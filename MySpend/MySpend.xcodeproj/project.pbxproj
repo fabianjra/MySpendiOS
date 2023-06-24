@@ -14,6 +14,7 @@
 		1F4C24942A47A6DC00CCAF6D /* MySpendTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4C24932A47A6DC00CCAF6D /* MySpendTests.swift */; };
 		1F4C249E2A47A6DC00CCAF6D /* MySpendUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4C249D2A47A6DC00CCAF6D /* MySpendUITests.swift */; };
 		1F4C24A02A47A6DC00CCAF6D /* MySpendUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4C249F2A47A6DC00CCAF6D /* MySpendUITestsLaunchTests.swift */; };
+		1F6344002A47A8C400081BCD /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 1F6343FF2A47A8C400081BCD /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		1F4C24992A47A6DC00CCAF6D /* MySpendUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MySpendUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F4C249D2A47A6DC00CCAF6D /* MySpendUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySpendUITests.swift; sourceTree = "<group>"; };
 		1F4C249F2A47A6DC00CCAF6D /* MySpendUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySpendUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		1F6343FF2A47A8C400081BCD /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +76,7 @@
 		1F4C24762A47A6DA00CCAF6D = {
 			isa = PBXGroup;
 			children = (
+				1F6343FF2A47A8C400081BCD /* README.md */,
 				1F4C24812A47A6DA00CCAF6D /* MySpend */,
 				1F4C24922A47A6DC00CCAF6D /* MySpendTests */,
 				1F4C249C2A47A6DC00CCAF6D /* MySpendUITests */,
@@ -231,6 +234,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F6344002A47A8C400081BCD /* README.md in Resources */,
 				1F4C248A2A47A6DC00CCAF6D /* Preview Assets.xcassets in Resources */,
 				1F4C24872A47A6DC00CCAF6D /* Assets.xcassets in Resources */,
 			);
