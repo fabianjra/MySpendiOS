@@ -19,7 +19,6 @@ struct TextFieldIconLeading: View {
                 .padding()
                 .background(Color.textFieldIconBackground)
             
-            
             TextField(placeHolder, text:$text)
                 .font(Fonts.primaryTextfield)
         }
@@ -31,12 +30,10 @@ struct TextFieldIconLeading: View {
 struct TextFieldIconLeading_Previews: PreviewProvider {
     static var previews: some View {
         
-        @State var text = ""
-        
         VStack {
-            TextFieldIconLeading(placeHolder: "Correo electronico",
-                                 text: .constant(text),
-                             icon: Image.userFill)
+            TextFieldIconLeading(placeHolder: "Email",
+                                 text: .constant(""),
+                                 icon: Image.envelopeFill)
         }
         .padding()
         .background(.gray)

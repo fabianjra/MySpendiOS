@@ -21,56 +21,58 @@ struct LoginView: View {
             Text("Iniciar sesión")
                 .font(Fonts.light)
             
-            TextFieldIconLeading(placeHolder: "Correo electronico",
+            TextFieldIconLeading(placeHolder: "Email",
                                  text: $userEmail,
-                                 icon: Image.userFill)
+                                 icon: Image.envelopeFill)
             
-            TextField("Contraseña", text: $userPassword)
+            TextFieldPasswordIconLeadingTrailing(placeHolder: "Password",
+                                                 text: $userPassword)
             
-            ButtonPrimary(text: "Iniciar sesión") {
-                print("Usuario: \(userEmail)")
+            ButtonPrimary(text: "Login") {
+                print("User: \(userEmail)")
+                print("Password: \(userPassword)")
             }
             .padding(.horizontal)
             
-            Button {
-                //TODO: Action Forget password
-                print("¿Olvidaste tu contraseña?")
-            } label: {
-                Text("¿Olvidaste tu contraseña?")
-            }
-
-            //TODO: View Line separator
-            
-            ButtonPrimary(text: "Registrarse") {
-                print("Registrarse")
-            }
-            .padding(.horizontal, 100)
-
-            Text("Loguearse con")
-            
-            HStack {
-                Button {
-                    //TODO: Login social network
-                } label: {
-                    Text("Facebook")
-                }
-                
-                Button {
-                    //TODO: Login social network
-                } label: {
-                    Text("Twitter")
-                }
-                
-                Button {
-                    //TODO: Login social network
-                } label: {
-                    Text("Google")
-                }
-            }
+//            Button {
+//                //TODO: Action Forget password
+//                print("¿Olvidaste tu contraseña?")
+//            } label: {
+//                Text("¿Olvidaste tu contraseña?")
+//            }
+//
+//            //TODO: View Line separator
+//
+//            ButtonPrimary(text: "Registrarse") {
+//                print("Registrarse")
+//            }
+//            .padding(.horizontal, 100)
+//
+//            Text("Loguearse con")
+//
+//            HStack {
+//                Button {
+//                    //TODO: Login social network
+//                } label: {
+//                    Text("Facebook")
+//                }
+//
+//                Button {
+//                    //TODO: Login social network
+//                } label: {
+//                    Text("Twitter")
+//                }
+//
+//                Button {
+//                    //TODO: Login social network
+//                } label: {
+//                    Text("Google")
+//                }
+//            }
         }
-        .background(LinearGradient(colors: Color.backgroundGradiant,
-                                   startPoint: .leading,
-                                   endPoint: .trailing))
+//        .background(LinearGradient(colors: Color.backgroundGradiant,
+//                                   startPoint: .leading,
+//                                   endPoint: .trailing))
     }
 }
 

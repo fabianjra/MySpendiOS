@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import Firebase
+//import Firebase
 
 //Resolve warning: [GoogleUtilities/AppDelegateSwizzler][I-SWZ001014] App Delegate does not conform to UIApplicationDelegate protocol.
 //It is not a good idea to go back to AppDelegate.
@@ -32,7 +32,7 @@ struct MySpendApp: App {
     //Se agrega la dependencia de Firebase aqui, ya que este archivo realiza la misma funcion que en el AppDelegate.
     init() {
         //FirebaseConfiguration.shared.setLoggerLevel(.min) //Evitar mensajes de firebase innecesarios.
-        FirebaseApp.configure()
+        //FirebaseApp.configure()
     }
     
     var body: some Scene {

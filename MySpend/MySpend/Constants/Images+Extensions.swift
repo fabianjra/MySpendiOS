@@ -9,6 +9,6 @@ import Foundation
 import SwiftUI
 
 extension Image {
-    
-    static let userFill = Image(systemName: "person.fill")
+    static let envelopeFill = Image(systemName: "envelope.fill")
+    static let lockFill = Image(systemName: "lock.fill")
 }

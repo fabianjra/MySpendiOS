@@ -31,6 +31,7 @@
 		1FE7C6832A47DDF40070B988 /* Radius.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE7C6822A47DDF40070B988 /* Radius.swift */; };
 		1FE7C6852A47E7120070B988 /* TextFieldIconLeading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE7C6842A47E7120070B988 /* TextFieldIconLeading.swift */; };
 		1FE7C6882A48027C0070B988 /* Images+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE7C6872A48027C0070B988 /* Images+Extensions.swift */; };
+		1FE7C68A2A480D2F0070B988 /* TextFieldPasswordIconLeadingTrailing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE7C6892A480D2F0070B988 /* TextFieldPasswordIconLeadingTrailing.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +76,7 @@
 		1FE7C6822A47DDF40070B988 /* Radius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Radius.swift; sourceTree = "<group>"; };
 		1FE7C6842A47E7120070B988 /* TextFieldIconLeading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldIconLeading.swift; sourceTree = "<group>"; };
 		1FE7C6872A48027C0070B988 /* Images+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Images+Extensions.swift"; sourceTree = "<group>"; };
+		1FE7C6892A480D2F0070B988 /* TextFieldPasswordIconLeadingTrailing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldPasswordIconLeadingTrailing.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -236,6 +238,7 @@
 			isa = PBXGroup;
 			children = (
 				1FE7C6842A47E7120070B988 /* TextFieldIconLeading.swift */,
+				1FE7C6892A480D2F0070B988 /* TextFieldPasswordIconLeadingTrailing.swift */,
 			);
 			path = TextFields;
 			sourceTree = "<group>";
@@ -409,6 +412,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F9D79C72A47C23C00F55418 /* Fonts.swift in Sources */,
+				1FE7C68A2A480D2F0070B988 /* TextFieldPasswordIconLeadingTrailing.swift in Sources */,
 				1FE7C6812A47DA1F0070B988 /* Colors+Extensions.swift in Sources */,
 				1FAEE6D02A47A9AB00630367 /* LoginView.swift in Sources */,
 				1FE7C6832A47DDF40070B988 /* Radius.swift in Sources */,
