@@ -22,7 +22,7 @@ Firebase is in charge of manage the Auth in app and the database using Firestore
     - 1: Add firebase dependecy with Swift Package Manager (Swift 3.0 or later): https://github.com/firebase/firebase-ios-sdk.git
     - 2: Download from firebase and add `GoogleService-Info.plist` to the project.
     - 3: Select the opciones: `FirebaseAuth`, `FireabaseFirestore`, `FirebaseCrashlytics`, `FirebaseAnalytics`
-    - 4: In app initialization `MySpendApp`, add the `import Firebase` and `FirebaseApp.configure()`. File: [Source]()
+    - 4: In app initialization `MySpendApp`, add the `import Firebase` and `FirebaseApp.configure()`. File: [Source](https://github.com/fabianjra/MySpendiOS/blob/main/MySpend/MySpend/MySpendApp.swift)
     - 5: For Crashlytics: In targets `MySpend` go to:
         * 5.1: Tab `Build Settings` and change all `debug information format` from `DWARF` to `DWARF with dSSYM file`.
         * 5.2: Tab `Build Phases` -> `+ > New Run Script Phase`.
