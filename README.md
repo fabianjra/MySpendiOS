@@ -14,7 +14,7 @@ mySpend es una app que te ayuda a controlar tus finazas.
 <p>&nbsp;</p>
 
 
-### Firebase
+## Firebase
 
 Firebase is in charge of manage the Auth in app and the database using Firestore. Also the Crashlytics analyzer for crashes in the app the Analytic.
 
