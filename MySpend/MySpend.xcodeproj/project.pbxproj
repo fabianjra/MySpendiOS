@@ -20,6 +20,7 @@
 		1F9D79B82A47AD4300F55418 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 1F9D79B72A47AD4300F55418 /* FirebaseAuth */; };
 		1F9D79BA2A47AD4300F55418 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 1F9D79B92A47AD4300F55418 /* FirebaseCrashlytics */; };
 		1F9D79BC2A47AD4300F55418 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 1F9D79BB2A47AD4300F55418 /* FirebaseFirestore */; };
+		1F9D79C72A47C23C00F55418 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9D79C62A47C23C00F55418 /* Fonts.swift */; };
 		1FAEE6D02A47A9AB00630367 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FAEE6CF2A47A9AB00630367 /* LoginView.swift */; };
 /* End PBXBuildFile section */
 
@@ -53,6 +54,12 @@
 		1F4C249F2A47A6DC00CCAF6D /* MySpendUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySpendUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		1F6343FF2A47A8C400081BCD /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		1F9D79B22A47ABEA00F55418 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		1F9D79C02A47C09D00F55418 /* Montserrat-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Light.ttf"; sourceTree = "<group>"; };
+		1F9D79C12A47C09D00F55418 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
+		1F9D79C22A47C09D00F55418 /* Montserrat-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-SemiBold.ttf"; sourceTree = "<group>"; };
+		1F9D79C32A47C09D00F55418 /* Montserrat-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Thin.ttf"; sourceTree = "<group>"; };
+		1F9D79C42A47C0F000F55418 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1F9D79C62A47C23C00F55418 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		1FAEE6CF2A47A9AB00630367 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -109,10 +116,13 @@
 		1F4C24812A47A6DA00CCAF6D /* MySpend */ = {
 			isa = PBXGroup;
 			children = (
+				1F9D79C52A47C22600F55418 /* Styles */,
+				1F9D79BE2A47C08200F55418 /* Resources */,
 				1FAEE6CE2A47A9A200630367 /* Login */,
 				1F4C24822A47A6DA00CCAF6D /* MySpendApp.swift */,
 				1F4C24842A47A6DA00CCAF6D /* HomeView.swift */,
 				1F4C24862A47A6DC00CCAF6D /* Assets.xcassets */,
+				1F9D79C42A47C0F000F55418 /* Info.plist */,
 				1F9D79B22A47ABEA00F55418 /* GoogleService-Info.plist */,
 				1F4C24882A47A6DC00CCAF6D /* Preview Content */,
 			);
@@ -142,6 +152,33 @@
 				1F4C249F2A47A6DC00CCAF6D /* MySpendUITestsLaunchTests.swift */,
 			);
 			path = MySpendUITests;
+			sourceTree = "<group>";
+		};
+		1F9D79BE2A47C08200F55418 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				1F9D79BF2A47C08C00F55418 /* Fonts */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		1F9D79BF2A47C08C00F55418 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				1F9D79C02A47C09D00F55418 /* Montserrat-Light.ttf */,
+				1F9D79C12A47C09D00F55418 /* Montserrat-Regular.ttf */,
+				1F9D79C22A47C09D00F55418 /* Montserrat-SemiBold.ttf */,
+				1F9D79C32A47C09D00F55418 /* Montserrat-Thin.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		1F9D79C52A47C22600F55418 /* Styles */ = {
+			isa = PBXGroup;
+			children = (
+				1F9D79C62A47C23C00F55418 /* Fonts.swift */,
+			);
+			path = Styles;
 			sourceTree = "<group>";
 		};
 		1FAEE6CE2A47A9A200630367 /* Login */ = {
@@ -316,6 +353,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F9D79C72A47C23C00F55418 /* Fonts.swift in Sources */,
 				1FAEE6D02A47A9AB00630367 /* LoginView.swift in Sources */,
 				1F4C24852A47A6DA00CCAF6D /* HomeView.swift in Sources */,
 				1F4C24832A47A6DA00CCAF6D /* MySpendApp.swift in Sources */,
@@ -481,6 +519,7 @@
 				DEVELOPMENT_TEAM = RJNWKKQ88P;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MySpend/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -511,6 +550,7 @@
 				DEVELOPMENT_TEAM = RJNWKKQ88P;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MySpend/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
