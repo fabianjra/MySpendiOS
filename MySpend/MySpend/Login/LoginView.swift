@@ -20,30 +20,31 @@ struct LoginView: View {
             
             Text("Iniciar sesión")
                 .font(Fonts.light)
-
-            TextField("Correo electronico", text:$userEmail)
+            
+            TextFieldIconLeading(placeHolder: "Correo electronico",
+                                 text: userEmail,
+                                 icon: Image.userFill)
             
             TextField("Contraseña", text: $userPassword)
             
-            Button {
-                //TODO: Action Login
-            } label: {
-                Text("Iniciar sesión")
+            ButtonPrimary(text: "Iniciar sesión") {
+                print("Iniciar sesion")
             }
+            .padding(.horizontal)
             
             Button {
                 //TODO: Action Forget password
+                print("¿Olvidaste tu contraseña?")
             } label: {
                 Text("¿Olvidaste tu contraseña?")
             }
 
             //TODO: View Line separator
             
-            Button {
-                //TODO: Action Register
-            } label: {
-                Text("Registrarse")
+            ButtonPrimary(text: "Registrarse") {
+                print("Registrarse")
             }
+            .padding(.horizontal, 100)
 
             Text("Loguearse con")
             
@@ -67,6 +68,9 @@ struct LoginView: View {
                 }
             }
         }
+        .background(LinearGradient(colors: Color.backgroundGradiant,
+                                   startPoint: .leading,
+                                   endPoint: .trailing))
     }
 }
 
