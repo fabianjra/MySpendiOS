@@ -21,6 +21,10 @@ struct TextFieldIconLeading: View {
             
             TextField(placeHolder, text:$text)
                 .font(Fonts.primaryTextfield)
+                .autocapitalization(.none)
+                .textInputAutocapitalization(.never)
+                .autocorrectionDisabled(true)
+                .keyboardType(.emailAddress)
         }
         .background(Color.textfieldBackground)
         .cornerRadius(Radius.textField)
