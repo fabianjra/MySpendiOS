@@ -9,13 +9,13 @@ import SwiftUI
 
 struct TextFieldIconLeading: View {
     
-    @State private var text: String
-    let placeHolder: String
-    var icon: Image
+    private let placeHolder: String
+    @Binding private var text: String
+    private let icon: Image
     
-    init(placeHolder: String, text: String, icon: Image) {
+    init(placeHolder: String, text: Binding<String>, icon: Image) {
         self.placeHolder = placeHolder
-        self.text = text
+        self._text = text
         self.icon = icon
     }
     
@@ -41,7 +41,7 @@ struct TextFieldIconLeading_Previews: PreviewProvider {
         
         VStack {
             TextFieldIconLeading(placeHolder: "Correo electronico",
-                             text: text,
+                                 text: .constant(text),
                              icon: Image.userFill)
         }
         .padding()

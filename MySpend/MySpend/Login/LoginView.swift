@@ -22,13 +22,13 @@ struct LoginView: View {
                 .font(Fonts.light)
             
             TextFieldIconLeading(placeHolder: "Correo electronico",
-                                 text: userEmail,
+                                 text: $userEmail,
                                  icon: Image.userFill)
             
             TextField("Contraseña", text: $userPassword)
             
             ButtonPrimary(text: "Iniciar sesión") {
-                print("Iniciar sesion")
+                print("Usuario: \(userEmail)")
             }
             .padding(.horizontal)
             

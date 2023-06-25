@@ -37,7 +37,8 @@ struct MySpendApp: App {
     
     var body: some Scene {
         WindowGroup {
-            HomeView()
+            LoginView()
+            //HomeView() //TODO: Change to HomeView
                 //.environmentObject(dataManager) //Class for get, add and delete from Firestore.
         }
     }
