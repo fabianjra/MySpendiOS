@@ -10,7 +10,7 @@ import SwiftUI
 struct HomeView: View {
     var body: some View {
         VStack {
-            Text("My Spend for iOS - App for finances and money")
+            Text("TO DO HOME VIEW")
         }
     }
 }
