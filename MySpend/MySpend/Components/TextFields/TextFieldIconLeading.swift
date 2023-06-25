@@ -9,15 +9,9 @@ import SwiftUI
 
 struct TextFieldIconLeading: View {
     
-    private let placeHolder: String
-    @Binding private var text: String
-    private let icon: Image
-    
-    init(placeHolder: String, text: Binding<String>, icon: Image) {
-        self.placeHolder = placeHolder
-        self._text = text
-        self.icon = icon
-    }
+    let placeHolder: String
+    @Binding var text: String
+    let icon: Image
     
     var body: some View {
         HStack {
