@@ -11,11 +11,12 @@ struct TextFieldPasswordIconLeadingTrailing: View {
     
     let placeHolder: String
     @Binding var text: String
+    let icon: Image
 
     var body: some View {
         HStack {
-            Image.lockFill
-                .padding()
+            icon
+                .frame(width: 50, height: 50)
                 .background(Color.textFieldIconBackground)
             
             SecureField(placeHolder, text:$text)
@@ -23,9 +24,10 @@ struct TextFieldPasswordIconLeadingTrailing: View {
                 .textInputAutocapitalization(.never)
                 .autocorrectionDisabled(true)
                 .keyboardType(.asciiCapable) // This avoids suggestions bar on the keyboard.
+                
         }
         .background(Color.textfieldBackground)
-        .cornerRadius(Radius.textField)
+        .cornerRadius(Radius.textFieldCorners)
     }
 }
 
@@ -33,7 +35,8 @@ struct TextFieldPasswordIconLeadingTrailing_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
             TextFieldPasswordIconLeadingTrailing(placeHolder: "Password",
-                                 text: .constant(""))
+                                                 text: .constant(""),
+                                                 icon: Image.lockFill)
         }
         .padding()
         .background(.gray)

@@ -22,8 +22,9 @@ extension Color {
     static let textFieldIconBackground = Color("TextFieldIconBackground")
     
     // MARK: Background
-    static let backgroundLight = Color("BackgroundLeading")
-    static let backgroundMedium = Color("BackgroundTrailing")
+    static let background = Color("Background")
+    static let backgroundLight = Color("BackgroundFormLeading")
+    static let backgroundMedium = Color("BackgroundFormTrailing")
     static let backgroundGradiant: Array = [Color.backgroundLight,
                                              Color.backgroundMedium]
 }

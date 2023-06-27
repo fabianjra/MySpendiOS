@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F19D9642A4A583800137EA0 /* TextFieldIconStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F19D9632A4A583800137EA0 /* TextFieldIconStyle.swift */; };
+		1F19D9662A4A764B00137EA0 /* Frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F19D9652A4A764B00137EA0 /* Frame.swift */; };
 		1F4C24832A47A6DA00CCAF6D /* MySpendApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4C24822A47A6DA00CCAF6D /* MySpendApp.swift */; };
 		1F4C24852A47A6DA00CCAF6D /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4C24842A47A6DA00CCAF6D /* HomeView.swift */; };
 		1F4C24872A47A6DC00CCAF6D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F4C24862A47A6DC00CCAF6D /* Assets.xcassets */; };
@@ -29,7 +31,6 @@
 		1FE7C67E2A47D7880070B988 /* ButtonPrimary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE7C67D2A47D7880070B988 /* ButtonPrimary.swift */; };
 		1FE7C6812A47DA1F0070B988 /* Colors+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE7C6802A47DA1F0070B988 /* Colors+Extensions.swift */; };
 		1FE7C6832A47DDF40070B988 /* Radius.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE7C6822A47DDF40070B988 /* Radius.swift */; };
-		1FE7C6852A47E7120070B988 /* TextFieldIconLeading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE7C6842A47E7120070B988 /* TextFieldIconLeading.swift */; };
 		1FE7C6882A48027C0070B988 /* Images+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE7C6872A48027C0070B988 /* Images+Extensions.swift */; };
 		1FE7C68A2A480D2F0070B988 /* TextFieldPasswordIconLeadingTrailing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE7C6892A480D2F0070B988 /* TextFieldPasswordIconLeadingTrailing.swift */; };
 /* End PBXBuildFile section */
@@ -52,6 +53,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1F19D9632A4A583800137EA0 /* TextFieldIconStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldIconStyle.swift; sourceTree = "<group>"; };
+		1F19D9652A4A764B00137EA0 /* Frame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Frame.swift; sourceTree = "<group>"; };
 		1F4C247F2A47A6DA00CCAF6D /* MySpend.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MySpend.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F4C24822A47A6DA00CCAF6D /* MySpendApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySpendApp.swift; sourceTree = "<group>"; };
 		1F4C24842A47A6DA00CCAF6D /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -74,7 +77,6 @@
 		1FE7C67D2A47D7880070B988 /* ButtonPrimary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonPrimary.swift; sourceTree = "<group>"; };
 		1FE7C6802A47DA1F0070B988 /* Colors+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Colors+Extensions.swift"; sourceTree = "<group>"; };
 		1FE7C6822A47DDF40070B988 /* Radius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Radius.swift; sourceTree = "<group>"; };
-		1FE7C6842A47E7120070B988 /* TextFieldIconLeading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldIconLeading.swift; sourceTree = "<group>"; };
 		1FE7C6872A48027C0070B988 /* Images+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Images+Extensions.swift"; sourceTree = "<group>"; };
 		1FE7C6892A480D2F0070B988 /* TextFieldPasswordIconLeadingTrailing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldPasswordIconLeadingTrailing.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -108,6 +110,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1F19D9622A4A57E900137EA0 /* Styles */ = {
+			isa = PBXGroup;
+			children = (
+				1F19D9632A4A583800137EA0 /* TextFieldIconStyle.swift */,
+			);
+			path = Styles;
+			sourceTree = "<group>";
+		};
 		1F4C24762A47A6DA00CCAF6D = {
 			isa = PBXGroup;
 			children = (
@@ -210,6 +220,7 @@
 		1FE7C67B2A47D6EA0070B988 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				1F19D9622A4A57E900137EA0 /* Styles */,
 				1FE7C6862A47EEBE0070B988 /* TextFields */,
 				1FE7C67C2A47D6F30070B988 /* Buttons */,
 			);
@@ -230,6 +241,7 @@
 				1FE7C6802A47DA1F0070B988 /* Colors+Extensions.swift */,
 				1FE7C6822A47DDF40070B988 /* Radius.swift */,
 				1FE7C6872A48027C0070B988 /* Images+Extensions.swift */,
+				1F19D9652A4A764B00137EA0 /* Frame.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -237,7 +249,6 @@
 		1FE7C6862A47EEBE0070B988 /* TextFields */ = {
 			isa = PBXGroup;
 			children = (
-				1FE7C6842A47E7120070B988 /* TextFieldIconLeading.swift */,
 				1FE7C6892A480D2F0070B988 /* TextFieldPasswordIconLeadingTrailing.swift */,
 			);
 			path = TextFields;
@@ -418,9 +429,10 @@
 				1FE7C6832A47DDF40070B988 /* Radius.swift in Sources */,
 				1FE7C67E2A47D7880070B988 /* ButtonPrimary.swift in Sources */,
 				1FE7C6882A48027C0070B988 /* Images+Extensions.swift in Sources */,
+				1F19D9642A4A583800137EA0 /* TextFieldIconStyle.swift in Sources */,
 				1F4C24852A47A6DA00CCAF6D /* HomeView.swift in Sources */,
-				1FE7C6852A47E7120070B988 /* TextFieldIconLeading.swift in Sources */,
 				1F4C24832A47A6DA00CCAF6D /* MySpendApp.swift in Sources */,
+				1F19D9662A4A764B00137EA0 /* Frame.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

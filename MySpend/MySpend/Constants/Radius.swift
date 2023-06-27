@@ -8,6 +8,6 @@
 import Foundation
 
 struct Radius {
-    static let button: CGFloat = 10.0
-    static let textField: CGFloat = 10.0
+    static let buttonCorners: CGFloat = 10.0
+    static let textFieldCorners: CGFloat = 10.0
 }
