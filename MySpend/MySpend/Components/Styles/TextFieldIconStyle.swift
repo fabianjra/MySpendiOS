@@ -36,7 +36,7 @@ struct TextFieldIconStyle: TextFieldStyle {
             
             configuration
                 //.frame(height: Frames.textFieldHeight) //Textfield get full height inside view.
-                .background(.green) //TODO: For testing
+                //.background(.green) //TODO: For testing
                 .placeholder(when: text.isEmpty) {
                     Text(placeHolder ?? "")
                         .foregroundColor(Color.textFieldPlaceholder)
