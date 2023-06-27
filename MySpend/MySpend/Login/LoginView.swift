@@ -27,28 +27,17 @@ struct LoginView: View {
                     .font(Font.custom(MontserratFamily.regular.rawValue,
                                       size: FontSizes.body.size))
                 
-                TextField("", text: $userEmail)
-                    .textFieldStyle(TextFieldIconStyle("Email", text:$userEmail, iconLeading: Image.envelopeFill))
+                TextField("", text: $userEmail, prompt:
+                            Text("Email").foregroundColor(Color.textFieldPlaceholder))
+                    .textFieldStyle(TextFieldIconStyle($userEmail, iconLeading: Image.envelopeFill))
                     .autocapitalization(.none)
                     .textInputAutocapitalization(.never)
                     .autocorrectionDisabled(true)
                     .keyboardType(.emailAddress)
                 
-                TextField("", text: $userEmail)
-                    .textFieldStyle(TextFieldIconStyle(text:$userEmail, iconLeading: Image.envelopeFill))
-                
-                TextField("", text: $userEmail)
-                    .textFieldStyle(TextFieldIconStyle(text:$userEmail))
-                
-                TextField("", text: $userEmail)
-                    .textFieldStyle(TextFieldIconStyle("Test 1", text:$userEmail))
-                
-                SecureField("", text: $userPassword)
-                    .textFieldStyle(TextFieldIconStyle("Password", text: $userPassword, iconLeading: Image.lockFill))
-                    .autocapitalization(.none)
-                    .textInputAutocapitalization(.never)
-                    .autocorrectionDisabled(true)
-                    .keyboardType(.asciiCapable) // This avoids suggestions bar on the keyboard.
+                SecureFieldShowPassword(placeHolder: "Password",
+                                        text: $userPassword,
+                                        iconLeading: Image.lockFill)
                 
                 ButtonPrimary(text: "Login") {
                     print("User: \(userEmail)")

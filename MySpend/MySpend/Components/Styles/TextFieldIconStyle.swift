@@ -9,7 +9,6 @@ import SwiftUI
 
 struct TextFieldIconStyle: TextFieldStyle {
     
-    private let placeHolder: String?
     @Binding private var text: String
     private let fontFamily: MontserratFamily
     private let size: FontSizes
@@ -17,8 +16,7 @@ struct TextFieldIconStyle: TextFieldStyle {
     
     @FocusState var isFocused: Bool
     
-    public init(_ placeHolder: String? = nil, text: Binding<String>, fontFamily: MontserratFamily = .regular, size: FontSizes = .body, iconLeading: Image? = nil) {
-        self.placeHolder = placeHolder
+    public init(_ text: Binding<String>, fontFamily: MontserratFamily = .regular, size: FontSizes = .body, iconLeading: Image? = nil) {
         self._text = text
         self.fontFamily = fontFamily
         self.size = size
@@ -35,19 +33,13 @@ struct TextFieldIconStyle: TextFieldStyle {
             }
             
             configuration
-                //.frame(height: Frames.textFieldHeight) //Textfield get full height inside view.
+                .frame(height: Frames.textFieldHeight)
                 //.background(.green) //TODO: For testing
-                .placeholder(when: text.isEmpty) {
-                    Text(placeHolder ?? "")
-                        .foregroundColor(Color.textFieldPlaceholder)
-                }
                 .padding(.horizontal, iconLeading == nil ? nil : .zero)
                 .padding(.trailing, iconLeading != nil ? nil : .zero)
                 .font(.custom(fontFamily.rawValue, size: size.size))
-                //.modifier(frameModifier(active: iconLeading == nil))
                 .focused($isFocused)
         }
-        .frame(height: Frames.textFieldHeight)
         .foregroundColor(Color.textFieldForeground)
         .background(Color.textfieldBackground)
         .cornerRadius(Radius.textFieldCorners)
@@ -61,55 +53,40 @@ struct TextFieldIconStyle: TextFieldStyle {
             }
         }
     }
-    
-    //Commented because:
-    //This modifier is changing the Height Size when there is no icon.
-    struct frameModifier: ViewModifier {
-        let active : Bool
-        
-        @ViewBuilder
-        func body(content: Content) -> some View {
-            if active {
-                content.frame(height: Frames.textFieldHeight)
-            } else {
-                content
-            }
-        }
-    }
 }
 
 struct TextFieldIconStyle_Previews: PreviewProvider {
     static var previews: some View {
-
+        
         @State var text = ""
-
+        
         VStack {
             
             //Nothing:
             TextField("", text: $text)
-                .textFieldStyle(TextFieldIconStyle(text: $text))
+                .textFieldStyle(TextFieldIconStyle($text))
             
             //iOS Placeholder
             TextField("iOS placeholder", text: $text)
-                .textFieldStyle(TextFieldIconStyle(text: $text))
+                .textFieldStyle(TextFieldIconStyle($text))
             
-            //Only PlaceHolder
-            TextField("", text: $text)
-                .textFieldStyle(TextFieldIconStyle("Only placeholder",
-                                                   text: $text))
             //With placeholder and icon
             TextField("", text: $text)
-                .textFieldStyle(TextFieldIconStyle("With placeholder and icon",
-                                                   text: $text,
+                .textFieldStyle(TextFieldIconStyle($text,
                                                    iconLeading: Image.envelopeFill))
+            
+            //Nothing X2
+            TextField("", text: $text)
+                .textFieldStyle(TextFieldIconStyle($text))
+            
             //Only icon
             TextField("", text: $text)
-                .textFieldStyle(TextFieldIconStyle(text: $text,
+                .textFieldStyle(TextFieldIconStyle($text,
                                                    iconLeading: Image.envelopeFill))
             
             //Only icon X2
             TextField("", text: $text)
-                .textFieldStyle(TextFieldIconStyle(text: $text,
+                .textFieldStyle(TextFieldIconStyle($text,
                                                    iconLeading: Image.lockFill))
         }
         .padding()
