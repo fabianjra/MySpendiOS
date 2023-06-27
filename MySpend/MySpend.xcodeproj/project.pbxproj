@@ -235,7 +235,6 @@
 		1FE7C67B2A47D6EA0070B988 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				1F19D9622A4A57E900137EA0 /* Styles */,
 				1FE7C6862A47EEBE0070B988 /* TextFields */,
 				1FE7C67C2A47D6F30070B988 /* Buttons */,
 			);
@@ -266,6 +265,7 @@
 		1FE7C6862A47EEBE0070B988 /* TextFields */ = {
 			isa = PBXGroup;
 			children = (
+				1F19D9622A4A57E900137EA0 /* Styles */,
 				1FE7C6892A480D2F0070B988 /* SecureFieldShowPassword.swift */,
 			);
 			path = TextFields;

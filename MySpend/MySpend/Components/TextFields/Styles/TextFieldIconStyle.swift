@@ -10,13 +10,13 @@ import SwiftUI
 struct TextFieldIconStyle: TextFieldStyle {
     
     @Binding private var text: String
-    private let fontFamily: MontserratFamily
-    private let size: FontSizes
+    private let fontFamily: FontFamily
+    private let size: CGFloat
     private let iconLeading: Image?
     
     @FocusState var isFocused: Bool
     
-    public init(_ text: Binding<String>, fontFamily: MontserratFamily = .regular, size: FontSizes = .body, iconLeading: Image? = nil) {
+    public init(_ text: Binding<String>, fontFamily: FontFamily = .regular, size: CGFloat = FontSizes.body, iconLeading: Image? = nil) {
         self._text = text
         self.fontFamily = fontFamily
         self.size = size
@@ -37,7 +37,7 @@ struct TextFieldIconStyle: TextFieldStyle {
                 //.background(.green) //TODO: For testing
                 .padding(.horizontal, iconLeading == nil ? nil : .zero)
                 .padding(.trailing, iconLeading != nil ? nil : .zero)
-                .font(.custom(fontFamily.rawValue, size: size.size))
+                .font(.custom(fontFamily.rawValue, size: size))
                 .focused($isFocused)
         }
         .foregroundColor(Color.textFieldForeground)
@@ -71,9 +71,9 @@ struct TextFieldIconStyle_Previews: PreviewProvider {
                 .textFieldStyle(TextFieldIconStyle($text))
             
             //With placeholder and icon
-            TextField("", text: $text)
-                .textFieldStyle(TextFieldIconStyle($text,
-                                                   iconLeading: Image.envelopeFill))
+            TextField("", text: $text, prompt:
+                        Text("With placeholder and icon").foregroundColor(.textFieldPlaceholder))
+                .textFieldStyle(TextFieldIconStyle($text, iconLeading: Image.envelopeFill))
             
             //Nothing X2
             TextField("", text: $text)
@@ -81,13 +81,11 @@ struct TextFieldIconStyle_Previews: PreviewProvider {
             
             //Only icon
             TextField("", text: $text)
-                .textFieldStyle(TextFieldIconStyle($text,
-                                                   iconLeading: Image.envelopeFill))
+                .textFieldStyle(TextFieldIconStyle($text, iconLeading: Image.envelopeFill))
             
             //Only icon X2
             TextField("", text: $text)
-                .textFieldStyle(TextFieldIconStyle($text,
-                                                   iconLeading: Image.lockFill))
+                .textFieldStyle(TextFieldIconStyle($text, iconLeading: Image.lockFill))
         }
         .padding()
         .background(.gray)

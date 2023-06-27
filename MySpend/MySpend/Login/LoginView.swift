@@ -11,7 +11,7 @@ struct LoginView: View {
     
     @State private var userEmail: String = ""
     @State private var userPassword: String = ""
-    
+
     var body: some View {
         
         ZStack {
@@ -20,15 +20,16 @@ struct LoginView: View {
             
             VStack {
                 Text("mySpend")
-                    .font(Font.custom(MontserratFamily.regular.rawValue,
-                                      size: FontSizes.body.size))
+                    .foregroundColor(Color.textPrimaryForeground)
+                    .font(Font.custom(FontFamily.regular.rawValue,
+                                      size: FontSizes.body))
                 
                 Text("Iniciar sesión")
-                    .font(Font.custom(MontserratFamily.regular.rawValue,
-                                      size: FontSizes.body.size))
+                    .foregroundColor(Color.textPrimaryForeground)
+                    .font(Font.custom(FontFamily.regular.rawValue,
+                                      size: FontSizes.body))
                 
-                TextField("", text: $userEmail, prompt:
-                            Text("Email").foregroundColor(Color.textFieldPlaceholder))
+                TextField("", text: $userEmail, prompt: Text("Email"))
                     .textFieldStyle(TextFieldIconStyle($userEmail, iconLeading: Image.envelopeFill))
                     .autocapitalization(.none)
                     .textInputAutocapitalization(.never)

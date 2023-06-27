@@ -27,23 +27,30 @@ import SwiftUI
  .caption2      11.0    SFUI-Regular
  */
 
-public enum MontserratFamily: String {
+public enum FontFamily: String {
     case light = "Montserrat-Light"
     case regular = "Montserrat-Regular"
     case semibold = "Montserrat-SemiBold"
     case thin = "Montserrat-Thin"
 }
 
-public enum FontSizes {
-    case small
-    case body
-    case big
-    
-    var size: CGFloat {
-        switch self {
-        case .small: return UIFont.preferredFont(forTextStyle: .caption1).pointSize //12
-        case .body: return UIFont.preferredFont(forTextStyle: .body).pointSize //17
-        case .big: return UIFont.preferredFont(forTextStyle: .title3).pointSize //20
-        }
-    }
+struct FontSizes {
+    static let small = UIFont.preferredFont(forTextStyle: .caption1).pointSize //12
+    static let body = UIFont.preferredFont(forTextStyle: .body).pointSize //17
+    static let big = UIFont.preferredFont(forTextStyle: .title3).pointSize //20
 }
+
+//TODO: Refactorizar: Pasar a ViewBuilder para Text o similar.
+//public enum FontSizes {
+//    case small
+//    case body
+//    case big
+//
+//    var size: CGFloat {
+//        switch self {
+//        case .small: return UIFont.preferredFont(forTextStyle: .caption1).pointSize //12
+//        case .body: return UIFont.preferredFont(forTextStyle: .body).pointSize //17
+//        case .big: return UIFont.preferredFont(forTextStyle: .title3).pointSize //20
+//        }
+//    }
+//}

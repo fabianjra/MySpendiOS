@@ -18,8 +18,8 @@ struct ButtonPrimary: View {
         } label: {
             Text(text)
                 .foregroundColor(Color.buttonForeground)
-                .font(Font.custom(MontserratFamily.regular.rawValue,
-                                  size: FontSizes.body.size))
+                .font(Font.custom(FontFamily.regular.rawValue,
+                                  size: FontSizes.body))
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical)
