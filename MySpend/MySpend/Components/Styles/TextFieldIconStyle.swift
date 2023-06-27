@@ -15,6 +15,8 @@ struct TextFieldIconStyle: TextFieldStyle {
     private let size: FontSizes
     private let iconLeading: Image?
     
+    @FocusState var isFocused: Bool
+    
     public init(_ placeHolder: String? = nil, text: Binding<String>, fontFamily: MontserratFamily = .regular, size: FontSizes = .body, iconLeading: Image? = nil) {
         self.placeHolder = placeHolder
         self._text = text
@@ -39,17 +41,20 @@ struct TextFieldIconStyle: TextFieldStyle {
                 .placeholder(when: text.isEmpty) {
                     Text(placeHolder ?? "").foregroundColor(Color.textFieldPlaceholder)
                 }
+                .focused($isFocused)
         }
         .foregroundColor(Color.textFieldForeground)
         .background(Color.textfieldBackground)
         .cornerRadius(Radius.textFieldCorners)
-        .overlay(
-            RoundedRectangle(cornerRadius: Radius.textFieldCorners)
-                .stroke(LinearGradient(
-                    colors: Color.primaryButtonGradiant,
-                    startPoint: .leading,
-                    endPoint: .trailing), lineWidth: Shapes.textFieldLineWidth)
-        )
+        .overlay {
+            if isFocused {
+                RoundedRectangle(cornerRadius: Radius.textFieldCorners)
+                    .stroke(LinearGradient(
+                        colors: Color.primaryGradiant,
+                        startPoint: .leading,
+                        endPoint: .trailing), lineWidth: Shapes.textFieldLineWidth)
+            }
+        }
     }
     
     struct frameModifier: ViewModifier {
@@ -68,9 +73,9 @@ struct TextFieldIconStyle: TextFieldStyle {
 
 struct TextFieldIconStyle_Previews: PreviewProvider {
     static var previews: some View {
-        
+
         @State var text = ""
-        
+
         VStack {
             TextField("", text: $text)
                 .textFieldStyle(TextFieldIconStyle("Email", text: $text, iconLeading: Image.envelopeFill))

@@ -83,7 +83,7 @@ struct LoginView: View {
                 //            }
             }
             .padding()
-            .background(LinearGradient(colors: Color.backgroundGradiant,
+            .background(LinearGradient(colors: Color.backgroundFormGradiant,
                                        startPoint: .leading,
                                        endPoint: .trailing))
         }

@@ -17,13 +17,13 @@ struct ButtonPrimary: View {
             function()
         } label: {
             Text(text)
-                .foregroundColor(Color.primaryButtonText)
+                .foregroundColor(Color.buttonForeground)
                 .font(Font.custom(MontserratFamily.regular.rawValue,
                                   size: FontSizes.body.size))
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical)
-        .background(LinearGradient(colors: Color.primaryButtonGradiant,
+        .background(LinearGradient(colors: Color.primaryGradiant,
                                    startPoint: .leading,
                                    endPoint: .trailing))
         .clipShape(RoundedRectangle(cornerRadius: Radius.buttonCorners))

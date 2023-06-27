@@ -8,5 +8,5 @@
 import Foundation
 
 struct Shapes {
-    static let textFieldLineWidth: CGFloat = 1
+    static let textFieldLineWidth: CGFloat = 2
 }

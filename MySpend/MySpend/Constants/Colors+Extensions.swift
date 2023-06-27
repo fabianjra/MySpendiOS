@@ -11,11 +11,7 @@ import SwiftUI
 extension Color {
     
     // MARK: Buttons
-    static let primaryButtonText = Color("PrimaryButtonText")
-    static let primaryButtonLight = Color("PrimaryButtonLeading")
-    static let primaryButtonMedium = Color("PrimaryButtonTrailing")
-    static let primaryButtonGradiant: Array = [Color.primaryButtonLight,
-                                               Color.primaryButtonMedium]
+    static let buttonForeground = Color("ButtonForeground")
     
     // MARK: Textfields
     static let textFieldPlaceholder = Color("TextFieldPlaceholder") //AKA: Silver
@@ -25,8 +21,14 @@ extension Color {
     
     // MARK: Background
     static let background = Color("Background")
-    static let backgroundLight = Color("BackgroundFormLeading")
-    static let backgroundMedium = Color("BackgroundFormTrailing")
-    static let backgroundGradiant: Array = [Color.backgroundLight,
-                                             Color.backgroundMedium]
+    static let backgroundFormLight = Color("BackgroundFormLight")
+    static let backgroundFormDark = Color("BackgroundFormDark")
+    static let backgroundFormGradiant: Array = [Color.backgroundFormLight,
+                                                Color.backgroundFormDark]
+    
+    // MARK: General
+    static let primaryLight = Color("PrimaryLight")
+    static let primaryDark = Color("PrimaryDark")
+    static let primaryGradiant: Array = [Color.primaryLight,
+                                         Color.primaryDark]
 }
