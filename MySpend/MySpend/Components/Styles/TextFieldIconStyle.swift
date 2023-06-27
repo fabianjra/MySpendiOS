@@ -35,14 +35,19 @@ struct TextFieldIconStyle: TextFieldStyle {
             }
             
             configuration
+                //.frame(height: Frames.textFieldHeight) //Textfield get full height inside view.
+                .background(.green) //TODO: For testing
                 .placeholder(when: text.isEmpty) {
-                    Text(placeHolder ?? "").foregroundColor(Color.textFieldPlaceholder)
+                    Text(placeHolder ?? "")
+                        .foregroundColor(Color.textFieldPlaceholder)
                 }
                 .padding(.horizontal, iconLeading == nil ? nil : .zero)
+                .padding(.trailing, iconLeading != nil ? nil : .zero)
                 .font(.custom(fontFamily.rawValue, size: size.size))
                 //.modifier(frameModifier(active: iconLeading == nil))
                 .focused($isFocused)
         }
+        .frame(height: Frames.textFieldHeight)
         .foregroundColor(Color.textFieldForeground)
         .background(Color.textfieldBackground)
         .cornerRadius(Radius.textFieldCorners)
@@ -79,11 +84,33 @@ struct TextFieldIconStyle_Previews: PreviewProvider {
         @State var text = ""
 
         VStack {
+            
+            //Nothing:
             TextField("", text: $text)
-                .textFieldStyle(TextFieldIconStyle("Email",
-                                                   text: $text
-                                                   ,iconLeading: Image.envelopeFill
-                                                  ))
+                .textFieldStyle(TextFieldIconStyle(text: $text))
+            
+            //iOS Placeholder
+            TextField("iOS placeholder", text: $text)
+                .textFieldStyle(TextFieldIconStyle(text: $text))
+            
+            //Only PlaceHolder
+            TextField("", text: $text)
+                .textFieldStyle(TextFieldIconStyle("Only placeholder",
+                                                   text: $text))
+            //With placeholder and icon
+            TextField("", text: $text)
+                .textFieldStyle(TextFieldIconStyle("With placeholder and icon",
+                                                   text: $text,
+                                                   iconLeading: Image.envelopeFill))
+            //Only icon
+            TextField("", text: $text)
+                .textFieldStyle(TextFieldIconStyle(text: $text,
+                                                   iconLeading: Image.envelopeFill))
+            
+            //Only icon X2
+            TextField("", text: $text)
+                .textFieldStyle(TextFieldIconStyle(text: $text,
+                                                   iconLeading: Image.lockFill))
         }
         .padding()
         .background(.gray)

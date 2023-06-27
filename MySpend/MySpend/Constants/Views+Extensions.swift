@@ -17,6 +17,5 @@ extension View {
                 placeholder().opacity(shouldShow ? 1 : 0)
                 self
             }
-            .padding(.vertical) //Add padding when placeholder is empty.
         }
 }

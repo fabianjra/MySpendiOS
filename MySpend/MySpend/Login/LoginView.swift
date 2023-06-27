@@ -34,6 +34,15 @@ struct LoginView: View {
                     .autocorrectionDisabled(true)
                     .keyboardType(.emailAddress)
                 
+                TextField("", text: $userEmail)
+                    .textFieldStyle(TextFieldIconStyle(text:$userEmail, iconLeading: Image.envelopeFill))
+                
+                TextField("", text: $userEmail)
+                    .textFieldStyle(TextFieldIconStyle(text:$userEmail))
+                
+                TextField("", text: $userEmail)
+                    .textFieldStyle(TextFieldIconStyle("Test 1", text:$userEmail))
+                
                 SecureField("", text: $userPassword)
                     .textFieldStyle(TextFieldIconStyle("Password", text: $userPassword, iconLeading: Image.lockFill))
                     .autocapitalization(.none)
