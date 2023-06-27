@@ -27,12 +27,19 @@ struct LoginView: View {
                     .font(Font.custom(MontserratFamily.regular.rawValue,
                                       size: FontSizes.body.size))
                 
-                TextField("Email", text: $userEmail)
-                    .textFieldStyle(TextFieldIconStyle(iconLeading: Image.envelopeFill))
+                TextField("", text: $userEmail)
+                    .textFieldStyle(TextFieldIconStyle("Email", text:$userEmail, iconLeading: Image.envelopeFill))
                     .autocapitalization(.none)
                     .textInputAutocapitalization(.never)
                     .autocorrectionDisabled(true)
                     .keyboardType(.emailAddress)
+                
+                SecureField("", text: $userPassword)
+                    .textFieldStyle(TextFieldIconStyle(text: $userPassword, iconLeading: Image.lockFill))
+                    .autocapitalization(.none)
+                    .textInputAutocapitalization(.never)
+                    .autocorrectionDisabled(true)
+                    .keyboardType(.asciiCapable) // This avoids suggestions bar on the keyboard.
                 
                 TextFieldPasswordIconLeadingTrailing(placeHolder: "Password",
                                                      text: $userPassword,

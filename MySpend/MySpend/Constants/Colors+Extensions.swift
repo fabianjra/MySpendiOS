@@ -18,7 +18,9 @@ extension Color {
                                                Color.primaryButtonMedium]
     
     // MARK: Textfields
-    static let textfieldBackground = Color("TextfieldBackground")
+    static let textFieldPlaceholder = Color("TextFieldPlaceholder") //AKA: Silver
+    static let textFieldForeground = Color("TextFieldForeground")
+    static let textfieldBackground = Color("TextFieldBackground")
     static let textFieldIconBackground = Color("TextFieldIconBackground")
     
     // MARK: Background
