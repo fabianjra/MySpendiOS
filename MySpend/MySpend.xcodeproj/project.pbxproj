@@ -34,7 +34,7 @@
 		1FE7C6812A47DA1F0070B988 /* Colors+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE7C6802A47DA1F0070B988 /* Colors+Extensions.swift */; };
 		1FE7C6832A47DDF40070B988 /* Radius.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE7C6822A47DDF40070B988 /* Radius.swift */; };
 		1FE7C6882A48027C0070B988 /* Images+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE7C6872A48027C0070B988 /* Images+Extensions.swift */; };
-		1FE7C68A2A480D2F0070B988 /* TextFieldShowPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE7C6892A480D2F0070B988 /* TextFieldShowPassword.swift */; };
+		1FE7C68A2A480D2F0070B988 /* SecureFieldShowPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE7C6892A480D2F0070B988 /* SecureFieldShowPassword.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,7 +82,7 @@
 		1FE7C6802A47DA1F0070B988 /* Colors+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Colors+Extensions.swift"; sourceTree = "<group>"; };
 		1FE7C6822A47DDF40070B988 /* Radius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Radius.swift; sourceTree = "<group>"; };
 		1FE7C6872A48027C0070B988 /* Images+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Images+Extensions.swift"; sourceTree = "<group>"; };
-		1FE7C6892A480D2F0070B988 /* TextFieldShowPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldShowPassword.swift; sourceTree = "<group>"; };
+		1FE7C6892A480D2F0070B988 /* SecureFieldShowPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureFieldShowPassword.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -255,7 +255,7 @@
 		1FE7C6862A47EEBE0070B988 /* TextFields */ = {
 			isa = PBXGroup;
 			children = (
-				1FE7C6892A480D2F0070B988 /* TextFieldShowPassword.swift */,
+				1FE7C6892A480D2F0070B988 /* SecureFieldShowPassword.swift */,
 			);
 			path = TextFields;
 			sourceTree = "<group>";
@@ -429,7 +429,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F9D79C72A47C23C00F55418 /* Fonts.swift in Sources */,
-				1FE7C68A2A480D2F0070B988 /* TextFieldShowPassword.swift in Sources */,
+				1FE7C68A2A480D2F0070B988 /* SecureFieldShowPassword.swift in Sources */,
 				1F19D9682A4A7A7000137EA0 /* Views+Extensions.swift in Sources */,
 				1FE7C6812A47DA1F0070B988 /* Colors+Extensions.swift in Sources */,
 				1FAEE6D02A47A9AB00630367 /* LoginView.swift in Sources */,

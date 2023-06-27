@@ -1,5 +1,5 @@
 //
-//  TextFieldShowPassword.swift
+//  SecureFieldShowPassword.swift
 //  MySpend
 //
 //  Created by Fabian Rodriguez on 24/6/23.
@@ -7,15 +7,15 @@
 
 import SwiftUI
 
-struct TextFieldShowPassword: View {
+struct SecureFieldShowPassword: View {
     
     let placeHolder: String
     @Binding var text: String
-    let icon: Image
+    let iconLeading: Image
 
     var body: some View {
         HStack {
-            icon
+            iconLeading
                 .frame(width: 50, height: 50)
                 .background(Color.textFieldIconBackground)
             
@@ -31,12 +31,12 @@ struct TextFieldShowPassword: View {
     }
 }
 
-struct TextFieldShowPassword_Previews: PreviewProvider {
+struct SecureFieldShowPassword_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
-            TextFieldShowPassword(placeHolder: "Password",
+            SecureFieldShowPassword(placeHolder: "Password",
                                                  text: .constant(""),
-                                                 icon: Image.lockFill)
+                                                 iconLeading: Image.lockFill)
         }
         .padding()
         .background(.gray)

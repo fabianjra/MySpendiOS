@@ -35,12 +35,12 @@ struct TextFieldIconStyle: TextFieldStyle {
             }
             
             configuration
-                .padding(.horizontal, iconLeading == nil ? nil : .zero)
-                .font(.custom(fontFamily.rawValue, size: size.size))
-                .modifier(frameModifier(active: iconLeading == nil))
                 .placeholder(when: text.isEmpty) {
                     Text(placeHolder ?? "").foregroundColor(Color.textFieldPlaceholder)
                 }
+                .padding(.horizontal, iconLeading == nil ? nil : .zero)
+                .font(.custom(fontFamily.rawValue, size: size.size))
+                //.modifier(frameModifier(active: iconLeading == nil))
                 .focused($isFocused)
         }
         .foregroundColor(Color.textFieldForeground)
@@ -57,6 +57,8 @@ struct TextFieldIconStyle: TextFieldStyle {
         }
     }
     
+    //Commented because:
+    //This modifier is changing the Height Size when there is no icon.
     struct frameModifier: ViewModifier {
         let active : Bool
         
@@ -78,7 +80,10 @@ struct TextFieldIconStyle_Previews: PreviewProvider {
 
         VStack {
             TextField("", text: $text)
-                .textFieldStyle(TextFieldIconStyle("Email", text: $text, iconLeading: Image.envelopeFill))
+                .textFieldStyle(TextFieldIconStyle("Email",
+                                                   text: $text
+                                                   ,iconLeading: Image.envelopeFill
+                                                  ))
         }
         .padding()
         .background(.gray)
