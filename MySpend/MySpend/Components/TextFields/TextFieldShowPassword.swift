@@ -1,5 +1,5 @@
 //
-//  TextFieldPasswordIconLeadingTrailing.swift
+//  TextFieldShowPassword.swift
 //  MySpend
 //
 //  Created by Fabian Rodriguez on 24/6/23.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TextFieldPasswordIconLeadingTrailing: View {
+struct TextFieldShowPassword: View {
     
     let placeHolder: String
     @Binding var text: String
@@ -31,10 +31,10 @@ struct TextFieldPasswordIconLeadingTrailing: View {
     }
 }
 
-struct TextFieldPasswordIconLeadingTrailing_Previews: PreviewProvider {
+struct TextFieldShowPassword_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
-            TextFieldPasswordIconLeadingTrailing(placeHolder: "Password",
+            TextFieldShowPassword(placeHolder: "Password",
                                                  text: .constant(""),
                                                  icon: Image.lockFill)
         }

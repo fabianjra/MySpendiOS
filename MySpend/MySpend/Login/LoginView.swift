@@ -35,15 +35,11 @@ struct LoginView: View {
                     .keyboardType(.emailAddress)
                 
                 SecureField("", text: $userPassword)
-                    .textFieldStyle(TextFieldIconStyle(text: $userPassword, iconLeading: Image.lockFill))
+                    .textFieldStyle(TextFieldIconStyle("Password", text: $userPassword, iconLeading: Image.lockFill))
                     .autocapitalization(.none)
                     .textInputAutocapitalization(.never)
                     .autocorrectionDisabled(true)
                     .keyboardType(.asciiCapable) // This avoids suggestions bar on the keyboard.
-                
-                TextFieldPasswordIconLeadingTrailing(placeHolder: "Password",
-                                                     text: $userPassword,
-                                                     icon: Image.lockFill)
                 
                 ButtonPrimary(text: "Login") {
                     print("User: \(userEmail)")

@@ -1,5 +1,5 @@
 //
-//  Frame.swift
+//  Frames.swift
 //  MySpend
 //
 //  Created by Fabian Rodriguez on 26/6/23.
@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct Frame {
-    static let textFieldIcon: CGFloat = 50.0
+struct Frames {
+    static let textFieldHeight: CGFloat = 50.0
 }

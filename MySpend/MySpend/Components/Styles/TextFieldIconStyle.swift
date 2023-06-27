@@ -28,12 +28,12 @@ struct TextFieldIconStyle: TextFieldStyle {
         HStack {
             if let iconLeading = iconLeading {
                 iconLeading
-                    .frame(width: Frame.textFieldIcon, height: Frame.textFieldIcon)
+                    .frame(width: Frames.textFieldHeight, height: Frames.textFieldHeight)
                     .background(Color.textFieldIconBackground)
             }
             
             configuration
-                .padding(.horizontal, iconLeading == nil ? nil : 0)
+                .padding(.horizontal, iconLeading == nil ? nil : .zero)
                 .font(.custom(fontFamily.rawValue, size: size.size))
                 .modifier(frameModifier(active: iconLeading == nil))
                 .placeholder(when: text.isEmpty) {
@@ -43,6 +43,13 @@ struct TextFieldIconStyle: TextFieldStyle {
         .foregroundColor(Color.textFieldForeground)
         .background(Color.textfieldBackground)
         .cornerRadius(Radius.textFieldCorners)
+        .overlay(
+            RoundedRectangle(cornerRadius: Radius.textFieldCorners)
+                .stroke(LinearGradient(
+                    colors: Color.primaryButtonGradiant,
+                    startPoint: .leading,
+                    endPoint: .trailing), lineWidth: Shapes.textFieldLineWidth)
+        )
     }
     
     struct frameModifier: ViewModifier {
@@ -51,7 +58,7 @@ struct TextFieldIconStyle: TextFieldStyle {
         @ViewBuilder
         func body(content: Content) -> some View {
             if active {
-                content.frame(height: 50)
+                content.frame(height: Frames.textFieldHeight)
             } else {
                 content
             }
