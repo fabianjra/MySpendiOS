@@ -14,6 +14,7 @@ extension Color {
     static let buttonForeground = Color("ButtonForeground")
     static let buttonForegroundDisabled = Color("ButtonForegroundDisabled")
     static let buttonBackgroundDisabled = Color("ButtonBackgroundDisabled")
+    static let buttonLinkForeground = Color("ButtonLinkForeground")
     
     // MARK: General
     static let shadow = Color("Shadow")
@@ -30,8 +31,11 @@ extension Color {
     
     // MARK: Texts
     static let textPrimaryForeground = Color("TextPrimaryForeground")
+    static let textSecondaryForeground = Color("TextSecondaryForeground")
+    static let textErrorForeground = Color("TextErrorForeground")
     
     // MARK: Views
+    static let divider = Color("Divider")
     static let background = Color("Background")
     static let backgroundFormLight = Color("BackgroundFormLight")
     static let backgroundFormDark = Color("BackgroundFormDark")

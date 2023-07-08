@@ -12,6 +12,8 @@ struct LoginView: View {
     @State private var userEmail: String = ""
     @State private var userPassword: String = ""
     
+    @State private var errorMessage: String = ""
+    
     var body: some View {
         
         ZStack {
@@ -21,7 +23,7 @@ struct LoginView: View {
             
             VStack {
                 
-                //MARK: Title
+                //MARK: TITLE
                 VStack(spacing: Views.textSpacing) {
                     Text("mySpend")
                         .foregroundColor(Color.textPrimaryForeground)
@@ -35,13 +37,15 @@ struct LoginView: View {
                 }
                 .padding(.bottom)
                 
-                //MARK: LOGIN FORM:
+                
+                //MARK: LOGIN SECTION:
                 VStack(spacing: Views.formSpacing) {
                     
                     TextField("",
                               text: $userEmail,
                               prompt: Text("Email").foregroundColor(.textFieldPlaceholder))
                     .textFieldStyle(TextFieldIconStyle(iconLeading: Image.envelopeFill))
+                    .onChange(of: userEmail) { _ in errorMessage = "" }
                     .autocapitalization(.none)
                     .textInputAutocapitalization(.never)
                     .autocorrectionDisabled(true)
@@ -52,55 +56,74 @@ struct LoginView: View {
                                 text: $userPassword,
                                 prompt: Text("Password").foregroundColor(.textFieldPlaceholder))
                     .textFieldStyle(TextFieldIconStyle(iconLeading: Image.lockFill))
+                    .onChange(of: userPassword) { _ in errorMessage = "" }
                     .autocapitalization(.none)
                     .textInputAutocapitalization(.never)
                     .autocorrectionDisabled(true)
                     .keyboardType(.asciiCapable) //This avoids suggestions bar on the keyboard.
                     
+                    
                     Button("Login") {
                         print("User: \(userEmail)")
                         print("Password: \(userPassword)")
+                        errorMessage = "Error al ingresar"
                     }
                     .buttonStyle(ButtonPrimaryStyle())
-                    //.disabled(userEmail.isEmpty || userPassword.isEmpty)
+                    .padding(.bottom)
+                    
+                    
+                    Text("Error al ingresar")
+                        .modifier(Show(isVisible: !errorMessage.isEmpty))
+                        .foregroundColor(Color.textErrorForeground)
+                        .font(.custom(FontFamily.semibold.rawValue, size: FontSizes.body))
+                        .multilineTextAlignment(.center)
+                        .lineLimit(3)
+                    
+                    Button("Forgot password") {
+                        print("Forgot password pressed")
+                    }
+                    .buttonStyle(ButtonLinkStyle())
                 }
+                .padding(.bottom)
                 
                 
-                //            Button {
-                //                //TODO: Action Forget password
-                //                print("¿Olvidaste tu contraseña?")
-                //            } label: {
-                //                Text("¿Olvidaste tu contraseña?")
-                //            }
-                //
-                //            //TODO: View Line separator
-                //
-                //            ButtonPrimary(text: "Registrarse") {
-                //                print("Registrarse")
-                //            }
-                //            .padding(.horizontal, 100)
-                //
-                //            Text("Loguearse con")
-                //
-                //            HStack {
-                //                Button {
-                //                    //TODO: Login social network
-                //                } label: {
-                //                    Text("Facebook")
-                //                }
-                //
-                //                Button {
-                //                    //TODO: Login social network
-                //                } label: {
-                //                    Text("Twitter")
-                //                }
-                //
-                //                Button {
-                //                    //TODO: Login social network
-                //                } label: {
-                //                    Text("Google")
-                //                }
-                //            }
+                //MARK: DIVISION:
+                Divider()
+                    .frame(height: Frames.dividerHeight)
+                    .overlay(Color.divider)
+                    .padding(.horizontal)
+                    .padding(.bottom)
+                    
+                
+                //MARK: REGISTER SECTION:
+                VStack {
+                    Button("Register") {
+                        print("User: \(userEmail)")
+                        print("Password: \(userPassword)")
+                        errorMessage = "Error al ingresar"
+                    }
+                    .buttonStyle(ButtonPrimaryStyle())
+                    .padding(.bottom)
+                    .padding(.horizontal, Views.paddingSmallButton)
+                    
+                    
+                    Text("Login with")
+                        .foregroundColor(Color.textSecondaryForeground)
+                        .font(Font.custom(FontFamily.regular.rawValue,
+                                          size: FontSizes.body))
+                    
+                    HStack {
+                        //TODO: Add button for social networks
+                        Image.envelopeFill
+                            .padding()
+                        
+                        Image.lockFill
+                            .padding()
+                        
+                        Image.envelopeFill
+                            .padding()
+                    }
+                }
             }
             .padding()
             .background(LinearGradient(colors: Color.backgroundFormGradiant,

@@ -5,8 +5,10 @@
 //  Created by Fabian Rodriguez on 26/6/23.
 //
 
-import Foundation
+import UIKit
 
 struct Frames {
     static let textFieldHeight: CGFloat = 50.0
+    static let dividerHeight: CGFloat = 0.7
+    static let screenWidth = UIScreen.main.bounds.size.width
 }

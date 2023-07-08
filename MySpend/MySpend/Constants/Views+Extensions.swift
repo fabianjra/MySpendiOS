@@ -10,6 +10,7 @@ import SwiftUI
 struct Views {
     static let formSpacing: CGFloat = 15.0
     static let textSpacing: CGFloat = 5.0
+    static let paddingSmallButton: CGFloat = 60.0
 }
 
 
@@ -83,6 +84,41 @@ struct frameModifier: ViewModifier {
             content.frame(height: height)
         } else {
             content
+        }
+    }
+}
+
+/**
+ This is a view modifier that lets you show or hide views that you usually might not be able to.
+ It’s worth mentioning that a view modifier is a super helpful pattern you’d do well to commit to memory.
+ 
+ **Example:**
+ ```swift
+ @State var condition: Bool = true
+ 
+ Text("Hello world")
+    .modifier(Show(isVisible: condition))
+ ```
+ 
+ - Parameters:
+    - isVisible: Boolean condition.
+ 
+ - Authors: Fabian Rodriguez
+ 
+ - Version: 1.0
+ 
+ - Date: Jul 2023
+ */
+struct Show: ViewModifier {
+    let isVisible: Bool
+    
+    @ViewBuilder
+    func body(content: Content) -> some View {
+        
+        if isVisible {
+            content.opacity(1)
+        } else {
+            content.opacity(.zero)
         }
     }
 }
