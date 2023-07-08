@@ -9,17 +9,23 @@ import SwiftUI
 
 struct ButtonPrimaryStyle: ButtonStyle {
     
+    @Environment(\.isEnabled) private var isEnabled: Bool
+    
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .font(Font.custom(FontFamily.regular.rawValue,
                               size: FontSizes.body))
-            .foregroundColor(Color.buttonForeground)
+            .foregroundColor(isEnabled ? Color.buttonForeground : Color.buttonForegroundDisabled)
 
             .frame(maxWidth: .infinity)
             .padding(.vertical)
-            .background(LinearGradient(colors: Color.primaryGradiant,
-                                       startPoint: .leading,
-                                       endPoint: .trailing))
+            .background(isEnabled ? LinearGradient(colors: Color.primaryGradiant,
+                                                   startPoint: .leading,
+                                                   endPoint: .trailing) :
+                            LinearGradient(colors: [Color.buttonBackgroundDisabled],
+                                           startPoint: .leading,
+                                           endPoint: .trailing)
+            )
             .cornerRadius(Radius.buttonCorners)
         
             .scaleEffect(configuration.isPressed ? 1.05 : 1 )
@@ -34,5 +40,6 @@ struct ButtonPrimaryStyle_Previews: PreviewProvider {
             print("button pressed")
         }
         .buttonStyle(ButtonPrimaryStyle())
+        .environment(\.isEnabled, true)
     }
 }

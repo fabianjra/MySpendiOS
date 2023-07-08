@@ -62,6 +62,7 @@ struct LoginView: View {
                         print("Password: \(userPassword)")
                     }
                     .buttonStyle(ButtonPrimaryStyle())
+                    //.disabled(userEmail.isEmpty || userPassword.isEmpty)
                 }
                 
                 

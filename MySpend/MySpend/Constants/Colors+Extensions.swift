@@ -12,6 +12,8 @@ extension Color {
     
     // MARK: Buttons
     static let buttonForeground = Color("ButtonForeground")
+    static let buttonForegroundDisabled = Color("ButtonForegroundDisabled")
+    static let buttonBackgroundDisabled = Color("ButtonBackgroundDisabled")
     
     // MARK: General
     static let shadow = Color("Shadow")
