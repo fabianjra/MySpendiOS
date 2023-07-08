@@ -10,6 +10,7 @@
 		1F1408192A58FB9400181500 /* ButtonPrimaryStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1408182A58FB9400181500 /* ButtonPrimaryStyle.swift */; };
 		1F14081B2A590FC600181500 /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F14081A2A590FC600181500 /* Animations.swift */; };
 		1F14081D2A5910D300181500 /* ButtonLinkStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F14081C2A5910D300181500 /* ButtonLinkStyle.swift */; };
+		1F1408222A59254F00181500 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1408212A59254F00181500 /* RegisterView.swift */; };
 		1F19D9642A4A583800137EA0 /* TextFieldIconStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F19D9632A4A583800137EA0 /* TextFieldIconStyle.swift */; };
 		1F19D9662A4A764B00137EA0 /* Frames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F19D9652A4A764B00137EA0 /* Frames.swift */; };
 		1F19D9682A4A7A7000137EA0 /* Views+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F19D9672A4A7A7000137EA0 /* Views+Extensions.swift */; };
@@ -60,6 +61,7 @@
 		1F1408182A58FB9400181500 /* ButtonPrimaryStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonPrimaryStyle.swift; sourceTree = "<group>"; };
 		1F14081A2A590FC600181500 /* Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
 		1F14081C2A5910D300181500 /* ButtonLinkStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonLinkStyle.swift; sourceTree = "<group>"; };
+		1F1408212A59254F00181500 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		1F19D9632A4A583800137EA0 /* TextFieldIconStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldIconStyle.swift; sourceTree = "<group>"; };
 		1F19D9652A4A764B00137EA0 /* Frames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Frames.swift; sourceTree = "<group>"; };
 		1F19D9672A4A7A7000137EA0 /* Views+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Views+Extensions.swift"; sourceTree = "<group>"; };
@@ -127,6 +129,14 @@
 			path = Styles;
 			sourceTree = "<group>";
 		};
+		1F1408202A59253A00181500 /* Register */ = {
+			isa = PBXGroup;
+			children = (
+				1F1408212A59254F00181500 /* RegisterView.swift */,
+			);
+			path = Register;
+			sourceTree = "<group>";
+		};
 		1F19D9622A4A57E900137EA0 /* Styles */ = {
 			isa = PBXGroup;
 			children = (
@@ -173,6 +183,7 @@
 				1F9D79C52A47C22600F55418 /* Styles */,
 				1F9D79BE2A47C08200F55418 /* Resources */,
 				1FAEE6CE2A47A9A200630367 /* Login */,
+				1F1408202A59253A00181500 /* Register */,
 				1F4C24822A47A6DA00CCAF6D /* MySpendApp.swift */,
 				1F4C24842A47A6DA00CCAF6D /* HomeView.swift */,
 				1F4C24862A47A6DC00CCAF6D /* Assets.xcassets */,
@@ -463,6 +474,7 @@
 				1F4C24852A47A6DA00CCAF6D /* HomeView.swift in Sources */,
 				1F19D96A2A4A933200137EA0 /* Shapes.swift in Sources */,
 				1F14081D2A5910D300181500 /* ButtonLinkStyle.swift in Sources */,
+				1F1408222A59254F00181500 /* RegisterView.swift in Sources */,
 				1F4C24832A47A6DA00CCAF6D /* MySpendApp.swift in Sources */,
 				1F19D9662A4A764B00137EA0 /* Frames.swift in Sources */,
 			);
