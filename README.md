@@ -29,3 +29,41 @@ Firebase is in charge of manage the Auth in app and the database using Firestore
             * In shell terminal add: `"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run"`
             * In `input files` add: `${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}`
             * In `input files` add: `$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)`
+
+
+<p>&nbsp;</p>
+
+
+## Binding example:
+
+```
+struct TextFieldIconStyle: TextFieldStyle {
+    
+    @Binding private var text: String
+    private let size: CGFloat
+    
+    public init(_ text: Binding<String>, size: CGFloat = FontSizes.body) {
+        self._text = text
+        self.size = size
+    }
+    
+    public func _body(configuration: TextField<Self._Label>) -> some View {
+        HStack {
+            configuration
+                .frame(height: Frames.textFieldHeight)
+                .paddig()
+        }
+    }
+}
+
+struct TextFieldIconStyle_Previews: PreviewProvider {
+    static var previews: some View {
+        
+        @State var text = ""
+
+        TextField("", text: $text)
+            .textFieldStyle(TextFieldIconStyle($text))
+    }
+}
+
+```

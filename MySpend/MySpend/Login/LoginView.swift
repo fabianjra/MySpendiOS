@@ -38,21 +38,20 @@ struct LoginView: View {
                 //MARK: LOGIN FORM:
                 VStack(spacing: Views.formSpacing) {
                     
-                    TextField("Correo",
+                    TextField("",
                               text: $userEmail,
                               prompt: Text("Email").foregroundColor(.textFieldPlaceholder))
-                    .textFieldStyle(TextFieldIconStyle($userEmail,
-                                                       iconLeading: Image.envelopeFill))
+                    .textFieldStyle(TextFieldIconStyle(iconLeading: Image.envelopeFill))
                     .autocapitalization(.none)
                     .textInputAutocapitalization(.never)
                     .autocorrectionDisabled(true)
                     .keyboardType(.emailAddress)
+
                     
-                    SecureField("Password",
+                    SecureField("",
                                 text: $userPassword,
                                 prompt: Text("Password").foregroundColor(.textFieldPlaceholder))
-                    .textFieldStyle(TextFieldIconStyle($userPassword,
-                                                       iconLeading: Image.lockFill))
+                    .textFieldStyle(TextFieldIconStyle(iconLeading: Image.lockFill))
                     .autocapitalization(.none)
                     .textInputAutocapitalization(.never)
                     .autocorrectionDisabled(true)
@@ -111,7 +110,6 @@ struct LoginView: View {
             .shadow(color: .shadow,
                     radius: Radius.shadow,
                     x: .zero, y: .zero)
-            
         }
     }
 }
