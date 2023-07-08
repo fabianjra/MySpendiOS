@@ -38,6 +38,10 @@ struct FontSizes {
     static let small = UIFont.preferredFont(forTextStyle: .caption1).pointSize //12
     static let body = UIFont.preferredFont(forTextStyle: .body).pointSize //17
     static let big = UIFont.preferredFont(forTextStyle: .title3).pointSize //20
+    static let bigL = UIFont.preferredFont(forTextStyle: .title2).pointSize //22
+    static let bigXL = UIFont.preferredFont(forTextStyle: .title1).pointSize //28
+    static let bigXXL = UIFont.preferredFont(forTextStyle: .largeTitle).pointSize //34
+    static let bigXXXL = (UIFont.preferredFont(forTextStyle: .largeTitle).pointSize + 10.0) //44
 }
 
 //TODO: Refactorizar: Pasar a ViewBuilder para Text o similar.

@@ -7,6 +7,12 @@
 
 import SwiftUI
 
+struct Views {
+    static let formSpacing: CGFloat = 15.0
+    static let textSpacing: CGFloat = 5.0
+}
+
+
 extension View {
     
     /**

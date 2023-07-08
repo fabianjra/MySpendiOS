@@ -14,6 +14,7 @@ extension Color {
     static let buttonForeground = Color("ButtonForeground")
     
     // MARK: General
+    static let shadow = Color("Shadow")
     static let primaryLight = Color("PrimaryLight")
     static let primaryDark = Color("PrimaryDark")
     static let primaryGradiant: Array = [Color.primaryLight,

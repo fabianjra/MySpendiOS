@@ -42,10 +42,10 @@ struct TextFieldIconStyle: TextFieldStyle {
         }
         .foregroundColor(Color.textFieldForeground)
         .background(Color.textfieldBackground)
-        .cornerRadius(Radius.textFieldCorners)
+        .cornerRadius(Radius.corners)
         .overlay {
             if isFocused {
-                RoundedRectangle(cornerRadius: Radius.textFieldCorners)
+                RoundedRectangle(cornerRadius: Radius.corners)
                     .stroke(LinearGradient(
                         colors: Color.primaryGradiant,
                         startPoint: .leading,

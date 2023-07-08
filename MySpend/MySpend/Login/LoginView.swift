@@ -11,39 +11,60 @@ struct LoginView: View {
     
     @State private var userEmail: String = ""
     @State private var userPassword: String = ""
-
+    
     var body: some View {
         
         ZStack {
             
-            Color.background //Background for full view.
+            Color.background
+                .ignoresSafeArea()
             
             VStack {
-                Text("mySpend")
-                    .foregroundColor(Color.textPrimaryForeground)
-                    .font(Font.custom(FontFamily.regular.rawValue,
-                                      size: FontSizes.body))
                 
-                Text("Iniciar sesión")
-                    .foregroundColor(Color.textPrimaryForeground)
-                    .font(Font.custom(FontFamily.regular.rawValue,
-                                      size: FontSizes.body))
+                //MARK: Title
+                VStack(spacing: Views.textSpacing) {
+                    Text("mySpend")
+                        .foregroundColor(Color.textPrimaryForeground)
+                        .font(Font.custom(FontFamily.thin.rawValue,
+                                          size: FontSizes.bigXXXL))
+                    
+                    Text("Iniciar sesión")
+                        .foregroundColor(Color.textPrimaryForeground)
+                        .font(Font.custom(FontFamily.light.rawValue,
+                                          size: FontSizes.body))
+                }
+                .padding(.bottom)
                 
-                TextField("", text: $userEmail, prompt: Text("Email"))
-                    .textFieldStyle(TextFieldIconStyle($userEmail, iconLeading: Image.envelopeFill))
+                //MARK: LOGIN FORM:
+                VStack(spacing: Views.formSpacing) {
+                    
+                    TextField("Correo",
+                              text: $userEmail,
+                              prompt: Text("Email").foregroundColor(.textFieldPlaceholder))
+                    .textFieldStyle(TextFieldIconStyle($userEmail,
+                                                       iconLeading: Image.envelopeFill))
                     .autocapitalization(.none)
                     .textInputAutocapitalization(.never)
                     .autocorrectionDisabled(true)
                     .keyboardType(.emailAddress)
-                
-                SecureFieldShowPassword(placeHolder: "Password",
-                                        text: $userPassword,
-                                        iconLeading: Image.lockFill)
-                
-                ButtonPrimary(text: "Login") {
-                    print("User: \(userEmail)")
-                    print("Password: \(userPassword)")
+                    
+                    SecureField("Password",
+                                text: $userPassword,
+                                prompt: Text("Password").foregroundColor(.textFieldPlaceholder))
+                    .textFieldStyle(TextFieldIconStyle($userPassword,
+                                                       iconLeading: Image.lockFill))
+                    .autocapitalization(.none)
+                    .textInputAutocapitalization(.never)
+                    .autocorrectionDisabled(true)
+                    .keyboardType(.asciiCapable) //This avoids suggestions bar on the keyboard.
+                    
+                    Button("Login") {
+                        print("User: \(userEmail)")
+                        print("Password: \(userPassword)")
+                    }
+                    .buttonStyle(ButtonPrimaryStyle())
                 }
+                
                 
                 //            Button {
                 //                //TODO: Action Forget password
@@ -85,6 +106,12 @@ struct LoginView: View {
             .background(LinearGradient(colors: Color.backgroundFormGradiant,
                                        startPoint: .leading,
                                        endPoint: .trailing))
+            .cornerRadius(Radius.corners)
+            .padding()
+            .shadow(color: .shadow,
+                    radius: Radius.shadow,
+                    x: .zero, y: .zero)
+            
         }
     }
 }
