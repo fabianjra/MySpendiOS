@@ -13,10 +13,13 @@ struct LoginView: View {
     @State private var userPassword: String = ""
     
     @State private var errorMessage: String = ""
+    @State private var canLogin: Bool = false
+    @State private var goToRegister: Bool = false
     
     var body: some View {
         
-        NavigationView {
+        NavigationStack {
+            
             ZStack {
                 
                 Color.background
@@ -67,10 +70,22 @@ struct LoginView: View {
                         Button("Login") {
                             print("User: \(userEmail)")
                             print("Password: \(userPassword)")
-                            errorMessage = "Error al ingresar"
+                            
+                            if userEmail.isEmpty || userPassword.isEmpty {
+                                canLogin = false
+                            } else {
+                                canLogin = true
+                            }
+                            
+                            if canLogin == false {
+                                errorMessage = "Fill the text fields requireds"
+                            }
                         }
                         .buttonStyle(ButtonPrimaryStyle())
                         .padding(.bottom)
+                        .navigationDestination(isPresented: $canLogin) {
+                            MainView()
+                        }
                         
                         
                         Text("Error al ingresar")
@@ -99,13 +114,17 @@ struct LoginView: View {
                     //MARK: REGISTER SECTION:
                     VStack {
                         
-                        NavigationLink {
+                        Button("Register") {
+                            print("User: \(userEmail)")
+                            print("Password: \(userPassword)")
+                            errorMessage = "Error al ingresar"
+                            goToRegister = true
+                        }
+                        .buttonStyle(ButtonPrimaryStyle())
+                        .padding(.bottom)
+                        .padding(.horizontal, Views.paddingSmallButton)
+                        .navigationDestination(isPresented: $goToRegister) {
                             RegisterView()
-                                .navigationBarHidden(true)
-                        } label: {
-                            TextStyleButton("Register")
-                                .padding(.bottom)
-                                .padding(.horizontal, Views.paddingSmallButton)
                         }
                         
                         

@@ -17,7 +17,6 @@
 		1F19D96A2A4A933200137EA0 /* Shapes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F19D9692A4A933200137EA0 /* Shapes.swift */; };
 		1F19D96E2A4ACC3D00137EA0 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F19D96D2A4ACC3D00137EA0 /* Utils.swift */; };
 		1F4C24832A47A6DA00CCAF6D /* MySpendApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4C24822A47A6DA00CCAF6D /* MySpendApp.swift */; };
-		1F4C24852A47A6DA00CCAF6D /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4C24842A47A6DA00CCAF6D /* HomeView.swift */; };
 		1F4C24872A47A6DC00CCAF6D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F4C24862A47A6DC00CCAF6D /* Assets.xcassets */; };
 		1F4C248A2A47A6DC00CCAF6D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F4C24892A47A6DC00CCAF6D /* Preview Assets.xcassets */; };
 		1F4C24942A47A6DC00CCAF6D /* MySpendTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4C24932A47A6DC00CCAF6D /* MySpendTests.swift */; };
@@ -31,7 +30,8 @@
 		1F9D79BC2A47AD4300F55418 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 1F9D79BB2A47AD4300F55418 /* FirebaseFirestore */; };
 		1F9D79C72A47C23C00F55418 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9D79C62A47C23C00F55418 /* Fonts.swift */; };
 		1FAEE6D02A47A9AB00630367 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FAEE6CF2A47A9AB00630367 /* LoginView.swift */; };
-		1FC94CBC2A5A1DB7005CA0B6 /* TextStyleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC94CBB2A5A1DB7005CA0B6 /* TextStyleButton.swift */; };
+		1FC94CBC2A5A1DB7005CA0B6 /* TextViewStyledButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC94CBB2A5A1DB7005CA0B6 /* TextViewStyledButton.swift */; };
+		1FC94CBF2A5A2CB7005CA0B6 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC94CBE2A5A2CB7005CA0B6 /* MainView.swift */; };
 		1FE7C6752A47C7790070B988 /* Montserrat-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1F9D79C02A47C09D00F55418 /* Montserrat-Light.ttf */; };
 		1FE7C6762A47C77B0070B988 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1F9D79C12A47C09D00F55418 /* Montserrat-Regular.ttf */; };
 		1FE7C6772A47C77D0070B988 /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1F9D79C22A47C09D00F55418 /* Montserrat-SemiBold.ttf */; };
@@ -70,7 +70,6 @@
 		1F19D96D2A4ACC3D00137EA0 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		1F4C247F2A47A6DA00CCAF6D /* MySpend.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MySpend.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F4C24822A47A6DA00CCAF6D /* MySpendApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySpendApp.swift; sourceTree = "<group>"; };
-		1F4C24842A47A6DA00CCAF6D /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		1F4C24862A47A6DC00CCAF6D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1F4C24892A47A6DC00CCAF6D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		1F4C248F2A47A6DC00CCAF6D /* MySpendTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MySpendTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -87,7 +86,8 @@
 		1F9D79C42A47C0F000F55418 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1F9D79C62A47C23C00F55418 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		1FAEE6CF2A47A9AB00630367 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
-		1FC94CBB2A5A1DB7005CA0B6 /* TextStyleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStyleButton.swift; sourceTree = "<group>"; };
+		1FC94CBB2A5A1DB7005CA0B6 /* TextViewStyledButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewStyledButton.swift; sourceTree = "<group>"; };
+		1FC94CBE2A5A2CB7005CA0B6 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		1FE7C6802A47DA1F0070B988 /* Colors+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Colors+Extensions.swift"; sourceTree = "<group>"; };
 		1FE7C6822A47DDF40070B988 /* Radius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Radius.swift; sourceTree = "<group>"; };
 		1FE7C6872A48027C0070B988 /* Images+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Images+Extensions.swift"; sourceTree = "<group>"; };
@@ -179,6 +179,7 @@
 		1F4C24812A47A6DA00CCAF6D /* MySpend */ = {
 			isa = PBXGroup;
 			children = (
+				1FC94CBD2A5A2CA4005CA0B6 /* Main */,
 				1F19D96B2A4ACC2C00137EA0 /* Utils */,
 				1FE7C67F2A47DA0B0070B988 /* Constants */,
 				1FE7C67B2A47D6EA0070B988 /* Components */,
@@ -187,7 +188,6 @@
 				1FAEE6CE2A47A9A200630367 /* Login */,
 				1F1408202A59253A00181500 /* Register */,
 				1F4C24822A47A6DA00CCAF6D /* MySpendApp.swift */,
-				1F4C24842A47A6DA00CCAF6D /* HomeView.swift */,
 				1F4C24862A47A6DC00CCAF6D /* Assets.xcassets */,
 				1F9D79C42A47C0F000F55418 /* Info.plist */,
 				1F9D79B22A47ABEA00F55418 /* GoogleService-Info.plist */,
@@ -259,9 +259,17 @@
 		1FC94CBA2A5A1D91005CA0B6 /* Texts */ = {
 			isa = PBXGroup;
 			children = (
-				1FC94CBB2A5A1DB7005CA0B6 /* TextStyleButton.swift */,
+				1FC94CBB2A5A1DB7005CA0B6 /* TextViewStyledButton.swift */,
 			);
 			path = Texts;
+			sourceTree = "<group>";
+		};
+		1FC94CBD2A5A2CA4005CA0B6 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				1FC94CBE2A5A2CB7005CA0B6 /* MainView.swift */,
+			);
+			path = Main;
 			sourceTree = "<group>";
 		};
 		1FE7C67B2A47D6EA0070B988 /* Components */ = {
@@ -473,6 +481,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F9D79C72A47C23C00F55418 /* Fonts.swift in Sources */,
+				1FC94CBF2A5A2CB7005CA0B6 /* MainView.swift in Sources */,
 				1F19D9682A4A7A7000137EA0 /* Views+Extensions.swift in Sources */,
 				1F19D96E2A4ACC3D00137EA0 /* Utils.swift in Sources */,
 				1FE7C6812A47DA1F0070B988 /* Colors+Extensions.swift in Sources */,
@@ -482,8 +491,7 @@
 				1FE7C6832A47DDF40070B988 /* Radius.swift in Sources */,
 				1FE7C6882A48027C0070B988 /* Images+Extensions.swift in Sources */,
 				1F19D9642A4A583800137EA0 /* TextFieldIconStyle.swift in Sources */,
-				1FC94CBC2A5A1DB7005CA0B6 /* TextStyleButton.swift in Sources */,
-				1F4C24852A47A6DA00CCAF6D /* HomeView.swift in Sources */,
+				1FC94CBC2A5A1DB7005CA0B6 /* TextViewStyledButton.swift in Sources */,
 				1F19D96A2A4A933200137EA0 /* Shapes.swift in Sources */,
 				1F14081D2A5910D300181500 /* ButtonLinkStyle.swift in Sources */,
 				1F1408222A59254F00181500 /* RegisterView.swift in Sources */,
