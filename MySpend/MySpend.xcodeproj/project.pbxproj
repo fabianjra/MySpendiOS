@@ -37,6 +37,7 @@
 		1FC94CC82A5A42B2005CA0B6 /* Views+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC94CC72A5A42B2005CA0B6 /* Views+Extensions.swift */; };
 		1FC94CCA2A5A4588005CA0B6 /* Logs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC94CC92A5A4588005CA0B6 /* Logs.swift */; };
 		1FC94CCE2A5A4B8F005CA0B6 /* TextTitleForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC94CCD2A5A4B8F005CA0B6 /* TextTitleForm.swift */; };
+		1FC94CD12A5A6E01005CA0B6 /* TabViewIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC94CD02A5A6E01005CA0B6 /* TabViewIcons.swift */; };
 		1FE7C6752A47C7790070B988 /* Montserrat-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1F9D79C02A47C09D00F55418 /* Montserrat-Light.ttf */; };
 		1FE7C6762A47C77B0070B988 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1F9D79C12A47C09D00F55418 /* Montserrat-Regular.ttf */; };
 		1FE7C6772A47C77D0070B988 /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1F9D79C22A47C09D00F55418 /* Montserrat-SemiBold.ttf */; };
@@ -98,6 +99,7 @@
 		1FC94CC72A5A42B2005CA0B6 /* Views+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Views+Extensions.swift"; sourceTree = "<group>"; };
 		1FC94CC92A5A4588005CA0B6 /* Logs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logs.swift; sourceTree = "<group>"; };
 		1FC94CCD2A5A4B8F005CA0B6 /* TextTitleForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextTitleForm.swift; sourceTree = "<group>"; };
+		1FC94CD02A5A6E01005CA0B6 /* TabViewIcons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewIcons.swift; sourceTree = "<group>"; };
 		1FE7C6802A47DA1F0070B988 /* Colors+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Colors+Extensions.swift"; sourceTree = "<group>"; };
 		1FE7C6822A47DDF40070B988 /* Radius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Radius.swift; sourceTree = "<group>"; };
 		1FE7C6872A48027C0070B988 /* Images+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Images+Extensions.swift"; sourceTree = "<group>"; };
@@ -313,9 +315,18 @@
 			path = Scenes;
 			sourceTree = "<group>";
 		};
+		1FC94CCF2A5A6DEE005CA0B6 /* TabView */ = {
+			isa = PBXGroup;
+			children = (
+				1FC94CD02A5A6E01005CA0B6 /* TabViewIcons.swift */,
+			);
+			path = TabView;
+			sourceTree = "<group>";
+		};
 		1FE7C67B2A47D6EA0070B988 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				1FC94CCF2A5A6DEE005CA0B6 /* TabView */,
 				1FC94CBA2A5A1D91005CA0B6 /* Texts */,
 				1FE7C6862A47EEBE0070B988 /* TextFields */,
 				1FE7C67C2A47D6F30070B988 /* Buttons */,
@@ -535,6 +546,7 @@
 				1FE7C6882A48027C0070B988 /* Images+Extensions.swift in Sources */,
 				1F19D9642A4A583800137EA0 /* TextFieldIconStyle.swift in Sources */,
 				1FC94CBC2A5A1DB7005CA0B6 /* TextViewStyledButton.swift in Sources */,
+				1FC94CD12A5A6E01005CA0B6 /* TabViewIcons.swift in Sources */,
 				1F19D96A2A4A933200137EA0 /* Shapes.swift in Sources */,
 				1F14081D2A5910D300181500 /* ButtonLinkStyle.swift in Sources */,
 				1F1408222A59254F00181500 /* RegisterView.swift in Sources */,
