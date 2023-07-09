@@ -32,6 +32,7 @@
 		1FAEE6D02A47A9AB00630367 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FAEE6CF2A47A9AB00630367 /* LoginView.swift */; };
 		1FC94CBC2A5A1DB7005CA0B6 /* TextViewStyledButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC94CBB2A5A1DB7005CA0B6 /* TextViewStyledButton.swift */; };
 		1FC94CBF2A5A2CB7005CA0B6 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC94CBE2A5A2CB7005CA0B6 /* MainView.swift */; };
+		1FC94CC32A5A3732005CA0B6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FC94CC22A5A3732005CA0B6 /* LaunchScreen.storyboard */; };
 		1FE7C6752A47C7790070B988 /* Montserrat-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1F9D79C02A47C09D00F55418 /* Montserrat-Light.ttf */; };
 		1FE7C6762A47C77B0070B988 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1F9D79C12A47C09D00F55418 /* Montserrat-Regular.ttf */; };
 		1FE7C6772A47C77D0070B988 /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1F9D79C22A47C09D00F55418 /* Montserrat-SemiBold.ttf */; };
@@ -88,6 +89,7 @@
 		1FAEE6CF2A47A9AB00630367 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		1FC94CBB2A5A1DB7005CA0B6 /* TextViewStyledButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewStyledButton.swift; sourceTree = "<group>"; };
 		1FC94CBE2A5A2CB7005CA0B6 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		1FC94CC22A5A3732005CA0B6 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1FE7C6802A47DA1F0070B988 /* Colors+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Colors+Extensions.swift"; sourceTree = "<group>"; };
 		1FE7C6822A47DDF40070B988 /* Radius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Radius.swift; sourceTree = "<group>"; };
 		1FE7C6872A48027C0070B988 /* Images+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Images+Extensions.swift"; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 				1F9D79C42A47C0F000F55418 /* Info.plist */,
 				1F9D79B22A47ABEA00F55418 /* GoogleService-Info.plist */,
 				1F4C24882A47A6DC00CCAF6D /* Preview Content */,
+				1FC94CC22A5A3732005CA0B6 /* LaunchScreen.storyboard */,
 			);
 			path = MySpend;
 			sourceTree = "<group>";
@@ -426,6 +429,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FC94CC32A5A3732005CA0B6 /* LaunchScreen.storyboard in Resources */,
 				1FE7C6762A47C77B0070B988 /* Montserrat-Regular.ttf in Resources */,
 				1FE7C6752A47C7790070B988 /* Montserrat-Light.ttf in Resources */,
 				1F6344002A47A8C400081BCD /* README.md in Resources */,
@@ -652,6 +656,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -660,10 +665,12 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MySpend/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MySpend;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -684,6 +691,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MySpend/Preview Content\"";
@@ -691,10 +699,12 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MySpend/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MySpend;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
