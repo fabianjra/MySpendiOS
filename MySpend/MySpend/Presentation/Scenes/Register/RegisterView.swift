@@ -11,6 +11,7 @@ struct RegisterView: View {
     
     @Environment(\.dismiss) var dismiss
     
+    @State private var userName: String = ""
     @State private var userEmail: String = ""
     @State private var userPassword: String = ""
     @State private var userPasswordConfirm: String = ""
@@ -29,8 +30,15 @@ struct RegisterView: View {
                 TextTitleForm(subTitle: "Register new user")
                     .padding(.bottom)
                 
-                //MARK: LOGIN SECTION:
                 VStack(spacing: Views.formSpacing) {
+                    
+                    TextField("",
+                              text: $userName,
+                              prompt: Text("Name").foregroundColor(.textFieldPlaceholder))
+                    .textFieldStyle(TextFieldIconStyle(iconLeading: Image.personFill))
+                    .onChange(of: userName) { _ in errorMessage = "" }
+                    .keyboardType(.alphabet)
+                    
                     
                     TextField("",
                               text: $userEmail,
@@ -53,9 +61,19 @@ struct RegisterView: View {
                     .autocorrectionDisabled(true)
                     .keyboardType(.asciiCapable) //This avoids suggestions bar on the keyboard.
                     
+                    SecureField("",
+                                text: $userPasswordConfirm,
+                                prompt: Text("Confirm password").foregroundColor(.textFieldPlaceholder))
+                    .textFieldStyle(TextFieldIconStyle(iconLeading: Image.checkmark))
+                    .onChange(of: userPassword) { _ in errorMessage = "" }
+                    .autocapitalization(.none)
+                    .textInputAutocapitalization(.never)
+                    .autocorrectionDisabled(true)
+                    .keyboardType(.asciiCapable) //This avoids suggestions bar on the keyboard.
+                    
                     
                     Button("Register") {
-                        
+                        //TODO: Validations to register new user
                     }
                     .buttonStyle(ButtonPrimaryStyle())
                     .padding(.bottom)
@@ -80,7 +98,7 @@ struct RegisterView: View {
                     .padding(.bottom)
                 
                 
-                //MARK: REGISTER SECTION:
+                //MARK: GO BACK:
                 VStack {
                     
                     Button("Go back") {
