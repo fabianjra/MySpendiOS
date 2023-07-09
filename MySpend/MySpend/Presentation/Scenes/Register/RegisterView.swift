@@ -9,6 +9,8 @@ import SwiftUI
 
 struct RegisterView: View {
     
+    @Environment(\.dismiss) var dismiss
+    
     @State private var userEmail: String = ""
     @State private var userPassword: String = ""
     @State private var userPasswordConfirm: String = ""
@@ -17,26 +19,15 @@ struct RegisterView: View {
     
     var body: some View {
         
-        ZStack {
+        ZStack(alignment: .top) {
             
             Color.background
                 .ignoresSafeArea()
             
             VStack {
                 
-                //MARK: TITLE
-                VStack(spacing: Views.textSpacing) {
-                    Text("mySpend")
-                        .foregroundColor(Color.textPrimaryForeground)
-                        .font(Font.custom(FontFamily.thin.rawValue,
-                                          size: FontSizes.bigXXXL))
-                    
-                    Text("Register")
-                        .foregroundColor(Color.textPrimaryForeground)
-                        .font(Font.custom(FontFamily.light.rawValue,
-                                          size: FontSizes.body))
-                }
-                .padding(.bottom)
+                TextTitleForm(subTitle: "Register new user")
+                    .padding(.bottom)
                 
                 //MARK: LOGIN SECTION:
                 VStack(spacing: Views.formSpacing) {
@@ -70,12 +61,12 @@ struct RegisterView: View {
                     .padding(.bottom)
                     
                     
-                    Text("Error al ingresar")
+                    Text(errorMessage)
                         .modifier(Show(isVisible: !errorMessage.isEmpty))
                         .foregroundColor(Color.textErrorForeground)
                         .font(.custom(FontFamily.semibold.rawValue, size: FontSizes.body))
                         .multilineTextAlignment(.center)
-                        .lineLimit(3)
+                        .lineLimit(Views.messageMaxLines)
                     
                 }
                 .padding(.bottom)
@@ -93,14 +84,15 @@ struct RegisterView: View {
                 VStack {
                     
                     Button("Go back") {
-                        
+                        dismiss()
                     }
-                    .buttonStyle(ButtonPrimaryStyle())
+                    .buttonStyle(ButtonPrimaryStyle(color: Color.secondaryGradiant))
                     .padding(.bottom)
                     .padding(.horizontal, Views.paddingSmallButton)
                 }
             }
             .modifier(FormStyle())
+            .padding(.top)
         }
     }
 }

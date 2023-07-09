@@ -20,27 +20,15 @@ struct LoginView: View {
         
         NavigationStack {
             
-            ZStack {
+            ZStack(alignment: .top) {
                 
                 Color.background
                     .ignoresSafeArea()
                 
                 VStack {
                     
-                    //MARK: TITLE
-                    VStack(spacing: Views.textSpacing) {
-                        Text("mySpend")
-                            .foregroundColor(Color.textPrimaryForeground)
-                            .font(Font.custom(FontFamily.thin.rawValue,
-                                              size: FontSizes.bigXXXL))
-                        
-                        Text("Iniciar sesión")
-                            .foregroundColor(Color.textPrimaryForeground)
-                            .font(Font.custom(FontFamily.light.rawValue,
-                                              size: FontSizes.body))
-                    }
-                    .padding(.bottom)
-                    
+                    TextTitleForm(subTitle: "Log in to your account")
+                        .padding(.bottom)
                     
                     //MARK: LOGIN SECTION:
                     VStack(spacing: Views.formSpacing) {
@@ -88,12 +76,12 @@ struct LoginView: View {
                         }
                         
                         
-                        Text("Error al ingresar")
+                        Text(errorMessage)
                             .modifier(Show(isVisible: !errorMessage.isEmpty))
                             .foregroundColor(Color.textErrorForeground)
                             .font(.custom(FontFamily.semibold.rawValue, size: FontSizes.body))
                             .multilineTextAlignment(.center)
-                            .lineLimit(3)
+                            .lineLimit(Views.messageMaxLines)
                         
                         Button("Forgot password") {
                             print("Forgot password pressed")
@@ -117,7 +105,6 @@ struct LoginView: View {
                         Button("Register") {
                             print("User: \(userEmail)")
                             print("Password: \(userPassword)")
-                            errorMessage = "Error al ingresar"
                             goToRegister = true
                         }
                         .buttonStyle(ButtonPrimaryStyle())
@@ -125,6 +112,7 @@ struct LoginView: View {
                         .padding(.horizontal, Views.paddingSmallButton)
                         .navigationDestination(isPresented: $goToRegister) {
                             RegisterView()
+                                .toolbar(.hidden, for: .navigationBar)
                         }
                         
                         
@@ -147,6 +135,7 @@ struct LoginView: View {
                     }
                 }
                 .modifier(FormStyle())
+                .padding(.top)
             }
         }
     }

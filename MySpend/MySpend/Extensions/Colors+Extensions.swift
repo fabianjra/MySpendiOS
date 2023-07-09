@@ -17,10 +17,14 @@ extension Color {
     
     // MARK: General
     static let shadow = Color("Shadow")
-    static let primaryLight = Color("PrimaryLight")
-    static let primaryDark = Color("PrimaryDark")
-    static let primaryGradiant: Array = [Color.primaryLight,
-                                         Color.primaryDark]
+    static let primaryLeading = Color("PrimaryLeading")
+    static let primaryTrailing = Color("PrimaryTrailing")
+    static let primaryGradiant: Array = [Color.primaryLeading,
+                                         Color.primaryTrailing]
+    static let secondaryLeading = Color("SecondaryLeading")
+    static let secondaryTrailing = Color("SecondaryTrailing")
+    static let secondaryGradiant: Array = [Color.secondaryLeading,
+                                         Color.secondaryTrailing]
     
     // MARK: Textfields
     static let textFieldPlaceholder = Color("TextFieldPlaceholder") //AKA: Silver

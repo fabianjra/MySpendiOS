@@ -11,6 +11,12 @@ struct ButtonPrimaryStyle: ButtonStyle {
     
     @Environment(\.isEnabled) private var isEnabled: Bool
     
+    let color: Array<Color>
+    
+    init(color: Array<Color> = Color.primaryGradiant) {
+        self.color = color
+    }
+    
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             //Font family
@@ -20,7 +26,7 @@ struct ButtonPrimaryStyle: ButtonStyle {
             //Button shape
             .frame(maxWidth: .infinity)
             .padding(.vertical)
-            .background(isEnabled ? LinearGradient(colors: Color.primaryGradiant,
+            .background(isEnabled ? LinearGradient(colors: color,
                                                    startPoint: .leading,
                                                    endPoint: .trailing) :
                             LinearGradient(colors: [Color.buttonBackgroundDisabled],
