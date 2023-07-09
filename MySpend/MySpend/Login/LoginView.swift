@@ -146,15 +146,7 @@ struct LoginView: View {
                         }
                     }
                 }
-                .padding()
-                .background(LinearGradient(colors: Color.backgroundFormGradiant,
-                                           startPoint: .leading,
-                                           endPoint: .trailing))
-                .cornerRadius(Radius.corners)
-                .padding()
-                .shadow(color: .shadow,
-                        radius: Radius.shadow,
-                        x: .zero, y: .zero)
+                .modifier(FormStyle())
             }
         }
     }
