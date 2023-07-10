@@ -69,4 +69,55 @@ struct Utils {
             return rootVC?.children.last
         }
     }
+    
+    /**
+     Detects if the app is running on the canvas preview. Mostly used when the code is funcional only when running on device or simulator
+     
+     **Example:**
+     ```swift
+     if Utils.isRunningOnCanvas() == false {
+         //Do somenthing only when the canvas preview crashes.
+     }
+     ```
+     
+     - Returns: true if is running on canvas
+     
+     - Authors: Fabian Rodriguez
+     
+     - Version: 1.0
+     
+     - Date: March 2023
+     */
+    static func isRunningOnCanvas() -> Bool {
+        
+        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1" {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    /**
+     Get the size of each edge insets: Top size, Left size, Right size and Bottom size.
+     
+     **Notes:**
+     - If it is zero: it is iPhone SE, 8, 7 or 6.
+     
+     **Example:**
+     ```swift
+     VStack {
+         //View
+     }
+     .padding(.bottom, Utils.getEdgeInsets().bottom == .zero ? 10 : .zero) //Add padding when is iPhone SE screen.
+     ```
+     
+     - Returns: The size of each edge insets (top, left, right and bottom).
+     
+     - Authors: Fabian Rodriguez.
+     
+     - Date: May 2023
+     */
+    static func getEdgeInsets() -> UIEdgeInsets {
+        return (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first(where: {$0.isKeyWindow})?.safeAreaInsets ?? .zero
+    }
 }

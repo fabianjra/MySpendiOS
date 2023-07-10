@@ -30,6 +30,10 @@
 		1F9D79BC2A47AD4300F55418 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 1F9D79BB2A47AD4300F55418 /* FirebaseFirestore */; };
 		1F9D79C72A47C23C00F55418 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9D79C62A47C23C00F55418 /* Fonts.swift */; };
 		1FAEE6D02A47A9AB00630367 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FAEE6CF2A47A9AB00630367 /* LoginView.swift */; };
+		1FB8BB962A5BAFB3002DED1F /* TabViewCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB8BB952A5BAFB3002DED1F /* TabViewCustom.swift */; };
+		1FB8BB992A5BB181002DED1F /* SemiCircleShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB8BB982A5BB181002DED1F /* SemiCircleShape.swift */; };
+		1FB8BB9B2A5BB1E4002DED1F /* RoundedCornersShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB8BB9A2A5BB1E4002DED1F /* RoundedCornersShape.swift */; };
+		1FB8BB9D2A5BC728002DED1F /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB8BB9C2A5BC728002DED1F /* Colors.swift */; };
 		1FC94CBC2A5A1DB7005CA0B6 /* TextViewStyledButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC94CBB2A5A1DB7005CA0B6 /* TextViewStyledButton.swift */; };
 		1FC94CBF2A5A2CB7005CA0B6 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC94CBE2A5A2CB7005CA0B6 /* MainView.swift */; };
 		1FC94CC32A5A3732005CA0B6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FC94CC22A5A3732005CA0B6 /* LaunchScreen.storyboard */; };
@@ -92,6 +96,10 @@
 		1F9D79C42A47C0F000F55418 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1F9D79C62A47C23C00F55418 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		1FAEE6CF2A47A9AB00630367 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		1FB8BB952A5BAFB3002DED1F /* TabViewCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewCustom.swift; sourceTree = "<group>"; };
+		1FB8BB982A5BB181002DED1F /* SemiCircleShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemiCircleShape.swift; sourceTree = "<group>"; };
+		1FB8BB9A2A5BB1E4002DED1F /* RoundedCornersShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCornersShape.swift; sourceTree = "<group>"; };
+		1FB8BB9C2A5BC728002DED1F /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		1FC94CBB2A5A1DB7005CA0B6 /* TextViewStyledButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewStyledButton.swift; sourceTree = "<group>"; };
 		1FC94CBE2A5A2CB7005CA0B6 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		1FC94CC22A5A3732005CA0B6 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -268,6 +276,15 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
+		1FB8BB972A5BB16C002DED1F /* Shapes */ = {
+			isa = PBXGroup;
+			children = (
+				1FB8BB982A5BB181002DED1F /* SemiCircleShape.swift */,
+				1FB8BB9A2A5BB1E4002DED1F /* RoundedCornersShape.swift */,
+			);
+			path = Shapes;
+			sourceTree = "<group>";
+		};
 		1FC94CBA2A5A1D91005CA0B6 /* Texts */ = {
 			isa = PBXGroup;
 			children = (
@@ -298,6 +315,7 @@
 		1FC94CCB2A5A45C6005CA0B6 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				1FB8BB972A5BB16C002DED1F /* Shapes */,
 				1FC94CCC2A5A4619005CA0B6 /* Scenes */,
 				1FE7C67B2A47D6EA0070B988 /* Components */,
 				1F9D79C52A47C22600F55418 /* Styles */,
@@ -319,6 +337,7 @@
 			isa = PBXGroup;
 			children = (
 				1FC94CD02A5A6E01005CA0B6 /* TabViewIcons.swift */,
+				1FB8BB952A5BAFB3002DED1F /* TabViewCustom.swift */,
 			);
 			path = TabView;
 			sourceTree = "<group>";
@@ -350,6 +369,7 @@
 				1F19D9672A4A7A7000137EA0 /* Views.swift */,
 				1F19D9692A4A933200137EA0 /* Shapes.swift */,
 				1F14081A2A590FC600181500 /* Animations.swift */,
+				1FB8BB9C2A5BC728002DED1F /* Colors.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -532,6 +552,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1FC94CC82A5A42B2005CA0B6 /* Views+Extensions.swift in Sources */,
+				1FB8BB992A5BB181002DED1F /* SemiCircleShape.swift in Sources */,
 				1F9D79C72A47C23C00F55418 /* Fonts.swift in Sources */,
 				1FC94CBF2A5A2CB7005CA0B6 /* MainView.swift in Sources */,
 				1F19D9682A4A7A7000137EA0 /* Views.swift in Sources */,
@@ -544,13 +565,16 @@
 				1FE7C6832A47DDF40070B988 /* Radius.swift in Sources */,
 				1FC94CC52A5A4034005CA0B6 /* ViewModifiers.swift in Sources */,
 				1FE7C6882A48027C0070B988 /* Images+Extensions.swift in Sources */,
+				1FB8BB962A5BAFB3002DED1F /* TabViewCustom.swift in Sources */,
 				1F19D9642A4A583800137EA0 /* TextFieldIconStyle.swift in Sources */,
 				1FC94CBC2A5A1DB7005CA0B6 /* TextViewStyledButton.swift in Sources */,
 				1FC94CD12A5A6E01005CA0B6 /* TabViewIcons.swift in Sources */,
 				1F19D96A2A4A933200137EA0 /* Shapes.swift in Sources */,
 				1F14081D2A5910D300181500 /* ButtonLinkStyle.swift in Sources */,
 				1F1408222A59254F00181500 /* RegisterView.swift in Sources */,
+				1FB8BB9D2A5BC728002DED1F /* Colors.swift in Sources */,
 				1F4C24832A47A6DA00CCAF6D /* MySpendApp.swift in Sources */,
+				1FB8BB9B2A5BB1E4002DED1F /* RoundedCornersShape.swift in Sources */,
 				1F19D9662A4A764B00137EA0 /* Frames.swift in Sources */,
 				1FC94CCE2A5A4B8F005CA0B6 /* TextTitleForm.swift in Sources */,
 			);

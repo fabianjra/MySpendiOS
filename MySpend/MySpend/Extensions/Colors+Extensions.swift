@@ -26,6 +26,10 @@ extension Color {
     static let secondaryGradiant: Array = [Color.secondaryLeading,
                                          Color.secondaryTrailing]
     
+    // MARK: TabView
+    static let tabViewIconSelected = Color("TabViewIconSelected")
+    static let tabViewIconDeselected = Color("TabViewIconDeselected")
+    
     // MARK: Textfields
     static let textFieldPlaceholder = Color("TextFieldPlaceholder") //AKA: Silver
     static let textFieldForeground = Color("TextFieldForeground")

@@ -8,8 +8,15 @@
 import SwiftUI
 
 struct Views {
-    static let formSpacing: CGFloat = 15.0
-    static let textSpacing: CGFloat = 5.0
-    static let paddingSmallButton: CGFloat = 60.0
+    
+    //MARK: TEXT
     static let messageMaxLines: Int = 3
+    
+    //MARK: SPACING
+    static let textSpacing: CGFloat = 5.0
+    static let formSpacing: CGFloat = 15.0
+    
+    //MARK: PADDING
+    static let paddingSmallButton: CGFloat = 60.0
+    static let paddingTabViewHorizontal: CGFloat = 15.0
 }

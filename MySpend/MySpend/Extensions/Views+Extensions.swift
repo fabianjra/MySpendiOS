@@ -44,4 +44,34 @@ extension View {
                 self
             }
         }
+    
+    /**
+     Assign corners to a view, selecting especific corners.
+     
+     **Example:**
+     ```swift
+     @State private var text: String = ""
+     
+     TextField("", text: $text)
+         .placeholder(when: text.isEmpty) {
+             Text("Text for placeholder")
+                 .foregroundColor(Color.gray)
+         }
+     ```
+     
+     - Parameters:
+        - radius:How much de corner will be. | .inifinity value by default.
+        - corners:Which corners will curve. | .allCorners value by default.
+     
+     - Returns: View
+     
+     - Authors: Fabian Rodriguez
+     
+     - Version: 1.0
+     
+     - Date: June 2023
+     */
+    func cornerRadiusCustom(_ radius: CGFloat, corners: UIRectCorner) -> some View {
+        clipShape( RoundedCornerShape(radius: radius, corners: corners) )
+    }
 }
