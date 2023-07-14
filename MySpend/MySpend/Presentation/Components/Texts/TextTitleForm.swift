@@ -16,7 +16,7 @@ struct TextTitleForm: View {
             Text("mySpend")
                 .foregroundColor(Color.textPrimaryForeground)
                 .font(Font.custom(FontFamily.thin.rawValue,
-                                  size: FontSizes.bigXXXL))
+                                  size: FontSizes.bigXXL))
             
             Text(subTitle)
                 .foregroundColor(Color.textPrimaryForeground)

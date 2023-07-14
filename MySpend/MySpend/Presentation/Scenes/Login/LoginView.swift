@@ -10,7 +10,10 @@ import SwiftUI
 struct LoginView: View {
     
     @State private var userEmail: String = ""
+    @State private var userEmailError: Bool = false
+    
     @State private var userPassword: String = ""
+    @State private var userPasswordError: Bool = false
     
     @State private var errorMessage: String = ""
     @State private var canLogin: Bool = false
@@ -36,23 +39,29 @@ struct LoginView: View {
                         TextField("",
                                   text: $userEmail,
                                   prompt: Text("Email").foregroundColor(.textFieldPlaceholder))
-                        .textFieldStyle(TextFieldIconStyle(iconLeading: Image.envelopeFill))
-                        .onChange(of: userEmail) { _ in errorMessage = "" }
+                        .textFieldStyle(TextFieldIconStyle($userEmail, iconLeading: Image.envelopeFill, isError: $userEmailError))
                         .autocapitalization(.none)
                         .textInputAutocapitalization(.never)
                         .autocorrectionDisabled(true)
                         .keyboardType(.emailAddress)
+                        .onChange(of: userEmail) { _ in
+                            errorMessage = ""
+                            userEmailError = false
+                        }
                         
                         
                         SecureField("",
                                     text: $userPassword,
                                     prompt: Text("Password").foregroundColor(.textFieldPlaceholder))
-                        .textFieldStyle(TextFieldIconStyle(iconLeading: Image.lockFill))
-                        .onChange(of: userPassword) { _ in errorMessage = "" }
+                        .textFieldStyle(TextFieldIconStyle($userPassword, iconLeading: Image.lockFill, isError: $userPasswordError))
                         .autocapitalization(.none)
                         .textInputAutocapitalization(.never)
                         .autocorrectionDisabled(true)
                         .keyboardType(.asciiCapable) //This avoids suggestions bar on the keyboard.
+                        .onChange(of: userPassword) { _ in
+                            errorMessage = ""
+                            userPasswordError = false
+                        }
                         
                         
                         Button("Login") {
@@ -68,6 +77,9 @@ struct LoginView: View {
                             if canLogin == false {
                                 errorMessage = "Fill the text fields requireds"
                             }
+                            
+                            userEmailError = userEmail.isEmpty
+                            userPasswordError = userPassword.isEmpty
                         }
                         .buttonStyle(ButtonPrimaryStyle())
                         .padding(.bottom)

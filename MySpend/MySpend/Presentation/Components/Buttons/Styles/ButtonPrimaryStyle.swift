@@ -33,7 +33,7 @@ struct ButtonPrimaryStyle: ButtonStyle {
                                            startPoint: .leading,
                                            endPoint: .trailing)
             )
-            .cornerRadius(Radius.buttonCorners)
+            .cornerRadius(.infinity)
         
             //Button animations
             .scaleEffect(configuration.isPressed ?

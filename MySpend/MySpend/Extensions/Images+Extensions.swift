@@ -21,4 +21,8 @@ extension Image {
     static let stackFill = Image(systemName: "rectangle.stack.fill")
     static let listBulletClipboardFill = Image(systemName: "list.bullet.clipboard.fill")
     static let sliderHorizontal = Image(systemName: "slider.horizontal.3")
+    
+    //MARK: NAVIGATION
+    static let arrowBackward = Image(systemName: "arrow.backward")
+    static let chevronLeft = Image(systemName: "chevron.left")
 }
