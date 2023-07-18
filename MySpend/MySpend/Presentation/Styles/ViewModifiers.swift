@@ -150,3 +150,44 @@ struct Show: ViewModifier {
         }
     }
 }
+
+/**
+ Now that we know that the GeometryReader gives us the size of the container, the usual follow-up question is: how do I use it to get the size of a specific view?
+ To do this we need to move the geometry reader one level below our targeted view. How? We could add an empty background that gets the size of the targeted view and sends this information back to a Binding.
+ Let's create a SizeCalculator ViewModifier so that we can use this functionality on every view:
+ 
+ **Example:**
+ ```swift
+ extension View {
+     func saveSize(in size: Binding<CGSize>) -> some View {
+         modifier(SizeCalculator(size: size))
+     }
+ }
+ ```
+ 
+ - Parameters:
+    - size: Size to get from a view.
+ 
+ - Authors: Fabian Rodriguez
+ 
+ - Version: 1.0
+ 
+ - Date: Jul 2023
+ */
+
+struct SizeCalculator: ViewModifier {
+    
+    @Binding var size: CGSize
+    
+    func body(content: Content) -> some View {
+        content
+            .background(
+                GeometryReader { proxy in
+                    Color.clear //We just want the reader to get triggered, so let's use an empty color
+                        .onAppear {
+                            size = proxy.size
+                        }
+                }
+            )
+    }
+}

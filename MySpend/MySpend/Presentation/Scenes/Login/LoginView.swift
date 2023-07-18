@@ -30,7 +30,7 @@ struct LoginView: View {
                     TextTitleForm(subTitle: "Log in to your account")
                         .padding(.bottom)
                     
-                    //MARK: LOGIN SECTION:
+                    //MARK: LOGIN
                     VStack(spacing: Views.formSpacing) {
 
                         TextFieldEmail(text: $userEmail,
@@ -81,12 +81,12 @@ struct LoginView: View {
                     .padding(.bottom)
                     
                     
-                    //MARK: DIVISION:
+                    //MARK: DIVISION
                     DividerView()
                         .padding(.bottom)
                     
                     
-                    //MARK: REGISTER SECTION:
+                    //MARK: REGISTER
                     VStack {
                         
                         Button("Register") {

@@ -32,25 +32,25 @@ struct RegisterView: View {
 
             VStack {
                 
-                ZStack {
+                //MARK: HEADER
+                HStack {
+                    
+                    ButtonNavigationBack { dismiss() }
+                        .padding(.leading)
+                    
+                    Spacer()
                     
                     TextTitleForm(subTitle: "Register new user")
                         .padding(.bottom)
                     
-                    //Image.arrowBackward
-                    Image.chevronLeft
-                        .resizable()
-                        .frame(width: 15, height: 30)
-                        .foregroundColor(Color.textPrimaryForeground)
-                        .padding(.leading, -((Frames.screenWidth / 2) - 40))
-                        .fontWeight(.ultraLight)
-                        .onTapGesture {
-                            dismiss()
-                        }
+                    Spacer()
+                    
+                    ButtonNavigationBack {}
+                        .hidden()
+                        .padding(.trailing)
                 }
-                .frame(maxWidth: .infinity)
                 
-                
+                //MARK: REGISTER
                 VStack(spacing: Views.formSpacing) {
 
                     TextFieldName(text: $userName,
@@ -113,15 +113,12 @@ struct RegisterView: View {
                 .padding(.bottom)
                 
                 
-                //MARK: DIVISION:
-//                Divider()
-//                    .frame(height: Frames.dividerHeight)
-//                    .overlay(Color.divider)
-//                    .padding(.horizontal)
-//                    .padding(.bottom)
+                //MARK: DIVISION
+                DividerView()
+                    .padding(.bottom)
                 
                 
-                //MARK: GO BACK:
+                //MARK: GO BACK
 //                VStack {
 //
 //                    Button("Go back") {
