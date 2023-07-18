@@ -99,6 +99,6 @@ struct TextFieldIconStyle_Previews: PreviewProvider {
                 .textFieldStyle(TextFieldIconStyle($text, iconLeading: Image.lockFill, isError: .constant(false)))
         }
         .padding()
-        .background(.gray)
+        .background(Color.background)
     }
 }

@@ -23,6 +23,9 @@
 		1F4C249E2A47A6DC00CCAF6D /* MySpendUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4C249D2A47A6DC00CCAF6D /* MySpendUITests.swift */; };
 		1F4C24A02A47A6DC00CCAF6D /* MySpendUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4C249F2A47A6DC00CCAF6D /* MySpendUITestsLaunchTests.swift */; };
 		1F5CC57C2A6648E400C214FE /* DividerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5CC57B2A6648E400C214FE /* DividerView.swift */; };
+		1F5CC57E2A664EFB00C214FE /* TextFieldEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5CC57D2A664EFB00C214FE /* TextFieldEmail.swift */; };
+		1F5CC5802A6653AF00C214FE /* TextFieldPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5CC57F2A6653AF00C214FE /* TextFieldPassword.swift */; };
+		1F5CC5822A6657F800C214FE /* TextFieldName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5CC5812A6657F800C214FE /* TextFieldName.swift */; };
 		1F6344002A47A8C400081BCD /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 1F6343FF2A47A8C400081BCD /* README.md */; };
 		1F663B592A66460800FE70B1 /* PruebaNoMoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F663B582A66460800FE70B1 /* PruebaNoMoverView.swift */; };
 		1F9D79B32A47ABEA00F55418 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1F9D79B22A47ABEA00F55418 /* GoogleService-Info.plist */; };
@@ -90,6 +93,9 @@
 		1F4C249D2A47A6DC00CCAF6D /* MySpendUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySpendUITests.swift; sourceTree = "<group>"; };
 		1F4C249F2A47A6DC00CCAF6D /* MySpendUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySpendUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		1F5CC57B2A6648E400C214FE /* DividerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DividerView.swift; sourceTree = "<group>"; };
+		1F5CC57D2A664EFB00C214FE /* TextFieldEmail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldEmail.swift; sourceTree = "<group>"; };
+		1F5CC57F2A6653AF00C214FE /* TextFieldPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldPassword.swift; sourceTree = "<group>"; };
+		1F5CC5812A6657F800C214FE /* TextFieldName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldName.swift; sourceTree = "<group>"; };
 		1F6343FF2A47A8C400081BCD /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		1F663B582A66460800FE70B1 /* PruebaNoMoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PruebaNoMoverView.swift; sourceTree = "<group>"; };
 		1F9D79B22A47ABEA00F55418 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -392,6 +398,9 @@
 			isa = PBXGroup;
 			children = (
 				1F19D9622A4A57E900137EA0 /* Styles */,
+				1F5CC57D2A664EFB00C214FE /* TextFieldEmail.swift */,
+				1F5CC57F2A6653AF00C214FE /* TextFieldPassword.swift */,
+				1F5CC5812A6657F800C214FE /* TextFieldName.swift */,
 			);
 			path = TextFields;
 			sourceTree = "<group>";
@@ -587,8 +596,11 @@
 				1FC94CD12A5A6E01005CA0B6 /* TabViewIcons.swift in Sources */,
 				1F19D96A2A4A933200137EA0 /* Shapes.swift in Sources */,
 				1F14081D2A5910D300181500 /* ButtonLinkStyle.swift in Sources */,
+				1F5CC5822A6657F800C214FE /* TextFieldName.swift in Sources */,
+				1F5CC5802A6653AF00C214FE /* TextFieldPassword.swift in Sources */,
 				1F1408222A59254F00181500 /* RegisterView.swift in Sources */,
 				1FB8BB9D2A5BC728002DED1F /* Colors.swift in Sources */,
+				1F5CC57E2A664EFB00C214FE /* TextFieldEmail.swift in Sources */,
 				1F4C24832A47A6DA00CCAF6D /* MySpendApp.swift in Sources */,
 				1FB8BB9B2A5BB1E4002DED1F /* RoundedCornersShape.swift in Sources */,
 				1F19D9662A4A764B00137EA0 /* Frames.swift in Sources */,

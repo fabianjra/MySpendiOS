@@ -12,18 +12,19 @@ struct RegisterView: View {
     @Environment(\.dismiss) var dismiss
     
     @State private var userName: String = ""
-    @State private var userNameError: Bool = false
+    @State private var isUserNameError: Bool = false
     
     @State private var userEmail: String = ""
-    @State private var userEmailError: Bool = false
+    @State private var isUserEmailError: Bool = false
     
     @State private var userPassword: String = ""
-    @State private var userPasswordError: Bool = false
+    @State private var isUserPasswordError: Bool = false
     
     @State private var userPasswordConfirm: String = ""
-    @State private var userPasswordConfirmError: Bool = false
+    @State private var isUserPasswordConfirmError: Bool = false
     
     @State private var errorMessage: String = ""
+    @State private var canRegister: Bool = false
     
     var body: some View {
         
@@ -51,56 +52,54 @@ struct RegisterView: View {
                 
                 
                 VStack(spacing: Views.formSpacing) {
-                    
-                    TextField("",
-                              text: $userName,
-                              prompt: Text("Name").foregroundColor(.textFieldPlaceholder))
-                    .textFieldStyle(TextFieldIconStyle($userName, iconLeading: Image.personFill, isError: $userNameError))
-                    .onChange(of: userName) { _ in errorMessage = "" }
-                    .keyboardType(.alphabet)
+
+                    TextFieldName(text: $userName,
+                                  isError: $isUserNameError,
+                                  errorMessage: $errorMessage)
+                    .submitLabel(.done)
                     
                     
-                    TextField("",
-                              text: $userEmail,
-                              prompt: Text("Email").foregroundColor(.textFieldPlaceholder))
-                    .textFieldStyle(TextFieldIconStyle($userEmail, iconLeading: Image.envelopeFill, isError: $userEmailError))
-                    .onChange(of: userEmail) { _ in errorMessage = "" }
-                    .autocapitalization(.none)
-                    .textInputAutocapitalization(.never)
-                    .autocorrectionDisabled(true)
-                    .keyboardType(.emailAddress)
+                    TextFieldEmail(text: $userEmail,
+                                   isError: $isUserEmailError,
+                                   errorMessage: $errorMessage)
                     
+                    TextFieldPassword(text: $userPassword,
+                                      isError: $isUserPasswordError,
+                                      errorMessage: $errorMessage,
+                                      iconLeading: Image.lockFill)
                     
-                    SecureField("",
-                                text: $userPassword,
-                                prompt: Text("Password").foregroundColor(.textFieldPlaceholder))
-                    .textFieldStyle(TextFieldIconStyle($userPassword, iconLeading: Image.lockFill, isError: $userPasswordError))
-                    .onChange(of: userPassword) { _ in errorMessage = "" }
-                    .autocapitalization(.none)
-                    .textInputAutocapitalization(.never)
-                    .autocorrectionDisabled(true)
-                    .keyboardType(.asciiCapable) //This avoids suggestions bar on the keyboard.
-                    
-                    SecureField("",
-                                text: $userPasswordConfirm,
-                                prompt: Text("Confirm password").foregroundColor(.textFieldPlaceholder))
-                    .textFieldStyle(TextFieldIconStyle($userPasswordConfirm, iconLeading: Image.checkmark, isError: $userPasswordConfirmError))
-                    .onChange(of: userPassword) { _ in errorMessage = "" }
-                    .autocapitalization(.none)
-                    .textInputAutocapitalization(.never)
-                    .autocorrectionDisabled(true)
-                    .keyboardType(.asciiCapable) //This avoids suggestions bar on the keyboard.
-                    
+                    TextFieldPassword(text: $userPasswordConfirm,
+                                      isError: $isUserPasswordConfirmError,
+                                      errorMessage: $errorMessage,
+                                      iconLeading: Image.checkmark)
                     
                     Button("Register") {
                         
-                        userNameError = userName.isEmpty
-                        userEmailError = userEmail.isEmpty
-                        userPasswordError = userPassword.isEmpty
-                        userPasswordConfirmError = userPasswordConfirm.isEmpty
+                        print("User: \(userName)")
+                        print("Email: \(userEmail)")
+                        print("Password: \(userPassword)")
+                        print("Password confirm: \(userPasswordConfirm)")
+                        
+                        if userName.isEmpty || userEmail.isEmpty ||
+                            userPassword.isEmpty || userPasswordConfirm.isEmpty {
+                            canRegister = false
+                            errorMessage = "Fill the text fields required"
+                        } else {
+                            canRegister = true
+                        }
+
+                        //If Textfields are empty, bool error will be true.
+                        isUserNameError = userName.isEmpty
+                        isUserEmailError = userEmail.isEmpty
+                        isUserPasswordError = userPassword.isEmpty
+                        isUserPasswordConfirmError = userPasswordConfirm.isEmpty
                     }
                     .buttonStyle(ButtonPrimaryStyle())
                     .padding(.bottom)
+                    .navigationDestination(isPresented: $canRegister) {
+                        TabViewCustom(selectedTab: .resume)
+                            .toolbar(.hidden, for: .navigationBar)
+                    }
                     
                     
                     Text(errorMessage)
