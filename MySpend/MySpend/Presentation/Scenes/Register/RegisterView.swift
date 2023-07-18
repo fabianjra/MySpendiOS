@@ -28,10 +28,7 @@ struct RegisterView: View {
     var body: some View {
         
         ZStack(alignment: .top) {
-            
-            Color.background
-                .ignoresSafeArea()
-            
+
             VStack {
                 
                 ZStack {
@@ -136,8 +133,7 @@ struct RegisterView: View {
 //                    .padding(.horizontal, Views.paddingSmallButton)
 //                }
             }
-            .modifier(FormStyle())
-            .padding(.top)
+            .modifier(FormStyleSign())
         }
     }
 }

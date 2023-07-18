@@ -29,7 +29,7 @@ import SwiftUI
  
  - Date: Jul 2023
  */
-struct FormStyle: ViewModifier {
+struct FormStyleBordered: ViewModifier {
     
     @ViewBuilder
     func body(content: Content) -> some View {
@@ -43,6 +43,41 @@ struct FormStyle: ViewModifier {
             .shadow(color: .shadow,
                     radius: Radius.shadow,
                     x: .zero, y: .zero)
+    }
+}
+
+/**
+ Style color for full form view. Must be used in ZStack.
+ Padding added to separete components from edges.
+ 
+ **Example:**
+ ```swift
+ ZStack {
+     VStack {
+        Text("Form style")
+    }
+ }
+ .modifier(FormStyleSign())
+ ```
+ 
+ - Authors: Fabian Rodriguez
+ 
+ - Version: 1.0
+ 
+ - Date: Jul 2023
+ */
+struct FormStyleSign: ViewModifier {
+    
+    @ViewBuilder
+    func body(content: Content) -> some View {
+        
+        Spacer()
+            .ignoresSafeArea()
+            .background(LinearGradient(colors: Color.backgroundFormGradiant,
+                                       startPoint: .leading,
+                                       endPoint: .trailing))
+        content
+            .padding()
     }
 }
 

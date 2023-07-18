@@ -24,10 +24,7 @@ struct LoginView: View {
         NavigationStack {
             
             ZStack(alignment: .top) {
-                
-                Color.background
-                    .ignoresSafeArea()
-                
+
                 VStack {
                     
                     TextTitleForm(subTitle: "Log in to your account")
@@ -105,10 +102,7 @@ struct LoginView: View {
                     
                     
                     //MARK: DIVISION:
-                    Divider()
-                        .frame(height: Frames.dividerHeight)
-                        .overlay(Color.divider)
-                        .padding(.horizontal)
+                    DividerView()
                         .padding(.bottom)
                     
                     
@@ -147,8 +141,7 @@ struct LoginView: View {
                         }
                     }
                 }
-                .modifier(FormStyle())
-                .padding(.top)
+                .modifier(FormStyleSign())
             }
         }
     }
