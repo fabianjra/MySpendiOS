@@ -7,16 +7,24 @@
 
 import UIKit
 
+//Controls the state to enable or disable swipe to go back on Views.
+class AppState {
+    static let shared = AppState()
+
+    //True by default. Can swipe back in every view, until it's setted to false.
+    var swipeEnabled = true
+}
+
 extension UINavigationController: UIGestureRecognizerDelegate {
-    
     override open func viewDidLoad() {
         super.viewDidLoad()
         interactivePopGestureRecognizer?.delegate = self
-        interactivePopGestureRecognizer?.isEnabled = false
-
     }
     
     public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        return viewControllers.count > 1
+        if AppState.shared.swipeEnabled {
+            return viewControllers.count > 1
+        }
+        return false
     }
 }

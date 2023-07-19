@@ -30,6 +30,13 @@ struct TabViewCustom: View {
             //.padding(.bottom, Utils.getEdgeInsets().bottom == .zero ? 10 : .zero)
         }
         .edgesIgnoringSafeArea(.bottom)
+        .onAppear {
+            //Disable Swipe to go back.
+            AppState.shared.swipeEnabled = false
+        }
+        .onDisappear {
+            AppState.shared.swipeEnabled = true
+        }
     }
     
     var tabView: some View {
