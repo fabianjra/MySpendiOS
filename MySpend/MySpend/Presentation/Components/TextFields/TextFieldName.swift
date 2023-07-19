@@ -25,6 +25,7 @@ struct TextFieldName: View {
                                            isError: $isError))
         
         .onChange(of: text) { _ in errorMessage = "" }
+        .textContentType(.name)
         .keyboardType(.alphabet)
     }
 }

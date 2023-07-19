@@ -27,6 +27,7 @@ struct TextFieldEmail: View {
         .autocapitalization(.none)
         .textInputAutocapitalization(.never)
         .autocorrectionDisabled(true)
+        .textContentType(.emailAddress)
         .keyboardType(.emailAddress)
         .onChange(of: text) { _ in errorMessage = "" }
     }
