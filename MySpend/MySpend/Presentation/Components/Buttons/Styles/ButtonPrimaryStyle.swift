@@ -14,7 +14,6 @@ struct ButtonPrimaryStyle: ButtonStyle {
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            //Font family
             .font(.montserrat())
             .foregroundColor(isEnabled ? Color.buttonForeground : Color.buttonForegroundDisabled)
 

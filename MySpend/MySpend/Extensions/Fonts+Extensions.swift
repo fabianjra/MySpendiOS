@@ -70,16 +70,3 @@ extension Font {
         return .custom(family.value, size: size.value)
     }
 }
-
-
-//struct ContentViewFonts: View {
-//    var body: some View {
-//        VStack {
-//            Text("Text demo")
-//                .font(.montserrat())
-//
-//            Text("Text demo")
-//                .font(.montserrat(.regular, size: .small))
-//        }
-//    }
-//}

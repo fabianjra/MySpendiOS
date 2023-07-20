@@ -24,7 +24,7 @@ struct TextViewStyledButton: View {
             .background(LinearGradient(colors: Color.primaryGradiant,
                                        startPoint: .leading,
                                        endPoint: .trailing))
-            .cornerRadius(Radius.buttonCorners)
+            .cornerRadius(.infinity)
     }
 }
 

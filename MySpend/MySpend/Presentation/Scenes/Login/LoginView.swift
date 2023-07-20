@@ -66,7 +66,7 @@ struct LoginView: View {
                         }
                         
                         
-                        TextError(message: $errorMessage)
+                        TextError(message: errorMessage)
 
                         
                         Button("Forgot password?") {
@@ -103,8 +103,6 @@ struct LoginView: View {
                             Text("or")
                                 .foregroundColor(Color.textSecondaryForeground)
                                 .font(.montserrat())
-//                                .font(.custom(FontFamily.regular.rawValue,
-//                                                  size: FontSizes.body))
                             
                             VStack {
                                 DividerView()
@@ -113,10 +111,9 @@ struct LoginView: View {
                         .padding(.bottom)
                             
                         
-//                        Text("Login with")
-//                            .foregroundColor(Color.textSecondaryForeground)
-//                            .font(.custom(FontFamily.regular.rawValue,
-//                                              size: FontSizes.body))
+                        Text("Login with")
+                            .foregroundColor(Color.textSecondaryForeground)
+                            .font(.montserrat())
                         
                         HStack {
                             //TODO: Add button for social networks
