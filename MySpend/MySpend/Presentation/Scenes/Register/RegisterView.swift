@@ -102,32 +102,9 @@ struct RegisterView: View {
                     }
                     
                     
-                    Text(errorMessage)
-                        .modifier(Show(isVisible: !errorMessage.isEmpty))
-                        .foregroundColor(Color.textErrorForeground)
-                        .font(.montserrat(.semibold))
-                        .multilineTextAlignment(.center)
-                        .lineLimit(Views.messageMaxLines)
-                    
+                    TextError(message: errorMessage)
                 }
-                .padding(.bottom)
                 
-                
-                //MARK: DIVISION
-                DividerView()
-                    .padding(.bottom)
-                
-                
-                //MARK: GO BACK
-//                VStack {
-//
-//                    Button("Go back") {
-//                        dismiss()
-//                    }
-//                    .buttonStyle(ButtonPrimaryStyle(color: Color.secondaryGradiant))
-//                    .padding(.bottom)
-//                    .padding(.horizontal, Views.paddingSmallButton)
-//                }
             }
             .modifier(FormStyleSign())
         }

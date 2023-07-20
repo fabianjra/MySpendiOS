@@ -24,7 +24,7 @@ struct LoginView: View {
         NavigationStack {
             
             ZStack(alignment: .top) {
-
+                
                 VStack {
                     
                     TextTitleForm(subTitle: "Log in to your account")
@@ -32,10 +32,11 @@ struct LoginView: View {
                     
                     //MARK: LOGIN
                     VStack(spacing: Views.formSpacing) {
-
+                        
                         TextFieldEmail(text: $userEmail,
                                        isError: $isUserEmailError,
                                        errorMessage: $errorMessage)
+                        
                         
                         TextFieldPassword(text: $userPassword,
                                           isError: $isUserPasswordError,
@@ -53,7 +54,7 @@ struct LoginView: View {
                             } else {
                                 canLogin = true
                             }
-
+                            
                             //If Textfields are empty, bool error will be true.
                             isUserEmailError = userEmail.isEmpty
                             isUserPasswordError = userPassword.isEmpty
@@ -67,18 +68,18 @@ struct LoginView: View {
                         
                         
                         TextError(message: errorMessage)
-
+                    }
+                    .padding(.bottom)
+                    
+                    
+                    //MARK: REGISTER & FORGOT PASSWORD
+                    VStack {
                         
                         Button("Forgot password?") {
                             print("Forgot password pressed")
                         }
                         .buttonStyle(ButtonLinkStyle())
-                    }
-                    .padding(.bottom)
-                    
-                    
-                    //MARK: REGISTER
-                    VStack {
+                        .padding(.bottom)
                         
                         Button("Register") {
                             print("User: \(userEmail)")
@@ -92,25 +93,29 @@ struct LoginView: View {
                             RegisterView()
                                 .toolbar(.hidden, for: .navigationBar)
                         }
-                        
-                        
-                        //MARK: DIVISION
-                        HStack {
-                            VStack {
-                                DividerView()
-                            }
-                           
-                            Text("or")
-                                .foregroundColor(Color.textSecondaryForeground)
-                                .font(.montserrat())
-                            
-                            VStack {
-                                DividerView()
-                            }
+                    }
+                    .padding(.bottom)
+                    
+                    
+                    //MARK: DIVISION
+                    HStack {
+                        VStack {
+                            DividerView()
                         }
-                        .padding(.bottom)
-                            
                         
+                        Text("or")
+                            .foregroundColor(Color.textSecondaryForeground)
+                            .font(.montserrat())
+                        
+                        VStack {
+                            DividerView()
+                        }
+                    }
+                    .padding(.bottom)
+                    
+                    
+                    //MARK: LOGIN SOCIAL NETWORKS
+                    VStack {
                         Text("Login with")
                             .foregroundColor(Color.textSecondaryForeground)
                             .font(.montserrat())

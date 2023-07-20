@@ -47,8 +47,8 @@ struct FormStyleBordered: ViewModifier {
 }
 
 /**
- Style color for full form view. Must be used in ZStack.
- Padding added to separete components from edges.
+ Style color for full form view. Must be applied to a VStack, inside a ZStack.
+ Padding added to separete components from edges inside container.
  
  **Example:**
  ```swift
@@ -56,8 +56,8 @@ struct FormStyleBordered: ViewModifier {
      VStack {
         Text("Form style")
     }
+    .modifier(FormStyleSign())
  }
- .modifier(FormStyleSign())
  ```
  
  - Authors: Fabian Rodriguez
