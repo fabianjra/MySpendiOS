@@ -70,7 +70,7 @@ struct TabViewCustom: View {
                                              : Color.tabViewIconDeselected)
                             
                             Text(item.rawValue.capitalized)
-                                .font(Font.custom(FontFamily.regular.rawValue,
+                                .font(.custom(FontFamily.regular.rawValue,
                                                   size: FontSizes.small))
                                 .accentColor(selectedTab == item ?
                                              Color.tabViewIconSelected

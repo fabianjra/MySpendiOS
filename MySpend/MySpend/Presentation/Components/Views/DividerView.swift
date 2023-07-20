@@ -13,7 +13,6 @@ struct DividerView: View {
         Divider()
             .frame(height: Frames.dividerHeight)
             .overlay(Color.divider)
-            .padding(.horizontal)
     }
 }
 

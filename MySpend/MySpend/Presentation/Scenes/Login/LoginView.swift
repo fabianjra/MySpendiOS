@@ -66,24 +66,15 @@ struct LoginView: View {
                         }
                         
                         
-                        Text(errorMessage)
-                            .modifier(Show(isVisible: !errorMessage.isEmpty))
-                            .foregroundColor(Color.textErrorForeground)
-                            .font(.custom(FontFamily.semibold.rawValue, size: FontSizes.body))
-                            .multilineTextAlignment(.center)
-                            .lineLimit(Views.messageMaxLines)
+                        TextError(message: $errorMessage)
+
                         
-                        Button("Forgot password") {
+                        Button("Forgot password?") {
                             print("Forgot password pressed")
                         }
                         .buttonStyle(ButtonLinkStyle())
                     }
                     .padding(.bottom)
-                    
-                    
-                    //MARK: DIVISION
-                    DividerView()
-                        .padding(.bottom)
                     
                     
                     //MARK: REGISTER
@@ -103,10 +94,28 @@ struct LoginView: View {
                         }
                         
                         
-                        Text("Login with")
-                            .foregroundColor(Color.textSecondaryForeground)
-                            .font(Font.custom(FontFamily.regular.rawValue,
-                                              size: FontSizes.body))
+                        //MARK: DIVISION
+                        HStack {
+                            VStack {
+                                DividerView()
+                            }
+                           
+                            Text("or")
+                                .foregroundColor(Color.textSecondaryForeground)
+                                .font(.custom(FontFamily.regular.rawValue,
+                                                  size: FontSizes.body))
+                            
+                            VStack {
+                                DividerView()
+                            }
+                        }
+                        .padding(.bottom)
+                            
+                        
+//                        Text("Login with")
+//                            .foregroundColor(Color.textSecondaryForeground)
+//                            .font(.custom(FontFamily.regular.rawValue,
+//                                              size: FontSizes.body))
                         
                         HStack {
                             //TODO: Add button for social networks

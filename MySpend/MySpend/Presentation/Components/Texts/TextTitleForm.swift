@@ -15,12 +15,12 @@ struct TextTitleForm: View {
         VStack(spacing: Views.textSpacing) {
             Text("mySpend")
                 .foregroundColor(Color.textPrimaryForeground)
-                .font(Font.custom(FontFamily.thin.rawValue,
+                .font(.custom(FontFamily.thin.rawValue,
                                   size: FontSizes.bigXXL))
             
             Text(subTitle)
                 .foregroundColor(Color.textPrimaryForeground)
-                .font(Font.custom(FontFamily.light.rawValue,
+                .font(.custom(FontFamily.light.rawValue,
                                   size: FontSizes.body))
         }
     }

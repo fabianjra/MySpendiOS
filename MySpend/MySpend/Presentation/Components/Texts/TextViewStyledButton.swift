@@ -15,7 +15,7 @@ struct TextViewStyledButton: View {
         
         Text(text)
             //Font family
-            .font(Font.custom(FontFamily.regular.rawValue, size: FontSizes.body))
+            .font(.custom(FontFamily.regular.rawValue, size: FontSizes.body))
             .foregroundColor(Color.buttonForeground)
         
             //Button shape
