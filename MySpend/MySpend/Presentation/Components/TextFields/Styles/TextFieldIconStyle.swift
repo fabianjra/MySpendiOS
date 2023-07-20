@@ -9,17 +9,17 @@ import SwiftUI
 
 struct TextFieldIconStyle: TextFieldStyle {
     
-    @Binding var text: String
-    private let fontFamily: FontFamily
-    private let size: CGFloat
+    @Binding private var text: String
+    private let family: Font.Family
+    private let size: Font.Sizes
     private let iconLeading: Image?
     
-    @FocusState var isFocused: Bool
-    @Binding var isError: Bool
+    @FocusState private var isFocused: Bool
+    @Binding private var isError: Bool
     
-    public init(_ text: Binding<String>, fontFamily: FontFamily = .regular, size: CGFloat = FontSizes.body, iconLeading: Image? = nil, isError: Binding<Bool>) {
+    public init(_ text: Binding<String>, family: Font.Family = .regular, size: Font.Sizes = .body, iconLeading: Image? = nil, isError: Binding<Bool>) {
         self._text = text
-        self.fontFamily = fontFamily
+        self.family = family
         self.size = size
         self.iconLeading = iconLeading
         self._isError = isError
@@ -39,7 +39,7 @@ struct TextFieldIconStyle: TextFieldStyle {
                 //.background(.green) //TODO: For testing
                 .padding(.horizontal, iconLeading == nil ? nil : .zero)
                 .padding(.trailing, iconLeading != nil ? nil : .zero)
-                .font(.custom(fontFamily.rawValue, size: size))
+                .font(.montserrat(family, size: size))
                 .focused($isFocused)
                 .onChange(of: text, perform: { _ in isError = false })
         }

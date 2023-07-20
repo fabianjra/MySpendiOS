@@ -105,7 +105,7 @@ struct RegisterView: View {
                     Text(errorMessage)
                         .modifier(Show(isVisible: !errorMessage.isEmpty))
                         .foregroundColor(Color.textErrorForeground)
-                        .font(.custom(FontFamily.semibold.rawValue, size: FontSizes.body))
+                        .font(.montserrat(.semibold))
                         .multilineTextAlignment(.center)
                         .lineLimit(Views.messageMaxLines)
                     

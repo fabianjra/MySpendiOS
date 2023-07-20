@@ -102,8 +102,9 @@ struct LoginView: View {
                            
                             Text("or")
                                 .foregroundColor(Color.textSecondaryForeground)
-                                .font(.custom(FontFamily.regular.rawValue,
-                                                  size: FontSizes.body))
+                                .font(.montserrat())
+//                                .font(.custom(FontFamily.regular.rawValue,
+//                                                  size: FontSizes.body))
                             
                             VStack {
                                 DividerView()

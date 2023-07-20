@@ -16,7 +16,7 @@ struct TextError: View {
         Text(message)
             .modifier(Show(isVisible: !message.isEmpty))
             .foregroundColor(Color.textErrorForeground)
-            .font(.custom(FontFamily.semibold.rawValue, size: FontSizes.body))
+            .font(.montserrat(.semibold))
             .multilineTextAlignment(.center)
             .lineLimit(Views.messageMaxLines)
     }

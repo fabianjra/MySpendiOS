@@ -14,7 +14,7 @@ struct ButtonLinkStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
         //Font family
-        .font(.custom(FontFamily.regular.rawValue, size: FontSizes.body))
+        .font(.montserrat())
         .foregroundColor(isEnabled ? Color.buttonLinkForeground : Color.buttonLinkForeground)
 
         //Button shape
