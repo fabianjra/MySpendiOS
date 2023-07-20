@@ -23,117 +23,113 @@ struct LoginView: View {
         
         NavigationStack {
             
-            ZStack(alignment: .top) {
+            FormContainer {
                 
+                TextTitleForm(subTitle: "Log in to your account")
+                    .padding(.bottom)
+                
+                //MARK: LOGIN
+                VStack(spacing: Views.formSpacing) {
+                    
+                    TextFieldEmail(text: $userEmail,
+                                   isError: $isUserEmailError,
+                                   errorMessage: $errorMessage)
+                    
+                    
+                    TextFieldPassword(text: $userPassword,
+                                      isError: $isUserPasswordError,
+                                      errorMessage: $errorMessage,
+                                      iconLeading: Image.lockFill)
+                    
+                    
+                    Button("Login") {
+                        print("User: \(userEmail)")
+                        print("Password: \(userPassword)")
+                        
+                        if userEmail.isEmpty || userPassword.isEmpty {
+                            canLogin = false
+                            errorMessage = "Fill the text fields required"
+                        } else {
+                            canLogin = true
+                        }
+                        
+                        //If Textfields are empty, bool error will be true.
+                        isUserEmailError = userEmail.isEmpty
+                        isUserPasswordError = userPassword.isEmpty
+                    }
+                    .buttonStyle(ButtonPrimaryStyle())
+                    .padding(.bottom)
+                    .navigationDestination(isPresented: $canLogin) {
+                        TabViewCustom(selectedTab: .resume)
+                            .toolbar(.hidden, for: .navigationBar)
+                    }
+                    
+                    
+                    TextError(message: errorMessage)
+                }
+                .padding(.bottom)
+                
+                
+                //MARK: REGISTER & FORGOT PASSWORD
                 VStack {
                     
-                    TextTitleForm(subTitle: "Log in to your account")
-                        .padding(.bottom)
-                    
-                    //MARK: LOGIN
-                    VStack(spacing: Views.formSpacing) {
-                        
-                        TextFieldEmail(text: $userEmail,
-                                       isError: $isUserEmailError,
-                                       errorMessage: $errorMessage)
-                        
-                        
-                        TextFieldPassword(text: $userPassword,
-                                          isError: $isUserPasswordError,
-                                          errorMessage: $errorMessage,
-                                          iconLeading: Image.lockFill)
-                        
-                        
-                        Button("Login") {
-                            print("User: \(userEmail)")
-                            print("Password: \(userPassword)")
-                            
-                            if userEmail.isEmpty || userPassword.isEmpty {
-                                canLogin = false
-                                errorMessage = "Fill the text fields required"
-                            } else {
-                                canLogin = true
-                            }
-                            
-                            //If Textfields are empty, bool error will be true.
-                            isUserEmailError = userEmail.isEmpty
-                            isUserPasswordError = userPassword.isEmpty
-                        }
-                        .buttonStyle(ButtonPrimaryStyle())
-                        .padding(.bottom)
-                        .navigationDestination(isPresented: $canLogin) {
-                            TabViewCustom(selectedTab: .resume)
-                                .toolbar(.hidden, for: .navigationBar)
-                        }
-                        
-                        
-                        TextError(message: errorMessage)
+                    Button("Forgot password?") {
+                        print("Forgot password pressed")
                     }
+                    .buttonStyle(ButtonLinkStyle())
                     .padding(.bottom)
                     
-                    
-                    //MARK: REGISTER & FORGOT PASSWORD
-                    VStack {
-                        
-                        Button("Forgot password?") {
-                            print("Forgot password pressed")
-                        }
-                        .buttonStyle(ButtonLinkStyle())
-                        .padding(.bottom)
-                        
-                        Button("Register") {
-                            print("User: \(userEmail)")
-                            print("Password: \(userPassword)")
-                            goToRegister = true
-                        }
-                        .buttonStyle(ButtonPrimaryStyle())
-                        .padding(.bottom)
-                        .padding(.horizontal, Views.paddingSmallButton)
-                        .navigationDestination(isPresented: $goToRegister) {
-                            RegisterView()
-                                .toolbar(.hidden, for: .navigationBar)
-                        }
+                    Button("Register") {
+                        print("User: \(userEmail)")
+                        print("Password: \(userPassword)")
+                        goToRegister = true
                     }
+                    .buttonStyle(ButtonPrimaryStyle())
                     .padding(.bottom)
-                    
-                    
-                    //MARK: DIVISION
-                    HStack {
-                        VStack {
-                            DividerView()
-                        }
-                        
-                        Text("or")
-                            .foregroundColor(Color.textSecondaryForeground)
-                            .font(.montserrat())
-                        
-                        VStack {
-                            DividerView()
-                        }
-                    }
-                    .padding(.bottom)
-                    
-                    
-                    //MARK: LOGIN SOCIAL NETWORKS
-                    VStack {
-                        Text("Login with")
-                            .foregroundColor(Color.textSecondaryForeground)
-                            .font(.montserrat())
-                        
-                        HStack {
-                            //TODO: Add button for social networks
-                            Image.envelopeFill
-                                .padding()
-                            
-                            Image.lockFill
-                                .padding()
-                            
-                            Image.envelopeFill
-                                .padding()
-                        }
+                    .padding(.horizontal, Views.paddingSmallButton)
+                    .navigationDestination(isPresented: $goToRegister) {
+                        RegisterView()
+                            .toolbar(.hidden, for: .navigationBar)
                     }
                 }
-                .modifier(FormStyleSign())
+                .padding(.bottom)
+                
+                
+                //MARK: DIVISION
+                HStack {
+                    VStack {
+                        DividerView()
+                    }
+                    
+                    Text("or")
+                        .foregroundColor(Color.textSecondaryForeground)
+                        .font(.montserrat())
+                    
+                    VStack {
+                        DividerView()
+                    }
+                }
+                .padding(.bottom)
+                
+                
+                //MARK: LOGIN SOCIAL NETWORKS
+                VStack {
+                    Text("Login with")
+                        .foregroundColor(Color.textSecondaryForeground)
+                        .font(.montserrat())
+                    
+                    HStack {
+                        //TODO: Add button for social networks
+                        Image.envelopeFill
+                            .padding()
+                        
+                        Image.lockFill
+                            .padding()
+                        
+                        Image.envelopeFill
+                            .padding()
+                    }
+                }
             }
         }
     }

@@ -32,6 +32,7 @@
 		1F7437B42A668BCD0039EFD4 /* Gestures+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7437B32A668BCD0039EFD4 /* Gestures+Extensions.swift */; };
 		1F7486B72A68C4250063AC35 /* TextError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7486B62A68C4250063AC35 /* TextError.swift */; };
 		1F7486BB2A68D4A30063AC35 /* Fonts+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7486BA2A68D4A30063AC35 /* Fonts+Extensions.swift */; };
+		1F7486BF2A68ECD90063AC35 /* FormContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7486BE2A68ECD90063AC35 /* FormContainer.swift */; };
 		1F9D79B32A47ABEA00F55418 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1F9D79B22A47ABEA00F55418 /* GoogleService-Info.plist */; };
 		1F9D79B62A47AD4300F55418 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 1F9D79B52A47AD4300F55418 /* FirebaseAnalytics */; };
 		1F9D79B82A47AD4300F55418 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 1F9D79B72A47AD4300F55418 /* FirebaseAuth */; };
@@ -105,6 +106,7 @@
 		1F7437B32A668BCD0039EFD4 /* Gestures+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Gestures+Extensions.swift"; sourceTree = "<group>"; };
 		1F7486B62A68C4250063AC35 /* TextError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextError.swift; sourceTree = "<group>"; };
 		1F7486BA2A68D4A30063AC35 /* Fonts+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Fonts+Extensions.swift"; sourceTree = "<group>"; };
+		1F7486BE2A68ECD90063AC35 /* FormContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormContainer.swift; sourceTree = "<group>"; };
 		1F9D79B22A47ABEA00F55418 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1F9D79C02A47C09D00F55418 /* Montserrat-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Light.ttf"; sourceTree = "<group>"; };
 		1F9D79C12A47C09D00F55418 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
@@ -287,6 +289,7 @@
 			isa = PBXGroup;
 			children = (
 				1FC94CC42A5A4034005CA0B6 /* ViewModifiers.swift */,
+				1F7486BE2A68ECD90063AC35 /* FormContainer.swift */,
 			);
 			path = Styles;
 			sourceTree = "<group>";
@@ -603,6 +606,7 @@
 				1F19D9642A4A583800137EA0 /* TextFieldIconStyle.swift in Sources */,
 				1F5CC5842A6662A200C214FE /* ButtonNavigationBack.swift in Sources */,
 				1FC94CBC2A5A1DB7005CA0B6 /* TextViewStyledButton.swift in Sources */,
+				1F7486BF2A68ECD90063AC35 /* FormContainer.swift in Sources */,
 				1FC94CD12A5A6E01005CA0B6 /* TabViewIcons.swift in Sources */,
 				1F19D96A2A4A933200137EA0 /* Shapes.swift in Sources */,
 				1F14081D2A5910D300181500 /* ButtonLinkStyle.swift in Sources */,

@@ -28,85 +28,80 @@ struct RegisterView: View {
     
     var body: some View {
         
-        ZStack(alignment: .top) {
-
-            VStack {
+        FormContainer {
+            
+            //MARK: HEADER
+            HStack {
                 
-                //MARK: HEADER
-                HStack {
-                    
-                    ButtonNavigationBack { dismiss() }
-                        .padding(.leading)
-                    
-                    Spacer()
-                    
-                    TextTitleForm(subTitle: "Register new user")
-                        .padding(.bottom)
-                    
-                    Spacer()
-                    
-                    ButtonNavigationBack {}
-                        .hidden()
-                        .padding(.trailing)
-                }
+                ButtonNavigationBack { dismiss() }
+                    .padding(.leading)
                 
-                //MARK: REGISTER
-                VStack(spacing: Views.formSpacing) {
-
-                    TextFieldName(text: $userName,
-                                  isError: $isUserNameError,
-                                  errorMessage: $errorMessage)
-                    .submitLabel(.done)
-                    
-                    
-                    TextFieldEmail(text: $userEmail,
-                                   isError: $isUserEmailError,
-                                   errorMessage: $errorMessage)
-                    
-                    TextFieldPassword(text: $userPassword,
-                                      isError: $isUserPasswordError,
-                                      errorMessage: $errorMessage,
-                                      iconLeading: Image.lockFill)
-                    
-                    TextFieldPassword(text: $userPasswordConfirm,
-                                      isError: $isUserPasswordConfirmError,
-                                      errorMessage: $errorMessage,
-                                      iconLeading: Image.checkmark)
-                    
-                    Button("Register") {
-                        
-                        print("User: \(userName)")
-                        print("Email: \(userEmail)")
-                        print("Password: \(userPassword)")
-                        print("Password confirm: \(userPasswordConfirm)")
-                        
-                        if userName.isEmpty || userEmail.isEmpty ||
-                            userPassword.isEmpty || userPasswordConfirm.isEmpty {
-                            canRegister = false
-                            errorMessage = "Fill the text fields required"
-                        } else {
-                            canRegister = true
-                        }
-
-                        //If Textfields are empty, bool error will be true.
-                        isUserNameError = userName.isEmpty
-                        isUserEmailError = userEmail.isEmpty
-                        isUserPasswordError = userPassword.isEmpty
-                        isUserPasswordConfirmError = userPasswordConfirm.isEmpty
-                    }
-                    .buttonStyle(ButtonPrimaryStyle())
+                Spacer()
+                
+                TextTitleForm(subTitle: "Register new user")
                     .padding(.bottom)
-                    .navigationDestination(isPresented: $canRegister) {
-                        TabViewCustom(selectedTab: .resume)
-                            .toolbar(.hidden, for: .navigationBar)
+                
+                Spacer()
+                
+                ButtonNavigationBack {}
+                    .hidden()
+                    .padding(.trailing)
+            }
+            
+            //MARK: REGISTER
+            VStack(spacing: Views.formSpacing) {
+                
+                TextFieldName(text: $userName,
+                              isError: $isUserNameError,
+                              errorMessage: $errorMessage)
+                .submitLabel(.done)
+                
+                
+                TextFieldEmail(text: $userEmail,
+                               isError: $isUserEmailError,
+                               errorMessage: $errorMessage)
+                
+                TextFieldPassword(text: $userPassword,
+                                  isError: $isUserPasswordError,
+                                  errorMessage: $errorMessage,
+                                  iconLeading: Image.lockFill)
+                
+                TextFieldPassword(text: $userPasswordConfirm,
+                                  isError: $isUserPasswordConfirmError,
+                                  errorMessage: $errorMessage,
+                                  iconLeading: Image.checkmark)
+                
+                Button("Register") {
+                    
+                    print("User: \(userName)")
+                    print("Email: \(userEmail)")
+                    print("Password: \(userPassword)")
+                    print("Password confirm: \(userPasswordConfirm)")
+                    
+                    if userName.isEmpty || userEmail.isEmpty ||
+                        userPassword.isEmpty || userPasswordConfirm.isEmpty {
+                        canRegister = false
+                        errorMessage = "Fill the text fields required"
+                    } else {
+                        canRegister = true
                     }
                     
-                    
-                    TextError(message: errorMessage)
+                    //If Textfields are empty, bool error will be true.
+                    isUserNameError = userName.isEmpty
+                    isUserEmailError = userEmail.isEmpty
+                    isUserPasswordError = userPassword.isEmpty
+                    isUserPasswordConfirmError = userPasswordConfirm.isEmpty
+                }
+                .buttonStyle(ButtonPrimaryStyle())
+                .padding(.bottom)
+                .navigationDestination(isPresented: $canRegister) {
+                    TabViewCustom(selectedTab: .resume)
+                        .toolbar(.hidden, for: .navigationBar)
                 }
                 
+                
+                TextError(message: errorMessage)
             }
-            .modifier(FormStyleSign())
         }
     }
 }

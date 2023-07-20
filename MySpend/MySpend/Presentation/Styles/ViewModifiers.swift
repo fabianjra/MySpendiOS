@@ -152,6 +152,42 @@ struct Show: ViewModifier {
 }
 
 /**
+ Lets you ignore safe area from views with condition.
+ 
+ **Example:**
+ ```swift
+ @State var condition: Bool = true
+ 
+ VStack {
+    Color.red
+ }
+ .modifier(IgnoreSafeArea(condition: condition))
+ ```
+ 
+ - Parameters:
+    - condition: Boolean condition.
+ 
+ - Authors: Fabian Rodriguez
+ 
+ - Version: 1.0
+ 
+ - Date: Jul 2023
+ */
+struct IgnoreSafeArea: ViewModifier {
+    let condition: Bool
+    
+    @ViewBuilder
+    func body(content: Content) -> some View {
+        
+        if condition {
+            content.ignoresSafeArea()
+        } else {
+            content
+        }
+    }
+}
+
+/**
  Now that we know that the GeometryReader gives us the size of the container, the usual follow-up question is: how do I use it to get the size of a specific view?
  To do this we need to move the geometry reader one level below our targeted view. How? We could add an empty background that gets the size of the targeted view and sends this information back to a Binding.
  Let's create a SizeCalculator ViewModifier so that we can use this functionality on every view:
