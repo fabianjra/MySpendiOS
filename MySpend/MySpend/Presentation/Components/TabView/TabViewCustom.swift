@@ -22,7 +22,7 @@ struct TabViewCustom: View {
                 
                 selectedTab.view
                     .edgesIgnoringSafeArea(.bottom)
-                    //.tag(selectedTab)
+                //.tag(selectedTab)
             }
             
             tabView
@@ -52,19 +52,22 @@ struct TabViewCustom: View {
                         selectedTab = item
                     } label: {
                         VStack{
-
-                            item.imageIcon
-                                .resizable()
-                                .frame(width: Frames.tabViewIcon, height: Frames.tabViewIcon)
-                                .accentColor(selectedTab == item ?
-                                             Color.tabViewIconSelected
-                                             : Color.tabViewIconDeselected)
+                            
+                            Image.imageSelected(selectedTab == item,
+                                                imageSelected: item.image,
+                                                imageDeselected: item.imageDeselected)
+                            .frame(width: Frames.tabViewIcon,
+                                   height: Frames.tabViewIcon)
+                            .tint(selectedTab == item ?
+                                  Color.tabViewIconSelected
+                                  : Color.tabViewIconDeselected)
+                            
                             
                             Text(item.rawValue.capitalized)
                                 .font(.montserrat(size: .small))
-                                .accentColor(selectedTab == item ?
-                                             Color.tabViewIconSelected
-                                             : Color.tabViewIconDeselected)
+                                .tint(selectedTab == item ?
+                                      Color.tabViewIconSelected
+                                      : Color.tabViewIconDeselected)
                         }
                     }
                     .padding(.horizontal, Views.paddingTabViewHorizontal)

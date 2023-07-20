@@ -11,14 +11,20 @@ enum TabViewIcons: String, CaseIterable, Identifiable {
     public var id: Self { self }
     case resume
     case history
-    case category
     case settings
     
-    var imageIcon: Image {
+    var image: Image {
         switch self {
         case .resume: return Image.dolarSquareFill
         case .history: return Image.stackFill
-        case .category: return Image.listBulletClipboardFill
+        case .settings: return Image.sliderHorizontal
+        }
+    }
+    
+    var imageDeselected: Image {
+        switch self {
+        case .resume: return Image.dolarSquare
+        case .history: return Image.stack
         case .settings: return Image.sliderHorizontal
         }
     }
@@ -28,7 +34,6 @@ enum TabViewIcons: String, CaseIterable, Identifiable {
         switch self {
         case .resume: Color.blue
         case .history: Color.green
-        case .category: Color.yellow
         case .settings: Color.red
         }
     }
