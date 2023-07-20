@@ -19,6 +19,12 @@ struct DividerView: View {
 
 struct DividerView_Previews: PreviewProvider {
     static var previews: some View {
-        DividerView()
+        
+        ZStack {
+            Color.background
+            
+            DividerView()
+        }
+        
     }
 }

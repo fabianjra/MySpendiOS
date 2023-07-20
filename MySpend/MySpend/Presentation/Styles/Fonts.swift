@@ -43,18 +43,3 @@ struct FontSizes {
     static let bigXXL = UIFont.preferredFont(forTextStyle: .largeTitle).pointSize //34
     static let bigXXXL = (UIFont.preferredFont(forTextStyle: .largeTitle).pointSize + 10.0) //44
 }
-
-//TODO: Refactorizar: Pasar a ViewBuilder para Text o similar.
-//public enum FontSizes {
-//    case small
-//    case body
-//    case big
-//
-//    var size: CGFloat {
-//        switch self {
-//        case .small: return UIFont.preferredFont(forTextStyle: .caption1).pointSize //12
-//        case .body: return UIFont.preferredFont(forTextStyle: .body).pointSize //17
-//        case .big: return UIFont.preferredFont(forTextStyle: .title3).pointSize //20
-//        }
-//    }
-//}

@@ -15,6 +15,7 @@ class AppState {
     var swipeEnabled = true
 }
 
+//Code taken from here: https://stackoverflow.com/a/75661073/7116544
 extension UINavigationController: UIGestureRecognizerDelegate {
     override open func viewDidLoad() {
         super.viewDidLoad()

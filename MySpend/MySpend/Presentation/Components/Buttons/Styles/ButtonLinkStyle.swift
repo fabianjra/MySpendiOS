@@ -25,10 +25,14 @@ struct ButtonLinkStyle: ButtonStyle {
 struct ButtonLinkStyle_Previews: PreviewProvider {
     static var previews: some View {
         
-        Button("Button Primary") {
-            print("button pressed")
+        ZStack {
+            Color.background
+            
+            Button("Button Primary") {
+                print("button pressed")
+            }
+            .buttonStyle(ButtonLinkStyle())
+            .environment(\.isEnabled, true)
         }
-        .buttonStyle(ButtonLinkStyle())
-        .environment(\.isEnabled, true)
     }
 }

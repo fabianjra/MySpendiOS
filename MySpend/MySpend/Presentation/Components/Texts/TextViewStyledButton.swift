@@ -9,12 +9,8 @@ import SwiftUI
 
 struct TextViewStyledButton: View {
     
-    private var text: String = ""
-    
-    init(_ text: String) {
-        self.text = text
-    }
-    
+    let text: String
+
     var body: some View {
         
         Text(text)
@@ -34,6 +30,6 @@ struct TextViewStyledButton: View {
 
 struct TextViewStyledButton_Previews: PreviewProvider {
     static var previews: some View {
-        TextViewStyledButton("Button style")
+        TextViewStyledButton(text: "Button style")
     }
 }

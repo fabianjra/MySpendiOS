@@ -82,7 +82,7 @@ struct FormStyleSign: ViewModifier {
 }
 
 /**
- ViewBuilder to modify the frame of a View on base of a validation.
+ Modify the frame of a View based on a validation.
  
  **Example:**
  ```swift
