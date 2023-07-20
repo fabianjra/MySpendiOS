@@ -26,8 +26,6 @@ struct TabViewCustom: View {
             }
             
             tabView
-            //Add padding when is iPhone SE screen.
-            //.padding(.bottom, Utils.getEdgeInsets().bottom == .zero ? 10 : .zero)
         }
         .edgesIgnoringSafeArea(.bottom)
         .onAppear {
@@ -43,14 +41,7 @@ struct TabViewCustom: View {
         ZStack{
             
             //MARK: BACKGROUND
-            Color.white
-                .frame(height: Frames.tabViewHeight)
-                .cornerRadius(.infinity)
-                .shadow(color: .shadow.opacity(Colors.opacityHalf),
-                        radius: Radius.shadow,
-                        x: .zero, y: .zero)
-                .padding(.horizontal)
-                .padding(.bottom)
+            TabViewShape()
             
             
             //MARK: ITEMS
@@ -61,7 +52,7 @@ struct TabViewCustom: View {
                         selectedTab = item
                     } label: {
                         VStack{
-                            
+
                             item.imageIcon
                                 .resizable()
                                 .frame(width: Frames.tabViewIcon, height: Frames.tabViewIcon)
@@ -74,7 +65,6 @@ struct TabViewCustom: View {
                                 .accentColor(selectedTab == item ?
                                              Color.tabViewIconSelected
                                              : Color.tabViewIconDeselected)
-                            
                         }
                     }
                     .padding(.horizontal, Views.paddingTabViewHorizontal)

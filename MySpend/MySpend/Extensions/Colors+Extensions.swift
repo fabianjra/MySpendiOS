@@ -29,6 +29,7 @@ extension Color {
     // MARK: TabView
     static let tabViewIconSelected = Color("TabViewIconSelected")
     static let tabViewIconDeselected = Color("TabViewIconDeselected")
+    static let tabViewBackground = Color("TabViewBackground")
     
     // MARK: Textfields
     static let textFieldPlaceholder = Color("TextFieldPlaceholder") //AKA: Silver
