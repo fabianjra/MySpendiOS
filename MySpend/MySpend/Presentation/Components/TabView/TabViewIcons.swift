@@ -29,7 +29,7 @@ enum TabViewIcons: String, CaseIterable, Identifiable {
     @ViewBuilder
     var view: some View {
         switch self {
-        case .resume: Color.blue
+        case .resume: Color.background
         case .settings: Color.red
         }
     }

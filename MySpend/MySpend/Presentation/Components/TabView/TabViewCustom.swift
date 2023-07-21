@@ -21,7 +21,6 @@ struct TabViewCustom: View {
             TabView(selection: $selectedTab) {
                 
                 selectedTab.view
-                    .edgesIgnoringSafeArea(.bottom)
                 //.tag(selectedTab)
             }
             
