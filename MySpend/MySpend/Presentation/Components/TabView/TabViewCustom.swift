@@ -38,13 +38,9 @@ struct TabViewCustom: View {
     }
     
     var tabView: some View {
-        ZStack{
-            
-            //MARK: BACKGROUND
-            TabViewShape()
-            
-            
-            //MARK: ITEMS
+        TabViewContainer {
+            //TODO: Add new transaction function.
+        } content: {
             HStack {
                 ForEach(TabViewIcons.allCases, id: \.id) { item in
                     
