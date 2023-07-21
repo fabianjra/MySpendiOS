@@ -16,7 +16,6 @@ struct ButtonRounded: View {
     var body: some View {
         
         Button(action: function, label: {
-            
             icon
                 .resizable()
                 .frame(width: Frames.roundedButtonIcon, height: Frames.roundedButtonIcon)
@@ -24,18 +23,14 @@ struct ButtonRounded: View {
         })
         .padding()
         .background(
-            ZStack{
-                LinearGradient(colors: color,
-                               startPoint: .leading,
-                               endPoint: .trailing)
-                .clipShape(Circle())
-                .overlay(Circle().stroke(Color.buttonForeground, lineWidth: Views.buttonBorderWidth))
-            }
+            LinearGradient(colors: color,
+                           startPoint: .leading,
+                           endPoint: .trailing)
+            .overlay(Circle().stroke(Color.buttonForeground, lineWidth: Views.buttonBorderWidth))
         )
         .clipShape(Circle())
         .shadow(color: .shadow.opacity(Colors.opacityHalf),
-                radius: Radius.shadow,
-                x: .zero, y: .zero)
+                radius: Radius.shadow)
     }
 }
 
