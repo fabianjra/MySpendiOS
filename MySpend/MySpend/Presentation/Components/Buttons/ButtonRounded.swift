@@ -29,11 +29,11 @@ struct ButtonRounded: View {
                                startPoint: .leading,
                                endPoint: .trailing)
                 .clipShape(Circle())
-                .overlay(Circle().stroke(.white, lineWidth: Views.buttonBorderWidth))
+                .overlay(Circle().stroke(Color.buttonForeground, lineWidth: Views.buttonBorderWidth))
             }
         )
         .clipShape(Circle())
-        .shadow(color: .black.opacity(Colors.opacityHalf),
+        .shadow(color: .shadow.opacity(Colors.opacityHalf),
                 radius: Radius.shadow,
                 x: .zero, y: .zero)
     }
