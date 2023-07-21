@@ -22,5 +22,5 @@ struct Views {
     //MARK: PADDING
     static let paddingSmallButton: CGFloat = 60.0
     static let paddingTabViewHorizontal: CGFloat = 60.0
-    static let paddingButtonRoundedBottom: CGFloat = 90.0
+    static let paddingButtonRoundedBottom: CGFloat = 60.0
 }

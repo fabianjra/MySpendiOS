@@ -9,17 +9,18 @@ import SwiftUI
 
 struct TabViewContainer<Content: View>: View {
 
+    let aligment: Alignment
     var function: () -> Void
     var content: () -> Content
     
-    init(function: @escaping () -> Void, @ViewBuilder content: @escaping () -> Content) {
+    init(aligment: Alignment = .bottom, function: @escaping () -> Void, @ViewBuilder content: @escaping () -> Content) {
+        self.aligment = aligment
         self.function = function
         self.content = content
     }
     
     var body: some View {
-        ZStack{
-            
+        ZStack(alignment: aligment) {
             ButtonRounded {
                 function()
             }
@@ -36,6 +37,7 @@ struct TabViewContainer<Content: View>: View {
                 .padding(.bottom)
             
             HStack(content: content)
+                .padding(.bottom)
         }
     }
 }
