@@ -13,6 +13,9 @@ struct Frames {
     static let screenSize = UIScreen.main.bounds.size
     static let tabViewIcon: CGFloat = 20.0
     static let tabViewHeight: CGFloat = 75.0
+    
+    //MARK: BUTTON
+    static let roundedButtonIcon: CGFloat = 35.0
 }
 
 enum FrameSize {

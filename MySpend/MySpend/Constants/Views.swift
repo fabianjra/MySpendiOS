@@ -9,6 +9,9 @@ import SwiftUI
 
 struct Views {
     
+    //MARK: BUTTON
+    static let buttonBorderWidth: CGFloat = 6.0
+    
     //MARK: TEXT
     static let messageMaxLines: Int = 3
     

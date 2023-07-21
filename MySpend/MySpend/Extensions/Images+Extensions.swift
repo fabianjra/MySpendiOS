@@ -10,6 +10,9 @@ import SwiftUI
 
 extension Image {
     
+    //MARK: BUTTON
+    static let plus = Image(systemName: "plus")
+    
     //MARK: TEXFIELD
     static let envelopeFill = Image(systemName: "envelope.fill")
     static let lockFill = Image(systemName: "lock.fill")
