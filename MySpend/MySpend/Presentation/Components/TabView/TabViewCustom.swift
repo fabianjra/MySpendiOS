@@ -71,9 +71,13 @@ struct TabViewCustom: View {
                         }
                     }
                     .padding(.horizontal, Views.paddingTabViewHorizontal)
+                    .padding(.bottom)
+                    
+                    if item == .resume {
+                        Spacer()
+                    }
                 }
             }
-            .padding(.bottom)
         }
     }
 }

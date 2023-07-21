@@ -10,6 +10,7 @@ import SwiftUI
 struct TabViewShape: View {
     var body: some View {
         Color.tabViewBackground
+            .clipShape(SemiCircleShape())
             .frame(height: Frames.tabViewHeight)
             .cornerRadius(.infinity)
             .shadow(color: .shadow.opacity(Colors.opacityHalf),

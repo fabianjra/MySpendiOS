@@ -9,14 +9,12 @@ import SwiftUI
 
 enum TabViewIcons: String, CaseIterable, Identifiable {
     public var id: Self { self }
-    case resume
-    case history
-    case settings
+    case resume //History will be inside of this view.
+    case settings //Categories will be inside of this view.
     
     var image: Image {
         switch self {
         case .resume: return Image.dolarSquareFill
-        case .history: return Image.stackFill
         case .settings: return Image.sliderHorizontal
         }
     }
@@ -24,7 +22,6 @@ enum TabViewIcons: String, CaseIterable, Identifiable {
     var imageDeselected: Image {
         switch self {
         case .resume: return Image.dolarSquare
-        case .history: return Image.stack
         case .settings: return Image.sliderHorizontal
         }
     }
@@ -33,7 +30,6 @@ enum TabViewIcons: String, CaseIterable, Identifiable {
     var view: some View {
         switch self {
         case .resume: Color.blue
-        case .history: Color.green
         case .settings: Color.red
         }
     }
