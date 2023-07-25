@@ -46,7 +46,7 @@ struct TabViewCustom: View {
                     .padding(.horizontal, Views.paddingTabViewHorizontal)
                     .padding(.bottom)
 
-                if item == .resume {
+                if item == TabViewIcons.allCases.first {
                     Spacer()
                 }
             }
