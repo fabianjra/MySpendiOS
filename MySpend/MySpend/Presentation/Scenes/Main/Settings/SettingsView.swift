@@ -13,7 +13,6 @@ enum SettingOptions: String, CaseIterable, Identifiable, Hashable {
     case changeName = "Change my name"
     case changePassword = "Change my password"
     case validateAccount = "Validate account"
-    case logOut = "Log out"
     
     @ViewBuilder
     var view: some View {
@@ -22,7 +21,6 @@ enum SettingOptions: String, CaseIterable, Identifiable, Hashable {
         case .changeName: Color.background
         case .changePassword: Color.blue
         case .validateAccount: Color.red
-        case .logOut: Color.yellow
         }
     }
 }
@@ -32,41 +30,41 @@ struct Opcion: View {
     let option: String
     
     var body: some View {
-        Text("Opcion: \(option)")
+        VStack {
+            Text("Opcion: \(option)")
+        }
     }
 }
 
 struct SettingsView: View {
     
+    @Environment(\.dismiss) var dismiss
+    
     var body: some View {
-        
-        NavigationStack {
-
+        VStack {
             List(SettingOptions.allCases, id: \.id) { option in
                 
-                NavigationLink(option.rawValue, value: option.rawValue)
-                
+                NavigationLink(option.rawValue, destination: {
+                    option.view
+                        .toolbar(.hidden, for: .navigationBar)
+                })
+
                     .listRowBackground(Color.textfieldBackground)
-                //.listRowSeparator(.hidden)
+                //.listRowSeparator(.hidden))
             }
-            .navigationDestination(for: String.self, destination: Opcion.init)
-            .background(Color.background)
+            .background(Color.red)
             .scrollContentBackground(.hidden)
-        }
-        
-        
-//            NavigationStack {
-//                List {
-//                    NavigationLink("Show an integer", value: 42)
-//                    NavigationLink("Show a string", value: "Hello, world!")
-//                    NavigationLink("Show a Double", value: Double.pi)
-//                }
-//                .navigationDestination(for: Int.self) { Text("Received Int: \($0)") }
-//                .navigationDestination(for: String.self) { Text("Received String: \($0)") }
-//                .navigationDestination(for: Double.self) { Text("Received Double: \($0)") }
-//                .navigationTitle("Select a value")
-//            }
             
+            Button("Log out") {
+                dismiss()
+            }
+            //.buttonStyle(ButtonPrimaryStyle(color: [Color.warning1]))
+            .padding(.horizontal, Views.paddingSmallButton)
+            .padding(.bottom)
+            
+            Spacer()
+        }
+        .background(Color.background)
     }
 }
 
