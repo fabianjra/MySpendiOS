@@ -79,7 +79,6 @@ extension View {
      The job of the SizeCalculator is to add a GeometryReader as the background of our target view.
      On appear, so after SwiftUI has rendered the content, it will send the size back to the Binding
      
-     *Notes:**
      Reference: https://stackoverflow.com/questions/57577462/get-width-of-a-view-using-in-swiftui
      
      **Example:**

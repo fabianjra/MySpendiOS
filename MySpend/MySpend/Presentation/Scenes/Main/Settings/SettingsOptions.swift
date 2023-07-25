@@ -12,6 +12,8 @@ import SwiftUI
  so instead of trying to put different View types (due to generics) into one array (requires same type),
  we can make data responsible for providing corresponding view (that now with help of ViewBuilder is very easy).
  
+ Reference: https://github.com/Asperi-Demo/4SwiftUI/blob/master/PlayOn_iOS/PlayOn_iOS/Findings/TestDataDrivenScreenContruction.swift
+ 
  **Example:**
  ```swift
  List(SettingsOptions.allCases) { option in
