@@ -38,9 +38,7 @@ struct Opcion: View {
 
 struct SettingsView: View {
     
-    //@Environment(\.dismiss) var dismiss
-    
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
         VStack {
@@ -48,18 +46,16 @@ struct SettingsView: View {
                 
                 NavigationLink(option.rawValue, destination: {
                     option.view
-                        .toolbar(.hidden, for: .navigationBar)
+                        .toolbar(.hidden)
                 })
-
-                    .listRowBackground(Color.textfieldBackground)
+                .listRowBackground(Color.textfieldBackground)
                 //.listRowSeparator(.hidden))
             }
             .background(Color.background)
             .scrollContentBackground(.hidden)
             
             Button("Log out") {
-//                /dismiss()
-                presentationMode.wrappedValue.dismiss()
+                dismiss()
             }
             .buttonStyle(ButtonPrimaryStyle(color: [Color.warning]))
             .padding(.horizontal, Views.paddingSmallButton)
