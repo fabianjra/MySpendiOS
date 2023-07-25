@@ -39,6 +39,7 @@ struct Opcion: View {
 struct SettingsView: View {
     
     @Environment(\.dismiss) var dismiss
+    @State private var showingAlert = false
     
     var body: some View {
         VStack {
@@ -55,11 +56,20 @@ struct SettingsView: View {
             .scrollContentBackground(.hidden)
             
             Button("Log out") {
-                dismiss()
+                showingAlert = true
             }
             .buttonStyle(ButtonPrimaryStyle(color: [Color.warning]))
             .padding(.horizontal, Views.paddingSmallButton)
             .padding(.bottom, 200)
+            .alert("Log out", isPresented: $showingAlert) {
+                Button("OK") {
+                    dismiss()
+                }
+                Button("Cancel", role: .cancel) { }
+            } message: {
+                Text("Are you sure?")
+            }
+            
         }
         .background(Color.background)
     }
