@@ -60,7 +60,7 @@ struct LoginView: View {
                     .buttonStyle(ButtonPrimaryStyle())
                     .padding(.bottom)
                     .navigationDestination(isPresented: $canLogin) {
-                        TabViewCustom(selectedTab: .resume)
+                        MainView(selectedTab: .resume)
                             .toolbar(.hidden, for: .navigationBar)
                     }
                     

@@ -95,7 +95,7 @@ struct RegisterView: View {
                 .buttonStyle(ButtonPrimaryStyle())
                 .padding(.bottom)
                 .navigationDestination(isPresented: $canRegister) {
-                    TabViewCustom(selectedTab: .resume)
+                    MainView(selectedTab: .resume)
                         .toolbar(.hidden, for: .navigationBar)
                 }
                 
