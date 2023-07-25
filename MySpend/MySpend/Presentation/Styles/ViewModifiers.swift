@@ -210,7 +210,6 @@ struct IgnoreSafeArea: ViewModifier {
  
  - Date: Jul 2023
  */
-
 struct SizeCalculator: ViewModifier {
     
     @Binding var size: CGSize

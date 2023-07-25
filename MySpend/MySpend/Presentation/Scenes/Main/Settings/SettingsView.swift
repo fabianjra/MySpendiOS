@@ -7,35 +7,6 @@
 
 import SwiftUI
 
-enum SettingOptions: String, CaseIterable, Identifiable, Hashable {
-    public var id: Self { self }
-    case categories = "Categories"
-    case changeName = "Change my name"
-    case changePassword = "Change my password"
-    case validateAccount = "Validate account"
-    
-    @ViewBuilder
-    var view: some View {
-        switch self {
-        case .categories: Color.green
-        case .changeName: Color.background
-        case .changePassword: Color.blue
-        case .validateAccount: Color.red
-        }
-    }
-}
-
-struct Opcion: View {
-    
-    let option: String
-    
-    var body: some View {
-        VStack {
-            Text("Opcion: \(option)")
-        }
-    }
-}
-
 struct SettingsView: View {
     
     @Environment(\.dismiss) var dismiss
@@ -43,17 +14,16 @@ struct SettingsView: View {
     
     var body: some View {
         VStack {
-            List(SettingOptions.allCases, id: \.id) { option in
+            
+            List(SettingsOptions.allCases) { option in
                 
-                NavigationLink(option.rawValue, destination: {
-                    option.view
-                        .toolbar(.hidden)
-                })
-                .listRowBackground(Color.textfieldBackground)
+                NavigationLink(option.rawValue, destination: option.view)
+                    .listRowBackground(Color.textfieldBackground)
                 //.listRowSeparator(.hidden))
             }
-            .background(Color.background)
             .scrollContentBackground(.hidden)
+            .background(Color.background)
+            
             
             Button("Log out") {
                 showingAlert = true
