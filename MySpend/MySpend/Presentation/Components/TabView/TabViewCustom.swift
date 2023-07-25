@@ -42,7 +42,7 @@ struct TabViewCustom: View {
         } content: {
             ForEach(TabViewIcons.allCases, id: \.id) { item in
                 
-                TabViewButtons(selectedTab: selectedTab, item: item)
+                TabViewButton(selectedTab: $selectedTab, item: item)
                     .padding(.horizontal, Views.paddingTabViewHorizontal)
                     .padding(.bottom)
 

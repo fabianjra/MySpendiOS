@@ -1,5 +1,5 @@
 //
-//  TabViewButtons.swift
+//  TabViewButton.swift
 //  MySpend
 //
 //  Created by Fabian Rodriguez on 24/7/23.
@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct TabViewButtons: View {
+struct TabViewButton: View {
     
-    @State var selectedTab: TabViewIcons
+    @Binding var selectedTab: TabViewIcons
     let item: TabViewIcons
     
     var body: some View {
@@ -39,14 +39,17 @@ struct TabViewButtons: View {
     }
 }
 
-struct TabViewButtons_Previews: PreviewProvider {
+struct TabViewButton_Previews: PreviewProvider {
     static var previews: some View {
+        
+        @State var selectedTab: TabViewIcons = .resume
+        
         ZStack {
             
             Color.background
             
             HStack {
-                TabViewButtons(selectedTab: .resume, item: .resume)
+                TabViewButton(selectedTab: $selectedTab, item: .resume)
             }
             .background(Color.textPrimaryForeground)
         }
