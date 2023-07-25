@@ -58,7 +58,7 @@ struct TextFieldIconStyle: TextFieldStyle {
             if isError {
                 RoundedRectangle(cornerRadius: .infinity)
                     .stroke(LinearGradient(
-                        colors: [Color.textErrorForeground],
+                        colors: [Color.warning],
                         startPoint: .leading,
                         endPoint: .trailing), lineWidth: Shapes.textFieldLineWidth)
             }

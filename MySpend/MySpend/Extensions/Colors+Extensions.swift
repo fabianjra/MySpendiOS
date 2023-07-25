@@ -16,6 +16,7 @@ extension Color {
     static let buttonLinkForeground = Color("ButtonLinkForeground")
     
     // MARK: General
+    static let warning = Color("Warning")
     static let shadow = Color("Shadow")
     static let primaryLeading = Color("PrimaryLeading")
     static let primaryTrailing = Color("PrimaryTrailing")
@@ -40,7 +41,6 @@ extension Color {
     // MARK: Texts
     static let textPrimaryForeground = Color("TextPrimaryForeground")
     static let textSecondaryForeground = Color("TextSecondaryForeground")
-    static let textErrorForeground = Color("TextErrorForeground")
     
     // MARK: Views
     static let divider = Color("Divider")

@@ -58,7 +58,7 @@ struct SettingsView: View {
             Button("Log out") {
                 dismiss()
             }
-            //.buttonStyle(ButtonPrimaryStyle(color: [Color.warning1]))
+            .buttonStyle(ButtonPrimaryStyle(color: [Color.warning]))
             .padding(.horizontal, Views.paddingSmallButton)
             .padding(.bottom)
             

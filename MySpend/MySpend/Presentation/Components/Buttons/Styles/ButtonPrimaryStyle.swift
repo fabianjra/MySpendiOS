@@ -10,7 +10,11 @@ import SwiftUI
 struct ButtonPrimaryStyle: ButtonStyle {
     
     @Environment(\.isEnabled) private var isEnabled: Bool
-    let color: Array<Color> = Color.primaryGradiant
+    let color: Array<Color>
+    
+    init(color: Array<Color> = Color.primaryGradiant) {
+        self.color = color
+    }
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
