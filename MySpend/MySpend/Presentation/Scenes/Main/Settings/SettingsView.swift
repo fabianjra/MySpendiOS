@@ -38,7 +38,9 @@ struct Opcion: View {
 
 struct SettingsView: View {
     
-    @Environment(\.dismiss) var dismiss
+    //@Environment(\.dismiss) var dismiss
+    
+    @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
         VStack {
@@ -52,17 +54,16 @@ struct SettingsView: View {
                     .listRowBackground(Color.textfieldBackground)
                 //.listRowSeparator(.hidden))
             }
-            .background(Color.red)
+            .background(Color.background)
             .scrollContentBackground(.hidden)
             
             Button("Log out") {
-                dismiss()
+//                /dismiss()
+                presentationMode.wrappedValue.dismiss()
             }
             .buttonStyle(ButtonPrimaryStyle(color: [Color.warning]))
             .padding(.horizontal, Views.paddingSmallButton)
-            .padding(.bottom)
-            
-            Spacer()
+            .padding(.bottom, 200)
         }
         .background(Color.background)
     }
