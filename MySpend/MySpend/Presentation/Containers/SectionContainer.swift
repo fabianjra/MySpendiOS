@@ -10,19 +10,37 @@ import SwiftUI
 struct SectionContainer<Content: View>: View {
     
     let header: String?
+    let isInsideList: Bool
+    let headerColor: Color?
+    let headerSize: Font.Sizes?
     var content: () -> Content
     
-    init(header: String? = nil, @ViewBuilder content: @escaping () -> Content) {
+    init(header: String? = nil, isInsideList: Bool? = true, headerColor: Color? = Color.textSecondaryForeground, headerSize: Font.Sizes? = .small, @ViewBuilder content: @escaping () -> Content) {
         self.header = header
+        self.isInsideList = isInsideList ?? true
+        self.headerColor = headerColor
+        self.headerSize = headerSize
         self.content = content
     }
     
     var body: some View {
         Section(content: content, header: {
             if let header = header {
-                Text(header)
-                    .foregroundColor(Color.textSecondaryForeground)
-                    .font(.montserrat(size: .small))
+                
+                if isInsideList {
+                    Text(header)
+                        .foregroundColor(headerColor)
+                        .font(.montserrat(size: headerSize ?? .small))
+                } else {
+                    HStack {
+                        Text(header)
+                            .foregroundColor(headerColor)
+                            .font(.montserrat(size: headerSize ?? .small))
+                            .padding(.leading)
+                        
+                        Spacer()
+                    }
+                }
             }
         })
         .listRowBackground(Color.listRowBackground)
@@ -31,15 +49,29 @@ struct SectionContainer<Content: View>: View {
 
 struct SectionContainer_Previews: PreviewProvider {
     static var previews: some View {
-        ListContainer {
-            SectionContainer(header: "Header for section") {
-                Text("Content of section")
+        VStack {
+            ListContainer {
+                SectionContainer(header: "Header for section") {
+                    Text("Content of section")
+                }
+                
+                SectionContainer {
+                    Text("Content without header")
+                    Text("Item 2")
+                }
             }
             
-            SectionContainer {
-                Text("Content without header")
-                Text("Item 2")
+            VStack {
+                SectionContainer(header: "HEADER WHEN IS NOT A LIST",
+                                 isInsideList: false,
+                                 headerSize: .small) {
+                    TextFieldName(text: .constant(""),
+                                  isError: .constant(false),
+                                  errorMessage: .constant(""))
+                }
             }
+            .padding()
+            .background(Color.background)
         }
     }
 }
