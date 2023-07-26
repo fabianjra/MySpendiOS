@@ -14,6 +14,9 @@ struct TextFieldIconStyle: TextFieldStyle {
     private let size: Font.Sizes
     private let iconLeading: Image?
     
+//    private let foregroundColor: Color?
+//    private let backgroundColor: Color?
+    
     @FocusState private var isFocused: Bool
     @Binding private var isError: Bool
     

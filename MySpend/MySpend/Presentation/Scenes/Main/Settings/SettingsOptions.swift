@@ -47,7 +47,7 @@ enum AccountOptions: String, CaseIterable, Identifiable {
     var view: some View {
         switch self {
         //"for: .navigationBar" is disabling the navigator to navigate the next View.
-        case .changeName: RegisterView().toolbar(.hidden)
+        case .changeName: ChangeNameView().toolbar(.hidden)
         case .changePassword: Color.green.toolbar(.hidden)
         case .validateAccount: Color.yellow.toolbar(.hidden)
         }

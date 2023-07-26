@@ -9,19 +9,29 @@ import SwiftUI
 
 struct TextFieldName: View {
     
-    @Binding var text: String
+    private let placeHolder: String?
+    @Binding private var text: String
+    private let iconLeading: Image?
     
-    @Binding var isError: Bool
-    @Binding var errorMessage: String
+    @Binding private var isError: Bool
+    @Binding private var errorMessage: String
+    
+    init(placeHolder: String? = nil, text: Binding<String>, iconLeading: Image? = Image.personFill, isError: Binding<Bool>, errorMessage: Binding<String>) {
+        self.placeHolder = placeHolder
+        self._text = text
+        self.iconLeading = iconLeading
+        self._isError = isError
+        self._errorMessage = errorMessage
+    }
     
     var body: some View {
         
         TextField("",
                   text: $text,
-                  prompt: Text("Name").foregroundColor(.textFieldPlaceholder))
+                  prompt: Text(placeHolder ?? "Name").foregroundColor(.textFieldPlaceholder))
         
         .textFieldStyle(TextFieldIconStyle($text,
-                                           iconLeading: Image.personFill,
+                                           iconLeading: iconLeading,
                                            isError: $isError))
         
         .onChange(of: text) { _ in errorMessage = "" }

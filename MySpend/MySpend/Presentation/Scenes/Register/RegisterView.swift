@@ -71,6 +71,7 @@ struct RegisterView: View {
                                   isError: $isUserPasswordConfirmError,
                                   errorMessage: $errorMessage,
                                   iconLeading: Image.checkmark)
+                .padding(.bottom)
                 
                 Button("Register") {
                     

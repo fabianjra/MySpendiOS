@@ -11,14 +11,13 @@ struct ChangeNameView: View {
     
     @Environment(\.dismiss) var dismiss
     
-    @State private var userName: String = ""
+    @State private var userName: String = "Actual name"
     
     @State private var newUserName: String = ""
     @State private var isNewUserNameError: Bool = false
 
-    
+    @State private var canSubmit: Bool = false
     @State private var errorMessage: String = ""
-    @State private var canRegister: Bool = false
     
     var body: some View {
         
@@ -45,13 +44,40 @@ struct ChangeNameView: View {
             }
             .padding(.bottom)
 
-            //MARK: REGISTER
+            
+            //MARK: FIELDS
             VStack(spacing: Views.formSpacing) {
                 
-                TextFieldName(text: $userName,
-                              isError: .constant(false),
-                              errorMessage: .constant(""))
+                TextFieldReadOnly(text: $userName, iconLeading: Image.personFill)
+                
+                TextFieldName(placeHolder: "New name",
+                              text: $newUserName,
+                              iconLeading: Image.checkmark,
+                              isError: $isNewUserNameError,
+                              errorMessage: $errorMessage)
                 .submitLabel(.done)
+                .padding(.bottom)
+                
+                
+                Button("Change name") {
+                    
+                    print("New user name: \(newUserName)")
+                    
+                    if newUserName.isEmptyOrWhitespace() {
+                        canSubmit = false
+                        errorMessage = "Fill the new user name text field"
+                    } else {
+                        canSubmit = true
+                    }
+                    
+                    //If Textfields are empty, bool error will be true.
+                    isNewUserNameError = newUserName.isEmptyOrWhitespace()
+                }
+                .buttonStyle(ButtonPrimaryStyle())
+                .padding(.bottom)
+                
+                
+                TextError(message: errorMessage)
             }
             
         }

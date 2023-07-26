@@ -40,6 +40,7 @@ struct LoginView: View {
                                       isError: $isUserPasswordError,
                                       errorMessage: $errorMessage,
                                       iconLeading: Image.lockFill)
+                    .padding(.bottom)
                     
                     
                     Button("Login") {
