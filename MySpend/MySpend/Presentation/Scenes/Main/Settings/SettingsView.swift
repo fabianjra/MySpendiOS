@@ -17,7 +17,7 @@ struct SettingsView: View {
         ListContainer {
             
             //MARK: ACCOUNT
-            Section {
+            SectionContainer(header: "Account") {
                 ForEach(AccountOptions.allCases) { option in
                     HStack {
                         option.icon
@@ -25,15 +25,10 @@ struct SettingsView: View {
                         NavigationLink(option.rawValue, destination: option.view)
                     }
                 }
-            } header: {
-                Text("Account")
-                    .foregroundColor(Color.textSecondaryForeground)
-                    .font(.montserrat(size: .small))
             }
-            .listRowBackground(Color.listRowBackground)
             
             //MARK: CONTENT
-            Section {
+            SectionContainer(header: "Content") {
                 ForEach(ContentOptions.allCases) { option in
                     HStack {
                         option.icon
@@ -41,15 +36,10 @@ struct SettingsView: View {
                         NavigationLink(option.rawValue, destination: option.view)
                     }
                 }
-            } header: {
-                Text("Content")
-                    .foregroundColor(Color.textSecondaryForeground)
-                    .font(.montserrat(size: .small))
             }
-            .listRowBackground(Color.listRowBackground)
             
             //MARK: LOGIN
-            Section {
+            SectionContainer(header: "Login") {
                 Button("Log out") {
                     showingAlert = true
                 }
@@ -65,13 +55,7 @@ struct SettingsView: View {
                 } message: {
                     //Text("Are you sure you want to log out?")
                 }
-                
-            } header: {
-                Text("Login")
-                    .foregroundColor(Color.textSecondaryForeground)
-                    .font(.montserrat(size: .small))
             }
-            .listRowBackground(Color.listRowBackground)
             
         }
     }
