@@ -14,17 +14,19 @@ struct TextFieldIconStyle: TextFieldStyle {
     private let size: Font.Sizes
     private let iconLeading: Image?
     
-//    private let foregroundColor: Color?
-//    private let backgroundColor: Color?
+    private let foregroundColor: Color?
+    private let backgroundColor: Color?
     
-    @FocusState private var isFocused: Bool
     @Binding private var isError: Bool
+    @FocusState private var isFocused: Bool
     
-    public init(_ text: Binding<String>, family: Font.Family = .regular, size: Font.Sizes = .body, iconLeading: Image? = nil, isError: Binding<Bool>) {
+    public init(_ text: Binding<String>, family: Font.Family = .regular, size: Font.Sizes = .body, iconLeading: Image? = nil, foregroundColor: Color? = Color.textFieldForeground, backgroundColor: Color? = Color.textfieldBackground, isError: Binding<Bool>) {
         self._text = text
         self.family = family
         self.size = size
         self.iconLeading = iconLeading
+        self.foregroundColor = foregroundColor
+        self.backgroundColor = backgroundColor
         self._isError = isError
     }
     
@@ -46,8 +48,8 @@ struct TextFieldIconStyle: TextFieldStyle {
                 .focused($isFocused)
                 .onChange(of: text, perform: { _ in isError = false })
         }
-        .foregroundColor(Color.textFieldForeground)
-        .background(Color.textfieldBackground)
+        .foregroundColor(foregroundColor)
+        .background(backgroundColor)
         .cornerRadius(.infinity)
         .overlay {
 //            if isFocused {

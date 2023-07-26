@@ -24,6 +24,8 @@ struct TextFieldReadOnly: View {
         
         .textFieldStyle(TextFieldIconStyle($text,
                                            iconLeading: iconLeding,
+                                           foregroundColor: Color.disabledForeground,
+                                           backgroundColor: Color.disabledBackground,
                                            isError: .constant(false)))
         .disabled(true)
     }

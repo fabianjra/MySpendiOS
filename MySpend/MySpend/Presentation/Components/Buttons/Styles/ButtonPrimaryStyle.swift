@@ -19,7 +19,7 @@ struct ButtonPrimaryStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .font(.montserrat())
-            .foregroundColor(isEnabled ? Color.buttonForeground : Color.buttonForegroundDisabled)
+            .foregroundColor(isEnabled ? Color.buttonForeground : Color.disabledForeground)
 
             //MARK: SHAPE
             .frame(maxWidth: .infinity)
@@ -27,7 +27,7 @@ struct ButtonPrimaryStyle: ButtonStyle {
             .background(isEnabled ? LinearGradient(colors: color,
                                                    startPoint: .leading,
                                                    endPoint: .trailing) :
-                            LinearGradient(colors: [Color.buttonBackgroundDisabled],
+                            LinearGradient(colors: [Color.disabledBackground],
                                            startPoint: .leading,
                                            endPoint: .trailing)
             )
@@ -42,12 +42,21 @@ struct ButtonPrimaryStyle: ButtonStyle {
 
 struct ButtonPrimaryStyle_Previews: PreviewProvider {
     static var previews: some View {
-        
-        Button("Button Primary") {
-            print("button pressed")
+        VStack {
+            Button("Button Primary") {
+                print("button pressed")
+            }
+            .buttonStyle(ButtonPrimaryStyle())
+            .environment(\.isEnabled, true)
+            //.disabled(userEmail.isEmpty || userPassword.isEmpty) //Way to use disabled
+            
+            Button("Button disabled") {
+                print("button pressed")
+            }
+            .buttonStyle(ButtonPrimaryStyle())
+            .environment(\.isEnabled, false)
         }
-        .buttonStyle(ButtonPrimaryStyle())
-        .environment(\.isEnabled, true)
-        //.disabled(userEmail.isEmpty || userPassword.isEmpty) //Way to use disabled
+        .padding()
+        .background(Color.background)
     }
 }

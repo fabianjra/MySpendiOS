@@ -12,6 +12,10 @@ extension Color {
     // MARK: GENERAL
     static let warning = Color("Warning")
     static let shadow = Color("Shadow")
+    static let disabledForeground = Color("DisabledForeground")
+    static let disabledBackground = Color("DisabledBackground")
+    
+    // MARK: GRADIANTS
     static let primaryLeading = Color("PrimaryLeading")
     static let primaryTrailing = Color("PrimaryTrailing")
     static let primaryGradiant: Array = [Color.primaryLeading,
@@ -23,8 +27,6 @@ extension Color {
     
     // MARK: BUTTONS
     static let buttonForeground = Color("ButtonForeground")
-    static let buttonForegroundDisabled = Color("ButtonForegroundDisabled")
-    static let buttonBackgroundDisabled = Color("ButtonBackgroundDisabled")
     static let buttonLinkForeground = Color("ButtonLinkForeground")
     
     //MARK: LIST
