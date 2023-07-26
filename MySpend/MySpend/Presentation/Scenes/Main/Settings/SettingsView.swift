@@ -17,10 +17,16 @@ struct SettingsView: View {
             
             List(SettingsOptions.allCases) { option in
                 
-                NavigationLink(option.rawValue, destination: option.view)
-                    .listRowBackground(Color.textfieldBackground)
-                //.listRowSeparator(.hidden))
+                HStack {
+                    option.icon
+                    
+                    NavigationLink(option.rawValue, destination: option.view)
+                        .listRowBackground(Color.textfieldBackground)
+                    //.listRowSeparator(.hidden))
+                }
+                
             }
+            //.scrollDisabled(true)
             .scrollContentBackground(.hidden)
             .background(Color.background)
             

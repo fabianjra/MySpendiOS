@@ -35,6 +35,15 @@ enum SettingsOptions: String, CaseIterable, Identifiable {
     case changePassword = "Change my password"
     case validateAccount = "Validate account"
     
+    var icon: Image {
+        switch self {
+        case .categories: return Image.listBulletClipboardFill
+        case .changeName: return Image.personFill
+        case .changePassword: return Image.lockFill
+        case .validateAccount: return Image.checkmark
+        }
+    }
+    
     @ViewBuilder
     var view: some View {
         switch self {

@@ -18,8 +18,8 @@ struct TabViewButton: View {
         } label: {
             VStack{
                 Image.imageSelected(selectedTab == item,
-                                    imageSelected: item.image,
-                                    imageDeselected: item.imageDeselected)
+                                    imageSelected: item.iconSelected,
+                                    imageDeselected: item.iconDeselected)
                 
                 .frame(width: Frames.tabViewIcon,
                        height: Frames.tabViewIcon)

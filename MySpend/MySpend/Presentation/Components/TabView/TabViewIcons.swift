@@ -12,14 +12,14 @@ enum TabViewIcons: String, CaseIterable, Identifiable {
     case resume //History will be inside of this view.
     case settings //Categories will be inside of this view.
     
-    var image: Image {
+    var iconSelected: Image {
         switch self {
         case .resume: return Image.dolarSquareFill
         case .settings: return Image.sliderHorizontal
         }
     }
     
-    var imageDeselected: Image {
+    var iconDeselected: Image {
         switch self {
         case .resume: return Image.dolarSquare
         case .settings: return Image.sliderHorizontal
