@@ -14,40 +14,72 @@ struct SettingsView: View {
     
     var body: some View {
         VStack {
-            
-            List(SettingsOptions.allCases) { option in
+            List {
                 
-                HStack {
-                    option.icon
-                    
-                    NavigationLink(option.rawValue, destination: option.view)
-                        .listRowBackground(Color.textfieldBackground)
-                    //.listRowSeparator(.hidden))
+                //MARK: ACCOUNT
+                Section {
+                    ForEach(AccountOptions.allCases) { option in
+                        HStack {
+                            option.icon
+                            
+                            NavigationLink(option.rawValue, destination: option.view)
+                        }
+                    }
+                } header: {
+                    Text("Account")
+                        .foregroundColor(Color.textSecondaryForeground)
+                        .font(.montserrat(size: .small))
                 }
+                .listRowBackground(Color.textfieldBackground)
+                
+                //MARK: CONTENT
+                Section {
+                    ForEach(ContentOptions.allCases) { option in
+                        HStack {
+                            option.icon
+                            
+                            NavigationLink(option.rawValue, destination: option.view)
+                        }
+                    }
+                } header: {
+                    Text("Content")
+                        .foregroundColor(Color.textSecondaryForeground)
+                        .font(.montserrat(size: .small))
+                }
+                .listRowBackground(Color.textfieldBackground)
+                
+                //MARK: LOGIN
+                Section {
+                    Button("Log out") {
+                        showingAlert = true
+                    }
+                    .foregroundColor(Color.warning)
+                    .font(.montserrat(.semibold))
+                    
+                    .alert("Want to log out?", isPresented: $showingAlert) {
+                        Button("Log out", role: .destructive) {
+                            dismiss()
+                        }
+                        
+                        Button("Cancel", role: .cancel) { }
+                    } message: {
+                        //Text("Are you sure you want to log out?")
+                    }
+                    
+                } header: {
+                    Text("Login")
+                        .foregroundColor(Color.textSecondaryForeground)
+                        .font(.montserrat(size: .small))
+                }
+                .listRowBackground(Color.textfieldBackground)
                 
             }
-            //.scrollDisabled(true)
+            .font(.montserrat())
+            .foregroundColor(Color.textFieldForeground)
+            .listStyle(.insetGrouped)
             .scrollContentBackground(.hidden)
             .background(Color.background)
-            
-            
-            Button("Log out") {
-                showingAlert = true
-            }
-            .buttonStyle(ButtonPrimaryStyle(color: [Color.warning]))
-            .padding(.horizontal, Views.paddingSmallButton)
-            .padding(.bottom, 200)
-            .alert("Log out", isPresented: $showingAlert) {
-                Button("OK") {
-                    dismiss()
-                }
-                Button("Cancel", role: .cancel) { }
-            } message: {
-                Text("Are you sure?")
-            }
-            
         }
-        .background(Color.background)
     }
 }
 

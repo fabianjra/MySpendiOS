@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+//MARK: ACCOUNT
+
 /**
  SwiftUI is data-driven reactive framework and Swift is strict typed language,
  so instead of trying to put different View types (due to generics) into one array (requires same type),
@@ -27,17 +29,14 @@ import SwiftUI
  
  - Date: Jul 2023
  */
-
-enum SettingsOptions: String, CaseIterable, Identifiable {
+enum AccountOptions: String, CaseIterable, Identifiable {
     public var id: Self { self }
-    case categories = "Categories"
     case changeName = "Change my name"
     case changePassword = "Change my password"
     case validateAccount = "Validate account"
     
     var icon: Image {
         switch self {
-        case .categories: return Image.listBulletClipboardFill
         case .changeName: return Image.personFill
         case .changePassword: return Image.lockFill
         case .validateAccount: return Image.checkmark
@@ -48,10 +47,32 @@ enum SettingsOptions: String, CaseIterable, Identifiable {
     var view: some View {
         switch self {
         //"for: .navigationBar" is disabling the navigator to navigate the next View.
-        case .categories: Color.red
         case .changeName: RegisterView().toolbar(.hidden)
         case .changePassword: Color.green.toolbar(.hidden)
         case .validateAccount: Color.yellow.toolbar(.hidden)
         }
     }
 }
+
+//*********************************************************
+//MARK: CONTENT
+
+enum ContentOptions: String, CaseIterable, Identifiable {
+    public var id: Self { self }
+    case categories = "Categories"
+    
+    var icon: Image {
+        switch self {
+        case .categories: return Image.listBulletClipboardFill
+        }
+    }
+    
+    @ViewBuilder
+    var view: some View {
+        switch self {
+        //"for: .navigationBar" is disabling the navigator to navigate the next View.
+        case .categories: Color.red
+        }
+    }
+}
+
