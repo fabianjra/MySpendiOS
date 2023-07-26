@@ -30,6 +30,7 @@
 		1F5CC5842A6662A200C214FE /* ButtonNavigationBack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5CC5832A6662A200C214FE /* ButtonNavigationBack.swift */; };
 		1F6344002A47A8C400081BCD /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 1F6343FF2A47A8C400081BCD /* README.md */; };
 		1F64B09D2A7089C5004AC825 /* SettingsOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F64B09C2A7089C5004AC825 /* SettingsOptions.swift */; };
+		1F64B0A12A70AA94004AC825 /* ListContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F64B0A02A70AA94004AC825 /* ListContainer.swift */; };
 		1F663B592A66460800FE70B1 /* PruebaNoMoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F663B582A66460800FE70B1 /* PruebaNoMoverView.swift */; };
 		1F7437B42A668BCD0039EFD4 /* Gestures+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7437B32A668BCD0039EFD4 /* Gestures+Extensions.swift */; };
 		1F7486B72A68C4250063AC35 /* TextError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7486B62A68C4250063AC35 /* TextError.swift */; };
@@ -109,6 +110,7 @@
 		1F5CC5832A6662A200C214FE /* ButtonNavigationBack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonNavigationBack.swift; sourceTree = "<group>"; };
 		1F6343FF2A47A8C400081BCD /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		1F64B09C2A7089C5004AC825 /* SettingsOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsOptions.swift; sourceTree = "<group>"; };
+		1F64B0A02A70AA94004AC825 /* ListContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListContainer.swift; sourceTree = "<group>"; };
 		1F663B582A66460800FE70B1 /* PruebaNoMoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PruebaNoMoverView.swift; sourceTree = "<group>"; };
 		1F7437B32A668BCD0039EFD4 /* Gestures+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Gestures+Extensions.swift"; sourceTree = "<group>"; };
 		1F7486B62A68C4250063AC35 /* TextError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextError.swift; sourceTree = "<group>"; };
@@ -299,6 +301,7 @@
 			children = (
 				1F7486BE2A68ECD90063AC35 /* FormContainer.swift */,
 				1F7486C62A6A57310063AC35 /* TabViewContainer.swift */,
+				1F64B0A02A70AA94004AC825 /* ListContainer.swift */,
 			);
 			path = Containers;
 			sourceTree = "<group>";
@@ -662,6 +665,7 @@
 				1F7486C92A6A5DC90063AC35 /* ButtonScaleStyle.swift in Sources */,
 				1F4C24832A47A6DA00CCAF6D /* MySpendApp.swift in Sources */,
 				1FB8BB9B2A5BB1E4002DED1F /* RoundedCornersShape.swift in Sources */,
+				1F64B0A12A70AA94004AC825 /* ListContainer.swift in Sources */,
 				1F7486CB2A6F72D20063AC35 /* TabViewButton.swift in Sources */,
 				1F19D9662A4A764B00137EA0 /* Frames.swift in Sources */,
 				1FC94CCE2A5A4B8F005CA0B6 /* TextTitleForm.swift in Sources */,

@@ -13,72 +13,66 @@ struct SettingsView: View {
     @State private var showingAlert = false
     
     var body: some View {
-        VStack {
-            List {
-                
-                //MARK: ACCOUNT
-                Section {
-                    ForEach(AccountOptions.allCases) { option in
-                        HStack {
-                            option.icon
-                            
-                            NavigationLink(option.rawValue, destination: option.view)
-                        }
-                    }
-                } header: {
-                    Text("Account")
-                        .foregroundColor(Color.textSecondaryForeground)
-                        .font(.montserrat(size: .small))
-                }
-                .listRowBackground(Color.textfieldBackground)
-                
-                //MARK: CONTENT
-                Section {
-                    ForEach(ContentOptions.allCases) { option in
-                        HStack {
-                            option.icon
-                            
-                            NavigationLink(option.rawValue, destination: option.view)
-                        }
-                    }
-                } header: {
-                    Text("Content")
-                        .foregroundColor(Color.textSecondaryForeground)
-                        .font(.montserrat(size: .small))
-                }
-                .listRowBackground(Color.textfieldBackground)
-                
-                //MARK: LOGIN
-                Section {
-                    Button("Log out") {
-                        showingAlert = true
-                    }
-                    .foregroundColor(Color.warning)
-                    .font(.montserrat(.semibold))
-                    
-                    .alert("Want to log out?", isPresented: $showingAlert) {
-                        Button("Log out", role: .destructive) {
-                            dismiss()
-                        }
+        
+        ListContainer {
+            
+            //MARK: ACCOUNT
+            Section {
+                ForEach(AccountOptions.allCases) { option in
+                    HStack {
+                        option.icon
                         
-                        Button("Cancel", role: .cancel) { }
-                    } message: {
-                        //Text("Are you sure you want to log out?")
+                        NavigationLink(option.rawValue, destination: option.view)
+                    }
+                }
+            } header: {
+                Text("Account")
+                    .foregroundColor(Color.textSecondaryForeground)
+                    .font(.montserrat(size: .small))
+            }
+            .listRowBackground(Color.listRowBackground)
+            
+            //MARK: CONTENT
+            Section {
+                ForEach(ContentOptions.allCases) { option in
+                    HStack {
+                        option.icon
+                        
+                        NavigationLink(option.rawValue, destination: option.view)
+                    }
+                }
+            } header: {
+                Text("Content")
+                    .foregroundColor(Color.textSecondaryForeground)
+                    .font(.montserrat(size: .small))
+            }
+            .listRowBackground(Color.listRowBackground)
+            
+            //MARK: LOGIN
+            Section {
+                Button("Log out") {
+                    showingAlert = true
+                }
+                .foregroundColor(Color.warning)
+                .font(.montserrat(.semibold))
+                
+                .alert("Want to log out?", isPresented: $showingAlert) {
+                    Button("Log out", role: .destructive) {
+                        dismiss()
                     }
                     
-                } header: {
-                    Text("Login")
-                        .foregroundColor(Color.textSecondaryForeground)
-                        .font(.montserrat(size: .small))
+                    Button("Cancel", role: .cancel) { }
+                } message: {
+                    //Text("Are you sure you want to log out?")
                 }
-                .listRowBackground(Color.textfieldBackground)
                 
+            } header: {
+                Text("Login")
+                    .foregroundColor(Color.textSecondaryForeground)
+                    .font(.montserrat(size: .small))
             }
-            .font(.montserrat())
-            .foregroundColor(Color.textFieldForeground)
-            .listStyle(.insetGrouped)
-            .scrollContentBackground(.hidden)
-            .background(Color.background)
+            .listRowBackground(Color.listRowBackground)
+            
         }
     }
 }
