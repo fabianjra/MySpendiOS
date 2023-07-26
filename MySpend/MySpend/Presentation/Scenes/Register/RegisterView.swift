@@ -24,7 +24,7 @@ struct RegisterView: View {
     @State private var isUserPasswordConfirmError: Bool = false
     
     @State private var errorMessage: String = ""
-    @State private var canRegister: Bool = false
+    @State private var canSubmit: Bool = false
     
     var body: some View {
         
@@ -39,7 +39,7 @@ struct RegisterView: View {
                 Spacer()
                 
                 TextTitleForm(subTitle: "Register new user")
-                    .padding(.bottom)
+                    
                 
                 Spacer()
                 
@@ -47,6 +47,7 @@ struct RegisterView: View {
                     .hidden()
                     .padding(.trailing)
             }
+            .padding(.bottom)
             
             //MARK: REGISTER
             VStack(spacing: Views.formSpacing) {
@@ -80,10 +81,10 @@ struct RegisterView: View {
                     
                     if userName.isEmpty || userEmail.isEmpty ||
                         userPassword.isEmpty || userPasswordConfirm.isEmpty {
-                        canRegister = false
+                        canSubmit = false
                         errorMessage = "Fill the text fields required"
                     } else {
-                        canRegister = true
+                        canSubmit = true
                     }
                     
                     //If Textfields are empty, bool error will be true.
@@ -94,7 +95,7 @@ struct RegisterView: View {
                 }
                 .buttonStyle(ButtonPrimaryStyle())
                 .padding(.bottom)
-                .navigationDestination(isPresented: $canRegister) {
+                .navigationDestination(isPresented: $canSubmit) {
                     MainView(selectedTab: .resume)
                         .toolbar(.hidden, for: .navigationBar)
                 }

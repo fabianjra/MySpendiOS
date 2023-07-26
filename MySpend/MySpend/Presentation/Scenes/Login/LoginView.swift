@@ -16,7 +16,7 @@ struct LoginView: View {
     @State private var isUserPasswordError: Bool = false
     
     @State private var errorMessage: String = ""
-    @State private var canLogin: Bool = false
+    @State private var canSubmit: Bool = false
     @State private var goToRegister: Bool = false
     
     var body: some View {
@@ -47,10 +47,10 @@ struct LoginView: View {
                         print("Password: \(userPassword)")
                         
                         if userEmail.isEmpty || userPassword.isEmpty {
-                            canLogin = false
+                            canSubmit = false
                             errorMessage = "Fill the text fields required"
                         } else {
-                            canLogin = true
+                            canSubmit = true
                         }
                         
                         //If Textfields are empty, bool error will be true.
@@ -59,7 +59,7 @@ struct LoginView: View {
                     }
                     .buttonStyle(ButtonPrimaryStyle())
                     .padding(.bottom)
-                    .navigationDestination(isPresented: $canLogin) {
+                    .navigationDestination(isPresented: $canSubmit) {
                         MainView(selectedTab: .resume)
                             .toolbar(.hidden, for: .navigationBar)
                     }
@@ -80,8 +80,6 @@ struct LoginView: View {
                     .padding(.bottom)
                     
                     Button("Register") {
-                        print("User: \(userEmail)")
-                        print("Password: \(userPassword)")
                         goToRegister = true
                     }
                     .buttonStyle(ButtonPrimaryStyle())

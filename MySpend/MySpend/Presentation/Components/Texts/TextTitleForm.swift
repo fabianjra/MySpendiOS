@@ -9,17 +9,29 @@ import SwiftUI
 
 struct TextTitleForm: View {
     
+    let title: String?
+    let titleWeight: Font.Family?
+    let titleSize: Font.Sizes?
     let subTitle: String
+    let subTitleWeight: Font.Family?
+    
+    init(title: String? = nil, titleWeight: Font.Family? = nil, titleSize: Font.Sizes? = nil, subTitle: String, subTitleWeight: Font.Family? = nil) {
+        self.title = title
+        self.titleWeight = titleWeight
+        self.titleSize = titleSize
+        self.subTitle = subTitle
+        self.subTitleWeight = subTitleWeight
+    }
     
     var body: some View {
         VStack(spacing: Views.textSpacing) {
-            Text("mySpend")
+            Text(title ?? "mySpend")
                 .foregroundColor(Color.textPrimaryForeground)
-                .font(.montserrat(.thin, size: .bigXXL))
+                .font(.montserrat(titleWeight ?? .thin, size: titleSize ?? .bigXXL))
             
             Text(subTitle)
                 .foregroundColor(Color.textPrimaryForeground)
-                .font(.montserrat(.light))
+                .font(.montserrat(subTitleWeight ?? .light))
         }
     }
 }
