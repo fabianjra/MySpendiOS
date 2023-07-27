@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1F0641462A72234900C19084 /* ChangePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0641452A72234900C19084 /* ChangePasswordView.swift */; };
+		1F0641482A72280500C19084 /* ValidateAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0641472A72280500C19084 /* ValidateAccountView.swift */; };
 		1F1408192A58FB9400181500 /* ButtonPrimaryStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1408182A58FB9400181500 /* ButtonPrimaryStyle.swift */; };
 		1F14081B2A590FC600181500 /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F14081A2A590FC600181500 /* Animations.swift */; };
 		1F14081D2A5910D300181500 /* ButtonLinkStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F14081C2A5910D300181500 /* ButtonLinkStyle.swift */; };
@@ -90,6 +91,7 @@
 
 /* Begin PBXFileReference section */
 		1F0641452A72234900C19084 /* ChangePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordView.swift; sourceTree = "<group>"; };
+		1F0641472A72280500C19084 /* ValidateAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateAccountView.swift; sourceTree = "<group>"; };
 		1F1408182A58FB9400181500 /* ButtonPrimaryStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonPrimaryStyle.swift; sourceTree = "<group>"; };
 		1F14081A2A590FC600181500 /* Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
 		1F14081C2A5910D300181500 /* ButtonLinkStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonLinkStyle.swift; sourceTree = "<group>"; };
@@ -312,6 +314,7 @@
 			children = (
 				1F64B0A82A70CBBF004AC825 /* ChangeNameView.swift */,
 				1F0641452A72234900C19084 /* ChangePasswordView.swift */,
+				1F0641472A72280500C19084 /* ValidateAccountView.swift */,
 			);
 			path = Options;
 			sourceTree = "<group>";
@@ -656,6 +659,7 @@
 				1FC94CC82A5A42B2005CA0B6 /* Views+Extensions.swift in Sources */,
 				1F5CC57C2A6648E400C214FE /* DividerView.swift in Sources */,
 				1FB8BB992A5BB181002DED1F /* SemiCircleShape.swift in Sources */,
+				1F0641482A72280500C19084 /* ValidateAccountView.swift in Sources */,
 				1FC94CBF2A5A2CB7005CA0B6 /* MainView.swift in Sources */,
 				1F19D9682A4A7A7000137EA0 /* Views.swift in Sources */,
 				1F19D96E2A4ACC3D00137EA0 /* Utils.swift in Sources */,

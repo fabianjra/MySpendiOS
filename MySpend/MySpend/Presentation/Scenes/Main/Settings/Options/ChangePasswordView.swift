@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ChangePasswordView: View {
     
-    @Environment(\.dismiss) var dismiss
+    @Environment(\.dismiss) private var dismiss
     
     @State private var userPassword: String = ""
     @State private var isUserPasswordError: Bool = false
@@ -100,7 +100,7 @@ struct ChangePasswordView: View {
         if userPassword.isEmptyOrWhitespace() || userNewPassword.isEmptyOrWhitespace() ||
             userNewPasswordConfirm.isEmptyOrWhitespace() {
             canSubmit = false
-            errorMessage = "Fill the new user name text field"
+            errorMessage = "Fill all the spaces"
         } else {
             canSubmit = true
         }

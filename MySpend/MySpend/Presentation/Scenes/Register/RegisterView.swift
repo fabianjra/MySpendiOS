@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RegisterView: View {
     
-    @Environment(\.dismiss) var dismiss
+    @Environment(\.dismiss) private var dismiss
     
     @State private var userName: String = ""
     @State private var isUserNameError: Bool = false
@@ -109,7 +109,7 @@ struct RegisterView: View {
         if userName.isEmptyOrWhitespace() || userEmail.isEmptyOrWhitespace() ||
             userPassword.isEmptyOrWhitespace() || userPasswordConfirm.isEmptyOrWhitespace() {
             canSubmit = false
-            errorMessage = "Fill the text fields required"
+            errorMessage = "Fill all the text fields"
         } else {
             canSubmit = true
         }

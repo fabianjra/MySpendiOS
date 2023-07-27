@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SettingsView: View {
     
-    @Environment(\.dismiss) var dismiss
+    @Environment(\.dismiss) private var dismiss
     @State private var showingAlert = false
     
     var body: some View {

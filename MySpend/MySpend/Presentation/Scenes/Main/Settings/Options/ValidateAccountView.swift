@@ -1,20 +1,18 @@
 //
-//  ChangeNameView.swift
+//  ValidateAccountView.swift
 //  MySpend
 //
-//  Created by Fabian Rodriguez on 25/7/23.
+//  Created by Fabian Rodriguez on 26/7/23.
 //
 
 import SwiftUI
 
-struct ChangeNameView: View {
+struct ValidateAccountView: View {
     
     @Environment(\.dismiss) private var dismiss
     
-    @State private var userName: String = "Actual name"
-    
-    @State private var newUserName: String = ""
-    @State private var isNewUserNameError: Bool = false
+    @State private var userEmail: String = ""
+    @State private var isUserEmailError: Bool = false
 
     @State private var canSubmit: Bool = false
     @State private var errorMessage: String = ""
@@ -29,12 +27,12 @@ struct ChangeNameView: View {
                 
                 Spacer()
                 
-                TextTitleForm(title: "Change name",
+                TextTitleForm(title: "Validate account",
                               titleWeight: .regular,
                               titleSize: .bigXL,
                               subTitle: "Fill the space",
                               subTitleWeight: .regular)
-                    
+                
                 Spacer()
                 
                 ButtonNavigationBack {}
@@ -42,26 +40,21 @@ struct ChangeNameView: View {
                     .padding(.trailing)
             }
             .padding(.bottom)
-
+            
             
             //MARK: FIELDS
             VStack(spacing: Views.formSpacing) {
                 
-                TextFieldReadOnly(text: $userName, iconLeading: Image.personFill)
-                
-                
-                TextFieldName(placeHolder: "New name",
-                              text: $newUserName,
-                              iconLeading: Image.checkmark,
-                              isError: $isNewUserNameError,
-                              errorMessage: $errorMessage)
+                TextFieldEmail(text: $userEmail,
+                               isError: $isUserEmailError,
+                               errorMessage: $errorMessage)
                 .padding(.bottom)
-                .submitLabel(.done)
-                .onSubmit { changeName() }
+                .submitLabel(.send)
+                .onSubmit { sendEmail() }
                 
                 
-                Button("Change name") {
-                    changeName()
+                Button("Send") {
+                    sendEmail()
                 }
                 .buttonStyle(ButtonPrimaryStyle())
                 .padding(.bottom)
@@ -72,23 +65,23 @@ struct ChangeNameView: View {
         }
     }
     
-    private func changeName() {
-        print("New user name: \(newUserName)")
+    private func sendEmail() {
+        print("User email: \(userEmail)")
         
-        if newUserName.isEmptyOrWhitespace() {
+        if userEmail.isEmptyOrWhitespace() {
             canSubmit = false
-            errorMessage = "Fill the new user name space"
+            errorMessage = "Fill the email space"
         } else {
             canSubmit = true
         }
         
         //If Textfields are empty, bool error will be true.
-        isNewUserNameError = newUserName.isEmptyOrWhitespace()
+        isUserEmailError = userEmail.isEmptyOrWhitespace()
     }
 }
 
-struct ChangeNameView_Previews: PreviewProvider {
+struct ValidateAccountView_Previews: PreviewProvider {
     static var previews: some View {
-        ChangeNameView()
+        ValidateAccountView()
     }
 }
