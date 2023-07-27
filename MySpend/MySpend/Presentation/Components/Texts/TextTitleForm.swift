@@ -12,10 +12,10 @@ struct TextTitleForm: View {
     let title: String?
     let titleWeight: Font.Family?
     let titleSize: Font.Sizes?
-    let subTitle: String
+    let subTitle: String?
     let subTitleWeight: Font.Family?
     
-    init(title: String? = nil, titleWeight: Font.Family? = nil, titleSize: Font.Sizes? = nil, subTitle: String, subTitleWeight: Font.Family? = nil) {
+    init(title: String? = nil, titleWeight: Font.Family? = nil, titleSize: Font.Sizes? = nil, subTitle: String? = nil, subTitleWeight: Font.Family? = nil) {
         self.title = title
         self.titleWeight = titleWeight
         self.titleSize = titleSize
@@ -29,7 +29,7 @@ struct TextTitleForm: View {
                 .foregroundColor(Color.textPrimaryForeground)
                 .font(.montserrat(titleWeight ?? .thin, size: titleSize ?? .bigXXL))
             
-            Text(subTitle)
+            Text(subTitle ?? "")
                 .foregroundColor(Color.textPrimaryForeground)
                 .font(.montserrat(subTitleWeight ?? .light))
         }

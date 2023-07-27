@@ -20,9 +20,7 @@ struct LoginView: View {
     @State private var goToRegister: Bool = false
     
     var body: some View {
-        
         NavigationStack {
-            
             FormContainer {
                 
                 TextTitleForm(subTitle: "Log in to your account")

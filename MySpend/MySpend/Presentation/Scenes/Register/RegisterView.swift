@@ -27,7 +27,6 @@ struct RegisterView: View {
     @State private var canSubmit: Bool = false
     
     var body: some View {
-        
         FormContainer {
             
             //MARK: HEADER

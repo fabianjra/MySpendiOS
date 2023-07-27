@@ -20,7 +20,6 @@ struct ChangeNameView: View {
     @State private var errorMessage: String = ""
     
     var body: some View {
-        
         FormContainer {
             
             //MARK: HEADER
@@ -33,7 +32,7 @@ struct ChangeNameView: View {
                 TextTitleForm(title: "Change name",
                               titleWeight: .regular,
                               titleSize: .bigXL,
-                              subTitle: "Type your new name",
+                              subTitle: "Fill the space",
                               subTitleWeight: .regular)
                     
                 Spacer()
