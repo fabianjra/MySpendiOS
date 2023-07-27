@@ -71,7 +71,7 @@ enum ContentOptions: String, CaseIterable, Identifiable {
     var view: some View {
         switch self {
         //"for: .navigationBar" is disabling the navigator to navigate the next View.
-        case .categories: Color.red
+        case .categories: Color.red.toolbar(.hidden)
         }
     }
 }

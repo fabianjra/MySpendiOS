@@ -9,17 +9,27 @@ import SwiftUI
 
 struct TextFieldPassword: View {
     
-    @Binding var text: String
+    private let placeHolder: String?
+    @Binding private var text: String
     
-    @Binding var isError: Bool
-    @Binding var errorMessage: String
-    let iconLeading: Image
+    @Binding private var isError: Bool
+    @Binding private var errorMessage: String
+    private let iconLeading: Image
+    
+    init(placeHolder: String? = nil, text: Binding<String>, isError: Binding<Bool>, errorMessage: Binding<String>, iconLeading: Image) {
+        self.placeHolder = placeHolder
+        self._text = text
+        self._isError = isError
+        self._errorMessage = errorMessage
+        self.iconLeading = iconLeading
+    }
     
     var body: some View {
         
         SecureField("",
                     text: $text,
-                    prompt: Text("Password").foregroundColor(.textFieldPlaceholder))
+                    prompt: Text(placeHolder ??
+                                 "Password").foregroundColor(.textFieldPlaceholder))
         
         .textFieldStyle(TextFieldIconStyle($text,
                                            iconLeading: iconLeading,

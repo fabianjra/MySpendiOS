@@ -13,7 +13,6 @@ struct SettingsView: View {
     @State private var showingAlert = false
     
     var body: some View {
-        
         ListContainer {
             
             //MARK: ACCOUNT

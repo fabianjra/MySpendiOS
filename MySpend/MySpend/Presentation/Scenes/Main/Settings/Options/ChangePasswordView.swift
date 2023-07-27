@@ -51,7 +51,8 @@ struct ChangePasswordView: View {
             //MARK: FIELDS
             VStack(spacing: Views.formSpacing) {
                 
-                TextFieldPassword(text: $userPassword,
+                TextFieldPassword(placeHolder: "Current password",
+                                  text: $userPassword,
                                   isError: $isUserPasswordError,
                                   errorMessage: $errorMessage,
                                   iconLeading: Image.lockFill)
@@ -60,7 +61,8 @@ struct ChangePasswordView: View {
                 .onSubmit { changePassword() }
                 
                 
-                TextFieldPassword(text: $userNewPassword,
+                TextFieldPassword(placeHolder: "New password",
+                                  text: $userNewPassword,
                                   isError: $isUserNewPasswordError,
                                   errorMessage: $errorMessage,
                                   iconLeading: Image.checkmark)
@@ -69,7 +71,8 @@ struct ChangePasswordView: View {
                 .onSubmit { changePassword() }
                 
                 
-                TextFieldPassword(text: $userNewPasswordConfirm,
+                TextFieldPassword(placeHolder: "Confirm new password",
+                                  text: $userNewPasswordConfirm,
                                   isError: $isUserNewPasswordConfirmError,
                                   errorMessage: $errorMessage,
                                   iconLeading: Image.checkmark)

@@ -74,7 +74,8 @@ struct RegisterView: View {
                 .onSubmit { register() }
                 
                 
-                TextFieldPassword(text: $userPasswordConfirm,
+                TextFieldPassword(placeHolder: "Confirm password",
+                                  text: $userPasswordConfirm,
                                   isError: $isUserPasswordConfirmError,
                                   errorMessage: $errorMessage,
                                   iconLeading: Image.checkmark)
