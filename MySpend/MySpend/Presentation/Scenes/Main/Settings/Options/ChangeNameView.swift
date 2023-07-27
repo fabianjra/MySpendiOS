@@ -50,28 +50,19 @@ struct ChangeNameView: View {
                 
                 TextFieldReadOnly(text: $userName, iconLeading: Image.personFill)
                 
+                
                 TextFieldName(placeHolder: "New name",
                               text: $newUserName,
                               iconLeading: Image.checkmark,
                               isError: $isNewUserNameError,
                               errorMessage: $errorMessage)
-                .submitLabel(.done)
                 .padding(.bottom)
+                .submitLabel(.done)
+                .onSubmit { changeName() }
                 
                 
                 Button("Change name") {
-                    
-                    print("New user name: \(newUserName)")
-                    
-                    if newUserName.isEmptyOrWhitespace() {
-                        canSubmit = false
-                        errorMessage = "Fill the new user name text field"
-                    } else {
-                        canSubmit = true
-                    }
-                    
-                    //If Textfields are empty, bool error will be true.
-                    isNewUserNameError = newUserName.isEmptyOrWhitespace()
+                    changeName()
                 }
                 .buttonStyle(ButtonPrimaryStyle())
                 .padding(.bottom)
@@ -79,8 +70,21 @@ struct ChangeNameView: View {
                 
                 TextError(message: errorMessage)
             }
-            
         }
+    }
+    
+    private func changeName() {
+        print("New user name: \(newUserName)")
+        
+        if newUserName.isEmptyOrWhitespace() {
+            canSubmit = false
+            errorMessage = "Fill the new user name text field"
+        } else {
+            canSubmit = true
+        }
+        
+        //If Textfields are empty, bool error will be true.
+        isNewUserNameError = newUserName.isEmptyOrWhitespace()
     }
 }
 

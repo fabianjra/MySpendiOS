@@ -35,7 +35,7 @@ struct LoginView: View {
                                    isError: $isUserEmailError,
                                    errorMessage: $errorMessage)
                     .submitLabel(.done)
-                    .onSubmit { validateLogin() }
+                    .onSubmit { login() }
                     
                     
                     TextFieldPassword(text: $userPassword,
@@ -45,11 +45,11 @@ struct LoginView: View {
                     .textContentType(.password)
                     .submitLabel(.done)
                     .padding(.bottom)
-                    .onSubmit { validateLogin() }
+                    .onSubmit { login() }
                     
                     
                     Button("Login") {
-                        validateLogin()
+                        login()
                     }
                     .buttonStyle(ButtonPrimaryStyle())
                     .padding(.bottom)
@@ -126,7 +126,7 @@ struct LoginView: View {
         }
     }
     
-    func validateLogin() {
+    private func login() {
         print("User: \(userEmail)")
         print("Password: \(userPassword)")
         
@@ -138,8 +138,8 @@ struct LoginView: View {
         }
         
         //If Textfields are empty, bool error will be true.
-        isUserEmailError = userEmail.isEmpty
-        isUserPasswordError = userPassword.isEmpty
+        isUserEmailError = userEmail.isEmptyOrWhitespace()
+        isUserPasswordError = userPassword.isEmptyOrWhitespace()
     }
 }
 
