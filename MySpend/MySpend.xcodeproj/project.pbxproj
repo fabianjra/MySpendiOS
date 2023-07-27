@@ -10,6 +10,7 @@
 		1F0641462A72234900C19084 /* ChangePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0641452A72234900C19084 /* ChangePasswordView.swift */; };
 		1F0641482A72280500C19084 /* ValidateAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0641472A72280500C19084 /* ValidateAccountView.swift */; };
 		1F06414A2A722AFB00C19084 /* ErrorMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0641492A722AFB00C19084 /* ErrorMessages.swift */; };
+		1F06414D2A7232D300C19084 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F06414C2A7232D300C19084 /* RootView.swift */; };
 		1F1408192A58FB9400181500 /* ButtonPrimaryStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1408182A58FB9400181500 /* ButtonPrimaryStyle.swift */; };
 		1F14081B2A590FC600181500 /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F14081A2A590FC600181500 /* Animations.swift */; };
 		1F14081D2A5910D300181500 /* ButtonLinkStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F14081C2A5910D300181500 /* ButtonLinkStyle.swift */; };
@@ -94,6 +95,7 @@
 		1F0641452A72234900C19084 /* ChangePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordView.swift; sourceTree = "<group>"; };
 		1F0641472A72280500C19084 /* ValidateAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateAccountView.swift; sourceTree = "<group>"; };
 		1F0641492A722AFB00C19084 /* ErrorMessages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessages.swift; sourceTree = "<group>"; };
+		1F06414C2A7232D300C19084 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		1F1408182A58FB9400181500 /* ButtonPrimaryStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonPrimaryStyle.swift; sourceTree = "<group>"; };
 		1F14081A2A590FC600181500 /* Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
 		1F14081C2A5910D300181500 /* ButtonLinkStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonLinkStyle.swift; sourceTree = "<group>"; };
@@ -186,6 +188,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1F06414B2A7232C900C19084 /* Root */ = {
+			isa = PBXGroup;
+			children = (
+				1F06414C2A7232D300C19084 /* RootView.swift */,
+			);
+			path = Root;
+			sourceTree = "<group>";
+		};
 		1F1408172A58FB8200181500 /* Styles */ = {
 			isa = PBXGroup;
 			children = (
@@ -390,6 +400,7 @@
 		1FC94CBD2A5A2CA4005CA0B6 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				1F06414B2A7232C900C19084 /* Root */,
 				1F1E85492A6F7AB400CEEBBC /* MainView */,
 				1F1E854A2A6F7ADF00CEEBBC /* Settings */,
 			);
@@ -696,6 +707,7 @@
 				1FB8BB9D2A5BC728002DED1F /* Colors.swift in Sources */,
 				1F7437B42A668BCD0039EFD4 /* Gestures+Extensions.swift in Sources */,
 				1F64B0AD2A70D647004AC825 /* TextFieldReadOnly.swift in Sources */,
+				1F06414D2A7232D300C19084 /* RootView.swift in Sources */,
 				1F7486C32A6A3F770063AC35 /* ButtonRounded.swift in Sources */,
 				1F5CC57E2A664EFB00C214FE /* TextFieldEmail.swift in Sources */,
 				1F7486C92A6A5DC90063AC35 /* ButtonScaleStyle.swift in Sources */,

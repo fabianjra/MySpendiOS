@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct SettingsView: View {
     
@@ -47,7 +48,30 @@ struct SettingsView: View {
                 
                 .alert("Want to log out?", isPresented: $showingAlert) {
                     Button("Log out", role: .destructive) {
-                        dismiss()
+                        
+//                        let userDefaults = UserDefaults.standard
+//
+//                        if userDefaults.value(forKey: "appFirstTimeOpend") == nil {
+//                            //if app is first time opened then it will be nil
+//                            userDefaults.setValue(true, forKey: "appFirstTimeOpend")
+//                            // signOut from FIRAuth
+//                            do {
+//                                try Auth.auth().signOut()
+//                            }catch {
+//
+//                            }
+//                            // go to beginning of app
+//                        } else {
+//                            //go to where you want
+//                        }
+                        
+                        do {
+                            try Auth.auth().signOut()
+                            
+                            dismiss()
+                        } catch {
+                            print("Error signing out: \(error)")
+                        }
                     }
                     
                     Button("Cancel", role: .cancel) { }
