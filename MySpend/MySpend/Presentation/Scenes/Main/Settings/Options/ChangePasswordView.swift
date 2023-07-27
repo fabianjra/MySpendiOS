@@ -36,7 +36,7 @@ struct ChangePasswordView: View {
                 TextTitleForm(title: "Change password",
                               titleWeight: .regular,
                               titleSize: .bigXL,
-                              subTitle: "Fill the spaces",
+                              subTitle: "Fill the passwords spaces",
                               subTitleWeight: .regular)
                 
                 Spacer()
@@ -100,7 +100,7 @@ struct ChangePasswordView: View {
         if userPassword.isEmptyOrWhitespace() || userNewPassword.isEmptyOrWhitespace() ||
             userNewPasswordConfirm.isEmptyOrWhitespace() {
             canSubmit = false
-            errorMessage = "Fill all the spaces"
+            errorMessage = ErrorMessages.emptySpaces.localizedDescription
         } else {
             canSubmit = true
         }

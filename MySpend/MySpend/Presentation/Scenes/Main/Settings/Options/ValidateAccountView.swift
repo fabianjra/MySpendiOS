@@ -30,7 +30,7 @@ struct ValidateAccountView: View {
                 TextTitleForm(title: "Validate account",
                               titleWeight: .regular,
                               titleSize: .bigXL,
-                              subTitle: "Fill the space",
+                              subTitle: "Fill the email space",
                               subTitleWeight: .regular)
                 
                 Spacer()
@@ -70,7 +70,7 @@ struct ValidateAccountView: View {
         
         if userEmail.isEmptyOrWhitespace() {
             canSubmit = false
-            errorMessage = "Fill the email space"
+            errorMessage = ErrorMessages.emptySpace.localizedDescription
         } else {
             canSubmit = true
         }

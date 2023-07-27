@@ -32,7 +32,7 @@ struct ChangeNameView: View {
                 TextTitleForm(title: "Change name",
                               titleWeight: .regular,
                               titleSize: .bigXL,
-                              subTitle: "Fill the space",
+                              subTitle: "Fill the name space",
                               subTitleWeight: .regular)
                     
                 Spacer()
@@ -77,7 +77,7 @@ struct ChangeNameView: View {
         
         if newUserName.isEmptyOrWhitespace() {
             canSubmit = false
-            errorMessage = "Fill the new user name space"
+            errorMessage = ErrorMessages.emptySpace.localizedDescription
         } else {
             canSubmit = true
         }

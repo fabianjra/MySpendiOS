@@ -40,9 +40,9 @@ struct LoginView: View {
                                       isError: $isUserPasswordError,
                                       errorMessage: $errorMessage,
                                       iconLeading: Image.lockFill)
+                    .padding(.bottom)
                     .textContentType(.password)
                     .submitLabel(.done)
-                    .padding(.bottom)
                     .onSubmit { login() }
                     
                     
@@ -130,7 +130,7 @@ struct LoginView: View {
         
         if userEmail.isEmptyOrWhitespace() || userPassword.isEmptyOrWhitespace() {
             canSubmit = false
-            errorMessage = "Fill the text fields required"
+            errorMessage = ErrorMessages.emptySpaces.localizedDescription
         } else {
             canSubmit = true
         }

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1F0641462A72234900C19084 /* ChangePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0641452A72234900C19084 /* ChangePasswordView.swift */; };
 		1F0641482A72280500C19084 /* ValidateAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0641472A72280500C19084 /* ValidateAccountView.swift */; };
+		1F06414A2A722AFB00C19084 /* ErrorMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0641492A722AFB00C19084 /* ErrorMessages.swift */; };
 		1F1408192A58FB9400181500 /* ButtonPrimaryStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1408182A58FB9400181500 /* ButtonPrimaryStyle.swift */; };
 		1F14081B2A590FC600181500 /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F14081A2A590FC600181500 /* Animations.swift */; };
 		1F14081D2A5910D300181500 /* ButtonLinkStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F14081C2A5910D300181500 /* ButtonLinkStyle.swift */; };
@@ -92,6 +93,7 @@
 /* Begin PBXFileReference section */
 		1F0641452A72234900C19084 /* ChangePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordView.swift; sourceTree = "<group>"; };
 		1F0641472A72280500C19084 /* ValidateAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateAccountView.swift; sourceTree = "<group>"; };
+		1F0641492A722AFB00C19084 /* ErrorMessages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessages.swift; sourceTree = "<group>"; };
 		1F1408182A58FB9400181500 /* ButtonPrimaryStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonPrimaryStyle.swift; sourceTree = "<group>"; };
 		1F14081A2A590FC600181500 /* Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
 		1F14081C2A5910D300181500 /* ButtonLinkStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonLinkStyle.swift; sourceTree = "<group>"; };
@@ -469,6 +471,7 @@
 				1F19D9692A4A933200137EA0 /* Shapes.swift */,
 				1F14081A2A590FC600181500 /* Animations.swift */,
 				1FB8BB9C2A5BC728002DED1F /* Colors.swift */,
+				1F0641492A722AFB00C19084 /* ErrorMessages.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -682,6 +685,7 @@
 				1FC94CBC2A5A1DB7005CA0B6 /* TextViewStyledButton.swift in Sources */,
 				1F7486BF2A68ECD90063AC35 /* FormContainer.swift in Sources */,
 				1FC94CD12A5A6E01005CA0B6 /* TabViewIcons.swift in Sources */,
+				1F06414A2A722AFB00C19084 /* ErrorMessages.swift in Sources */,
 				1F19D96A2A4A933200137EA0 /* Shapes.swift in Sources */,
 				1F14081D2A5910D300181500 /* ButtonLinkStyle.swift in Sources */,
 				1F5CC5822A6657F800C214FE /* TextFieldName.swift in Sources */,

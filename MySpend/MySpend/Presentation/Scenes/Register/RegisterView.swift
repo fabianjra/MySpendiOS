@@ -78,8 +78,8 @@ struct RegisterView: View {
                                   isError: $isUserPasswordConfirmError,
                                   errorMessage: $errorMessage,
                                   iconLeading: Image.checkmark)
-                .textContentType(.newPassword)
                 .padding(.bottom)
+                .textContentType(.newPassword)
                 .submitLabel(.done)
                 .onSubmit { register() }
                 
@@ -109,7 +109,7 @@ struct RegisterView: View {
         if userName.isEmptyOrWhitespace() || userEmail.isEmptyOrWhitespace() ||
             userPassword.isEmptyOrWhitespace() || userPasswordConfirm.isEmptyOrWhitespace() {
             canSubmit = false
-            errorMessage = "Fill all the text fields"
+            errorMessage = ErrorMessages.emptySpaces.localizedDescription
         } else {
             canSubmit = true
         }
