@@ -56,17 +56,24 @@ struct RegisterView: View {
                               isError: $isUserNameError,
                               errorMessage: $errorMessage)
                 .submitLabel(.done)
+                .onSubmit { validateRegister() }
                 
                 
                 TextFieldEmail(text: $userEmail,
                                isError: $isUserEmailError,
                                errorMessage: $errorMessage)
+                .submitLabel(.done)
+                .onSubmit { validateRegister() }
+                
                 
                 TextFieldPassword(text: $userPassword,
                                   isError: $isUserPasswordError,
                                   errorMessage: $errorMessage,
                                   iconLeading: Image.lockFill)
                 .textContentType(.newPassword)
+                .submitLabel(.done)
+                .onSubmit { validateRegister() }
+                
                 
                 TextFieldPassword(text: $userPasswordConfirm,
                                   isError: $isUserPasswordConfirmError,
@@ -74,27 +81,12 @@ struct RegisterView: View {
                                   iconLeading: Image.checkmark)
                 .textContentType(.newPassword)
                 .padding(.bottom)
+                .submitLabel(.done)
+                .onSubmit { validateRegister() }
+                
                 
                 Button("Register") {
-                    
-                    print("User: \(userName)")
-                    print("Email: \(userEmail)")
-                    print("Password: \(userPassword)")
-                    print("Password confirm: \(userPasswordConfirm)")
-                    
-                    if userName.isEmpty || userEmail.isEmpty ||
-                        userPassword.isEmpty || userPasswordConfirm.isEmpty {
-                        canSubmit = false
-                        errorMessage = "Fill the text fields required"
-                    } else {
-                        canSubmit = true
-                    }
-                    
-                    //If Textfields are empty, bool error will be true.
-                    isUserNameError = userName.isEmpty
-                    isUserEmailError = userEmail.isEmpty
-                    isUserPasswordError = userPassword.isEmpty
-                    isUserPasswordConfirmError = userPasswordConfirm.isEmpty
+                    validateRegister()
                 }
                 .buttonStyle(ButtonPrimaryStyle())
                 .padding(.bottom)
@@ -107,6 +99,27 @@ struct RegisterView: View {
                 TextError(message: errorMessage)
             }
         }
+    }
+    
+    func validateRegister() {
+        print("User: \(userName)")
+        print("Email: \(userEmail)")
+        print("Password: \(userPassword)")
+        print("Password confirm: \(userPasswordConfirm)")
+        
+        if userName.isEmpty || userEmail.isEmpty ||
+            userPassword.isEmpty || userPasswordConfirm.isEmpty {
+            canSubmit = false
+            errorMessage = "Fill the text fields required"
+        } else {
+            canSubmit = true
+        }
+        
+        //If Textfields are empty, bool error will be true.
+        isUserNameError = userName.isEmpty
+        isUserEmailError = userEmail.isEmpty
+        isUserPasswordError = userPassword.isEmpty
+        isUserPasswordConfirmError = userPasswordConfirm.isEmpty
     }
 }
 

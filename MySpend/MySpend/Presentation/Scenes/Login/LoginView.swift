@@ -34,6 +34,8 @@ struct LoginView: View {
                     TextFieldEmail(text: $userEmail,
                                    isError: $isUserEmailError,
                                    errorMessage: $errorMessage)
+                    .submitLabel(.done)
+                    .onSubmit { validateLogin() }
                     
                     
                     TextFieldPassword(text: $userPassword,
@@ -41,23 +43,13 @@ struct LoginView: View {
                                       errorMessage: $errorMessage,
                                       iconLeading: Image.lockFill)
                     .textContentType(.password)
+                    .submitLabel(.done)
                     .padding(.bottom)
+                    .onSubmit { validateLogin() }
                     
                     
                     Button("Login") {
-                        print("User: \(userEmail)")
-                        print("Password: \(userPassword)")
-                        
-                        if userEmail.isEmpty || userPassword.isEmpty {
-                            canSubmit = false
-                            errorMessage = "Fill the text fields required"
-                        } else {
-                            canSubmit = true
-                        }
-                        
-                        //If Textfields are empty, bool error will be true.
-                        isUserEmailError = userEmail.isEmpty
-                        isUserPasswordError = userPassword.isEmpty
+                        validateLogin()
                     }
                     .buttonStyle(ButtonPrimaryStyle())
                     .padding(.bottom)
@@ -132,6 +124,22 @@ struct LoginView: View {
                 }
             }
         }
+    }
+    
+    func validateLogin() {
+        print("User: \(userEmail)")
+        print("Password: \(userPassword)")
+        
+        if userEmail.isEmptyOrWhitespace() || userPassword.isEmptyOrWhitespace() {
+            canSubmit = false
+            errorMessage = "Fill the text fields required"
+        } else {
+            canSubmit = true
+        }
+        
+        //If Textfields are empty, bool error will be true.
+        isUserEmailError = userEmail.isEmpty
+        isUserPasswordError = userPassword.isEmpty
     }
 }
 
