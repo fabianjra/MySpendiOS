@@ -98,7 +98,7 @@ struct RegisterView: View {
                 .padding(.bottom)
                 .navigationDestination(isPresented: $canSubmit) {
                     MainView(selectedTab: .resume)
-                        .toolbar(.hidden, for: .navigationBar)
+                        .toolbar(.hidden)
                 }
                 
                 

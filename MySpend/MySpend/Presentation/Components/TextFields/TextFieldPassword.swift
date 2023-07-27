@@ -24,12 +24,6 @@ struct TextFieldPassword: View {
         .textFieldStyle(TextFieldIconStyle($text,
                                            iconLeading: iconLeading,
                                            isError: $isError))
-        
-        .autocapitalization(.none)
-        .textInputAutocapitalization(.never)
-        .autocorrectionDisabled(true)
-        .textContentType(.password)
-        //.keyboardType(.asciiCapable) //This avoids suggestions bar on the keyboard.
         .onChange(of: text) { _ in errorMessage = "" }
     }
 }

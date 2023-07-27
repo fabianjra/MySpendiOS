@@ -62,7 +62,7 @@ struct LoginView: View {
                     .padding(.bottom)
                     .navigationDestination(isPresented: $canSubmit) {
                         MainView(selectedTab: .resume)
-                            .toolbar(.hidden, for: .navigationBar)
+                            .toolbar(.hidden)
                     }
                     
                     
@@ -88,7 +88,7 @@ struct LoginView: View {
                     .padding(.horizontal, Views.paddingSmallButton)
                     .navigationDestination(isPresented: $goToRegister) {
                         RegisterView()
-                            .toolbar(.hidden, for: .navigationBar)
+                            .toolbar(.hidden)
                     }
                 }
                 .padding(.bottom)
