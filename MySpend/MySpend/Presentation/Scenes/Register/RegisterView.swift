@@ -66,11 +66,13 @@ struct RegisterView: View {
                                   isError: $isUserPasswordError,
                                   errorMessage: $errorMessage,
                                   iconLeading: Image.lockFill)
+                .textContentType(.newPassword)
                 
                 TextFieldPassword(text: $userPasswordConfirm,
                                   isError: $isUserPasswordConfirmError,
                                   errorMessage: $errorMessage,
                                   iconLeading: Image.checkmark)
+                .textContentType(.newPassword)
                 .padding(.bottom)
                 
                 Button("Register") {
