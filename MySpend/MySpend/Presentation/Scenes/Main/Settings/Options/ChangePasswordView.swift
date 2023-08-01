@@ -121,8 +121,19 @@ struct ChangePasswordView: View {
             }
             
             
-            //Validate if currentPassword is correct:
+            //EMAIL:
             let credential = EmailAuthProvider.credential(withEmail: userEmail, password: userPassword)
+            
+            //FACEBOOK:
+            //let credential = FacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.currentAccessToken().tokenString)
+            
+            //TWITTER:
+            //let credential = TwitterAuthProvider.credential(withToken: session.authToken, secret: session.authTokenSecret)
+
+            //GOOGLE:
+            //let authentication = user.authentication
+            //let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken, accessToken: authentication.accessToken)
+
 
             // Prompt the user to re-provide their sign-in credentials
             user?.reauthenticate(with: credential, completion: { res, error in
