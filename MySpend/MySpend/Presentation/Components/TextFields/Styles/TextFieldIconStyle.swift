@@ -18,9 +18,11 @@ struct TextFieldIconStyle: TextFieldStyle {
     private let backgroundColor: Color?
     
     @Binding private var isError: Bool
+    
+    private var showFocusedIndicador: Bool
     @FocusState private var isFocused: Bool
     
-    public init(_ text: Binding<String>, family: Font.Family = .regular, size: Font.Sizes = .body, iconLeading: Image? = nil, foregroundColor: Color? = Color.textFieldForeground, backgroundColor: Color? = Color.textfieldBackground, isError: Binding<Bool>) {
+    public init(_ text: Binding<String>, family: Font.Family = .regular, size: Font.Sizes = .body, iconLeading: Image? = nil, foregroundColor: Color? = Color.textFieldForeground, backgroundColor: Color? = Color.textfieldBackground, isError: Binding<Bool>, showFocusedIndicador: Bool = true) {
         self._text = text
         self.family = family
         self.size = size
@@ -28,6 +30,7 @@ struct TextFieldIconStyle: TextFieldStyle {
         self.foregroundColor = foregroundColor
         self.backgroundColor = backgroundColor
         self._isError = isError
+        self.showFocusedIndicador = showFocusedIndicador
     }
     
     public func _body(configuration: TextField<Self._Label>) -> some View {
@@ -52,12 +55,14 @@ struct TextFieldIconStyle: TextFieldStyle {
         .background(backgroundColor)
         .cornerRadius(.infinity)
         .overlay {
-            if isFocused {
-                RoundedRectangle(cornerRadius: .infinity)
-                    .stroke(LinearGradient(
-                        colors: Color.primaryGradiant,
-                        startPoint: .leading,
-                        endPoint: .trailing), lineWidth: Shapes.textFieldLineWidth)
+            if showFocusedIndicador {
+                if isFocused {
+                    RoundedRectangle(cornerRadius: .infinity)
+                        .stroke(LinearGradient(
+                            colors: Color.primaryGradiant,
+                            startPoint: .leading,
+                            endPoint: .trailing), lineWidth: Shapes.textFieldLineWidth)
+                }
             }
             
             if isError {
