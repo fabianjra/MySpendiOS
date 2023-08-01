@@ -81,31 +81,28 @@ struct ChangeNameView: View {
     }
     
     private func changeName() {
-        print("New user name: \(newUserName)")
         
-        if newUserName.isEmptyOrWhitespace() {
-            canSubmit = false
+        isNewUserNameError = newUserName.isEmptyOrWhitespace()
+        
+        if isNewUserNameError {
             errorMessage = ErrorMessages.emptySpace.localizedDescription
-        } else {
             
+        } else {
             
             let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
             changeRequest?.displayName = newUserName
+            changeRequest?.photoURL = nil
             
             changeRequest?.commitChanges { error in
                
                 if let error = error {
                     errorMessage = error.localizedDescription
-                    return
+                } else {
+                    errorMessage = "NAME CHANGED! Go backs"
+                    canSubmit = true
                 }
-                
-                errorMessage = "NAME CHANGED! Go backs"
-                canSubmit = true
             }
         }
-        
-        //If Textfields are empty, bool error will be true.
-        isNewUserNameError = newUserName.isEmptyOrWhitespace()
     }
 }
 

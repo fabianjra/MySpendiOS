@@ -97,72 +97,59 @@ struct ChangePasswordView: View {
     }
     
     private func changePassword() {
-        print("User password: \(userPassword)")
-        print("User new password: \(userNewPassword)")
-        print("User new password confirm: \(userNewPasswordConfirm)")
         
-        if userPassword.isEmptyOrWhitespace() || userNewPassword.isEmptyOrWhitespace() ||
-            userNewPasswordConfirm.isEmptyOrWhitespace() {
+        isUserPasswordError = userPassword.isEmptyOrWhitespace()
+        isUserNewPasswordError = userNewPassword.isEmptyOrWhitespace()
+        isUserNewPasswordConfirmError = userNewPasswordConfirm.isEmptyOrWhitespace()
+        
+        if isUserPasswordError || isUserNewPasswordError ||
+            isUserNewPasswordConfirmError {
             canSubmit = false
             errorMessage = ErrorMessages.emptySpaces.localizedDescription
-            
-        } else if userNewPassword != userNewPassword {
-            
+            return
+        }
+        
+        if userNewPassword != userNewPasswordConfirm {
             errorMessage = ErrorMessages.newPasswordIsDifferent.localizedDescription
-        } else {
+            return
+        }
+        
+        let user = Auth.auth().currentUser
+        let userEmail = user?.email ?? ""
+        
+        //EMAIL:
+        let credential = EmailAuthProvider.credential(withEmail: userEmail, password: userPassword)
+        
+        //FACEBOOK:
+        //let credential = FacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.currentAccessToken().tokenString)
+        
+        //TWITTER:
+        //let credential = TwitterAuthProvider.credential(withToken: session.authToken, secret: session.authTokenSecret)
+        
+        //GOOGLE:
+        //let authentication = user.authentication
+        //let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken, accessToken: authentication.accessToken)
+        
+        
+        // Prompt the user to re-provide their sign-in credentials
+        user?.reauthenticate(with: credential) { result, error in
             
-            let auth = Auth.auth()
-            let user = auth.currentUser
-            
-            var userEmail = ""
-            
-            if let user = auth.currentUser {
-                userEmail = user.email ?? ""
-            }
-            
-            
-            //EMAIL:
-            let credential = EmailAuthProvider.credential(withEmail: userEmail, password: userPassword)
-            
-            //FACEBOOK:
-            //let credential = FacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.currentAccessToken().tokenString)
-            
-            //TWITTER:
-            //let credential = TwitterAuthProvider.credential(withToken: session.authToken, secret: session.authTokenSecret)
-
-            //GOOGLE:
-            //let authentication = user.authentication
-            //let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken, accessToken: authentication.accessToken)
-
-
-            // Prompt the user to re-provide their sign-in credentials
-            user?.reauthenticate(with: credential, completion: { res, error in
-                if let error = error {
-                  
-                    errorMessage = error.localizedDescription
+            if let error = error {
+                errorMessage = error.localizedDescription
+                
+            } else {
+                user?.updatePassword(to: userNewPasswordConfirm) { error in
                     
-                } else {
-                  // User re-authenticated.
-                    
-                    //UPDATE PASSWORD:
-                    user?.updatePassword(to: userNewPasswordConfirm) { error in
+                    if let error = error {
+                        errorMessage = error.localizedDescription
                         
-                        if let error = error {
-                            errorMessage = error.localizedDescription
-                            return
-                        }
-                        
+                    } else {
                         errorMessage = "PASSWORD CHANGED!"
                         canSubmit = true
                     }
                 }
-            })
+            }
         }
-        
-        //If Textfields are empty, bool error will be true.
-        isUserPasswordError = userPassword.isEmptyOrWhitespace()
-        isUserNewPasswordError = userNewPassword.isEmptyOrWhitespace()
-        isUserNewPasswordConfirmError = userNewPasswordConfirm.isEmptyOrWhitespace()
     }
 }
 

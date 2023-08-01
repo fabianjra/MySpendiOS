@@ -102,24 +102,19 @@ struct RegisterView: View {
     }
     
     private func register() {
-        print("User: \(userName)")
-        print("Email: \(userEmail)")
-        print("Password: \(userPassword)")
-        print("Password confirm: \(userPasswordConfirm)")
-        
-        if userName.isEmptyOrWhitespace() || userEmail.isEmptyOrWhitespace() ||
-            userPassword.isEmptyOrWhitespace() || userPasswordConfirm.isEmptyOrWhitespace() {
-            canSubmit = false
-            errorMessage = ErrorMessages.emptySpaces.localizedDescription
-        } else {
-            canSubmit = true
-        }
-        
-        //If Textfields are empty, bool error will be true.
+
         isUserNameError = userName.isEmptyOrWhitespace()
         isUserEmailError = userEmail.isEmptyOrWhitespace()
         isUserPasswordError = userPassword.isEmptyOrWhitespace()
         isUserPasswordConfirmError = userPasswordConfirm.isEmptyOrWhitespace()
+        
+        if isUserNameError || isUserEmailError ||
+            isUserPasswordError || isUserPasswordConfirmError {
+            errorMessage = ErrorMessages.emptySpaces.localizedDescription
+            
+        } else {
+            canSubmit = true
+        }
     }
 }
 

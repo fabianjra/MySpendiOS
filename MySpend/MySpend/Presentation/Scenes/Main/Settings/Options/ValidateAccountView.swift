@@ -69,7 +69,6 @@ struct ValidateAccountView: View {
         print("User email: \(userEmail)")
         
         if userEmail.isEmptyOrWhitespace() {
-            canSubmit = false
             errorMessage = ErrorMessages.emptySpace.localizedDescription
         } else {
             canSubmit = true

@@ -124,16 +124,17 @@ struct LoginView: View {
     }
     
     private func login() {
-        print("User: \(userEmail)")
-        print("Password: \(userPassword)")
+
+        //If Textfields are empty, bool error will be true.
+        isUserEmailError = userEmail.isEmptyOrWhitespace()
+        isUserPasswordError = userPassword.isEmptyOrWhitespace()
         
-        if userEmail.isEmptyOrWhitespace() || userPassword.isEmptyOrWhitespace() {
+        if isUserEmailError || isUserPasswordError {
             errorMessage = ErrorMessages.emptySpaces.localizedDescription
-        } else {
             
+        } else {
             Auth.auth().signIn(withEmail: userEmail,
                                password: userPassword) { result, error in
-                
                 if let error = error {
                     errorMessage = error.localizedDescription
                 } else {
@@ -141,10 +142,6 @@ struct LoginView: View {
                 }
             }
         }
-        
-        //If Textfields are empty, bool error will be true.
-        isUserEmailError = userEmail.isEmptyOrWhitespace()
-        isUserPasswordError = userPassword.isEmptyOrWhitespace()
     }
 }
 
