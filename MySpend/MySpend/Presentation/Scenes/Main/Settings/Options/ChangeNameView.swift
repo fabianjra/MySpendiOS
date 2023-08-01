@@ -20,6 +20,8 @@ struct ChangeNameView: View {
     @State private var canSubmit: Bool = false
     @State private var errorMessage: String = ""
     
+    @State private var user = Auth.auth().currentUser
+    
     var body: some View {
         FormScrollContainer {
             
@@ -72,10 +74,12 @@ struct ChangeNameView: View {
             }
         }
         .onAppear {
-            if let user = Auth.auth().currentUser {
+            if let user = user {
                 let displayName: String? = user.displayName
 
                 userName = displayName ?? ""
+            } else {
+                errorMessage = ErrorMessages.userNotLoggedIn.localizedDescription
             }
         }
     }
@@ -89,7 +93,7 @@ struct ChangeNameView: View {
             
         } else {
             
-            let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
+            let changeRequest = user?.createProfileChangeRequest()
             changeRequest?.displayName = newUserName
             changeRequest?.photoURL = nil
             
@@ -98,7 +102,7 @@ struct ChangeNameView: View {
                 if let error = error {
                     errorMessage = error.localizedDescription
                 } else {
-                    errorMessage = "NAME CHANGED! Go backs"
+                    errorMessage = "NAME CHANGED! Go back."
                     canSubmit = true
                 }
             }

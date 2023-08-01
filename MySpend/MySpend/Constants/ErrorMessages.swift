@@ -11,6 +11,8 @@ enum ErrorMessages: String, Error {
     case emptySpace
     case emptySpaces
     case newPasswordIsDifferent
+    case userNotLoggedIn
+    case userIsVerified
 }
 
 extension ErrorMessages: LocalizedError {
@@ -19,6 +21,8 @@ extension ErrorMessages: LocalizedError {
         case .emptySpace: return NSLocalizedString("Fill the empty space.", comment: "")
         case .emptySpaces: return NSLocalizedString("Fill the empty spaces.", comment: "")
         case .newPasswordIsDifferent: return NSLocalizedString("New password and confirm password are different.", comment: "")
+        case .userNotLoggedIn: return NSLocalizedString("User is not logged in.", comment: "")
+        case .userIsVerified: return NSLocalizedString("User is already verified.", comment: "")
         }
     }
 }

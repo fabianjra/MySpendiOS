@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct ValidateAccountView: View {
     
@@ -16,6 +17,8 @@ struct ValidateAccountView: View {
 
     @State private var canSubmit: Bool = false
     @State private var errorMessage: String = ""
+    
+    @State private var user = Auth.auth().currentUser
     
     var body: some View {
         FormScrollContainer {
@@ -63,19 +66,27 @@ struct ValidateAccountView: View {
                 TextError(message: errorMessage)
             }
         }
+        .onAppear {
+            if let user = user {
+                if user.isEmailVerified {
+                    errorMessage = ErrorMessages.userIsVerified.localizedDescription
+                }
+            } else {
+               errorMessage = ErrorMessages.userNotLoggedIn.localizedDescription
+           }
+        }
     }
     
     private func sendEmail() {
-        print("User email: \(userEmail)")
         
-        if userEmail.isEmptyOrWhitespace() {
+        isUserEmailError = userEmail.isEmptyOrWhitespace()
+        
+        if isUserEmailError {
             errorMessage = ErrorMessages.emptySpace.localizedDescription
-        } else {
-            canSubmit = true
+            return
         }
         
-        //If Textfields are empty, bool error will be true.
-        isUserEmailError = userEmail.isEmptyOrWhitespace()
+        canSubmit = true
     }
 }
 

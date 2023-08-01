@@ -24,6 +24,8 @@ struct ChangePasswordView: View {
     @State private var canSubmit: Bool = false
     @State private var errorMessage: String = ""
     
+    @State private var user = Auth.auth().currentUser
+    
     var body: some View {
         FormScrollContainer {
             
@@ -92,7 +94,12 @@ struct ChangePasswordView: View {
                 
                 TextError(message: errorMessage)
             }
-            
+        }
+        .onAppear {
+            guard user != nil else {
+                errorMessage = ErrorMessages.userNotLoggedIn.localizedDescription
+                return
+            }
         }
     }
     
@@ -114,7 +121,6 @@ struct ChangePasswordView: View {
             return
         }
         
-        let user = Auth.auth().currentUser
         let userEmail = user?.email ?? ""
         
         //EMAIL:

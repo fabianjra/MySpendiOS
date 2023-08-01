@@ -44,6 +44,7 @@ struct SettingsView: View {
             
             //MARK: LOGIN
             SectionContainer(header: "Login") {
+                
                 Button("Log out") {
                     showingAlert = true
                 }
@@ -51,24 +52,8 @@ struct SettingsView: View {
                 .font(.montserrat(.semibold))
                 
                 .alert("Want to log out?", isPresented: $showingAlert) {
+                    
                     Button("Log out", role: .destructive) {
-                        
-//                        let userDefaults = UserDefaults.standard
-//
-//                        if userDefaults.value(forKey: "appFirstTimeOpend") == nil {
-//                            //if app is first time opened then it will be nil
-//                            userDefaults.setValue(true, forKey: "appFirstTimeOpend")
-//                            // signOut from FIRAuth
-//                            do {
-//                                try Auth.auth().signOut()
-//                            }catch {
-//
-//                            }
-//                            // go to beginning of app
-//                        } else {
-//                            //go to where you want
-//                        }
-                        
                         do {
                             try Auth.auth().signOut()
                             
