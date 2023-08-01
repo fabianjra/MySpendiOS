@@ -51,6 +51,7 @@ extension Color {
     // MARK: VIEWS
     static let divider = Color("Divider")
     static let background = Color("Background")
+    static let backgroundTop = Color("BackgroundTop")
     static let backgroundFormLight = Color("BackgroundFormLight")
     static let backgroundFormDark = Color("BackgroundFormDark")
     static let backgroundFormGradiant: Array = [Color.backgroundFormLight,

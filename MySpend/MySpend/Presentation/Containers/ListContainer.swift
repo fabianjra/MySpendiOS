@@ -21,7 +21,11 @@ struct ListContainer<Content: View>: View {
             .foregroundColor(Color.listRowForeground)
             .listStyle(.insetGrouped)
             .scrollContentBackground(.hidden)
-            .background(Color.background)
+            .background(RadialGradient(colors: [Color.backgroundTop,
+                                        Color.background],
+                                       center: .top,
+                                       startRadius: .zero,
+                                       endRadius: Colors.endRadiusBackground))
     }
 }
 
