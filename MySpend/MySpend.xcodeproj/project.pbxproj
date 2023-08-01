@@ -23,6 +23,8 @@
 		1F1E854C2A6F7AFD00CEEBBC /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1E854B2A6F7AFD00CEEBBC /* SettingsView.swift */; };
 		1F46B4122A79885D003A9550 /* Validations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F46B4112A79885D003A9550 /* Validations.swift */; };
 		1F46B4142A79976F003A9550 /* FormScrollContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F46B4132A79976F003A9550 /* FormScrollContainer.swift */; };
+		1F46B4172A799CFD003A9550 /* ResumeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F46B4162A799CFD003A9550 /* ResumeView.swift */; };
+		1F46B4192A79A267003A9550 /* ContentContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F46B4182A79A267003A9550 /* ContentContainer.swift */; };
 		1F4C24832A47A6DA00CCAF6D /* MySpendApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4C24822A47A6DA00CCAF6D /* MySpendApp.swift */; };
 		1F4C24872A47A6DC00CCAF6D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F4C24862A47A6DC00CCAF6D /* Assets.xcassets */; };
 		1F4C248A2A47A6DC00CCAF6D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F4C24892A47A6DC00CCAF6D /* Preview Assets.xcassets */; };
@@ -110,6 +112,8 @@
 		1F1E854B2A6F7AFD00CEEBBC /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		1F46B4112A79885D003A9550 /* Validations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validations.swift; sourceTree = "<group>"; };
 		1F46B4132A79976F003A9550 /* FormScrollContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormScrollContainer.swift; sourceTree = "<group>"; };
+		1F46B4162A799CFD003A9550 /* ResumeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeView.swift; sourceTree = "<group>"; };
+		1F46B4182A79A267003A9550 /* ContentContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentContainer.swift; sourceTree = "<group>"; };
 		1F4C247F2A47A6DA00CCAF6D /* MySpend.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MySpend.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F4C24822A47A6DA00CCAF6D /* MySpendApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySpendApp.swift; sourceTree = "<group>"; };
 		1F4C24862A47A6DC00CCAF6D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -253,6 +257,14 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
+		1F46B4152A799CE6003A9550 /* Resume */ = {
+			isa = PBXGroup;
+			children = (
+				1F46B4162A799CFD003A9550 /* ResumeView.swift */,
+			);
+			path = Resume;
+			sourceTree = "<group>";
+		};
 		1F4C24762A47A6DA00CCAF6D = {
 			isa = PBXGroup;
 			children = (
@@ -338,6 +350,7 @@
 		1F7486CC2A6F78D10063AC35 /* Containers */ = {
 			isa = PBXGroup;
 			children = (
+				1F46B4182A79A267003A9550 /* ContentContainer.swift */,
 				1F7486BE2A68ECD90063AC35 /* FormContainer.swift */,
 				1F46B4132A79976F003A9550 /* FormScrollContainer.swift */,
 				1F7486C62A6A57310063AC35 /* TabViewContainer.swift */,
@@ -407,6 +420,7 @@
 			children = (
 				1F06414B2A7232C900C19084 /* Root */,
 				1F1E85492A6F7AB400CEEBBC /* MainView */,
+				1F46B4152A799CE6003A9550 /* Resume */,
 				1F1E854A2A6F7ADF00CEEBBC /* Settings */,
 			);
 			path = Main;
@@ -428,11 +442,11 @@
 		1FC94CCB2A5A45C6005CA0B6 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				1FE7C67B2A47D6EA0070B988 /* Components */,
 				1F7486CC2A6F78D10063AC35 /* Containers */,
 				1FB8BB972A5BB16C002DED1F /* Shapes */,
-				1FC94CCC2A5A4619005CA0B6 /* Scenes */,
-				1FE7C67B2A47D6EA0070B988 /* Components */,
 				1F9D79C52A47C22600F55418 /* Styles */,
+				1FC94CCC2A5A4619005CA0B6 /* Scenes */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -677,6 +691,7 @@
 				1F663B592A66460800FE70B1 /* PruebaNoMoverView.swift in Sources */,
 				1F7486B72A68C4250063AC35 /* TextError.swift in Sources */,
 				1FC94CC82A5A42B2005CA0B6 /* Views+Extensions.swift in Sources */,
+				1F46B4172A799CFD003A9550 /* ResumeView.swift in Sources */,
 				1F5CC57C2A6648E400C214FE /* DividerView.swift in Sources */,
 				1F46B4122A79885D003A9550 /* Validations.swift in Sources */,
 				1FB8BB992A5BB181002DED1F /* SemiCircleShape.swift in Sources */,
@@ -700,6 +715,7 @@
 				1FE7C6882A48027C0070B988 /* Images+Extensions.swift in Sources */,
 				1F19D9642A4A583800137EA0 /* TextFieldIconStyle.swift in Sources */,
 				1F5CC5842A6662A200C214FE /* ButtonNavigationBack.swift in Sources */,
+				1F46B4192A79A267003A9550 /* ContentContainer.swift in Sources */,
 				1FC94CBC2A5A1DB7005CA0B6 /* TextViewStyledButton.swift in Sources */,
 				1F7486BF2A68ECD90063AC35 /* FormContainer.swift in Sources */,
 				1FC94CD12A5A6E01005CA0B6 /* TabViewIcons.swift in Sources */,
