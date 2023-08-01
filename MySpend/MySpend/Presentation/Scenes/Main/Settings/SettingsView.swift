@@ -19,10 +19,12 @@ struct SettingsView: View {
             //MARK: ACCOUNT
             SectionContainer(header: "Account") {
                 ForEach(AccountOptions.allCases) { option in
-                    HStack {
-                        option.icon
-                        
-                        NavigationLink(option.rawValue, destination: option.view)
+                    if option.showOption {
+                        HStack {
+                            option.icon
+                            
+                            NavigationLink(option.rawValue, destination: option.view)
+                        }
                     }
                 }
             }
@@ -30,10 +32,12 @@ struct SettingsView: View {
             //MARK: CONTENT
             SectionContainer(header: "Content") {
                 ForEach(ContentOptions.allCases) { option in
-                    HStack {
-                        option.icon
-                        
-                        NavigationLink(option.rawValue, destination: option.view)
+                    if option.showOption {
+                        HStack {
+                            option.icon
+                            
+                            NavigationLink(option.rawValue, destination: option.view)
+                        }
                     }
                 }
             }

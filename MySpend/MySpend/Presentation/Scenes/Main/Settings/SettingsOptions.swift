@@ -43,6 +43,14 @@ enum AccountOptions: String, CaseIterable, Identifiable {
         }
     }
     
+    var showOption: Bool {
+        switch self {
+        case .changeName: return Validations.showChangeName
+        case .changePassword: return Validations.showChangePassword
+        case .validateAccount: return Validations.showValidateAccount
+        }
+    }
+    
     @ViewBuilder
     var view: some View {
         switch self {
@@ -64,6 +72,12 @@ enum ContentOptions: String, CaseIterable, Identifiable {
     var icon: Image {
         switch self {
         case .categories: return Image.listBulletClipboardFill
+        }
+    }
+    
+    var showOption: Bool {
+        switch self {
+        case .categories: return Validations.showCategories
         }
     }
     
