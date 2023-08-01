@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct ResumeView: View {
     
@@ -19,6 +20,7 @@ struct ResumeView: View {
                 VStack(alignment: .leading) {
                     Text("Hello \(userName) 👋")
                         .font(.montserrat(.semibold, size: .big))
+                        .lineLimit(Views.messageMaxLines)
                     
                     Text("Welcome back")
                         .font(.montserrat(.light, size: .small))
@@ -47,7 +49,29 @@ struct ResumeView: View {
                     .foregroundColor(Color.textPrimaryForeground)
             }
         }
-        .onAppear { userName = "Fabian" }
+        .onAppear {
+            
+            if let user = Auth.auth().currentUser {
+                
+                // The user's ID, unique to the Firebase project.
+                // Do NOT use this value to authenticate with your backend server,
+                // if you have one. Use getTokenWithCompletion:completion: instead.
+                
+                let _: String = user.providerID
+                let _: String = user.uid
+                let displayName: String? = user.displayName
+                let _: URL? = user.photoURL
+                let _: String? = user.email
+                
+                var multiFactorString = "MultiFactor: "
+                for info in user.multiFactor.enrolledFactors {
+                  multiFactorString += info.displayName ?? "[DispayName]"
+                  multiFactorString += " "
+                }
+                
+                userName = displayName ?? ""
+            }
+        }
     }
 }
 
