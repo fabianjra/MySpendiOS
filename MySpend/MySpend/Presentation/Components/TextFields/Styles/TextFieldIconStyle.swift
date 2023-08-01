@@ -14,15 +14,22 @@ struct TextFieldIconStyle: TextFieldStyle {
     private let size: Font.Sizes
     private let iconLeading: Image?
     
-    private let foregroundColor: Color?
-    private let backgroundColor: Color?
+    private let foregroundColor: Color
+    private let backgroundColor: Color
     
     @Binding private var isError: Bool
     
     private var showFocusedIndicador: Bool
     @FocusState private var isFocused: Bool
     
-    public init(_ text: Binding<String>, family: Font.Family = .regular, size: Font.Sizes = .body, iconLeading: Image? = nil, foregroundColor: Color? = Color.textFieldForeground, backgroundColor: Color? = Color.textfieldBackground, isError: Binding<Bool>, showFocusedIndicador: Bool = true) {
+    public init(_ text: Binding<String>,
+                family: Font.Family = .regular,
+                size: Font.Sizes = .body,
+                iconLeading: Image? = nil,
+                foregroundColor: Color = Color.textFieldForeground,
+                backgroundColor: Color = Color.textfieldBackground,
+                isError: Binding<Bool>,
+                showFocusedIndicador: Bool = true) {
         self._text = text
         self.family = family
         self.size = size
