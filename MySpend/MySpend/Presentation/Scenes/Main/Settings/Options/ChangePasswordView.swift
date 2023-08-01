@@ -111,22 +111,41 @@ struct ChangePasswordView: View {
             errorMessage = ErrorMessages.newPasswordIsDifferent.localizedDescription
         } else {
             
+            let auth = Auth.auth()
+            let user = auth.currentUser
+            
             var userEmail = ""
             
-            if let user = Auth.auth().currentUser {
+            if let user = auth.currentUser {
                 userEmail = user.email ?? ""
             }
             
             
-            
             //Validate if currentPassword is correct:
-//            Auth.auth().signIn(withEmail: userEmail, password: userPassword) { [weak self] authResult, error in
-//
-//                guard let strongSelf = self else { return }
-//                // ...
-//            }
-            
-            canSubmit = true
+            let credential = EmailAuthProvider.credential(withEmail: userEmail, password: userPassword)
+
+            // Prompt the user to re-provide their sign-in credentials
+            user?.reauthenticate(with: credential, completion: { res, error in
+                if let error = error {
+                  
+                    errorMessage = error.localizedDescription
+                    
+                } else {
+                  // User re-authenticated.
+                    
+                    //UPDATE PASSWORD:
+                    user?.updatePassword(to: userNewPasswordConfirm) { error in
+                        
+                        if let error = error {
+                            errorMessage = error.localizedDescription
+                            return
+                        }
+                        
+                        errorMessage = "PASSWORD CHANGED!"
+                        canSubmit = true
+                    }
+                }
+            })
         }
         
         //If Textfields are empty, bool error will be true.

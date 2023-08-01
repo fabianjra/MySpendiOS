@@ -99,8 +99,8 @@ struct ChangeNameView: View {
                     return
                 }
                 
-                canSubmit = true
                 errorMessage = "NAME CHANGED! Go backs"
+                canSubmit = true
             }
         }
         
