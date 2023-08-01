@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct ChangePasswordView: View {
     
@@ -104,7 +105,27 @@ struct ChangePasswordView: View {
             userNewPasswordConfirm.isEmptyOrWhitespace() {
             canSubmit = false
             errorMessage = ErrorMessages.emptySpaces.localizedDescription
+            
+        } else if userNewPassword != userNewPassword {
+            
+            errorMessage = ErrorMessages.newPasswordIsDifferent.localizedDescription
         } else {
+            
+            var userEmail = ""
+            
+            if let user = Auth.auth().currentUser {
+                userEmail = user.email ?? ""
+            }
+            
+            
+            
+            //Validate if currentPassword is correct:
+//            Auth.auth().signIn(withEmail: userEmail, password: userPassword) { [weak self] authResult, error in
+//
+//                guard let strongSelf = self else { return }
+//                // ...
+//            }
+            
             canSubmit = true
         }
         

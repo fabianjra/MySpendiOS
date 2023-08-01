@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct ChangeNameView: View {
     
     @Environment(\.dismiss) private var dismiss
     
-    @State private var userName: String = "Actual name"
+    @State private var userName: String = ""
     
     @State private var newUserName: String = ""
     @State private var isNewUserNameError: Bool = false
@@ -70,6 +71,13 @@ struct ChangeNameView: View {
                 TextError(message: errorMessage)
             }
         }
+        .onAppear {
+            if let user = Auth.auth().currentUser {
+                let displayName: String? = user.displayName
+
+                userName = displayName ?? ""
+            }
+        }
     }
     
     private func changeName() {
@@ -79,7 +87,21 @@ struct ChangeNameView: View {
             canSubmit = false
             errorMessage = ErrorMessages.emptySpace.localizedDescription
         } else {
-            canSubmit = true
+            
+            
+            let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
+            changeRequest?.displayName = newUserName
+            
+            changeRequest?.commitChanges { error in
+               
+                if let error = error {
+                    errorMessage = error.localizedDescription
+                    return
+                }
+                
+                canSubmit = true
+                errorMessage = "NAME CHANGED! Go backs"
+            }
         }
         
         //If Textfields are empty, bool error will be true.
