@@ -24,7 +24,7 @@ struct ChangePasswordView: View {
     @State private var errorMessage: String = ""
     
     var body: some View {
-        FormContainer {
+        FormScrollContainer {
             
             //MARK: HEADER
             HStack {

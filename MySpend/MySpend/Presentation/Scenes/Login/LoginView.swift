@@ -21,7 +21,7 @@ struct LoginView: View {
     @State private var goToRegister: Bool = false
     
     var body: some View {
-        FormContainer {
+        FormScrollContainer {
             
             TextTitleForm(subTitle: "Log in to your account")
                 .padding(.bottom)

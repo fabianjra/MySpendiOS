@@ -22,6 +22,7 @@
 		1F19D96E2A4ACC3D00137EA0 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F19D96D2A4ACC3D00137EA0 /* Utils.swift */; };
 		1F1E854C2A6F7AFD00CEEBBC /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1E854B2A6F7AFD00CEEBBC /* SettingsView.swift */; };
 		1F46B4122A79885D003A9550 /* Validations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F46B4112A79885D003A9550 /* Validations.swift */; };
+		1F46B4142A79976F003A9550 /* FormScrollContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F46B4132A79976F003A9550 /* FormScrollContainer.swift */; };
 		1F4C24832A47A6DA00CCAF6D /* MySpendApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4C24822A47A6DA00CCAF6D /* MySpendApp.swift */; };
 		1F4C24872A47A6DC00CCAF6D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F4C24862A47A6DC00CCAF6D /* Assets.xcassets */; };
 		1F4C248A2A47A6DC00CCAF6D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F4C24892A47A6DC00CCAF6D /* Preview Assets.xcassets */; };
@@ -108,6 +109,7 @@
 		1F19D96D2A4ACC3D00137EA0 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		1F1E854B2A6F7AFD00CEEBBC /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		1F46B4112A79885D003A9550 /* Validations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validations.swift; sourceTree = "<group>"; };
+		1F46B4132A79976F003A9550 /* FormScrollContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormScrollContainer.swift; sourceTree = "<group>"; };
 		1F4C247F2A47A6DA00CCAF6D /* MySpend.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MySpend.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F4C24822A47A6DA00CCAF6D /* MySpendApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySpendApp.swift; sourceTree = "<group>"; };
 		1F4C24862A47A6DC00CCAF6D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -337,6 +339,7 @@
 			isa = PBXGroup;
 			children = (
 				1F7486BE2A68ECD90063AC35 /* FormContainer.swift */,
+				1F46B4132A79976F003A9550 /* FormScrollContainer.swift */,
 				1F7486C62A6A57310063AC35 /* TabViewContainer.swift */,
 				1F64B0A02A70AA94004AC825 /* ListContainer.swift */,
 				1F64B0A52A70B828004AC825 /* SectionContainer.swift */,
@@ -713,6 +716,7 @@
 				1F64B0AD2A70D647004AC825 /* TextFieldReadOnly.swift in Sources */,
 				1F06414D2A7232D300C19084 /* RootView.swift in Sources */,
 				1F7486C32A6A3F770063AC35 /* ButtonRounded.swift in Sources */,
+				1F46B4142A79976F003A9550 /* FormScrollContainer.swift in Sources */,
 				1F5CC57E2A664EFB00C214FE /* TextFieldEmail.swift in Sources */,
 				1F7486C92A6A5DC90063AC35 /* ButtonScaleStyle.swift in Sources */,
 				1F4C24832A47A6DA00CCAF6D /* MySpendApp.swift in Sources */,

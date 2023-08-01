@@ -52,13 +52,13 @@ struct TextFieldIconStyle: TextFieldStyle {
         .background(backgroundColor)
         .cornerRadius(.infinity)
         .overlay {
-//            if isFocused {
-//                RoundedRectangle(cornerRadius: .infinity)
-//                    .stroke(LinearGradient(
-//                        colors: Color.primaryGradiant,
-//                        startPoint: .leading,
-//                        endPoint: .trailing), lineWidth: Shapes.textFieldLineWidth)
-//            }
+            if isFocused {
+                RoundedRectangle(cornerRadius: .infinity)
+                    .stroke(LinearGradient(
+                        colors: Color.primaryGradiant,
+                        startPoint: .leading,
+                        endPoint: .trailing), lineWidth: Shapes.textFieldLineWidth)
+            }
             
             if isError {
                 RoundedRectangle(cornerRadius: .infinity)
