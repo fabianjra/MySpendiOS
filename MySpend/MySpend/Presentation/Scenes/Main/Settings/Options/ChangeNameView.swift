@@ -90,7 +90,8 @@ struct ChangeNameView: View {
             errorMessage = ErrorMessages.emptySpace.localizedDescription
             
         } else {
-            SessionStore.updateUserName(newUserName: newUserName) { user, error in
+            SessionStore.updateUserName(newUserName: newUserName,
+                                        user: SessionStore.getCurrentUser()) { user, error in
                 if let error = error {
                     errorMessage = error.localizedDescription
                 } else {

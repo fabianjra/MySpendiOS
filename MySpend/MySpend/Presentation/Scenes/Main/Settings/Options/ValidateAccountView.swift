@@ -82,7 +82,7 @@ struct ValidateAccountView: View {
 //        }
         
         if canSendEmail() {
-            SessionStore.sendEmailValidation { success, error in
+            SessionStore.sendEmailValidation(user: SessionStore.getCurrentUser()) { success, error in
                 if success {
                     canSubmit = true
                 } else {

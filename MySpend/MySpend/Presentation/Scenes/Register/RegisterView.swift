@@ -26,6 +26,9 @@ struct RegisterView: View {
     @State private var errorMessage: String = ""
     @State private var canSubmit: Bool = false
     
+    @State private var errorMessageUpdateName: String = ""
+    @State private var errorMessageSendEmail: String = ""
+    
     var body: some View {
         FormScrollContainer {
             
@@ -97,6 +100,9 @@ struct RegisterView: View {
                 
                 
                 TextError(message: errorMessage)
+                
+                TextError(message: errorMessageUpdateName)
+                TextError(message: errorMessageSendEmail)
             }
         }
     }
@@ -113,7 +119,37 @@ struct RegisterView: View {
             errorMessage = ErrorMessages.emptySpaces.localizedDescription
             
         } else {
-            canSubmit = true
+            SessionStore.registerUser(userEmail,
+                                      password: userPassword) { success, user, error in
+                if success {
+                    
+                    if let user = user {
+                        
+                        //Add userName:
+                        SessionStore.updateUserName(newUserName: userName,
+                                                    user: user) { user, error in
+                            if let error = error {
+                                errorMessageUpdateName = error.localizedDescription
+                            }
+                        }
+                        
+                        //Send email verification:
+                        SessionStore.sendEmailValidation(user: user) { success, error in
+                            if success == false {
+                                errorMessageSendEmail = error.localizedDescription
+                            }
+                        }
+                        
+                        canSubmit = true
+                    } else {
+                        errorMessageUpdateName = ErrorMessages.userCreatedWithoutName.localizedDescription
+                        errorMessageSendEmail = ErrorMessages.userCreatedWithoutSendEmail.localizedDescription
+                    }
+                    
+                } else {
+                    errorMessage = error.localizedDescription
+                }
+            }
         }
     }
 }
