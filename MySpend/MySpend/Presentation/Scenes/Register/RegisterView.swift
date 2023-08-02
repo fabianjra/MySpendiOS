@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct RegisterView: View {
     
@@ -26,8 +27,8 @@ struct RegisterView: View {
     @State private var errorMessage: String = ""
     @State private var canSubmit: Bool = false
     
-    @State private var errorMessageUpdateName: String = ""
-    @State private var errorMessageSendEmail: String = ""
+    @State private var errorUpdateName: String = ""
+    @State private var errorSendEmail: String = ""
     
     var body: some View {
         FormScrollContainer {
@@ -41,7 +42,7 @@ struct RegisterView: View {
                 Spacer()
                 
                 TextTitleForm(subTitle: "Register new user")
-                    
+                
                 
                 Spacer()
                 
@@ -101,14 +102,14 @@ struct RegisterView: View {
                 
                 TextError(message: errorMessage)
                 
-                TextError(message: errorMessageUpdateName)
-                TextError(message: errorMessageSendEmail)
+                TextError(message: errorUpdateName)
+                TextError(message: errorSendEmail)
             }
         }
     }
     
     private func register() {
-
+        
         isUserNameError = userName.isEmptyOrWhitespace()
         isUserEmailError = userEmail.isEmptyOrWhitespace()
         isUserPasswordError = userPassword.isEmptyOrWhitespace()
@@ -117,38 +118,60 @@ struct RegisterView: View {
         if isUserNameError || isUserEmailError ||
             isUserPasswordError || isUserPasswordConfirmError {
             errorMessage = ErrorMessages.emptySpaces.localizedDescription
-            
-        } else {
-            SessionStore.registerUser(userEmail,
-                                      password: userPassword) { success, user, error in
-                if success {
-                    
-                    if let user = user {
-                        
-                        //Add userName:
-                        SessionStore.updateUserName(newUserName: userName,
-                                                    user: user) { user, error in
-                            if let error = error {
-                                errorMessageUpdateName = error.localizedDescription
-                            }
-                        }
-                        
-                        //Send email verification:
-                        SessionStore.sendEmailValidation(user: user) { success, error in
-                            if success == false {
-                                errorMessageSendEmail = error.localizedDescription
-                            }
-                        }
-                        
-                        canSubmit = true
-                    } else {
-                        errorMessageUpdateName = ErrorMessages.userCreatedWithoutName.localizedDescription
-                        errorMessageSendEmail = ErrorMessages.userCreatedWithoutSendEmail.localizedDescription
-                    }
+            return
+        }
+        
+        if userPassword.count < 6 || userPasswordConfirm.count < 6 {
+            errorMessage = ErrorMessages.passwordIsShort.localizedDescription
+            return
+        }
+        
+        if userPassword != userPasswordConfirm {
+            errorMessage = ErrorMessages.creationPasswordIsDifferent.localizedDescription
+            return
+        }
+        
+        Register()
+    }
+    
+    private func Register() {
+        SessionStore.registerUser(userEmail,
+                                  password: userPassword) { success, user, error in
+            if success {
+                if let user = user {
+                    updateName(user: user)
                     
                 } else {
-                    errorMessage = error.localizedDescription
+                    errorUpdateName = ErrorMessages.userCreatedNoName.localizedDescription
+                    errorSendEmail = ErrorMessages.userCreatedNoSendEmail.localizedDescription
                 }
+                
+            } else {
+                errorMessage = error.localizedDescription
+            }
+        }
+    }
+    
+    private func updateName(user: User) {
+        SessionStore.updateUserName(newUserName: userName,
+                                    user: user) { _, error in
+            if let error = error {
+                errorMessage = error.localizedDescription
+                errorUpdateName = ErrorMessages.userCreatedNoName.localizedDescription
+                errorSendEmail = ErrorMessages.userCreatedNoSendEmail.localizedDescription
+            } else {
+                sendEmail(user: user)
+            }
+        }
+    }
+    
+    private func sendEmail(user: User) {
+        SessionStore.sendEmailValidation(user: user) { success, error in
+            if success {
+                canSubmit = true
+            } else {
+                errorMessage = error.localizedDescription
+                errorSendEmail = ErrorMessages.userCreatedNoSendEmail.localizedDescription
             }
         }
     }
