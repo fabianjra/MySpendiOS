@@ -8,6 +8,7 @@
 import Foundation
 
 enum ErrorMessages: String, Error {
+    case generic
     case emptySpace
     case emptySpaces
     case newPasswordIsDifferent
@@ -18,6 +19,7 @@ enum ErrorMessages: String, Error {
 extension ErrorMessages: LocalizedError {
     public var errorDescription: String? {
         switch self {
+        case .generic: return NSLocalizedString("Something wrong happened, try again.", comment: "")
         case .emptySpace: return NSLocalizedString("Fill the empty space.", comment: "")
         case .emptySpaces: return NSLocalizedString("Fill the empty spaces.", comment: "")
         case .newPasswordIsDifferent: return NSLocalizedString("New password and confirm password are different.", comment: "")

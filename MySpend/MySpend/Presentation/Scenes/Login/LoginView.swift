@@ -133,12 +133,12 @@ struct LoginView: View {
             errorMessage = ErrorMessages.emptySpaces.localizedDescription
             
         } else {
-            Auth.auth().signIn(withEmail: userEmail,
-                               password: userPassword) { result, error in
-                if let error = error {
-                    errorMessage = error.localizedDescription
-                } else {
+            SessionStore.singIn(userEmail, password: userPassword) { success, error in
+                if success {
                     canSubmit = true
+                } else {
+                    errorMessage = error?.localizedDescription ??
+                    ErrorMessages.generic.localizedDescription
                 }
             }
         }
