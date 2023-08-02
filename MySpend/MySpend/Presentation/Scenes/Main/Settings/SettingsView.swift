@@ -54,12 +54,12 @@ struct SettingsView: View {
                 .alert("Want to log out?", isPresented: $showingAlert) {
                     
                     Button("Log out", role: .destructive) {
-                        do {
-                            try Auth.auth().signOut()
-                            
-                            dismiss()
-                        } catch {
-                            print("Error signing out: \(error)")
+                        SessionStore.signOut { success, error in
+                            if success {
+                                dismiss()
+                            } else {
+                                print("Error signing out: \(error)")
+                            }
                         }
                     }
                     

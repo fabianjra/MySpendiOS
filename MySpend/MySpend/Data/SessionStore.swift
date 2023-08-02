@@ -109,12 +109,12 @@ class SessionStore {
         }
     }
     
-    static func signOut() -> Bool {
+    static func signOut(completionHandler: @escaping (_ success: Bool, _ error: Error) -> Void) {
         do {
             try Auth.auth().signOut()
-            return true
+            completionHandler(true, ErrorMessages.generic)
         } catch {
-            return false
+            completionHandler(false, error)
         }
     }
 }
