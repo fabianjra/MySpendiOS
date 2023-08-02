@@ -12,13 +12,14 @@ struct ValidateAccountView: View {
     
     @Environment(\.dismiss) private var dismiss
     
-    @State private var userEmail: String = ""
-    @State private var isUserEmailError: Bool = false
+    //@State private var userEmail: String = ""
+    //@State private var isUserEmailError: Bool = false
+    @State private var buttonEnabled: Bool = false
 
     @State private var canSubmit: Bool = false
     @State private var errorMessage: String = ""
     
-    @State private var user = Auth.auth().currentUser
+    @State private var user = SessionStore.getCurrentUser()
     
     var body: some View {
         FormScrollContainer {
@@ -32,9 +33,7 @@ struct ValidateAccountView: View {
                 
                 TextTitleForm(title: "Validate account",
                               titleWeight: .regular,
-                              titleSize: .bigXL,
-                              subTitle: "Fill the email space",
-                              subTitleWeight: .regular)
+                              titleSize: .bigXL)
                 
                 Spacer()
                 
@@ -48,15 +47,17 @@ struct ValidateAccountView: View {
             //MARK: FIELDS
             VStack(spacing: Views.formSpacing) {
                 
-                TextFieldEmail(text: $userEmail,
-                               isError: $isUserEmailError,
-                               errorMessage: $errorMessage)
-                .padding(.bottom)
-                .submitLabel(.send)
-                .onSubmit { sendEmail() }
+//                TextFieldEmail(text: $userEmail,
+//                               isError: $isUserEmailError,
+//                               errorMessage: $errorMessage)
+//                .padding(.bottom)
+//                .submitLabel(.send)
+//                .onSubmit { sendEmail() }
+
+                TextPlain(message: "Please follow the instructions that will be send to your email account.", aligment: .center)
                 
                 
-                Button("Send") {
+                Button("Send email") {
                     sendEmail()
                 }
                 .buttonStyle(ButtonPrimaryStyle())
@@ -67,26 +68,42 @@ struct ValidateAccountView: View {
             }
         }
         .onAppear {
-            if let user = user {
-                if user.isEmailVerified {
-                    errorMessage = ErrorMessages.userIsVerified.localizedDescription
-                }
-            } else {
-               errorMessage = ErrorMessages.userNotLoggedIn.localizedDescription
-           }
+            buttonEnabled = canSendEmail()
         }
     }
     
     private func sendEmail() {
         
-        isUserEmailError = userEmail.isEmptyOrWhitespace()
+        //isUserEmailError = userEmail.isEmptyOrWhitespace()
         
-        if isUserEmailError {
-            errorMessage = ErrorMessages.emptySpace.localizedDescription
-            return
+//        if isUserEmailError {
+//            errorMessage = ErrorMessages.emptySpace.localizedDescription
+//            return
+//        }
+        
+        if canSendEmail() {
+            SessionStore.sendEmailValidation { success, error in
+                if success {
+                    canSubmit = true
+                } else {
+                    errorMessage = error.localizedDescription
+                }
+            }
         }
-        
-        canSubmit = true
+    }
+    
+    private func canSendEmail() -> Bool {
+        if let user = self.user {
+            if user.isEmailVerified {
+                errorMessage = ErrorMessages.userIsVerified.localizedDescription
+                return false
+            } else {
+                return true
+            }
+        } else {
+           errorMessage = ErrorMessages.userNotLoggedIn.localizedDescription
+            return false
+       }
     }
 }
 

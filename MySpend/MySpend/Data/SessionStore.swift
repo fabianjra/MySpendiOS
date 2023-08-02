@@ -85,6 +85,20 @@ class SessionStore {
         }
     }
     
+    static func sendEmailValidation(completionHandler: @escaping (_ success: Bool, _ error: Error) -> Void) {
+        if let user = getCurrentUser() {
+            user.sendEmailVerification { error in
+                if let error = error {
+                    completionHandler(false, error)
+                } else {
+                    completionHandler(true, ErrorMessages.generic)
+                }
+            }
+        } else {
+            completionHandler(false, ErrorMessages.userNotLoggedIn)
+        }
+    }
+    
     static func singIn(_ email: String, password: String, completionHandler: @escaping (_ success: Bool, _ error: Error) -> Void) {
         Auth.auth().signIn(withEmail: email, password: password) { _, error in
             if let error = error {
