@@ -137,8 +137,7 @@ struct LoginView: View {
                 if success {
                     canSubmit = true
                 } else {
-                    errorMessage = error?.localizedDescription ??
-                    ErrorMessages.generic.localizedDescription
+                    errorMessage = error.localizedDescription
                 }
             }
         }

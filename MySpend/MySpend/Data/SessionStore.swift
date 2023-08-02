@@ -23,7 +23,6 @@ class SessionStore {
     }
     
     static func updateUserName(newUserName: String, completionHandler: @escaping (User?, Error?) -> Void) {
-        
         if let user = getCurrentUser() {
             
             let changeRequest = user.createProfileChangeRequest()
@@ -33,7 +32,6 @@ class SessionStore {
                 
                 if let error = error {
                     completionHandler(nil, error)
-                    
                 } else {
                     if let updatedUser = Auth.auth().currentUser {
                         completionHandler(updatedUser, nil)
@@ -45,12 +43,54 @@ class SessionStore {
         }
     }
     
-    static func singIn(_ email: String, password: String, completionHandler: @escaping (_ success: Bool, _ error: Error?) -> Void) {
-        Auth.auth().signIn(withEmail: email, password: password) { Result, error in
+    static func updatePassword(actualPassword: String, newPasword: String,
+                               completionHandler: @escaping (_ success: Bool, _ error: Error) -> Void) {
+        if let user = getCurrentUser() {
+            
+            let userEmail = user.email ?? ""
+            
+            //EMAIL:
+            let credential = EmailAuthProvider.credential(withEmail: userEmail, password: actualPassword)
+            
+            //FACEBOOK:
+            //let credential = FacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.currentAccessToken().tokenString)
+            
+            //TWITTER:
+            //let credential = TwitterAuthProvider.credential(withToken: session.authToken, secret: session.authTokenSecret)
+            
+            //GOOGLE:
+            //let authentication = user.authentication
+            //let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken, accessToken: authentication.accessToken)
+            
+            
+            // Prompt the user to re-provide their sign-in credentials
+            user.reauthenticate(with: credential) { result, error in
+                
+                if let error = error {
+                    completionHandler(false, error)
+                } else {
+                    user.updatePassword(to: newPasword) { error in
+                        
+                        if let error = error {
+                            completionHandler(false, error)
+                            
+                        } else {
+                            completionHandler(true, ErrorMessages.empty)
+                        }
+                    }
+                }
+            }
+        } else {
+            completionHandler(false, ErrorMessages.userNotLoggedIn)
+        }
+    }
+    
+    static func singIn(_ email: String, password: String, completionHandler: @escaping (_ success: Bool, _ error: Error) -> Void) {
+        Auth.auth().signIn(withEmail: email, password: password) { _, error in
             if let error = error {
                 completionHandler(false, error)
             } else {
-                completionHandler(true, nil)
+                completionHandler(true, ErrorMessages.empty)
             }
         }
     }

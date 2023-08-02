@@ -20,7 +20,7 @@ struct ChangePasswordView: View {
     
     @State private var userNewPasswordConfirm: String = ""
     @State private var isUserNewPasswordConfirmError: Bool = false
-
+    
     @State private var canSubmit: Bool = false
     @State private var errorMessage: String = ""
     
@@ -121,39 +121,14 @@ struct ChangePasswordView: View {
             return
         }
         
-        let userEmail = user?.email ?? ""
-        
-        //EMAIL:
-        let credential = EmailAuthProvider.credential(withEmail: userEmail, password: userPassword)
-        
-        //FACEBOOK:
-        //let credential = FacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.currentAccessToken().tokenString)
-        
-        //TWITTER:
-        //let credential = TwitterAuthProvider.credential(withToken: session.authToken, secret: session.authTokenSecret)
-        
-        //GOOGLE:
-        //let authentication = user.authentication
-        //let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken, accessToken: authentication.accessToken)
-        
-        
-        // Prompt the user to re-provide their sign-in credentials
-        user?.reauthenticate(with: credential) { result, error in
+        SessionStore.updatePassword(actualPassword: userPassword,
+                                    newPasword: userNewPasswordConfirm) { success, error in
             
-            if let error = error {
-                errorMessage = error.localizedDescription
-                
+            if success {
+                errorMessage = "PASSWORD CHANGED!"
+                canSubmit = true
             } else {
-                user?.updatePassword(to: userNewPasswordConfirm) { error in
-                    
-                    if let error = error {
-                        errorMessage = error.localizedDescription
-                        
-                    } else {
-                        errorMessage = "PASSWORD CHANGED!"
-                        canSubmit = true
-                    }
-                }
+                errorMessage = error.localizedDescription
             }
         }
     }

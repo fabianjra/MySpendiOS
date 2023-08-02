@@ -8,6 +8,7 @@
 import Foundation
 
 enum ErrorMessages: String, Error {
+    case empty
     case generic
     case emptySpace
     case emptySpaces
@@ -19,6 +20,7 @@ enum ErrorMessages: String, Error {
 extension ErrorMessages: LocalizedError {
     public var errorDescription: String? {
         switch self {
+        case .empty: return NSLocalizedString("", comment: "")
         case .generic: return NSLocalizedString("Something wrong happened, try again.", comment: "")
         case .emptySpace: return NSLocalizedString("Fill the empty space.", comment: "")
         case .emptySpaces: return NSLocalizedString("Fill the empty spaces.", comment: "")
