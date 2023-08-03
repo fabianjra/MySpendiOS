@@ -28,9 +28,22 @@ struct ButtonPrimaryStyle: ButtonStyle {
         // MARK: SHAPE
             .frame(maxWidth: .infinity)
             .padding(.vertical)
-            .background(LinearGradient(colors: color,
-                                       startPoint: .leading,
-                                       endPoint: .trailing)
+            .background(
+                
+                //If enabled: Original background color.
+                isEnabled ? LinearGradient(colors: color,
+                                           startPoint: .leading,
+                                           endPoint: .trailing) :
+                    
+                    //If disabled, but is loading, preserve the original color.
+                    isLoading ? LinearGradient(colors: color,
+                                               startPoint: .leading,
+                                               endPoint: .trailing) :
+                    
+                    //If disabled and is not loading, show disabled background color.
+                    LinearGradient(colors: [Color.disabledBackground],
+                                   startPoint: .leading,
+                                   endPoint: .trailing)
             )
             .cornerRadius(.infinity)
         
