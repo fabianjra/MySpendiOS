@@ -9,6 +9,7 @@ import SwiftUI
 import Firebase
 
 private enum Field: Hashable {
+    case name
     case email
     case password
     case passwordConfirm
@@ -52,15 +53,15 @@ struct RegisterView: View {
                 TextFieldName(text: $userName,
                               isError: $isUserNameError,
                               errorMessage: $errorMessage)
+                .onSubmit { focusedField = .name }
                 .submitLabel(.next)
-                .onSubmit { focusedField = .email }
                 
                 
                 TextFieldEmail(text: $userEmail,
                                isError: $isUserEmailError,
                                errorMessage: $errorMessage)
-                .submitLabel(.next)
                 .focused($focusedField, equals: .email)
+                .submitLabel(.next)
                 .onSubmit { focusedField = .password }
                 
                 
@@ -69,8 +70,8 @@ struct RegisterView: View {
                                   errorMessage: $errorMessage,
                                   iconLeading: Image.lockFill)
                 .textContentType(.newPassword)
-                .submitLabel(.next)
                 .focused($focusedField, equals: .password)
+                .submitLabel(.next)
                 .onSubmit { focusedField = .passwordConfirm }
                 
                 
@@ -81,8 +82,8 @@ struct RegisterView: View {
                                   iconLeading: Image.checkmark)
                 .padding(.bottom)
                 .textContentType(.newPassword)
-                .submitLabel(.done)
                 .focused($focusedField, equals: .passwordConfirm)
+                .submitLabel(.done)
                 .onSubmit { validateRegister() }
                 
                 

@@ -9,6 +9,7 @@ import SwiftUI
 import Firebase
 
 private enum Field: Hashable {
+    case email
     case password
 }
 
@@ -42,6 +43,7 @@ struct LoginView: View {
                 TextFieldEmail(text: $userEmail,
                                isError: $isUserEmailError,
                                errorMessage: $errorMessage)
+                .focused($focusedField, equals: .email)
                 .submitLabel(.next)
                 .onSubmit { focusedField = .password }
                 
@@ -52,9 +54,9 @@ struct LoginView: View {
                                   iconLeading: Image.lockFill)
                 .padding(.bottom)
                 .textContentType(.password)
+                .focused($focusedField, equals: .password)
                 .submitLabel(.done)
                 .onSubmit { validateLogin() }
-                .focused($focusedField, equals: .password)
                 
                 
                 Button("Login") {
@@ -133,6 +135,15 @@ struct LoginView: View {
             }
         }
         .disabled(isLoading)
+        
+        //Add the "Done" button at the Top of the keyboard.
+//        .toolbar {
+//            ToolbarItem(placement: .keyboard) {
+//                Button("Done") {
+//                    focusedField = nil
+//                }
+//            }
+//        }
     }
     
     private func validateLogin() {
