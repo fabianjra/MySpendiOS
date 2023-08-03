@@ -10,64 +10,56 @@ import Firebase
 
 struct ValidateAccountView: View {
     
-    //@State private var userEmail: String = ""
-    //@State private var isUserEmailError: Bool = false
-    @State private var buttonEnabled: Bool = false
-
+    @State private var buttonDisabled: Bool = false
+    
     @State private var canSubmit: Bool = false
     @State private var errorMessage: String = ""
     
-    @State private var user = SessionStore.getCurrentUser()
+    @State private var isLoading: Bool = false
     
     var body: some View {
         FormScrollContainer {
             
             // MARK: HEADER
             HeaderNavigator(title: "Validate account",
-                          titleWeight: .regular,
-                          titleSize: .bigXL)
+                            titleWeight: .regular,
+                            titleSize: .bigXL)
             .padding(.bottom)
             
             
             // MARK: FIELDS
             VStack(spacing: Views.formSpacing) {
                 
-//                TextFieldEmail(text: $userEmail,
-//                               isError: $isUserEmailError,
-//                               errorMessage: $errorMessage)
-//                .padding(.bottom)
-//                .submitLabel(.send)
-//                .onSubmit { sendEmail() }
-
                 TextPlain(message: "Please follow the instructions that will be send to your email account.", aligment: .center)
                 
                 
                 Button("Send email") {
                     sendEmail()
                 }
-                .buttonStyle(ButtonPrimaryStyle())
+                .buttonStyle(ButtonPrimaryStyle(isLoading: $isLoading))
                 .padding(.bottom)
-                
+                .disabled(buttonDisabled)
                 
                 TextError(message: errorMessage)
             }
         }
         .onAppear {
-            buttonEnabled = canSendEmail()
+            //the answer is opposite, becuase disabled is opposite to can send email.
+            //eg: can send email?: YES - So button is NOT disabled (opposite).
+            buttonDisabled = !canSendEmail()
         }
     }
     
     private func sendEmail() {
-        
-        //isUserEmailError = userEmail.isEmptyOrWhitespace()
-        
-//        if isUserEmailError {
-//            errorMessage = ErrorMessages.emptySpace.localizedDescription
-//            return
-//        }
-        
         if canSendEmail() {
-            SessionStore.sendEmailValidation(user: SessionStore.getCurrentUser()) { success, error in
+            
+            isLoading = true
+            
+            SessionStore.sendEmailValidation() { success, error in
+                defer {
+                    isLoading = false
+                }
+                
                 if success {
                     canSubmit = true
                 } else {
@@ -78,7 +70,7 @@ struct ValidateAccountView: View {
     }
     
     private func canSendEmail() -> Bool {
-        if let user = self.user {
+        if let user = SessionStore.getCurrentUser() {
             if user.isEmailVerified {
                 errorMessage = ErrorMessages.userIsVerified.localizedDescription
                 return false
@@ -86,9 +78,9 @@ struct ValidateAccountView: View {
                 return true
             }
         } else {
-           errorMessage = ErrorMessages.userNotLoggedIn.localizedDescription
+            errorMessage = ErrorMessages.userNotLoggedIn.localizedDescription
             return false
-       }
+        }
     }
 }
 

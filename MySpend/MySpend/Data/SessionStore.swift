@@ -22,7 +22,7 @@ class SessionStore {
         }
     }
     
-    static func updateUserName(newUserName: String, user: User?, completionHandler: @escaping (User?, Error?) -> Void) {
+    static func updateUserName(newUserName: String, user: User? = getCurrentUser(), completionHandler: @escaping (User?, Error?) -> Void) {
         if let user = user {
             
             let changeRequest = user.createProfileChangeRequest()
@@ -85,13 +85,14 @@ class SessionStore {
         }
     }
     
-    static func sendEmailValidation(user: User?, completionHandler: @escaping (_ success: Bool, _ error: Error) -> Void) {
+    static func sendEmailValidation(user: User? = getCurrentUser(),
+                                    completionHandler: @escaping (_ success: Bool, _ error: Error) -> Void) {
         if let user = user {
             user.sendEmailVerification { error in
                 if let error = error {
                     completionHandler(false, error)
                 } else {
-                    completionHandler(true, ErrorMessages.generic)
+                    completionHandler(true, ErrorMessages.empty)
                 }
             }
         } else {
@@ -124,7 +125,7 @@ class SessionStore {
     static func signOut(completionHandler: @escaping (_ success: Bool, _ error: Error) -> Void) {
         do {
             try Auth.auth().signOut()
-            completionHandler(true, ErrorMessages.generic)
+            completionHandler(true, ErrorMessages.empty)
         } catch {
             completionHandler(false, error)
         }

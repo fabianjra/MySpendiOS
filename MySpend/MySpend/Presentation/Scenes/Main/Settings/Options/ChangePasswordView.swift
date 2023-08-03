@@ -22,7 +22,7 @@ struct ChangePasswordView: View {
     @State private var canSubmit: Bool = false
     @State private var errorMessage: String = ""
     
-    @State private var user = Auth.auth().currentUser
+    @State private var isLoading: Bool = false
     
     var body: some View {
         FormScrollContainer {
@@ -46,7 +46,7 @@ struct ChangePasswordView: View {
                                   iconLeading: Image.lockFill)
                 .textContentType(.password)
                 .submitLabel(.done)
-                .onSubmit { changePassword() }
+                .onSubmit { validateChangePassword() }
                 
                 
                 TextFieldPassword(placeHolder: "New password",
@@ -56,7 +56,7 @@ struct ChangePasswordView: View {
                                   iconLeading: Image.checkmark)
                 .textContentType(.newPassword)
                 .submitLabel(.done)
-                .onSubmit { changePassword() }
+                .onSubmit { validateChangePassword() }
                 
                 
                 TextFieldPassword(placeHolder: "Confirm new password",
@@ -67,11 +67,11 @@ struct ChangePasswordView: View {
                 .padding(.bottom)
                 .textContentType(.newPassword)
                 .submitLabel(.done)
-                .onSubmit { changePassword() }
+                .onSubmit { validateChangePassword() }
                 
                 
                 Button("Change password") {
-                    changePassword()
+                    validateChangePassword()
                 }
                 .buttonStyle(ButtonPrimaryStyle())
                 .padding(.bottom)
@@ -81,22 +81,19 @@ struct ChangePasswordView: View {
             }
         }
         .onAppear {
-            guard user != nil else {
+            if SessionStore.getCurrentUser() == nil {
                 errorMessage = ErrorMessages.userNotLoggedIn.localizedDescription
-                return
             }
         }
     }
     
-    private func changePassword() {
+    private func validateChangePassword() {
         
         isUserPasswordError = userPassword.isEmptyOrWhitespace()
         isUserNewPasswordError = userNewPassword.isEmptyOrWhitespace()
         isUserNewPasswordConfirmError = userNewPasswordConfirm.isEmptyOrWhitespace()
         
-        if isUserPasswordError || isUserNewPasswordError ||
-            isUserNewPasswordConfirmError {
-            canSubmit = false
+        if isUserPasswordError || isUserNewPasswordError || isUserNewPasswordConfirmError {
             errorMessage = ErrorMessages.emptySpaces.localizedDescription
             return
         }
@@ -106,8 +103,17 @@ struct ChangePasswordView: View {
             return
         }
         
+        changePassword()
+    }
+    
+    private func changePassword() {
+        isLoading = true
+        
         SessionStore.updatePassword(actualPassword: userPassword,
                                     newPasword: userNewPasswordConfirm) { success, error in
+            defer {
+                isLoading = false
+            }
             
             if success {
                 errorMessage = "PASSWORD CHANGED!"

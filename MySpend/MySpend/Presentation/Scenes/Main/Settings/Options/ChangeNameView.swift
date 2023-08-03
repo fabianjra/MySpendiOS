@@ -14,9 +14,11 @@ struct ChangeNameView: View {
     
     @State private var newUserName: String = ""
     @State private var isNewUserNameError: Bool = false
-
+    
     @State private var canSubmit: Bool = false
     @State private var errorMessage: String = ""
+    
+    @State private var isLoading: Bool = false
     
     var body: some View {
         FormScrollContainer {
@@ -28,7 +30,7 @@ struct ChangeNameView: View {
                             subTitle: "Fill the name space",
                             subTitleWeight: .regular)
             .padding(.bottom)
-
+            
             
             // MARK: FIELDS
             VStack(spacing: Views.formSpacing) {
@@ -43,13 +45,13 @@ struct ChangeNameView: View {
                               errorMessage: $errorMessage)
                 .padding(.bottom)
                 .submitLabel(.done)
-                .onSubmit { changeName() }
+                .onSubmit { validateChangeName() }
                 
                 
                 Button("Change name") {
-                    changeName()
+                    validateChangeName()
                 }
-                .buttonStyle(ButtonPrimaryStyle())
+                .buttonStyle(ButtonPrimaryStyle(isLoading: $isLoading))
                 .padding(.bottom)
                 
                 
@@ -67,22 +69,31 @@ struct ChangeNameView: View {
         }
     }
     
-    private func changeName() {
+    private func validateChangeName() {
         
         isNewUserNameError = newUserName.isEmptyOrWhitespace()
         
         if isNewUserNameError {
             errorMessage = ErrorMessages.emptySpace.localizedDescription
+            return
+        }
+        
+        changeName()
+    }
+    
+    private func changeName() {
+        isLoading = true
+        
+        SessionStore.updateUserName(newUserName: newUserName) { user, error in
+            defer {
+                isLoading = false
+            }
             
-        } else {
-            SessionStore.updateUserName(newUserName: newUserName,
-                                        user: SessionStore.getCurrentUser()) { user, error in
-                if let error = error {
-                    errorMessage = error.localizedDescription
-                } else {
-                    errorMessage = "NAME CHANGED TO: \(user?.displayName ?? "")"
-                    canSubmit = true
-                }
+            if let error = error {
+                errorMessage = error.localizedDescription
+            } else {
+                errorMessage = "NAME CHANGED TO: \(user?.displayName ?? "")"
+                canSubmit = true
             }
         }
     }

@@ -45,14 +45,14 @@ struct RegisterView: View {
                               isError: $isUserNameError,
                               errorMessage: $errorMessage)
                 .submitLabel(.done)
-                .onSubmit { register() }
+                .onSubmit { validateRegister() }
                 
                 
                 TextFieldEmail(text: $userEmail,
                                isError: $isUserEmailError,
                                errorMessage: $errorMessage)
                 .submitLabel(.done)
-                .onSubmit { register() }
+                .onSubmit { validateRegister() }
                 
                 
                 TextFieldPassword(text: $userPassword,
@@ -61,7 +61,7 @@ struct RegisterView: View {
                                   iconLeading: Image.lockFill)
                 .textContentType(.newPassword)
                 .submitLabel(.done)
-                .onSubmit { register() }
+                .onSubmit { validateRegister() }
                 
                 
                 TextFieldPassword(placeHolder: "Confirm password",
@@ -72,11 +72,11 @@ struct RegisterView: View {
                 .padding(.bottom)
                 .textContentType(.newPassword)
                 .submitLabel(.done)
-                .onSubmit { register() }
+                .onSubmit { validateRegister() }
                 
                 
                 Button("Register") {
-                    register()
+                    validateRegister()
                 }
                 .buttonStyle(ButtonPrimaryStyle(isLoading: $isLoading))
                 .padding(.bottom)
@@ -94,7 +94,7 @@ struct RegisterView: View {
         }
     }
     
-    private func register() {
+    private func validateRegister() {
         
         isUserNameError = userName.isEmptyOrWhitespace()
         isUserEmailError = userEmail.isEmptyOrWhitespace()
@@ -117,11 +117,10 @@ struct RegisterView: View {
             return
         }
         
-        Register()
+        register()
     }
     
-    private func Register() {
-        
+    private func register() {
         isLoading = true
         
         SessionStore.registerUser(userEmail,
@@ -159,7 +158,6 @@ struct RegisterView: View {
     
     private func sendEmail(user: User) {
         SessionStore.sendEmailValidation(user: user) { success, error in
-            
             defer {
                 isLoading = false
             }

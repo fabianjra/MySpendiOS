@@ -37,7 +37,7 @@ struct LoginView: View {
                                isError: $isUserEmailError,
                                errorMessage: $errorMessage)
                 .submitLabel(.done)
-                .onSubmit { login() }
+                .onSubmit { validateLogin() }
                 
                 
                 TextFieldPassword(text: $userPassword,
@@ -47,11 +47,11 @@ struct LoginView: View {
                 .padding(.bottom)
                 .textContentType(.password)
                 .submitLabel(.done)
-                .onSubmit { login() }
+                .onSubmit { validateLogin() }
                 
                 
                 Button("Login") {
-                    login()
+                    validateLogin()
                 }
                 .buttonStyle(ButtonPrimaryStyle(isLoading: $isLoading))
                 .padding(.bottom)
@@ -127,30 +127,32 @@ struct LoginView: View {
         }
     }
     
-    private func login() {
-
+    private func validateLogin() {
+        
         //If Textfields are empty, bool error will be true.
         isUserEmailError = userEmail.isEmptyOrWhitespace()
         isUserPasswordError = userPassword.isEmptyOrWhitespace()
         
         if isUserEmailError || isUserPasswordError {
             errorMessage = ErrorMessages.emptySpaces.localizedDescription
+            return
+        }
+        
+        login()
+    }
+    
+    private func login() {
+        isLoading = true
+        
+        SessionStore.singIn(userEmail, password: userPassword) { success, error in
+            defer {
+                isLoading = false
+            }
             
-        } else {
-            
-            isLoading = true
-            
-            SessionStore.singIn(userEmail, password: userPassword) { success, error in
-                
-                defer {
-                    isLoading = false
-                }
-                
-                if success {
-                    canSubmit = true
-                } else {
-                    errorMessage = error.localizedDescription
-                }
+            if success {
+                canSubmit = true
+            } else {
+                errorMessage = error.localizedDescription
             }
         }
     }
