@@ -62,8 +62,17 @@ struct TextFieldIconStyle: TextFieldStyle {
                 .font(.montserrat(family, size: size))
                 .focused($isFocused)
                 .onChange(of: text, perform: { _ in
-                    isError = false
-                    textLimitValidation(textLimit)
+                    
+                    if text.isEmpty {
+                        isError = true
+                    } else {
+                        isError = false
+                    }
+                    
+                    //Validate the limit character count.
+                    if text.count > textLimit {
+                        text = String(text.prefix(textLimit))
+                    }
                 })
         }
         .foregroundColor(foregroundColor)
@@ -90,12 +99,6 @@ struct TextFieldIconStyle: TextFieldStyle {
                         startPoint: .leading,
                         endPoint: .trailing), lineWidth: Shapes.textFieldLineWidth)
             }
-        }
-    }
-    
-    private func textLimitValidation(_ upper: Int) {
-        if text.count > upper {
-            text = String(text.prefix(upper))
         }
     }
 }
