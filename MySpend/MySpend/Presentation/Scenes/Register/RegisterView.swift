@@ -15,12 +15,15 @@ struct RegisterView: View {
     
     @State private var userEmail: String = ""
     @State private var isUserEmailError: Bool = false
+    @FocusState private var userEmailFocused: Bool
     
     @State private var userPassword: String = ""
     @State private var isUserPasswordError: Bool = false
+    @FocusState private var userPasswordFocused: Bool
     
     @State private var userPasswordConfirm: String = ""
     @State private var isUserPasswordConfirmError: Bool = false
+    @FocusState private var userPasswordConfirmFocused: Bool
     
     @State private var errorMessage: String = ""
     @State private var canSubmit: Bool = false
@@ -44,15 +47,16 @@ struct RegisterView: View {
                 TextFieldName(text: $userName,
                               isError: $isUserNameError,
                               errorMessage: $errorMessage)
-                .submitLabel(.done)
-                .onSubmit { validateRegister() }
+                .submitLabel(.next)
+                .onSubmit { userEmailFocused = true }
                 
                 
                 TextFieldEmail(text: $userEmail,
                                isError: $isUserEmailError,
                                errorMessage: $errorMessage)
-                .submitLabel(.done)
-                .onSubmit { validateRegister() }
+                .submitLabel(.next)
+                .focused($userEmailFocused)
+                .onSubmit { userPasswordFocused = true }
                 
                 
                 TextFieldPassword(text: $userPassword,
@@ -60,8 +64,9 @@ struct RegisterView: View {
                                   errorMessage: $errorMessage,
                                   iconLeading: Image.lockFill)
                 .textContentType(.newPassword)
-                .submitLabel(.done)
-                .onSubmit { validateRegister() }
+                .submitLabel(.next)
+                .focused($userPasswordFocused)
+                .onSubmit { userPasswordConfirmFocused = true }
                 
                 
                 TextFieldPassword(placeHolder: "Confirm password",
@@ -72,6 +77,7 @@ struct RegisterView: View {
                 .padding(.bottom)
                 .textContentType(.newPassword)
                 .submitLabel(.done)
+                .focused($userPasswordConfirmFocused)
                 .onSubmit { validateRegister() }
                 
                 

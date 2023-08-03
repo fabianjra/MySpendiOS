@@ -15,6 +15,7 @@ struct LoginView: View {
     
     @State private var userPassword: String = ""
     @State private var isUserPasswordError: Bool = false
+    @FocusState private var userPasswordFocused: Bool
     
     @State private var errorMessage: String = ""
     @State private var canSubmit: Bool = false
@@ -36,8 +37,8 @@ struct LoginView: View {
                 TextFieldEmail(text: $userEmail,
                                isError: $isUserEmailError,
                                errorMessage: $errorMessage)
-                .submitLabel(.done)
-                .onSubmit { validateLogin() }
+                .submitLabel(.next)
+                .onSubmit { userPasswordFocused = true }
                 
                 
                 TextFieldPassword(text: $userPassword,
@@ -48,6 +49,7 @@ struct LoginView: View {
                 .textContentType(.password)
                 .submitLabel(.done)
                 .onSubmit { validateLogin() }
+                .focused($userPasswordFocused)
                 
                 
                 Button("Login") {
