@@ -22,6 +22,7 @@ struct ChangePasswordView: View {
     @State private var canSubmit: Bool = false
     @State private var errorMessage: String = ""
     
+    @State private var buttonDisabled: Bool = false
     @State private var isLoading: Bool = false
     
     var body: some View {
@@ -74,6 +75,7 @@ struct ChangePasswordView: View {
                     validateChangePassword()
                 }
                 .buttonStyle(ButtonPrimaryStyle())
+                .disabled(buttonDisabled)
                 .padding(.bottom)
                 
                 
@@ -83,6 +85,7 @@ struct ChangePasswordView: View {
         .disabled(isLoading)
         .onAppear {
             if SessionStore.getCurrentUser() == nil {
+                buttonDisabled = true
                 errorMessage = ErrorMessages.userNotLoggedIn.localizedDescription
             }
         }

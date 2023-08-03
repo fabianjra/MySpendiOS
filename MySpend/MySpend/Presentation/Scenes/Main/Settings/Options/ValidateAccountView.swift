@@ -10,11 +10,10 @@ import Firebase
 
 struct ValidateAccountView: View {
     
-    @State private var buttonDisabled: Bool = false
-    
     @State private var canSubmit: Bool = false
     @State private var errorMessage: String = ""
     
+    @State private var buttonDisabled: Bool = false
     @State private var isLoading: Bool = false
     
     var body: some View {
