@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-//MARK: ACCOUNT
+// MARK: ACCOUNT
 
 /**
  SwiftUI is data-driven reactive framework and Swift is strict typed language,
@@ -63,7 +63,7 @@ enum AccountOptions: String, CaseIterable, Identifiable {
 }
 
 //*********************************************************
-//MARK: CONTENT
+// MARK: CONTENT
 
 enum ContentOptions: String, CaseIterable, Identifiable {
     public var id: Self { self }

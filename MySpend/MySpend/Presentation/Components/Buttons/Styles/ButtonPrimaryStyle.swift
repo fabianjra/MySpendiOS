@@ -21,7 +21,7 @@ struct ButtonPrimaryStyle: ButtonStyle {
             .font(.montserrat())
             .foregroundColor(isEnabled ? Color.buttonForeground : Color.disabledForeground)
 
-            //MARK: SHAPE
+            // MARK: SHAPE
             .frame(maxWidth: .infinity)
             .padding(.vertical)
             .background(isEnabled ? LinearGradient(colors: color,
@@ -33,7 +33,7 @@ struct ButtonPrimaryStyle: ButtonStyle {
             )
             .cornerRadius(.infinity)
         
-            //MARK: ANIMATIONS
+            // MARK: ANIMATIONS
             .scaleEffect(configuration.isPressed ?
                          Animations.buttonScalePressed : Animations.buttonOriginalPressed)
             .animation(.easeOut(duration: Animations.buttonScaleDuration), value: configuration.isPressed)

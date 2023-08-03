@@ -10,8 +10,6 @@ import Firebase
 
 struct RegisterView: View {
     
-    @Environment(\.dismiss) private var dismiss
-    
     @State private var userName: String = ""
     @State private var isUserNameError: Bool = false
     
@@ -33,26 +31,12 @@ struct RegisterView: View {
     var body: some View {
         FormScrollContainer {
             
-            //MARK: HEADER
-            HStack {
-                
-                ButtonNavigationBack { dismiss() }
-                    .padding(.leading)
-                
-                Spacer()
-                
-                TextTitleForm(subTitle: "Register new user")
-                
-                
-                Spacer()
-                
-                ButtonNavigationBack {}
-                    .hidden()
-                    .padding(.trailing)
-            }
-            .padding(.bottom)
+            // MARK: HEADER
+            HeaderNavigator(subTitle: "Register new user")
+                .padding(.bottom)
+
             
-            //MARK: REGISTER
+            // MARK: REGISTER
             VStack(spacing: Views.formSpacing) {
                 
                 TextFieldName(text: $userName,

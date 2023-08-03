@@ -9,11 +9,11 @@ import Foundation
 
 struct Validations {
     
-    //MARK: ACCOUNT
+    // MARK: ACCOUNT
     static let showChangeName: Bool = true
     static let showChangePassword: Bool = true
     static let showValidateAccount: Bool = true
     
-    //MARK: CONTENT
+    // MARK: CONTENT
     static let showCategories: Bool = true
 }

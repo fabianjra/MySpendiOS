@@ -40,7 +40,7 @@ struct FormContainer<Content: View>: View {
 struct FormContainer_Previews: PreviewProvider {
     static var previews: some View {
         FormContainer {
-            TextTitleForm(subTitle: "Inside of container")
+            HeaderNavigator(subTitle: "Inside of container")
         }
     }
 }

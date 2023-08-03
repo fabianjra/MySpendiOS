@@ -16,7 +16,7 @@ struct SettingsView: View {
     var body: some View {
         ListContainer {
             
-            //MARK: ACCOUNT
+            // MARK: ACCOUNT
             SectionContainer(header: "Account") {
                 ForEach(AccountOptions.allCases) { option in
                     if option.showOption {
@@ -29,7 +29,7 @@ struct SettingsView: View {
                 }
             }
             
-            //MARK: CONTENT
+            // MARK: CONTENT
             SectionContainer(header: "Content") {
                 ForEach(ContentOptions.allCases) { option in
                     if option.showOption {
@@ -42,7 +42,7 @@ struct SettingsView: View {
                 }
             }
             
-            //MARK: LOGIN
+            // MARK: LOGIN
             SectionContainer(header: "Login") {
                 
                 Button("Log out") {

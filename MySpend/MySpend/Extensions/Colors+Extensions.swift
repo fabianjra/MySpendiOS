@@ -29,7 +29,7 @@ extension Color {
     static let buttonForeground = Color("ButtonForeground")
     static let buttonLinkForeground = Color("ButtonLinkForeground")
     
-    //MARK: LIST
+    // MARK: LIST
     static let listRowForeground = Color("ListRowForeground")
     static let listRowBackground = Color("ListRowBackground")
     

@@ -14,7 +14,7 @@ struct Frames {
     static let tabViewIcon: CGFloat = 20.0
     static let tabViewHeight: CGFloat = 75.0
     
-    //MARK: BUTTON
+    // MARK: BUTTON
     static let roundedButtonIcon: CGFloat = 35.0
 }
 

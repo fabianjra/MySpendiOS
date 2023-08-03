@@ -15,7 +15,7 @@ struct ResumeView: View {
     var body: some View {
         ContentContainer {
             
-            //MARK: HEADER
+            // MARK: HEADER
             HStack {
                 VStack(alignment: .leading) {
                     Text("Hello \(userName) 👋")
@@ -31,7 +31,7 @@ struct ResumeView: View {
             .padding(.bottom)
             
             
-            //MARK: CONTENT
+            // MARK: CONTENT
             VStack {
                 
                 Button("History") {
@@ -42,7 +42,7 @@ struct ResumeView: View {
             .padding(.bottom)
 
             
-            //MARK: RESUME
+            // MARK: RESUME
             ScrollView(showsIndicators: false) {
                 Text("Item 1: $1000 - 25/05/2023")
                     .font(.montserrat())

@@ -23,10 +23,12 @@ struct LoginView: View {
     var body: some View {
         FormScrollContainer {
             
-            TextTitleForm(subTitle: "Log in to your account")
+            // MARK: HEADER
+            HeaderNavigator(subTitle: "Log in to your account", onlyTitle: true)
                 .padding(.bottom)
             
-            //MARK: LOGIN
+            
+            // MARK: LOGIN
             VStack(spacing: Views.formSpacing) {
                 
                 TextFieldEmail(text: $userEmail,
@@ -62,7 +64,7 @@ struct LoginView: View {
             .padding(.bottom)
             
             
-            //MARK: REGISTER & FORGOT PASSWORD
+            // MARK: REGISTER & FORGOT PASSWORD
             VStack {
                 
                 Button("Forgot password?") {
@@ -85,7 +87,7 @@ struct LoginView: View {
             .padding(.bottom)
             
             
-            //MARK: DIVISION
+            // MARK: DIVISION
             HStack {
                 VStack {
                     DividerView()
@@ -102,7 +104,7 @@ struct LoginView: View {
             .padding(.bottom)
             
             
-            //MARK: LOGIN SOCIAL NETWORKS
+            // MARK: LOGIN SOCIAL NETWORKS
             VStack {
                 Text("Login with")
                     .foregroundColor(Color.textSecondaryForeground)

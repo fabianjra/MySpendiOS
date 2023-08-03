@@ -10,8 +10,6 @@ import Firebase
 
 struct ChangePasswordView: View {
     
-    @Environment(\.dismiss) private var dismiss
-    
     @State private var userPassword: String = ""
     @State private var isUserPasswordError: Bool = false
     
@@ -29,29 +27,16 @@ struct ChangePasswordView: View {
     var body: some View {
         FormScrollContainer {
             
-            //MARK: HEADER
-            HStack {
-                ButtonNavigationBack { dismiss() }
-                    .padding(.leading)
-                
-                Spacer()
-                
-                TextTitleForm(title: "Change password",
-                              titleWeight: .regular,
-                              titleSize: .bigXL,
-                              subTitle: "Fill the passwords spaces",
-                              subTitleWeight: .regular)
-                
-                Spacer()
-                
-                ButtonNavigationBack {}
-                    .hidden()
-                    .padding(.trailing)
-            }
+            // MARK: HEADER
+            HeaderNavigator(title: "Change password",
+                          titleWeight: .regular,
+                          titleSize: .bigXL,
+                          subTitle: "Fill the passwords spaces",
+                          subTitleWeight: .regular)
             .padding(.bottom)
             
             
-            //MARK: FIELDS
+            // MARK: FIELDS
             VStack(spacing: Views.formSpacing) {
                 
                 TextFieldPassword(placeHolder: "Current password",

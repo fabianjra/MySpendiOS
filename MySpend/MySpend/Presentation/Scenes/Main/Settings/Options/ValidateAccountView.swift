@@ -10,8 +10,6 @@ import Firebase
 
 struct ValidateAccountView: View {
     
-    @Environment(\.dismiss) private var dismiss
-    
     //@State private var userEmail: String = ""
     //@State private var isUserEmailError: Bool = false
     @State private var buttonEnabled: Bool = false
@@ -24,27 +22,14 @@ struct ValidateAccountView: View {
     var body: some View {
         FormScrollContainer {
             
-            //MARK: HEADER
-            HStack {
-                ButtonNavigationBack { dismiss() }
-                    .padding(.leading)
-                
-                Spacer()
-                
-                TextTitleForm(title: "Validate account",
-                              titleWeight: .regular,
-                              titleSize: .bigXL)
-                
-                Spacer()
-                
-                ButtonNavigationBack {}
-                    .hidden()
-                    .padding(.trailing)
-            }
+            // MARK: HEADER
+            HeaderNavigator(title: "Validate account",
+                          titleWeight: .regular,
+                          titleSize: .bigXL)
             .padding(.bottom)
             
             
-            //MARK: FIELDS
+            // MARK: FIELDS
             VStack(spacing: Views.formSpacing) {
                 
 //                TextFieldEmail(text: $userEmail,
