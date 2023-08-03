@@ -13,7 +13,7 @@ struct Utils {
      Get the Interface Orientation device.
      
      **Notes:**
-     An application can use more than one scene, each with one or more windows.
+     - An application can use more than one scene, each with one or more windows.
      Use the connectedScenes method to obtain the list of connected scenes for the application.
      Use the window or keyWindow property on a scene to obtain the window.
      If you are certain that your app uses only one scene with one window you could obtain the same root view controller using the following:
@@ -39,6 +39,30 @@ struct Utils {
     }
     
     /**
+     Get the first window from the scene presented.
+     
+     - Authors: Fabian Rodriguez
+     
+     - Version: 1.0
+     
+     - Date: February 2023
+     */
+    static func getFirstWindow() -> UIWindow? {
+        
+        //Not deprecated code fot the windowScene:
+        //'windows' was deprecated in iOS 15.0: Use UIWindowScene.windows on a relevant window scene instead
+        guard let firstScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
+            return nil
+        }
+        
+        guard let firstWindow = firstScene.windows.first else {
+            return nil
+        }
+        
+        return firstWindow
+    }
+    
+    /**
      Get the root view controller or the presented view controller in case it's called by a Modal.
      
      - Authors: Fabian Rodriguez
@@ -47,16 +71,9 @@ struct Utils {
      
      - Date: February 2023
      */
-    private static func getActualViewController() -> UIViewController? {
-        
-        //Not deprecated code fot the windowScene.
-        guard let firstScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
-            return nil
-        }
-        
-        guard let firstWindow = firstScene.windows.first else {
-            return nil
-        }
+    static func getActualViewController() -> UIViewController? {
+
+        guard let firstWindow = getFirstWindow() else { return nil }
         
         //Each ViewController keeps track of the view it has presented,
         //so we can move from the head to the tail, which will always be the current view

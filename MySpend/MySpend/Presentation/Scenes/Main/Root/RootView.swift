@@ -22,6 +22,8 @@ struct RootView: View {
                 }
             }
             .onAppear {
+                UIApplication.shared.addTapGestureRecognizer()
+                
                 //Handle session for navigation.
                 Auth.auth().addStateDidChangeListener { auth, user in
                     isUserLoged = user != nil
