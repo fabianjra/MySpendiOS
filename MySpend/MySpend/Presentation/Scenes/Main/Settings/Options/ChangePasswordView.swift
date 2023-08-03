@@ -80,6 +80,7 @@ struct ChangePasswordView: View {
                 TextError(message: errorMessage)
             }
         }
+        .disabled(isLoading)
         .onAppear {
             if SessionStore.getCurrentUser() == nil {
                 errorMessage = ErrorMessages.userNotLoggedIn.localizedDescription

@@ -58,6 +58,7 @@ struct ChangeNameView: View {
                 TextError(message: errorMessage)
             }
         }
+        .disabled(isLoading)
         .onAppear {
             SessionStore.getUserName { name, error in
                 if let error = error {

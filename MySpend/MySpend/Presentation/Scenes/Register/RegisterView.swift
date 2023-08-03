@@ -92,6 +92,7 @@ struct RegisterView: View {
                 TextError(message: errorSendEmail)
             }
         }
+        .disabled(isLoading)
     }
     
     private func validateRegister() {

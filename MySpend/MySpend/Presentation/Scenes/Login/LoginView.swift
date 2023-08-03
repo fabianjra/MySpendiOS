@@ -125,6 +125,7 @@ struct LoginView: View {
                 }
             }
         }
+        .disabled(isLoading)
     }
     
     private func validateLogin() {

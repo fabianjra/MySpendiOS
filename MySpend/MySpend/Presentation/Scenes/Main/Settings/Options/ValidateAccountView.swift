@@ -43,6 +43,7 @@ struct ValidateAccountView: View {
                 TextError(message: errorMessage)
             }
         }
+        .disabled(isLoading)
         .onAppear {
             //the answer is opposite, becuase disabled is opposite to can send email.
             //eg: can send email?: YES - So button is NOT disabled (opposite).

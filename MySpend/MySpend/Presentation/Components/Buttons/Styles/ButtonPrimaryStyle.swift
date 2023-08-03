@@ -28,12 +28,9 @@ struct ButtonPrimaryStyle: ButtonStyle {
         // MARK: SHAPE
             .frame(maxWidth: .infinity)
             .padding(.vertical)
-            .background(isEnabled ? LinearGradient(colors: color,
-                                                   startPoint: .leading,
-                                                   endPoint: .trailing) :
-                            LinearGradient(colors: [Color.disabledBackground],
-                                           startPoint: .leading,
-                                           endPoint: .trailing)
+            .background(LinearGradient(colors: color,
+                                       startPoint: .leading,
+                                       endPoint: .trailing)
             )
             .cornerRadius(.infinity)
         
@@ -59,7 +56,7 @@ struct ButtonPrimaryStyle_Previews: PreviewProvider {
                 print("button pressed")
             }
             .buttonStyle(ButtonPrimaryStyle(isLoading: .constant(true)))
-            .environment(\.isEnabled, true)
+            //.environment(\.isEnabled, true))
             //.disabled(userEmail.isEmpty || userPassword.isEmpty) //Way to use disabled
             
             
@@ -73,7 +70,8 @@ struct ButtonPrimaryStyle_Previews: PreviewProvider {
                 print("button pressed")
             }
             .buttonStyle(ButtonPrimaryStyle(isLoading: .constant(false)))
-            .environment(\.isEnabled, false)
+            .disabled(true) //Correct way to disable the button
+            //.environment(\.isEnabled, false)
         }
         .padding()
         .background(Color.background)
