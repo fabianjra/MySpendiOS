@@ -24,7 +24,7 @@ struct Loader: View {
                         .offset(y: calcYOffset(geometry))
                 }
                 .frame(width: geometry.size.width, height: geometry.size.height)
-                .rotationEffect(!self.isAnimating ? .degrees(0) : .degrees(360))
+                .rotationEffect(!isAnimating ? .degrees(.zero) : .degrees(360))
                 .animation(Animation.timingCurve(0.5, 0.15 + Double(index) / 5,
                                                      0.25, 1,
                                                      duration: 1.5)
@@ -33,7 +33,7 @@ struct Loader: View {
         }
         .aspectRatio(1, contentMode: .fit)
         .onAppear {
-            self.isAnimating = true
+            isAnimating = true
         }
     }
     
@@ -49,6 +49,9 @@ struct Loader: View {
 
 struct Loader_Previews: PreviewProvider {
     static var previews: some View {
+        
+        @State var showLoader: Bool = true
+        
         VStack {
             ZStack {
                 LinearGradient(colors: Color.primaryGradiant,
@@ -59,18 +62,11 @@ struct Loader_Previews: PreviewProvider {
               }
             
             
-            Button {
-                
-            } label: {
-                if true {
-                    Loader()
-                        //.frame(width: 200, height: 200)
-                        .foregroundColor(Color.textPrimaryForeground)
-                } else {
-                    Text("Texto")
-                }
+            Button("Show loader") {
+                showLoader.toggle()
             }
-            .buttonStyle(.borderedProminent)
+            .buttonStyle(ButtonPrimaryStyle(isLoading: $showLoader))
+            
 
             Loader()
                 .frame(width: 200, height: 200)
