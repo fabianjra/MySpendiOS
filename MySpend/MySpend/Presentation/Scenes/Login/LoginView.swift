@@ -8,6 +8,10 @@
 import SwiftUI
 import Firebase
 
+private enum Field: Hashable {
+    case password
+}
+
 struct LoginView: View {
     
     @State private var userEmail: String = ""
@@ -15,13 +19,14 @@ struct LoginView: View {
     
     @State private var userPassword: String = ""
     @State private var isUserPasswordError: Bool = false
-    @FocusState private var userPasswordFocused: Bool
     
     @State private var errorMessage: String = ""
     @State private var canSubmit: Bool = false
     @State private var goToRegister: Bool = false
     
     @State private var isLoading: Bool = false
+    
+    @FocusState private var focusedField: Field?
     
     var body: some View {
         FormScrollContainer {
@@ -38,7 +43,7 @@ struct LoginView: View {
                                isError: $isUserEmailError,
                                errorMessage: $errorMessage)
                 .submitLabel(.next)
-                .onSubmit { userPasswordFocused = true }
+                .onSubmit { focusedField = .password }
                 
                 
                 TextFieldPassword(text: $userPassword,
@@ -49,7 +54,7 @@ struct LoginView: View {
                 .textContentType(.password)
                 .submitLabel(.done)
                 .onSubmit { validateLogin() }
-                .focused($userPasswordFocused)
+                .focused($focusedField, equals: .password)
                 
                 
                 Button("Login") {

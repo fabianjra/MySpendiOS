@@ -8,6 +8,12 @@
 import SwiftUI
 import Firebase
 
+private enum Field: Hashable {
+    case email
+    case password
+    case passwordConfirm
+}
+
 struct RegisterView: View {
     
     @State private var userName: String = ""
@@ -15,15 +21,12 @@ struct RegisterView: View {
     
     @State private var userEmail: String = ""
     @State private var isUserEmailError: Bool = false
-    @FocusState private var userEmailFocused: Bool
     
     @State private var userPassword: String = ""
     @State private var isUserPasswordError: Bool = false
-    @FocusState private var userPasswordFocused: Bool
     
     @State private var userPasswordConfirm: String = ""
     @State private var isUserPasswordConfirmError: Bool = false
-    @FocusState private var userPasswordConfirmFocused: Bool
     
     @State private var errorMessage: String = ""
     @State private var canSubmit: Bool = false
@@ -33,13 +36,15 @@ struct RegisterView: View {
     
     @State private var isLoading: Bool = false
     
+    @FocusState private var focusedField: Field?
+    
     var body: some View {
         FormScrollContainer {
             
             // MARK: HEADER
             HeaderNavigator(subTitle: "Register new user")
                 .padding(.bottom)
-
+            
             
             // MARK: REGISTER
             VStack(spacing: Views.formSpacing) {
@@ -48,15 +53,15 @@ struct RegisterView: View {
                               isError: $isUserNameError,
                               errorMessage: $errorMessage)
                 .submitLabel(.next)
-                .onSubmit { userEmailFocused = true }
+                .onSubmit { focusedField = .email }
                 
                 
                 TextFieldEmail(text: $userEmail,
                                isError: $isUserEmailError,
                                errorMessage: $errorMessage)
                 .submitLabel(.next)
-                .focused($userEmailFocused)
-                .onSubmit { userPasswordFocused = true }
+                .focused($focusedField, equals: .email)
+                .onSubmit { focusedField = .password }
                 
                 
                 TextFieldPassword(text: $userPassword,
@@ -65,8 +70,8 @@ struct RegisterView: View {
                                   iconLeading: Image.lockFill)
                 .textContentType(.newPassword)
                 .submitLabel(.next)
-                .focused($userPasswordFocused)
-                .onSubmit { userPasswordConfirmFocused = true }
+                .focused($focusedField, equals: .password)
+                .onSubmit { focusedField = .passwordConfirm }
                 
                 
                 TextFieldPassword(placeHolder: "Confirm password",
@@ -77,7 +82,7 @@ struct RegisterView: View {
                 .padding(.bottom)
                 .textContentType(.newPassword)
                 .submitLabel(.done)
-                .focused($userPasswordConfirmFocused)
+                .focused($focusedField, equals: .passwordConfirm)
                 .onSubmit { validateRegister() }
                 
                 
