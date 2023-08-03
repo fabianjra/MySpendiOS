@@ -54,8 +54,8 @@ struct RegisterView: View {
                               isError: $isUserNameError,
                               errorMessage: $errorMessage)
                 .focused($focusedField, equals: .name)
-                .onSubmit { focusedField = .name }
                 .submitLabel(.next)
+                .onSubmit { focusedField = .email }
                 
                 
                 TextFieldEmail(text: $userEmail,
