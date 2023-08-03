@@ -12,13 +12,12 @@ struct TextViewStyledButton: View {
     let text: String
 
     var body: some View {
-        
         Text(text)
-            //Font family
+            // MARK: FONT FAMILY
             .font(.montserrat())
             .foregroundColor(Color.buttonForeground)
         
-            //Button shape
+            // MARK: BUTTON SHAPE
             .frame(maxWidth: .infinity)
             .padding(.vertical)
             .background(LinearGradient(colors: Color.primaryGradiant,

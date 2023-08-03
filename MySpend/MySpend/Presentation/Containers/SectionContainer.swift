@@ -11,11 +11,16 @@ struct SectionContainer<Content: View>: View {
     
     let header: String?
     let isInsideList: Bool
-    let headerColor: Color?
-    let headerSize: Font.Sizes?
+    let headerColor: Color
+    let headerSize: Font.Sizes
     var content: () -> Content
     
-    init(header: String? = nil, isInsideList: Bool? = true, headerColor: Color? = Color.textSecondaryForeground, headerSize: Font.Sizes? = .small, @ViewBuilder content: @escaping () -> Content) {
+    init(header: String? = nil,
+         isInsideList: Bool? = true,
+         headerColor: Color = Color.textSecondaryForeground,
+         headerSize: Font.Sizes = .small,
+         @ViewBuilder content: @escaping () -> Content) {
+        
         self.header = header
         self.isInsideList = isInsideList ?? true
         self.headerColor = headerColor
@@ -30,12 +35,12 @@ struct SectionContainer<Content: View>: View {
                 if isInsideList {
                     Text(header)
                         .foregroundColor(headerColor)
-                        .font(.montserrat(size: headerSize ?? .small))
+                        .font(.montserrat(size: headerSize))
                 } else {
                     HStack {
                         Text(header)
                             .foregroundColor(headerColor)
-                            .font(.montserrat(size: headerSize ?? .small))
+                            .font(.montserrat(size: headerSize))
                             .padding(.leading)
                         
                         Spacer()

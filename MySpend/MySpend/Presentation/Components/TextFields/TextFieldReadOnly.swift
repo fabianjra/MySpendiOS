@@ -18,8 +18,7 @@ struct TextFieldReadOnly: View {
     }
     
     var body: some View {
-        TextField("",
-                  text: $text,
+        TextField("", text: $text,
                   prompt: Text("Name").foregroundColor(.textFieldPlaceholder))
         
         .textFieldStyle(TextFieldIconStyle($text,

@@ -21,7 +21,6 @@ struct ButtonLinkStyle: ButtonStyle {
 
 struct ButtonLinkStyle_Previews: PreviewProvider {
     static var previews: some View {
-        
         ZStack {
             Color.background
             

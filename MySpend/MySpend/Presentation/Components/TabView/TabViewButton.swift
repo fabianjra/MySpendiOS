@@ -45,7 +45,6 @@ struct TabViewButton_Previews: PreviewProvider {
         @State var selectedTab: TabViewIcons = .resume
         
         ZStack {
-            
             Color.background
             
             HStack {

@@ -21,6 +21,7 @@ struct HeaderNavigator: View {
     let subTitleWeight: Font.Family
     let subTitleSize: Font.Sizes
     
+    // MARK: VALIDATION
     let onlyTitle: Bool
     
     init(title: String = "mySpend",

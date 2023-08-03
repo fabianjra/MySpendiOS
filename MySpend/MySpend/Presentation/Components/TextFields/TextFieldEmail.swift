@@ -15,7 +15,6 @@ struct TextFieldEmail: View {
     @Binding var errorMessage: String
     
     var body: some View {
-        
         TextField("",
                   text: $text,
                   prompt: Text("Email").foregroundColor(.textFieldPlaceholder))
@@ -35,7 +34,6 @@ struct TextFieldEmail: View {
 
 struct TextFieldEmail_Previews: PreviewProvider {
     static var previews: some View {
-        
         VStack {
             TextFieldEmail(text: .constant(""),
                            isError: .constant(false),

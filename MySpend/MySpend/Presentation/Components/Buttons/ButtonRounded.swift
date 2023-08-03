@@ -9,12 +9,20 @@ import SwiftUI
 
 struct ButtonRounded: View {
     
-    let icon: Image = Image.plus
-    let color: Array<Color> = Color.primaryGradiant
-    let function: () -> Void
+    private let icon: Image
+    private let color: Array<Color>
+    private let function: () -> Void
+    
+    init(icon: Image = Image.plus,
+         color: Array<Color> = Color.primaryGradiant,
+         function: @escaping () -> Void) {
+        
+        self.icon = icon
+        self.color = color
+        self.function = function
+    }
     
     var body: some View {
-        
         Button(action: function, label: {
             icon
                 .resizable()

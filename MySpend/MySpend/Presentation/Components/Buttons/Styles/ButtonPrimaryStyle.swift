@@ -36,6 +36,8 @@ struct ButtonPrimaryStyle: ButtonStyle {
                                            endPoint: .trailing)
             )
             .cornerRadius(.infinity)
+        
+        // MARK: ANIMATIONS
             .overlay(content: {
                 if isLoading {
                     Loader()
@@ -44,7 +46,6 @@ struct ButtonPrimaryStyle: ButtonStyle {
                 }
             })
         
-        // MARK: ANIMATIONS
             .scaleEffect(configuration.isPressed ?
                          Animations.buttonScalePressed : Animations.buttonOriginalPressed)
             .animation(.easeOut(duration: Animations.buttonScaleDuration), value: configuration.isPressed)

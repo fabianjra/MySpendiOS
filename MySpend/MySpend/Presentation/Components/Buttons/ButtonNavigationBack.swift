@@ -12,10 +12,9 @@ struct ButtonNavigationBack: View {
     let function: () -> Void
     
     var body: some View {
-        
-        Button(action: {
+        Button {
             function()
-        }) {
+        } label: {
             Image.chevronLeft
                 .resizable()
                 .frame(width: FrameSize.width.buttonBack, height: FrameSize.height.buttonBack)
