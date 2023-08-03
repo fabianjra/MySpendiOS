@@ -61,7 +61,10 @@ struct TextFieldIconStyle: TextFieldStyle {
                 .onChange(of: text, perform: { _ in isError = false })
         }
         .foregroundColor(foregroundColor)
-        .background(isEnabled ? backgroundColor : Color.disabledBackground)
+        
+        //if apply disabled background, all textfield will change to gray when a view is loading.
+        //.background(isEnabled ? backgroundColor : Color.disabledBackground)
+        .background(backgroundColor)
         .cornerRadius(.infinity)
         .overlay {
             if showFocusedIndicador {
