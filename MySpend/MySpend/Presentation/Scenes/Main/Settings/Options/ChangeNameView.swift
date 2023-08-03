@@ -18,6 +18,7 @@ struct ChangeNameView: View {
     @State private var canSubmit: Bool = false
     @State private var errorMessage: String = ""
     
+    @State private var buttonDisabled: Bool = false
     @State private var isLoading: Bool = false
     
     var body: some View {
@@ -53,6 +54,7 @@ struct ChangeNameView: View {
                 }
                 .buttonStyle(ButtonPrimaryStyle(isLoading: $isLoading))
                 .padding(.bottom)
+                .disabled(buttonDisabled)
                 
                 
                 TextError(message: errorMessage)
@@ -62,6 +64,7 @@ struct ChangeNameView: View {
         .onAppear {
             SessionStore.getUserName { name, error in
                 if let error = error {
+                    buttonDisabled = true
                     errorMessage = error.localizedDescription
                 } else {
                     userName = name

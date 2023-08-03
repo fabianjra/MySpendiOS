@@ -10,6 +10,7 @@ import SwiftUI
 struct ButtonPrimaryStyle: ButtonStyle {
     
     @Environment(\.isEnabled) private var isEnabled: Bool
+    
     let color: Array<Color>
     @Binding var isLoading: Bool
     

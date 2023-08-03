@@ -28,7 +28,7 @@ struct TextFieldIconStyle: TextFieldStyle {
                 iconLeading: Image? = nil,
                 foregroundColor: Color = Color.textFieldForeground,
                 backgroundColor: Color = Color.textfieldBackground,
-                isError: Binding<Bool>,
+                isError: Binding<Bool> = .constant(false),
                 showFocusedIndicador: Bool = true) {
         
         self._text = text
