@@ -9,6 +9,8 @@ import SwiftUI
 
 struct TextFieldIconStyle: TextFieldStyle {
     
+    @Environment(\.isEnabled) private var isEnabled: Bool
+    
     @Binding private var text: String
     private let family: Font.Family
     private let size: Font.Sizes
@@ -59,7 +61,7 @@ struct TextFieldIconStyle: TextFieldStyle {
                 .onChange(of: text, perform: { _ in isError = false })
         }
         .foregroundColor(foregroundColor)
-        .background(backgroundColor)
+        .background(isEnabled ? backgroundColor : Color.disabledBackground)
         .cornerRadius(.infinity)
         .overlay {
             if showFocusedIndicador {
@@ -97,6 +99,7 @@ struct TextFieldIconStyle_Previews: PreviewProvider {
             //iOS Placeholder
             TextField("iOS placeholder", text: $text)
                 .textFieldStyle(TextFieldIconStyle($text, isError: .constant(false)))
+                .disabled(true)
             
             //With placeholder and icon, With error
             TextField("", text: $text, prompt:
@@ -108,8 +111,9 @@ struct TextFieldIconStyle_Previews: PreviewProvider {
                 .textFieldStyle(TextFieldIconStyle($text, isError: .constant(false)))
             
             //Only icon
-            TextField("", text: $text)
+            TextField("", text: .constant("This textfield is disabled"))
                 .textFieldStyle(TextFieldIconStyle($text, iconLeading: Image.envelopeFill, isError: .constant(false)))
+                .disabled(true)
             
             //Only icon X2
             TextField("", text: $text)
