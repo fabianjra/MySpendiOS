@@ -21,6 +21,7 @@ struct TextFieldEmail: View {
         
         .textFieldStyle(TextFieldIconStyle($text,
                                            iconLeading: Image.envelopeFill,
+                                           textLimit: Views.textLimitEmail,
                                            isError: $isError))
         
         .autocapitalization(.none)

@@ -15,6 +15,12 @@ struct Views {
     // MARK: TEXT
     static let messageMaxLines: Int = 3
     
+    // MARK: TEXTFIELD CHARACTER LIMIT
+    static let textLimitGeneral: Int = 50
+    static let textLimitName: Int = 40
+    static let textLimitEmail: Int = 50
+    static let textLimitPassword: Int = 50
+
     // MARK: SPACING
     static let textSpacing: CGFloat = 5.0
     static let formSpacing: CGFloat = 15.0

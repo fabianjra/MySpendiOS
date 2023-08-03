@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 struct TextFieldIconStyle: TextFieldStyle {
     
@@ -15,6 +16,7 @@ struct TextFieldIconStyle: TextFieldStyle {
     private let family: Font.Family
     private let size: Font.Sizes
     private let iconLeading: Image?
+    private let textLimit: Int
     
     private let foregroundColor: Color
     private let backgroundColor: Color
@@ -28,6 +30,7 @@ struct TextFieldIconStyle: TextFieldStyle {
                 family: Font.Family = .regular,
                 size: Font.Sizes = .body,
                 iconLeading: Image? = nil,
+                textLimit: Int = Views.textLimitGeneral,
                 foregroundColor: Color = Color.textFieldForeground,
                 backgroundColor: Color = Color.textfieldBackground,
                 isError: Binding<Bool> = .constant(false),
@@ -37,6 +40,7 @@ struct TextFieldIconStyle: TextFieldStyle {
         self.family = family
         self.size = size
         self.iconLeading = iconLeading
+        self.textLimit = textLimit
         self.foregroundColor = foregroundColor
         self.backgroundColor = backgroundColor
         self._isError = isError
@@ -59,6 +63,7 @@ struct TextFieldIconStyle: TextFieldStyle {
                 .font(.montserrat(family, size: size))
                 .focused($isFocused)
                 .onChange(of: text, perform: { _ in isError = false })
+                .onReceive(Just(text)) { _ in textLimitValidation(textLimit) }
         }
         .foregroundColor(foregroundColor)
         
@@ -84,6 +89,12 @@ struct TextFieldIconStyle: TextFieldStyle {
                         startPoint: .leading,
                         endPoint: .trailing), lineWidth: Shapes.textFieldLineWidth)
             }
+        }
+    }
+    
+    private func textLimitValidation(_ upper: Int) {
+        if text.count > upper {
+            text = String(text.prefix(upper))
         }
     }
 }

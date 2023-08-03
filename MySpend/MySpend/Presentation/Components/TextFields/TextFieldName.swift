@@ -36,6 +36,7 @@ struct TextFieldName: View {
         
         .textFieldStyle(TextFieldIconStyle($text,
                                            iconLeading: iconLeading,
+                                           textLimit: Views.textLimitName,
                                            isError: $isError))
         
         .onChange(of: text) { _ in errorMessage = "" }
