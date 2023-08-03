@@ -62,6 +62,7 @@ struct ValidateAccountView: View {
                 
                 if success {
                     canSubmit = true
+                    errorMessage = "EMAIL SENT!"
                 } else {
                     errorMessage = error.localizedDescription
                 }

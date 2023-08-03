@@ -74,7 +74,7 @@ struct ChangePasswordView: View {
                 Button("Change password") {
                     validateChangePassword()
                 }
-                .buttonStyle(ButtonPrimaryStyle())
+                .buttonStyle(ButtonPrimaryStyle(isLoading: $isLoading))
                 .disabled(buttonDisabled)
                 .padding(.bottom)
                 
