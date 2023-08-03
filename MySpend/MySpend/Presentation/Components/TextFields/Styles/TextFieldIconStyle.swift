@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Combine
 
 struct TextFieldIconStyle: TextFieldStyle {
     
@@ -62,8 +61,10 @@ struct TextFieldIconStyle: TextFieldStyle {
                 .padding(.trailing, iconLeading != nil ? nil : .zero)
                 .font(.montserrat(family, size: size))
                 .focused($isFocused)
-                .onChange(of: text, perform: { _ in isError = false })
-                .onReceive(Just(text)) { _ in textLimitValidation(textLimit) }
+                .onChange(of: text, perform: { _ in
+                    isError = false
+                    textLimitValidation(textLimit)
+                })
         }
         .foregroundColor(foregroundColor)
         
