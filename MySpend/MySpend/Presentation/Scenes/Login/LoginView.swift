@@ -78,7 +78,7 @@ struct LoginView: View {
                 Button("Register") {
                     goToRegister = true
                 }
-                .buttonStyle(ButtonPrimaryStyle())
+                .buttonStyle(ButtonPrimaryStyle(neverBgDisabled: true))
                 .padding(.bottom)
                 .padding(.horizontal, Views.paddingSmallButton)
                 .navigationDestination(isPresented: $goToRegister) {

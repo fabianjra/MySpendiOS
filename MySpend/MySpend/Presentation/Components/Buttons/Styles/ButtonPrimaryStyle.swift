@@ -11,20 +11,33 @@ struct ButtonPrimaryStyle: ButtonStyle {
     
     @Environment(\.isEnabled) private var isEnabled: Bool
     
-    let color: Array<Color>
-    @Binding var isLoading: Bool
+    private let color: Array<Color>
+    @Binding private var isLoading: Bool
+    private let neverBgDisabled: Bool
     
     init(color: Array<Color> = Color.primaryGradiant,
-         isLoading: Binding<Bool> = .constant(false)) {
+         isLoading: Binding<Bool> = .constant(false),
+         neverBgDisabled: Bool = false) {
+        
         self.color = color
         self._isLoading = isLoading
+        self.neverBgDisabled = neverBgDisabled
     }
     
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .modifier(Show(isVisible: isLoading == false))
             .font(.montserrat())
-            .foregroundColor(isEnabled ? Color.buttonForeground : Color.disabledForeground)
+            .foregroundColor(
+                
+                //If enabled: Original foreground color.
+                isEnabled ? Color.buttonForeground :
+                    
+                    //If disabled and dont want to show foreground disabled, preserve the original color.
+                neverBgDisabled ? Color.buttonForeground :
+                    
+                    //If disabled and want to show foregroundDisabled: show disabled foreground color.
+                Color.disabledForeground)
         
         // MARK: SHAPE
             .frame(maxWidth: .infinity)
@@ -37,14 +50,19 @@ struct ButtonPrimaryStyle: ButtonStyle {
                                            endPoint: .trailing) :
                     
                     //If disabled, but is loading, preserve the original color.
-                    isLoading ? LinearGradient(colors: color,
-                                               startPoint: .leading,
-                                               endPoint: .trailing) :
+                isLoading ? LinearGradient(colors: color,
+                                           startPoint: .leading,
+                                           endPoint: .trailing) :
                     
-                    //If disabled and is not loading, show disabled background color.
-                    LinearGradient(colors: [Color.disabledBackground],
-                                   startPoint: .leading,
-                                   endPoint: .trailing)
+                    //If disabled and is not loading but dont want to show BackGround disabled, preserve the original color.
+                neverBgDisabled ? LinearGradient(colors: color,
+                                                 startPoint: .leading,
+                                                 endPoint: .trailing) :
+                    
+                    //If disabled and is not loading and want to show BackGroundDisabled: show disabled background color.
+                LinearGradient(colors: [Color.disabledBackground],
+                               startPoint: .leading,
+                               endPoint: .trailing)
             )
             .cornerRadius(.infinity)
         
@@ -57,6 +75,7 @@ struct ButtonPrimaryStyle: ButtonStyle {
                 }
             })
         
+        // MARK: EFFECTS
             .scaleEffect(configuration.isPressed ?
                          Animations.buttonScalePressed : Animations.buttonOriginalPressed)
             .animation(.easeOut(duration: Animations.buttonScaleDuration), value: configuration.isPressed)
