@@ -8,6 +8,12 @@
 import SwiftUI
 import Firebase
 
+private enum Field: Hashable {
+    case userPassword
+    case newPassword
+    case newPasswordConfirm
+}
+
 struct ChangePasswordView: View {
     
     @State private var userPassword: String = ""
@@ -24,6 +30,8 @@ struct ChangePasswordView: View {
     
     @State private var buttonDisabled: Bool = false
     @State private var isLoading: Bool = false
+    
+    @FocusState private var focusedField: Field?
     
     var body: some View {
         FormScrollContainer {
@@ -46,8 +54,9 @@ struct ChangePasswordView: View {
                                   errorMessage: $errorMessage,
                                   iconLeading: Image.lockFill)
                 .textContentType(.password)
-                .submitLabel(.done)
-                .onSubmit { validateChangePassword() }
+                .focused($focusedField, equals: .userPassword)
+                .submitLabel(.next)
+                .onSubmit { focusedField = .newPassword }
                 
                 
                 TextFieldPassword(placeHolder: "New password",
@@ -56,8 +65,9 @@ struct ChangePasswordView: View {
                                   errorMessage: $errorMessage,
                                   iconLeading: Image.checkmark)
                 .textContentType(.newPassword)
-                .submitLabel(.done)
-                .onSubmit { validateChangePassword() }
+                .focused($focusedField, equals: .newPassword)
+                .submitLabel(.next)
+                .onSubmit { focusedField = .newPasswordConfirm }
                 
                 
                 TextFieldPassword(placeHolder: "Confirm new password",
@@ -67,6 +77,7 @@ struct ChangePasswordView: View {
                                   iconLeading: Image.checkmark)
                 .padding(.bottom)
                 .textContentType(.newPassword)
+                .focused($focusedField, equals: .newPasswordConfirm)
                 .submitLabel(.done)
                 .onSubmit { validateChangePassword() }
                 
@@ -92,6 +103,8 @@ struct ChangePasswordView: View {
     }
     
     private func validateChangePassword() {
+        
+        focusedField = .none
         
         isUserPasswordError = userPassword.isEmptyOrWhitespace()
         isUserNewPasswordError = userNewPassword.isEmptyOrWhitespace()

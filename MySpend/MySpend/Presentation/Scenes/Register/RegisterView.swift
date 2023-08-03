@@ -53,6 +53,7 @@ struct RegisterView: View {
                 TextFieldName(text: $userName,
                               isError: $isUserNameError,
                               errorMessage: $errorMessage)
+                .focused($focusedField, equals: .name)
                 .onSubmit { focusedField = .name }
                 .submitLabel(.next)
                 
@@ -108,6 +109,8 @@ struct RegisterView: View {
     }
     
     private func validateRegister() {
+        
+        focusedField = .none
         
         isUserNameError = userName.isEmptyOrWhitespace()
         isUserEmailError = userEmail.isEmptyOrWhitespace()

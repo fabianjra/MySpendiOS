@@ -148,6 +148,8 @@ struct LoginView: View {
     
     private func validateLogin() {
         
+        focusedField = .none
+        
         //If Textfields are empty, bool error will be true.
         isUserEmailError = userEmail.isEmptyOrWhitespace()
         isUserPasswordError = userPassword.isEmptyOrWhitespace()
