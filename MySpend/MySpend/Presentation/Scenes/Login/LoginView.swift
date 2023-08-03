@@ -20,6 +20,8 @@ struct LoginView: View {
     @State private var canSubmit: Bool = false
     @State private var goToRegister: Bool = false
     
+    @State private var isLoading: Bool = false
+    
     var body: some View {
         FormScrollContainer {
             
@@ -51,7 +53,7 @@ struct LoginView: View {
                 Button("Login") {
                     login()
                 }
-                .buttonStyle(ButtonPrimaryStyle())
+                .buttonStyle(ButtonPrimaryStyle(isLoading: $isLoading))
                 .padding(.bottom)
                 .navigationDestination(isPresented: $canSubmit) {
                     MainView(selectedTab: .resume)
@@ -135,7 +137,15 @@ struct LoginView: View {
             errorMessage = ErrorMessages.emptySpaces.localizedDescription
             
         } else {
+            
+            isLoading = true
+            
             SessionStore.singIn(userEmail, password: userPassword) { success, error in
+                
+                defer {
+                    isLoading = false
+                }
+                
                 if success {
                     canSubmit = true
                 } else {

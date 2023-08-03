@@ -28,6 +28,8 @@ struct RegisterView: View {
     @State private var errorUpdateName: String = ""
     @State private var errorSendEmail: String = ""
     
+    @State private var isLoading: Bool = false
+    
     var body: some View {
         FormScrollContainer {
             
@@ -76,7 +78,7 @@ struct RegisterView: View {
                 Button("Register") {
                     register()
                 }
-                .buttonStyle(ButtonPrimaryStyle())
+                .buttonStyle(ButtonPrimaryStyle(isLoading: $isLoading))
                 .padding(.bottom)
                 .navigationDestination(isPresented: $canSubmit) {
                     MainView(selectedTab: .resume)
@@ -119,6 +121,9 @@ struct RegisterView: View {
     }
     
     private func Register() {
+        
+        isLoading = true
+        
         SessionStore.registerUser(userEmail,
                                   password: userPassword) { success, user, error in
             if success {
@@ -126,11 +131,13 @@ struct RegisterView: View {
                     updateName(user: user)
                     
                 } else {
+                    isLoading = false
                     errorUpdateName = ErrorMessages.userCreatedNoName.localizedDescription
                     errorSendEmail = ErrorMessages.userCreatedNoSendEmail.localizedDescription
                 }
                 
             } else {
+                isLoading = false
                 errorMessage = error.localizedDescription
             }
         }
@@ -140,6 +147,7 @@ struct RegisterView: View {
         SessionStore.updateUserName(newUserName: userName,
                                     user: user) { _, error in
             if let error = error {
+                isLoading = false
                 errorMessage = error.localizedDescription
                 errorUpdateName = ErrorMessages.userCreatedNoName.localizedDescription
                 errorSendEmail = ErrorMessages.userCreatedNoSendEmail.localizedDescription
@@ -151,6 +159,11 @@ struct RegisterView: View {
     
     private func sendEmail(user: User) {
         SessionStore.sendEmailValidation(user: user) { success, error in
+            
+            defer {
+                isLoading = false
+            }
+            
             if success {
                 canSubmit = true
             } else {
