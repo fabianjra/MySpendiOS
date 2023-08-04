@@ -74,7 +74,7 @@ extension String {
      
      - Date: Aug 2023
      */
-    func textToImage(size:CGFloat) -> UIImage {
+    func textToImage(size: CGFloat) -> UIImage {
         let nsString = (self as NSString)
         let font = UIFont.systemFont(ofSize: size)
         let stringAttributes = [NSAttributedString.Key.font: font]

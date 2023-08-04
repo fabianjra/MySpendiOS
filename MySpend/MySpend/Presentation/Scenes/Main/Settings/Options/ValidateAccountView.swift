@@ -28,9 +28,9 @@ struct ValidateAccountView: View {
                             titleSize: .bigXL)
             .padding(.bottom)
             
-            // MARK: PLAIN SCREEN
-            if !userIsValidated {
+            if userIsValidated {
                 
+                // MARK: PLAIN SCREEN
                 userIsValidatedBody
                     .padding(.top)
                 
@@ -42,9 +42,7 @@ struct ValidateAccountView: View {
         }
         .disabled(isLoading)
         .onAppear {
-            //the answer is opposite, becuase disabled is opposite to can send email.
-            //eg: can send email?: YES - So button is NOT disabled (opposite).
-            buttonDisabled = !canSendEmail()
+            isUserValidated()
         }
     }
     
@@ -52,16 +50,16 @@ struct ValidateAccountView: View {
         VStack {
             TextPlain(message: ErrorMessages.userIsValidated.localizedDescription,
                       family: .semibold,
-                      size: .bigXL,
+                      size: .bigL,
                       aligment: .center)
             
             TextPlain(message: "No action necessary.",
                       family: .semibold,
-                      size: .bigL,
+                      size: .big,
                       aligment: .center)
             .padding(.bottom)
             
-            Image(uiImage: "🥳".textToImage(size: 60))
+            Image(uiImage: Emojis.fest.textToImage(size: Frames.emojiSize))
                 .padding(.bottom)
             
             Button("Go back") {
@@ -91,8 +89,9 @@ struct ValidateAccountView: View {
         }
     }
     
+    
     private func sendEmail() {
-        if canSendEmail() {
+        if isUserValidated() == false {
             
             isLoading = true
             
@@ -111,16 +110,22 @@ struct ValidateAccountView: View {
         }
     }
     
-    private func canSendEmail() -> Bool {
+    //@discardableResult: Avoid the warning Xcode gives us when you dont use the return value.
+    @discardableResult private func isUserValidated() -> Bool {
         if let user = SessionStore.getCurrentUser() {
+            
             if user.isEmailVerified {
                 userIsValidated = true
+                buttonDisabled = true
                 errorMessage = ErrorMessages.userIsValidated.localizedDescription
-                return false
-            } else {
                 return true
+                
+            } else {
+                return false
             }
+            
         } else {
+            buttonDisabled = true
             errorMessage = ErrorMessages.userNotLoggedIn.localizedDescription
             return false
         }
