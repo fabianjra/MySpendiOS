@@ -10,9 +10,12 @@ import Firebase
 
 struct ValidateAccountView: View {
     
+    @Environment(\.dismiss) private var dismiss
+    
     @State private var canSubmit: Bool = false
     @State private var errorMessage: String = ""
     
+    @State private var userIsValidated: Bool = false
     @State private var buttonDisabled: Bool = false
     @State private var isLoading: Bool = false
     
@@ -25,21 +28,16 @@ struct ValidateAccountView: View {
                             titleSize: .bigXL)
             .padding(.bottom)
             
-            
-            // MARK: FIELDS
-            VStack(spacing: Views.formSpacing) {
+            // MARK: PLAIN SCREEN
+            if !userIsValidated {
                 
-                TextPlain(message: "Please follow the instructions that will be send to your email account.", aligment: .center)
+                userIsValidatedBody
+                    .padding(.top)
                 
+            } else {
                 
-                Button("Send email") {
-                    sendEmail()
-                }
-                .buttonStyle(ButtonPrimaryStyle(isLoading: $isLoading))
-                .padding(.bottom)
-                .disabled(buttonDisabled)
-                
-                TextError(message: errorMessage)
+                // MARK: FIELDS
+                sendEmailBody
             }
         }
         .disabled(isLoading)
@@ -47,6 +45,49 @@ struct ValidateAccountView: View {
             //the answer is opposite, becuase disabled is opposite to can send email.
             //eg: can send email?: YES - So button is NOT disabled (opposite).
             buttonDisabled = !canSendEmail()
+        }
+    }
+    
+    private var userIsValidatedBody: some View {
+        VStack {
+            TextPlain(message: ErrorMessages.userIsValidated.localizedDescription,
+                      family: .semibold,
+                      size: .bigXL,
+                      aligment: .center)
+            
+            TextPlain(message: "No action necessary.",
+                      family: .semibold,
+                      size: .bigL,
+                      aligment: .center)
+            .padding(.bottom)
+            
+            Image(uiImage: "🥳".textToImage(size: 60))
+                .padding(.bottom)
+            
+            Button("Go back") {
+                dismiss()
+            }
+            .buttonStyle(ButtonPrimaryStyle())
+            .padding(.top)
+        }
+        .padding(.top)
+    }
+    
+    private var sendEmailBody: some View {
+        VStack(spacing: Views.formSpacing) {
+            
+            TextPlain(message: "Please follow the instructions that will be send to your email account.", aligment: .center)
+            
+            
+            Button("Send email") {
+                sendEmail()
+            }
+            .buttonStyle(ButtonPrimaryStyle(isLoading: $isLoading))
+            .padding(.bottom)
+            .disabled(buttonDisabled)
+            
+            
+            TextError(message: errorMessage)
         }
     }
     
@@ -73,7 +114,8 @@ struct ValidateAccountView: View {
     private func canSendEmail() -> Bool {
         if let user = SessionStore.getCurrentUser() {
             if user.isEmailVerified {
-                errorMessage = ErrorMessages.userIsVerified.localizedDescription
+                userIsValidated = true
+                errorMessage = ErrorMessages.userIsValidated.localizedDescription
                 return false
             } else {
                 return true

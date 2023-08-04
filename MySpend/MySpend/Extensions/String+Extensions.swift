@@ -5,6 +5,8 @@
 //  Created by Fabian Rodriguez on 25/7/23.
 //
 
+import UIKit
+
 extension String {
     
     /**
@@ -49,5 +51,43 @@ extension String {
      */
     func escaped() -> String {
         return self.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? self
+    }
+    
+    /**
+     Convert a given text to UIImage (UIKit image).
+     It's necessary that the SwiftUI Image control, receive as parameter "uiImage".
+     
+     **Example:**
+     ```swift
+     public var body: some View {
+        let imageFromText = "👋".textToImage(size: 50)
+        Image(uiImage: imageFromText)
+     }
+     ```
+     
+     - Parameters:
+        - size:The size the image will have.
+     
+     - Authors: Fabian Rodriguez
+     
+     - Version: 1.0
+     
+     - Date: Aug 2023
+     */
+    func textToImage(size:CGFloat) -> UIImage {
+        let nsString = (self as NSString)
+        let font = UIFont.systemFont(ofSize: size)
+        let stringAttributes = [NSAttributedString.Key.font: font]
+        let imageSize = nsString.size(withAttributes: stringAttributes)
+        
+        UIGraphicsBeginImageContextWithOptions(imageSize, false, CGFloat.zero)
+        UIColor.clear.set()
+        UIRectFill(CGRect(origin: CGPoint(), size: imageSize))
+        nsString.draw(at: CGPoint.zero, withAttributes: stringAttributes)
+        
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return image ?? UIImage()
     }
 }
