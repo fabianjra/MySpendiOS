@@ -56,27 +56,31 @@ struct ModalNewTransaction: View {
                 .labelsHidden()
             
             
-            TextField("", text: $dateString, prompt: Text("Date"))
+            TextField("", text: $dateString, prompt:
+                        Text("Date").foregroundColor(.textFieldPlaceholder))
                 .textFieldStyle(TextFieldIconStyle($dateString,
                                                    iconLeading: Image.calendar,
                                                    isError: $isDateError))
                 .disabled(true)
             
             
-            TextField("", text: $amount, prompt: Text("Amount"))
+            TextField("", text: $amount, prompt:
+                        Text("Amount").foregroundColor(.textFieldPlaceholder))
                 .textFieldStyle(TextFieldIconStyle($amount,
                                                    iconLeading: Image.dolarSquareFill,
                                                    textLimit: 9,
                                                    isError: $isAmountError))
             
             
-            TextField("", text: $category, prompt: Text("Category"))
+            TextField("", text: $category, prompt:
+                        Text("Category").foregroundColor(.textFieldPlaceholder))
                 .textFieldStyle(TextFieldIconStyle($category,
                                                    iconLeading: Image.stackFill,
                                                    isError: $isCategoryError))
             
             
-            TextField("", text: $notes, prompt: Text("Notes"))
+            TextField("", text: $notes, prompt:
+                        Text("Notes").foregroundColor(.textFieldPlaceholder))
                 .textFieldStyle(TextFieldIconStyle($notes,
                                                    isError: $isAmountError))
                 .padding(.bottom)
