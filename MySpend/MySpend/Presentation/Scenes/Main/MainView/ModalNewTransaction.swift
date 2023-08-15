@@ -7,9 +7,17 @@
 
 import SwiftUI
 
+private enum TransactionType: String, CaseIterable, Identifiable {
+    public var id: Self { self }
+    case expense = "expense"
+    case income = "income"
+}
+
 struct ModalNewTransaction: View {
     
     @Environment(\.dismiss) var dismiss
+    
+    @State private var transactionType: TransactionType = .expense
     
     @State private var dateString: String = ""
     @State private var isDateError: Bool = false
@@ -35,6 +43,14 @@ struct ModalNewTransaction: View {
                             subTitle: "Enter the new transation details",
                             onlyTitle: true)
             .padding(.vertical)
+            
+            
+            Picker("Transaction type", selection: $transactionType) {
+                ForEach(TransactionType.allCases) { type in
+                    Text(type.rawValue)
+                }
+            }
+            .pickerStyle(.segmented)
             
             
             DatePicker("Date:", selection: $date, displayedComponents: .date)
