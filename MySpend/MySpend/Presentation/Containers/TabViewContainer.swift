@@ -24,10 +24,10 @@ struct TabViewContainer<Content: View>: View {
             ButtonRounded {
                 function()
             }
-            .padding(.bottom, Views.paddingButtonRoundedBottom)
+            .padding(.bottom, Views.paddingButtonRoundedBottomForCurvedTabview)
             
             Color.tabViewBackground
-                .clipShape(SemiCircleShape())
+                .clipShape(SemiCircleShapeCurved())
                 .frame(height: Frames.tabViewHeight)
                 .cornerRadius(.infinity)
                 .shadow(color: .shadow.opacity(Colors.opacityHalf),

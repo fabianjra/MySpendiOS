@@ -30,4 +30,5 @@ struct Views {
     static let paddingSmallButton: CGFloat = 60.0
     static let paddingTabViewHorizontal: CGFloat = 60.0
     static let paddingButtonRoundedBottom: CGFloat = 60.0
+    static let paddingButtonRoundedBottomForCurvedTabview: CGFloat = 50.0
 }
