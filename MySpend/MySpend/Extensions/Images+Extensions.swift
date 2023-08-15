@@ -18,6 +18,7 @@ extension Image {
     static let lockFill = Image(systemName: "lock.fill") //Password
     static let personFill = Image(systemName: "person.fill") //Name
     static let checkmark = Image(systemName: "checkmark") //Password confirmation
+    static let calendar = Image(systemName: "calendar") //Date
     
     // MARK: TABVIEW
     static let dolarSquare = Image(systemName: "dollarsign.square") //Resume

@@ -80,6 +80,7 @@
 		1FE7C6812A47DA1F0070B988 /* Colors+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE7C6802A47DA1F0070B988 /* Colors+Extensions.swift */; };
 		1FE7C6832A47DDF40070B988 /* Radius.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE7C6822A47DDF40070B988 /* Radius.swift */; };
 		1FE7C6882A48027C0070B988 /* Images+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE7C6872A48027C0070B988 /* Images+Extensions.swift */; };
+		1FFA5D5A2A8B57CC00AC0519 /* ModalNewTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFA5D592A8B57CC00AC0519 /* ModalNewTransaction.swift */; };
 		1FFD5FA32A8B35A300A53050 /* ButtonHorizontalStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFD5FA22A8B35A300A53050 /* ButtonHorizontalStyle.swift */; };
 /* End PBXBuildFile section */
 
@@ -174,6 +175,7 @@
 		1FE7C6802A47DA1F0070B988 /* Colors+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Colors+Extensions.swift"; sourceTree = "<group>"; };
 		1FE7C6822A47DDF40070B988 /* Radius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Radius.swift; sourceTree = "<group>"; };
 		1FE7C6872A48027C0070B988 /* Images+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Images+Extensions.swift"; sourceTree = "<group>"; };
+		1FFA5D592A8B57CC00AC0519 /* ModalNewTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalNewTransaction.swift; sourceTree = "<group>"; };
 		1FFD5FA22A8B35A300A53050 /* ButtonHorizontalStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonHorizontalStyle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -254,6 +256,7 @@
 			isa = PBXGroup;
 			children = (
 				1FC94CBE2A5A2CB7005CA0B6 /* MainView.swift */,
+				1FFA5D592A8B57CC00AC0519 /* ModalNewTransaction.swift */,
 			);
 			path = MainView;
 			sourceTree = "<group>";
@@ -761,6 +764,7 @@
 				1F06414D2A7232D300C19084 /* RootView.swift in Sources */,
 				1F7486C32A6A3F770063AC35 /* ButtonRounded.swift in Sources */,
 				1F46B4142A79976F003A9550 /* FormScrollContainer.swift in Sources */,
+				1FFA5D5A2A8B57CC00AC0519 /* ModalNewTransaction.swift in Sources */,
 				1F5CC57E2A664EFB00C214FE /* TextFieldEmail.swift in Sources */,
 				1F7486C92A6A5DC90063AC35 /* ButtonScaleStyle.swift in Sources */,
 				1F4C24832A47A6DA00CCAF6D /* MySpendApp.swift in Sources */,

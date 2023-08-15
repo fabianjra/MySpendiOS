@@ -11,6 +11,8 @@ struct MainView: View {
     
     @State private var selectedTab: TabViewIcons
     
+    @State private var showNewItemModal = false
+    
     init(selectedTab: TabViewIcons) {
         self.selectedTab = selectedTab
         UITabBar.appearance().isHidden = true
@@ -34,11 +36,18 @@ struct MainView: View {
         .onDisappear {
             AppState.shared.swipeEnabled = true
         }
+        
+        .sheet(isPresented: $showNewItemModal) {
+            ModalNewTransaction()
+                .presentationDetents([.large])
+        }
     }
     
     var tabView: some View {
         TabViewContainer {
-            //TODO: Add new transaction function.
+            
+            showNewItemModal = true
+            
         } content: {
             ForEach(TabViewIcons.allCases, id: \.id) { item in
                 
