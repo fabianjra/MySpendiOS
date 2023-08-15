@@ -13,6 +13,7 @@ struct Views {
     static let buttonBorderWidth: CGFloat = 6.0
     
     // MARK: TEXT
+    static let buttonMaxLines: Int = 1
     static let messageMaxLines: Int = 3
     
     // MARK: TEXTFIELD CHARACTER LIMIT

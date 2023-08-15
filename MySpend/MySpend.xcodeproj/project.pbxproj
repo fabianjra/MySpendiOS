@@ -80,6 +80,7 @@
 		1FE7C6812A47DA1F0070B988 /* Colors+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE7C6802A47DA1F0070B988 /* Colors+Extensions.swift */; };
 		1FE7C6832A47DDF40070B988 /* Radius.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE7C6822A47DDF40070B988 /* Radius.swift */; };
 		1FE7C6882A48027C0070B988 /* Images+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE7C6872A48027C0070B988 /* Images+Extensions.swift */; };
+		1FFD5FA32A8B35A300A53050 /* ButtonHorizontalStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFD5FA22A8B35A300A53050 /* ButtonHorizontalStyle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -173,6 +174,7 @@
 		1FE7C6802A47DA1F0070B988 /* Colors+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Colors+Extensions.swift"; sourceTree = "<group>"; };
 		1FE7C6822A47DDF40070B988 /* Radius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Radius.swift; sourceTree = "<group>"; };
 		1FE7C6872A48027C0070B988 /* Images+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Images+Extensions.swift"; sourceTree = "<group>"; };
+		1FFD5FA22A8B35A300A53050 /* ButtonHorizontalStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonHorizontalStyle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -216,6 +218,7 @@
 			isa = PBXGroup;
 			children = (
 				1F1408182A58FB9400181500 /* ButtonPrimaryStyle.swift */,
+				1FFD5FA22A8B35A300A53050 /* ButtonHorizontalStyle.swift */,
 				1F14081C2A5910D300181500 /* ButtonLinkStyle.swift */,
 				1F7486C82A6A5DC90063AC35 /* ButtonScaleStyle.swift */,
 			);
@@ -735,6 +738,7 @@
 				1FE7C6882A48027C0070B988 /* Images+Extensions.swift in Sources */,
 				1F19D9642A4A583800137EA0 /* TextFieldIconStyle.swift in Sources */,
 				1F5CC5842A6662A200C214FE /* ButtonNavigationBack.swift in Sources */,
+				1FFD5FA32A8B35A300A53050 /* ButtonHorizontalStyle.swift in Sources */,
 				1F46B4192A79A267003A9550 /* ContentContainer.swift in Sources */,
 				1FC94CBC2A5A1DB7005CA0B6 /* TextViewStyledButton.swift in Sources */,
 				1F7486BF2A68ECD90063AC35 /* FormContainer.swift in Sources */,

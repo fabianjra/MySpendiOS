@@ -20,17 +20,18 @@ extension Image {
     static let checkmark = Image(systemName: "checkmark") //Password confirmation
     
     // MARK: TABVIEW
-    static let dolarSquare = Image(systemName: "dollarsign.square")
-    static let dolarSquareFill = Image(systemName: "dollarsign.square.fill") //Resume
-    static let stack = Image(systemName: "rectangle.stack")
-    static let stackFill = Image(systemName: "rectangle.stack.fill") //History
+    static let dolarSquare = Image(systemName: "dollarsign.square") //Resume
+    static let dolarSquareFill = Image(systemName: "dollarsign.square.fill")
+    static let stack = Image(systemName: "mail.stack") //History
+    static let stackFill = Image(systemName: "mail.stack.fill")
     static let sliderHorizontal = Image(systemName: "slider.horizontal.3") //Settings
     
     // MARK: LIST
-    static let listBulletClipboard = Image(systemName: "list.bullet.clipboard")
-    static let listBulletClipboardFill = Image(systemName: "list.bullet.clipboard.fill") //Categories
+    static let listBulletClipboard = Image(systemName: "list.bullet.clipboard") //Categories
+    static let listBulletClipboardFill = Image(systemName: "list.bullet.clipboard.fill")
     
     // MARK: NAVIGATION
+    static let arrowRight = Image(systemName: "arrow.right")
     static let arrowBackward = Image(systemName: "arrow.backward")
     static let chevronLeft = Image(systemName: "chevron.left")
     

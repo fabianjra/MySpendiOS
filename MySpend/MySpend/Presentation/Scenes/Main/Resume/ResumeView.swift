@@ -37,7 +37,8 @@ struct ResumeView: View {
                 Button("History") {
                     
                 }
-                .buttonStyle(ButtonPrimaryStyle())
+                .buttonStyle(ButtonHorizontalStyle(subTitle: "Go to history",
+                                                   iconLeading: Image.stackFill))
             }
             .padding(.bottom)
 
