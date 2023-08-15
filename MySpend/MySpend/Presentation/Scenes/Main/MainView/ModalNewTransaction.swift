@@ -11,9 +11,11 @@ struct ModalNewTransaction: View {
     
     @Environment(\.dismiss) var dismiss
     
-    @State private var date: String = ""
+    @State private var dateString: String = ""
     @State private var isDateError: Bool = false
     
+    @State private var date = Date.now
+
     @State private var amount: String = ""
     @State private var isAmountError: Bool = false
     
@@ -34,11 +36,32 @@ struct ModalNewTransaction: View {
                             onlyTitle: true)
             .padding(.vertical)
             
-            TextField("", text: $date, prompt: Text("Date"))
-                .textFieldStyle(TextFieldIconStyle($date,
+            
+            DatePicker("Date:", selection: $date, displayedComponents: .date)
+                .padding()
+                .foregroundColor(Color.textPrimaryForeground)
+                .onChange(of: date) { newDate in
+                    
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "dd/MM/yyyy"
+                    let dateFormted = dateFormatter.string(from: newDate)
+                    
+                    
+                    dateString = dateFormted
+                    
+                    
+                    print("*******************")
+                    print(dateFormted)
+                }
+                .labelsHidden()
+            
+            
+            TextField("", text: $dateString, prompt: Text("Date"))
+                .textFieldStyle(TextFieldIconStyle($dateString,
                                                    iconLeading: Image.calendar,
-                                                   textLimit: 9,
                                                    isError: $isDateError))
+                .disabled(true)
+            
             
             TextField("", text: $amount, prompt: Text("Amount"))
                 .textFieldStyle(TextFieldIconStyle($amount,
