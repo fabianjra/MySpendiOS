@@ -21,10 +21,10 @@ struct ModalNewTransaction: View {
     
     @State private var dateString: String = ""
     
-    @State private var date = Date()
+    @State private var selectedDate: Date = .now
     
     @State private var showingPicker = false
-
+    
     @State private var amount: String = ""
     @State private var isAmountError: Bool = false
     
@@ -55,75 +55,60 @@ struct ModalNewTransaction: View {
             .padding(.bottom)
             
             
-//            TextField("", text: $dateString, prompt:
-//                        Text("Date").foregroundColor(.textFieldPlaceholder))
-//                .textFieldStyle(TextFieldIconStyle($dateString,
-//                                                   iconLeading: Image.calendar,
-//                                                   isError: $isDateError))
-            
-            Text(dateString)
-                .font(.montserrat())
-                .foregroundColor(Color.textPrimaryForeground)
+            TextFieldReadOnly(text: $dateString, iconLeading: Image.calendar, colorDisabled: false)
                 .onTapGesture {
                     showingPicker = true
                 }
                 .sheet(isPresented: $showingPicker) {
-                    
-                    DatePicker(selection: $date, displayedComponents: .date) {
+                    NavigationStack {
                         
+                        DatePicker("", selection: $selectedDate, displayedComponents: .date)
+                            .datePickerStyle(.graphical)
+                            .onChange(of: selectedDate, perform: { _ in
+                                dateString = Utils.dateToStringShort(date: selectedDate)
+                                //let day = selectedDate.formatted(.dateTime.day())
+                            })
+                            .toolbar {
+                                ToolbarItem(placement: .cancellationAction) {
+                                    Button("Today") {
+                                        selectedDate = .now
+                                    }
+                                }
+                                
+                                ToolbarItem(placement: .confirmationAction) {
+                                    Button("Done") {
+                                        showingPicker = false
+                                    }
+                                }
+                            }
                     }
-                    .onChange(of: date, perform: { newDate in
-                        
-                        let dateFormatter = DateFormatter()
-                        dateFormatter.dateFormat = "dd/MM/yyyy"
-                        let dateFormated = dateFormatter.string(from: newDate)
-                        dateString = dateFormated
-                        
-                        showingPicker = false
-                    })
-                    .datePickerStyle(.graphical)
                     .presentationDetents([.medium])
-                    .toolbar {
-                        ToolbarItem(placement: .cancellationAction) {
-                            Button("Cancel") {
-                                showingPicker = false
-                            }
-                        }
-                        ToolbarItem(placement: .confirmationAction) {
-                            Button("Done") {
-                                showingPicker = false
-                            }
-                        }
-                    }
                 }
                 .onAppear {
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "dd/MM/yyyy"
-                    let dateFormated = dateFormatter.string(from: date)
-                    dateString = dateFormated
+                    dateString = Utils.dateToStringShort(date: selectedDate)
                 }
             
             
             TextField("", text: $amount, prompt:
                         Text("Amount").foregroundColor(.textFieldPlaceholder))
-                .textFieldStyle(TextFieldIconStyle($amount,
-                                                   iconLeading: Image.dolarSquareFill,
-                                                   textLimit: 9,
-                                                   isError: $isAmountError))
+            .textFieldStyle(TextFieldIconStyle($amount,
+                                               iconLeading: Image.dolarSquareFill,
+                                               textLimit: 12,
+                                               isError: $isAmountError))
             
-            
+            //TODO: Change to sheet list (all categories inserted).
             TextField("", text: $category, prompt:
                         Text("Category").foregroundColor(.textFieldPlaceholder))
-                .textFieldStyle(TextFieldIconStyle($category,
-                                                   iconLeading: Image.stackFill,
-                                                   isError: $isCategoryError))
+            .textFieldStyle(TextFieldIconStyle($category,
+                                               iconLeading: Image.stackFill,
+                                               isError: $isCategoryError))
             
             
             TextField("", text: $notes, prompt:
                         Text("Notes").foregroundColor(.textFieldPlaceholder))
-                .textFieldStyle(TextFieldIconStyle($notes,
-                                                   isError: $isAmountError))
-                .padding(.bottom)
+            .textFieldStyle(TextFieldIconStyle($notes,
+                                               isError: $isAmountError))
+            .padding(.bottom)
             
             
             Button("Accept") {

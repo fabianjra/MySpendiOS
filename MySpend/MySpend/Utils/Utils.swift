@@ -137,4 +137,32 @@ struct Utils {
     static func getEdgeInsets() -> UIEdgeInsets {
         return (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first(where: {$0.isKeyWindow})?.safeAreaInsets ?? .zero
     }
+    
+    /**
+     Convert a given date to string in short format: dd/MM/yyy. Ejem: 29/05/1990
+     
+     **Example:**
+     ```swift
+     DatePicker(selection: $selectedDate, displayedComponents: .date) {
+         
+     }
+     .onChange(of: selectedDate, perform: { _ in
+
+         dateString = Utils.dateToStringShort(date: selectedDate)
+         
+         let day = selectedDate.formatted(.dateTime.day())
+     })
+     ```
+     
+     - Returns: String short date: dd/MM/yyy
+     
+     - Authors: Fabian Rodriguez.
+     
+     - Date: Sep 2023
+     */
+    static func dateToStringShort(date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy"
+        return dateFormatter.string(from: date)
+    }
 }

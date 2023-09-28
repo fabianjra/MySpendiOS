@@ -11,10 +11,12 @@ struct TextFieldReadOnly: View {
     
     @Binding private var text: String
     private let iconLeding: Image?
+    private let colorDisabled: Bool
     
-    init(text: Binding<String>, iconLeading: Image? = nil) {
+    init(text: Binding<String>, iconLeading: Image? = nil, colorDisabled: Bool = true) {
         self._text = text
         self.iconLeding = iconLeading
+        self.colorDisabled = colorDisabled
     }
     
     var body: some View {
@@ -23,7 +25,7 @@ struct TextFieldReadOnly: View {
         
         .textFieldStyle(TextFieldIconStyle($text,
                                            iconLeading: iconLeding,
-                                           backgroundColor: Color.disabledBackground))
+                                           backgroundColor: colorDisabled ? Color.disabledBackground : Color.textfieldBackground))
         .disabled(true)
     }
 }
@@ -31,9 +33,13 @@ struct TextFieldReadOnly: View {
 struct TextFieldReadOnly_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
-            TextFieldReadOnly(text: .constant("Read only text"), iconLeading: Image.personFill)
+            TextFieldReadOnly(text: .constant("Read only text"),
+                              iconLeading: Image.personFill)
             
             TextFieldReadOnly(text: .constant("Read only text without icon"))
+            
+            TextFieldReadOnly(text: .constant("Read only without disabled background"),
+                              colorDisabled: false)
         }
         .padding()
         .background(Color.background)
