@@ -39,7 +39,7 @@ struct TextFieldName: View {
                                            textLimit: Views.textLimitName,
                                            isError: $isError))
         
-        .onChange(of: text) { _ in errorMessage = "" }
+        .onChange(of: text) { errorMessage = "" }
         .textContentType(.name)
         .keyboardType(.alphabet)
     }

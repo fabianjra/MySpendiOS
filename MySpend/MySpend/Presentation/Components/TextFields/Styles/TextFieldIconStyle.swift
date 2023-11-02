@@ -61,7 +61,7 @@ struct TextFieldIconStyle: TextFieldStyle {
                 .padding(.trailing, iconLeading != nil ? nil : .zero)
                 .font(.montserrat(family, size: size))
                 .focused($isFocused)
-                .onChange(of: text, perform: { _ in
+                .onChange(of: text, {
                     
                     if text.isEmpty {
                         isError = true

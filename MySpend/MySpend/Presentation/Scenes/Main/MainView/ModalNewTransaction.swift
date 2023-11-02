@@ -64,7 +64,7 @@ struct ModalNewTransaction: View {
                         
                         DatePicker("", selection: $selectedDate, displayedComponents: .date)
                             .datePickerStyle(.graphical)
-                            .onChange(of: selectedDate, perform: { _ in
+                            .onChange(of: selectedDate, { oldValue, newValue in
                                 dateString = Utils.dateToStringShort(date: selectedDate)
                                 //let day = selectedDate.formatted(.dateTime.day())
                             })

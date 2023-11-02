@@ -29,7 +29,7 @@ struct TextFieldEmail: View {
         .autocorrectionDisabled(true)
         .textContentType(.emailAddress)
         .keyboardType(.emailAddress)
-        .onChange(of: text) { _ in errorMessage = "" }
+        .onChange(of: text) { errorMessage = "" }
     }
 }
 

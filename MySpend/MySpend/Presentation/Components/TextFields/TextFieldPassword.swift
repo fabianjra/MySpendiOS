@@ -42,7 +42,7 @@ struct TextFieldPassword: View {
         //.textInputAutocapitalization(.never)
         //.autocorrectionDisabled(true)
         //.keyboardType(.asciiCapable) //This avoids suggestions bar on the keyboard.
-        .onChange(of: text) { _ in errorMessage = "" }
+        .onChange(of: text) { errorMessage = "" }
     }
 }
 
