@@ -17,6 +17,7 @@ private enum Field: Hashable {
 
 struct RegisterView: View {
     
+    //TODO: PASAR A VIEWMODEL.
     @State private var userName: String = ""
     @State private var isUserNameError: Bool = false
     
@@ -85,11 +86,17 @@ struct RegisterView: View {
                 .textContentType(.newPassword)
                 .focused($focusedField, equals: .passwordConfirm)
                 .submitLabel(.done)
-                .onSubmit { validateRegister() }
+                .onSubmit {
+                    Task {
+                        await validateRegister()
+                    }
+                }
                 
                 
                 Button("Register") {
-                    validateRegister()
+                    Task {
+                        await validateRegister()
+                    }
                 }
                 .buttonStyle(ButtonPrimaryStyle(isLoading: $isLoading))
                 .padding(.bottom)
@@ -108,7 +115,7 @@ struct RegisterView: View {
         .disabled(isLoading)
     }
     
-    private func validateRegister() {
+    private func validateRegister() async {
         
         focusedField = .none
         
@@ -133,57 +140,20 @@ struct RegisterView: View {
             return
         }
         
-        register()
-    }
-    
-    private func register() {
         isLoading = true
         
-        SessionStore.registerUser(userEmail,
-                                  password: userPassword) { success, user, error in
-            if success {
-                if let user = user {
-                    updateName(user: user)
-                    
-                } else {
-                    isLoading = false
-                    errorUpdateName = ErrorMessages.userCreatedNoName.localizedDescription
-                    errorSendEmail = ErrorMessages.userCreatedNoSendEmail.localizedDescription
-                }
-                
-            } else {
-                isLoading = false
-                errorMessage = error.localizedDescription
-            }
-        }
-    }
-    
-    private func updateName(user: User) {
-        SessionStore.updateUserName(newUserName: userName,
-                                    user: user) { _, error in
-            if let error = error {
-                isLoading = false
-                errorMessage = error.localizedDescription
-                errorUpdateName = ErrorMessages.userCreatedNoName.localizedDescription
-                errorSendEmail = ErrorMessages.userCreatedNoSendEmail.localizedDescription
-            } else {
-                sendEmail(user: user)
-            }
-        }
-    }
-    
-    private func sendEmail(user: User) {
-        SessionStore.sendEmailValidation(user: user) { success, error in
+        do {
             defer {
                 isLoading = false
             }
             
-            if success {
-                canSubmit = true
-            } else {
-                errorMessage = error.localizedDescription
-                errorSendEmail = ErrorMessages.userCreatedNoSendEmail.localizedDescription
-            }
+            try await SessionStore.createUser(withEmail: userEmail,
+                                                           password: userPassword,
+                                                           username: userName)
+            
+            canSubmit = true
+        } catch {
+            errorMessage = error.localizedDescription
         }
     }
 }

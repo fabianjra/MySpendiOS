@@ -44,7 +44,7 @@ struct TextPlain_Previews: PreviewProvider {
         ZStack {
             Color.background
             
-            TextPlain(message: "Error while processing")
+            TextPlain(message: "This is a plain message")
         }
     }
 }

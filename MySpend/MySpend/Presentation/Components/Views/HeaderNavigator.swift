@@ -86,6 +86,12 @@ struct HeaderNavigator_Previews: PreviewProvider {
                             subTitle: "Subtitle",
                             subTitleWeight: .light,
                             subTitleSize: .body)
+            
+            DividerView()
+            
+            HeaderNavigator(title: "Only title",
+                            subTitle: "Only Subtitle",
+                            onlyTitle: true)
         }
         .background(Color.background)
     }

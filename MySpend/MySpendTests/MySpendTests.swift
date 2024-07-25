@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import MySpend
+//@testable import MySpend //Migrar a iOS 17
 
 final class MySpendTests: XCTestCase {
 

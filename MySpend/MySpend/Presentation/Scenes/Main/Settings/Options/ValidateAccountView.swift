@@ -78,7 +78,9 @@ struct ValidateAccountView: View {
             
             
             Button("Send email") {
-                sendEmail()
+                Task {
+                    await sendEmail()
+                }
             }
             .buttonStyle(ButtonPrimaryStyle(isLoading: $isLoading))
             .padding(.bottom)
@@ -89,29 +91,26 @@ struct ValidateAccountView: View {
         }
     }
     
-    
-    private func sendEmail() {
-        if isUserValidated() == false {
-            
-            isLoading = true
-            
-            SessionStore.sendEmailValidation() { success, error in
-                defer {
-                    isLoading = false
-                }
-                
-                if success {
-                    canSubmit = true
-                    errorMessage = "EMAIL SENT!"
-                } else {
-                    errorMessage = error.localizedDescription
-                }
+    private func sendEmail() async {
+        
+        defer {
+            isLoading = false
+        }
+        
+        do {
+            if isUserValidated() == false {
+                try await SessionStore.sendEmailRegisteredUser()
+                canSubmit = true
             }
+        }
+        catch {
+            errorMessage = error.localizedDescription
         }
     }
     
-    //@discardableResult: Avoid the warning Xcode gives us when you dont use the return value.
-    @discardableResult private func isUserValidated() -> Bool {
+    //@discardableResult: Avoid the warning Xcode gives us when you dont use the return value, because this function is called in the OnAppear View without using the result.
+    @discardableResult
+    private func isUserValidated() -> Bool {
         if let user = SessionStore.getCurrentUser() {
             
             if user.isEmailVerified {

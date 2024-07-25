@@ -46,11 +46,17 @@ struct ChangeNameView: View {
                               errorMessage: $errorMessage)
                 .padding(.bottom)
                 .submitLabel(.done)
-                .onSubmit { validateChangeName() }
+                .onSubmit {
+                    Task {
+                        await changeName()
+                    }
+                }
                 
                 
                 Button("Change name") {
-                    validateChangeName()
+                    Task {
+                        await changeName()
+                    }
                 }
                 .buttonStyle(ButtonPrimaryStyle(isLoading: $isLoading))
                 .padding(.bottom)
@@ -73,7 +79,7 @@ struct ChangeNameView: View {
         }
     }
     
-    private func validateChangeName() {
+    private func changeName() async {
         
         isNewUserNameError = newUserName.isEmptyOrWhitespace()
         
@@ -82,23 +88,20 @@ struct ChangeNameView: View {
             return
         }
         
-        changeName()
-    }
-    
-    private func changeName() {
         isLoading = true
         
-        SessionStore.updateUserName(newUserName: newUserName) { user, error in
-            defer {
-                isLoading = false
-            }
+        defer {
+            isLoading = false
+        }
+        
+        do {
+            try await SessionStore.updateUser(newUserName: newUserName)
             
-            if let error = error {
-                errorMessage = error.localizedDescription
-            } else {
-                errorMessage = "NAME CHANGED TO: \(user?.displayName ?? "")"
-                canSubmit = true
-            }
+            errorMessage = "NAME CHANGED TO: \(SessionStore.getCurrentUser()?.displayName ?? "")"
+            canSubmit = true
+        }
+        catch {
+            errorMessage = error.localizedDescription
         }
     }
 }

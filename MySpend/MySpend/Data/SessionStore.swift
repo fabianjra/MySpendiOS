@@ -5,8 +5,9 @@
 //  Created by Fabian Rodriguez on 1/8/23.
 //
 
-import SwiftUI
+//import SwiftUI
 import Firebase
+import FirebaseFirestoreSwift
 
 class SessionStore {
     
@@ -22,6 +23,7 @@ class SessionStore {
         }
     }
     
+    // Migrar de ChangeNameView (Se utilizaba solamente en registro y en vista de cambio de nombre).
     static func updateUserName(newUserName: String, user: User? = getCurrentUser(), completionHandler: @escaping (User?, Error?) -> Void) {
         if let user = user {
             
@@ -85,33 +87,6 @@ class SessionStore {
         }
     }
     
-    static func sendEmailValidation(user: User? = getCurrentUser(),
-                                    completionHandler: @escaping (_ success: Bool, _ error: Error) -> Void) {
-        if let user = user {
-            user.sendEmailVerification { error in
-                if let error = error {
-                    completionHandler(false, error)
-                } else {
-                    completionHandler(true, ErrorMessages.empty)
-                }
-            }
-        } else {
-            completionHandler(false, ErrorMessages.userNotLoggedIn)
-        }
-    }
-    
-    static func registerUser(_ email: String, password: String,
-                             completionHandler: @escaping (_ success: Bool, _ user: User?, _ error: Error) -> Void) {
-        
-        Auth.auth().createUser(withEmail: email, password: password) { userData, error in
-            if let error = error {
-                completionHandler(false, nil, error)
-            } else {
-                completionHandler(true, userData?.user, ErrorMessages.empty)
-            }
-        }
-    }
-    
     static func singIn(_ email: String, password: String, completionHandler: @escaping (_ success: Bool, _ error: Error) -> Void) {
         Auth.auth().signIn(withEmail: email, password: password) { _, error in
             if let error = error {
@@ -128,6 +103,52 @@ class SessionStore {
             completionHandler(true, ErrorMessages.empty)
         } catch {
             completionHandler(false, error)
+        }
+    }
+}
+
+// Updated To use Firebase with Async/Await || Version 10.17.0
+extension SessionStore {
+    
+    static func createUser(withEmail email: String, password: String, username: String) async throws {
+        
+        let user = try await Auth.auth().createUser(withEmail: email, password: password).user
+        
+        try await updateUser(newUserName: username, user: user)
+        
+        //Try to create a new user collection to store the user data:
+        let userModel = UserModel(id: user.uid, fullname: user.displayName ?? "", email: user.email ?? "")
+        try await storeCollection(user: userModel)
+        
+        try await sendEmailRegisteredUser()
+    }
+    
+    static func updateUser(newUserName: String, user: User? = getCurrentUser()) async throws {
+        if let user = user {
+            
+            let changeRequest = user.createProfileChangeRequest()
+            changeRequest.displayName = newUserName
+            
+            try await changeRequest.commitChanges()
+        } else {
+            throw ErrorMessages.userNotLoggedIn
+        }
+    }
+    
+    static func storeCollection(user: UserModel) async throws {
+        
+        let encodedUser = try Firestore.Encoder().encode(user)
+        let createRequest = Firestore.firestore().collection("users").document(user.id)
+        
+        try await createRequest.setData(encodedUser)
+    }
+    
+    static func sendEmailRegisteredUser(user: User? = getCurrentUser()) async throws {
+        
+        if let user = user {
+            try await user.sendEmailVerification()
+        } else {
+            throw ErrorMessages.userNotLoggedIn
         }
     }
 }
