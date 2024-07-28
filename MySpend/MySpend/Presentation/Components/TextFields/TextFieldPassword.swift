@@ -36,7 +36,7 @@ struct TextFieldPassword: View {
         
         .textFieldStyle(TextFieldIconStyle($text,
                                            iconLeading: iconLeading,
-                                           textLimit: Views.textLimitPassword,
+                                           textLimit: ConstantViews.textLimitPassword,
                                            isError: $isError))
         //.autocapitalization(.none)
         //.textInputAutocapitalization(.never)

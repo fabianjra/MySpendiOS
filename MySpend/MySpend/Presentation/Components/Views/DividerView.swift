@@ -10,7 +10,7 @@ import SwiftUI
 struct DividerView: View {
     var body: some View {
         Divider()
-            .frame(height: Frames.dividerHeight)
+            .frame(height: ConstantFrames.dividerHeight)
             .overlay(Color.divider)
     }
 }

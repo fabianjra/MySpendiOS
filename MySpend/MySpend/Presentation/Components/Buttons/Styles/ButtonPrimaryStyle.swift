@@ -77,8 +77,8 @@ struct ButtonPrimaryStyle: ButtonStyle {
         
         // MARK: EFFECTS
             .scaleEffect(configuration.isPressed ?
-                         Animations.buttonScalePressed : Animations.buttonOriginalPressed)
-            .animation(.easeOut(duration: Animations.buttonScaleDuration), value: configuration.isPressed)
+                         ConstantAnimations.buttonScalePressed : ConstantAnimations.buttonOriginalPressed)
+            .animation(.easeOut(duration: ConstantAnimations.buttonScaleDuration), value: configuration.isPressed)
     }
 }
 

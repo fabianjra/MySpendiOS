@@ -18,9 +18,9 @@ struct ResumeView: View {
             // MARK: HEADER
             HStack {
                 VStack(alignment: .leading) {
-                    Text("Hello \(userName) \(Emojis.greeting)")
+                    Text("Hello \(userName) \(ConstantEmojis.greeting)")
                         .font(.montserrat(.semibold, size: .big))
-                        .lineLimit(Views.messageMaxLines)
+                        .lineLimit(ConstantViews.messageMaxLines)
                     
                     Text("Welcome back")
                         .font(.montserrat(.light, size: .small))

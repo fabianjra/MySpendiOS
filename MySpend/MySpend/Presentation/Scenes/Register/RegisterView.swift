@@ -49,7 +49,7 @@ struct RegisterView: View {
             
             
             // MARK: REGISTER
-            VStack(spacing: Views.formSpacing) {
+            VStack(spacing: ConstantViews.formSpacing) {
                 
                 TextFieldName(text: $userName,
                               isError: $isUserNameError,
@@ -126,17 +126,17 @@ struct RegisterView: View {
         
         if isUserNameError || isUserEmailError ||
             isUserPasswordError || isUserPasswordConfirmError {
-            errorMessage = ErrorMessages.emptySpaces.localizedDescription
+            errorMessage = ConstantMessages.emptySpaces.localizedDescription
             return
         }
         
         if userPassword.count < 6 || userPasswordConfirm.count < 6 {
-            errorMessage = ErrorMessages.passwordIsShort.localizedDescription
+            errorMessage = ConstantMessages.passwordIsShort.localizedDescription
             return
         }
         
         if userPassword != userPasswordConfirm {
-            errorMessage = ErrorMessages.creationPasswordIsDifferent.localizedDescription
+            errorMessage = ConstantMessages.creationPasswordIsDifferent.localizedDescription
             return
         }
         

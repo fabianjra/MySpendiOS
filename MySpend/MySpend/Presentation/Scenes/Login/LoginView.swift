@@ -38,7 +38,7 @@ struct LoginView: View {
             
             
             // MARK: LOGIN
-            VStack(spacing: Views.formSpacing) {
+            VStack(spacing: ConstantViews.formSpacing) {
                 
                 TextFieldEmail(text: $userEmail,
                                isError: $isUserEmailError,
@@ -89,7 +89,7 @@ struct LoginView: View {
                 }
                 .buttonStyle(ButtonPrimaryStyle(neverBgDisabled: true))
                 .padding(.bottom)
-                .padding(.horizontal, Views.paddingSmallButton)
+                .padding(.horizontal, ConstantViews.paddingSmallButton)
                 .navigationDestination(isPresented: $goToRegister) {
                     RegisterView()
                         .toolbar(.hidden)
@@ -155,7 +155,7 @@ struct LoginView: View {
         isUserPasswordError = userPassword.isEmptyOrWhitespace()
         
         if isUserEmailError || isUserPasswordError {
-            errorMessage = ErrorMessages.emptySpaces.localizedDescription
+            errorMessage = ConstantMessages.emptySpaces.localizedDescription
             return
         }
         

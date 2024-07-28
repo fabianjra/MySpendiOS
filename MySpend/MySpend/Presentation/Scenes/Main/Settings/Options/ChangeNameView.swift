@@ -34,7 +34,7 @@ struct ChangeNameView: View {
             
             
             // MARK: FIELDS
-            VStack(spacing: Views.formSpacing) {
+            VStack(spacing: ConstantViews.formSpacing) {
                 
                 TextFieldReadOnly(text: $userName, iconLeading: Image.personFill)
                 
@@ -84,7 +84,7 @@ struct ChangeNameView: View {
         isNewUserNameError = newUserName.isEmptyOrWhitespace()
         
         if isNewUserNameError {
-            errorMessage = ErrorMessages.emptySpace.localizedDescription
+            errorMessage = ConstantMessages.emptySpace.localizedDescription
             return
         }
         

@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct Frames {
+struct ConstantFrames {
     static let textFieldHeight: CGFloat = 50.0
     static let dividerHeight: CGFloat = 0.7
     static let screenSize = UIScreen.main.bounds.size

@@ -19,7 +19,7 @@ class SessionStore {
         if let user = getCurrentUser() {
             completionHandler(user.displayName ?? "", nil)
         } else {
-            completionHandler("", ErrorMessages.userNotLoggedIn)
+            completionHandler("", ConstantMessages.userNotLoggedIn)
         }
     }
     
@@ -41,7 +41,7 @@ class SessionStore {
                 }
             }
         } else {
-            completionHandler(nil, ErrorMessages.userNotLoggedIn)
+            completionHandler(nil, ConstantMessages.userNotLoggedIn)
         }
     }
     
@@ -77,13 +77,13 @@ class SessionStore {
                             completionHandler(false, error)
                             
                         } else {
-                            completionHandler(true, ErrorMessages.empty)
+                            completionHandler(true, ConstantMessages.empty)
                         }
                     }
                 }
             }
         } else {
-            completionHandler(false, ErrorMessages.userNotLoggedIn)
+            completionHandler(false, ConstantMessages.userNotLoggedIn)
         }
     }
     
@@ -92,7 +92,7 @@ class SessionStore {
             if let error = error {
                 completionHandler(false, error)
             } else {
-                completionHandler(true, ErrorMessages.empty)
+                completionHandler(true, ConstantMessages.empty)
             }
         }
     }
@@ -100,7 +100,7 @@ class SessionStore {
     static func signOut(completionHandler: @escaping (_ success: Bool, _ error: Error) -> Void) {
         do {
             try Auth.auth().signOut()
-            completionHandler(true, ErrorMessages.empty)
+            completionHandler(true, ConstantMessages.empty)
         } catch {
             completionHandler(false, error)
         }
@@ -117,8 +117,8 @@ extension SessionStore {
         try await updateUser(newUserName: username, user: user)
         
         //Try to create a new user collection to store the user data:
-        let userModel = UserModel(id: user.uid, fullname: user.displayName ?? "", email: user.email ?? "")
-        try await storeCollection(user: userModel)
+        let userModel = UserModel(id: user.uid, fullname: user.displayName ?? "", email: user.email ?? "", transactions: [])
+        try await storeNewUser(user: userModel)
         
         try await sendEmailRegisteredUser()
     }
@@ -131,11 +131,11 @@ extension SessionStore {
             
             try await changeRequest.commitChanges()
         } else {
-            throw ErrorMessages.userNotLoggedIn
+            throw ConstantMessages.userNotLoggedIn
         }
     }
     
-    static func storeCollection(user: UserModel) async throws {
+    static func storeNewUser(user: UserModel) async throws {
         
         let encodedUser = try Firestore.Encoder().encode(user)
         let createRequest = Firestore.firestore().collection("users").document(user.id)
@@ -148,7 +148,7 @@ extension SessionStore {
         if let user = user {
             try await user.sendEmailVerification()
         } else {
-            throw ErrorMessages.userNotLoggedIn
+            throw ConstantMessages.userNotLoggedIn
         }
     }
 }

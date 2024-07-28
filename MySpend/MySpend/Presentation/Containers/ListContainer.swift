@@ -25,7 +25,7 @@ struct ListContainer<Content: View>: View {
                                         Color.background],
                                        center: .top,
                                        startRadius: .zero,
-                                       endRadius: Colors.endRadiusBackground))
+                                       endRadius: ConstantColors.endRadiusBackground))
     }
 }
 

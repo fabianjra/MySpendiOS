@@ -52,7 +52,7 @@ struct MainView: View {
             ForEach(TabViewIcons.allCases, id: \.id) { item in
                 
                 TabViewButton(selectedTab: $selectedTab, item: item)
-                    .padding(.horizontal, Views.paddingTabViewHorizontal)
+                    .padding(.horizontal, ConstantViews.paddingTabViewHorizontal)
                     .padding(.bottom)
 
                 if item == TabViewIcons.allCases.first {

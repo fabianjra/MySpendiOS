@@ -83,14 +83,14 @@ struct SemiCircleShape_Previews: PreviewProvider {
             VStack {
                 Color.tabViewBackground
                     .clipShape(SemiCircleShape())
-                    .frame(height: Frames.tabViewHeight)
+                    .frame(height: ConstantFrames.tabViewHeight)
             }
             .padding(.bottom, 200)
             
             VStack {
                 Color.tabViewBackground
                     .clipShape(SemiCircleShapeCurved())
-                    .frame(height: Frames.tabViewHeight)
+                    .frame(height: ConstantFrames.tabViewHeight)
             }
             .padding(.top, 200)
 

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Views {
+struct ConstantViews {
     
     // MARK: BUTTON
     static let buttonBorderWidth: CGFloat = 6.0

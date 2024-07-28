@@ -46,7 +46,7 @@ struct ChangePasswordView: View {
             
             
             // MARK: FIELDS
-            VStack(spacing: Views.formSpacing) {
+            VStack(spacing: ConstantViews.formSpacing) {
                 
                 TextFieldPassword(placeHolder: "Current password",
                                   text: $userPassword,
@@ -97,7 +97,7 @@ struct ChangePasswordView: View {
         .onAppear {
             if SessionStore.getCurrentUser() == nil {
                 buttonDisabled = true
-                errorMessage = ErrorMessages.userNotLoggedIn.localizedDescription
+                errorMessage = ConstantMessages.userNotLoggedIn.localizedDescription
             }
         }
     }
@@ -111,12 +111,12 @@ struct ChangePasswordView: View {
         isUserNewPasswordConfirmError = userNewPasswordConfirm.isEmptyOrWhitespace()
         
         if isUserPasswordError || isUserNewPasswordError || isUserNewPasswordConfirmError {
-            errorMessage = ErrorMessages.emptySpaces.localizedDescription
+            errorMessage = ConstantMessages.emptySpaces.localizedDescription
             return
         }
         
         if userNewPassword != userNewPasswordConfirm {
-            errorMessage = ErrorMessages.newPasswordIsDifferent.localizedDescription
+            errorMessage = ConstantMessages.newPasswordIsDifferent.localizedDescription
             return
         }
         

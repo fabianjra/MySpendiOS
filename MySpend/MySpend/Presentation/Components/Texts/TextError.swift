@@ -16,7 +16,7 @@ struct TextError: View {
             .foregroundColor(Color.warning)
             .font(.montserrat(.semibold))
             .multilineTextAlignment(.center)
-            .lineLimit(Views.messageMaxLines)
+            .lineLimit(ConstantViews.messageMaxLines)
     }
 }
 

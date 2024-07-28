@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum ErrorMessages: String, Error {
+enum ConstantMessages: String, Error {
     case empty
     case generic
     case emptySpace
@@ -21,7 +21,7 @@ enum ErrorMessages: String, Error {
     case userCreatedNoSendEmail
 }
 
-extension ErrorMessages: LocalizedError {
+extension ConstantMessages: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .empty: return NSLocalizedString("", comment: "")

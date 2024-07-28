@@ -11,6 +11,7 @@ struct UserModel: Identifiable, Codable {
     var id: String
     let fullname: String
     let email: String
+    let transactions: [TransactionModel]?
     
     // Take the full name and separate the first name letters.
     var initials: String {
@@ -23,5 +24,12 @@ struct UserModel: Identifiable, Codable {
         }
         
         return ""
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case fullname
+        case email
+        case transactions
     }
 }

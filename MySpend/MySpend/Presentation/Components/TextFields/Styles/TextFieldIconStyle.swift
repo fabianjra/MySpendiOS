@@ -29,7 +29,7 @@ struct TextFieldIconStyle: TextFieldStyle {
                 family: Font.Family = .regular,
                 size: Font.Sizes = .body,
                 iconLeading: Image? = nil,
-                textLimit: Int = Views.textLimitGeneral,
+                textLimit: Int = ConstantViews.textLimitGeneral,
                 foregroundColor: Color = Color.textFieldForeground,
                 backgroundColor: Color = Color.textfieldBackground,
                 isError: Binding<Bool> = .constant(false),
@@ -50,12 +50,12 @@ struct TextFieldIconStyle: TextFieldStyle {
         HStack {
             if let iconLeading = iconLeading {
                 iconLeading
-                    .frame(width: Frames.textFieldHeight, height: Frames.textFieldHeight)
+                    .frame(width: ConstantFrames.textFieldHeight, height: ConstantFrames.textFieldHeight)
                     .background(Color.textFieldIconBackground)
             }
             
             configuration
-                .frame(height: Frames.textFieldHeight)
+                .frame(height: ConstantFrames.textFieldHeight)
                 //.background(.green) //TODO: For testing
                 .padding(.horizontal, iconLeading == nil ? nil : .zero)
                 .padding(.trailing, iconLeading != nil ? nil : .zero)
@@ -88,7 +88,7 @@ struct TextFieldIconStyle: TextFieldStyle {
                         .stroke(LinearGradient(
                             colors: Color.primaryGradiant,
                             startPoint: .leading,
-                            endPoint: .trailing), lineWidth: Shapes.textFieldLineWidth)
+                            endPoint: .trailing), lineWidth: ConstantShapes.textFieldLineWidth)
                 }
             }
             
@@ -97,7 +97,7 @@ struct TextFieldIconStyle: TextFieldStyle {
                     .stroke(LinearGradient(
                         colors: [Color.warning],
                         startPoint: .leading,
-                        endPoint: .trailing), lineWidth: Shapes.textFieldLineWidth)
+                        endPoint: .trailing), lineWidth: ConstantShapes.textFieldLineWidth)
             }
         }
     }
