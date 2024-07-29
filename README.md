@@ -67,3 +67,24 @@ struct TextFieldIconStyle_Previews: PreviewProvider {
 }
 
 ```
+
+## Download Firebase Firestore Database:
+
+Firestore does not support exporting existing data to a file (JSON file).
+Instructions to export the Firestore Data to JSON file using **NPM**:
+
+1. Generate a private key file for your service account. In the Firebase console, open Settings > Service Accounts.
+2. Click Generate New Private Key, then confirm by clicking Generate Key.
+3. Store the JSON file containing the key.
+4. Rename the JSON file to `credentials.json`.
+5. Navigate to the folder that contains the credentials.json file and enter this code in console:
+```
+npx -p node-firestore-import-export firestore-export -a credentials.json -b backup.json
+```
+7. Follow the instructions prompted on your console.
+
+Import data to Firestore using this command:
+```
+npx -p node-firestore-import-export firestore-import -a credentials.json -b backup.json
+```
+
