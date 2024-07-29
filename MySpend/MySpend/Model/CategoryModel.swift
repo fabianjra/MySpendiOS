@@ -8,7 +8,7 @@
 import Foundation
 
 struct CategoryModel: Identifiable, Codable  {
-    var id: String
+    public var id = UUID().uuidString
     let description: String
     
     enum CodingKeys: String, CodingKey {

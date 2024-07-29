@@ -151,4 +151,41 @@ extension SessionStore {
             throw ConstantMessages.userNotLoggedIn
         }
     }
+    
+    static func setNewTransaction(transactionModel: TransactionModel) async throws {
+        if let userId = getCurrentUser()?.uid {
+            
+            let encodedTransaction = try Firestore.Encoder().encode(transactionModel)
+            
+            let collectionUsers = Firestore.firestore().collection("users").document(userId)
+            
+            try await collectionUsers.updateData(["transactions": encodedTransaction])
+        } else {
+            throw ConstantMessages.userNotLoggedIn
+        }
+    }
+    
+    //TODO: Agregar al OnAppear de la vista de Resumen para probar su funcionalidad.
+    static func getTransactions() async throws -> [TransactionModel] {
+        if let userId = getCurrentUser()?.uid {
+            
+            let collectionTransactions = Firestore.firestore().collection("users").document(userId).collection("transactions")
+            
+            let decodedTransaction = try Firestore.Decoder().decode(TransactionModel.self, from: collectionTransactions)
+            
+            let documentsSnapshot = try await collectionTransactions.getDocuments()
+            
+            var transactions: [TransactionModel] = []
+            
+            for document in documentsSnapshot.documents {
+                if let transaction = try? document.data(as: TransactionModel.self) {
+                    transactions.append(transaction)
+                }
+            }
+            
+            return transactions
+        } else {
+            throw ConstantMessages.userNotLoggedIn
+        }
+    }
 }

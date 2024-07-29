@@ -108,6 +108,7 @@ struct RegisterView: View {
                 
                 TextError(message: errorMessage)
                 
+                //TODO: Resolver para mostrar mensajes de error:
                 TextError(message: errorUpdateName)
                 TextError(message: errorSendEmail)
             }

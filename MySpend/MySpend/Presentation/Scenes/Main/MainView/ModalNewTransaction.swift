@@ -7,17 +7,17 @@
 
 import SwiftUI
 
-private enum TransactionType: String, CaseIterable, Identifiable {
-    public var id: Self { self }
-    case expense = "expense"
-    case income = "income"
+private enum Field: Hashable {
+    case amount
+    case category
+    case notes
 }
 
 struct ModalNewTransaction: View {
     
     @Environment(\.dismiss) var dismiss
     
-    @State private var transactionType: TransactionType = .expense
+    @State private var transactionType: TransactionTypeEnum = .expense
     
     @State private var dateString: String = ""
     
@@ -33,7 +33,10 @@ struct ModalNewTransaction: View {
     
     @State private var notes: String = ""
     
+    @State private var errorMessage: String = ""
     @State private var isLoading: Bool = false
+    
+    @FocusState private var focusedField: Field?
     
     var body: some View {
         ContentContainer {
@@ -47,11 +50,12 @@ struct ModalNewTransaction: View {
             
             
             Picker("Transaction type", selection: $transactionType) {
-                ForEach(TransactionType.allCases) { type in
+                ForEach(TransactionTypeEnum.allCases) { type in
                     Text(type.rawValue)
                 }
             }
             .pickerStyle(.segmented)
+            .colorMultiply(transactionType == .expense ? .warning : .primaryLeading)
             .padding(.bottom)
             
             
@@ -91,10 +95,15 @@ struct ModalNewTransaction: View {
             
             TextField("", text: $amount, prompt:
                         Text("Amount").foregroundColor(.textFieldPlaceholder))
+            .keyboardType(.decimalPad)
             .textFieldStyle(TextFieldIconStyle($amount,
                                                iconLeading: Image.dolarSquareFill,
                                                textLimit: 12,
                                                isError: $isAmountError))
+            .focused($focusedField, equals: .amount)
+            .onSubmit { focusedField = .category }
+            .onChange(of: amount) { errorMessage = "" }
+            
             
             //TODO: Change to sheet list (all categories inserted).
             TextField("", text: $category, prompt:
@@ -102,17 +111,29 @@ struct ModalNewTransaction: View {
             .textFieldStyle(TextFieldIconStyle($category,
                                                iconLeading: Image.stackFill,
                                                isError: $isCategoryError))
+            .focused($focusedField, equals: .category)
+            .onSubmit { focusedField = .notes }
+            .onChange(of: category) { errorMessage = "" }
             
             
             TextField("", text: $notes, prompt:
                         Text("Notes").foregroundColor(.textFieldPlaceholder))
             .textFieldStyle(TextFieldIconStyle($notes,
                                                isError: $isAmountError))
+            .focused($focusedField, equals: .notes)
+            .onChange(of: notes) { errorMessage = "" }
             .padding(.bottom)
+            .onSubmit {
+                Task {
+                    await addNewTransaction()
+                }
+            }
             
             
             Button("Accept") {
-                
+                Task {
+                    await addNewTransaction()
+                }
             }
             .buttonStyle(ButtonPrimaryStyle(isLoading: $isLoading))
             .padding(.vertical)
@@ -121,6 +142,43 @@ struct ModalNewTransaction: View {
                 dismiss()
             }
             .buttonStyle(ButtonPrimaryStyle(color: [Color.warning]))
+            
+            
+            TextError(message: errorMessage)
+        }
+    }
+    
+    private func addNewTransaction() async {
+        errorMessage = ""
+        focusedField = .none
+        
+        isAmountError = amount.isEmptyOrWhitespace()
+        isCategoryError = category.isEmptyOrWhitespace()
+        
+        if isAmountError || isCategoryError {
+            errorMessage = ConstantMessages.emptySpaces.localizedDescription
+            return
+        }
+        
+        isLoading = true
+        
+        do {
+            defer {
+                isLoading = false
+            }
+            
+            let categoryModel = CategoryModel(description: category)
+            
+            let transactionModel = TransactionModel(amount: Double(amount),
+                                                   date: Utils.StringShortDateToDate(dateShort: dateString),
+                                                   category: categoryModel,
+                                                   detail: notes,
+                                                   type: transactionType)
+            try await SessionStore.setNewTransaction(transactionModel: transactionModel)
+            
+            dismiss()
+        } catch {
+            errorMessage = error.localizedDescription
         }
     }
 }
