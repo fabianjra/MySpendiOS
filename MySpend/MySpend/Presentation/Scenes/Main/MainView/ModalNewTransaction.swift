@@ -170,13 +170,17 @@ struct ModalNewTransaction: View {
             let categoryModel = CategoryModel(description: category)
             
             let transactionModel = TransactionModel(amount: Double(amount),
-                                                   date: Utils.StringShortDateToDate(dateShort: dateString),
+                                                   date: dateString,
                                                    category: categoryModel,
                                                    detail: notes,
                                                    type: transactionType)
-            try await SessionStore.setNewTransaction(transactionModel: transactionModel)
+            let response = try await SessionStore.setNewTransaction(transactionModel: transactionModel)
             
-            dismiss()
+            if response.code == ConstantCodeResponse.ok {
+                dismiss()
+            } else {
+                errorMessage = response.message
+            }
         } catch {
             errorMessage = error.localizedDescription
         }

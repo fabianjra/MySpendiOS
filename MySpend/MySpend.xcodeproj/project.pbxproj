@@ -48,6 +48,8 @@
 		1F64B0A92A70CBBF004AC825 /* ChangeNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F64B0A82A70CBBF004AC825 /* ChangeNameView.swift */; };
 		1F64B0AB2A70CFC3004AC825 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F64B0AA2A70CFC3004AC825 /* String+Extensions.swift */; };
 		1F64B0AD2A70D647004AC825 /* TextFieldReadOnly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F64B0AC2A70D647004AC825 /* TextFieldReadOnly.swift */; };
+		1F697E082C5B3C22009529EF /* ResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F697E072C5B3C22009529EF /* ResponseModel.swift */; };
+		1F697E0A2C5B3E39009529EF /* ConstantCodeResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F697E092C5B3E39009529EF /* ConstantCodeResponse.swift */; };
 		1F7437B42A668BCD0039EFD4 /* Gestures+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7437B32A668BCD0039EFD4 /* Gestures+Extensions.swift */; };
 		1F7486B72A68C4250063AC35 /* TextError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7486B62A68C4250063AC35 /* TextError.swift */; };
 		1F7486BB2A68D4A30063AC35 /* Fonts+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7486BA2A68D4A30063AC35 /* Fonts+Extensions.swift */; };
@@ -149,6 +151,8 @@
 		1F64B0A82A70CBBF004AC825 /* ChangeNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeNameView.swift; sourceTree = "<group>"; };
 		1F64B0AA2A70CFC3004AC825 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		1F64B0AC2A70D647004AC825 /* TextFieldReadOnly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldReadOnly.swift; sourceTree = "<group>"; };
+		1F697E072C5B3C22009529EF /* ResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseModel.swift; sourceTree = "<group>"; };
+		1F697E092C5B3E39009529EF /* ConstantCodeResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantCodeResponse.swift; sourceTree = "<group>"; };
 		1F7437B32A668BCD0039EFD4 /* Gestures+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Gestures+Extensions.swift"; sourceTree = "<group>"; };
 		1F7486B62A68C4250063AC35 /* TextError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextError.swift; sourceTree = "<group>"; };
 		1F7486BA2A68D4A30063AC35 /* Fonts+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Fonts+Extensions.swift"; sourceTree = "<group>"; };
@@ -427,6 +431,7 @@
 				1F9F16D32AFC926D003CB599 /* UserModel.swift */,
 				1FD2E9822C53267D00E68602 /* TransactionModel.swift */,
 				1FD2E9842C5329F800E68602 /* CategoryModel.swift */,
+				1F697E072C5B3C22009529EF /* ResponseModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -554,6 +559,7 @@
 				1F0641492A722AFB00C19084 /* ConstantMessages.swift */,
 				1F46B4112A79885D003A9550 /* ConstantValidations.swift */,
 				1F171F282A7CC90D00A0A33E /* ConstantEmojis.swift */,
+				1F697E092C5B3E39009529EF /* ConstantCodeResponse.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -742,6 +748,7 @@
 				1F7486B72A68C4250063AC35 /* TextError.swift in Sources */,
 				1FC94CC82A5A42B2005CA0B6 /* Views+Extensions.swift in Sources */,
 				1F46B4172A799CFD003A9550 /* ResumeView.swift in Sources */,
+				1F697E0A2C5B3E39009529EF /* ConstantCodeResponse.swift in Sources */,
 				1F5CC57C2A6648E400C214FE /* DividerView.swift in Sources */,
 				1F46B4122A79885D003A9550 /* ConstantValidations.swift in Sources */,
 				1FB8BB992A5BB181002DED1F /* SemiCircleShape.swift in Sources */,
@@ -785,6 +792,7 @@
 				1F64B09D2A7089C5004AC825 /* SettingsOptions.swift in Sources */,
 				1FB8BB9D2A5BC728002DED1F /* ConstantColors.swift in Sources */,
 				1F7437B42A668BCD0039EFD4 /* Gestures+Extensions.swift in Sources */,
+				1F697E082C5B3C22009529EF /* ResponseModel.swift in Sources */,
 				1F64B0AD2A70D647004AC825 /* TextFieldReadOnly.swift in Sources */,
 				1F9462EB2A7B4D8200F5CBFB /* HeaderNavigator.swift in Sources */,
 				1F06414D2A7232D300C19084 /* RootView.swift in Sources */,

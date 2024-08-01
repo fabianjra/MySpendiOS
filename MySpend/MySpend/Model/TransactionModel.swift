@@ -10,7 +10,7 @@ import Foundation
 struct TransactionModel: Identifiable, Codable {
     public var id = UUID().uuidString
     let amount: Double?
-    let date: Date?
+    let date: String?
     let category: CategoryModel?
     let detail: String?
     let type: TransactionTypeEnum?

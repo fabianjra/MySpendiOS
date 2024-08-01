@@ -11,7 +11,7 @@ struct UserModel: Identifiable, Codable {
     var id: String
     let fullname: String
     let email: String
-    let transactions: [TransactionModel]?
+    var transactions: [TransactionModel]?
     
     // Take the full name and separate the first name letters.
     var initials: String {

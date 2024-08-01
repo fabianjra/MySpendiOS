@@ -152,16 +152,83 @@ extension SessionStore {
         }
     }
     
-    static func setNewTransaction(transactionModel: TransactionModel) async throws {
-        if let userId = getCurrentUser()?.uid {
+//    static func setNewTransaction(transactionModel: TransactionModel) async throws -> ResponseModel {
+//        if let userId = getCurrentUser()?.uid {
+//            
+//            //let encodedNewTransaction = try Firestore.Encoder().encode(transactionModel)
+//            
+//            let userRef = Firestore.firestore().collection("users").document(userId)
+//            
+//            // Recuperar el documento del usuario, modificar el arreglo y actualizar Firestore
+//            let document = try await userRef.getDocument()
+//            
+//            if document.exists {
+//                
+//                var user = try document.data(as: UserModel.self)
+//                
+//                if var transactionCollection = user.transactions {
+//                    transactionCollection.append(transactionModel)
+//                } else {
+//                    //TODO: ¿Como se agrega la coleccion si no existe en Firebase Firestore?
+//                }
+//                
+//                try userRef.setData(from: user)
+//                return ResponseModel()
+//            } else {
+//                return ResponseModel(ConstantCodeResponse.ok, ConstantMessages.userNotExists.localizedDescription)
+//            }
+//        } else {
+//            return ResponseModel(ConstantCodeResponse.genericError, ConstantMessages.userNotLoggedIn.localizedDescription)
+//        }
+//    }
+    
+    static func setNewTransaction(transactionModel: TransactionModel) async throws -> ResponseModel {
+        
+        guard let userId = getCurrentUser()?.uid else {
+            return ResponseModel(ConstantCodeResponse.error, ConstantMessages.userNotLoggedIn.localizedDescription)
+        }
+        
+        let db = Firestore.firestore()
+        let userRef = db.collection("users").document(userId)
+        
+        do {
+            let response = try await db.runTransaction { (transaction, errorPointer) -> Any? in
+                
+                let userDocument: DocumentSnapshot
+                
+                do {
+                    try userDocument = transaction.getDocument(userRef)
+                } catch let error as NSError {
+                    errorPointer?.pointee = error
+                    Logs.WriteCatchExeption(error: error)
+                    return ResponseModel(ConstantCodeResponse.error, ConstantMessages.cantGetDocumentFB.localizedDescription)
+                }
+                
+                guard var user = try? userDocument.data(as: UserModel.self) else {
+                    return ResponseModel(ConstantCodeResponse.error, ConstantMessages.generic.localizedDescription)
+                }
+                
+                if user.transactions == nil {
+                    user.transactions = []
+                }
+                
+                user.transactions?.append(transactionModel)
+                
+                do {
+                    try transaction.setData(from: user, forDocument: userRef)
+                } catch let error {
+                    errorPointer?.pointee = error as NSError
+                    Logs.WriteCatchExeption(error: error)
+                    return ResponseModel(ConstantCodeResponse.error, ConstantMessages.cantSetDataFB.localizedDescription)
+                }
+                
+                return ResponseModel()
+            }
             
-            let encodedTransaction = try Firestore.Encoder().encode(transactionModel)
-            
-            let collectionUsers = Firestore.firestore().collection("users").document(userId)
-            
-            try await collectionUsers.updateData(["transactions": encodedTransaction])
-        } else {
-            throw ConstantMessages.userNotLoggedIn
+            return response as! ResponseModel
+        } catch {
+            Logs.WriteCatchExeption(error: error)
+            return ResponseModel(ConstantCodeResponse.error, error.localizedDescription)
         }
     }
     
