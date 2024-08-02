@@ -77,7 +77,7 @@ struct ResumeView: View {
         }
         .onAppear {
             
-            if let user = UtilsFB.getCurrentUser() {
+            if let user = UtilsStore.getCurrentUser() {
                 
                 // The user's ID, unique to the Firebase project.
                 // Do NOT use this value to authenticate with your backend server,
@@ -108,7 +108,7 @@ struct ResumeView: View {
     private func getTransactions() async {
         
         do {
-            transactions = try await SessionStore.getTransactions()
+            transactions = try await DatabaseStore.getTransactions()
             
             for item in transactions {
                 totalBalance += item.amount ?? 0

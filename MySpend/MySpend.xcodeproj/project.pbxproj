@@ -26,6 +26,7 @@
 		1F1E854C2A6F7AFD00CEEBBC /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1E854B2A6F7AFD00CEEBBC /* SettingsView.swift */; };
 		1F3A953D2C5D68D4008AAE50 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3A953C2C5D68D4008AAE50 /* LoginViewModel.swift */; };
 		1F3A953F2C5D6F82008AAE50 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3A953E2C5D6F82008AAE50 /* Login.swift */; };
+		1F3A95412C5D74CC008AAE50 /* DatabaseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3A95402C5D74CC008AAE50 /* DatabaseStore.swift */; };
 		1F46B4122A79885D003A9550 /* ConstantValidations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F46B4112A79885D003A9550 /* ConstantValidations.swift */; };
 		1F46B4142A79976F003A9550 /* FormScrollContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F46B4132A79976F003A9550 /* FormScrollContainer.swift */; };
 		1F46B4172A799CFD003A9550 /* ResumeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F46B4162A799CFD003A9550 /* ResumeView.swift */; };
@@ -40,7 +41,7 @@
 		1F4C249E2A47A6DC00CCAF6D /* MySpendUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4C249D2A47A6DC00CCAF6D /* MySpendUITests.swift */; };
 		1F4C24A02A47A6DC00CCAF6D /* MySpendUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4C249F2A47A6DC00CCAF6D /* MySpendUITestsLaunchTests.swift */; };
 		1F4C9B592C5C78DD00C403B3 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4C9B582C5C78DD00C403B3 /* Double+Extensions.swift */; };
-		1F4C9B5B2C5C847100C403B3 /* UtilsFB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4C9B5A2C5C847100C403B3 /* UtilsFB.swift */; };
+		1F4C9B5B2C5C847100C403B3 /* UtilsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4C9B5A2C5C847100C403B3 /* UtilsStore.swift */; };
 		1F4C9B5E2C5CA48E00C403B3 /* PickerSegmented.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4C9B5D2C5CA48E00C403B3 /* PickerSegmented.swift */; };
 		1F5CC57C2A6648E400C214FE /* DividerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5CC57B2A6648E400C214FE /* DividerView.swift */; };
 		1F5CC57E2A664EFB00C214FE /* TextFieldEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5CC57D2A664EFB00C214FE /* TextFieldEmail.swift */; };
@@ -132,6 +133,7 @@
 		1F1E854B2A6F7AFD00CEEBBC /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		1F3A953C2C5D68D4008AAE50 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		1F3A953E2C5D6F82008AAE50 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
+		1F3A95402C5D74CC008AAE50 /* DatabaseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseStore.swift; sourceTree = "<group>"; };
 		1F46B4112A79885D003A9550 /* ConstantValidations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantValidations.swift; sourceTree = "<group>"; };
 		1F46B4132A79976F003A9550 /* FormScrollContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormScrollContainer.swift; sourceTree = "<group>"; };
 		1F46B4162A799CFD003A9550 /* ResumeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeView.swift; sourceTree = "<group>"; };
@@ -149,7 +151,7 @@
 		1F4C249D2A47A6DC00CCAF6D /* MySpendUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySpendUITests.swift; sourceTree = "<group>"; };
 		1F4C249F2A47A6DC00CCAF6D /* MySpendUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySpendUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		1F4C9B582C5C78DD00C403B3 /* Double+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
-		1F4C9B5A2C5C847100C403B3 /* UtilsFB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilsFB.swift; sourceTree = "<group>"; };
+		1F4C9B5A2C5C847100C403B3 /* UtilsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilsStore.swift; sourceTree = "<group>"; };
 		1F4C9B5D2C5CA48E00C403B3 /* PickerSegmented.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerSegmented.swift; sourceTree = "<group>"; };
 		1F5CC57B2A6648E400C214FE /* DividerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DividerView.swift; sourceTree = "<group>"; };
 		1F5CC57D2A664EFB00C214FE /* TextFieldEmail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldEmail.swift; sourceTree = "<group>"; };
@@ -306,7 +308,8 @@
 			children = (
 				1F46B41E2A79D9BB003A9550 /* PRUEBAS_SessionStore.swift */,
 				1F46B4202A79E10C003A9550 /* SessionStore.swift */,
-				1F4C9B5A2C5C847100C403B3 /* UtilsFB.swift */,
+				1F3A95402C5D74CC008AAE50 /* DatabaseStore.swift */,
+				1F4C9B5A2C5C847100C403B3 /* UtilsStore.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -779,7 +782,7 @@
 				1F46B4122A79885D003A9550 /* ConstantValidations.swift in Sources */,
 				1FB8BB992A5BB181002DED1F /* SemiCircleShape.swift in Sources */,
 				1F0641482A72280500C19084 /* ValidateAccountView.swift in Sources */,
-				1F4C9B5B2C5C847100C403B3 /* UtilsFB.swift in Sources */,
+				1F4C9B5B2C5C847100C403B3 /* UtilsStore.swift in Sources */,
 				1FC94CBF2A5A2CB7005CA0B6 /* MainView.swift in Sources */,
 				1F4C9B5E2C5CA48E00C403B3 /* PickerSegmented.swift in Sources */,
 				1F19D9682A4A7A7000137EA0 /* ConstantViews.swift in Sources */,
@@ -797,6 +800,7 @@
 				1F14081B2A590FC600181500 /* ConstantAnimations.swift in Sources */,
 				1F3A953D2C5D68D4008AAE50 /* LoginViewModel.swift in Sources */,
 				1F64B0A62A70B828004AC825 /* SectionContainer.swift in Sources */,
+				1F3A95412C5D74CC008AAE50 /* DatabaseStore.swift in Sources */,
 				1FE7C6832A47DDF40070B988 /* ConstantRadius.swift in Sources */,
 				1F0641462A72234900C19084 /* ChangePasswordView.swift in Sources */,
 				1FC94CC52A5A4034005CA0B6 /* ViewModifiers.swift in Sources */,

@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Firebase
 
 struct SettingsView: View {
     
@@ -42,7 +41,7 @@ struct SettingsView: View {
                 }
             }
             
-            // MARK: LOGIN
+            // MARK: LOG OUT
             SectionContainer(header: "Login") {
                 
                 Button("Log out") {
@@ -54,12 +53,10 @@ struct SettingsView: View {
                 .alert("Want to log out?", isPresented: $showingAlert) {
                     
                     Button("Log out", role: .destructive) {
-                        SessionStore.signOut { success, error in
-                            if success {
-                                dismiss()
-                            } else {
-                                print("Error signing out: \(error)")
-                            }
+                        do {
+                            try SessionStore.singOut()
+                        } catch {
+                            Logs.WriteCatchExeption("Error signing out", error: error)
                         }
                     }
                     

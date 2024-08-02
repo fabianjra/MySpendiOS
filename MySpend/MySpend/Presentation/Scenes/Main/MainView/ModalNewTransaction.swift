@@ -169,7 +169,7 @@ struct ModalNewTransaction: View {
                                                    category: categoryModel,
                                                    detail: notes,
                                                    type: transactionType)
-            let response = try await SessionStore.addNewTransaction(transactionModel: transactionModel)
+            let response = try await DatabaseStore.addNewTransaction(transactionModel: transactionModel)
             
             if response.code == ConstantCodeResponse.ok {
                 dismiss()

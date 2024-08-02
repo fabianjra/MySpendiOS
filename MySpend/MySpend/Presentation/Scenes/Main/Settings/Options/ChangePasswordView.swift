@@ -79,11 +79,17 @@ struct ChangePasswordView: View {
                 .textContentType(.newPassword)
                 .focused($focusedField, equals: .newPasswordConfirm)
                 .submitLabel(.done)
-                .onSubmit { validateChangePassword() }
+                .onSubmit {
+                    Task {
+                        await validateChangePassword()
+                    }
+                }
                 
                 
                 Button("Change password") {
-                    validateChangePassword()
+                    Task {
+                        await validateChangePassword()
+                    }
                 }
                 .buttonStyle(ButtonPrimaryStyle(isLoading: $isLoading))
                 .disabled(buttonDisabled)
@@ -95,14 +101,14 @@ struct ChangePasswordView: View {
         }
         .disabled(isLoading)
         .onAppear {
-            if UtilsFB.getCurrentUser() == nil {
+            if UtilsStore.getCurrentUser() == nil {
                 buttonDisabled = true
                 errorMessage = ConstantMessages.userNotLoggedIn.localizedDescription
             }
         }
     }
     
-    private func validateChangePassword() {
+    private func validateChangePassword() async {
         
         focusedField = .none
         
@@ -120,25 +126,25 @@ struct ChangePasswordView: View {
             return
         }
         
-        changePassword()
+        do {
+           try await changePassword()
+        } catch {
+            errorMessage = error.localizedDescription
+        }
     }
     
-    private func changePassword() {
+    private func changePassword() async throws {
         isLoading = true
         
-        SessionStore.updatePassword(actualPassword: userPassword,
-                                    newPasword: userNewPasswordConfirm) { success, error in
-            defer {
-                isLoading = false
-            }
-            
-            if success {
-                errorMessage = "PASSWORD CHANGED!"
-                canSubmit = true
-            } else {
-                errorMessage = error.localizedDescription
-            }
+        defer {
+            isLoading = false
         }
+        
+        try await SessionStore.updatePassword(actualPassword: userPassword, 
+                                              newPasword: userNewPasswordConfirm)
+        
+        errorMessage = "PASSWORD CHANGED!"
+        canSubmit = true
     }
 }
 

@@ -68,13 +68,11 @@ struct ChangeNameView: View {
         }
         .disabled(isLoading)
         .onAppear {
-            SessionStore.getUserName { name, error in
-                if let error = error {
-                    buttonDisabled = true
-                    errorMessage = error.localizedDescription
-                } else {
-                    userName = name
-                }
+            do {
+                userName = try SessionStore.getUserName()
+            } catch {
+                buttonDisabled = true
+                errorMessage = error.localizedDescription
             }
         }
     }
@@ -97,7 +95,7 @@ struct ChangeNameView: View {
         do {
             try await SessionStore.updateUser(newUserName: newUserName)
             
-            errorMessage = "NAME CHANGED TO: \(UtilsFB.getCurrentUser()?.displayName ?? "")"
+            errorMessage = "NAME CHANGED TO: \(UtilsStore.getCurrentUser()?.displayName ?? "")"
             canSubmit = true
         }
         catch {
