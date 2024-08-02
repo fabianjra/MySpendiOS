@@ -43,7 +43,7 @@ struct HeaderNavigator: View {
     
     var body: some View {
         if onlyTitle {
-            VStack(spacing: ConstantViews.textSpacing) {
+            VStack(spacing: ConstantViews.textHeaderSpacing) {
                 titleAndSubtitle
             }
         } else {
@@ -65,7 +65,7 @@ struct HeaderNavigator: View {
     }
     
     private var titleAndSubtitle: some View {
-        VStack(spacing: ConstantViews.textSpacing) {
+        VStack(spacing: ConstantViews.textHeaderSpacing) {
             Text(title)
                 .foregroundColor(Color.textPrimaryForeground)
                 .font(.montserrat(titleWeight, size: titleSize))

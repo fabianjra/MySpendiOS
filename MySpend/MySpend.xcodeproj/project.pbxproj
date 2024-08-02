@@ -39,6 +39,7 @@
 		1F4C24A02A47A6DC00CCAF6D /* MySpendUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4C249F2A47A6DC00CCAF6D /* MySpendUITestsLaunchTests.swift */; };
 		1F4C9B592C5C78DD00C403B3 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4C9B582C5C78DD00C403B3 /* Double+Extensions.swift */; };
 		1F4C9B5B2C5C847100C403B3 /* UtilsFB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4C9B5A2C5C847100C403B3 /* UtilsFB.swift */; };
+		1F4C9B5E2C5CA48E00C403B3 /* PickerSegmented.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4C9B5D2C5CA48E00C403B3 /* PickerSegmented.swift */; };
 		1F5CC57C2A6648E400C214FE /* DividerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5CC57B2A6648E400C214FE /* DividerView.swift */; };
 		1F5CC57E2A664EFB00C214FE /* TextFieldEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5CC57D2A664EFB00C214FE /* TextFieldEmail.swift */; };
 		1F5CC5802A6653AF00C214FE /* TextFieldPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5CC57F2A6653AF00C214FE /* TextFieldPassword.swift */; };
@@ -145,6 +146,7 @@
 		1F4C249F2A47A6DC00CCAF6D /* MySpendUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySpendUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		1F4C9B582C5C78DD00C403B3 /* Double+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
 		1F4C9B5A2C5C847100C403B3 /* UtilsFB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilsFB.swift; sourceTree = "<group>"; };
+		1F4C9B5D2C5CA48E00C403B3 /* PickerSegmented.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerSegmented.swift; sourceTree = "<group>"; };
 		1F5CC57B2A6648E400C214FE /* DividerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DividerView.swift; sourceTree = "<group>"; };
 		1F5CC57D2A664EFB00C214FE /* TextFieldEmail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldEmail.swift; sourceTree = "<group>"; };
 		1F5CC57F2A6653AF00C214FE /* TextFieldPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldPassword.swift; sourceTree = "<group>"; };
@@ -372,6 +374,14 @@
 			path = MySpendUITests;
 			sourceTree = "<group>";
 		};
+		1F4C9B5C2C5CA46E00C403B3 /* Picker */ = {
+			isa = PBXGroup;
+			children = (
+				1F4C9B5D2C5CA48E00C403B3 /* PickerSegmented.swift */,
+			);
+			path = Picker;
+			sourceTree = "<group>";
+		};
 		1F5CC57A2A6648D000C214FE /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -536,6 +546,7 @@
 		1FE7C67B2A47D6EA0070B988 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				1F4C9B5C2C5CA46E00C403B3 /* Picker */,
 				1F5CC57A2A6648D000C214FE /* Views */,
 				1FC94CCF2A5A6DEE005CA0B6 /* TabView */,
 				1FC94CBA2A5A1D91005CA0B6 /* Texts */,
@@ -764,6 +775,7 @@
 				1F0641482A72280500C19084 /* ValidateAccountView.swift in Sources */,
 				1F4C9B5B2C5C847100C403B3 /* UtilsFB.swift in Sources */,
 				1FC94CBF2A5A2CB7005CA0B6 /* MainView.swift in Sources */,
+				1F4C9B5E2C5CA48E00C403B3 /* PickerSegmented.swift in Sources */,
 				1F19D9682A4A7A7000137EA0 /* ConstantViews.swift in Sources */,
 				1F19D96E2A4ACC3D00137EA0 /* Utils.swift in Sources */,
 				1F7486C72A6A57310063AC35 /* TabViewContainer.swift in Sources */,

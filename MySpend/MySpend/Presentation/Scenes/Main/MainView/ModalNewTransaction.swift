@@ -48,14 +48,9 @@ struct ModalNewTransaction: View {
                             onlyTitle: true)
             .padding(.vertical)
             
-            
-            Picker("Transaction type", selection: $transactionType) {
-                ForEach(TransactionTypeEnum.allCases) { type in
-                    Text(type.rawValue)
-                }
-            }
-            .pickerStyle(.segmented)
-            .colorMultiply(transactionType == .expense ? .warning : .primaryLeading)
+
+            PickerSegmented(selection: $transactionType, 
+                            segments: TransactionTypeEnum.allCases)
             .padding(.bottom)
             
             

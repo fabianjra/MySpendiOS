@@ -12,6 +12,7 @@ struct ResumeView: View {
     
     @State var userName: String = ""
     @State var transactions: [TransactionModel] = []
+    @State var totalBalance: Double = 0
     
     @State private var errorMessage: String = ""
     
@@ -43,19 +44,36 @@ struct ResumeView: View {
                 .buttonStyle(ButtonHorizontalStyle(subTitle: "Go to history",
                                                    iconLeading: Image.stackFill))
             }
-            .padding(.bottom)
 
             TextError(message: errorMessage)
             
             // MARK: RESUME
-            ScrollView(showsIndicators: false) {
-                ForEach(transactions) { item in
-                    Text("\(item.amount?.roundedToTwoDecimalsString() ?? "0") - \(item.date ?? "")")
-                        .font(.montserrat())
-                        .foregroundColor(Color.textPrimaryForeground)
+            VStack {
+                ScrollView(showsIndicators: false) {
+                    ForEach(transactions) { item in
+                        HStack {
+                            TextPlain(message: "\(item.category?.description ?? "")")
+                            
+                            Spacer()
+                            
+                            TextPlain(message: "$ \(item.amount?.roundedToTwoDecimalsString() ?? "$ 0.00")")
+                        }
+                        .padding(.vertical, ConstantViews.textResumeSpacing)
+                        .padding(.horizontal)
+                    }
+                }
+                
+                DividerView()
+                    .background(.blue)
+                
+                HStack {
+                    TextPlain(message: "Balance", size: .big)
+                    Spacer()
+                    TextPlain(message: "$ \(totalBalance.roundedToTwoDecimalsString())", size: .big)
                 }
             }
-            
+            .padding(.bottom, ConstantViews.paddingBottomResumeview)
+ 
         }
         .onAppear {
             
@@ -80,20 +98,24 @@ struct ResumeView: View {
                 userName = displayName ?? ""
                 
                 Task {
-                    transactions = await getTransactions()
+                     await getTransactions()
                 }
                 
             }
         }
     }
     
-    private func getTransactions() async -> [TransactionModel] {
+    private func getTransactions() async {
         
         do {
-            return try await SessionStore.getTransactions()
+            transactions = try await SessionStore.getTransactions()
+            
+            for item in transactions {
+                totalBalance += item.amount ?? 0
+            }
+            
         } catch {
             errorMessage = error.localizedDescription
-            return []
         }
     }
 }
