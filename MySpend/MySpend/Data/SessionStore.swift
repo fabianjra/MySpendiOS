@@ -58,7 +58,7 @@ struct SessionStore {
     //TODO: Agregar funcion de Transaccion para que sea atomico (Se complete todo o no haga ninguna accion).
     static func registerUser(withEmail email: String, password: String, username: String) async throws {
         
-        let user = try await createUserFB(email, password)
+        let user = try await Auth.auth().createUser(withEmail: email, password: password).user
         
         try await updateUser(newUserName: username, forUser: user)
         
@@ -68,11 +68,7 @@ struct SessionStore {
         
         //try await sendEmailRegisteredUser() //Commented: Will send only via: Validation User View.
     }
-    
-    private static func createUserFB(_ email: String, _ password: String) async throws -> User{
-        return try await Auth.auth().createUser(withEmail: email, password: password).user
-    }
-    
+
     static func updateUser(newUserName: String, forUser user: User? = UtilsStore.currentUser) async throws {
         guard let user = UtilsStore.currentUser else {
             throw ConstantMessages.userNotLoggedIn

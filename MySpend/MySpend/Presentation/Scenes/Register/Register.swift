@@ -6,23 +6,20 @@
 //
 
 struct Register {
-    var userName: String = ""
-    var isUserNameError: Bool = false
+    var name: String = ""
+    var isNameError: Bool = false
     
-    var userEmail: String = ""
-    var isUserEmailError: Bool = false
+    var email: String = ""
+    var isEmailError: Bool = false
     
-    var userPassword: String = ""
-    var isUserPasswordError: Bool = false
+    var password: String = ""
+    var isPasswordError: Bool = false
     
-    var userPasswordConfirm: String = ""
-    var isUserPasswordConfirmError: Bool = false
+    var passwordConfirm: String = ""
+    var isPasswordConfirmError: Bool = false
     
     var errorMessage: String = ""
     var canSubmit: Bool = false
-    
-    var errorUpdateName: String = ""
-    var errorSendEmail: String = ""
     
     var isLoading: Bool = false
     

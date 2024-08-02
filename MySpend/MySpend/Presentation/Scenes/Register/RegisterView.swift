@@ -23,24 +23,24 @@ struct RegisterView: View {
             // MARK: REGISTER
             VStack(spacing: ConstantViews.formSpacing) {
                 
-                TextFieldName(text: $registerVM.register.userName,
-                              isError: $registerVM.register.isUserNameError,
+                TextFieldName(text: $registerVM.register.name,
+                              isError: $registerVM.register.isNameError,
                               errorMessage: $registerVM.register.errorMessage)
                 .focused($focusedField, equals: .name)
                 .submitLabel(.next)
                 .onSubmit { focusedField = .email }
                 
                 
-                TextFieldEmail(text: $registerVM.register.userEmail,
-                               isError: $registerVM.register.isUserEmailError,
+                TextFieldEmail(text: $registerVM.register.email,
+                               isError: $registerVM.register.isEmailError,
                                errorMessage: $registerVM.register.errorMessage)
                 .focused($focusedField, equals: .email)
                 .submitLabel(.next)
                 .onSubmit { focusedField = .password }
                 
                 
-                TextFieldPassword(text: $registerVM.register.userPassword,
-                                  isError: $registerVM.register.isUserPasswordError,
+                TextFieldPassword(text: $registerVM.register.password,
+                                  isError: $registerVM.register.isPasswordError,
                                   errorMessage: $registerVM.register.errorMessage,
                                   iconLeading: Image.lockFill)
                 .textContentType(.newPassword)
@@ -50,8 +50,8 @@ struct RegisterView: View {
                 
                 
                 TextFieldPassword(placeHolder: "Confirm password",
-                                  text: $registerVM.register.userPasswordConfirm,
-                                  isError: $registerVM.register.isUserPasswordConfirmError,
+                                  text: $registerVM.register.passwordConfirm,
+                                  isError: $registerVM.register.isPasswordConfirmError,
                                   errorMessage: $registerVM.register.errorMessage,
                                   iconLeading: Image.checkmark)
                 .padding(.bottom)
@@ -81,10 +81,6 @@ struct RegisterView: View {
                 
                 
                 TextError(message: registerVM.register.errorMessage)
-                
-                //TODO: Resolver para mostrar mensajes de error:
-                TextError(message: registerVM.register.errorUpdateName)
-                TextError(message: registerVM.register.errorSendEmail)
             }
         }
         .disabled(registerVM.register.isLoading)
