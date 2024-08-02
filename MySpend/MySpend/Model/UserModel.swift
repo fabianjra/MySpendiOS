@@ -13,7 +13,8 @@ struct UserModel: Identifiable, Codable {
     let email: String
     var transactions: [TransactionModel]?
     
-    // Take the full name and separate the first name letters.
+    /// Take the full name and separate the first name letters.
+    /// Example: Fabian Rodriugez --> FR
     var initials: String {
         let formatter = PersonNameComponentsFormatter()
         

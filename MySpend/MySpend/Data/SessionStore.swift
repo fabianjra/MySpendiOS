@@ -11,43 +11,17 @@ import FirebaseFirestoreSwift
 
 class SessionStore {
     
-    static func getCurrentUser() -> User? {
-        return Auth.auth().currentUser
-    }
-    
     static func getUserName(completionHandler: (String, Error?) -> Void) {
-        if let user = getCurrentUser() {
+        if let user = currentUser {
             completionHandler(user.displayName ?? "", nil)
         } else {
             completionHandler("", ConstantMessages.userNotLoggedIn)
         }
     }
-    
-    // Migrar de ChangeNameView (Se utilizaba solamente en registro y en vista de cambio de nombre).
-    static func updateUserName(newUserName: String, user: User? = getCurrentUser(), completionHandler: @escaping (User?, Error?) -> Void) {
-        if let user = user {
-            
-            let changeRequest = user.createProfileChangeRequest()
-            changeRequest.displayName = newUserName
-            
-            changeRequest.commitChanges { error in
-                
-                if let error = error {
-                    completionHandler(nil, error)
-                } else {
-                    if let updatedUser = Auth.auth().currentUser {
-                        completionHandler(updatedUser, nil)
-                    }
-                }
-            }
-        } else {
-            completionHandler(nil, ConstantMessages.userNotLoggedIn)
-        }
-    }
-    
+
     static func updatePassword(actualPassword: String, newPasword: String,
                                completionHandler: @escaping (_ success: Bool, _ error: Error) -> Void) {
-        if let user = getCurrentUser() {
+        if let user = currentUser {
             
             let userEmail = user.email ?? ""
             
@@ -107,89 +81,65 @@ class SessionStore {
     }
 }
 
+private let currentUser = UtilsFB.getCurrentUser()
+private let db = Firestore.firestore()
+private let userRef = db.collection(ConstantFB.Collections.users)
+
 // Updated To use Firebase with Async/Await || Version 10.17.0
 extension SessionStore {
     
-    static func createUser(withEmail email: String, password: String, username: String) async throws {
+    //TODO: Agregar funcion de Transaccion para que sea atomico (Se complete todo o no haga ninguna accion).
+    static func registerUser(withEmail email: String, password: String, username: String) async throws {
         
-        let user = try await Auth.auth().createUser(withEmail: email, password: password).user
+        let user = try await createUserFB(email, password)
         
-        try await updateUser(newUserName: username, user: user)
+        try await updateUser(newUserName: username, forUser: user)
         
-        //Try to create a new user collection to store the user data:
         let userModel = UserModel(id: user.uid, fullname: user.displayName ?? "", email: user.email ?? "", transactions: [])
-        try await storeNewUser(user: userModel)
         
-        try await sendEmailRegisteredUser()
+        try await storeUserDocument(forUser: userModel)
+        
+        //try await sendEmailRegisteredUser() //Commented: Will send only via: Validation User View.
     }
     
-    static func updateUser(newUserName: String, user: User? = getCurrentUser()) async throws {
-        if let user = user {
-            
-            let changeRequest = user.createProfileChangeRequest()
-            changeRequest.displayName = newUserName
-            
-            try await changeRequest.commitChanges()
-        } else {
+    private static func createUserFB(_ email: String, _ password: String) async throws -> User{
+        return try await Auth.auth().createUser(withEmail: email, password: password).user
+    }
+    
+    static func updateUser(newUserName: String, forUser user: User? = currentUser) async throws {
+        guard let user = currentUser else {
             throw ConstantMessages.userNotLoggedIn
         }
+        
+        let changeRequest = user.createProfileChangeRequest()
+        changeRequest.displayName = newUserName
+        
+        try await changeRequest.commitChanges()
     }
     
-    static func storeNewUser(user: UserModel) async throws {
+    private static func storeUserDocument(forUser user: UserModel) async throws {
         
-        let encodedUser = try Firestore.Encoder().encode(user)
-        let createRequest = Firestore.firestore().collection("users").document(user.id)
+        let encodedUser = try UtilsFB.encodeModelFB(user)
+        let createRequest = userRef.document(user.id)
         
         try await createRequest.setData(encodedUser)
     }
     
-    static func sendEmailRegisteredUser(user: User? = getCurrentUser()) async throws {
-        
-        if let user = user {
-            try await user.sendEmailVerification()
-        } else {
+    static func sendEmailRegisteredUser() async throws {
+        guard let user = currentUser else {
             throw ConstantMessages.userNotLoggedIn
         }
+        
+        try await user.sendEmailVerification()
     }
     
-//    static func setNewTransaction(transactionModel: TransactionModel) async throws -> ResponseModel {
-//        if let userId = getCurrentUser()?.uid {
-//            
-//            //let encodedNewTransaction = try Firestore.Encoder().encode(transactionModel)
-//            
-//            let userRef = Firestore.firestore().collection("users").document(userId)
-//            
-//            // Recuperar el documento del usuario, modificar el arreglo y actualizar Firestore
-//            let document = try await userRef.getDocument()
-//            
-//            if document.exists {
-//                
-//                var user = try document.data(as: UserModel.self)
-//                
-//                if var transactionCollection = user.transactions {
-//                    transactionCollection.append(transactionModel)
-//                } else {
-//                    //TODO: ¿Como se agrega la coleccion si no existe en Firebase Firestore?
-//                }
-//                
-//                try userRef.setData(from: user)
-//                return ResponseModel()
-//            } else {
-//                return ResponseModel(ConstantCodeResponse.ok, ConstantMessages.userNotExists.localizedDescription)
-//            }
-//        } else {
-//            return ResponseModel(ConstantCodeResponse.genericError, ConstantMessages.userNotLoggedIn.localizedDescription)
-//        }
-//    }
-    
-    static func setNewTransaction(transactionModel: TransactionModel) async throws -> ResponseModel {
+    static func addNewTransaction(transactionModel: TransactionModel) async throws -> ResponseModel {
         
-        guard let userId = getCurrentUser()?.uid else {
+        guard let userId = currentUser?.uid else {
             return ResponseModel(ConstantCodeResponse.error, ConstantMessages.userNotLoggedIn.localizedDescription)
         }
         
-        let db = Firestore.firestore()
-        let userRef = db.collection("users").document(userId)
+        let userRefDocument = userRef.document(userId)
         
         do {
             let response = try await db.runTransaction { (transaction, errorPointer) -> Any? in
@@ -197,7 +147,7 @@ extension SessionStore {
                 let userDocument: DocumentSnapshot
                 
                 do {
-                    try userDocument = transaction.getDocument(userRef)
+                    try userDocument = transaction.getDocument(userRefDocument)
                 } catch let error as NSError {
                     errorPointer?.pointee = error
                     Logs.WriteCatchExeption(error: error)
@@ -215,13 +165,14 @@ extension SessionStore {
                 user.transactions?.append(transactionModel)
                 
                 do {
-                    try transaction.setData(from: user, forDocument: userRef)
+                    try transaction.setData(from: user, forDocument: userRefDocument)
                 } catch let error {
                     errorPointer?.pointee = error as NSError
                     Logs.WriteCatchExeption(error: error)
                     return ResponseModel(ConstantCodeResponse.error, ConstantMessages.cantSetDataFB.localizedDescription)
                 }
                 
+                //TODO: Cambiar las validaciones de Try Catch, para enviar error con Throw.
                 return ResponseModel()
             }
             
@@ -232,27 +183,25 @@ extension SessionStore {
         }
     }
     
-    //TODO: Agregar al OnAppear de la vista de Resumen para probar su funcionalidad.
     static func getTransactions() async throws -> [TransactionModel] {
-        if let userId = getCurrentUser()?.uid {
-            
-            let collectionTransactions = Firestore.firestore().collection("users").document(userId).collection("transactions")
-            
-            let decodedTransaction = try Firestore.Decoder().decode(TransactionModel.self, from: collectionTransactions)
-            
-            let documentsSnapshot = try await collectionTransactions.getDocuments()
-            
-            var transactions: [TransactionModel] = []
-            
-            for document in documentsSnapshot.documents {
-                if let transaction = try? document.data(as: TransactionModel.self) {
-                    transactions.append(transaction)
-                }
-            }
-            
-            return transactions
-        } else {
+        guard let userId = currentUser?.uid else {
             throw ConstantMessages.userNotLoggedIn
         }
+        
+        let userDocument = userRef.document(userId)
+        
+        let documentSnapshot = try await userDocument.getDocument()
+        
+        guard let data = documentSnapshot.data() else {
+            return []
+        }
+        
+        let decodedDocument = try UtilsFB.decodeModelFB(data: data, forModel: UserModel.self)
+        
+        guard let transactions = decodedDocument.transactions else {
+            return []
+        }
+        
+        return transactions
     }
 }

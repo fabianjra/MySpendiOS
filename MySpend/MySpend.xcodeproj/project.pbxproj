@@ -12,6 +12,7 @@
 		1F0641482A72280500C19084 /* ValidateAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0641472A72280500C19084 /* ValidateAccountView.swift */; };
 		1F06414A2A722AFB00C19084 /* ConstantMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0641492A722AFB00C19084 /* ConstantMessages.swift */; };
 		1F06414D2A7232D300C19084 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F06414C2A7232D300C19084 /* RootView.swift */; };
+		1F0E9AB62C5C62B300675CE8 /* ConstantFB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0E9AB52C5C62B300675CE8 /* ConstantFB.swift */; };
 		1F1408192A58FB9400181500 /* ButtonPrimaryStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1408182A58FB9400181500 /* ButtonPrimaryStyle.swift */; };
 		1F14081B2A590FC600181500 /* ConstantAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F14081A2A590FC600181500 /* ConstantAnimations.swift */; };
 		1F14081D2A5910D300181500 /* ButtonLinkStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F14081C2A5910D300181500 /* ButtonLinkStyle.swift */; };
@@ -36,6 +37,8 @@
 		1F4C24942A47A6DC00CCAF6D /* MySpendTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4C24932A47A6DC00CCAF6D /* MySpendTests.swift */; };
 		1F4C249E2A47A6DC00CCAF6D /* MySpendUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4C249D2A47A6DC00CCAF6D /* MySpendUITests.swift */; };
 		1F4C24A02A47A6DC00CCAF6D /* MySpendUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4C249F2A47A6DC00CCAF6D /* MySpendUITestsLaunchTests.swift */; };
+		1F4C9B592C5C78DD00C403B3 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4C9B582C5C78DD00C403B3 /* Double+Extensions.swift */; };
+		1F4C9B5B2C5C847100C403B3 /* UtilsFB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4C9B5A2C5C847100C403B3 /* UtilsFB.swift */; };
 		1F5CC57C2A6648E400C214FE /* DividerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5CC57B2A6648E400C214FE /* DividerView.swift */; };
 		1F5CC57E2A664EFB00C214FE /* TextFieldEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5CC57D2A664EFB00C214FE /* TextFieldEmail.swift */; };
 		1F5CC5802A6653AF00C214FE /* TextFieldPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5CC57F2A6653AF00C214FE /* TextFieldPassword.swift */; };
@@ -112,6 +115,7 @@
 		1F0641472A72280500C19084 /* ValidateAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateAccountView.swift; sourceTree = "<group>"; };
 		1F0641492A722AFB00C19084 /* ConstantMessages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantMessages.swift; sourceTree = "<group>"; };
 		1F06414C2A7232D300C19084 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		1F0E9AB52C5C62B300675CE8 /* ConstantFB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantFB.swift; sourceTree = "<group>"; };
 		1F1408182A58FB9400181500 /* ButtonPrimaryStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonPrimaryStyle.swift; sourceTree = "<group>"; };
 		1F14081A2A590FC600181500 /* ConstantAnimations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantAnimations.swift; sourceTree = "<group>"; };
 		1F14081C2A5910D300181500 /* ButtonLinkStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonLinkStyle.swift; sourceTree = "<group>"; };
@@ -139,6 +143,8 @@
 		1F4C24992A47A6DC00CCAF6D /* MySpendUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MySpendUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F4C249D2A47A6DC00CCAF6D /* MySpendUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySpendUITests.swift; sourceTree = "<group>"; };
 		1F4C249F2A47A6DC00CCAF6D /* MySpendUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySpendUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		1F4C9B582C5C78DD00C403B3 /* Double+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
+		1F4C9B5A2C5C847100C403B3 /* UtilsFB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilsFB.swift; sourceTree = "<group>"; };
 		1F5CC57B2A6648E400C214FE /* DividerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DividerView.swift; sourceTree = "<group>"; };
 		1F5CC57D2A664EFB00C214FE /* TextFieldEmail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldEmail.swift; sourceTree = "<group>"; };
 		1F5CC57F2A6653AF00C214FE /* TextFieldPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldPassword.swift; sourceTree = "<group>"; };
@@ -294,6 +300,7 @@
 			children = (
 				1F46B41E2A79D9BB003A9550 /* PRUEBAS_SessionStore.swift */,
 				1F46B4202A79E10C003A9550 /* SessionStore.swift */,
+				1F4C9B5A2C5C847100C403B3 /* UtilsFB.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -490,6 +497,7 @@
 				1F7437B32A668BCD0039EFD4 /* Gestures+Extensions.swift */,
 				1F7486BA2A68D4A30063AC35 /* Fonts+Extensions.swift */,
 				1F64B0AA2A70CFC3004AC825 /* String+Extensions.swift */,
+				1F4C9B582C5C78DD00C403B3 /* Double+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -560,6 +568,7 @@
 				1F46B4112A79885D003A9550 /* ConstantValidations.swift */,
 				1F171F282A7CC90D00A0A33E /* ConstantEmojis.swift */,
 				1F697E092C5B3E39009529EF /* ConstantCodeResponse.swift */,
+				1F0E9AB52C5C62B300675CE8 /* ConstantFB.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -753,6 +762,7 @@
 				1F46B4122A79885D003A9550 /* ConstantValidations.swift in Sources */,
 				1FB8BB992A5BB181002DED1F /* SemiCircleShape.swift in Sources */,
 				1F0641482A72280500C19084 /* ValidateAccountView.swift in Sources */,
+				1F4C9B5B2C5C847100C403B3 /* UtilsFB.swift in Sources */,
 				1FC94CBF2A5A2CB7005CA0B6 /* MainView.swift in Sources */,
 				1F19D9682A4A7A7000137EA0 /* ConstantViews.swift in Sources */,
 				1F19D96E2A4ACC3D00137EA0 /* Utils.swift in Sources */,
@@ -787,6 +797,7 @@
 				1F14081D2A5910D300181500 /* ButtonLinkStyle.swift in Sources */,
 				1F5CC5822A6657F800C214FE /* TextFieldName.swift in Sources */,
 				1F7486BB2A68D4A30063AC35 /* Fonts+Extensions.swift in Sources */,
+				1F4C9B592C5C78DD00C403B3 /* Double+Extensions.swift in Sources */,
 				1F5CC5802A6653AF00C214FE /* TextFieldPassword.swift in Sources */,
 				1F1408222A59254F00181500 /* RegisterView.swift in Sources */,
 				1F64B09D2A7089C5004AC825 /* SettingsOptions.swift in Sources */,
@@ -807,6 +818,7 @@
 				1F7486CB2A6F72D20063AC35 /* TabViewButton.swift in Sources */,
 				1F9462EE2A7B54EC00F5CBFB /* Loader.swift in Sources */,
 				1F9F16D42AFC926D003CB599 /* UserModel.swift in Sources */,
+				1F0E9AB62C5C62B300675CE8 /* ConstantFB.swift in Sources */,
 				1FD2E9832C53267D00E68602 /* TransactionModel.swift in Sources */,
 				1F19D9662A4A764B00137EA0 /* ConstantFrames.swift in Sources */,
 			);

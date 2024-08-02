@@ -148,7 +148,7 @@ struct RegisterView: View {
                 isLoading = false
             }
             
-            try await SessionStore.createUser(withEmail: userEmail,
+            try await SessionStore.registerUser(withEmail: userEmail,
                                                            password: userPassword,
                                                            username: userName)
             

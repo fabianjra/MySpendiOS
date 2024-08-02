@@ -95,7 +95,7 @@ struct ChangePasswordView: View {
         }
         .disabled(isLoading)
         .onAppear {
-            if SessionStore.getCurrentUser() == nil {
+            if UtilsFB.getCurrentUser() == nil {
                 buttonDisabled = true
                 errorMessage = ConstantMessages.userNotLoggedIn.localizedDescription
             }

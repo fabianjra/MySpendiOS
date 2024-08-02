@@ -112,9 +112,9 @@ struct ValidateAccountView: View {
     @discardableResult
     private func isUserValidated() -> Bool {
         
-        SessionStore.getCurrentUser()?.reload()
+        UtilsFB.getCurrentUser()?.reload()
 
-        if let user = SessionStore.getCurrentUser() {
+        if let user = UtilsFB.getCurrentUser() {
             
             if user.isEmailVerified {
                 userIsValidated = true

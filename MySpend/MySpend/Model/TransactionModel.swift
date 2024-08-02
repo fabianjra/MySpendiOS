@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct TransactionModel: Identifiable, Codable {
+struct TransactionModel: Identifiable, Codable, Equatable {
     public var id = UUID().uuidString
     let amount: Double?
     let date: String?

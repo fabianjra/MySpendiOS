@@ -97,7 +97,7 @@ struct ChangeNameView: View {
         do {
             try await SessionStore.updateUser(newUserName: newUserName)
             
-            errorMessage = "NAME CHANGED TO: \(SessionStore.getCurrentUser()?.displayName ?? "")"
+            errorMessage = "NAME CHANGED TO: \(UtilsFB.getCurrentUser()?.displayName ?? "")"
             canSubmit = true
         }
         catch {
