@@ -6,15 +6,15 @@
 //
 
 struct Login {
-    var userEmail: String = ""
-    var isUserEmailError: Bool = false
+    var email: String = ""
+    var isEmailError: Bool = false
 
-    var userPassword: String = ""
-    var isUserPasswordError: Bool = false
+    var password: String = ""
+    var isPasswordError: Bool = false
 
     var errorMessage: String = ""
     var canSubmit: Bool = false
-    var goToRegister: Bool = false
+    var navigateToRegisterView: Bool = false
 
     var isLoading: Bool = false
     

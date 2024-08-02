@@ -68,6 +68,8 @@
 		1F9462EB2A7B4D8200F5CBFB /* HeaderNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9462EA2A7B4D8200F5CBFB /* HeaderNavigator.swift */; };
 		1F9462EE2A7B54EC00F5CBFB /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9462ED2A7B54EC00F5CBFB /* Loader.swift */; };
 		1F9F16D42AFC926D003CB599 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9F16D32AFC926D003CB599 /* UserModel.swift */; };
+		1FA08EE22C5D993C0019000B /* Register.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA08EE12C5D993C0019000B /* Register.swift */; };
+		1FA08EE42C5D99480019000B /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA08EE32C5D99480019000B /* RegisterViewModel.swift */; };
 		1FAEE6D02A47A9AB00630367 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FAEE6CF2A47A9AB00630367 /* LoginView.swift */; };
 		1FB87CF52AF45A1B003D11EA /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 1FB87CF42AF45A1B003D11EA /* FirebaseAnalytics */; };
 		1FB87CF72AF45A1B003D11EA /* FirebaseAuthCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 1FB87CF62AF45A1B003D11EA /* FirebaseAuthCombine-Community */; };
@@ -183,6 +185,8 @@
 		1F9D79C32A47C09D00F55418 /* Montserrat-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Thin.ttf"; sourceTree = "<group>"; };
 		1F9D79C42A47C0F000F55418 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1F9F16D32AFC926D003CB599 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		1FA08EE12C5D993C0019000B /* Register.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Register.swift; sourceTree = "<group>"; };
+		1FA08EE32C5D99480019000B /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
 		1FAEE6CF2A47A9AB00630367 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		1FB8BB982A5BB181002DED1F /* SemiCircleShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemiCircleShape.swift; sourceTree = "<group>"; };
 		1FB8BB9A2A5BB1E4002DED1F /* RoundedCornersShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCornersShape.swift; sourceTree = "<group>"; };
@@ -255,6 +259,8 @@
 			isa = PBXGroup;
 			children = (
 				1F1408212A59254F00181500 /* RegisterView.swift */,
+				1FA08EE12C5D993C0019000B /* Register.swift */,
+				1FA08EE32C5D99480019000B /* RegisterViewModel.swift */,
 			);
 			path = Register;
 			sourceTree = "<group>";
@@ -804,6 +810,7 @@
 				1FE7C6832A47DDF40070B988 /* ConstantRadius.swift in Sources */,
 				1F0641462A72234900C19084 /* ChangePasswordView.swift in Sources */,
 				1FC94CC52A5A4034005CA0B6 /* ViewModifiers.swift in Sources */,
+				1FA08EE22C5D993C0019000B /* Register.swift in Sources */,
 				1FE7C6882A48027C0070B988 /* Images+Extensions.swift in Sources */,
 				1F19D9642A4A583800137EA0 /* TextFieldIconStyle.swift in Sources */,
 				1F5CC5842A6662A200C214FE /* ButtonNavigationBack.swift in Sources */,
@@ -828,6 +835,7 @@
 				1FB8BB9D2A5BC728002DED1F /* ConstantColors.swift in Sources */,
 				1F7437B42A668BCD0039EFD4 /* Gestures+Extensions.swift in Sources */,
 				1F697E082C5B3C22009529EF /* ResponseModel.swift in Sources */,
+				1FA08EE42C5D99480019000B /* RegisterViewModel.swift in Sources */,
 				1F64B0AD2A70D647004AC825 /* TextFieldReadOnly.swift in Sources */,
 				1F9462EB2A7B4D8200F5CBFB /* HeaderNavigator.swift in Sources */,
 				1F06414D2A7232D300C19084 /* RootView.swift in Sources */,

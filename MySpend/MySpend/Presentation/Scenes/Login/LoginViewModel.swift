@@ -14,10 +14,10 @@ class LoginViewModel: ObservableObject {
     
     func validateLogin() async {
         //If Textfields are empty, bool error will be true.
-        login.isUserEmailError = login.userEmail.isEmptyOrWhitespace()
-        login.isUserPasswordError = login.userPassword.isEmptyOrWhitespace()
+        login.isEmailError = login.email.isEmptyOrWhitespace()
+        login.isPasswordError = login.password.isEmptyOrWhitespace()
         
-        if login.isUserEmailError || login.isUserPasswordError {
+        if login.isEmailError || login.isPasswordError {
             login.errorMessage = ConstantMessages.emptySpaces.localizedDescription
             return
         }
@@ -37,7 +37,7 @@ class LoginViewModel: ObservableObject {
             login.isLoading = false
         }
         
-        try await SessionStore.singIn(login.userEmail, password: login.userPassword)
+        try await SessionStore.singIn(login.email, password: login.password)
         login.canSubmit = true
     }
 }

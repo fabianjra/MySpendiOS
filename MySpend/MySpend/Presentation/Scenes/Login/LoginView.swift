@@ -24,16 +24,16 @@ struct LoginView: View {
             // MARK: LOGIN
             VStack(spacing: ConstantViews.formSpacing) {
                 
-                TextFieldEmail(text: $loginVM.login.userEmail,
-                               isError: $loginVM.login.isUserEmailError,
+                TextFieldEmail(text: $loginVM.login.email,
+                               isError: $loginVM.login.isEmailError,
                                errorMessage: $loginVM.login.errorMessage)
                 .focused($focusedField, equals: .email)
                 .submitLabel(.next)
                 .onSubmit { focusedField = .password }
                 
                 
-                TextFieldPassword(text: $loginVM.login.userPassword,
-                                  isError: $loginVM.login.isUserPasswordError,
+                TextFieldPassword(text: $loginVM.login.password,
+                                  isError: $loginVM.login.isPasswordError,
                                   errorMessage: $loginVM.login.errorMessage,
                                   iconLeading: Image.lockFill)
                 .padding(.bottom)
@@ -77,12 +77,12 @@ struct LoginView: View {
                 .padding(.bottom)
                 
                 Button("Register") {
-                    loginVM.login.goToRegister = true
+                    loginVM.login.navigateToRegisterView = true
                 }
                 .buttonStyle(ButtonPrimaryStyle(neverBgDisabled: true))
                 .padding(.bottom)
                 .padding(.horizontal, ConstantViews.paddingSmallButton)
-                .navigationDestination(isPresented: $loginVM.login.goToRegister) {
+                .navigationDestination(isPresented: $loginVM.login.navigateToRegisterView) {
                     RegisterView()
                         .toolbar(.hidden)
                 }
