@@ -61,16 +61,6 @@ class SessionStore {
         }
     }
     
-    static func singIn(_ email: String, password: String, completionHandler: @escaping (_ success: Bool, _ error: Error) -> Void) {
-        Auth.auth().signIn(withEmail: email, password: password) { _, error in
-            if let error = error {
-                completionHandler(false, error)
-            } else {
-                completionHandler(true, ConstantMessages.empty)
-            }
-        }
-    }
-    
     static func signOut(completionHandler: @escaping (_ success: Bool, _ error: Error) -> Void) {
         do {
             try Auth.auth().signOut()
@@ -87,6 +77,10 @@ private let userRef = db.collection(ConstantFB.Collections.users)
 
 // Updated To use Firebase with Async/Await || Version 10.17.0
 extension SessionStore {
+    
+    static func singIn(_ email: String, password: String) async throws {
+        try await Auth.auth().signIn(withEmail: email, password: password)
+    }
     
     //TODO: Agregar funcion de Transaccion para que sea atomico (Se complete todo o no haga ninguna accion).
     static func registerUser(withEmail email: String, password: String, username: String) async throws {
