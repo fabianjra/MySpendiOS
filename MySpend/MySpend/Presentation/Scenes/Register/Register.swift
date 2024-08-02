@@ -6,23 +6,30 @@
 //
 
 struct Register {
-    let userName: String = ""
-    let isUserNameError: Bool = false
+    var userName: String = ""
+    var isUserNameError: Bool = false
     
-    let userEmail: String = ""
-    let isUserEmailError: Bool = false
+    var userEmail: String = ""
+    var isUserEmailError: Bool = false
     
-    let userPassword: String = ""
-    let isUserPasswordError: Bool = false
+    var userPassword: String = ""
+    var isUserPasswordError: Bool = false
     
-    let userPasswordConfirm: String = ""
-    let isUserPasswordConfirmError: Bool = false
+    var userPasswordConfirm: String = ""
+    var isUserPasswordConfirmError: Bool = false
     
-    let errorMessage: String = ""
-    let canSubmit: Bool = false
+    var errorMessage: String = ""
+    var canSubmit: Bool = false
     
-    let errorUpdateName: String = ""
-    let errorSendEmail: String = ""
+    var errorUpdateName: String = ""
+    var errorSendEmail: String = ""
     
-    let isLoading: Bool = false
+    var isLoading: Bool = false
+    
+    enum Field: Hashable {
+        case name
+        case email
+        case password
+        case passwordConfirm
+    }
 }

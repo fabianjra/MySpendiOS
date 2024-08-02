@@ -6,39 +6,11 @@
 //
 
 import SwiftUI
-import Firebase
-
-private enum Field: Hashable {
-    case name
-    case email
-    case password
-    case passwordConfirm
-}
 
 struct RegisterView: View {
     
-    //TODO: PASAR A VIEWMODEL.
-    @State private var userName: String = ""
-    @State private var isUserNameError: Bool = false
-    
-    @State private var userEmail: String = ""
-    @State private var isUserEmailError: Bool = false
-    
-    @State private var userPassword: String = ""
-    @State private var isUserPasswordError: Bool = false
-    
-    @State private var userPasswordConfirm: String = ""
-    @State private var isUserPasswordConfirmError: Bool = false
-    
-    @State private var errorMessage: String = ""
-    @State private var canSubmit: Bool = false
-    
-    @State private var errorUpdateName: String = ""
-    @State private var errorSendEmail: String = ""
-    
-    @State private var isLoading: Bool = false
-    
-    @FocusState private var focusedField: Field?
+    @StateObject var registerVM = RegisterViewModel()
+    @FocusState private var focusedField: Register.Field?
     
     var body: some View {
         FormScrollContainer {
@@ -51,25 +23,25 @@ struct RegisterView: View {
             // MARK: REGISTER
             VStack(spacing: ConstantViews.formSpacing) {
                 
-                TextFieldName(text: $userName,
-                              isError: $isUserNameError,
-                              errorMessage: $errorMessage)
+                TextFieldName(text: $registerVM.register.userName,
+                              isError: $registerVM.register.isUserNameError,
+                              errorMessage: $registerVM.register.errorMessage)
                 .focused($focusedField, equals: .name)
                 .submitLabel(.next)
                 .onSubmit { focusedField = .email }
                 
                 
-                TextFieldEmail(text: $userEmail,
-                               isError: $isUserEmailError,
-                               errorMessage: $errorMessage)
+                TextFieldEmail(text: $registerVM.register.userEmail,
+                               isError: $registerVM.register.isUserEmailError,
+                               errorMessage: $registerVM.register.errorMessage)
                 .focused($focusedField, equals: .email)
                 .submitLabel(.next)
                 .onSubmit { focusedField = .password }
                 
                 
-                TextFieldPassword(text: $userPassword,
-                                  isError: $isUserPasswordError,
-                                  errorMessage: $errorMessage,
+                TextFieldPassword(text: $registerVM.register.userPassword,
+                                  isError: $registerVM.register.isUserPasswordError,
+                                  errorMessage: $registerVM.register.errorMessage,
                                   iconLeading: Image.lockFill)
                 .textContentType(.newPassword)
                 .focused($focusedField, equals: .password)
@@ -78,9 +50,9 @@ struct RegisterView: View {
                 
                 
                 TextFieldPassword(placeHolder: "Confirm password",
-                                  text: $userPasswordConfirm,
-                                  isError: $isUserPasswordConfirmError,
-                                  errorMessage: $errorMessage,
+                                  text: $registerVM.register.userPasswordConfirm,
+                                  isError: $registerVM.register.isUserPasswordConfirmError,
+                                  errorMessage: $registerVM.register.errorMessage,
                                   iconLeading: Image.checkmark)
                 .padding(.bottom)
                 .textContentType(.newPassword)
@@ -88,79 +60,37 @@ struct RegisterView: View {
                 .submitLabel(.done)
                 .onSubmit {
                     Task {
-                        await validateRegister()
+                        focusedField = .none
+                        await registerVM.validateRegister()
                     }
                 }
                 
                 
                 Button("Register") {
                     Task {
-                        await validateRegister()
+                        focusedField = .none
+                        await registerVM.validateRegister()
                     }
                 }
-                .buttonStyle(ButtonPrimaryStyle(isLoading: $isLoading))
+                .buttonStyle(ButtonPrimaryStyle(isLoading: $registerVM.register.isLoading))
                 .padding(.bottom)
-                .navigationDestination(isPresented: $canSubmit) {
+                .navigationDestination(isPresented: $registerVM.register.canSubmit) {
                     MainView(selectedTab: .resume)
                         .toolbar(.hidden)
                 }
                 
                 
-                TextError(message: errorMessage)
+                TextError(message: registerVM.register.errorMessage)
                 
                 //TODO: Resolver para mostrar mensajes de error:
-                TextError(message: errorUpdateName)
-                TextError(message: errorSendEmail)
+                TextError(message: registerVM.register.errorUpdateName)
+                TextError(message: registerVM.register.errorSendEmail)
             }
         }
-        .disabled(isLoading)
-    }
-    
-    private func validateRegister() async {
-        
-        focusedField = .none
-        
-        isUserNameError = userName.isEmptyOrWhitespace()
-        isUserEmailError = userEmail.isEmptyOrWhitespace()
-        isUserPasswordError = userPassword.isEmptyOrWhitespace()
-        isUserPasswordConfirmError = userPasswordConfirm.isEmptyOrWhitespace()
-        
-        if isUserNameError || isUserEmailError ||
-            isUserPasswordError || isUserPasswordConfirmError {
-            errorMessage = ConstantMessages.emptySpaces.localizedDescription
-            return
-        }
-        
-        if userPassword.count < 6 || userPasswordConfirm.count < 6 {
-            errorMessage = ConstantMessages.passwordIsShort.localizedDescription
-            return
-        }
-        
-        if userPassword != userPasswordConfirm {
-            errorMessage = ConstantMessages.creationPasswordIsDifferent.localizedDescription
-            return
-        }
-        
-        isLoading = true
-        
-        do {
-            defer {
-                isLoading = false
-            }
-            
-            try await SessionStore.registerUser(withEmail: userEmail,
-                                                           password: userPassword,
-                                                           username: userName)
-            
-            canSubmit = true
-        } catch {
-            errorMessage = error.localizedDescription
-        }
+        .disabled(registerVM.register.isLoading)
     }
 }
 
-struct RegisterView_Previews: PreviewProvider {
-    static var previews: some View {
-        RegisterView()
-    }
+#Preview {
+    RegisterView()
 }
