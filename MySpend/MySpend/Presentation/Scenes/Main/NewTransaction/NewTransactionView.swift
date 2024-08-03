@@ -10,7 +10,7 @@ import SwiftUI
 struct NewTransactionView: View {
     
     @Environment(\.dismiss) var dismiss
-
+    
     @StateObject var newTransactionVM = NewTransactionViewModel()
     @FocusState private var focusedField: NewTransaction.Field?
     
@@ -24,7 +24,7 @@ struct NewTransactionView: View {
                             onlyTitle: true)
             .padding(.vertical)
             
-
+            
             PickerSegmented(selection: $newTransactionVM.newTransaction.transactionType,
                             segments: TransactionTypeEnum.allCases)
             .padding(.bottom)
@@ -33,39 +33,39 @@ struct NewTransactionView: View {
             TextFieldReadOnly(text: $newTransactionVM.newTransaction.dateString,
                               iconLeading: Image.calendar,
                               colorDisabled: false)
-                .onTapGesture {
-                    newTransactionVM.newTransaction.showDatePicker = true
-                }
-                .sheet(isPresented: $newTransactionVM.newTransaction.showDatePicker) {
-                    NavigationStack {
-                        
-                        DatePicker("",
-                                   selection: $newTransactionVM.newTransaction.selectedDate,
-                                   displayedComponents: .date)
-                            .datePickerStyle(.graphical)
-                            .onChange(of: newTransactionVM.newTransaction.selectedDate, { oldValue, newValue in
-                                newTransactionVM.newTransaction.dateString = Utils.dateToStringShort(date: newValue)
-                                //let day = selectedDate.formatted(.dateTime.day())
-                            })
-                            .toolbar {
-                                ToolbarItem(placement: .cancellationAction) {
-                                    Button("Today") {
-                                        newTransactionVM.newTransaction.selectedDate = .now
-                                    }
-                                }
-                                
-                                ToolbarItem(placement: .confirmationAction) {
-                                    Button("Done") {
-                                        newTransactionVM.newTransaction.showDatePicker = false
-                                    }
-                                }
+            .onTapGesture {
+                newTransactionVM.newTransaction.showDatePicker = true
+            }
+            .sheet(isPresented: $newTransactionVM.newTransaction.showDatePicker) {
+                NavigationStack {
+                    
+                    DatePicker("",
+                               selection: $newTransactionVM.newTransaction.selectedDate,
+                               displayedComponents: .date)
+                    .datePickerStyle(.graphical)
+                    .onChange(of: newTransactionVM.newTransaction.selectedDate, { oldValue, newValue in
+                        newTransactionVM.newTransaction.dateString = Utils.dateToStringShort(date: newValue)
+                        //let day = selectedDate.formatted(.dateTime.day())
+                    })
+                    .toolbar {
+                        ToolbarItem(placement: .cancellationAction) {
+                            Button("Today") {
+                                newTransactionVM.newTransaction.selectedDate = .now
                             }
+                        }
+                        
+                        ToolbarItem(placement: .confirmationAction) {
+                            Button("Done") {
+                                newTransactionVM.newTransaction.showDatePicker = false
+                            }
+                        }
                     }
-                    .presentationDetents([.medium])
                 }
-                .onAppear {
-                    newTransactionVM.newTransaction.dateString = Utils.dateToStringShort(date: newTransactionVM.newTransaction.selectedDate)
-                }
+                .presentationDetents([.medium])
+            }
+            .onAppear {
+                newTransactionVM.newTransaction.dateString = Utils.dateToStringShort(date: newTransactionVM.newTransaction.selectedDate)
+            }
             
             
             TextField("", text: $newTransactionVM.newTransaction.amount, prompt:
