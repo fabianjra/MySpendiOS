@@ -54,10 +54,11 @@ struct LoginView: View {
                 }
                 .buttonStyle(ButtonPrimaryStyle(isLoading: $loginVM.login.isLoading))
                 .padding(.bottom)
-                .navigationDestination(isPresented: $loginVM.login.canSubmit) {
-                    MainView(selectedTab: .resume)
-                        .toolbar(.hidden)
-                }
+                //TODO: No hace falta el navigation porque ya la vista RootView maneja esto al loguearse:
+//                .navigationDestination(isPresented: $loginVM.login.canSubmit) {
+//                    MainView(selectedTab: .resume)
+//                        .toolbar(.hidden)
+//                }
                 
                 
                 TextError(message: loginVM.login.errorMessage)

@@ -38,7 +38,7 @@ struct MainView: View {
         }
         
         .sheet(isPresented: $showNewItemModal) {
-            ModalNewTransaction()
+            NewTransactionView()
                 .presentationDetents([.large])
         }
     }
@@ -63,8 +63,6 @@ struct MainView: View {
     }
 }
 
-struct MainView_Previews: PreviewProvider {
-    static var previews: some View {
-        MainView(selectedTab: .resume)
-    }
+#Preview {
+    MainView(selectedTab: .resume)
 }

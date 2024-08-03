@@ -134,8 +134,6 @@ struct ValidateAccountView: View {
     }
 }
 
-struct ValidateAccountView_Previews: PreviewProvider {
-    static var previews: some View {
-        ValidateAccountView()
-    }
+#Preview {
+    ValidateAccountView()
 }

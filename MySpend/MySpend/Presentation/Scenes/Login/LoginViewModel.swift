@@ -13,7 +13,8 @@ class LoginViewModel: ObservableObject {
     @Published var login = Login()
     
     func validateLogin() async {
-
+        login.errorMessage = ""
+        
         if login.email.isEmptyOrWhitespace() || login.password.isEmptyOrWhitespace() {
             login.errorMessage = ConstantMessages.emptySpaces.localizedDescription
             return

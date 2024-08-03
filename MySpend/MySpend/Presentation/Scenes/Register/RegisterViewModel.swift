@@ -13,6 +13,7 @@ class RegisterViewModel: ObservableObject {
     @Published var register = Register()
     
     func validateRegister() async {
+        register.errorMessage = ""
         
         if register.name.isEmptyOrWhitespace() || register.email.isEmptyOrWhitespace() ||
             register.password.isEmptyOrWhitespace() || register.passwordConfirm.isEmptyOrWhitespace() {
