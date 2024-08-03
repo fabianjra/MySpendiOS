@@ -24,7 +24,6 @@ struct RegisterView: View {
             VStack(spacing: ConstantViews.formSpacing) {
                 
                 TextFieldName(text: $registerVM.register.name,
-                              isError: $registerVM.register.isNameError,
                               errorMessage: $registerVM.register.errorMessage)
                 .focused($focusedField, equals: .name)
                 .submitLabel(.next)
@@ -32,7 +31,6 @@ struct RegisterView: View {
                 
                 
                 TextFieldEmail(text: $registerVM.register.email,
-                               isError: $registerVM.register.isEmailError,
                                errorMessage: $registerVM.register.errorMessage)
                 .focused($focusedField, equals: .email)
                 .submitLabel(.next)
@@ -40,7 +38,6 @@ struct RegisterView: View {
                 
                 
                 TextFieldPassword(text: $registerVM.register.password,
-                                  isError: $registerVM.register.isPasswordError,
                                   errorMessage: $registerVM.register.errorMessage,
                                   iconLeading: Image.lockFill)
                 .textContentType(.newPassword)
@@ -51,7 +48,6 @@ struct RegisterView: View {
                 
                 TextFieldPassword(placeHolder: "Confirm password",
                                   text: $registerVM.register.passwordConfirm,
-                                  isError: $registerVM.register.isPasswordConfirmError,
                                   errorMessage: $registerVM.register.errorMessage,
                                   iconLeading: Image.checkmark)
                 .padding(.bottom)

@@ -38,7 +38,6 @@ struct FormScrollContainer_Previews: PreviewProvider {
     static var previews: some View {
         FormScrollContainer {
             TextFieldEmail(text: .constant(""),
-                           isError: .constant(false),
                            errorMessage: .constant(""))
         }
     }

@@ -12,19 +12,16 @@ struct TextFieldPassword: View {
     private let placeHolder: String
     @Binding private var text: String
     
-    @Binding private var isError: Bool
     @Binding private var errorMessage: String
     private let iconLeading: Image
     
     init(placeHolder: String = "Password",
          text: Binding<String>,
-         isError: Binding<Bool>,
          errorMessage: Binding<String>,
          iconLeading: Image) {
         
         self.placeHolder = placeHolder
         self._text = text
-        self._isError = isError
         self._errorMessage = errorMessage
         self.iconLeading = iconLeading
     }
@@ -37,24 +34,20 @@ struct TextFieldPassword: View {
         .textFieldStyle(TextFieldIconStyle($text,
                                            iconLeading: iconLeading,
                                            textLimit: ConstantViews.textLimitPassword,
-                                           isError: $isError))
+                                           errorMessage: $errorMessage))
         //.autocapitalization(.none)
         //.textInputAutocapitalization(.never)
         //.autocorrectionDisabled(true)
         //.keyboardType(.asciiCapable) //This avoids suggestions bar on the keyboard.
-        .onChange(of: text) { errorMessage = "" }
     }
 }
 
-struct TextFieldPassword_Previews: PreviewProvider {
-    static var previews: some View {
-        VStack {
-            TextFieldPassword(text: .constant(""),
-                              isError: .constant(false),
-                              errorMessage: .constant(""),
-                              iconLeading: Image.lockFill)
-        }
-        .padding()
-        .background(Color.background)
+#Preview {
+    VStack {
+        TextFieldPassword(text: .constant(""),
+                          errorMessage: .constant(""),
+                          iconLeading: Image.lockFill)
     }
+    .padding()
+    .background(Color.background)
 }

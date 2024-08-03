@@ -42,7 +42,6 @@ struct ChangeNameView: View {
                 TextFieldName(placeHolder: "New name",
                               text: $newUserName,
                               iconLeading: Image.checkmark,
-                              isError: $isNewUserNameError,
                               errorMessage: $errorMessage)
                 .padding(.bottom)
                 .submitLabel(.done)
@@ -104,8 +103,6 @@ struct ChangeNameView: View {
     }
 }
 
-struct ChangeNameView_Previews: PreviewProvider {
-    static var previews: some View {
-        ChangeNameView()
-    }
+#Preview {
+    ChangeNameView()
 }

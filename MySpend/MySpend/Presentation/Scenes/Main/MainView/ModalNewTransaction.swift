@@ -93,8 +93,7 @@ struct ModalNewTransaction: View {
             .keyboardType(.decimalPad)
             .textFieldStyle(TextFieldIconStyle($amount,
                                                iconLeading: Image.dolarSquareFill,
-                                               textLimit: 12,
-                                               isError: $isAmountError))
+                                               textLimit: 12))
             .focused($focusedField, equals: .amount)
             .onSubmit { focusedField = .category }
             .onChange(of: amount) { errorMessage = "" }
@@ -104,8 +103,7 @@ struct ModalNewTransaction: View {
             TextField("", text: $category, prompt:
                         Text("Category").foregroundColor(.textFieldPlaceholder))
             .textFieldStyle(TextFieldIconStyle($category,
-                                               iconLeading: Image.stackFill,
-                                               isError: $isCategoryError))
+                                               iconLeading: Image.stackFill))
             .focused($focusedField, equals: .category)
             .onSubmit { focusedField = .notes }
             .onChange(of: category) { errorMessage = "" }
@@ -113,8 +111,7 @@ struct ModalNewTransaction: View {
             
             TextField("", text: $notes, prompt:
                         Text("Notes").foregroundColor(.textFieldPlaceholder))
-            .textFieldStyle(TextFieldIconStyle($notes,
-                                               isError: $isAmountError))
+            .textFieldStyle(TextFieldIconStyle($notes))
             .focused($focusedField, equals: .notes)
             .onChange(of: notes) { errorMessage = "" }
             .padding(.bottom)

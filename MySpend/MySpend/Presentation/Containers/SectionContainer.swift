@@ -52,31 +52,28 @@ struct SectionContainer<Content: View>: View {
     }
 }
 
-struct SectionContainer_Previews: PreviewProvider {
-    static var previews: some View {
-        VStack {
-            ListContainer {
-                SectionContainer(header: "Header for section") {
-                    Text("Content of section")
-                }
-                
-                SectionContainer {
-                    Text("Content without header")
-                    Text("Item 2")
-                }
+#Preview {
+    VStack {
+        ListContainer {
+            SectionContainer(header: "Header for section") {
+                Text("Content of section")
             }
             
-            VStack {
-                SectionContainer(header: "HEADER WHEN IS NOT A LIST",
-                                 isInsideList: false,
-                                 headerSize: .small) {
-                    TextFieldName(text: .constant(""),
-                                  isError: .constant(false),
-                                  errorMessage: .constant(""))
-                }
+            SectionContainer {
+                Text("Content without header")
+                Text("Item 2")
             }
-            .padding()
-            .background(Color.background)
         }
+        
+        VStack {
+            SectionContainer(header: "HEADER WHEN IS NOT A LIST",
+                             isInsideList: false,
+                             headerSize: .small) {
+                TextFieldName(text: .constant(""),
+                              errorMessage: .constant(""))
+            }
+        }
+        .padding()
+        .background(Color.background)
     }
 }

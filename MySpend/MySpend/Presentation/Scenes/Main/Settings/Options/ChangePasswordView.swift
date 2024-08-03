@@ -50,7 +50,6 @@ struct ChangePasswordView: View {
                 
                 TextFieldPassword(placeHolder: "Current password",
                                   text: $userPassword,
-                                  isError: $isUserPasswordError,
                                   errorMessage: $errorMessage,
                                   iconLeading: Image.lockFill)
                 .textContentType(.password)
@@ -61,7 +60,6 @@ struct ChangePasswordView: View {
                 
                 TextFieldPassword(placeHolder: "New password",
                                   text: $userNewPassword,
-                                  isError: $isUserNewPasswordError,
                                   errorMessage: $errorMessage,
                                   iconLeading: Image.checkmark)
                 .textContentType(.newPassword)
@@ -72,7 +70,6 @@ struct ChangePasswordView: View {
                 
                 TextFieldPassword(placeHolder: "Confirm new password",
                                   text: $userNewPasswordConfirm,
-                                  isError: $isUserNewPasswordConfirmError,
                                   errorMessage: $errorMessage,
                                   iconLeading: Image.checkmark)
                 .padding(.bottom)
@@ -148,8 +145,6 @@ struct ChangePasswordView: View {
     }
 }
 
-struct ChangePasswordView_Previews: PreviewProvider {
-    static var previews: some View {
-        ChangePasswordView()
-    }
+#Preview {
+    ChangePasswordView()
 }

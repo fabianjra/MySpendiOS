@@ -25,7 +25,6 @@ struct LoginView: View {
             VStack(spacing: ConstantViews.formSpacing) {
                 
                 TextFieldEmail(text: $loginVM.login.email,
-                               isError: $loginVM.login.isEmailError,
                                errorMessage: $loginVM.login.errorMessage)
                 .focused($focusedField, equals: .email)
                 .submitLabel(.next)
@@ -33,7 +32,6 @@ struct LoginView: View {
                 
                 
                 TextFieldPassword(text: $loginVM.login.password,
-                                  isError: $loginVM.login.isPasswordError,
                                   errorMessage: $loginVM.login.errorMessage,
                                   iconLeading: Image.lockFill)
                 .padding(.bottom)

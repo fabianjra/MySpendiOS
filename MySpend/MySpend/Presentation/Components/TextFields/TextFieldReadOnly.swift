@@ -30,18 +30,16 @@ struct TextFieldReadOnly: View {
     }
 }
 
-struct TextFieldReadOnly_Previews: PreviewProvider {
-    static var previews: some View {
-        VStack {
-            TextFieldReadOnly(text: .constant("Read only text"),
-                              iconLeading: Image.personFill)
-            
-            TextFieldReadOnly(text: .constant("Read only text without icon"))
-            
-            TextFieldReadOnly(text: .constant("Read only without disabled background"),
-                              colorDisabled: false)
-        }
-        .padding()
-        .background(Color.background)
+#Preview {
+    VStack {
+        TextFieldReadOnly(text: .constant("Read only text"),
+                          iconLeading: Image.personFill)
+        
+        TextFieldReadOnly(text: .constant("Read only text without icon"))
+        
+        TextFieldReadOnly(text: .constant("Read only without disabled background"),
+                          colorDisabled: false)
     }
+    .padding()
+    .background(Color.background)
 }
