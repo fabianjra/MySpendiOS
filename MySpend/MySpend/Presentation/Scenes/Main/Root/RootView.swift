@@ -8,6 +8,20 @@
 import SwiftUI
 import Firebase
 
+enum Vistas: Hashable, View {
+    case Register
+    case MainView(TabViewIcons)
+    
+    var body: some View {
+        switch self {
+        case .Register:
+            RegisterView()
+        case .MainView(let selectedTab):
+            Vistas.MainView(selectedTab)
+        }
+    }
+}
+
 struct RootView: View {
     
     @State private var isUserLoged = false
@@ -39,8 +53,6 @@ struct RootView: View {
     }
 }
 
-struct RootView_Previews: PreviewProvider {
-    static var previews: some View {
-        RootView()
-    }
+#Preview {
+    RootView()
 }

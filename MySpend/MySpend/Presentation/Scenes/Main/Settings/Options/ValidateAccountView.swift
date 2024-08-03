@@ -20,7 +20,7 @@ struct ValidateAccountView: View {
     @State private var isLoading: Bool = false
     
     var body: some View {
-        FormScrollContainer {
+        FormContainer {
             
             // MARK: HEADER
             HeaderNavigator(title: "Validate account",
@@ -48,7 +48,7 @@ struct ValidateAccountView: View {
     
     private var userIsValidatedBody: some View {
         VStack {
-            TextPlain(message: ErrorMessages.userIsValidated.localizedDescription,
+            TextPlain(message: ConstantMessages.userIsValidated.localizedDescription,
                       family: .semibold,
                       size: .bigL,
                       aligment: .center)
@@ -59,7 +59,7 @@ struct ValidateAccountView: View {
                       aligment: .center)
             .padding(.bottom)
             
-            Image(uiImage: Emojis.fest.textToImage(size: Frames.emojiSize))
+            Image(uiImage: ConstantEmojis.fest.textToImage(size: ConstantFrames.emojiSize))
                 .padding(.bottom)
             
             Button("Go back") {
@@ -72,13 +72,15 @@ struct ValidateAccountView: View {
     }
     
     private var sendEmailBody: some View {
-        VStack(spacing: Views.formSpacing) {
+        VStack(spacing: ConstantViews.formSpacing) {
             
             TextPlain(message: "Please follow the instructions that will be send to your email account.", aligment: .center)
             
             
             Button("Send email") {
-                sendEmail()
+                Task {
+                    await sendEmail()
+                }
             }
             .buttonStyle(ButtonPrimaryStyle(isLoading: $isLoading))
             .padding(.bottom)
@@ -89,35 +91,35 @@ struct ValidateAccountView: View {
         }
     }
     
-    
-    private func sendEmail() {
-        if isUserValidated() == false {
-            
-            isLoading = true
-            
-            SessionStore.sendEmailValidation() { success, error in
-                defer {
-                    isLoading = false
-                }
-                
-                if success {
-                    canSubmit = true
-                    errorMessage = "EMAIL SENT!"
-                } else {
-                    errorMessage = error.localizedDescription
-                }
+    private func sendEmail() async {
+        
+        defer {
+            isLoading = false
+        }
+        
+        do {
+            if isUserValidated() == false {
+                try await SessionStore.sendEmailRegisteredUser()
+                canSubmit = true
             }
+        }
+        catch {
+            errorMessage = error.localizedDescription
         }
     }
     
-    //@discardableResult: Avoid the warning Xcode gives us when you dont use the return value.
-    @discardableResult private func isUserValidated() -> Bool {
-        if let user = SessionStore.getCurrentUser() {
+    //@discardableResult: Avoid the warning Xcode gives us when you dont use the return value, because this function is called in the OnAppear View without using the result.
+    @discardableResult
+    private func isUserValidated() -> Bool {
+        
+        UtilsStore.getCurrentUser()?.reload()
+
+        if let user = UtilsStore.getCurrentUser() {
             
             if user.isEmailVerified {
                 userIsValidated = true
                 buttonDisabled = true
-                errorMessage = ErrorMessages.userIsValidated.localizedDescription
+                errorMessage = ConstantMessages.userIsValidated.localizedDescription
                 return true
                 
             } else {
@@ -126,14 +128,12 @@ struct ValidateAccountView: View {
             
         } else {
             buttonDisabled = true
-            errorMessage = ErrorMessages.userNotLoggedIn.localizedDescription
+            errorMessage = ConstantMessages.userNotLoggedIn.localizedDescription
             return false
         }
     }
 }
 
-struct ValidateAccountView_Previews: PreviewProvider {
-    static var previews: some View {
-        ValidateAccountView()
-    }
+#Preview {
+    ValidateAccountView()
 }

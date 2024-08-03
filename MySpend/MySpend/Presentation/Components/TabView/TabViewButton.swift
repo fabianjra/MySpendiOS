@@ -21,8 +21,8 @@ struct TabViewButton: View {
                                     imageSelected: item.iconSelected,
                                     imageDeselected: item.iconDeselected)
                 
-                .frame(width: Frames.tabViewIcon,
-                       height: Frames.tabViewIcon)
+                .frame(width: ConstantFrames.tabViewIcon,
+                       height: ConstantFrames.tabViewIcon)
                 
                 .tint(selectedTab == item ?
                       Color.tabViewIconSelected
@@ -39,18 +39,15 @@ struct TabViewButton: View {
     }
 }
 
-struct TabViewButton_Previews: PreviewProvider {
-    static var previews: some View {
-        
+#Preview {
+    ZStack {
         @State var selectedTab: TabViewIcons = .resume
         
-        ZStack {
-            Color.background
-            
-            HStack {
-                TabViewButton(selectedTab: $selectedTab, item: .resume)
-            }
-            .background(Color.textPrimaryForeground)
+        Color.background
+        
+        HStack {
+            TabViewButton(selectedTab: $selectedTab, item: .resume)
         }
+        .background(Color.textPrimaryForeground)
     }
 }

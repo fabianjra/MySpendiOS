@@ -13,19 +13,16 @@ struct TextFieldName: View {
     @Binding private var text: String
     private let iconLeading: Image
     
-    @Binding private var isError: Bool
     @Binding private var errorMessage: String
     
     init(placeHolder: String = "Name",
          text: Binding<String>,
          iconLeading: Image = Image.personFill,
-         isError: Binding<Bool>,
          errorMessage: Binding<String>) {
         
         self.placeHolder = placeHolder
         self._text = text
         self.iconLeading = iconLeading
-        self._isError = isError
         self._errorMessage = errorMessage
     }
     
@@ -36,23 +33,18 @@ struct TextFieldName: View {
         
         .textFieldStyle(TextFieldIconStyle($text,
                                            iconLeading: iconLeading,
-                                           textLimit: Views.textLimitName,
-                                           isError: $isError))
-        
-        .onChange(of: text) { errorMessage = "" }
+                                           textLimit: ConstantViews.textLimitName,
+                                           errorMessage: $errorMessage))
         .textContentType(.name)
         .keyboardType(.alphabet)
     }
 }
 
-struct TextFieldName_Previews: PreviewProvider {
-    static var previews: some View {
-        VStack {
-            TextFieldName(text: .constant(""),
-                           isError: .constant(false),
-                           errorMessage: .constant(""))
-        }
-        .padding()
-        .background(Color.background)
+#Preview {
+    VStack {
+        TextFieldName(text: .constant(""),
+                      errorMessage: .constant(""))
     }
+    .padding()
+    .background(Color.background)
 }

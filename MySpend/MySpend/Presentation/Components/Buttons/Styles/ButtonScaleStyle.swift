@@ -9,23 +9,20 @@ import SwiftUI
 
 struct ButtonScaleStyle: ButtonStyle {
     
-    let scaleSize: CGFloat = Animations.buttonScalePressed
+    let scaleSize: CGFloat = ConstantAnimations.buttonScalePressed
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .scaleEffect(configuration.isPressed ?
-                         scaleSize : Animations.buttonOriginalPressed)
-            .animation(.easeOut(duration: Animations.buttonScaleDuration),
+                         scaleSize : ConstantAnimations.buttonOriginalPressed)
+            .animation(.easeOut(duration: ConstantAnimations.buttonScaleDuration),
                        value: configuration.isPressed)
     }
 }
 
-struct ButtonScaleStyle_Previews: PreviewProvider {
-    static var previews: some View {
-        Button("Scale effect") {
-            print("button pressed")
-        }
-        .buttonStyle(ButtonScaleStyle())
+#Preview {
+    Button("Scale effect") {
+        print("button pressed")
     }
+    .buttonStyle(ButtonScaleStyle())
 }
-

@@ -43,12 +43,12 @@ struct ButtonHorizontalStyle: ButtonStyle {
                 configuration.label
                     .font(.montserrat(size: .big))
                     .foregroundColor(Color.buttonForeground)
-                    .lineLimit(Views.buttonMaxLines)
+                    .lineLimit(ConstantViews.buttonMaxLines)
                 
                 Text(subTitle)
                     .font(.montserrat(size: .small))
                     .foregroundColor(Color.textFieldPlaceholder)
-                    .lineLimit(Views.buttonMaxLines)
+                    .lineLimit(ConstantViews.buttonMaxLines)
             }
             .padding(.horizontal)
             
@@ -69,31 +69,29 @@ struct ButtonHorizontalStyle: ButtonStyle {
         .background(LinearGradient(colors: color,
                                    startPoint: .top,
                                    endPoint: .bottom))
-        .cornerRadius(Radius.corners)
+        .cornerRadius(ConstantRadius.corners)
         
         // MARK: EFFECTS
         .scaleEffect(configuration.isPressed ?
-                     Animations.buttonScalePressed : Animations.buttonOriginalPressed)
-        .animation(.easeOut(duration: Animations.buttonScaleDuration), value: configuration.isPressed)
+                     ConstantAnimations.buttonScalePressed : ConstantAnimations.buttonOriginalPressed)
+        .animation(.easeOut(duration: ConstantAnimations.buttonScaleDuration), value: configuration.isPressed)
     }
     
 }
 
-struct ButtonHorizontalStyle_Previews: PreviewProvider {
-    static var previews: some View {
-        VStack {
-            Button("History") {
-                print("button pressed")
-            }
-            .buttonStyle(ButtonHorizontalStyle(subTitle: "Enter the history", iconLeading: Image.stackFill))
-            //.disabled(true)
-            
-            Button("Button without icon") {
-                print("button pressed")
-            }
-            .buttonStyle(ButtonHorizontalStyle(subTitle: "subtitle for button"))
+#Preview {
+    VStack {
+        Button("History") {
+            print("button pressed")
         }
-        .padding()
-        .background(Color.background)
+        .buttonStyle(ButtonHorizontalStyle(subTitle: "Enter the history", iconLeading: Image.stackFill))
+        //.disabled(true)
+        
+        Button("Button without icon") {
+            print("button pressed")
+        }
+        .buttonStyle(ButtonHorizontalStyle(subTitle: "subtitle for button"))
     }
+    .padding()
+    .background(Color.background)
 }

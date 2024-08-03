@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct Shapes {
+struct ConstantShapes {
     static let textFieldLineWidth: CGFloat = 2
 }

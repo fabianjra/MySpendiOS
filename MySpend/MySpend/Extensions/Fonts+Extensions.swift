@@ -69,4 +69,8 @@ extension Font {
     static func montserrat(_ family: Family = .regular, size: Sizes = .body) -> Font {
         return .custom(family.value, size: size.value)
     }
+    
+    static func montserratToUIFont(_ family: Family = .regular, size: Sizes = .body) -> UIFont {
+        return UIFont(name: family.value, size: size.value) ?? UIFont.systemFont(ofSize: size.value)
+    }
 }

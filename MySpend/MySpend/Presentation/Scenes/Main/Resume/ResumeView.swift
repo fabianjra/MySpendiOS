@@ -11,6 +11,10 @@ import Firebase
 struct ResumeView: View {
     
     @State var userName: String = ""
+    @State var transactions: [TransactionModel] = []
+    @State var totalBalance: Double = 0
+    
+    @State private var errorMessage: String = ""
     
     var body: some View {
         ContentContainer {
@@ -18,9 +22,9 @@ struct ResumeView: View {
             // MARK: HEADER
             HStack {
                 VStack(alignment: .leading) {
-                    Text("Hello \(userName) \(Emojis.greeting)")
+                    Text("Hello \(userName) \(ConstantEmojis.greeting)")
                         .font(.montserrat(.semibold, size: .big))
-                        .lineLimit(Views.messageMaxLines)
+                        .lineLimit(ConstantViews.messageMaxLines)
                     
                     Text("Welcome back")
                         .font(.montserrat(.light, size: .small))
@@ -40,19 +44,40 @@ struct ResumeView: View {
                 .buttonStyle(ButtonHorizontalStyle(subTitle: "Go to history",
                                                    iconLeading: Image.stackFill))
             }
-            .padding(.bottom)
 
+            TextError(message: errorMessage)
             
             // MARK: RESUME
-            ScrollView(showsIndicators: false) {
-                Text("Item 1: $1000 - 25/05/2023")
-                    .font(.montserrat())
-                    .foregroundColor(Color.textPrimaryForeground)
+            VStack {
+                ScrollView(showsIndicators: false) {
+                    ForEach(transactions) { item in
+                        HStack {
+                            TextPlain(message: "\(item.category?.description ?? "")")
+                            
+                            Spacer()
+                            
+                            TextPlain(message: "$ \(item.amount?.roundedToTwoDecimalsString() ?? "$ 0.00")")
+                        }
+                        .padding(.vertical, ConstantViews.textResumeSpacing)
+                        .padding(.horizontal)
+                    }
+                }
+                
+                DividerView()
+                    .background(.blue)
+                
+                HStack {
+                    TextPlain(message: "Balance", size: .big)
+                    Spacer()
+                    TextPlain(message: "$ \(totalBalance.roundedToTwoDecimalsString())", size: .big)
+                }
             }
+            .padding(.bottom, ConstantViews.paddingBottomResumeview)
+ 
         }
         .onAppear {
             
-            if let user = SessionStore.getCurrentUser() {
+            if let user = UtilsStore.getCurrentUser() {
                 
                 // The user's ID, unique to the Firebase project.
                 // Do NOT use this value to authenticate with your backend server,
@@ -71,13 +96,61 @@ struct ResumeView: View {
                 }
                 
                 userName = displayName ?? ""
+                
+                Task {
+                     await getTransactions()
+                }
+                
             }
+        }
+    }
+    
+    private func getTransactions() async {
+        
+        do {
+            //TODO: Descomentar para pruebas:
+            //transactions = try await DatabaseStore.getTransactions()
+            
+            for item in transactions {
+                totalBalance += item.amount ?? 0
+            }
+            
+        } catch {
+            errorMessage = error.localizedDescription
         }
     }
 }
 
-struct ResumeView_Previews: PreviewProvider {
-    static var previews: some View {
-        ResumeView()
+#Preview {
+    VStack {
+        let category1 = CategoryModel(description: "Gasolina")
+        let category2 = CategoryModel(description: "Comida")
+        let category3 = CategoryModel(description: "Turismo")
+        
+        let transaction1 = TransactionModel(amount: 56000,
+                                            date: "25/05/1990",
+                                            category: category1,
+                                            detail: "Nota",
+                                            type: .expense)
+        let transaction2 = TransactionModel(amount: 3000,
+                                            date: "25/05/2024",
+                                            category: category2,
+                                            detail: "Nota",
+                                            type: .expense)
+        let transaction3 = TransactionModel(amount: 100,
+                                            date: "01/12/2003",
+                                            category: category1,
+                                            detail: "Nota",
+                                            type: .expense)
+        let transaction4 = TransactionModel(amount: 270000,
+                                            date: "01/05/2023",
+                                            category: category3,
+                                            detail: "Nota",
+                                            type: .expense)
+        
+        let transactionArray = [transaction1, transaction2, transaction3, transaction4]
+        
+        ResumeView(userName: "Vista previa",
+                   transactions: transactionArray)
     }
 }

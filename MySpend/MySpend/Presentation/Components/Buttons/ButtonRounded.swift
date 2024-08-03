@@ -26,7 +26,7 @@ struct ButtonRounded: View {
         Button(action: function, label: {
             icon
                 .resizable()
-                .frame(width: Frames.roundedButtonIcon, height: Frames.roundedButtonIcon)
+                .frame(width: ConstantFrames.roundedButtonIcon, height: ConstantFrames.roundedButtonIcon)
                 .foregroundColor(Color.buttonForeground)
         })
         .padding()
@@ -34,16 +34,14 @@ struct ButtonRounded: View {
             LinearGradient(colors: color,
                            startPoint: .leading,
                            endPoint: .trailing)
-            .overlay(Circle().stroke(Color.buttonForeground, lineWidth: Views.buttonBorderWidth))
+            .overlay(Circle().stroke(Color.buttonForeground, lineWidth: ConstantViews.buttonBorderWidth))
         )
         .clipShape(Circle())
-        .shadow(color: .shadow.opacity(Colors.opacityHalf),
-                radius: Radius.shadow)
+        .shadow(color: .shadow.opacity(ConstantColors.opacityHalf),
+                radius: ConstantRadius.shadow)
     }
 }
 
-struct ButtonRounded_Previews: PreviewProvider {
-    static var previews: some View {
-        ButtonRounded(function: { print("hola") })
-    }
+#Preview {
+    ButtonRounded(function: { print("hola") })
 }

@@ -162,7 +162,17 @@ struct Utils {
      */
     static func dateToStringShort(date: Date) -> String {
         let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "es_CR")
         dateFormatter.dateFormat = "dd/MM/yyyy"
         return dateFormatter.string(from: date)
+    }
+    
+    static func StringShortDateToDate(dateShort: String) -> Date {
+        let dateFormatter = DateFormatter()
+        //dateFormatter.locale = Locale(identifier: "en_US_POSIX") // set locale to reliable US_POSIX
+        dateFormatter.locale = Locale(identifier: "es_CR")
+        dateFormatter.dateFormat = "dd/MM/yyy"
+        let date = dateFormatter.date(from:dateShort) ?? .now
+        return date
     }
 }

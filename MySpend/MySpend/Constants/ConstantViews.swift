@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Views {
+struct ConstantViews {
     
     // MARK: BUTTON
     static let buttonBorderWidth: CGFloat = 6.0
@@ -23,7 +23,8 @@ struct Views {
     static let textLimitPassword: Int = 50
 
     // MARK: SPACING
-    static let textSpacing: CGFloat = 5.0
+    static let textHeaderSpacing: CGFloat = 5.0
+    static let textResumeSpacing: CGFloat = 5.0
     static let formSpacing: CGFloat = 15.0
     
     // MARK: PADDING
@@ -31,4 +32,5 @@ struct Views {
     static let paddingTabViewHorizontal: CGFloat = 60.0
     static let paddingButtonRoundedBottom: CGFloat = 60.0
     static let paddingButtonRoundedBottomForCurvedTabview: CGFloat = 50.0
+    static let paddingBottomResumeview: CGFloat = 110.0
 }

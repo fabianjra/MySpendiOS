@@ -10,8 +10,6 @@ import SwiftUI
 struct TextFieldEmail: View {
     
     @Binding var text: String
-    
-    @Binding var isError: Bool
     @Binding var errorMessage: String
     
     var body: some View {
@@ -21,26 +19,22 @@ struct TextFieldEmail: View {
         
         .textFieldStyle(TextFieldIconStyle($text,
                                            iconLeading: Image.envelopeFill,
-                                           textLimit: Views.textLimitEmail,
-                                           isError: $isError))
+                                           textLimit: ConstantViews.textLimitEmail,
+                                           errorMessage: $errorMessage))
         
         .autocapitalization(.none)
         .textInputAutocapitalization(.never)
         .autocorrectionDisabled(true)
         .textContentType(.emailAddress)
         .keyboardType(.emailAddress)
-        .onChange(of: text) { errorMessage = "" }
     }
 }
 
-struct TextFieldEmail_Previews: PreviewProvider {
-    static var previews: some View {
-        VStack {
-            TextFieldEmail(text: .constant(""),
-                           isError: .constant(false),
-                           errorMessage: .constant(""))
-        }
-        .padding()
-        .background(Color.background)
+#Preview {
+    VStack {
+        TextFieldEmail(text: .constant(""),
+                       errorMessage: .constant(""))
     }
+    .padding()
+    .background(Color.background)
 }

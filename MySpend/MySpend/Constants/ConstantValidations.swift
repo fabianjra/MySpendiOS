@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Validations {
+struct ConstantValidations {
     
     // MARK: ACCOUNT
     static let showChangeName: Bool = true

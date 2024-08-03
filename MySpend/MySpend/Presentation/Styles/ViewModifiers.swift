@@ -38,10 +38,10 @@ struct FormStyleBordered: ViewModifier {
             .background(LinearGradient(colors: Color.backgroundFormGradiant,
                                        startPoint: .leading,
                                        endPoint: .trailing))
-            .cornerRadius(Radius.corners)
+            .cornerRadius(ConstantRadius.corners)
             .padding()
             .shadow(color: .shadow,
-                    radius: Radius.shadow,
+                    radius: ConstantRadius.shadow,
                     x: .zero, y: .zero)
     }
 }

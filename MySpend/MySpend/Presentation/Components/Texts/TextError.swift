@@ -16,16 +16,14 @@ struct TextError: View {
             .foregroundColor(Color.warning)
             .font(.montserrat(.semibold))
             .multilineTextAlignment(.center)
-            .lineLimit(Views.messageMaxLines)
+            .lineLimit(ConstantViews.messageMaxLines)
     }
 }
 
-struct TextError_Previews: PreviewProvider {
-    static var previews: some View {
-        ZStack {
-            Color.background
-            
-            TextError(message: "Error while processing")
-        }
+#Preview {
+    ZStack {
+        Color.background
+        
+        TextError(message: "Error while processing")
     }
 }

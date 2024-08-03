@@ -1,0 +1,180 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2761
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\froman\fcharset0 Times-Roman;\f1\froman\fcharset0 Times-Bold;\f2\fmodern\fcharset0 Courier;
+\f3\fmodern\fcharset0 Courier-Bold;\f4\fnil\fcharset0 HelveticaNeue;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red0\green0\blue0;\red179\green179\blue179;
+}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;\cssrgb\c0\c0\c0\c84706;\cssrgb\c75294\c75294\c75294;
+}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}}{\leveltext\leveltemplateid1\'01\'00;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listname ;}\listid1}
+{\list\listtemplateid2\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}}{\leveltext\leveltemplateid101\'01\'00;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listname ;}\listid2}
+{\list\listtemplateid3\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid201\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid3}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}{\listoverride\listid3\listoverridecount0\ls3}}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\fs24 \cf0 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Para implementar un sistema que permita cargar datos, almacenarlos en cach\'e9 local y sincronizarlos con el servidor una vez se restaure la conexi\'f3n a Internet, debes considerar varios pasos clave:\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\sa240\partightenfactor0
+\ls1\ilvl0
+\f1\b \cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	1	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Almacenamiento en Cach\'e9 Local:
+\f0\b0  Puedes usar varias estrategias para el almacenamiento en cach\'e9 local en una aplicaci\'f3n iOS. Algunas opciones comunes son usar 
+\f2\fs26 UserDefaults
+\f0\fs24 , archivos locales, o una base de datos local como 
+\f2\fs26 Core Data
+\f0\fs24  o 
+\f2\fs26 SQLite
+\f0\fs24 . En este caso, vamos a usar 
+\f2\fs26 UserDefaults
+\f0\fs24  para simplificar.\
+\ls1\ilvl0
+\f1\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	2	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Sincronizaci\'f3n con el Servidor:
+\f0\b0  Necesitas implementar una l\'f3gica que sincronice los datos locales con el servidor cuando se restablezca la conexi\'f3n a Internet. Esto generalmente se hace con un sistema de verificaci\'f3n o sincronizaci\'f3n peri\'f3dica.\
+\ls1\ilvl0
+\f1\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	3	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Verificaci\'f3n de la Conexi\'f3n a Internet:
+\f0\b0  Usar una librer\'eda para la detecci\'f3n de la conectividad de red, como 
+\f2\fs26 Network
+\f0\fs24  framework, para verificar si hay conexi\'f3n a Internet disponible.\
+\pard\pardeftab720\sa280\partightenfactor0
+
+\f1\b\fs28 \cf0 Ejemplo Simplificado Usando 
+\f3\fs30\fsmilli15210 UserDefaults
+\f1\fs28 \
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\b0\fs24 \cf0 Aqu\'ed tienes un ejemplo simplificado de c\'f3mo podr\'edas modificar tu funci\'f3n para almacenar los datos en cach\'e9 local y sincronizarlos con el servidor cuando haya conexi\'f3n a Internet:\
+\pard\pardeftab720\partightenfactor0
+
+\f2\fs26 \cf0 swift\
+\pard\pardeftab720\partightenfactor0
+
+\f4\fs22 \cf3 \cb4 \strokec3 Copiar c\'f3digo
+\f2\fs26 \cf0 \cb1 \strokec2 \
+import Foundation\
+import Combine\
+import Network\
+\
+// Funci\'f3n para obtener las transacciones\
+static func getTransactions() async throws -> [TransactionModel] \{\
+    let cacheKey = "cachedTransactions"\
+    \
+    // Verificar la conectividad\
+    let isConnected = await checkInternetConnection()\
+    \
+    if isConnected \{\
+        // Si hay conexi\'f3n a Internet, obtener los datos del servidor\
+        guard let userId = UtilsStore.currentUser?.uid else \{\
+            throw ConstantMessages.userNotLoggedIn\
+        \}\
+        \
+        let userDocument = UtilsStore.userRef.document(userId)\
+        \
+        let documentSnapshot = try await userDocument.getDocument()\
+        \
+        guard let data = documentSnapshot.data() else \{\
+            return []\
+        \}\
+        \
+        let decodedDocument = try UtilsStore.decodeModelFB(data: data, forModel: UserModel.self)\
+        \
+        guard let transactions = decodedDocument.transactions else \{\
+            return []\
+        \}\
+        \
+        // Guardar las transacciones en cach\'e9\
+        saveToCache(transactions: transactions)\
+        \
+        return transactions\
+    \} else \{\
+        // Si no hay conexi\'f3n, cargar las transacciones desde la cach\'e9\
+        return loadFromCache() ?? []\
+    \}\
+\}\
+\
+// Funci\'f3n para guardar las transacciones en cach\'e9\
+private static func saveToCache(transactions: [TransactionModel]) \{\
+    let encoder = JSONEncoder()\
+    if let encoded = try? encoder.encode(transactions) \{\
+        UserDefaults.standard.set(encoded, forKey: "cachedTransactions")\
+    \}\
+\}\
+\
+// Funci\'f3n para cargar las transacciones desde la cach\'e9\
+private static func loadFromCache() -> [TransactionModel]? \{\
+    if let data = UserDefaults.standard.data(forKey: "cachedTransactions") \{\
+        let decoder = JSONDecoder()\
+        return try? decoder.decode([TransactionModel].self, from: data)\
+    \}\
+    return nil\
+\}\
+\
+// Funci\'f3n para verificar la conectividad a Internet\
+private static func checkInternetConnection() async -> Bool \{\
+    let monitor = NWPathMonitor()\
+    monitor.start(queue: DispatchQueue.global())\
+    \
+    return await withCheckedContinuation \{ continuation in\
+        monitor.pathUpdateHandler = \{ path in\
+            continuation.resume(returning: path.status == .satisfied)\
+        \}\
+    \}\
+\}\
+\pard\pardeftab720\sa280\partightenfactor0
+
+\f1\b\fs28 \cf0 Descripci\'f3n del C\'f3digo:\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\sa240\partightenfactor0
+\ls2\ilvl0
+\f3\fs26 \cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	1	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 getTransactions()
+\f1\fs24 :
+\f0\b0  La funci\'f3n principal verifica si hay una conexi\'f3n a Internet. Si est\'e1 disponible, obtiene los datos del servidor y los guarda en cach\'e9. Si no hay conexi\'f3n, carga los datos desde la cach\'e9.\
+\ls2\ilvl0
+\f3\b\fs26 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	2	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 saveToCache(transactions:)
+\f1\fs24 :
+\f0\b0  Guarda las transacciones en 
+\f2\fs26 UserDefaults
+\f0\fs24  como datos codificados en JSON.\
+\ls2\ilvl0
+\f3\b\fs26 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	3	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 loadFromCache()
+\f1\fs24 :
+\f0\b0  Carga las transacciones desde 
+\f2\fs26 UserDefaults
+\f0\fs24  si est\'e1n disponibles.\
+\ls2\ilvl0
+\f3\b\fs26 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	4	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 checkInternetConnection()
+\f1\fs24 :
+\f0\b0  Usa el 
+\f2\fs26 NWPathMonitor
+\f0\fs24  para verificar si hay una conexi\'f3n a Internet disponible.\
+\pard\pardeftab720\sa280\partightenfactor0
+
+\f1\b\fs28 \cf0 Notas Adicionales:\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\partightenfactor0
+\ls3\ilvl0
+\fs24 \cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Sincronizaci\'f3n en Segundo Plano:
+\f0\b0  Puedes agregar l\'f3gica adicional para sincronizar los datos en segundo plano cuando la conexi\'f3n a Internet se restablezca.\
+\ls3\ilvl0
+\f1\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Persistencia y Seguridad:
+\f0\b0  Para datos sensibles o grandes vol\'famenes de datos, considera usar una base de datos local como 
+\f2\fs26 Core Data
+\f0\fs24  o 
+\f2\fs26 SQLite
+\f0\fs24  en lugar de 
+\f2\fs26 UserDefaults
+\f0\fs24 .\
+\pard\pardeftab720\sa240\partightenfactor0
+\cf0 Este enfoque proporciona una forma b\'e1sica de manejar cach\'e9 y sincronizaci\'f3n, y puedes adaptarlo seg\'fan las necesidades espec\'edficas de tu aplicaci\'f3n.\
+\pard\pardeftab720\partightenfactor0
+\cf0 \
+\pard\pardeftab720\qc\partightenfactor0
+
+\f4\fs22 \cf3 \strokec3 \
+}

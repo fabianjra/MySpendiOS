@@ -38,7 +38,7 @@ struct MainView: View {
         }
         
         .sheet(isPresented: $showNewItemModal) {
-            ModalNewTransaction()
+            NewTransactionView()
                 .presentationDetents([.large])
         }
     }
@@ -52,7 +52,7 @@ struct MainView: View {
             ForEach(TabViewIcons.allCases, id: \.id) { item in
                 
                 TabViewButton(selectedTab: $selectedTab, item: item)
-                    .padding(.horizontal, Views.paddingTabViewHorizontal)
+                    .padding(.horizontal, ConstantViews.paddingTabViewHorizontal)
                     .padding(.bottom)
 
                 if item == TabViewIcons.allCases.first {
@@ -63,8 +63,6 @@ struct MainView: View {
     }
 }
 
-struct MainView_Previews: PreviewProvider {
-    static var previews: some View {
-        MainView(selectedTab: .resume)
-    }
+#Preview {
+    MainView(selectedTab: .resume)
 }

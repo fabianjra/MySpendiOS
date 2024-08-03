@@ -34,7 +34,7 @@ struct ChangePasswordView: View {
     @FocusState private var focusedField: Field?
     
     var body: some View {
-        FormScrollContainer {
+        FormContainer {
             
             // MARK: HEADER
             HeaderNavigator(title: "Change password",
@@ -46,11 +46,10 @@ struct ChangePasswordView: View {
             
             
             // MARK: FIELDS
-            VStack(spacing: Views.formSpacing) {
+            VStack(spacing: ConstantViews.formSpacing) {
                 
                 TextFieldPassword(placeHolder: "Current password",
                                   text: $userPassword,
-                                  isError: $isUserPasswordError,
                                   errorMessage: $errorMessage,
                                   iconLeading: Image.lockFill)
                 .textContentType(.password)
@@ -61,7 +60,6 @@ struct ChangePasswordView: View {
                 
                 TextFieldPassword(placeHolder: "New password",
                                   text: $userNewPassword,
-                                  isError: $isUserNewPasswordError,
                                   errorMessage: $errorMessage,
                                   iconLeading: Image.checkmark)
                 .textContentType(.newPassword)
@@ -72,18 +70,23 @@ struct ChangePasswordView: View {
                 
                 TextFieldPassword(placeHolder: "Confirm new password",
                                   text: $userNewPasswordConfirm,
-                                  isError: $isUserNewPasswordConfirmError,
                                   errorMessage: $errorMessage,
                                   iconLeading: Image.checkmark)
                 .padding(.bottom)
                 .textContentType(.newPassword)
                 .focused($focusedField, equals: .newPasswordConfirm)
                 .submitLabel(.done)
-                .onSubmit { validateChangePassword() }
+                .onSubmit {
+                    Task {
+                        await validateChangePassword()
+                    }
+                }
                 
                 
                 Button("Change password") {
-                    validateChangePassword()
+                    Task {
+                        await validateChangePassword()
+                    }
                 }
                 .buttonStyle(ButtonPrimaryStyle(isLoading: $isLoading))
                 .disabled(buttonDisabled)
@@ -95,14 +98,14 @@ struct ChangePasswordView: View {
         }
         .disabled(isLoading)
         .onAppear {
-            if SessionStore.getCurrentUser() == nil {
+            if UtilsStore.getCurrentUser() == nil {
                 buttonDisabled = true
-                errorMessage = ErrorMessages.userNotLoggedIn.localizedDescription
+                errorMessage = ConstantMessages.userNotLoggedIn.localizedDescription
             }
         }
     }
     
-    private func validateChangePassword() {
+    private func validateChangePassword() async {
         
         focusedField = .none
         
@@ -111,39 +114,37 @@ struct ChangePasswordView: View {
         isUserNewPasswordConfirmError = userNewPasswordConfirm.isEmptyOrWhitespace()
         
         if isUserPasswordError || isUserNewPasswordError || isUserNewPasswordConfirmError {
-            errorMessage = ErrorMessages.emptySpaces.localizedDescription
+            errorMessage = ConstantMessages.emptySpaces.localizedDescription
             return
         }
         
         if userNewPassword != userNewPasswordConfirm {
-            errorMessage = ErrorMessages.newPasswordIsDifferent.localizedDescription
+            errorMessage = ConstantMessages.newPasswordIsDifferent.localizedDescription
             return
         }
         
-        changePassword()
+        do {
+           try await changePassword()
+        } catch {
+            errorMessage = error.localizedDescription
+        }
     }
     
-    private func changePassword() {
+    private func changePassword() async throws {
         isLoading = true
         
-        SessionStore.updatePassword(actualPassword: userPassword,
-                                    newPasword: userNewPasswordConfirm) { success, error in
-            defer {
-                isLoading = false
-            }
-            
-            if success {
-                errorMessage = "PASSWORD CHANGED!"
-                canSubmit = true
-            } else {
-                errorMessage = error.localizedDescription
-            }
+        defer {
+            isLoading = false
         }
+        
+        try await SessionStore.updatePassword(actualPassword: userPassword, 
+                                              newPasword: userNewPasswordConfirm)
+        
+        errorMessage = "PASSWORD CHANGED!"
+        canSubmit = true
     }
 }
 
-struct ChangePasswordView_Previews: PreviewProvider {
-    static var previews: some View {
-        ChangePasswordView()
-    }
+#Preview {
+    ChangePasswordView()
 }

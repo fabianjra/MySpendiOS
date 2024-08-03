@@ -22,7 +22,7 @@ struct ChangeNameView: View {
     @State private var isLoading: Bool = false
     
     var body: some View {
-        FormScrollContainer {
+        FormContainer {
             
             // MARK: HEADER
             HeaderNavigator(title: "Change name",
@@ -34,7 +34,7 @@ struct ChangeNameView: View {
             
             
             // MARK: FIELDS
-            VStack(spacing: Views.formSpacing) {
+            VStack(spacing: ConstantViews.formSpacing) {
                 
                 TextFieldReadOnly(text: $userName, iconLeading: Image.personFill)
                 
@@ -42,15 +42,20 @@ struct ChangeNameView: View {
                 TextFieldName(placeHolder: "New name",
                               text: $newUserName,
                               iconLeading: Image.checkmark,
-                              isError: $isNewUserNameError,
                               errorMessage: $errorMessage)
                 .padding(.bottom)
                 .submitLabel(.done)
-                .onSubmit { validateChangeName() }
+                .onSubmit {
+                    Task {
+                        await changeName()
+                    }
+                }
                 
                 
                 Button("Change name") {
-                    validateChangeName()
+                    Task {
+                        await changeName()
+                    }
                 }
                 .buttonStyle(ButtonPrimaryStyle(isLoading: $isLoading))
                 .padding(.bottom)
@@ -62,49 +67,42 @@ struct ChangeNameView: View {
         }
         .disabled(isLoading)
         .onAppear {
-            SessionStore.getUserName { name, error in
-                if let error = error {
-                    buttonDisabled = true
-                    errorMessage = error.localizedDescription
-                } else {
-                    userName = name
-                }
+            do {
+                userName = try SessionStore.getUserName()
+            } catch {
+                buttonDisabled = true
+                errorMessage = error.localizedDescription
             }
         }
     }
     
-    private func validateChangeName() {
+    private func changeName() async {
         
         isNewUserNameError = newUserName.isEmptyOrWhitespace()
         
         if isNewUserNameError {
-            errorMessage = ErrorMessages.emptySpace.localizedDescription
+            errorMessage = ConstantMessages.emptySpace.localizedDescription
             return
         }
         
-        changeName()
-    }
-    
-    private func changeName() {
         isLoading = true
         
-        SessionStore.updateUserName(newUserName: newUserName) { user, error in
-            defer {
-                isLoading = false
-            }
+        defer {
+            isLoading = false
+        }
+        
+        do {
+            try await SessionStore.updateUser(newUserName: newUserName)
             
-            if let error = error {
-                errorMessage = error.localizedDescription
-            } else {
-                errorMessage = "NAME CHANGED TO: \(user?.displayName ?? "")"
-                canSubmit = true
-            }
+            errorMessage = "NAME CHANGED TO: \(UtilsStore.getCurrentUser()?.displayName ?? "")"
+            canSubmit = true
+        }
+        catch {
+            errorMessage = error.localizedDescription
         }
     }
 }
 
-struct ChangeNameView_Previews: PreviewProvider {
-    static var previews: some View {
-        ChangeNameView()
-    }
+#Preview {
+    ChangeNameView()
 }

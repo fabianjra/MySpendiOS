@@ -31,7 +31,7 @@ struct ContentContainer<Content: View>: View {
                                             Color.background],
                                            center: .top,
                                            startRadius: .zero,
-                                           endRadius: Colors.endRadiusBackground))
+                                           endRadius: ConstantColors.endRadiusBackground))
             
             VStack(content: content)
                 .padding(.all, addPading ? nil : .zero)
@@ -39,10 +39,8 @@ struct ContentContainer<Content: View>: View {
     }
 }
 
-struct ContentContainer_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentContainer {
-            HeaderNavigator(subTitle: "Inside of container")
-        }
+#Preview {
+    ContentContainer {
+        HeaderNavigator(subTitle: "Inside of container")
     }
 }

@@ -74,26 +74,24 @@ struct SemiCircleShapeCurved: Shape {
     }
 }
 
-struct SemiCircleShape_Previews: PreviewProvider {
-    static var previews: some View {
-        ZStack {
-            
-            Color.background
-            
-            VStack {
-                Color.tabViewBackground
-                    .clipShape(SemiCircleShape())
-                    .frame(height: Frames.tabViewHeight)
-            }
-            .padding(.bottom, 200)
-            
-            VStack {
-                Color.tabViewBackground
-                    .clipShape(SemiCircleShapeCurved())
-                    .frame(height: Frames.tabViewHeight)
-            }
-            .padding(.top, 200)
-
+#Preview {
+    ZStack {
+        
+        Color.background
+        
+        VStack {
+            Color.tabViewBackground
+                .clipShape(SemiCircleShape())
+                .frame(height: ConstantFrames.tabViewHeight)
         }
+        .padding(.bottom, 200)
+        
+        VStack {
+            Color.tabViewBackground
+                .clipShape(SemiCircleShapeCurved())
+                .frame(height: ConstantFrames.tabViewHeight)
+        }
+        .padding(.top, 200)
+        
     }
 }

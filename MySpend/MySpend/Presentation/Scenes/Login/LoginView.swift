@@ -8,29 +8,13 @@
 import SwiftUI
 import Firebase
 
-private enum Field: Hashable {
-    case email
-    case password
-}
-
 struct LoginView: View {
     
-    @State private var userEmail: String = ""
-    @State private var isUserEmailError: Bool = false
-    
-    @State private var userPassword: String = ""
-    @State private var isUserPasswordError: Bool = false
-    
-    @State private var errorMessage: String = ""
-    @State private var canSubmit: Bool = false
-    @State private var goToRegister: Bool = false
-    
-    @State private var isLoading: Bool = false
-    
-    @FocusState private var focusedField: Field?
-    
+    @StateObject var loginVM = LoginViewModel()
+    @FocusState private var focusedField: Login.Field?
+ 
     var body: some View {
-        FormScrollContainer {
+        FormContainer {
             
             // MARK: HEADER
             HeaderNavigator(subTitle: "Log in to your account", onlyTitle: true)
@@ -38,39 +22,46 @@ struct LoginView: View {
             
             
             // MARK: LOGIN
-            VStack(spacing: Views.formSpacing) {
+            VStack(spacing: ConstantViews.formSpacing) {
                 
-                TextFieldEmail(text: $userEmail,
-                               isError: $isUserEmailError,
-                               errorMessage: $errorMessage)
+                TextFieldEmail(text: $loginVM.login.email,
+                               errorMessage: $loginVM.login.errorMessage)
                 .focused($focusedField, equals: .email)
                 .submitLabel(.next)
                 .onSubmit { focusedField = .password }
                 
                 
-                TextFieldPassword(text: $userPassword,
-                                  isError: $isUserPasswordError,
-                                  errorMessage: $errorMessage,
+                TextFieldPassword(text: $loginVM.login.password,
+                                  errorMessage: $loginVM.login.errorMessage,
                                   iconLeading: Image.lockFill)
                 .padding(.bottom)
                 .textContentType(.password)
                 .focused($focusedField, equals: .password)
                 .submitLabel(.done)
-                .onSubmit { validateLogin() }
+                .onSubmit {
+                    focusedField = .none
+                    Task {
+                        await loginVM.validateLogin()
+                    }
+                }
                 
                 
                 Button("Login") {
-                    validateLogin()
+                    focusedField = .none
+                    Task {
+                        await loginVM.validateLogin()
+                    }
                 }
-                .buttonStyle(ButtonPrimaryStyle(isLoading: $isLoading))
+                .buttonStyle(ButtonPrimaryStyle(isLoading: $loginVM.login.isLoading))
                 .padding(.bottom)
-                .navigationDestination(isPresented: $canSubmit) {
-                    MainView(selectedTab: .resume)
-                        .toolbar(.hidden)
-                }
+                //TODO: No hace falta el navigation porque ya la vista RootView maneja esto al loguearse:
+//                .navigationDestination(isPresented: $loginVM.login.canSubmit) {
+//                    MainView(selectedTab: .resume)
+//                        .toolbar(.hidden)
+//                }
                 
                 
-                TextError(message: errorMessage)
+                TextError(message: loginVM.login.errorMessage)
             }
             .padding(.bottom)
             
@@ -85,12 +76,12 @@ struct LoginView: View {
                 .padding(.bottom)
                 
                 Button("Register") {
-                    goToRegister = true
+                    loginVM.login.navigateToRegisterView = true
                 }
                 .buttonStyle(ButtonPrimaryStyle(neverBgDisabled: true))
                 .padding(.bottom)
-                .padding(.horizontal, Views.paddingSmallButton)
-                .navigationDestination(isPresented: $goToRegister) {
+                .padding(.horizontal, ConstantViews.paddingSmallButton)
+                .navigationDestination(isPresented: $loginVM.login.navigateToRegisterView) {
                     RegisterView()
                         .toolbar(.hidden)
                 }
@@ -134,7 +125,7 @@ struct LoginView: View {
                 }
             }
         }
-        .disabled(isLoading)
+        .disabled(loginVM.login.isLoading)
         
         //Add the "Done" button at the Top of the keyboard.
 //        .toolbar {
@@ -145,42 +136,8 @@ struct LoginView: View {
 //            }
 //        }
     }
-    
-    private func validateLogin() {
-        
-        focusedField = .none
-        
-        //If Textfields are empty, bool error will be true.
-        isUserEmailError = userEmail.isEmptyOrWhitespace()
-        isUserPasswordError = userPassword.isEmptyOrWhitespace()
-        
-        if isUserEmailError || isUserPasswordError {
-            errorMessage = ErrorMessages.emptySpaces.localizedDescription
-            return
-        }
-        
-        login()
-    }
-    
-    private func login() {
-        isLoading = true
-        
-        SessionStore.singIn(userEmail, password: userPassword) { success, error in
-            defer {
-                isLoading = false
-            }
-            
-            if success {
-                canSubmit = true
-            } else {
-                errorMessage = error.localizedDescription
-            }
-        }
-    }
 }
 
-struct LoginView_Previews: PreviewProvider {
-    static var previews: some View {
-        LoginView()
-    }
+#Preview {
+    LoginView()
 }

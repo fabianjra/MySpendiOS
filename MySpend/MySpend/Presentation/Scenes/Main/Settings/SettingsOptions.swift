@@ -45,9 +45,9 @@ enum AccountOptions: String, CaseIterable, Identifiable {
     
     var showOption: Bool {
         switch self {
-        case .changeName: return Validations.showChangeName
-        case .changePassword: return Validations.showChangePassword
-        case .validateAccount: return Validations.showValidateAccount
+        case .changeName: return ConstantValidations.showChangeName
+        case .changePassword: return ConstantValidations.showChangePassword
+        case .validateAccount: return ConstantValidations.showValidateAccount
         }
     }
     
@@ -77,7 +77,7 @@ enum ContentOptions: String, CaseIterable, Identifiable {
     
     var showOption: Bool {
         switch self {
-        case .categories: return Validations.showCategories
+        case .categories: return ConstantValidations.showCategories
         }
     }
     

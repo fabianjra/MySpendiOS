@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Emojis {
+struct ConstantEmojis {
     static let greeting: String = "👋"
     static let fest: String = "🥳"
 }

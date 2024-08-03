@@ -77,36 +77,34 @@ struct ButtonPrimaryStyle: ButtonStyle {
         
         // MARK: EFFECTS
             .scaleEffect(configuration.isPressed ?
-                         Animations.buttonScalePressed : Animations.buttonOriginalPressed)
-            .animation(.easeOut(duration: Animations.buttonScaleDuration), value: configuration.isPressed)
+                         ConstantAnimations.buttonScalePressed : ConstantAnimations.buttonOriginalPressed)
+            .animation(.easeOut(duration: ConstantAnimations.buttonScaleDuration), value: configuration.isPressed)
     }
 }
 
-struct ButtonPrimaryStyle_Previews: PreviewProvider {
-    static var previews: some View {
-        VStack {
-            Button("Button Primary") {
-                print("button pressed")
-            }
-            .buttonStyle(ButtonPrimaryStyle(isLoading: .constant(true)))
-            //.environment(\.isEnabled, true))
-            //.disabled(userEmail.isEmpty || userPassword.isEmpty) //Way to use disabled
-            
-            
-            Button("Button Primary") {
-                print("button pressed")
-            }
-            .buttonStyle(ButtonPrimaryStyle(isLoading: .constant(false)))
-            
-            
-            Button("Button disabled") {
-                print("button pressed")
-            }
-            .buttonStyle(ButtonPrimaryStyle(isLoading: .constant(false)))
-            .disabled(true) //Correct way to disable the button
-            //.environment(\.isEnabled, false)
+#Preview {
+    VStack {
+        Button("Button Primary") {
+            print("button pressed")
         }
-        .padding()
-        .background(Color.background)
+        .buttonStyle(ButtonPrimaryStyle(isLoading: .constant(true)))
+        //.environment(\.isEnabled, true))
+        //.disabled(userEmail.isEmpty || userPassword.isEmpty) //Way to use disabled
+        
+        
+        Button("Button Primary") {
+            print("button pressed")
+        }
+        .buttonStyle(ButtonPrimaryStyle(isLoading: .constant(false)))
+        
+        
+        Button("Button disabled") {
+            print("button pressed")
+        }
+        .buttonStyle(ButtonPrimaryStyle(isLoading: .constant(false)))
+        .disabled(true) //Correct way to disable the button
+        //.environment(\.isEnabled, false)
     }
+    .padding()
+    .background(Color.background)
 }

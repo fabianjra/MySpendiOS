@@ -5,129 +5,94 @@
 //  Created by Fabian Rodriguez on 1/8/23.
 //
 
-import SwiftUI
 import Firebase
+import FirebaseFirestoreSwift
 
-class SessionStore {
+// Updated To use Firebase with Async/Await || Version 10.17.0
+struct SessionStore {
     
-    static func getCurrentUser() -> User? {
-        return Auth.auth().currentUser
+    static func singIn(_ email: String, password: String) async throws {
+        try await Auth.auth().signIn(withEmail: email, password: password)
     }
     
-    static func getUserName(completionHandler: (String, Error?) -> Void) {
-        if let user = getCurrentUser() {
-            completionHandler(user.displayName ?? "", nil)
+    static func singOut() throws {
+        try Auth.auth().signOut()
+    }
+    
+    static func getUserName() throws -> String {
+        if let user = UtilsStore.currentUser {
+            return user.displayName ?? ""
         } else {
-            completionHandler("", ErrorMessages.userNotLoggedIn)
+            throw ConstantMessages.userNotLoggedIn
         }
     }
     
-    static func updateUserName(newUserName: String, user: User? = getCurrentUser(), completionHandler: @escaping (User?, Error?) -> Void) {
-        if let user = user {
-            
-            let changeRequest = user.createProfileChangeRequest()
-            changeRequest.displayName = newUserName
-            
-            changeRequest.commitChanges { error in
-                
-                if let error = error {
-                    completionHandler(nil, error)
-                } else {
-                    if let updatedUser = Auth.auth().currentUser {
-                        completionHandler(updatedUser, nil)
-                    }
-                }
-            }
-        } else {
-            completionHandler(nil, ErrorMessages.userNotLoggedIn)
+    //TODO: Agregar funcion de Transaccion para que sea atomico (Se complete todo o no haga ninguna accion).
+    static func updatePassword(actualPassword: String, newPasword: String) async throws {
+        guard let user = UtilsStore.currentUser else {
+            throw ConstantMessages.userNotLoggedIn
         }
-    }
-    
-    static func updatePassword(actualPassword: String, newPasword: String,
-                               completionHandler: @escaping (_ success: Bool, _ error: Error) -> Void) {
-        if let user = getCurrentUser() {
-            
-            let userEmail = user.email ?? ""
-            
-            //EMAIL:
-            let credential = EmailAuthProvider.credential(withEmail: userEmail, password: actualPassword)
-            
-            //FACEBOOK:
-            //let credential = FacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.currentAccessToken().tokenString)
-            
-            //TWITTER:
-            //let credential = TwitterAuthProvider.credential(withToken: session.authToken, secret: session.authTokenSecret)
-            
-            //GOOGLE:
-            //let authentication = user.authentication
-            //let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken, accessToken: authentication.accessToken)
-            
-            
-            // Prompt the user to re-provide their sign-in credentials
-            user.reauthenticate(with: credential) { result, error in
-                
-                if let error = error {
-                    completionHandler(false, error)
-                } else {
-                    user.updatePassword(to: newPasword) { error in
-                        
-                        if let error = error {
-                            completionHandler(false, error)
-                            
-                        } else {
-                            completionHandler(true, ErrorMessages.empty)
-                        }
-                    }
-                }
-            }
-        } else {
-            completionHandler(false, ErrorMessages.userNotLoggedIn)
-        }
-    }
-    
-    static func sendEmailValidation(user: User? = getCurrentUser(),
-                                    completionHandler: @escaping (_ success: Bool, _ error: Error) -> Void) {
-        if let user = user {
-            user.sendEmailVerification { error in
-                if let error = error {
-                    completionHandler(false, error)
-                } else {
-                    completionHandler(true, ErrorMessages.empty)
-                }
-            }
-        } else {
-            completionHandler(false, ErrorMessages.userNotLoggedIn)
-        }
-    }
-    
-    static func registerUser(_ email: String, password: String,
-                             completionHandler: @escaping (_ success: Bool, _ user: User?, _ error: Error) -> Void) {
         
-        Auth.auth().createUser(withEmail: email, password: password) { userData, error in
-            if let error = error {
-                completionHandler(false, nil, error)
-            } else {
-                completionHandler(true, userData?.user, ErrorMessages.empty)
-            }
-        }
+        let userEmail = user.email ?? ""
+        
+        //EMAIL:
+        let credential = EmailAuthProvider.credential(withEmail: userEmail, password: actualPassword)
+        
+        //FACEBOOK:
+        //let credential = FacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.currentAccessToken().tokenString)
+        
+        //TWITTER:
+        //let credential = TwitterAuthProvider.credential(withToken: session.authToken, secret: session.authTokenSecret)
+        
+        //GOOGLE:
+        //let authentication = user.authentication
+        //let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken, accessToken: authentication.accessToken)
+        
+        
+        // Prompt the user to re-provide their sign-in credentials
+        try await user.reauthenticate(with: credential)
+        
+        try await user.updatePassword(to: newPasword)
     }
     
-    static func singIn(_ email: String, password: String, completionHandler: @escaping (_ success: Bool, _ error: Error) -> Void) {
-        Auth.auth().signIn(withEmail: email, password: password) { _, error in
-            if let error = error {
-                completionHandler(false, error)
-            } else {
-                completionHandler(true, ErrorMessages.empty)
-            }
+    //TODO: Agregar funcion de Transaccion para que sea atomico (Se complete todo o no haga ninguna accion).
+    static func registerUser(withEmail email: String, password: String, username: String) async throws {
+        
+        let user = try await Auth.auth().createUser(withEmail: email, password: password).user
+        
+        try await updateUser(newUserName: username, forUser: user)
+        
+        let userModel = UserModel(id: user.uid, fullname: user.displayName ?? "", email: user.email ?? "", transactions: [])
+        
+        try await storeUserDocument(forUser: userModel)
+        
+        //try await sendEmailRegisteredUser() //Commented: Will send only via: Validation User View.
+    }
+
+    static func updateUser(newUserName: String, forUser user: User? = UtilsStore.currentUser) async throws {
+        guard let user = UtilsStore.currentUser else {
+            throw ConstantMessages.userNotLoggedIn
         }
+        
+        let changeRequest = user.createProfileChangeRequest()
+        changeRequest.displayName = newUserName
+        
+        try await changeRequest.commitChanges()
     }
     
-    static func signOut(completionHandler: @escaping (_ success: Bool, _ error: Error) -> Void) {
-        do {
-            try Auth.auth().signOut()
-            completionHandler(true, ErrorMessages.empty)
-        } catch {
-            completionHandler(false, error)
+    private static func storeUserDocument(forUser user: UserModel) async throws {
+        
+        let encodedUser = try UtilsStore.encodeModelFB(user)
+        let createRequest = UtilsStore.userRef.document(user.id)
+        
+        try await createRequest.setData(encodedUser)
+    }
+    
+    static func sendEmailRegisteredUser() async throws {
+        guard let user = UtilsStore.currentUser else {
+            throw ConstantMessages.userNotLoggedIn
         }
+        
+        try await user.sendEmailVerification()
     }
 }

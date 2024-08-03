@@ -39,12 +39,10 @@ struct TextPlain: View {
     }
 }
 
-struct TextPlain_Previews: PreviewProvider {
-    static var previews: some View {
-        ZStack {
-            Color.background
-            
-            TextPlain(message: "Error while processing")
-        }
+#Preview {
+    ZStack {
+        Color.background
+        
+        TextPlain(message: "This is a plain message")
     }
 }
