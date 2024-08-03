@@ -42,6 +42,7 @@ struct NewTransactionView: View {
                     DatePicker("",
                                selection: $newTransactionVM.newTransaction.selectedDate,
                                displayedComponents: .date)
+                    .padding(.horizontal)
                     .datePickerStyle(.graphical)
                     .onChange(of: newTransactionVM.newTransaction.selectedDate, { oldValue, newValue in
                         newTransactionVM.newTransaction.dateString = Utils.dateToStringShort(date: newValue)
