@@ -9,7 +9,7 @@ import Foundation
 
 enum ConstantMessages: String, Error {
     case empty
-    case ok
+    case successful
     case generic
     case emptySpace
     case emptySpaces
@@ -27,7 +27,7 @@ extension ConstantMessages: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .empty: return NSLocalizedString("", comment: "")
-        case .ok: return NSLocalizedString("Transaction succesful", comment: "")
+        case .successful: return NSLocalizedString("Successful", comment: "")
         case .generic: return NSLocalizedString("Something wrong happened, try again.", comment: "")
         case .emptySpace: return NSLocalizedString("Fill the empty space.", comment: "")
         case .emptySpaces: return NSLocalizedString("Fill the empty spaces.", comment: "")
