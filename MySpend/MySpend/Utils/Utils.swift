@@ -138,6 +138,10 @@ struct Utils {
         return (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first(where: {$0.isKeyWindow})?.safeAreaInsets ?? .zero
     }
     
+    static func deviceHasNotch() -> Bool {
+        return getEdgeInsets().bottom != .zero
+    }
+    
     /**
      Convert a given date to string in short format: dd/MM/yyy. Ejem: 29/05/1990
      
