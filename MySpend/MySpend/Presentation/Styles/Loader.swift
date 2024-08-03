@@ -47,35 +47,32 @@ struct Loader: View {
 }
 
 
-struct Loader_Previews: PreviewProvider {
-    static var previews: some View {
-        
+#Preview {
+    VStack {
         @State var showLoader: Bool = true
         
-        VStack {
-            ZStack {
-                LinearGradient(colors: Color.primaryGradiant,
-                                           startPoint: .leading,
-                                           endPoint: .trailing)
-                .mask(Loader()
-                    .frame(width: 200, height: 200))
-              }
-            
-            
-            Button("Show loader") {
-                showLoader.toggle()
-            }
-            .buttonStyle(ButtonPrimaryStyle(isLoading: $showLoader))
-            
-
-            Loader()
-                .frame(width: 200, height: 200)
-                .foregroundColor(Color.textPrimaryForeground)
-
-            
-            ProgressView()
-                .tint(Color.textPrimaryForeground)
+        ZStack {
+            LinearGradient(colors: Color.primaryGradiant,
+                           startPoint: .leading,
+                           endPoint: .trailing)
+            .mask(Loader()
+                .frame(width: 200, height: 200))
         }
-        .background(Color.background)
+        
+        
+        Button("Show loader") {
+            showLoader.toggle()
+        }
+        .buttonStyle(ButtonPrimaryStyle(isLoading: $showLoader))
+        
+        
+        Loader()
+            .frame(width: 200, height: 200)
+            .foregroundColor(Color.textPrimaryForeground)
+        
+        
+        ProgressView()
+            .tint(Color.textPrimaryForeground)
     }
+    .background(Color.background)
 }

@@ -42,8 +42,6 @@ struct ButtonRounded: View {
     }
 }
 
-struct ButtonRounded_Previews: PreviewProvider {
-    static var previews: some View {
-        ButtonRounded(function: { print("hola") })
-    }
+#Preview {
+    ButtonRounded(function: { print("hola") })
 }

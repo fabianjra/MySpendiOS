@@ -39,10 +39,8 @@ struct ContentContainer<Content: View>: View {
     }
 }
 
-struct ContentContainer_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentContainer {
-            HeaderNavigator(subTitle: "Inside of container")
-        }
+#Preview {
+    ContentContainer {
+        HeaderNavigator(subTitle: "Inside of container")
     }
 }

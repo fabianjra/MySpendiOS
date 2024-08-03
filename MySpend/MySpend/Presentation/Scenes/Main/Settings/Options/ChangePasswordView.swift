@@ -34,7 +34,7 @@ struct ChangePasswordView: View {
     @FocusState private var focusedField: Field?
     
     var body: some View {
-        FormScrollContainer {
+        FormContainer {
             
             // MARK: HEADER
             HeaderNavigator(title: "Change password",

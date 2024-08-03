@@ -29,11 +29,9 @@ struct ListContainer<Content: View>: View {
     }
 }
 
-struct ListContainer_Previews: PreviewProvider {
-    static var previews: some View {
-        ListContainer {
-            Text("Inside list container")
-                .listRowBackground(Color.listRowBackground)
-        }
+#Preview {
+    ListContainer {
+        Text("Inside list container")
+            .listRowBackground(Color.listRowBackground)
     }
 }

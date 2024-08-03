@@ -20,12 +20,10 @@ struct TextError: View {
     }
 }
 
-struct TextError_Previews: PreviewProvider {
-    static var previews: some View {
-        ZStack {
-            Color.background
-            
-            TextError(message: "Error while processing")
-        }
+#Preview {
+    ZStack {
+        Color.background
+        
+        TextError(message: "Error while processing")
     }
 }

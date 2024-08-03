@@ -20,12 +20,9 @@ struct ButtonScaleStyle: ButtonStyle {
     }
 }
 
-struct ButtonScaleStyle_Previews: PreviewProvider {
-    static var previews: some View {
-        Button("Scale effect") {
-            print("button pressed")
-        }
-        .buttonStyle(ButtonScaleStyle())
+#Preview {
+    Button("Scale effect") {
+        print("button pressed")
     }
+    .buttonStyle(ButtonScaleStyle())
 }
-

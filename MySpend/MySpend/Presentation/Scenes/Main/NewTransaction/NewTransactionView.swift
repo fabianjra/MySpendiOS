@@ -15,7 +15,7 @@ struct NewTransactionView: View {
     @FocusState private var focusedField: NewTransaction.Field?
     
     var body: some View {
-        ContentContainer {
+        FormContainer(scrollable: true) {
             
             HeaderNavigator(title: "New transaction",
                             titleWeight: .regular,
@@ -99,8 +99,14 @@ struct NewTransactionView: View {
             .onSubmit {
                 Task {
                     focusedField = .none
-                    await newTransactionVM.addNewTransaction()
-                    dismiss()
+                    let result = await newTransactionVM.addNewTransaction()
+                    
+                    if result.status.isSuccess {
+                        dismiss()
+                    } else {
+                        newTransactionVM.newTransaction.errorMessage = result.message
+                    }
+                    
                 }
             }
             
@@ -108,8 +114,13 @@ struct NewTransactionView: View {
             Button("Accept") {
                 Task {
                     focusedField = .none
-                    await newTransactionVM.addNewTransaction()
-                    dismiss()
+                    let result = await newTransactionVM.addNewTransaction()
+                    
+                    if result.status.isSuccess {
+                        dismiss()
+                    } else {
+                        newTransactionVM.newTransaction.errorMessage = result.message
+                    }
                 }
             }
             .buttonStyle(ButtonPrimaryStyle(isLoading: $newTransactionVM.newTransaction.isLoading))

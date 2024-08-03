@@ -15,12 +15,10 @@ struct DividerView: View {
     }
 }
 
-struct DividerView_Previews: PreviewProvider {
-    static var previews: some View {
-        ZStack {
-            Color.background
-            
-            DividerView()
-        }
+#Preview {
+    ZStack {
+        Color.background
+        
+        DividerView()
     }
 }

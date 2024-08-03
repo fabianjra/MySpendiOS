@@ -77,22 +77,20 @@ struct HeaderNavigator: View {
     }
 }
 
-struct HeaderNavigator_Previews: PreviewProvider {
-    static var previews: some View {
-        VStack {
-            HeaderNavigator(title: "Title",
-                            titleWeight: .thin,
-                            titleSize: .bigXXL,
-                            subTitle: "Subtitle",
-                            subTitleWeight: .light,
-                            subTitleSize: .body)
-            
-            DividerView()
-            
-            HeaderNavigator(title: "Only title",
-                            subTitle: "Only Subtitle",
-                            onlyTitle: true)
-        }
-        .background(Color.background)
+#Preview {
+    VStack {
+        HeaderNavigator(title: "Title",
+                        titleWeight: .thin,
+                        titleSize: .bigXXL,
+                        subTitle: "Subtitle",
+                        subTitleWeight: .light,
+                        subTitleSize: .body)
+        
+        DividerView()
+        
+        HeaderNavigator(title: "Only title",
+                        subTitle: "Only Subtitle",
+                        onlyTitle: true)
     }
+    .background(Color.background)
 }

@@ -108,7 +108,8 @@ struct ResumeView: View {
     private func getTransactions() async {
         
         do {
-            //transactions = try await DatabaseStore.getTransactions() //TODO: Descomentar para pruebas.
+            //TODO: Descomentar para pruebas:
+            //transactions = try await DatabaseStore.getTransactions()
             
             for item in transactions {
                 totalBalance += item.amount ?? 0

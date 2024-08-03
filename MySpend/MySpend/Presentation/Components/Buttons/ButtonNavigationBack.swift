@@ -24,13 +24,11 @@ struct ButtonNavigationBack: View {
     }
 }
 
-struct ButtonNavigationBack_Previews: PreviewProvider {
-    static var previews: some View {
-        VStack {
-            ButtonNavigationBack { print("pressed") }
-            //.padding(.leading, -((saveSize.width / 2) - 20)) //If need to use ZStack.
-        }
-        .padding()
-        .background(Color.background)
+#Preview {
+    VStack {
+        ButtonNavigationBack { print("pressed") }
+        //.padding(.leading, -((saveSize.width / 2) - 20)) //If need to use ZStack.
     }
+    .padding()
+    .background(Color.background)
 }

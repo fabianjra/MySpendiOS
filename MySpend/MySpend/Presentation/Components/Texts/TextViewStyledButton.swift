@@ -27,8 +27,6 @@ struct TextViewStyledButton: View {
     }
 }
 
-struct TextViewStyledButton_Previews: PreviewProvider {
-    static var previews: some View {
-        TextViewStyledButton(text: "Button style")
-    }
+#Preview {
+    TextViewStyledButton(text: "Button style")
 }

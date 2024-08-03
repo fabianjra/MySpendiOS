@@ -14,7 +14,7 @@ struct LoginView: View {
     @FocusState private var focusedField: Login.Field?
  
     var body: some View {
-        FormScrollContainer {
+        FormContainer {
             
             // MARK: HEADER
             HeaderNavigator(subTitle: "Log in to your account", onlyTitle: true)

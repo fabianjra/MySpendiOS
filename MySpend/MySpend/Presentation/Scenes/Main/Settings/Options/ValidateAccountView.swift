@@ -20,7 +20,7 @@ struct ValidateAccountView: View {
     @State private var isLoading: Bool = false
     
     var body: some View {
-        FormScrollContainer {
+        FormContainer {
             
             // MARK: HEADER
             HeaderNavigator(title: "Validate account",

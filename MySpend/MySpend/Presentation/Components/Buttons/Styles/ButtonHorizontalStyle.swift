@@ -79,21 +79,19 @@ struct ButtonHorizontalStyle: ButtonStyle {
     
 }
 
-struct ButtonHorizontalStyle_Previews: PreviewProvider {
-    static var previews: some View {
-        VStack {
-            Button("History") {
-                print("button pressed")
-            }
-            .buttonStyle(ButtonHorizontalStyle(subTitle: "Enter the history", iconLeading: Image.stackFill))
-            //.disabled(true)
-            
-            Button("Button without icon") {
-                print("button pressed")
-            }
-            .buttonStyle(ButtonHorizontalStyle(subTitle: "subtitle for button"))
+#Preview {
+    VStack {
+        Button("History") {
+            print("button pressed")
         }
-        .padding()
-        .background(Color.background)
+        .buttonStyle(ButtonHorizontalStyle(subTitle: "Enter the history", iconLeading: Image.stackFill))
+        //.disabled(true)
+        
+        Button("Button without icon") {
+            print("button pressed")
+        }
+        .buttonStyle(ButtonHorizontalStyle(subTitle: "subtitle for button"))
     }
+    .padding()
+    .background(Color.background)
 }

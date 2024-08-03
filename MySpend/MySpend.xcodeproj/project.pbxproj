@@ -28,7 +28,7 @@
 		1F3A953F2C5D6F82008AAE50 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3A953E2C5D6F82008AAE50 /* Login.swift */; };
 		1F3A95412C5D74CC008AAE50 /* DatabaseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3A95402C5D74CC008AAE50 /* DatabaseStore.swift */; };
 		1F46B4122A79885D003A9550 /* ConstantValidations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F46B4112A79885D003A9550 /* ConstantValidations.swift */; };
-		1F46B4142A79976F003A9550 /* FormScrollContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F46B4132A79976F003A9550 /* FormScrollContainer.swift */; };
+		1F46B4142A79976F003A9550 /* FormContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F46B4132A79976F003A9550 /* FormContainer.swift */; };
 		1F46B4172A799CFD003A9550 /* ResumeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F46B4162A799CFD003A9550 /* ResumeView.swift */; };
 		1F46B4192A79A267003A9550 /* ContentContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F46B4182A79A267003A9550 /* ContentContainer.swift */; };
 		1F46B41F2A79D9BB003A9550 /* PRUEBAS_SessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F46B41E2A79D9BB003A9550 /* PRUEBAS_SessionStore.swift */; };
@@ -59,7 +59,6 @@
 		1F7437B42A668BCD0039EFD4 /* Gestures+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7437B32A668BCD0039EFD4 /* Gestures+Extensions.swift */; };
 		1F7486B72A68C4250063AC35 /* TextError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7486B62A68C4250063AC35 /* TextError.swift */; };
 		1F7486BB2A68D4A30063AC35 /* Fonts+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7486BA2A68D4A30063AC35 /* Fonts+Extensions.swift */; };
-		1F7486BF2A68ECD90063AC35 /* FormContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7486BE2A68ECD90063AC35 /* FormContainer.swift */; };
 		1F7486C32A6A3F770063AC35 /* ButtonRounded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7486C22A6A3F770063AC35 /* ButtonRounded.swift */; };
 		1F7486C72A6A57310063AC35 /* TabViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7486C62A6A57310063AC35 /* TabViewContainer.swift */; };
 		1F7486C92A6A5DC90063AC35 /* ButtonScaleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7486C82A6A5DC90063AC35 /* ButtonScaleStyle.swift */; };
@@ -138,7 +137,7 @@
 		1F3A953E2C5D6F82008AAE50 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		1F3A95402C5D74CC008AAE50 /* DatabaseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseStore.swift; sourceTree = "<group>"; };
 		1F46B4112A79885D003A9550 /* ConstantValidations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantValidations.swift; sourceTree = "<group>"; };
-		1F46B4132A79976F003A9550 /* FormScrollContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormScrollContainer.swift; sourceTree = "<group>"; };
+		1F46B4132A79976F003A9550 /* FormContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormContainer.swift; sourceTree = "<group>"; };
 		1F46B4162A799CFD003A9550 /* ResumeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeView.swift; sourceTree = "<group>"; };
 		1F46B4182A79A267003A9550 /* ContentContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentContainer.swift; sourceTree = "<group>"; };
 		1F46B41E2A79D9BB003A9550 /* PRUEBAS_SessionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PRUEBAS_SessionStore.swift; sourceTree = "<group>"; };
@@ -172,7 +171,6 @@
 		1F7437B32A668BCD0039EFD4 /* Gestures+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Gestures+Extensions.swift"; sourceTree = "<group>"; };
 		1F7486B62A68C4250063AC35 /* TextError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextError.swift; sourceTree = "<group>"; };
 		1F7486BA2A68D4A30063AC35 /* Fonts+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Fonts+Extensions.swift"; sourceTree = "<group>"; };
-		1F7486BE2A68ECD90063AC35 /* FormContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormContainer.swift; sourceTree = "<group>"; };
 		1F7486C22A6A3F770063AC35 /* ButtonRounded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonRounded.swift; sourceTree = "<group>"; };
 		1F7486C62A6A57310063AC35 /* TabViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewContainer.swift; sourceTree = "<group>"; };
 		1F7486C82A6A5DC90063AC35 /* ButtonScaleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonScaleStyle.swift; sourceTree = "<group>"; };
@@ -419,8 +417,7 @@
 			isa = PBXGroup;
 			children = (
 				1F46B4182A79A267003A9550 /* ContentContainer.swift */,
-				1F7486BE2A68ECD90063AC35 /* FormContainer.swift */,
-				1F46B4132A79976F003A9550 /* FormScrollContainer.swift */,
+				1F46B4132A79976F003A9550 /* FormContainer.swift */,
 				1F7486C62A6A57310063AC35 /* TabViewContainer.swift */,
 				1F64B0A02A70AA94004AC825 /* ListContainer.swift */,
 				1F64B0A52A70B828004AC825 /* SectionContainer.swift */,
@@ -829,7 +826,6 @@
 				1FFD5FA32A8B35A300A53050 /* ButtonHorizontalStyle.swift in Sources */,
 				1F46B4192A79A267003A9550 /* ContentContainer.swift in Sources */,
 				1FC94CBC2A5A1DB7005CA0B6 /* TextViewStyledButton.swift in Sources */,
-				1F7486BF2A68ECD90063AC35 /* FormContainer.swift in Sources */,
 				1FD2E9852C5329F800E68602 /* CategoryModel.swift in Sources */,
 				1F171F292A7CC90D00A0A33E /* ConstantEmojis.swift in Sources */,
 				1FC94CD12A5A6E01005CA0B6 /* TabViewIcons.swift in Sources */,
@@ -852,7 +848,7 @@
 				1F9462EB2A7B4D8200F5CBFB /* HeaderNavigator.swift in Sources */,
 				1F06414D2A7232D300C19084 /* RootView.swift in Sources */,
 				1F7486C32A6A3F770063AC35 /* ButtonRounded.swift in Sources */,
-				1F46B4142A79976F003A9550 /* FormScrollContainer.swift in Sources */,
+				1F46B4142A79976F003A9550 /* FormContainer.swift in Sources */,
 				1FFA5D5A2A8B57CC00AC0519 /* NewTransactionView.swift in Sources */,
 				1F5CC57E2A664EFB00C214FE /* TextFieldEmail.swift in Sources */,
 				1F7486C92A6A5DC90063AC35 /* ButtonScaleStyle.swift in Sources */,

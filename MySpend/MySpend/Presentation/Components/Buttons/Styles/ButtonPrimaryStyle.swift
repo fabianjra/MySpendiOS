@@ -82,31 +82,29 @@ struct ButtonPrimaryStyle: ButtonStyle {
     }
 }
 
-struct ButtonPrimaryStyle_Previews: PreviewProvider {
-    static var previews: some View {
-        VStack {
-            Button("Button Primary") {
-                print("button pressed")
-            }
-            .buttonStyle(ButtonPrimaryStyle(isLoading: .constant(true)))
-            //.environment(\.isEnabled, true))
-            //.disabled(userEmail.isEmpty || userPassword.isEmpty) //Way to use disabled
-            
-            
-            Button("Button Primary") {
-                print("button pressed")
-            }
-            .buttonStyle(ButtonPrimaryStyle(isLoading: .constant(false)))
-            
-            
-            Button("Button disabled") {
-                print("button pressed")
-            }
-            .buttonStyle(ButtonPrimaryStyle(isLoading: .constant(false)))
-            .disabled(true) //Correct way to disable the button
-            //.environment(\.isEnabled, false)
+#Preview {
+    VStack {
+        Button("Button Primary") {
+            print("button pressed")
         }
-        .padding()
-        .background(Color.background)
+        .buttonStyle(ButtonPrimaryStyle(isLoading: .constant(true)))
+        //.environment(\.isEnabled, true))
+        //.disabled(userEmail.isEmpty || userPassword.isEmpty) //Way to use disabled
+        
+        
+        Button("Button Primary") {
+            print("button pressed")
+        }
+        .buttonStyle(ButtonPrimaryStyle(isLoading: .constant(false)))
+        
+        
+        Button("Button disabled") {
+            print("button pressed")
+        }
+        .buttonStyle(ButtonPrimaryStyle(isLoading: .constant(false)))
+        .disabled(true) //Correct way to disable the button
+        //.environment(\.isEnabled, false)
     }
+    .padding()
+    .background(Color.background)
 }

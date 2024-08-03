@@ -42,13 +42,10 @@ struct TabViewContainer<Content: View>: View {
     }
 }
 
-struct TabViewContainer_Previews: PreviewProvider {
-    static var previews: some View {
-        TabViewContainer {
-            print("Button add pressed")
-        } content: {
-            
-        }
-
+#Preview {
+    TabViewContainer {
+        print("Button add pressed")
+    } content: {
+        
     }
 }

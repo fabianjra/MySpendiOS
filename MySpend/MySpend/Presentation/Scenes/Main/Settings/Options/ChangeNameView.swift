@@ -22,7 +22,7 @@ struct ChangeNameView: View {
     @State private var isLoading: Bool = false
     
     var body: some View {
-        FormScrollContainer {
+        FormContainer {
             
             // MARK: HEADER
             HeaderNavigator(title: "Change name",
