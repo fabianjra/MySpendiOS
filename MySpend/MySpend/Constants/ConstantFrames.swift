@@ -13,6 +13,7 @@ struct ConstantFrames {
     static let screenSize = UIScreen.main.bounds.size
     static let tabViewIcon: CGFloat = 20.0
     static let tabViewHeight: CGFloat = 75.0
+    static let calendarHeight: CGFloat = 450.0
     
     // MARK: IMAGES
     static let emojiSize: CGFloat = 50.0

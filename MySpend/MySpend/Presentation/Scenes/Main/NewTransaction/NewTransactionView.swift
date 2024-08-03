@@ -37,8 +37,8 @@ struct NewTransactionView: View {
                 newTransactionVM.newTransaction.showDatePicker = true
             }
             .sheet(isPresented: $newTransactionVM.newTransaction.showDatePicker) {
-                NavigationStack {
-                    
+                NavigationView {
+
                     DatePicker("",
                                selection: $newTransactionVM.newTransaction.selectedDate,
                                displayedComponents: .date)
@@ -62,7 +62,7 @@ struct NewTransactionView: View {
                         }
                     }
                 }
-                .presentationDetents([.medium])
+                .presentationDetents([.height(ConstantFrames.calendarHeight)])
             }
             .onAppear {
                 newTransactionVM.newTransaction.dateString = Utils.dateToStringShort(date: newTransactionVM.newTransaction.selectedDate)
