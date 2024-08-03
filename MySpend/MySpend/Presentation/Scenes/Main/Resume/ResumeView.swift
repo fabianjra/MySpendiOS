@@ -121,33 +121,32 @@ struct ResumeView: View {
     }
 }
 
-struct ResumeView_Previews: PreviewProvider {
-    static var previews: some View {
-        
+#Preview {
+    VStack {
         let category1 = CategoryModel(description: "Gasolina")
         let category2 = CategoryModel(description: "Comida")
         let category3 = CategoryModel(description: "Turismo")
         
         let transaction1 = TransactionModel(amount: 56000,
-                                           date: "25/05/1990",
-                                           category: category1,
-                                           detail: "Nota",
-                                           type: .expense)
+                                            date: "25/05/1990",
+                                            category: category1,
+                                            detail: "Nota",
+                                            type: .expense)
         let transaction2 = TransactionModel(amount: 3000,
-                                           date: "25/05/2024",
-                                           category: category2,
-                                           detail: "Nota",
-                                           type: .expense)
+                                            date: "25/05/2024",
+                                            category: category2,
+                                            detail: "Nota",
+                                            type: .expense)
         let transaction3 = TransactionModel(amount: 100,
-                                           date: "01/12/2003",
-                                           category: category1,
-                                           detail: "Nota",
-                                           type: .expense)
+                                            date: "01/12/2003",
+                                            category: category1,
+                                            detail: "Nota",
+                                            type: .expense)
         let transaction4 = TransactionModel(amount: 270000,
-                                           date: "01/05/2023",
-                                           category: category3,
-                                           detail: "Nota",
-                                           type: .expense)
+                                            date: "01/05/2023",
+                                            category: category3,
+                                            detail: "Nota",
+                                            type: .expense)
         
         let transactionArray = [transaction1, transaction2, transaction3, transaction4]
         
