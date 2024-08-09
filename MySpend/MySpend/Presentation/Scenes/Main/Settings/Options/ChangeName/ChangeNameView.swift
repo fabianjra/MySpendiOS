@@ -10,7 +10,7 @@ import Firebase
 
 struct ChangeNameView: View {
     
-    @StateObject var changeNameVM = ChangeNameViewModel()
+    @StateObject private var changeNameVM = ChangeNameViewModel()
     
     var body: some View {
         FormContainer {
@@ -27,13 +27,13 @@ struct ChangeNameView: View {
             // MARK: FIELDS
             VStack(spacing: ConstantViews.formSpacing) {
                 
-                TextFieldReadOnly(text: $changeNameVM.changeName.userName, iconLeading: Image.personFill)
+                TextFieldReadOnly(text: $changeNameVM.model.userName, iconLeading: Image.personFill)
                 
                 
                 TextFieldName(placeHolder: "New name",
-                              text: $changeNameVM.changeName.newUserName,
+                              text: $changeNameVM.model.newUserName,
                               iconLeading: Image.checkmark,
-                              errorMessage: $changeNameVM.changeName.errorMessage)
+                              errorMessage: $changeNameVM.model.errorMessage)
                 .padding(.bottom)
                 .submitLabel(.done)
                 .onSubmit {
@@ -50,10 +50,10 @@ struct ChangeNameView: View {
                 }
                 .buttonStyle(ButtonPrimaryStyle(isLoading: $changeNameVM.isLoading))
                 .padding(.bottom)
-                .disabled(changeNameVM.changeName.buttonDisabled)
+                .disabled(changeNameVM.model.disabled)
                 
                 
-                TextError(message: changeNameVM.changeName.errorMessage)
+                TextError(message: changeNameVM.model.errorMessage)
             }
         }
         .disabled(changeNameVM.isLoading)

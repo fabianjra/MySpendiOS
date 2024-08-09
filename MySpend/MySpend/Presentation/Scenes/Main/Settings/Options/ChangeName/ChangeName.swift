@@ -12,5 +12,5 @@ struct ChangeName {
     var newUserName: String = ""
     
     var errorMessage: String = ""
-    var buttonDisabled: Bool = false
+    var disabled: Bool = false
 }

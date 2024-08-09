@@ -27,6 +27,8 @@
 		1F222F432C65A72C0017A1BE /* ChangeName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F222F422C65A72C0017A1BE /* ChangeName.swift */; };
 		1F222F452C65A7370017A1BE /* ChangeNameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F222F442C65A7370017A1BE /* ChangeNameViewModel.swift */; };
 		1F222F4D2C65C1AD0017A1BE /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F222F4C2C65C1AD0017A1BE /* BaseViewModel.swift */; };
+		1F222F502C65C6B00017A1BE /* ChangePassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F222F4F2C65C6B00017A1BE /* ChangePassword.swift */; };
+		1F222F522C65C6BD0017A1BE /* ChangePasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F222F512C65C6BD0017A1BE /* ChangePasswordViewModel.swift */; };
 		1F3A953D2C5D68D4008AAE50 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3A953C2C5D68D4008AAE50 /* LoginViewModel.swift */; };
 		1F3A953F2C5D6F82008AAE50 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3A953E2C5D6F82008AAE50 /* Login.swift */; };
 		1F3A95412C5D74CC008AAE50 /* DatabaseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3A95402C5D74CC008AAE50 /* DatabaseStore.swift */; };
@@ -139,6 +141,8 @@
 		1F222F422C65A72C0017A1BE /* ChangeName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeName.swift; sourceTree = "<group>"; };
 		1F222F442C65A7370017A1BE /* ChangeNameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeNameViewModel.swift; sourceTree = "<group>"; };
 		1F222F4C2C65C1AD0017A1BE /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
+		1F222F4F2C65C6B00017A1BE /* ChangePassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePassword.swift; sourceTree = "<group>"; };
+		1F222F512C65C6BD0017A1BE /* ChangePasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewModel.swift; sourceTree = "<group>"; };
 		1F3A953C2C5D68D4008AAE50 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		1F3A953E2C5D6F82008AAE50 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		1F3A95402C5D74CC008AAE50 /* DatabaseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseStore.swift; sourceTree = "<group>"; };
@@ -317,6 +321,16 @@
 			path = ChangeName;
 			sourceTree = "<group>";
 		};
+		1F222F4E2C65C6A00017A1BE /* ChangePassword */ = {
+			isa = PBXGroup;
+			children = (
+				1F0641452A72234900C19084 /* ChangePasswordView.swift */,
+				1F222F512C65C6BD0017A1BE /* ChangePasswordViewModel.swift */,
+				1F222F4F2C65C6B00017A1BE /* ChangePassword.swift */,
+			);
+			path = ChangePassword;
+			sourceTree = "<group>";
+		};
 		1F46B4152A799CE6003A9550 /* Resume */ = {
 			isa = PBXGroup;
 			children = (
@@ -424,7 +438,7 @@
 			isa = PBXGroup;
 			children = (
 				1F222F412C65A71C0017A1BE /* ChangeName */,
-				1F0641452A72234900C19084 /* ChangePasswordView.swift */,
+				1F222F4E2C65C6A00017A1BE /* ChangePassword */,
 				1F0641472A72280500C19084 /* ValidateAccountView.swift */,
 			);
 			path = Options;
@@ -846,6 +860,7 @@
 				1FFD5FA32A8B35A300A53050 /* ButtonHorizontalStyle.swift in Sources */,
 				1F46B4192A79A267003A9550 /* ContentContainer.swift in Sources */,
 				1FC94CBC2A5A1DB7005CA0B6 /* TextViewStyledButton.swift in Sources */,
+				1F222F502C65C6B00017A1BE /* ChangePassword.swift in Sources */,
 				1FD2E9852C5329F800E68602 /* CategoryModel.swift in Sources */,
 				1F171F292A7CC90D00A0A33E /* ConstantEmojis.swift in Sources */,
 				1FC94CD12A5A6E01005CA0B6 /* TabViewIcons.swift in Sources */,
@@ -859,6 +874,7 @@
 				1F4C9B592C5C78DD00C403B3 /* Double+Extensions.swift in Sources */,
 				1F5CC5802A6653AF00C214FE /* TextFieldPassword.swift in Sources */,
 				1F1408222A59254F00181500 /* RegisterView.swift in Sources */,
+				1F222F522C65C6BD0017A1BE /* ChangePasswordViewModel.swift in Sources */,
 				1F64B09D2A7089C5004AC825 /* SettingsOptions.swift in Sources */,
 				1FB8BB9D2A5BC728002DED1F /* ConstantColors.swift in Sources */,
 				1F7437B42A668BCD0039EFD4 /* Gestures+Extensions.swift in Sources */,

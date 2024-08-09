@@ -9,32 +9,32 @@ import Foundation
 
 class ChangeNameViewModel: BaseViewModel {
 
-    @Published var changeName = ChangeName()
+    @Published var model = ChangeName()
     
     func changeUserName() async {
-        await performWithLoading {
-            
-            if self.changeName.newUserName.isEmptyOrWhitespace() {
-                self.changeName.errorMessage = ConstantMessages.emptySpace.localizedDescription
-                return
-            }
-            
+        
+        if model.newUserName.isEmptyOrWhitespace() {
+            model.errorMessage = ConstantMessages.emptySpace.localizedDescription
+            return
+        }
+        
+        await performWithLoader {
             do {
-                try await SessionStore.updateUser(newUserName: self.changeName.newUserName)
+                try await SessionStore.updateUser(newUserName: self.model.newUserName)
                 
-                self.changeName.errorMessage = "NAME CHANGED TO: \(UtilsStore.getCurrentUser()?.displayName ?? "")"
+                self.model.errorMessage = "NAME CHANGED TO: \(UtilsStore.getCurrentUser()?.displayName ?? "")"
             } catch {
-                self.changeName.errorMessage = error.localizedDescription
+                self.model.errorMessage = error.localizedDescription
             }
         }
     }
     
     func onAppear() {
         do {
-            changeName.userName = try SessionStore.getUserName()
+            model.userName = try SessionStore.getUserName()
         } catch {
-            changeName.buttonDisabled = true
-            changeName.errorMessage = error.localizedDescription
+            model.disabled = true
+            model.errorMessage = error.localizedDescription
         }
     }
 }
