@@ -10,11 +10,14 @@ import Firebase
 
 struct ResumeView: View {
     
-    @State var userName: String = ""
-    @State var transactions: [TransactionModel] = []
-    @State var totalBalance: Double = 0
+    @StateObject private var resumeVM: ResumeViewModel
     
-    @State private var errorMessage: String = ""
+    init(model: Resume = Resume()) {
+        // SwiftUI ensures that the following initialization uses the
+        // closure only once during the lifetime of the view, so
+        // later changes to the view's name input have no effect.
+        _resumeVM = StateObject(wrappedValue: ResumeViewModel(model: model))
+    }
     
     var body: some View {
         ContentContainer {
@@ -22,7 +25,7 @@ struct ResumeView: View {
             // MARK: HEADER
             HStack {
                 VStack(alignment: .leading) {
-                    Text("Hello \(userName) \(ConstantEmojis.greeting)")
+                    Text("Hello \(resumeVM.model.userName) \(ConstantEmojis.greeting)")
                         .font(.montserrat(.semibold, size: .big))
                         .lineLimit(ConstantViews.messageMaxLines)
                     
@@ -45,12 +48,12 @@ struct ResumeView: View {
                                                    iconLeading: Image.stackFill))
             }
 
-            TextError(message: errorMessage)
+            TextError(message: resumeVM.model.errorMessage)
             
             // MARK: RESUME
             VStack {
                 ScrollView(showsIndicators: false) {
-                    ForEach(transactions) { item in
+                    ForEach(resumeVM.model.transactions) { item in
                         HStack {
                             TextPlain(message: "\(item.category?.description ?? "")")
                             
@@ -67,9 +70,12 @@ struct ResumeView: View {
                     .background(.blue)
                 
                 HStack {
-                    TextPlain(message: "Balance", size: .big)
+                    TextPlain(message: "Balance", 
+                              size: .big)
                     Spacer()
-                    TextPlain(message: "$ \(totalBalance.roundedToTwoDecimalsString())", size: .big)
+                    
+                    TextPlain(message: "$ \(resumeVM.model.totalBalance.roundedToTwoDecimalsString())",
+                              size: .big)
                 }
             }
             .padding(.bottom, ConstantViews.paddingBottomResumeview)
@@ -77,51 +83,14 @@ struct ResumeView: View {
         }
         .onAppear {
             
-            if let user = UtilsStore.getCurrentUser() {
-                
-                // The user's ID, unique to the Firebase project.
-                // Do NOT use this value to authenticate with your backend server,
-                // if you have one. Use getTokenWithCompletion:completion: instead.
-                
-                let _: String = user.providerID
-                let _: String = user.uid
-                let displayName: String? = user.displayName
-                let _: URL? = user.photoURL
-                let _: String? = user.email
-                
-                var multiFactorString = "MultiFactor: "
-                for info in user.multiFactor.enrolledFactors {
-                  multiFactorString += info.displayName ?? "[DispayName]"
-                  multiFactorString += " "
-                }
-                
-                userName = displayName ?? ""
-                
-                Task {
-                     await getTransactions()
-                }
-                
+            Task {
+                await resumeVM.onAppear()
             }
-        }
-    }
-    
-    private func getTransactions() async {
-        
-        do {
-            //TODO: Descomentar para pruebas:
-            //transactions = try await DatabaseStore.getTransactions()
-            
-            for item in transactions {
-                totalBalance += item.amount ?? 0
-            }
-            
-        } catch {
-            errorMessage = error.localizedDescription
         }
     }
 }
 
-#Preview {
+#Preview("With Content") {
     VStack {
         let category1 = CategoryModel(description: "Gasolina")
         let category2 = CategoryModel(description: "Comida")
@@ -150,7 +119,16 @@ struct ResumeView: View {
         
         let transactionArray = [transaction1, transaction2, transaction3, transaction4]
         
-        ResumeView(userName: "Vista previa",
-                   transactions: transactionArray)
+        let resume = Resume(userName: "vista previa",
+                            transactions: transactionArray,
+                            totalBalance: 0.0,
+                            errorMessage: "")
+        ResumeView(model: resume)
+            .environment(\.locale, .init(identifier: "es"))
     }
+}
+
+#Preview("No content") {
+    ResumeView()
+        .environment(\.locale, .init(identifier: "en"))
 }
