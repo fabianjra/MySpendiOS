@@ -9,12 +9,12 @@ import Foundation
 
 class ResumeViewModel: BaseViewModel {
     
-    @Published var model: Resume
+    @Published var model = Resume()
     
     init(model: Resume = Resume()) {
         self.model = model
     }
-    
+
     func onAppear() async {
         if let user = UtilsStore.getCurrentUser() {
             
@@ -46,11 +46,13 @@ class ResumeViewModel: BaseViewModel {
         //#if DEBUG || TARGET_OS_SIMULATOR
         #if targetEnvironment(simulator)
             //No cargar datos cuando se esta corriendo en simulador.
+            model.transactions = try await DatabaseStore.getTransactions()
         #else
             //Otra accion en caso de que no sea DEBUG o Simulator.
             model.transactions = try await DatabaseStore.getTransactions()
         #endif
             
+            model.totalBalance = 0
             for item in model.transactions {
                 model.totalBalance += item.amount ?? 0
             }

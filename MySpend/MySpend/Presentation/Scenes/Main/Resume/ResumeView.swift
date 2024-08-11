@@ -10,14 +10,16 @@ import Firebase
 
 struct ResumeView: View {
     
-    @StateObject private var resumeVM: ResumeViewModel
+    @EnvironmentObject private var resumeVM: ResumeViewModel
     
-    init(model: Resume = Resume()) {
-        // SwiftUI ensures that the following initialization uses the
-        // closure only once during the lifetime of the view, so
-        // later changes to the view's name input have no effect.
-        _resumeVM = StateObject(wrappedValue: ResumeViewModel(model: model))
-    }
+//    init(model: Resume = Resume()) {
+//        /*
+//         * SwiftUI ensures that the following initialization uses the
+//         * closure only once during the lifetime of the view, so
+//         * later changes to the view's name input have no effect.
+//         */
+//        _resumeVM = StateObject(wrappedValue: ResumeViewModel(model: model))
+//    }
     
     var body: some View {
         ContentContainer {
@@ -123,12 +125,15 @@ struct ResumeView: View {
                             transactions: transactionArray,
                             totalBalance: 0.0,
                             errorMessage: "")
-        ResumeView(model: resume)
+        
+        ResumeView()
             .environment(\.locale, .init(identifier: "es"))
+            .environmentObject(ResumeViewModel(model: resume))
     }
 }
 
 #Preview("No content") {
     ResumeView()
         .environment(\.locale, .init(identifier: "en"))
+        .environmentObject(ResumeViewModel())
 }

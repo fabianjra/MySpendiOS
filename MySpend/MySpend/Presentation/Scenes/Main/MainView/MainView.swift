@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MainView: View {
     
+    @StateObject private var resumeVM = ResumeViewModel()
     @State private var selectedTab: TabViewIcons
     
     @State private var showNewItemModal = false
@@ -23,7 +24,8 @@ struct MainView: View {
             TabView(selection: $selectedTab) {
                 
                 selectedTab.view
-                //.tag(selectedTab)
+                    .tag(selectedTab.id)
+                    .environmentObject(resumeVM)
             }
             
             tabView
