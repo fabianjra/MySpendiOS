@@ -10,7 +10,7 @@ import Firebase
 
 struct ResumeView: View {
     
-    @EnvironmentObject private var resumeVM: ResumeViewModel
+    @ObservedObject var resumeVM: ResumeViewModel
     
 //    init(model: Resume = Resume()) {
 //        /*
@@ -126,14 +126,14 @@ struct ResumeView: View {
                             totalBalance: 0.0,
                             errorMessage: "")
         
-        ResumeView()
+        let resumeVM = ResumeViewModel(model: resume)
+        
+        ResumeView(resumeVM: resumeVM)
             .environment(\.locale, .init(identifier: "es"))
-            .environmentObject(ResumeViewModel(model: resume))
     }
 }
 
 #Preview("No content") {
-    ResumeView()
+    ResumeView(resumeVM: ResumeViewModel())
         .environment(\.locale, .init(identifier: "en"))
-        .environmentObject(ResumeViewModel())
 }

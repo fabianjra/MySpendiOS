@@ -26,13 +26,13 @@ enum TabViewIcons: String, CaseIterable, Identifiable {
         }
     }
     
-    @ViewBuilder
-    var view: some View {
-        switch self {
-        case .resume:
-            ResumeView()
-        case .settings:
-            SettingsView()
-        }
-    }
+//    @ViewBuilder
+//    var view: some View {
+//        switch self {
+//        case .resume:
+//            ResumeView()
+//        case .settings:
+//            SettingsView()
+//        }
+//    }
 }

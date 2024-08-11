@@ -21,11 +21,23 @@ struct MainView: View {
     
     var body: some View {
         ZStack(alignment: .bottom) {
+            
+            /// Los tabView siempre estan cargadas en memoria, su totalidad de vistas,
+            /// en este caso las 5 vistas estan cargadas en memoria.
+            /// Por eso, se se hace scroll en la vista principal, se cambia de vista y luego vuelve,
+            /// la vista permanece como quedó.
             TabView(selection: $selectedTab) {
                 
-                selectedTab.view
-                    .tag(selectedTab.id)
-                    .environmentObject(resumeVM)
+                /// Los tags permiten que las vistas cambien entre una seleccion u otra en el TabView.
+                ResumeView(resumeVM: resumeVM)
+                    .tag(TabViewIcons.resume)
+                
+                SettingsView()
+                    .tag(TabViewIcons.settings)
+                
+//                selectedTab.view
+//                    .tag(selectedTab.id)
+//                    .environmentObject(resumeVM)
             }
             
             tabView
@@ -56,7 +68,7 @@ struct MainView: View {
                 TabViewButton(selectedTab: $selectedTab, item: item)
                     .padding(.horizontal, ConstantViews.paddingTabViewHorizontal)
                     .padding(.bottom)
-
+                
                 if item == TabViewIcons.allCases.first {
                     Spacer()
                 }
