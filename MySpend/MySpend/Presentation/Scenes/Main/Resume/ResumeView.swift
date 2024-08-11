@@ -94,28 +94,28 @@ struct ResumeView: View {
 
 #Preview("With Content") {
     VStack {
-        let category1 = CategoryModel(description: "Gasolina")
-        let category2 = CategoryModel(description: "Comida")
-        let category3 = CategoryModel(description: "Turismo")
+        let _ = CategoryModel(icon: "envelope.fill", description: "Gasolina")
+        let _ = CategoryModel(icon: "lock.fill", description: "Comida")
+        let _ = CategoryModel(icon: "person.fill", description: "Turismo")
         
         let transaction1 = TransactionModel(amount: 56000,
                                             date: "25/05/1990",
-                                            category: category1,
+                                            category: "01",
                                             detail: "Nota",
                                             type: .expense)
         let transaction2 = TransactionModel(amount: 3000,
                                             date: "25/05/2024",
-                                            category: category2,
+                                            category: "02",
                                             detail: "Nota",
                                             type: .expense)
         let transaction3 = TransactionModel(amount: 100,
                                             date: "01/12/2003",
-                                            category: category1,
+                                            category: "03",
                                             detail: "Nota",
                                             type: .expense)
         let transaction4 = TransactionModel(amount: 270000,
                                             date: "01/05/2023",
-                                            category: category3,
+                                            category: "04",
                                             detail: "Nota",
                                             type: .expense)
         

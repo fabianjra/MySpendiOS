@@ -11,7 +11,7 @@ struct TransactionModel: Identifiable, Codable, Equatable {
     public var id = UUID().uuidString
     let amount: Double?
     let date: String?
-    let category: CategoryModel?
+    let category: String?
     let detail: String?
     let type: TransactionTypeEnum?
     

@@ -15,7 +15,7 @@ class NewTransactionViewModel: ObservableObject {
     func addNewTransaction() async -> ResponseModel {
         newTransaction.errorMessage = ""
 
-        if newTransaction.amount.isEmptyOrWhitespace() || newTransaction.category.isEmptyOrWhitespace() {
+        if newTransaction.amount.isEmptyOrWhitespace() || newTransaction.categoryId.isEmptyOrWhitespace() {
             //newTransaction.errorMessage = ConstantMessages.emptySpaces.localizedDescription
             return ResponseModel(.error, ConstantMessages.emptySpaces.localizedDescription)
         }
@@ -27,11 +27,9 @@ class NewTransactionViewModel: ObservableObject {
         }
         
         do {
-            let categoryModel = CategoryModel(description: newTransaction.category)
-            
             let transactionModel = TransactionModel(amount: Double(newTransaction.amount),
                                                     date: newTransaction.dateString,
-                                                    category: categoryModel,
+                                                    category: newTransaction.categoryId,
                                                     detail: newTransaction.notes,
                                                     type: newTransaction.transactionType)
             

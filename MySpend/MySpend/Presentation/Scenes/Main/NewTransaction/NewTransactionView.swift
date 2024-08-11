@@ -82,9 +82,9 @@ struct NewTransactionView: View {
                 
                 
                 //TODO: Change to sheet list (all categories inserted).
-                TextField("", text: $newTransactionVM.newTransaction.category, prompt:
+                TextField("", text: $newTransactionVM.newTransaction.categoryId, prompt:
                             Text("Category").foregroundColor(.textFieldPlaceholder))
-                .textFieldStyle(TextFieldIconStyle($newTransactionVM.newTransaction.category,
+                .textFieldStyle(TextFieldIconStyle($newTransactionVM.newTransaction.categoryId,
                                                    iconLeading: Image.stackFill,
                                                    errorMessage: $newTransactionVM.newTransaction.errorMessage))
                 .focused($focusedField, equals: .category)

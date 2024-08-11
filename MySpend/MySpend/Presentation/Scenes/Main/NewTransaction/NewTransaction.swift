@@ -16,7 +16,7 @@ struct NewTransaction {
     var showDatePicker = false
     
     var amount: String = ""
-    var category: String = ""
+    var categoryId: String = ""
     var notes: String = ""
     
     var errorMessage: String = ""

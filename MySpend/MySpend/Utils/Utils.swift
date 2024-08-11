@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 struct Utils {
     
@@ -178,5 +179,13 @@ struct Utils {
         dateFormatter.dateFormat = "dd/MM/yyy"
         let date = dateFormatter.date(from:dateShort) ?? .now
         return date
+    }
+    
+    /// Get an FavIcon from a string text.
+    /// Example: envelope.fill
+    /// - Parameter iconName: SB Symbol Image name
+    /// - Returns: SwiftUI Image
+    func getIconFromString(_ iconName: String) -> Image {
+        return Image(systemName: iconName)
     }
 }
