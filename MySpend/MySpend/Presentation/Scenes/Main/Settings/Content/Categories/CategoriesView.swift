@@ -9,11 +9,8 @@ import SwiftUI
 
 struct CategoriesView: View {
     
-    @State var arrayCategories: [CategoryModel]
-    
-    init(arrayCategories: [CategoryModel] = []) {
-        self.arrayCategories = arrayCategories
-    }
+    @StateObject var categoriesVM = CategoriesViewModel(categories: [])
+    @State private var showNewItemModal = false
     
     var body: some View {
         ContentContainer(addPading: false) {
@@ -27,7 +24,7 @@ struct CategoriesView: View {
             
             ZStack(alignment: .bottomTrailing) {
                 ListContainer {
-                    ForEach(arrayCategories) { category in
+                    ForEach(categoriesVM.categories) { category in
                         HStack {
                             let navIcon = Utils.getIconFromString(category.icon)
                             
@@ -46,11 +43,20 @@ struct CategoriesView: View {
                 }
                 
                 ButtonRounded {
-                    print("New category add")
+                    showNewItemModal = true
                 }
                 .padding(.trailing, ConstantViews.paddingButtonAddCategory)
                 .padding(.bottom, ConstantViews.paddingButtonAddCategory)
             }
+        }
+        .onAppear {
+            Task {
+                await categoriesVM.getCategories()
+            }
+        }
+        .sheet(isPresented: $showNewItemModal) {
+            NewCategoryView()
+                .presentationDetents([.large])
         }
     }
 }
@@ -59,23 +65,25 @@ struct CategoriesView: View {
     VStack {
         let category1 = CategoryModel(icon: "envelope.fill",
                                       description: "Gasolina",
-                                      type: .expense)
+                                      categoryType: .expense)
         let category2 = CategoryModel(icon: "lock.fill", 
                                       description: "Comida",
-                                      type: .income)
+                                      categoryType: .income)
         let category3 = CategoryModel(icon: nil,
                                       description: "Sin icono",
-                                      type: .expense)
+                                      categoryType: .expense)
         let category4 = CategoryModel(icon: "", 
                                       description: "String vacio",
-                                      type: .expense)
+                                      categoryType: .expense)
         let category5 = CategoryModel(icon: "person.fill", 
                                       description: "Turismo",
-                                      type: .income)
+                                      categoryType: .income)
         
         let categories = [category1, category2, category3, category4, category5]
         
-        CategoriesView(arrayCategories: categories)
+        let categoriesVM = CategoriesViewModel(categories: categories)
+        
+        CategoriesView(categoriesVM: categoriesVM)
     }
 }
 
@@ -84,10 +92,11 @@ struct CategoriesView: View {
         @State var arrayCategories: [CategoryModel] = (1...40).map { item in
             CategoryModel(icon: "person.fill", 
                           description: "\(item) Categoria prueba",
-                          type: .expense)
+                          categoryType: .expense)
         }
         
-        CategoriesView(arrayCategories: arrayCategories)
+        let categoriesVM = CategoriesViewModel(categories: arrayCategories)
+        CategoriesView(categoriesVM: categoriesVM)
     }
 }
 

@@ -7,6 +7,7 @@
 
 import Foundation
 
+//TODO: Remover esta para utilizar el modelo de NewTransaction
 struct TransactionModel: Identifiable, Codable, Equatable {
     public var id = UUID().uuidString
     let amount: Double
