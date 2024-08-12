@@ -27,7 +27,7 @@ class NewTransactionViewModel: ObservableObject {
         }
         
         do {
-            let transactionModel = TransactionModel(amount: Double(newTransaction.amount),
+            let transactionModel = TransactionModel(amount: Double(newTransaction.amount) ?? .zero,
                                                     date: newTransaction.dateString,
                                                     category: newTransaction.categoryId,
                                                     detail: newTransaction.notes,

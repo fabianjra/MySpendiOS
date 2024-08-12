@@ -29,12 +29,11 @@ struct CategoriesView: View {
                 ListContainer {
                     ForEach(arrayCategories) { category in
                         HStack {
-                            if let icon = category.icon {
-                                
-                                Utils.getIconFromString(icon)
-                                    .frame(width: FrameSize.width.navIconCategoryList,
-                                           height: FrameSize.height.navIconCategoryList)
-                            }
+                            let navIcon = Utils.getIconFromString(category.icon)
+                            
+                            navIcon
+                                .frame(width: FrameSize.width.navIconCategoryList,
+                                       height: FrameSize.height.navIconCategoryList)
                             
                             Text(category.description)
                             
@@ -57,11 +56,23 @@ struct CategoriesView: View {
 
 #Preview("Content") {
     VStack {
-        let category1 = CategoryModel(icon: "envelope.fill", description: "Gasolina")
-        let category2 = CategoryModel(icon: "lock.fill", description: "Comida")
-        let category3 = CategoryModel(icon: "person.fill", description: "Turismo")
+        let category1 = CategoryModel(icon: "envelope.fill",
+                                      description: "Gasolina",
+                                      type: .expense)
+        let category2 = CategoryModel(icon: "lock.fill", 
+                                      description: "Comida",
+                                      type: .income)
+        let category3 = CategoryModel(icon: nil,
+                                      description: "Sin icono",
+                                      type: .expense)
+        let category4 = CategoryModel(icon: "", 
+                                      description: "String vacio",
+                                      type: .expense)
+        let category5 = CategoryModel(icon: "person.fill", 
+                                      description: "Turismo",
+                                      type: .income)
         
-        let categories = [category1, category2, category3]
+        let categories = [category1, category2, category3, category4, category5]
         
         CategoriesView(arrayCategories: categories)
     }
@@ -70,7 +81,9 @@ struct CategoriesView: View {
 #Preview("Screen filled") {
     VStack {
         @State var arrayCategories: [CategoryModel] = (1...40).map { item in
-            CategoryModel(icon: "person.fill", description: "\(item) Categoria prueba")
+            CategoryModel(icon: "person.fill", 
+                          description: "\(item) Categoria prueba",
+                          type: .expense)
         }
         
         CategoriesView(arrayCategories: arrayCategories)

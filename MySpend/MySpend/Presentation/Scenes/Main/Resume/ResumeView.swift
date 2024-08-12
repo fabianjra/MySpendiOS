@@ -57,11 +57,11 @@ struct ResumeView: View {
                 ScrollView(showsIndicators: false) {
                     ForEach(resumeVM.model.transactions) { item in
                         HStack {
-                            TextPlain(message: "\(item.category?.description ?? "")")
+                            TextPlain(message: item.category.description)
                             
                             Spacer()
                             
-                            TextPlain(message: "$ \(item.amount?.roundedToTwoDecimalsString() ?? "$ 0.00")")
+                            TextPlain(message: "$ \(item.amount.roundedToTwoDecimalsString())")
                         }
                         .padding(.vertical, ConstantViews.textResumeSpacing)
                         .padding(.horizontal)
@@ -94,10 +94,6 @@ struct ResumeView: View {
 
 #Preview("With Content") {
     VStack {
-        let _ = CategoryModel(icon: "envelope.fill", description: "Gasolina")
-        let _ = CategoryModel(icon: "lock.fill", description: "Comida")
-        let _ = CategoryModel(icon: "person.fill", description: "Turismo")
-        
         let transaction1 = TransactionModel(amount: 56000,
                                             date: "25/05/1990",
                                             category: "01",

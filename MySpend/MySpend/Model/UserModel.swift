@@ -12,6 +12,7 @@ struct UserModel: Identifiable, Codable {
     let fullname: String
     let email: String
     var transactions: [TransactionModel]?
+    var categoryList: [CategoryModel]?
     
     /// Take the full name and separate the first name letters.
     /// Example: Fabian Rodriugez --> FR
@@ -32,5 +33,6 @@ struct UserModel: Identifiable, Codable {
         case fullname
         case email
         case transactions
+        case categoryList
     }
 }

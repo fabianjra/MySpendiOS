@@ -62,7 +62,7 @@ struct SessionStore {
         
         try await updateUser(newUserName: username, forUser: user)
         
-        let userModel = UserModel(id: user.uid, fullname: user.displayName ?? "", email: user.email ?? "", transactions: [])
+        let userModel = UserModel(id: user.uid, fullname: user.displayName ?? "", email: user.email ?? "", transactions: [], categoryList: [])
         
         try await storeUserDocument(forUser: userModel)
         

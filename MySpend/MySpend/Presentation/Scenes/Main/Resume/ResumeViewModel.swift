@@ -54,7 +54,7 @@ class ResumeViewModel: BaseViewModel {
             
             model.totalBalance = 0
             for item in model.transactions {
-                model.totalBalance += item.amount ?? 0
+                model.totalBalance += item.amount
             }
             
         } catch {
