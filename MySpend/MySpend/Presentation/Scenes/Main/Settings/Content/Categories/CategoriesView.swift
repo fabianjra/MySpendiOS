@@ -32,7 +32,7 @@ struct CategoriesView: View {
                                 .frame(width: FrameSize.width.navIconCategoryList,
                                        height: FrameSize.height.navIconCategoryList)
                             
-                            Text(category.description)
+                            Text(category.name)
                             
                             Spacer()
                             
@@ -64,19 +64,19 @@ struct CategoriesView: View {
 #Preview("Content") {
     VStack {
         let category1 = CategoryModel(icon: "envelope.fill",
-                                      description: "Gasolina",
+                                      name: "Gasolina",
                                       categoryType: .expense)
         let category2 = CategoryModel(icon: "lock.fill", 
-                                      description: "Comida",
+                                      name: "Comida",
                                       categoryType: .income)
-        let category3 = CategoryModel(icon: nil,
-                                      description: "Sin icono",
+        let category3 = CategoryModel(icon: "",
+                                      name: "Sin icono",
                                       categoryType: .expense)
         let category4 = CategoryModel(icon: "", 
-                                      description: "String vacio",
+                                      name: "String vacio",
                                       categoryType: .expense)
         let category5 = CategoryModel(icon: "person.fill", 
-                                      description: "Turismo",
+                                      name: "Turismo",
                                       categoryType: .income)
         
         let categories = [category1, category2, category3, category4, category5]
@@ -91,7 +91,7 @@ struct CategoriesView: View {
     VStack {
         @State var arrayCategories: [CategoryModel] = (1...40).map { item in
             CategoryModel(icon: "person.fill", 
-                          description: "\(item) Categoria prueba",
+                          name: "\(item) Categoria prueba",
                           categoryType: .expense)
         }
         

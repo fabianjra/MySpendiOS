@@ -57,7 +57,7 @@ struct ResumeView: View {
                 ScrollView(showsIndicators: false) {
                     ForEach(resumeVM.model.transactions) { item in
                         HStack {
-                            TextPlain(message: item.category.description)
+                            TextPlain(message: item.categoryId.description)
                             
                             Spacer()
                             
@@ -96,22 +96,22 @@ struct ResumeView: View {
     VStack {
         let transaction1 = TransactionModel(amount: 56000,
                                             date: "25/05/1990",
-                                            category: "01",
+                                            categoryId: "01",
                                             detail: "Nota",
                                             type: .expense)
         let transaction2 = TransactionModel(amount: 3000,
                                             date: "25/05/2024",
-                                            category: "02",
+                                            categoryId: "02",
                                             detail: "Nota",
                                             type: .expense)
         let transaction3 = TransactionModel(amount: 100,
                                             date: "01/12/2003",
-                                            category: "03",
+                                            categoryId: "03",
                                             detail: "Nota",
                                             type: .expense)
         let transaction4 = TransactionModel(amount: 270000,
                                             date: "01/05/2023",
-                                            category: "04",
+                                            categoryId: "04",
                                             detail: "Nota",
                                             type: .expense)
         

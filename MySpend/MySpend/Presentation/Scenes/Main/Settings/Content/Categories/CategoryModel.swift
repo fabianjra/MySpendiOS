@@ -9,14 +9,14 @@ import Foundation
 
 struct CategoryModel: Identifiable, Codable, Equatable  {
     public var id = UUID().uuidString
-    let icon: String?   
-    let description: String
-    let categoryType: TransactionTypeEnum
+    var icon: String = ""
+    var name: String = ""
+    var categoryType: TransactionTypeEnum = .expense
     
     enum CodingKeys: String, CodingKey {
         case id
         case icon
-        case description
+        case name
         case categoryType
     }
 }

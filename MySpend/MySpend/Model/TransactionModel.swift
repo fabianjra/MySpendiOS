@@ -12,7 +12,7 @@ struct TransactionModel: Identifiable, Codable, Equatable {
     public var id = UUID().uuidString
     let amount: Double
     let date: String
-    let category: String
+    let categoryId: String
     let detail: String?
     let type: TransactionTypeEnum
     
@@ -20,7 +20,7 @@ struct TransactionModel: Identifiable, Codable, Equatable {
         case id
         case amount
         case date
-        case category
+        case categoryId
         case detail
         case type
     }

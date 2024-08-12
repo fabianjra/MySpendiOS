@@ -7,7 +7,7 @@
 
 import Foundation
 
-class CategoriesViewModel: ObservableObject {
+class CategoriesViewModel: BaseViewModel {
     
     @Published var categories: [CategoryModel]
     @Published var errorMessage: String = ""

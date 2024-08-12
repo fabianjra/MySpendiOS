@@ -79,7 +79,6 @@
 		1FA08EE42C5D99480019000B /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA08EE32C5D99480019000B /* RegisterViewModel.swift */; };
 		1FAA87D52C697F1000700CD6 /* CategoriesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FAA87D42C697F1000700CD6 /* CategoriesViewModel.swift */; };
 		1FAA87D72C697F1A00700CD6 /* CategoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FAA87D62C697F1A00700CD6 /* CategoriesView.swift */; };
-		1FAA87DA2C699FFA00700CD6 /* NewCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FAA87D92C699FFA00700CD6 /* NewCategory.swift */; };
 		1FAA87DC2C69A00500700CD6 /* NewCategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FAA87DB2C69A00500700CD6 /* NewCategoryViewModel.swift */; };
 		1FAA87DE2C69A01000700CD6 /* NewCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FAA87DD2C69A01000700CD6 /* NewCategoryView.swift */; };
 		1FAEE6D02A47A9AB00630367 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FAEE6CF2A47A9AB00630367 /* LoginView.swift */; };
@@ -210,7 +209,6 @@
 		1FA08EE32C5D99480019000B /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
 		1FAA87D42C697F1000700CD6 /* CategoriesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesViewModel.swift; sourceTree = "<group>"; };
 		1FAA87D62C697F1A00700CD6 /* CategoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesView.swift; sourceTree = "<group>"; };
-		1FAA87D92C699FFA00700CD6 /* NewCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCategory.swift; sourceTree = "<group>"; };
 		1FAA87DB2C69A00500700CD6 /* NewCategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCategoryViewModel.swift; sourceTree = "<group>"; };
 		1FAA87DD2C69A01000700CD6 /* NewCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCategoryView.swift; sourceTree = "<group>"; };
 		1FAEE6CF2A47A9AB00630367 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -566,7 +564,6 @@
 			children = (
 				1FAA87DD2C69A01000700CD6 /* NewCategoryView.swift */,
 				1FAA87DB2C69A00500700CD6 /* NewCategoryViewModel.swift */,
-				1FAA87D92C699FFA00700CD6 /* NewCategory.swift */,
 			);
 			path = NewCategory;
 			sourceTree = "<group>";
@@ -958,7 +955,6 @@
 				1F7486C32A6A3F770063AC35 /* ButtonRounded.swift in Sources */,
 				1F222F5E2C65DD080017A1BE /* ResumeViewModel.swift in Sources */,
 				1F46B4142A79976F003A9550 /* FormContainer.swift in Sources */,
-				1FAA87DA2C699FFA00700CD6 /* NewCategory.swift in Sources */,
 				1FFA5D5A2A8B57CC00AC0519 /* NewTransactionView.swift in Sources */,
 				1FAA87DE2C69A01000700CD6 /* NewCategoryView.swift in Sources */,
 				1F5CC57E2A664EFB00C214FE /* TextFieldEmail.swift in Sources */,
