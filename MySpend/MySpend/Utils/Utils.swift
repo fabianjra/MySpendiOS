@@ -185,7 +185,7 @@ struct Utils {
     /// Example: envelope.fill
     /// - Parameter iconName: SB Symbol Image name
     /// - Returns: SwiftUI Image
-    func getIconFromString(_ iconName: String) -> Image {
+    static func getIconFromString(_ iconName: String) -> Image {
         return Image(systemName: iconName)
     }
 }

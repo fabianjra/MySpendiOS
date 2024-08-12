@@ -32,9 +32,10 @@ extension Image {
     static let listBulletClipboardFill = Image(systemName: "list.bullet.clipboard.fill")
     
     // MARK: NAVIGATION
-    static let arrowRight = Image(systemName: "arrow.right")
-    static let arrowBackward = Image(systemName: "arrow.backward")
-    static let chevronLeft = Image(systemName: "chevron.left")
+    static let arrowRight = Image(systemName: "arrow.right") // ->
+    static let arrowBackward = Image(systemName: "arrow.backward") // <-
+    static let chevronLeft = Image(systemName: "chevron.left") // <
+    static let chevronRight = Image(systemName: "chevron.right") // <
     
     // MARK: GENERAL
     static let warningFill = Image(systemName: "exclamationmark.triangle.fill")
