@@ -25,23 +25,31 @@ struct CategoriesView: View {
                             subTitleWeight: .regular)
             .padding(.horizontal)
             
-            ListContainer {
-                ForEach(arrayCategories) { category in
-                    HStack {
-                        if let icon = category.icon {
+            ZStack(alignment: .bottomTrailing) {
+                ListContainer {
+                    ForEach(arrayCategories) { category in
+                        HStack {
+                            if let icon = category.icon {
+                                
+                                Utils.getIconFromString(icon)
+                                    .frame(width: FrameSize.width.navIconCategoryList,
+                                           height: FrameSize.height.navIconCategoryList)
+                            }
                             
-                            Utils.getIconFromString(icon)
-                                .frame(width: FrameSize.width.navIconCategoryList,
-                                       height: FrameSize.height.navIconCategoryList)
+                            Text(category.description)
+                            
+                            Spacer()
+                            
+                            Image.chevronRight
                         }
-                        
-                        Text(category.description)
-                        
-                        Spacer()
-                        
-                        Image.chevronRight
                     }
                 }
+                
+                ButtonRounded {
+                    print("New category add")
+                }
+                .padding(.trailing, ConstantViews.paddingButtonAddCategory)
+                .padding(.bottom, ConstantViews.paddingButtonAddCategory)
             }
         }
     }

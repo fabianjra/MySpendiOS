@@ -29,7 +29,7 @@ extension Image {
     
     // MARK: LIST
     static let listBulletClipboard = Image(systemName: "list.bullet.clipboard") //Categories
-    static let listBulletClipboardFill = Image(systemName: "list.bullet.clipboard.fill")
+    static let listBulletClipboardFill = Image(systemName: "list.bullet.clipboard.fill") //Categories
     
     // MARK: NAVIGATION
     static let arrowRight = Image(systemName: "arrow.right") // ->
