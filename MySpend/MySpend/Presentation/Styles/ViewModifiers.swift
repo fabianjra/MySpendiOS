@@ -152,7 +152,7 @@ struct Show: ViewModifier {
 }
 
 /**
- Lets you ignore safe area from views with condition.
+ Lets you ignore safe area in views with condition.
  
  **Example:**
  ```swift
@@ -181,6 +181,45 @@ struct IgnoreSafeArea: ViewModifier {
         
         if condition {
             content.ignoresSafeArea()
+        } else {
+            content
+        }
+    }
+}
+
+/**
+ Lets you add the background radial radient color to views with condition.
+ 
+ **Example:**
+ ```swift
+ @State var condition: Bool = true
+ 
+ VStack {
+    Color.red
+ }
+ .modifier(addRadialGradientBackGround(condition: addBackground,
+                                       color: Color.backgroundContentGradient))
+ ```
+ 
+ - Parameters:
+    - condition: Boolean condition.
+    - color: Gradient radial color.
+ 
+ - Authors: Fabian Rodriguez
+ 
+ - Version: 1.0
+ 
+ - Date: Aug 2024
+ */
+struct addRadialGradientBackGround: ViewModifier {
+    let condition: Bool
+    let color: RadialGradient
+    
+    @ViewBuilder
+    func body(content: Content) -> some View {
+        
+        if condition {
+            content.background(color)
         } else {
             content
         }

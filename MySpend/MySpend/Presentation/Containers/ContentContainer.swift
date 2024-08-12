@@ -12,13 +12,19 @@ struct ContentContainer<Content: View>: View {
     let aligment: Alignment
     let ignoreSafeArea: Bool
     let addPading: Bool
+    let addBackground: Bool
     
     var content: () -> Content
     
-    init(aligment: Alignment = .top, ignoreSafeArea: Bool = true, addPading: Bool = true, @ViewBuilder content: @escaping () -> Content) {
+    init(aligment: Alignment = .top, 
+         ignoreSafeArea: Bool = true,
+         addPading: Bool = true,
+         addBackground: Bool = true,
+         @ViewBuilder content: @escaping () -> Content) {
         self.aligment = aligment
         self.ignoreSafeArea = ignoreSafeArea
         self.addPading = addPading
+        self.addBackground = addBackground
         self.content = content
     }
     
@@ -27,11 +33,8 @@ struct ContentContainer<Content: View>: View {
             
             Spacer()
                 .modifier(IgnoreSafeArea(condition: ignoreSafeArea))
-                .background(RadialGradient(colors: [Color.backgroundTop,
-                                            Color.background],
-                                           center: .top,
-                                           startRadius: .zero,
-                                           endRadius: ConstantColors.endRadiusBackground))
+                .modifier(addRadialGradientBackGround(condition: addBackground,
+                                                      color: Color.backgroundContentGradient))
             
             VStack(content: content)
                 .padding(.all, addPading ? nil : .zero)
@@ -39,8 +42,15 @@ struct ContentContainer<Content: View>: View {
     }
 }
 
-#Preview {
+#Preview("Using background") {
     ContentContainer {
         HeaderNavigator(subTitle: "Inside of container")
+    }
+}
+
+#Preview("Without background") {
+    ContentContainer(addBackground: false) {
+        HeaderNavigator(subTitle: "Inside of container",
+                        textColor: Color.textFieldForeground)
     }
 }

@@ -54,14 +54,16 @@ struct SectionContainer<Content: View>: View {
 
 #Preview {
     VStack {
-        ListContainer {
-            SectionContainer(header: "Header for section") {
-                Text("Content of section")
-            }
-            
-            SectionContainer {
-                Text("Content without header")
-                Text("Item 2")
+        ContentContainer(addPading: false) {
+            ListContainer {
+                SectionContainer(header: "Header for section") {
+                    Text("Content of section")
+                }
+                
+                SectionContainer {
+                    Text("Content without header")
+                    Text("Item 2")
+                }
             }
         }
         

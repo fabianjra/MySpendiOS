@@ -21,6 +21,9 @@ struct HeaderNavigator: View {
     let subTitleWeight: Font.Family
     let subTitleSize: Font.Sizes
     
+    // MARK: GENERAL
+    let textColor: Color
+    
     // MARK: VALIDATION
     let onlyTitle: Bool
     
@@ -30,6 +33,7 @@ struct HeaderNavigator: View {
          subTitle: String = "",
          subTitleWeight: Font.Family = .light,
          subTitleSize: Font.Sizes = .body,
+         textColor: Color = Color.textPrimaryForeground,
          onlyTitle: Bool = false) {
         
         self.title = title
@@ -38,6 +42,7 @@ struct HeaderNavigator: View {
         self.subTitle = subTitle
         self.subTitleWeight = subTitleWeight
         self.subTitleSize = subTitleSize
+        self.textColor = textColor
         self.onlyTitle = onlyTitle
     }
     
@@ -48,7 +53,7 @@ struct HeaderNavigator: View {
             }
         } else {
             HStack {
-                ButtonNavigationBack { dismiss() }
+                ButtonNavigationBack(color: textColor) { dismiss() }
                     .padding(.leading)
                 
                 Spacer()
@@ -57,7 +62,7 @@ struct HeaderNavigator: View {
                 
                 Spacer()
                 
-                ButtonNavigationBack {}
+                ButtonNavigationBack(color: textColor) {}
                     .hidden()
                     .padding(.trailing)
             }
@@ -67,11 +72,11 @@ struct HeaderNavigator: View {
     private var titleAndSubtitle: some View {
         VStack(spacing: ConstantViews.textHeaderSpacing) {
             Text(title)
-                .foregroundColor(Color.textPrimaryForeground)
+                .foregroundColor(textColor)
                 .font(.montserrat(titleWeight, size: titleSize))
             
             Text(subTitle)
-                .foregroundColor(Color.textPrimaryForeground)
+                .foregroundColor(textColor)
                 .font(.montserrat(subTitleWeight, size: subTitleSize))
         }
     }

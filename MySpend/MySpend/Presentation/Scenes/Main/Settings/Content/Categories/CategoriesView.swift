@@ -42,6 +42,7 @@ struct CategoriesView: View {
                             Image.chevronRight
                         }
                     }
+                    .listRowBackground(Color.listRowBackground) //Background for each row.
                 }
                 
                 ButtonRounded {

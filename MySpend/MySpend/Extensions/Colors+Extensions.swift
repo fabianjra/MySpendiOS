@@ -15,7 +15,7 @@ extension Color {
     static let disabledForeground = Color("DisabledForeground")
     static let disabledBackground = Color("DisabledBackground")
     
-    // MARK: GRADIANTS
+    // MARK: GRADIENTS
     static let primaryLeading = Color("PrimaryLeading")
     static let primaryTrailing = Color("PrimaryTrailing")
     static let primaryGradiant: Array = [Color.primaryLeading,
@@ -24,6 +24,11 @@ extension Color {
     static let secondaryTrailing = Color("SecondaryTrailing")
     static let secondaryGradiant: Array = [Color.secondaryLeading,
                                          Color.secondaryTrailing]
+    static let backgroundContentGradient = RadialGradient(colors: [Color.backgroundTop,
+                                                           Color.background],
+                                                          center: .top,
+                                                          startRadius: .zero,
+                                                          endRadius: ConstantColors.endRadiusBackground)
     
     // MARK: BUTTONS
     static let buttonForeground = Color("ButtonForeground")

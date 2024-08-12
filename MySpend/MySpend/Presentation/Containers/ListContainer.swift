@@ -21,17 +21,15 @@ struct ListContainer<Content: View>: View {
             .foregroundColor(Color.listRowForeground)
             .listStyle(.insetGrouped)
             .scrollContentBackground(.hidden)
-            .background(RadialGradient(colors: [Color.backgroundTop,
-                                        Color.background],
-                                       center: .top,
-                                       startRadius: .zero,
-                                       endRadius: ConstantColors.endRadiusBackground))
     }
 }
 
 #Preview {
-    ListContainer {
-        Text("Inside list container")
-            .listRowBackground(Color.listRowBackground)
+    //Add ContentContainer for the background color style
+    ContentContainer(addPading: false) {
+        ListContainer {
+            Text("Inside list container")
+                .listRowBackground(Color.listRowBackground)
+        }
     }
 }

@@ -137,6 +137,15 @@ struct TextFieldIconStyle: TextFieldStyle {
         //Only icon X2
         TextField("", text: $text)
             .textFieldStyle(TextFieldIconStyle($text, iconLeading: Image.lockFill))
+            .padding(.bottom)
+        
+        VStack {
+            SectionContainer(header: "Header for a TextField",
+                             isInsideList: false) {
+                TextFieldName(text: .constant(""),
+                              errorMessage: .constant(""))
+            }
+        }
     }
     .padding()
     .background(Color.background)

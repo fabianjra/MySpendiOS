@@ -489,9 +489,9 @@
 			children = (
 				1F46B4182A79A267003A9550 /* ContentContainer.swift */,
 				1F46B4132A79976F003A9550 /* FormContainer.swift */,
-				1F7486C62A6A57310063AC35 /* TabViewContainer.swift */,
 				1F64B0A02A70AA94004AC825 /* ListContainer.swift */,
 				1F64B0A52A70B828004AC825 /* SectionContainer.swift */,
+				1F7486C62A6A57310063AC35 /* TabViewContainer.swift */,
 			);
 			path = Containers;
 			sourceTree = "<group>";
