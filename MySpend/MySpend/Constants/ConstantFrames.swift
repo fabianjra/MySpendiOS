@@ -35,8 +35,8 @@ enum FrameSize {
     
     var navIconCategoryList: CGFloat {
         switch self {
-        case .width: return 35.0
-        case .height: return 35.0
+        case .width: return 20.0
+        case .height: return 20.0
         }
     }
 }

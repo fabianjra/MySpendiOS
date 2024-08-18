@@ -26,11 +26,13 @@ struct CategoriesView: View {
                 ListContainer {
                     ForEach(categoriesVM.categories) { category in
                         HStack {
-                            let navIcon = Utils.getIconFromString(category.icon)
+                            let icon = Utils.getIconFromString(category.icon)
                             
-                            navIcon
-                                .frame(width: FrameSize.width.navIconCategoryList,
-                                       height: FrameSize.height.navIconCategoryList)
+                            if let image = icon {
+                                image
+                                    .frame(width: FrameSize.width.navIconCategoryList,
+                                           height: FrameSize.height.navIconCategoryList)
+                            }
                             
                             Text(category.name)
                             
@@ -64,7 +66,7 @@ struct CategoriesView: View {
         let category1 = CategoryModel(icon: "envelope.fill",
                                       name: "Gasolina",
                                       categoryType: .expense)
-        let category2 = CategoryModel(icon: "lock.fill", 
+        let category2 = CategoryModel(icon: "arrowshape.turn.up.left.fill",
                                       name: "Comida",
                                       categoryType: .income)
         let category3 = CategoryModel(icon: "",
