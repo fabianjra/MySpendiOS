@@ -7,7 +7,7 @@
 
 import Combine
 
-class HistoryViewModel: ObservableObject {
+class HistoryViewModel: BaseViewModel {
     
     @Published var model: History
     var errorMessage: String = ""
@@ -17,19 +17,19 @@ class HistoryViewModel: ObservableObject {
     }
     
     func getTransactions() async {
-        
-        do {
-        //#if DEBUG || TARGET_OS_SIMULATOR
-        #if targetEnvironment(simulator)
-            //No cargar datos cuando se esta corriendo en simulador.
-            model.transactions = try await DatabaseStore.getTransactions()
-        #else
-            //Otra accion en caso de que no sea DEBUG o Simulator.
-            model.transactions = try await DatabaseStore.getTransactions()
-        #endif
-            
-        } catch {
-            errorMessage = error.localizedDescription
+        await performWithLoader {
+            do {
+                //#if DEBUG || TARGET_OS_SIMULATOR
+                #if targetEnvironment(simulator)
+                    //No cargar datos cuando se esta corriendo en simulador.
+                self.model.transactions = try await DatabaseStore.getTransactions()
+                #else
+                    //Otra accion en caso de que no sea DEBUG o Simulator.
+                self.model.transactions = try await DatabaseStore.getTransactions()
+                #endif
+            } catch {
+                self.errorMessage = error.localizedDescription
+            }
         }
     }
 }

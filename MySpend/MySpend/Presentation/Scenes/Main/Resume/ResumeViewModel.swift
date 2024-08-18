@@ -10,6 +10,7 @@ import Foundation
 class ResumeViewModel: BaseViewModel {
     
     @Published var model = Resume()
+    @Published var navigateToHistory: Bool = false
     
     init(model: Resume = Resume()) {
         self.model = model

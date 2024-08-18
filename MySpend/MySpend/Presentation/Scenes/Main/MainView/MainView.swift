@@ -29,7 +29,7 @@ struct MainView: View {
             TabView(selection: $selectedTab) {
                 
                 /// Los tags permiten que las vistas cambien entre una seleccion u otra en el TabView.
-                ResumeView(resumeVM: resumeVM)
+                ResumeView(viewModel: resumeVM)
                     .tag(TabViewIcons.resume)
                 
                 SettingsView()

@@ -10,7 +10,7 @@ import Firebase
 
 struct ResumeView: View {
     
-    @ObservedObject var resumeVM: ResumeViewModel
+    @ObservedObject var viewModel: ResumeViewModel
     
 //    init(model: Resume = Resume()) {
 //        /*
@@ -27,7 +27,7 @@ struct ResumeView: View {
             // MARK: HEADER
             HStack {
                 VStack(alignment: .leading) {
-                    Text("Hello \(resumeVM.model.userName) \(ConstantEmojis.greeting)")
+                    Text("Hello \(viewModel.model.userName) \(ConstantEmojis.greeting)")
                         .font(.montserrat(.semibold, size: .big))
                         .lineLimit(ConstantViews.messageMaxLines)
                     
@@ -42,20 +42,23 @@ struct ResumeView: View {
             
             // MARK: CONTENT
             VStack {
-                
                 Button("History") {
-                    
+                    viewModel.navigateToHistory = true
                 }
                 .buttonStyle(ButtonHorizontalStyle(subTitle: "Go to history",
                                                    iconLeading: Image.stackFill))
             }
+            .navigationDestination(isPresented: $viewModel.navigateToHistory) {
+                HistoryView()
+                    .toolbar(.hidden)
+            }
 
-            TextError(message: resumeVM.model.errorMessage)
+            TextError(message: viewModel.model.errorMessage)
             
             // MARK: RESUME
             VStack {
                 ScrollView(showsIndicators: false) {
-                    ForEach(resumeVM.model.transactions) { item in
+                    ForEach(viewModel.model.transactions) { item in
                         HStack {
                             TextPlain(message: item.categoryId.description)
                             
@@ -76,7 +79,7 @@ struct ResumeView: View {
                               size: .big)
                     Spacer()
                     
-                    TextPlain(message: "$ \(resumeVM.model.totalBalance.roundedToTwoDecimalsString())",
+                    TextPlain(message: "$ \(viewModel.model.totalBalance.roundedToTwoDecimalsString())",
                               size: .big)
                 }
             }
@@ -85,7 +88,7 @@ struct ResumeView: View {
         }
         .onAppear {
             Task {
-                await resumeVM.onAppear()
+                await viewModel.onAppear()
             }
         }
     }
@@ -123,12 +126,12 @@ struct ResumeView: View {
         
         let resumeVM = ResumeViewModel(model: resume)
         
-        ResumeView(resumeVM: resumeVM)
+        ResumeView(viewModel: resumeVM)
             .environment(\.locale, .init(identifier: "es"))
     }
 }
 
 #Preview("No content") {
-    ResumeView(resumeVM: ResumeViewModel())
+    ResumeView(viewModel: ResumeViewModel())
         .environment(\.locale, .init(identifier: "en"))
 }
