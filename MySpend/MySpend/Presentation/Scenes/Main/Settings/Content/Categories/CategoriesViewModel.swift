@@ -5,14 +5,14 @@
 //  Created by Fabian Rodriguez on 11/8/24.
 //
 
-import Foundation
+import FirebaseFirestore
 
 class CategoriesViewModel: BaseViewModel {
     
     @Published var categories: [CategoryModel]
     @Published var errorMessage: String = ""
     
-    init(categories: [CategoryModel]) {
+    init(categories: [CategoryModel] = []) {
         self.categories = categories
     }
     
@@ -30,5 +30,20 @@ class CategoriesViewModel: BaseViewModel {
             errorMessage = error.localizedDescription
         }
     }
-
+ 
+    private var listener: ListenerRegistration?
+    
+    func startListeningForCategoryChanges() {
+        do {
+            listener = try DatabaseStore.listenCategoriesChanges { [weak self] categoriesLoaded in
+                self?.categories = categoriesLoaded
+            }
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
+    
+    deinit {
+        listener?.remove()
+    }
 }

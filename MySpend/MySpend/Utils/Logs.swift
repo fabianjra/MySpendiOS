@@ -5,6 +5,8 @@
 //  Created by Fabian Rodriguez on 8/7/23.
 //
 
+import Foundation
+
 enum Logs {
     
     /**
@@ -71,5 +73,47 @@ enum Logs {
         print("///*****************************************///")
         print(obj ?? "-----------------------------------------------------")
         print("///*****************************************///")
+    }
+    
+    /**
+     Creates a customizable `NSError` instance.
+     This function allows you to create an `NSError` with a specific domain, code,
+     user info dictionary, and custom description. It is useful for creating standardized
+     error objects throughout your application.
+     
+     **Example:**
+     ```swift
+     let customError = UtilsStore.createCustomNSError(domain: "com.yourapp.network",
+                                                      code: 404,
+                                                      userInfo: ["key": "value"],
+                                                      description: "The requested resource was not found.")
+     ```
+     
+     - Parameters:
+        - domain: A string indicating the domain of the error. This should describe the error's general source, such as `"com.yourapp.network".
+        - code: An integer representing the error code. This is typically a unique value for the specific type of error within the domain.
+        - userInfo: A dictionary containing key-value pairs that provide additional information about the error. For example, this could include localized error descriptions or recovery suggestions.
+        - description: A  description string that can be added to the user info dictionary under the `NSLocalizedDescriptionKey` to describe the error.
+     
+     - Returns: A fully customized `NSError` instance with the provided parameters.
+     
+     - Authors: Fabian Rodriguez
+     
+     - Version: 1.0
+     
+     - Date: Aug 2024
+     */
+    static func createError(domain: ErrorDomain, code: Int, userInfo: [String: Any]? = nil, description: String? = nil) -> NSError {
+        var fullUserInfo = userInfo ?? [:]
+        
+        if let description = description {
+            fullUserInfo[NSLocalizedDescriptionKey] = description
+        }
+        
+        return NSError(domain: domain.rawValue, code: code, userInfo: fullUserInfo)
+    }
+    
+    enum ErrorDomain: String {
+        case databaseStore = "com.mySpend.DatabaseStore"
     }
 }

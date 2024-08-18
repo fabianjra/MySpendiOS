@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CategoriesView: View {
     
-    @StateObject var categoriesVM = CategoriesViewModel(categories: [])
+    @StateObject var categoriesVM = CategoriesViewModel()
     @State private var showNewItemModal = false
     
     var body: some View {
@@ -50,9 +50,7 @@ struct CategoriesView: View {
             }
         }
         .onAppear {
-            Task {
-                await categoriesVM.getCategories()
-            }
+            categoriesVM.startListeningForCategoryChanges()
         }
         .sheet(isPresented: $showNewItemModal) {
             NewCategoryView()
