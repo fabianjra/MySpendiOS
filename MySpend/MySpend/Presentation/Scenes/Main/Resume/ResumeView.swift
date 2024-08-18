@@ -84,7 +84,6 @@ struct ResumeView: View {
  
         }
         .onAppear {
-            
             Task {
                 await resumeVM.onAppear()
             }

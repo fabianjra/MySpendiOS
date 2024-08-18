@@ -64,6 +64,9 @@
 		1F64B0A92A70CBBF004AC825 /* ChangeNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F64B0A82A70CBBF004AC825 /* ChangeNameView.swift */; };
 		1F64B0AB2A70CFC3004AC825 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F64B0AA2A70CFC3004AC825 /* String+Extensions.swift */; };
 		1F64B0AD2A70D647004AC825 /* TextFieldReadOnly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F64B0AC2A70D647004AC825 /* TextFieldReadOnly.swift */; };
+		1F65D95D2C7287C10023CC5D /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F65D95C2C7287C10023CC5D /* HistoryView.swift */; };
+		1F65D95F2C7287CC0023CC5D /* HistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F65D95E2C7287CC0023CC5D /* HistoryViewModel.swift */; };
+		1F65D9612C7287D30023CC5D /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F65D9602C7287D30023CC5D /* History.swift */; };
 		1F697E082C5B3C22009529EF /* ResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F697E072C5B3C22009529EF /* ResponseModel.swift */; };
 		1F7437B42A668BCD0039EFD4 /* Gestures+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7437B32A668BCD0039EFD4 /* Gestures+Extensions.swift */; };
 		1F7486B72A68C4250063AC35 /* TextError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7486B62A68C4250063AC35 /* TextError.swift */; };
@@ -189,6 +192,9 @@
 		1F64B0A82A70CBBF004AC825 /* ChangeNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeNameView.swift; sourceTree = "<group>"; };
 		1F64B0AA2A70CFC3004AC825 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		1F64B0AC2A70D647004AC825 /* TextFieldReadOnly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldReadOnly.swift; sourceTree = "<group>"; };
+		1F65D95C2C7287C10023CC5D /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+		1F65D95E2C7287CC0023CC5D /* HistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewModel.swift; sourceTree = "<group>"; };
+		1F65D9602C7287D30023CC5D /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
 		1F697E072C5B3C22009529EF /* ResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseModel.swift; sourceTree = "<group>"; };
 		1F7437B32A668BCD0039EFD4 /* Gestures+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Gestures+Extensions.swift"; sourceTree = "<group>"; };
 		1F7486B62A68C4250063AC35 /* TextError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextError.swift; sourceTree = "<group>"; };
@@ -480,6 +486,16 @@
 			path = Account;
 			sourceTree = "<group>";
 		};
+		1F65D95B2C7287AC0023CC5D /* History */ = {
+			isa = PBXGroup;
+			children = (
+				1F65D95C2C7287C10023CC5D /* HistoryView.swift */,
+				1F65D95E2C7287CC0023CC5D /* HistoryViewModel.swift */,
+				1F65D9602C7287D30023CC5D /* History.swift */,
+			);
+			path = History;
+			sourceTree = "<group>";
+		};
 		1F7486CC2A6F78D10063AC35 /* Containers */ = {
 			isa = PBXGroup;
 			children = (
@@ -609,6 +625,7 @@
 			children = (
 				1F1E85492A6F7AB400CEEBBC /* MainView */,
 				1F46B4152A799CE6003A9550 /* Resume */,
+				1F65D95B2C7287AC0023CC5D /* History */,
 				1FA08EE72C5DC1B50019000B /* NewTransaction */,
 				1F1E854A2A6F7ADF00CEEBBC /* Settings */,
 			);
@@ -936,6 +953,7 @@
 				1F46B4212A79E10C003A9550 /* SessionStore.swift in Sources */,
 				1F46B41F2A79D9BB003A9550 /* PRUEBAS_SessionStore.swift in Sources */,
 				1F06414A2A722AFB00C19084 /* ConstantMessages.swift in Sources */,
+				1F65D9612C7287D30023CC5D /* History.swift in Sources */,
 				1F19D96A2A4A933200137EA0 /* ConstantShapes.swift in Sources */,
 				1F14081D2A5910D300181500 /* ButtonLinkStyle.swift in Sources */,
 				1F5CC5822A6657F800C214FE /* TextFieldName.swift in Sources */,
@@ -944,6 +962,7 @@
 				1F5CC5802A6653AF00C214FE /* TextFieldPassword.swift in Sources */,
 				1F1408222A59254F00181500 /* RegisterView.swift in Sources */,
 				1F222F522C65C6BD0017A1BE /* ChangePasswordViewModel.swift in Sources */,
+				1F65D95D2C7287C10023CC5D /* HistoryView.swift in Sources */,
 				1F64B09D2A7089C5004AC825 /* SettingsOptions.swift in Sources */,
 				1FB8BB9D2A5BC728002DED1F /* ConstantColors.swift in Sources */,
 				1F7437B42A668BCD0039EFD4 /* Gestures+Extensions.swift in Sources */,
@@ -961,6 +980,7 @@
 				1F7486C92A6A5DC90063AC35 /* ButtonScaleStyle.swift in Sources */,
 				1F4C24832A47A6DA00CCAF6D /* MySpendApp.swift in Sources */,
 				1F222F572C65D0A70017A1BE /* ValidateAccount.swift in Sources */,
+				1F65D95F2C7287CC0023CC5D /* HistoryViewModel.swift in Sources */,
 				1FB8BB9B2A5BB1E4002DED1F /* RoundedCornersShape.swift in Sources */,
 				1F64B0A12A70AA94004AC825 /* ListContainer.swift in Sources */,
 				1F7486CB2A6F72D20063AC35 /* TabViewButton.swift in Sources */,
