@@ -48,10 +48,6 @@ struct ResumeView: View {
                 .buttonStyle(ButtonHorizontalStyle(subTitle: "Go to history",
                                                    iconLeading: Image.stackFill))
             }
-            .navigationDestination(isPresented: $viewModel.navigateToHistory) {
-                HistoryView()
-                    .toolbar(.hidden)
-            }
 
             TextError(message: viewModel.model.errorMessage)
             
@@ -90,6 +86,10 @@ struct ResumeView: View {
             Task {
                 await viewModel.onAppear()
             }
+        }
+        .navigationDestination(isPresented: $viewModel.navigateToHistory) {
+            HistoryView()
+                .toolbar(.hidden)
         }
     }
 }
