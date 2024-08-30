@@ -69,8 +69,8 @@ struct SessionStore {
         //try await sendEmailRegisteredUser() //Commented: Will send only via: Validation User View.
     }
 
-    static func updateUser(newUserName: String, forUser user: User? = UtilsStore.currentUser) async throws {
-        guard let user = UtilsStore.currentUser else {
+    static func updateUser(newUserName: String, forUser user: User?) async throws {
+        guard let user = user else {
             throw ConstantMessages.userNotLoggedIn
         }
         

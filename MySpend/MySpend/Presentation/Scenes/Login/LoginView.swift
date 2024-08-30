@@ -54,11 +54,6 @@ struct LoginView: View {
                 }
                 .buttonStyle(ButtonPrimaryStyle(isLoading: $loginVM.login.isLoading))
                 .padding(.bottom)
-                //TODO: No hace falta el navigation porque ya la vista RootView maneja esto al loguearse:
-//                .navigationDestination(isPresented: $loginVM.login.canSubmit) {
-//                    MainView(selectedTab: .resume)
-//                        .toolbar(.hidden)
-//                }
                 
                 
                 TextError(message: loginVM.login.errorMessage)
@@ -76,15 +71,11 @@ struct LoginView: View {
                 .padding(.bottom)
                 
                 Button("Register") {
-                    loginVM.login.navigateToRegisterView = true
+                    Router.shared.path.append(Router.Destination.register)
                 }
                 .buttonStyle(ButtonPrimaryStyle(neverBgDisabled: true))
                 .padding(.bottom)
                 .padding(.horizontal, ConstantViews.paddingSmallButton)
-                .navigationDestination(isPresented: $loginVM.login.navigateToRegisterView) {
-                    RegisterView()
-                        .toolbar(.hidden)
-                }
             }
             .padding(.bottom)
             

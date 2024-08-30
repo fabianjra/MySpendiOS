@@ -10,14 +10,15 @@ import Foundation
 class ResumeViewModel: BaseViewModel {
     
     @Published var model = Resume()
-    @Published var navigateToHistory: Bool = false
+    
+    @Published var errorMessage: String = ""
     
     init(model: Resume = Resume()) {
         self.model = model
     }
 
     func onAppear() async {
-        if let user = UtilsStore.getCurrentUser() {
+        if let user = UtilsStore.currentUser {
             
             // The user's ID, unique to the Firebase project.
             // Do NOT use this value to authenticate with your backend server,
@@ -59,7 +60,7 @@ class ResumeViewModel: BaseViewModel {
             }
             
         } catch {
-            model.errorMessage = error.localizedDescription
+            errorMessage = error.localizedDescription
         }
     }
 }

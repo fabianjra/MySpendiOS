@@ -43,13 +43,14 @@ struct ResumeView: View {
             // MARK: CONTENT
             VStack {
                 Button("History") {
-                    viewModel.navigateToHistory = true
+                    Router.shared.path.append(Router.Destination.history)
                 }
                 .buttonStyle(ButtonHorizontalStyle(subTitle: "Go to history",
                                                    iconLeading: Image.stackFill))
             }
-
-            TextError(message: viewModel.model.errorMessage)
+            
+            
+            TextError(message: viewModel.errorMessage)
             
             // MARK: RESUME
             VStack {
@@ -87,10 +88,6 @@ struct ResumeView: View {
                 await viewModel.onAppear()
             }
         }
-        .navigationDestination(isPresented: $viewModel.navigateToHistory) {
-            HistoryView()
-                .toolbar(.hidden)
-        }
     }
 }
 
@@ -121,8 +118,7 @@ struct ResumeView: View {
         
         let resume = Resume(userName: "vista previa",
                             transactions: transactionArray,
-                            totalBalance: 0.0,
-                            errorMessage: "")
+                            totalBalance: 0.0)
         
         let resumeVM = ResumeViewModel(model: resume)
         
@@ -134,4 +130,22 @@ struct ResumeView: View {
 #Preview("No content") {
     ResumeView(viewModel: ResumeViewModel())
         .environment(\.locale, .init(identifier: "en"))
+}
+
+
+
+struct UserJSON: Codable {
+    let uid: String
+    let email: String?
+    let displayName: String?
+    let phoneNumber: String?
+    let photoURL: String?
+    
+    init(user: User) {
+        self.uid = user.uid
+        self.email = user.email
+        self.displayName = user.displayName
+        self.phoneNumber = user.phoneNumber
+        self.photoURL = user.photoURL?.absoluteString
+    }
 }

@@ -57,7 +57,11 @@ struct RegisterView: View {
                 .onSubmit {
                     Task {
                         focusedField = .none
-                        await registerVM.validateRegister()
+                        let canSubmit = await registerVM.validateRegister()
+                        
+                        if canSubmit {
+                            Router.shared.path.append(Router.Destination.main)
+                        }
                     }
                 }
                 
@@ -65,15 +69,15 @@ struct RegisterView: View {
                 Button("Register") {
                     Task {
                         focusedField = .none
-                        await registerVM.validateRegister()
+                        let canSubmit = await registerVM.validateRegister()
+                        
+                        if canSubmit {
+                            Router.shared.path.append(Router.Destination.main)
+                        }
                     }
                 }
                 .buttonStyle(ButtonPrimaryStyle(isLoading: $registerVM.register.isLoading))
                 .padding(.bottom)
-                .navigationDestination(isPresented: $registerVM.register.canSubmit) {
-                    MainView(selectedTab: .resume)
-                        .toolbar(.hidden)
-                }
                 
                 
                 TextError(message: registerVM.register.errorMessage)

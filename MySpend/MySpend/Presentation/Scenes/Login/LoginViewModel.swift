@@ -28,7 +28,6 @@ class LoginViewModel: ObservableObject {
         
         do {
             try await SessionStore.singIn(login.email, password: login.password)
-            login.canSubmit = true
         } catch {
             Logs.WriteCatchExeption(error: error)
             login.errorMessage = error.localizedDescription

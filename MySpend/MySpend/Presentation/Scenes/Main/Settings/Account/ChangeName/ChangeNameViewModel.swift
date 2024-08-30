@@ -20,7 +20,7 @@ class ChangeNameViewModel: BaseViewModel {
         
         await performWithLoader {
             do {
-                try await SessionStore.updateUser(newUserName: self.model.newUserName)
+                try await SessionStore.updateUser(newUserName: self.model.newUserName, forUser: UtilsStore.currentUser)
                 
                 self.model.errorMessage = "NAME CHANGED TO: \(UtilsStore.getCurrentUser()?.displayName ?? "")"
             } catch {

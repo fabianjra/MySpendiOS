@@ -10,12 +10,11 @@ import SwiftUI
 struct MainView: View {
     
     @StateObject private var resumeVM = ResumeViewModel()
-    @State private var selectedTab: TabViewIcons
+    @State private var selectedTab: TabViewIcons = .resume
     
     @State private var showNewItemModal = false
     
-    init(selectedTab: TabViewIcons) {
-        self.selectedTab = selectedTab
+    init() {
         UITabBar.appearance().isHidden = true
     }
     
@@ -34,10 +33,6 @@ struct MainView: View {
                 
                 SettingsView()
                     .tag(TabViewIcons.settings)
-                
-//                selectedTab.view
-//                    .tag(selectedTab.id)
-//                    .environmentObject(resumeVM)
             }
             
             tabView
@@ -78,5 +73,9 @@ struct MainView: View {
 }
 
 #Preview {
-    MainView(selectedTab: .resume)
+    VStack {
+        let path = Router()
+        MainView()
+            .environmentObject(path)
+    }
 }

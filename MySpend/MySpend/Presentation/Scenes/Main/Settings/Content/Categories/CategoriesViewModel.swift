@@ -31,19 +31,19 @@ class CategoriesViewModel: BaseViewModel {
         }
     }
  
-    private var listener: ListenerRegistration?
-    
-    func startListeningForCategoryChanges() {
-        do {
-            listener = try DatabaseStore.listenCategoriesChanges { [weak self] categoriesLoaded in
-                self?.categories = categoriesLoaded
-            }
-        } catch {
-            errorMessage = error.localizedDescription
-        }
-    }
-    
-    deinit {
-        listener?.remove()
-    }
+//    private var listener: ListenerRegistration?
+//    
+//    func startListeningForCategoryChanges() {
+//        do {
+//            listener = try DatabaseStore.listenCategoriesChanges { [weak self] categoriesLoaded in
+//                self?.categories = categoriesLoaded
+//            }
+//        } catch {
+//            errorMessage = error.localizedDescription
+//        }
+//    }
+//    
+//    deinit {
+//        listener?.remove()
+//    }
 }

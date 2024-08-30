@@ -11,8 +11,6 @@ struct Login {
 
     var errorMessage: String = ""
     
-    var canSubmit: Bool = false
-    var navigateToRegisterView: Bool = false
     var isLoading: Bool = false
     
     /// Used for @FocusState in the Login View.
