@@ -30,7 +30,6 @@
 		1F222F502C65C6B00017A1BE /* ChangePassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F222F4F2C65C6B00017A1BE /* ChangePassword.swift */; };
 		1F222F522C65C6BD0017A1BE /* ChangePasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F222F512C65C6BD0017A1BE /* ChangePasswordViewModel.swift */; };
 		1F222F552C65D09F0017A1BE /* ValidateAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F222F542C65D09F0017A1BE /* ValidateAccountViewModel.swift */; };
-		1F222F572C65D0A70017A1BE /* ValidateAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F222F562C65D0A70017A1BE /* ValidateAccount.swift */; };
 		1F222F5C2C65DCFF0017A1BE /* Resume.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F222F5B2C65DCFF0017A1BE /* Resume.swift */; };
 		1F222F5E2C65DD080017A1BE /* ResumeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F222F5D2C65DD080017A1BE /* ResumeViewModel.swift */; };
 		1F3A953D2C5D68D4008AAE50 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3A953C2C5D68D4008AAE50 /* LoginViewModel.swift */; };
@@ -41,7 +40,7 @@
 		1F46B4172A799CFD003A9550 /* ResumeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F46B4162A799CFD003A9550 /* ResumeView.swift */; };
 		1F46B4192A79A267003A9550 /* ContentContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F46B4182A79A267003A9550 /* ContentContainer.swift */; };
 		1F46B41F2A79D9BB003A9550 /* PRUEBAS_SessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F46B41E2A79D9BB003A9550 /* PRUEBAS_SessionStore.swift */; };
-		1F46B4212A79E10C003A9550 /* SessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F46B4202A79E10C003A9550 /* SessionStore.swift */; };
+		1F46B4212A79E10C003A9550 /* AuthFB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F46B4202A79E10C003A9550 /* AuthFB.swift */; };
 		1F46B4232A7A03CD003A9550 /* TextPlain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F46B4222A7A03CD003A9550 /* TextPlain.swift */; };
 		1F4C24832A47A6DA00CCAF6D /* MySpendApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4C24822A47A6DA00CCAF6D /* MySpendApp.swift */; };
 		1F4C24872A47A6DC00CCAF6D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F4C24862A47A6DC00CCAF6D /* Assets.xcassets */; };
@@ -95,6 +94,9 @@
 		1FB8BB9D2A5BC728002DED1F /* ConstantColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB8BB9C2A5BC728002DED1F /* ConstantColors.swift */; };
 		1FC2E6712C5DC474007EA785 /* NewTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC2E6702C5DC474007EA785 /* NewTransaction.swift */; };
 		1FC2E6732C5DC567007EA785 /* NewTransactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC2E6722C5DC567007EA785 /* NewTransactionViewModel.swift */; };
+		1FC36BA82C816B24002EF932 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 1FC36BA72C816B24002EF932 /* FirebaseStorage */; };
+		1FC36BAA2C816BFF002EF932 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 1FC36BA92C816BFF002EF932 /* FirebaseFirestore */; };
+		1FC36BAC2C816F44002EF932 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC36BAB2C816F44002EF932 /* AuthViewModel.swift */; };
 		1FC94CBC2A5A1DB7005CA0B6 /* TextViewStyledButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC94CBB2A5A1DB7005CA0B6 /* TextViewStyledButton.swift */; };
 		1FC94CBF2A5A2CB7005CA0B6 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC94CBE2A5A2CB7005CA0B6 /* MainView.swift */; };
 		1FC94CC32A5A3732005CA0B6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FC94CC22A5A3732005CA0B6 /* LaunchScreen.storyboard */; };
@@ -156,7 +158,6 @@
 		1F222F4F2C65C6B00017A1BE /* ChangePassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePassword.swift; sourceTree = "<group>"; };
 		1F222F512C65C6BD0017A1BE /* ChangePasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewModel.swift; sourceTree = "<group>"; };
 		1F222F542C65D09F0017A1BE /* ValidateAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateAccountViewModel.swift; sourceTree = "<group>"; };
-		1F222F562C65D0A70017A1BE /* ValidateAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateAccount.swift; sourceTree = "<group>"; };
 		1F222F5B2C65DCFF0017A1BE /* Resume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resume.swift; sourceTree = "<group>"; };
 		1F222F5D2C65DD080017A1BE /* ResumeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeViewModel.swift; sourceTree = "<group>"; };
 		1F3A953C2C5D68D4008AAE50 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
@@ -167,7 +168,7 @@
 		1F46B4162A799CFD003A9550 /* ResumeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeView.swift; sourceTree = "<group>"; };
 		1F46B4182A79A267003A9550 /* ContentContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentContainer.swift; sourceTree = "<group>"; };
 		1F46B41E2A79D9BB003A9550 /* PRUEBAS_SessionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PRUEBAS_SessionStore.swift; sourceTree = "<group>"; };
-		1F46B4202A79E10C003A9550 /* SessionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStore.swift; sourceTree = "<group>"; };
+		1F46B4202A79E10C003A9550 /* AuthFB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFB.swift; sourceTree = "<group>"; };
 		1F46B4222A7A03CD003A9550 /* TextPlain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextPlain.swift; sourceTree = "<group>"; };
 		1F4C247F2A47A6DA00CCAF6D /* MySpend.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MySpend.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F4C24822A47A6DA00CCAF6D /* MySpendApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySpendApp.swift; sourceTree = "<group>"; };
@@ -225,6 +226,7 @@
 		1FB8BB9C2A5BC728002DED1F /* ConstantColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantColors.swift; sourceTree = "<group>"; };
 		1FC2E6702C5DC474007EA785 /* NewTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTransaction.swift; sourceTree = "<group>"; };
 		1FC2E6722C5DC567007EA785 /* NewTransactionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTransactionViewModel.swift; sourceTree = "<group>"; };
+		1FC36BAB2C816F44002EF932 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		1FC94CBB2A5A1DB7005CA0B6 /* TextViewStyledButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewStyledButton.swift; sourceTree = "<group>"; };
 		1FC94CBE2A5A2CB7005CA0B6 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		1FC94CC22A5A3732005CA0B6 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -249,7 +251,9 @@
 				1FB87CF92AF45A1B003D11EA /* FirebaseCrashlytics in Frameworks */,
 				1FB87CFB2AF45A1B003D11EA /* FirebaseFirestoreCombine-Community in Frameworks */,
 				1FB87CF52AF45A1B003D11EA /* FirebaseAnalytics in Frameworks */,
+				1FC36BA82C816B24002EF932 /* FirebaseStorage in Frameworks */,
 				1FB87CF72AF45A1B003D11EA /* FirebaseAuthCombine-Community in Frameworks */,
+				1FC36BAA2C816BFF002EF932 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -361,7 +365,6 @@
 			children = (
 				1F0641472A72280500C19084 /* ValidateAccountView.swift */,
 				1F222F542C65D09F0017A1BE /* ValidateAccountViewModel.swift */,
-				1F222F562C65D0A70017A1BE /* ValidateAccount.swift */,
 			);
 			path = ValidateAccount;
 			sourceTree = "<group>";
@@ -388,9 +391,10 @@
 			isa = PBXGroup;
 			children = (
 				1F46B41E2A79D9BB003A9550 /* PRUEBAS_SessionStore.swift */,
-				1F46B4202A79E10C003A9550 /* SessionStore.swift */,
+				1F46B4202A79E10C003A9550 /* AuthFB.swift */,
 				1F3A95402C5D74CC008AAE50 /* DatabaseStore.swift */,
 				1F4C9B5A2C5C847100C403B3 /* UtilsStore.swift */,
+				1FC36BAB2C816F44002EF932 /* AuthViewModel.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -756,6 +760,8 @@
 				1FB87CF62AF45A1B003D11EA /* FirebaseAuthCombine-Community */,
 				1FB87CF82AF45A1B003D11EA /* FirebaseCrashlytics */,
 				1FB87CFA2AF45A1B003D11EA /* FirebaseFirestoreCombine-Community */,
+				1FC36BA72C816B24002EF932 /* FirebaseStorage */,
+				1FC36BA92C816BFF002EF932 /* FirebaseFirestore */,
 			);
 			productName = MySpend;
 			productReference = 1F4C247F2A47A6DA00CCAF6D /* MySpend.app */;
@@ -943,6 +949,7 @@
 				1FAA87D52C697F1000700CD6 /* CategoriesViewModel.swift in Sources */,
 				1F222F452C65A7370017A1BE /* ChangeNameViewModel.swift in Sources */,
 				1F222F4D2C65C1AD0017A1BE /* BaseViewModel.swift in Sources */,
+				1FC36BAC2C816F44002EF932 /* AuthViewModel.swift in Sources */,
 				1FA08EE22C5D993C0019000B /* Register.swift in Sources */,
 				1FE7C6882A48027C0070B988 /* Images+Extensions.swift in Sources */,
 				1F19D9642A4A583800137EA0 /* TextFieldIconStyle.swift in Sources */,
@@ -954,7 +961,7 @@
 				1FD2E9852C5329F800E68602 /* CategoryModel.swift in Sources */,
 				1F171F292A7CC90D00A0A33E /* ConstantEmojis.swift in Sources */,
 				1FC94CD12A5A6E01005CA0B6 /* TabViewIcons.swift in Sources */,
-				1F46B4212A79E10C003A9550 /* SessionStore.swift in Sources */,
+				1F46B4212A79E10C003A9550 /* AuthFB.swift in Sources */,
 				1F46B41F2A79D9BB003A9550 /* PRUEBAS_SessionStore.swift in Sources */,
 				1F06414A2A722AFB00C19084 /* ConstantMessages.swift in Sources */,
 				1F65D9612C7287D30023CC5D /* History.swift in Sources */,
@@ -983,7 +990,6 @@
 				1F5CC57E2A664EFB00C214FE /* TextFieldEmail.swift in Sources */,
 				1F7486C92A6A5DC90063AC35 /* ButtonScaleStyle.swift in Sources */,
 				1F4C24832A47A6DA00CCAF6D /* MySpendApp.swift in Sources */,
-				1F222F572C65D0A70017A1BE /* ValidateAccount.swift in Sources */,
 				1F65D95F2C7287CC0023CC5D /* HistoryViewModel.swift in Sources */,
 				1FB8BB9B2A5BB1E4002DED1F /* RoundedCornersShape.swift in Sources */,
 				1F64B0A12A70AA94004AC825 /* ListContainer.swift in Sources */,
@@ -1364,6 +1370,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 1FB87CF32AF459D5003D11EA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseFirestoreCombine-Community";
+		};
+		1FC36BA72C816B24002EF932 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1FB87CF32AF459D5003D11EA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
+		1FC36BA92C816BFF002EF932 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1FB87CF32AF459D5003D11EA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

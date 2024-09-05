@@ -11,6 +11,7 @@ import Firebase
 struct ResumeView: View {
     
     @ObservedObject var viewModel: ResumeViewModel
+    @EnvironmentObject var authViewModel: AuthViewModel
     
 //    init(model: Resume = Resume()) {
 //        /*
@@ -84,8 +85,17 @@ struct ResumeView: View {
  
         }
         .onAppear {
+            print("Router count RESUME: \(Router.shared.path.count)")
             Task {
-                await viewModel.onAppear()
+                await viewModel.onAppear(authViewModel)
+            }
+        }
+        .onDisappear {
+            //TODO: Verificar que sea necesario limpiar el viewModel, ya que la vista desaparece.
+            if authViewModel.currentUser == nil {
+                viewModel.model.transactions = []
+                viewModel.model.totalBalance = 0
+                viewModel.model.userName = ""
             }
         }
     }
@@ -130,22 +140,4 @@ struct ResumeView: View {
 #Preview("No content") {
     ResumeView(viewModel: ResumeViewModel())
         .environment(\.locale, .init(identifier: "en"))
-}
-
-
-
-struct UserJSON: Codable {
-    let uid: String
-    let email: String?
-    let displayName: String?
-    let phoneNumber: String?
-    let photoURL: String?
-    
-    init(user: User) {
-        self.uid = user.uid
-        self.email = user.email
-        self.displayName = user.displayName
-        self.phoneNumber = user.phoneNumber
-        self.photoURL = user.photoURL?.absoluteString
-    }
 }

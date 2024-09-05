@@ -25,13 +25,14 @@ import Firebase
 
 struct RootView: View {
     
-    @State private var isUserLoged = false
     @StateObject var router = Router.shared
+    
+    @EnvironmentObject var authViewModel: AuthViewModel
     
     var body: some View {
         NavigationStack(path: $router.path) {
             VStack {
-                if isUserLoged {
+                if authViewModel.currentUser != nil {
                     MainView()
                 } else {
                     LoginView()
@@ -39,19 +40,6 @@ struct RootView: View {
             }
             .onAppear {
                 UIApplication.shared.addTapGestureRecognizer()
-                
-                
-                //Handle session for navigation.
-                Auth.auth().addStateDidChangeListener { auth, user in
-                    isUserLoged = user != nil
-                }
-                
-                if Auth.auth().currentUser?.uid != nil {
-                    //user is logged in
-                } else {
-                    //user is not logged in
-                }
-                 
             }
             .navigationDestination(for: Router.Destination.self) { destination in
                 switch destination {

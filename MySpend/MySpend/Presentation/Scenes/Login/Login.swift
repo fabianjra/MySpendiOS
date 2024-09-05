@@ -8,10 +8,6 @@
 struct Login {
     var email: String = ""
     var password: String = ""
-
-    var errorMessage: String = ""
-    
-    var isLoading: Bool = false
     
     /// Used for @FocusState in the Login View.
     enum Field: Hashable {

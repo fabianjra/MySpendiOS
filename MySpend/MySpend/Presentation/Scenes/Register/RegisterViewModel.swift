@@ -38,7 +38,7 @@ class RegisterViewModel: ObservableObject {
         }
         
         do {
-            try await SessionStore.registerUser(withEmail: register.email,
+            try await AuthFB().registerUser(withEmail: register.email,
                                                 password: register.password,
                                                 username: register.name)
             return true

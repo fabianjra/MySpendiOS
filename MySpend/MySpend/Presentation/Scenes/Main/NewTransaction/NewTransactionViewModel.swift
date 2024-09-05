@@ -33,7 +33,7 @@ class NewTransactionViewModel: ObservableObject {
                                                     detail: newTransaction.notes,
                                                     type: newTransaction.transactionType)
             
-            try await DatabaseStore.addNewTransaction(transactionModel: transactionModel)
+            try await DatabaseStore().addNewTransaction(transactionModel: transactionModel)
             
             return ResponseModel(.successful)
         } catch {

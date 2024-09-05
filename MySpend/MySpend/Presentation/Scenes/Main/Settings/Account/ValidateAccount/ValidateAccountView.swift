@@ -10,7 +10,7 @@ import Firebase
 
 struct ValidateAccountView: View {
     
-    @StateObject var validateAccountVM = ValidateAccountViewModel()
+    @StateObject var viewModel = ValidateAccountViewModel()
     
     var body: some View {
         FormContainer {
@@ -21,7 +21,7 @@ struct ValidateAccountView: View {
                             titleSize: .bigXL)
             .padding(.bottom)
             
-            if validateAccountVM.model.userIsValidated {
+            if viewModel.userIsValidated {
                 
                 // MARK: PLAIN SCREEN
                 userIsValidatedBody
@@ -33,9 +33,11 @@ struct ValidateAccountView: View {
                 sendEmailBody
             }
         }
-        .disabled(validateAccountVM.isLoading)
+        .disabled(viewModel.isLoading)
         .onAppear {
-            validateAccountVM.isUserValidated()
+            Task {
+                await viewModel.isUserValidated()
+            }
         }
     }
     
@@ -60,7 +62,7 @@ struct ValidateAccountView: View {
             Button("Go back") {
                 dismiss()
             }
-            .buttonStyle(ButtonPrimaryStyle())
+            .buttonStyle(ButtonPrimaryStyle(isLoading: $viewModel.isLoading))
             .padding(.top)
         }
         .padding(.top)
@@ -74,15 +76,15 @@ struct ValidateAccountView: View {
             
             Button("Send email") {
                 Task {
-                    await validateAccountVM.sendEmail()
+                    await viewModel.sendEmail()
                 }
             }
-            .buttonStyle(ButtonPrimaryStyle(isLoading: $validateAccountVM.isLoading))
+            .buttonStyle(ButtonPrimaryStyle(isLoading: $viewModel.isLoading))
             .padding(.bottom)
-            .disabled(validateAccountVM.model.disabled)
+            .disabled(viewModel.disabled)
             
             
-            TextError(message: validateAccountVM.model.errorMessage)
+            TextError(message: viewModel.errorMessage)
         }
     }
 }

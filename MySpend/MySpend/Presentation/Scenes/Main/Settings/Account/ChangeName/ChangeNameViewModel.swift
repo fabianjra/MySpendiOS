@@ -5,36 +5,42 @@
 //  Created by Fabian Rodriguez on 8/8/24.
 //
 
-import Foundation
+import Combine
 
 class ChangeNameViewModel: BaseViewModel {
 
     @Published var model = ChangeName()
+    let currentUser = AuthFB().currentUser
+    
+    var errorMessage: String = ""
+    @Published var disabled: Bool = false
     
     func changeUserName() async {
         
         if model.newUserName.isEmptyOrWhitespace() {
-            model.errorMessage = ConstantMessages.emptySpace.localizedDescription
+            errorMessage = ConstantMessages.emptySpace.localizedDescription
             return
         }
         
         await performWithLoader {
             do {
-                try await SessionStore.updateUser(newUserName: self.model.newUserName, forUser: UtilsStore.currentUser)
+                try await AuthFB().updateUser(newUserName: self.model.newUserName, forUser: self.currentUser)
                 
-                self.model.errorMessage = "NAME CHANGED TO: \(UtilsStore.getCurrentUser()?.displayName ?? "")"
+                self.errorMessage = "NAME CHANGED TO: \(self.currentUser?.displayName ?? "")"
             } catch {
-                self.model.errorMessage = error.localizedDescription
+                self.errorMessage = error.localizedDescription
             }
         }
     }
     
     func onAppear() {
-        do {
-            model.userName = try SessionStore.getUserName()
-        } catch {
-            model.disabled = true
-            model.errorMessage = error.localizedDescription
+        model.userName = currentUser?.displayName ?? ""
+        
+        if let currentUser = currentUser?.displayName {
+            model.userName = currentUser
+        } else {
+            disabled = true
+            errorMessage = ConstantMessages.userNotLoggedIn.localizedDescription
         }
     }
 }

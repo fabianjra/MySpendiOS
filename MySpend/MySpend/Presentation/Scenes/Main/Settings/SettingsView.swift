@@ -10,6 +10,7 @@ import SwiftUI
 struct SettingsView: View {
     
     @State private var showingAlert = false
+    @EnvironmentObject var authViewModel: AuthViewModel
     
     var body: some View {
         ContentContainer(addPading: false) {
@@ -54,7 +55,9 @@ struct SettingsView: View {
                         
                         Button("Log out", role: .destructive) {
                             do {
-                                try SessionStore.singOut()
+                                authViewModel.removeListener()
+                                try AuthFB().singOut()
+                                Router.shared.path.removeLast(Router.shared.path.count) //In case when come from register.
                             } catch {
                                 Logs.WriteCatchExeption("Error signing out", error: error)
                             }

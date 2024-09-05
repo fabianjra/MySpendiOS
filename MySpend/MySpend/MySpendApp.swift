@@ -35,9 +35,12 @@ struct MySpendApp: App {
         FirebaseApp.configure()
     }
     
+    @StateObject var authViewModel = AuthViewModel()
+    
     var body: some Scene {
         WindowGroup {
             RootView()
+                .environmentObject(authViewModel)
                 //.environmentObject(dataManager) //Class for get, add and delete from Firestore.
         }
     }

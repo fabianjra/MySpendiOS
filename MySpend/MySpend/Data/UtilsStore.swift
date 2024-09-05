@@ -8,14 +8,9 @@ import Firebase
 
 struct UtilsStore {
     
-    static let currentUser = getCurrentUser()
     static let db = Firestore.firestore()
     static let userRef = db.collection(ConstantFB.Collections.users)
-    
-    static func getCurrentUser() -> User? {
-        return Auth.auth().currentUser
-    }
-    
+
     static func encodeModelFB<T: Encodable>(_ model: T) throws -> [String: Any] {
         return try Firestore.Encoder().encode(model)
     }

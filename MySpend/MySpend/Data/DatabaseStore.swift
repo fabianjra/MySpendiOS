@@ -10,6 +10,8 @@ import FirebaseFirestoreSwift
 
 struct DatabaseStore {
     
+    var currentUser: User? = Auth.auth().currentUser
+    
     //**************************************************************
     // MARK: TRANSACCIONES
     //**************************************************************
@@ -31,9 +33,9 @@ struct DatabaseStore {
      
      - Date: Aug 2024
      */
-    static func addNewTransaction(transactionModel: TransactionModel) async throws {
+    func addNewTransaction(transactionModel: TransactionModel) async throws {
         
-        guard let userId = UtilsStore.currentUser?.uid else {
+        guard let userId = currentUser?.uid else {
             throw ConstantMessages.userNotLoggedIn
         }
         
@@ -92,8 +94,8 @@ struct DatabaseStore {
         }
     }
     
-    static func getTransactions() async throws -> [TransactionModel] {
-        guard let userId = UtilsStore.currentUser?.uid else {
+    func getTransactions() async throws -> [TransactionModel] {
+        guard let userId = currentUser?.uid else {
             throw ConstantMessages.userNotLoggedIn
         }
         
@@ -118,9 +120,9 @@ struct DatabaseStore {
     // MARK: CATEGORIES
     //**************************************************************
     
-    static func addNewCategory(categoryModel: CategoryModel) async throws {
+    func addNewCategory(categoryModel: CategoryModel) async throws {
         
-        guard let userId = UtilsStore.currentUser?.uid else {
+        guard let userId = currentUser?.uid else {
             throw ConstantMessages.userNotLoggedIn
         }
         
@@ -171,8 +173,8 @@ struct DatabaseStore {
         }
     }
     
-    static func getCategories() async throws -> [CategoryModel] {
-        guard let userId = UtilsStore.currentUser?.uid else {
+    func getCategories() async throws -> [CategoryModel] {
+        guard let userId = currentUser?.uid else {
             throw ConstantMessages.userNotLoggedIn
         }
         
@@ -238,8 +240,8 @@ struct DatabaseStore {
      
      - Date: Aug 2024
      */
-    static func listenCategoriesChanges(listener: @escaping ([CategoryModel]) -> Void) throws -> ListenerRegistration? {
-        guard let userId = UtilsStore.currentUser?.uid else {
+    func listenCategoriesChanges(listener: @escaping ([CategoryModel]) -> Void) throws -> ListenerRegistration? {
+        guard let userId = currentUser?.uid else {
             throw ConstantMessages.userNotLoggedIn
         }
         

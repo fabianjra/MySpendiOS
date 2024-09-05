@@ -14,6 +14,8 @@ struct MainView: View {
     
     @State private var showNewItemModal = false
     
+    @EnvironmentObject var authViewModel: AuthViewModel
+    
     init() {
         UITabBar.appearance().isHidden = true
     }

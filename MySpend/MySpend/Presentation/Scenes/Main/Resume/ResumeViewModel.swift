@@ -5,9 +5,11 @@
 //  Created by Fabian Rodriguez on 8/8/24.
 //
 
-import Foundation
+import SwiftUI
 
 class ResumeViewModel: BaseViewModel {
+    
+    //var authViewModel: AuthViewModel?
     
     @Published var model = Resume()
     
@@ -17,8 +19,8 @@ class ResumeViewModel: BaseViewModel {
         self.model = model
     }
 
-    func onAppear() async {
-        if let user = UtilsStore.currentUser {
+    func onAppear(_ authViewModel: AuthViewModel) async {
+        if let user = authViewModel.currentUser {
             
             // The user's ID, unique to the Firebase project.
             // Do NOT use this value to authenticate with your backend server,
@@ -48,10 +50,10 @@ class ResumeViewModel: BaseViewModel {
         //#if DEBUG || TARGET_OS_SIMULATOR
         #if targetEnvironment(simulator)
             //No cargar datos cuando se esta corriendo en simulador.
-            model.transactions = try await DatabaseStore.getTransactions()
+            model.transactions = try await DatabaseStore().getTransactions()
         #else
             //Otra accion en caso de que no sea DEBUG o Simulator.
-            model.transactions = try await DatabaseStore.getTransactions()
+            model.transactions = try await DatabaseStore().getTransactions()
         #endif
             
             model.totalBalance = 0

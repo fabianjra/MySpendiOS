@@ -21,6 +21,7 @@ enum ConstantMessages: String, Error {
     case userIsValidated
     case userCreatedNoName
     case userCreatedNoSendEmail
+    case emailSent
 }
 
 extension ConstantMessages: LocalizedError {
@@ -39,6 +40,7 @@ extension ConstantMessages: LocalizedError {
         case .userIsValidated: return NSLocalizedString("User is already validated.", comment: "")
         case .userCreatedNoName: return NSLocalizedString("The user was created without name, please add your name manually in Settings -> Change my name.", comment: "")
         case .userCreatedNoSendEmail: return NSLocalizedString("The user was created without sending the verification email, please send it manually in Settings -> Validate account.", comment: "")
+        case .emailSent: return NSLocalizedString("Email sent! follow next steps in your email.", comment: "")
         }
     }
 }

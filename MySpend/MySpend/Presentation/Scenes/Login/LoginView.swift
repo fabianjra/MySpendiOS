@@ -12,6 +12,8 @@ struct LoginView: View {
     
     @StateObject var loginVM = LoginViewModel()
     @FocusState private var focusedField: Login.Field?
+    
+    @EnvironmentObject var authViewModel: AuthViewModel
  
     var body: some View {
         FormContainer {
@@ -25,14 +27,14 @@ struct LoginView: View {
             VStack(spacing: ConstantViews.formSpacing) {
                 
                 TextFieldEmail(text: $loginVM.login.email,
-                               errorMessage: $loginVM.login.errorMessage)
+                               errorMessage: $loginVM.errorMessage)
                 .focused($focusedField, equals: .email)
                 .submitLabel(.next)
                 .onSubmit { focusedField = .password }
                 
                 
                 TextFieldPassword(text: $loginVM.login.password,
-                                  errorMessage: $loginVM.login.errorMessage,
+                                  errorMessage: $loginVM.errorMessage,
                                   iconLeading: Image.lockFill)
                 .padding(.bottom)
                 .textContentType(.password)
@@ -52,11 +54,11 @@ struct LoginView: View {
                         await loginVM.validateLogin()
                     }
                 }
-                .buttonStyle(ButtonPrimaryStyle(isLoading: $loginVM.login.isLoading))
+                .buttonStyle(ButtonPrimaryStyle(isLoading: $loginVM.isLoading))
                 .padding(.bottom)
                 
                 
-                TextError(message: loginVM.login.errorMessage)
+                TextError(message: loginVM.errorMessage)
             }
             .padding(.bottom)
             
@@ -116,7 +118,10 @@ struct LoginView: View {
                 }
             }
         }
-        .disabled(loginVM.login.isLoading)
+        .disabled(loginVM.isLoading)
+        .onAppear {
+            authViewModel.listenAuthentificationState()
+        }
         
         //Add the "Done" button at the Top of the keyboard.
 //        .toolbar {

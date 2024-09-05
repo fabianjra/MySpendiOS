@@ -6,21 +6,23 @@
 //
 
 import Firebase
-import FirebaseFirestoreSwift
+//import FirebaseFirestoreSwift
 
 // Updated To use Firebase with Async/Await || Version 10.17.0
-struct SessionStore {
+struct AuthFB {
     
-    static func singIn(_ email: String, password: String) async throws {
+    var currentUser: User? = Auth.auth().currentUser
+    
+    func singIn(_ email: String, password: String) async throws {
         try await Auth.auth().signIn(withEmail: email, password: password)
     }
     
-    static func singOut() throws {
+    func singOut() throws {
         try Auth.auth().signOut()
     }
     
-    static func getUserName() throws -> String {
-        if let user = UtilsStore.currentUser {
+    func getUserName() throws -> String {
+        if let user = currentUser {
             return user.displayName ?? ""
         } else {
             throw ConstantMessages.userNotLoggedIn
@@ -28,8 +30,8 @@ struct SessionStore {
     }
     
     //TODO: Agregar funcion de Transaccion para que sea atomico (Se complete todo o no haga ninguna accion).
-    static func updatePassword(actualPassword: String, newPasword: String) async throws {
-        guard let user = UtilsStore.currentUser else {
+    func updatePassword(actualPassword: String, newPasword: String) async throws {
+        guard let user = currentUser else {
             throw ConstantMessages.userNotLoggedIn
         }
         
@@ -56,7 +58,7 @@ struct SessionStore {
     }
     
     //TODO: Agregar funcion de Transaccion para que sea atomico (Se complete todo o no haga ninguna accion).
-    static func registerUser(withEmail email: String, password: String, username: String) async throws {
+    func registerUser(withEmail email: String, password: String, username: String) async throws {
         
         let user = try await Auth.auth().createUser(withEmail: email, password: password).user
         
@@ -69,7 +71,7 @@ struct SessionStore {
         //try await sendEmailRegisteredUser() //Commented: Will send only via: Validation User View.
     }
 
-    static func updateUser(newUserName: String, forUser user: User?) async throws {
+    func updateUser(newUserName: String, forUser user: User?) async throws {
         guard let user = user else {
             throw ConstantMessages.userNotLoggedIn
         }
@@ -80,7 +82,7 @@ struct SessionStore {
         try await changeRequest.commitChanges()
     }
     
-    private static func storeUserDocument(forUser user: UserModel) async throws {
+    func storeUserDocument(forUser user: UserModel) async throws {
         
         let encodedUser = try UtilsStore.encodeModelFB(user)
         let createRequest = UtilsStore.userRef.document(user.id)
@@ -88,8 +90,8 @@ struct SessionStore {
         try await createRequest.setData(encodedUser)
     }
     
-    static func sendEmailRegisteredUser() async throws {
-        guard let user = UtilsStore.currentUser else {
+    func sendEmailRegisteredUser() async throws {
+        guard let user = currentUser else {
             throw ConstantMessages.userNotLoggedIn
         }
         

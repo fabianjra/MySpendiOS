@@ -5,7 +5,7 @@
 //  Created by Fabian Rodriguez on 8/8/24.
 //
 
-import Foundation
+import Firebase
 
 class ChangePasswordViewModel: BaseViewModel {
     
@@ -26,7 +26,7 @@ class ChangePasswordViewModel: BaseViewModel {
         
         await performWithLoader {
             do {
-                try await SessionStore.updatePassword(actualPassword: self.model.userPassword,
+                try await AuthFB().updatePassword(actualPassword: self.model.userPassword,
                                                       newPasword: self.model.userNewPasswordConfirm)
                 
                 self.model.errorMessage = "PASSWORD CHANGED!"
@@ -37,7 +37,7 @@ class ChangePasswordViewModel: BaseViewModel {
     }
     
     func onAppear() {
-        if UtilsStore.getCurrentUser() == nil {
+        if Auth.auth().currentUser == nil {
             model.disabled = true
             model.errorMessage = ConstantMessages.userNotLoggedIn.localizedDescription
         }

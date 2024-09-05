@@ -5,7 +5,7 @@
 //  Created by Fabian Rodriguez on 8/8/24.
 //
 
-import Foundation
+import SwiftUI
 
 @MainActor
 class BaseViewModel: ObservableObject {
@@ -13,9 +13,14 @@ class BaseViewModel: ObservableObject {
     @Published var isLoading: Bool = false
     
     func performWithLoader(_ work: @escaping () async -> Void) async {
-        isLoading = true
+        withAnimation {
+            isLoading = true
+        }
+        
         defer {
-            isLoading = false
+            withAnimation {
+                isLoading = false
+            }
         }
         
         await work()

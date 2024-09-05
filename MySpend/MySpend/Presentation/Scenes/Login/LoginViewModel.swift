@@ -5,32 +5,29 @@
 //  Created by Fabian Rodriguez on 2/8/24.
 //
 
-import Combine
+import SwiftUI
 
-@MainActor
-class LoginViewModel: ObservableObject {
+class LoginViewModel: BaseViewModel {
     
     @Published var login = Login()
     
+    var errorMessage: String = ""
+    
     func validateLogin() async {
-        login.errorMessage = ""
+        errorMessage = ""
         
         if login.email.isEmptyOrWhitespace() || login.password.isEmptyOrWhitespace() {
-            login.errorMessage = ConstantMessages.emptySpaces.localizedDescription
+            errorMessage = ConstantMessages.emptySpaces.localizedDescription
             return
         }
         
-        login.isLoading = true
-        
-        defer {
-            login.isLoading = false
-        }
-        
-        do {
-            try await SessionStore.singIn(login.email, password: login.password)
-        } catch {
-            Logs.WriteCatchExeption(error: error)
-            login.errorMessage = error.localizedDescription
+        await performWithLoader {
+            do {
+                try await AuthFB().singIn(self.login.email, password: self.login.password)
+            } catch {
+                Logs.WriteCatchExeption(error: error)
+                self.errorMessage = error.localizedDescription
+            }
         }
     }
 }

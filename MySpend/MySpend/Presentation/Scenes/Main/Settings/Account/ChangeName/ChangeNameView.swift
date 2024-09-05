@@ -33,7 +33,7 @@ struct ChangeNameView: View {
                 TextFieldName(placeHolder: "New name",
                               text: $changeNameVM.model.newUserName,
                               iconLeading: Image.checkmark,
-                              errorMessage: $changeNameVM.model.errorMessage)
+                              errorMessage: $changeNameVM.errorMessage)
                 .padding(.bottom)
                 .submitLabel(.done)
                 .onSubmit {
@@ -50,10 +50,10 @@ struct ChangeNameView: View {
                 }
                 .buttonStyle(ButtonPrimaryStyle(isLoading: $changeNameVM.isLoading))
                 .padding(.bottom)
-                .disabled(changeNameVM.model.disabled)
+                .disabled(changeNameVM.disabled)
                 
                 
-                TextError(message: changeNameVM.model.errorMessage)
+                TextError(message: changeNameVM.errorMessage)
             }
         }
         .disabled(changeNameVM.isLoading)
