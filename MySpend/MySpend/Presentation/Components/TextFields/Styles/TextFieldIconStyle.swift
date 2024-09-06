@@ -78,6 +78,11 @@ struct TextFieldIconStyle: TextFieldStyle {
                         text = String(text.prefix(textLimit))
                     }
                 })
+                .onChange(of: errorMessage) {
+                    if text.isEmpty && !errorMessage.isEmpty {
+                        isError = true
+                    } 
+                }
         }
         .foregroundColor(foregroundColor)
         
