@@ -49,7 +49,6 @@ struct ChangeNameView: View {
                     }
                 }
                 .buttonStyle(ButtonPrimaryStyle(isLoading: $changeNameVM.isLoading))
-                .padding(.bottom)
                 .disabled(changeNameVM.disabled)
                 
                 

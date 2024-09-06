@@ -49,15 +49,14 @@ struct LoginView: View {
                 }
                 .buttonStyle(ButtonPrimaryStyle(isLoading: $loginVM.isLoading))
                 
+                TextError(message: loginVM.errorMessage)
+                
                 
                 Button("Forgot password?") {
                     print("Forgot password pressed")
                 }
                 .buttonStyle(ButtonLinkStyle())
-                .padding(.bottom)
-                
-                
-                TextError(message: loginVM.errorMessage)
+                .padding(.bottom)   
             }
 
             

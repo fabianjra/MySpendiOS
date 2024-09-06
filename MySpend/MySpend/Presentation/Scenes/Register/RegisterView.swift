@@ -63,7 +63,6 @@ struct RegisterView: View {
                     registerNewUser()
                 }
                 .buttonStyle(ButtonPrimaryStyle(isLoading: $viewModel.isLoading))
-                .padding(.bottom)
                 
                 
                 TextError(message: viewModel.errorMessage)

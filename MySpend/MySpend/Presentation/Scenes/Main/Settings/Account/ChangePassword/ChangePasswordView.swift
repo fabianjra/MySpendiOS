@@ -72,7 +72,6 @@ struct ChangePasswordView: View {
                 }
                 .buttonStyle(ButtonPrimaryStyle(isLoading: $changePasswordVM.isLoading))
                 .disabled(changePasswordVM.model.disabled)
-                .padding(.bottom)
                 
                 
                 TextError(message: changePasswordVM.model.errorMessage)

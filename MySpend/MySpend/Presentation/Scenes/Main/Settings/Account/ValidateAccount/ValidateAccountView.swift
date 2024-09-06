@@ -80,7 +80,6 @@ struct ValidateAccountView: View {
                 }
             }
             .buttonStyle(ButtonPrimaryStyle(isLoading: $viewModel.isLoading))
-            .padding(.bottom)
             .disabled(viewModel.disabled)
             
             
