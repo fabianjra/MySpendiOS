@@ -12,11 +12,9 @@ class ChangeNameViewModel: BaseViewModel {
     @Published var model = ChangeName()
     let currentUser = AuthFB().currentUser
     
-    var errorMessage: String = ""
     @Published var disabled: Bool = false
     
     func changeUserName() async {
-        
         if model.newUserName.isEmptyOrWhitespace() {
             errorMessage = ConstantMessages.emptySpace.localizedDescription
             return

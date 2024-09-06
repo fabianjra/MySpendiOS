@@ -11,11 +11,6 @@ struct Register {
     var password: String = ""
     var passwordConfirm: String = ""
     
-    var errorMessage: String = ""
-    
-    var canSubmit: Bool = false
-    var isLoading: Bool = false
-    
     enum Field: Hashable {
         case name
         case email

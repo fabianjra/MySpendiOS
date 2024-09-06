@@ -10,12 +10,9 @@ import Firebase
 class ValidateAccountViewModel: BaseViewModel {
     
     @Published var userIsValidated: Bool = false
-    var errorMessage: String = ""
     var disabled: Bool = false
     
     func sendEmail() async {
-        errorMessage = ""
-        
         await performWithLoader {
             do {
                 try await AuthFB().currentUser?.reload()

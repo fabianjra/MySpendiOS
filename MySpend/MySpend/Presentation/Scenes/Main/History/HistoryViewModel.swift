@@ -10,7 +10,6 @@ import Combine
 class HistoryViewModel: BaseViewModel {
     
     @Published var model: History
-    var errorMessage: String = ""
     
     init(model: History = History()) {
         self.model = model

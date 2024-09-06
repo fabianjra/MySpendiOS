@@ -13,8 +13,6 @@ class ResumeViewModel: BaseViewModel {
     
     @Published var model = Resume()
     
-    @Published var errorMessage: String = ""
-    
     init(model: Resume = Resume()) {
         self.model = model
     }

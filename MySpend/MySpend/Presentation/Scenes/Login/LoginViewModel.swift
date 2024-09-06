@@ -11,11 +11,7 @@ class LoginViewModel: BaseViewModel {
     
     @Published var login = Login()
     
-    var errorMessage: String = ""
-    
     func validateLogin() async {
-        errorMessage = ""
-        
         if login.email.isEmptyOrWhitespace() || login.password.isEmptyOrWhitespace() {
             errorMessage = ConstantMessages.emptySpaces.localizedDescription
             return

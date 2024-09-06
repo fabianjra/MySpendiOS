@@ -11,8 +11,11 @@ import SwiftUI
 class BaseViewModel: ObservableObject {
     
     @Published var isLoading: Bool = false
+    @Published var errorMessage = ""
     
     func performWithLoader(_ work: @escaping () async -> Void) async {
+        errorMessage = ""
+        
         withAnimation {
             isLoading = true
         }

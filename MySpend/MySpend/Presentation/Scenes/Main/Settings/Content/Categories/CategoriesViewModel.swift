@@ -10,7 +10,6 @@ import FirebaseFirestore
 class CategoriesViewModel: BaseViewModel {
     
     @Published var categories: [CategoryModel]
-    @Published var errorMessage: String = ""
     
     init(categories: [CategoryModel] = []) {
         self.categories = categories

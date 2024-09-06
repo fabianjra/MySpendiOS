@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RegisterView: View {
     
-    @StateObject var registerVM = RegisterViewModel()
+    @StateObject var viewModel = RegisterViewModel()
     @FocusState private var focusedField: Register.Field?
     
     var body: some View {
@@ -23,22 +23,22 @@ struct RegisterView: View {
             // MARK: REGISTER
             VStack(spacing: ConstantViews.formSpacing) {
                 
-                TextFieldName(text: $registerVM.register.name,
-                              errorMessage: $registerVM.register.errorMessage)
+                TextFieldName(text: $viewModel.register.name,
+                              errorMessage: $viewModel.errorMessage)
                 .focused($focusedField, equals: .name)
                 .submitLabel(.next)
                 .onSubmit { focusedField = .email }
                 
                 
-                TextFieldEmail(text: $registerVM.register.email,
-                               errorMessage: $registerVM.register.errorMessage)
+                TextFieldEmail(text: $viewModel.register.email,
+                               errorMessage: $viewModel.errorMessage)
                 .focused($focusedField, equals: .email)
                 .submitLabel(.next)
                 .onSubmit { focusedField = .password }
                 
                 
-                TextFieldPassword(text: $registerVM.register.password,
-                                  errorMessage: $registerVM.register.errorMessage,
+                TextFieldPassword(text: $viewModel.register.password,
+                                  errorMessage: $viewModel.errorMessage,
                                   iconLeading: Image.lockFill)
                 .textContentType(.newPassword)
                 .focused($focusedField, equals: .password)
@@ -47,43 +47,42 @@ struct RegisterView: View {
                 
                 
                 TextFieldPassword(placeHolder: "Confirm password",
-                                  text: $registerVM.register.passwordConfirm,
-                                  errorMessage: $registerVM.register.errorMessage,
+                                  text: $viewModel.register.passwordConfirm,
+                                  errorMessage: $viewModel.errorMessage,
                                   iconLeading: Image.checkmark)
                 .padding(.bottom)
                 .textContentType(.newPassword)
                 .focused($focusedField, equals: .passwordConfirm)
                 .submitLabel(.done)
                 .onSubmit {
-                    Task {
-                        focusedField = .none
-                        let canSubmit = await registerVM.validateRegister()
-                        
-                        if canSubmit {
-                            Router.shared.path.append(Router.Destination.main)
-                        }
-                    }
+                    registerNewUser()
                 }
                 
                 
                 Button("Register") {
-                    Task {
-                        focusedField = .none
-                        let canSubmit = await registerVM.validateRegister()
-                        
-                        if canSubmit {
-                            Router.shared.path.append(Router.Destination.main)
-                        }
-                    }
+                    registerNewUser()
                 }
-                .buttonStyle(ButtonPrimaryStyle(isLoading: $registerVM.register.isLoading))
+                .buttonStyle(ButtonPrimaryStyle(isLoading: $viewModel.isLoading))
                 .padding(.bottom)
                 
                 
-                TextError(message: registerVM.register.errorMessage)
+                TextError(message: viewModel.errorMessage)
             }
         }
-        .disabled(registerVM.register.isLoading)
+        .disabled(viewModel.isLoading)
+    }
+    
+    private func registerNewUser() {
+        Task {
+            focusedField = .none
+            let response = await viewModel.validateRegister()
+            
+            if response.status.isSuccess {
+                Router.shared.path.append(Router.Destination.main)
+            } else {
+                viewModel.errorMessage = response.message
+            }
+        }
     }
 }
 

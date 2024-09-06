@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Firebase
 
 struct LoginView: View {
     
@@ -41,30 +40,15 @@ struct LoginView: View {
                 .focused($focusedField, equals: .password)
                 .submitLabel(.done)
                 .onSubmit {
-                    focusedField = .none
-                    Task {
-                        await loginVM.validateLogin()
-                    }
+                    login()
                 }
                 
                 
                 Button("Login") {
-                    focusedField = .none
-                    Task {
-                        await loginVM.validateLogin()
-                    }
+                    login()
                 }
                 .buttonStyle(ButtonPrimaryStyle(isLoading: $loginVM.isLoading))
-                .padding(.bottom)
                 
-                
-                TextError(message: loginVM.errorMessage)
-            }
-            .padding(.bottom)
-            
-            
-            // MARK: REGISTER & FORGOT PASSWORD
-            VStack {
                 
                 Button("Forgot password?") {
                     print("Forgot password pressed")
@@ -72,15 +56,10 @@ struct LoginView: View {
                 .buttonStyle(ButtonLinkStyle())
                 .padding(.bottom)
                 
-                Button("Register") {
-                    Router.shared.path.append(Router.Destination.register)
-                }
-                .buttonStyle(ButtonPrimaryStyle(neverBgDisabled: true))
-                .padding(.bottom)
-                .padding(.horizontal, ConstantViews.paddingSmallButton)
+                
+                TextError(message: loginVM.errorMessage)
             }
-            .padding(.bottom)
-            
+
             
             // MARK: DIVISION
             HStack {
@@ -117,6 +96,18 @@ struct LoginView: View {
                         .padding()
                 }
             }
+            .padding(.bottom)
+            
+            // MARK: REGISTER
+            VStack {
+                TextPlain(message: "New user?")
+                
+                Button("Create a new free account") {
+                    Router.shared.path.append(Router.Destination.register)
+                }
+                .buttonStyle(ButtonLinkStyle())
+            }
+            .padding(.top)
         }
         .disabled(loginVM.isLoading)
         .onAppear {
@@ -132,8 +123,16 @@ struct LoginView: View {
 //            }
 //        }
     }
+    
+    private func login() {
+        focusedField = .none
+        Task {
+            await loginVM.validateLogin()
+        }
+    }
 }
 
 #Preview {
     LoginView()
+        .environmentObject(AuthViewModel())
 }

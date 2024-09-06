@@ -5,47 +5,41 @@
 //  Created by Fabian Rodriguez on 2/8/24.
 //
 
-import Combine
+import Foundation
 
-@MainActor
-class RegisterViewModel: ObservableObject {
+class RegisterViewModel: BaseViewModel {
     
     @Published var register = Register()
     
-    func validateRegister() async -> Bool {
-        register.errorMessage = ""
-        
+    func validateRegister() async -> ResponseModel {
         if register.name.isEmptyOrWhitespace() || register.email.isEmptyOrWhitespace() ||
             register.password.isEmptyOrWhitespace() || register.passwordConfirm.isEmptyOrWhitespace() {
-            register.errorMessage = ConstantMessages.emptySpaces.localizedDescription
-            return false
+            
+            return ResponseModel(.error, ConstantMessages.emptySpaces.localizedDescription)
         }
         
         if register.password.count < 6 || register.passwordConfirm.count < 6 {
-            register.errorMessage = ConstantMessages.passwordIsShort.localizedDescription
-            return false
+            return ResponseModel(.error, ConstantMessages.passwordIsShort.localizedDescription)
         }
         
         if register.password != register.passwordConfirm {
-            register.errorMessage = ConstantMessages.creationPasswordIsDifferent.localizedDescription
-            return false
+            return ResponseModel(.error, ConstantMessages.creationPasswordIsDifferent.localizedDescription)
         }
         
-        register.isLoading = true
+        var response = ResponseModel()
         
-        defer {
-            register.isLoading = false
+        await performWithLoader {
+            do {
+                try await AuthFB().registerUser(withEmail: self.register.email,
+                                                password: self.register.password,
+                                                username: self.register.name)
+                response = ResponseModel(.successful)
+            } catch {
+                Logs.WriteCatchExeption(error: error)
+                response = ResponseModel(.error, error.localizedDescription)
+            }
         }
         
-        do {
-            try await AuthFB().registerUser(withEmail: register.email,
-                                                password: register.password,
-                                                username: register.name)
-            return true
-        } catch {
-            Logs.WriteCatchExeption(error: error)
-            register.errorMessage = error.localizedDescription
-            return false
-        }
+        return response
     }
 }
