@@ -51,11 +51,13 @@ struct TextFieldIconStyle: TextFieldStyle {
         HStack {
             if let iconLeading = iconLeading {
                 iconLeading
-                    .frame(width: ConstantFrames.textFieldHeight, height: ConstantFrames.textFieldHeight)
+                    .frame(width: ConstantFrames.textFieldHeight, 
+                           height: ConstantFrames.textFieldHeight)
                     .background(Color.textFieldIconBackground)
             }
             
             configuration
+                //.background(.red) //TODO: For testing
                 .frame(height: ConstantFrames.textFieldHeight)
                 //.background(.green) //TODO: For testing
                 .padding(.horizontal, iconLeading == nil ? nil : .zero)
@@ -82,6 +84,9 @@ struct TextFieldIconStyle: TextFieldStyle {
                     if text.isEmpty && !errorMessage.isEmpty {
                         isError = true
                     } 
+                }
+                .onTapGesture {
+                    isFocused = true
                 }
         }
         .foregroundColor(foregroundColor)
