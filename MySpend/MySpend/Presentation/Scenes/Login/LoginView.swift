@@ -28,16 +28,13 @@ struct LoginView: View {
                 TextFieldEmail(text: $loginVM.login.email,
                                errorMessage: $loginVM.errorMessage)
                 .focused($focusedField, equals: .email)
-                .submitLabel(.done)
                 .onSubmit { login() }
                 
                 TextFieldPassword(text: $loginVM.login.password,
                                   errorMessage: $loginVM.errorMessage,
                                   iconLeading: Image.lockFill)
                 .padding(.bottom)
-                .textContentType(.password)
                 .focused($focusedField, equals: .password)
-                .submitLabel(.done)
                 .onSubmit { login() }
                 
                 

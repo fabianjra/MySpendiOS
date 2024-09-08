@@ -24,6 +24,7 @@ struct TextFieldIconStyle: TextFieldStyle {
     @Binding private var errorMessage: String
     
     private var showFocusedIndicador: Bool
+    private var submitLabel: SubmitLabel
     @FocusState private var isFocused: Bool
     
     public init(_ text: Binding<String>,
@@ -34,7 +35,8 @@ struct TextFieldIconStyle: TextFieldStyle {
                 foregroundColor: Color = Color.textFieldForeground,
                 backgroundColor: Color = Color.textfieldBackground,
                 errorMessage: Binding<String> = .constant(""),
-                showFocusedIndicador: Bool = true) {
+                showFocusedIndicador: Bool = true,
+                submitLabel: SubmitLabel = .done) {
         
         self._text = text
         self.family = family
@@ -45,6 +47,7 @@ struct TextFieldIconStyle: TextFieldStyle {
         self.backgroundColor = backgroundColor
         self._errorMessage = errorMessage
         self.showFocusedIndicador = showFocusedIndicador
+        self.submitLabel = submitLabel
     }
     
     public func _body(configuration: TextField<Self._Label>) -> some View {
@@ -63,6 +66,7 @@ struct TextFieldIconStyle: TextFieldStyle {
                 .padding(.horizontal, iconLeading == nil ? nil : .zero)
                 .padding(.trailing, iconLeading != nil ? nil : .zero)
                 .font(.montserrat(family, size: size))
+                .submitLabel(submitLabel)
                 .focused($isFocused)
                 .onChange(of: text, {
                     

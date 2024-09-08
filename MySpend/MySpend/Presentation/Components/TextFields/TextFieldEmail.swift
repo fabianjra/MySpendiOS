@@ -21,7 +21,6 @@ struct TextFieldEmail: View {
                                            iconLeading: Image.envelopeFill,
                                            textLimit: ConstantViews.textLimitEmail,
                                            errorMessage: $errorMessage))
-        
         .autocapitalization(.none)
         .textInputAutocapitalization(.never)
         .autocorrectionDisabled(true)
