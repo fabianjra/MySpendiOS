@@ -81,6 +81,9 @@ struct ResumeView: View {
                 }
             }
             .padding(.bottom, ConstantViews.paddingBottomResumeview)
+            
+            //Tiene un efecto no deseado al transicionar entre tab y tab.
+            //.redacted(reason: viewModel.isLoading ? .placeholder : [])
  
         }
         .onAppear {
