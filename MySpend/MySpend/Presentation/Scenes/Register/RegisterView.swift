@@ -67,14 +67,14 @@ struct RegisterView: View {
                         Button {
                             focusedField = focusedField?.previous()
                         } label: {
-                            Image (systemName: "chevron.up")
+                            Image.chevronUp
                         }
                         .disabled(focusedField == Register.Field.allCases.first)
                         
                         Button {
                             focusedField = focusedField?.next()
                         } label: {
-                            Image (systemName: "chevron.down")
+                            Image.chevronDown
                         }
                         .disabled(focusedField == Register.Field.allCases.last)
                         

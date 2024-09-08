@@ -36,12 +36,14 @@ extension Image {
     static let arrowBackward = Image(systemName: "arrow.backward") // <-
     static let chevronLeft = Image(systemName: "chevron.left") // <
     static let chevronRight = Image(systemName: "chevron.right") // <
+    static let chevronUp = Image(systemName: "chevron.up")
+    static let chevronDown = Image(systemName: "chevron.down")
     
     // MARK: GENERAL
     static let warningFill = Image(systemName: "exclamationmark.triangle.fill")
     static let arrowTurnUpLeft = Image(systemName: "arrowshape.turn.up.left")
     static let arrowTurnUpLeftFill = Image(systemName: "arrowshape.turn.up.left.fill")
-    
+
     // MARK: FUNCTIONS
     static func imageSelected(_ condition: Bool, imageSelected: Image, imageDeselected: Image) -> Image {
         if condition {
