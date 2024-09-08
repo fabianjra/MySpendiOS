@@ -124,7 +124,6 @@ struct LoginView: View {
     }
     
     private func login() {
-        focusedField = .none
         Task {
             await loginVM.validateLogin()
         }

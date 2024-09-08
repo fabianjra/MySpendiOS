@@ -5,22 +5,23 @@
 //  Created by Fabian Rodriguez on 8/8/24.
 //
 
-import Firebase
+import Foundation
 
 class ChangePasswordViewModel: BaseViewModel {
     
     @Published var model = ChangePassword()
+    @Published var disabled: Bool = false
     
     func validateChangePassword() async {
         
         if model.userPassword.isEmptyOrWhitespace() || model.userNewPassword.isEmptyOrWhitespace()
             || model.userNewPasswordConfirm.isEmptyOrWhitespace() {
-            model.errorMessage = ConstantMessages.emptySpaces.localizedDescription
+            errorMessage = ConstantMessages.emptySpaces.localizedDescription
             return
         }
         
         if model.userNewPassword != model.userNewPasswordConfirm {
-            model.errorMessage = ConstantMessages.newPasswordIsDifferent.localizedDescription
+            errorMessage = ConstantMessages.newPasswordIsDifferent.localizedDescription
             return
         }
         
@@ -29,17 +30,17 @@ class ChangePasswordViewModel: BaseViewModel {
                 try await AuthFB().updatePassword(actualPassword: self.model.userPassword,
                                                       newPasword: self.model.userNewPasswordConfirm)
                 
-                self.model.errorMessage = "PASSWORD CHANGED!"
+                self.errorMessage = "Password changed"
             } catch {
-                self.model.errorMessage = error.localizedDescription
+                self.errorMessage = error.localizedDescription
             }
         }
     }
     
     func onAppear() {
-        if Auth.auth().currentUser == nil {
-            model.disabled = true
-            model.errorMessage = ConstantMessages.userNotLoggedIn.localizedDescription
+        if AuthFB().currentUser == nil {
+            disabled = true
+            errorMessage = ConstantMessages.userNotLoggedIn.localizedDescription
         }
     }
 }

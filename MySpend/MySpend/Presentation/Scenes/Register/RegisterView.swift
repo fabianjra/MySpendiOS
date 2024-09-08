@@ -73,7 +73,6 @@ struct RegisterView: View {
     
     private func registerNewUser() {
         Task {
-            focusedField = .none
             let response = await viewModel.validateRegister()
             
             if response.status.isSuccess {

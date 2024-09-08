@@ -36,7 +36,7 @@ struct ValidateAccountView: View {
         .disabled(viewModel.isLoading)
         .onAppear {
             Task {
-                await viewModel.isUserValidated()
+                await viewModel.onAppear()
             }
         }
     }

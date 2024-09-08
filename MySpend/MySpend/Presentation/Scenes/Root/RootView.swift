@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Firebase
 
 //TODO: Como hacer para pasar una variable a una vista en un ENUM.
 //enum Vistas: Hashable, View {
@@ -60,4 +59,5 @@ struct RootView: View {
 
 #Preview {
     RootView()
+        .environmentObject(AuthViewModel())
 }

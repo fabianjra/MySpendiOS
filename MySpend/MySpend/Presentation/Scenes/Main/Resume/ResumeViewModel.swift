@@ -9,8 +9,6 @@ import SwiftUI
 
 class ResumeViewModel: BaseViewModel {
     
-    //var authViewModel: AuthViewModel?
-    
     @Published var model = Resume()
     
     init(model: Resume = Resume()) {

@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Firebase
 
 struct ResumeView: View {
     
@@ -134,10 +133,12 @@ struct ResumeView: View {
         
         ResumeView(viewModel: resumeVM)
             .environment(\.locale, .init(identifier: "es"))
+            .environmentObject(AuthViewModel())
     }
 }
 
 #Preview("No content") {
     ResumeView(viewModel: ResumeViewModel())
         .environment(\.locale, .init(identifier: "en"))
+        .environmentObject(AuthViewModel())
 }

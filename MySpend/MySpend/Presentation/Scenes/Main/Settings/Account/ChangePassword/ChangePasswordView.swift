@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Firebase
 
 struct ChangePasswordView: View {
     
@@ -30,7 +29,7 @@ struct ChangePasswordView: View {
                 
                 TextFieldPassword(placeHolder: "Current password",
                                   text: $changePasswordVM.model.userPassword,
-                                  errorMessage: $changePasswordVM.model.errorMessage,
+                                  errorMessage: $changePasswordVM.errorMessage,
                                   iconLeading: Image.lockFill)
                 .textContentType(.password)
                 .focused($focusedField, equals: .userPassword)
@@ -40,7 +39,7 @@ struct ChangePasswordView: View {
                 
                 TextFieldPassword(placeHolder: "New password",
                                   text: $changePasswordVM.model.userNewPassword,
-                                  errorMessage: $changePasswordVM.model.errorMessage,
+                                  errorMessage: $changePasswordVM.errorMessage,
                                   iconLeading: Image.checkmark)
                 .textContentType(.newPassword)
                 .focused($focusedField, equals: .newPassword)
@@ -50,36 +49,36 @@ struct ChangePasswordView: View {
                 
                 TextFieldPassword(placeHolder: "Confirm new password",
                                   text: $changePasswordVM.model.userNewPasswordConfirm,
-                                  errorMessage: $changePasswordVM.model.errorMessage,
+                                  errorMessage: $changePasswordVM.errorMessage,
                                   iconLeading: Image.checkmark)
                 .padding(.bottom)
                 .textContentType(.newPassword)
                 .focused($focusedField, equals: .newPasswordConfirm)
                 .submitLabel(.done)
                 .onSubmit {
-                    focusedField = .none
-                    Task {
-                        await changePasswordVM.validateChangePassword()
-                    }
+                    changePassword()
                 }
                 
                 
                 Button("Change password") {
-                    focusedField = .none
-                    Task {
-                        await changePasswordVM.validateChangePassword()
-                    }
+                    changePassword()
                 }
                 .buttonStyle(ButtonPrimaryStyle(isLoading: $changePasswordVM.isLoading))
-                .disabled(changePasswordVM.model.disabled)
+                .disabled(changePasswordVM.disabled)
                 
                 
-                TextError(message: changePasswordVM.model.errorMessage)
+                TextError(message: changePasswordVM.errorMessage)
             }
         }
         .disabled(changePasswordVM.isLoading)
         .onAppear {
             changePasswordVM.onAppear()
+        }
+    }
+    
+    private func changePassword() {
+        Task {
+            await changePasswordVM.validateChangePassword()
         }
     }
 }

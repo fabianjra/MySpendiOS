@@ -12,10 +12,6 @@ struct ChangePassword {
     var userNewPassword: String = ""
     var userNewPasswordConfirm: String = ""
     
-    var errorMessage: String = ""
-    
-    var disabled: Bool = false
-    
     enum Field: Hashable {
         case userPassword
         case newPassword

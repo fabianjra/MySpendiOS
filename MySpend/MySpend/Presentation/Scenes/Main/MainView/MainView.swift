@@ -75,9 +75,6 @@ struct MainView: View {
 }
 
 #Preview {
-    VStack {
-        let path = Router()
-        MainView()
-            .environmentObject(path)
-    }
+    MainView()
+        .environmentObject(AuthViewModel())
 }

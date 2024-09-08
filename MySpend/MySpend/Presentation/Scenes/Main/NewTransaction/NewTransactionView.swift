@@ -81,7 +81,7 @@ struct NewTransactionView: View {
                 .onSubmit { focusedField = .category }
                 
                 
-                //TODO: Change to sheet list (all categories inserted).
+                //TODO: Change to sheet list (loading and showing all categories).
                 TextField("", text: $newTransactionVM.newTransaction.categoryId, prompt:
                             Text("Category").foregroundColor(.textFieldPlaceholder))
                 .textFieldStyle(TextFieldIconStyle($newTransactionVM.newTransaction.categoryId,
@@ -99,31 +99,12 @@ struct NewTransactionView: View {
                 .padding(.bottom)
                 .id("notes")
                 .onSubmit {
-                    Task {
-                        focusedField = .none
-                        let result = await newTransactionVM.addNewTransaction()
-                        
-                        if result.status.isSuccess {
-                            dismiss()
-                        } else {
-                            newTransactionVM.newTransaction.errorMessage = result.message
-                        }
-                        
-                    }
+                    process()
                 }
                 
                 
                 Button("Accept") {
-                    Task {
-                        focusedField = .none
-                        let result = await newTransactionVM.addNewTransaction()
-                        
-                        if result.status.isSuccess {
-                            dismiss()
-                        } else {
-                            newTransactionVM.newTransaction.errorMessage = result.message
-                        }
-                    }
+                    process()
                 }
                 .buttonStyle(ButtonPrimaryStyle(isLoading: $newTransactionVM.newTransaction.isLoading))
                 .padding(.vertical)
@@ -151,7 +132,18 @@ struct NewTransactionView: View {
                 }
             }
         }
-        
+    }
+    
+    private func process() {
+        Task {
+            let result = await newTransactionVM.addNewTransaction()
+            
+            if result.status.isSuccess {
+                dismiss()
+            } else {
+                newTransactionVM.newTransaction.errorMessage = result.message
+            }
+        }
     }
 }
 

@@ -20,6 +20,7 @@ class NewTransactionViewModel: ObservableObject {
             return ResponseModel(.error, ConstantMessages.emptySpaces.localizedDescription)
         }
         
+        //TODO: Utilizar BaseViewModel.
         newTransaction.isLoading = true
         
         defer {

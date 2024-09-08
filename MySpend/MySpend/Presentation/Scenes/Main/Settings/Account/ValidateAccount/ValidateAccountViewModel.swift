@@ -45,7 +45,7 @@ class ValidateAccountViewModel: BaseViewModel {
     
     //@discardableResult: Avoid the warning Xcode gives us when you dont use the return value, because this function is called in the OnAppear View without using the result.
     //@discardableResult
-    func isUserValidated() async {
+    func onAppear() async {
         guard let currentUser = getCurrentUser() else {
             return
         }
