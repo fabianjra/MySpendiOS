@@ -15,16 +15,14 @@ class CategoriesViewModel: BaseViewModel {
         self.categories = categories
     }
     
-    //TODO: Forma de obtener categorias una unica vez. Descartado. Utilizar Listener.
-    private func getCategories() async {
+    private func getCategoriesOnce() async {
         
         do {
         //#if DEBUG || TARGET_OS_SIMULATOR
         #if targetEnvironment(simulator)
             //No cargar datos cuando se esta corriendo en simulador.
-            categories = try await DatabaseStore().getCategories()
         #else
-            //Otra accion en caso de que no sea DEBUG o Simulator.
+            //Otra accion en caso de que no sea DEBUG o Simulator. Ejem: Dispositivo fisico.
             categories = try await DatabaseStore().getCategories()
         #endif
         } catch {
@@ -34,7 +32,7 @@ class CategoriesViewModel: BaseViewModel {
  
     private var listener: ListenerRegistration?
     
-    func startListeningForCategoryChanges() {
+    func onAppear() {
         do {
             listener = try DatabaseStore().listenCategoriesChanges { [weak self] categoriesLoaded in
                 guard let self = self else {

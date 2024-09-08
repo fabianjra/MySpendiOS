@@ -15,15 +15,10 @@ struct NewTransaction {
     var dateString: String = ""
     var selectedDate: Date = .now
     
-    var showDatePicker = false
-    
     var amount: String = ""
     var categoryId: String = ""
     var notes: String = ""
-    
-    var errorMessage: String = ""
-    var isLoading: Bool = false
-    
+
     enum Field: Hashable {
         case amount
         case category

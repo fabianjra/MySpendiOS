@@ -35,9 +35,9 @@ struct NewTransactionView: View {
                                   iconLeading: Image.calendar,
                                   colorDisabled: false)
                 .onTapGesture {
-                    newTransactionVM.newTransaction.showDatePicker = true
+                    newTransactionVM.showDatePicker = true
                 }
-                .sheet(isPresented: $newTransactionVM.newTransaction.showDatePicker) {
+                .sheet(isPresented: $newTransactionVM.showDatePicker) {
                     NavigationView {
                         
                         DatePicker("",
@@ -58,7 +58,7 @@ struct NewTransactionView: View {
                             
                             ToolbarItem(placement: .confirmationAction) {
                                 Button("Done") {
-                                    newTransactionVM.newTransaction.showDatePicker = false
+                                    newTransactionVM.showDatePicker = false
                                 }
                             }
                         }
@@ -76,7 +76,7 @@ struct NewTransactionView: View {
                 .textFieldStyle(TextFieldIconStyle($newTransactionVM.newTransaction.amount,
                                                    iconLeading: Image.dolarSquareFill,
                                                    textLimit: 12,
-                                                   errorMessage: $newTransactionVM.newTransaction.errorMessage))
+                                                   errorMessage: $newTransactionVM.errorMessage))
                 .focused($focusedField, equals: .amount)
                 .onSubmit { focusedField = .category }
                 
@@ -86,7 +86,7 @@ struct NewTransactionView: View {
                             Text("Category").foregroundColor(.textFieldPlaceholder))
                 .textFieldStyle(TextFieldIconStyle($newTransactionVM.newTransaction.categoryId,
                                                    iconLeading: Image.stackFill,
-                                                   errorMessage: $newTransactionVM.newTransaction.errorMessage))
+                                                   errorMessage: $newTransactionVM.errorMessage))
                 .focused($focusedField, equals: .category)
                 .onSubmit { focusedField = .notes }
                 
@@ -94,7 +94,7 @@ struct NewTransactionView: View {
                 TextField("", text: $newTransactionVM.newTransaction.notes, prompt:
                             Text("Notes").foregroundColor(.textFieldPlaceholder))
                 .textFieldStyle(TextFieldIconStyle($newTransactionVM.newTransaction.notes,
-                                                   errorMessage: $newTransactionVM.newTransaction.errorMessage))
+                                                   errorMessage: $newTransactionVM.errorMessage))
                 .focused($focusedField, equals: .notes)
                 .padding(.bottom)
                 .id("notes")
@@ -106,7 +106,7 @@ struct NewTransactionView: View {
                 Button("Accept") {
                     process()
                 }
-                .buttonStyle(ButtonPrimaryStyle(isLoading: $newTransactionVM.newTransaction.isLoading))
+                .buttonStyle(ButtonPrimaryStyle(isLoading: $newTransactionVM.isLoading))
                 .padding(.vertical)
                 .padding(.bottom)
                 
@@ -117,7 +117,7 @@ struct NewTransactionView: View {
                 .padding(.horizontal)
                 
                 
-                TextError(message: newTransactionVM.newTransaction.errorMessage)
+                TextError(message: newTransactionVM.errorMessage)
                 
                 Spacer()
             }
@@ -141,7 +141,7 @@ struct NewTransactionView: View {
             if result.status.isSuccess {
                 dismiss()
             } else {
-                newTransactionVM.newTransaction.errorMessage = result.message
+                newTransactionVM.errorMessage = result.message
             }
         }
     }

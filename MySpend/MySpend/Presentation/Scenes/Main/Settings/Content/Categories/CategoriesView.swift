@@ -52,7 +52,7 @@ struct CategoriesView: View {
             }
         }
         .onAppear {
-            categoriesVM.startListeningForCategoryChanges()
+            categoriesVM.onAppear()
         }
         .sheet(isPresented: $showNewItemModal) {
             NewCategoryView()
