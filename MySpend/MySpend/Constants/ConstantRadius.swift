@@ -10,4 +10,5 @@ import Foundation
 struct ConstantRadius {
     static let corners: CGFloat = 20.0
     static let shadow: CGFloat = 5.0
+    static let cornersModal: CGFloat = 50.0
 }

@@ -57,6 +57,7 @@ struct CategoriesView: View {
         .sheet(isPresented: $showNewItemModal) {
             NewCategoryView()
                 .presentationDetents([.large])
+                .presentationCornerRadius(ConstantRadius.cornersModal)
         }
     }
 }

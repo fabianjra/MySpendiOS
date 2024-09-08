@@ -51,6 +51,7 @@ struct MainView: View {
         .sheet(isPresented: $showNewItemModal) {
             NewTransactionView()
                 .presentationDetents([.large])
+                .presentationCornerRadius(ConstantRadius.cornersModal)
         }
     }
     
