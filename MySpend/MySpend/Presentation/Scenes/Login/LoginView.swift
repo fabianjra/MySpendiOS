@@ -28,9 +28,8 @@ struct LoginView: View {
                 TextFieldEmail(text: $loginVM.login.email,
                                errorMessage: $loginVM.errorMessage)
                 .focused($focusedField, equals: .email)
-                .submitLabel(.next)
-                .onSubmit { focusedField = .password }
-                
+                .submitLabel(.done)
+                .onSubmit { login() }
                 
                 TextFieldPassword(text: $loginVM.login.password,
                                   errorMessage: $loginVM.errorMessage,
@@ -39,9 +38,7 @@ struct LoginView: View {
                 .textContentType(.password)
                 .focused($focusedField, equals: .password)
                 .submitLabel(.done)
-                .onSubmit {
-                    login()
-                }
+                .onSubmit { login() }
                 
                 
                 Button("Login") {
@@ -57,6 +54,31 @@ struct LoginView: View {
                 }
                 .buttonStyle(ButtonLinkStyle())
                 .padding(.bottom)   
+            }
+            .toolbar {
+                ToolbarItemGroup(placement: .keyboard) {
+                    HStack {
+                        Button {
+                            focusedField = .email
+                        } label: {
+                            Image (systemName: "chevron.up")
+                        }
+                        .disabled(focusedField == .email)
+                        
+                        Button {
+                            focusedField = .password
+                        } label: {
+                            Image (systemName: "chevron.down")
+                        }
+                        .disabled(focusedField == .password)
+                        
+                        Spacer()
+                        
+                        Button("Done") {
+                            focusedField = nil
+                        }
+                    }
+                }
             }
 
             
@@ -112,15 +134,6 @@ struct LoginView: View {
         .onAppear {
             authViewModel.listenAuthentificationState()
         }
-        
-        //Add the "Done" button at the Top of the keyboard.
-//        .toolbar {
-//            ToolbarItem(placement: .keyboard) {
-//                Button("Done") {
-//                    focusedField = nil
-//                }
-//            }
-//        }
     }
     
     private func login() {
