@@ -10,15 +10,30 @@ import Firebase
 class ValidateAccountViewModel: BaseViewModel {
     
     @Published var userIsValidated: Bool = false
-    var disabled: Bool = false
+    @Published var disabled: Bool = false
+    
+    private func getCurrentUser() -> User? {
+        guard let currentUser = AuthFB().currentUser else {
+            disabled = true
+            errorMessage = ConstantMessages.userNotLoggedIn.localizedDescription
+            return nil
+        }
+        
+        return currentUser
+    }
     
     func sendEmail() async {
+        guard let currentUser = getCurrentUser() else {
+            return
+        }
+        
         await performWithLoader {
             do {
-                try await AuthFB().currentUser?.reload()
+                try await currentUser.reload()
                 
-                if AuthFB().currentUser!.isEmailVerified == false {
+                if !currentUser.isEmailVerified {
                     try await AuthFB().sendEmailRegisteredUser()
+                    self.errorMessage = ConstantMessages.emailSent.localizedDescription
                 } else {
                     self.errorMessage = ConstantMessages.userIsValidated.localizedDescription
                 }
@@ -29,34 +44,24 @@ class ValidateAccountViewModel: BaseViewModel {
     }
     
     //@discardableResult: Avoid the warning Xcode gives us when you dont use the return value, because this function is called in the OnAppear View without using the result.
-    @discardableResult
-    func isUserValidated() async -> Bool {
+    //@discardableResult
+    func isUserValidated() async {
+        guard let currentUser = getCurrentUser() else {
+            return
+        }
         
         await performWithLoader {
             do {
-                try await AuthFB().currentUser?.reload() //TODO: Esto es un parche.
-                self.errorMessage = ConstantMessages.emailSent.localizedDescription
+                try await currentUser.reload()
             } catch {
                 self.errorMessage = error.localizedDescription
+                self.disabled = true
             }
         }
-
-        if AuthFB().currentUser != nil {
-            
-            if AuthFB().currentUser!.isEmailVerified {
-                userIsValidated = true
-                disabled = true
-                errorMessage = ConstantMessages.userIsValidated.localizedDescription
-                return true
-                
-            } else {
-                return false
-            }
-            
-        } else {
-            disabled = true
-            errorMessage = ConstantMessages.userNotLoggedIn.localizedDescription
-            return false
+        
+        if currentUser.isEmailVerified {
+            userIsValidated = true
+            errorMessage = ConstantMessages.userIsValidated.localizedDescription
         }
     }
 }

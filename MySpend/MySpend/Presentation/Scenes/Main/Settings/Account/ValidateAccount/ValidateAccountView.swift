@@ -71,7 +71,7 @@ struct ValidateAccountView: View {
     private var sendEmailBody: some View {
         VStack(spacing: ConstantViews.formSpacing) {
             
-            TextPlain(message: "Follow next steps in your email account.", aligment: .center)
+            TextPlain(message: "Send the information to your email account and follow next steps.", aligment: .center)
             
             
             Button("Send email") {
