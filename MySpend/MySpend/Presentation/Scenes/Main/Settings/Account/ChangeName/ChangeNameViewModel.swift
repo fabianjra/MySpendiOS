@@ -12,6 +12,7 @@ class ChangeNameViewModel: BaseViewModel {
     @Published var model = ChangeName()
     @Published var disabled: Bool = false
     
+    //TODO: Pasar disabled y la funcion de validacion de currentUser a BaseViewModel
     private func getCurrentUser() -> User? {
         guard let currentUser = AuthFB().currentUser else {
             disabled = true
