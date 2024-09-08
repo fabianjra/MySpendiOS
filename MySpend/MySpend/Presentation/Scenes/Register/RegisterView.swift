@@ -26,15 +26,13 @@ struct RegisterView: View {
                 TextFieldName(text: $viewModel.register.name,
                               errorMessage: $viewModel.errorMessage)
                 .focused($focusedField, equals: .name)
-                .submitLabel(.next)
-                .onSubmit { focusedField = .email }
+                .onSubmit { registerNewUser() }
                 
                 
                 TextFieldEmail(text: $viewModel.register.email,
                                errorMessage: $viewModel.errorMessage)
                 .focused($focusedField, equals: .email)
-                .submitLabel(.next)
-                .onSubmit { focusedField = .password }
+                .onSubmit { registerNewUser() }
                 
                 
                 TextFieldPassword(text: $viewModel.register.password,
@@ -42,8 +40,7 @@ struct RegisterView: View {
                                   iconLeading: Image.lockFill)
                 .textContentType(.newPassword)
                 .focused($focusedField, equals: .password)
-                .submitLabel(.next)
-                .onSubmit { focusedField = .passwordConfirm }
+                .onSubmit { registerNewUser() }
                 
                 
                 TextFieldPassword(placeHolder: "Confirm password",
@@ -53,10 +50,7 @@ struct RegisterView: View {
                 .padding(.bottom)
                 .textContentType(.newPassword)
                 .focused($focusedField, equals: .passwordConfirm)
-                .submitLabel(.done)
-                .onSubmit {
-                    registerNewUser()
-                }
+                .onSubmit { registerNewUser() }
                 
                 
                 Button("Register") {
@@ -67,6 +61,32 @@ struct RegisterView: View {
                 
                 TextError(message: viewModel.errorMessage)
             }
+            .toolbar {
+                ToolbarItemGroup(placement: .keyboard) {
+                    HStack {
+                        Button {
+                            focusedField = focusedField?.previous()
+                        } label: {
+                            Image (systemName: "chevron.up")
+                        }
+                        .disabled(focusedField == Register.Field.allCases.first)
+                        
+                        Button {
+                            focusedField = focusedField?.next()
+                        } label: {
+                            Image (systemName: "chevron.down")
+                        }
+                        .disabled(focusedField == Register.Field.allCases.last)
+                        
+                        Spacer()
+                        
+                        Button("Done") {
+                            focusedField = nil
+                        }
+                    }
+                }
+            }
+            
         }
         .disabled(viewModel.isLoading)
     }
