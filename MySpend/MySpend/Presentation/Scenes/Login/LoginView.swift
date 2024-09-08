@@ -56,18 +56,18 @@ struct LoginView: View {
                 ToolbarItemGroup(placement: .keyboard) {
                     HStack {
                         Button {
-                            focusedField = .email
+                            focusedField = focusedField?.previous()
                         } label: {
-                            Image (systemName: "chevron.up")
+                            Image.chevronUp
                         }
-                        .disabled(focusedField == .email)
+                        .disabled(focusedField == Login.Field.allCases.first)
                         
                         Button {
-                            focusedField = .password
+                            focusedField = focusedField?.next()
                         } label: {
-                            Image (systemName: "chevron.down")
+                            Image.chevronDown
                         }
-                        .disabled(focusedField == .password)
+                        .disabled(focusedField == Login.Field.allCases.last)
                         
                         Spacer()
                         

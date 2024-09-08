@@ -36,6 +36,5 @@ struct Register {
             let previousIndex = Register.Field.allCases.index(before: currentIndex)
             return currentIndex > .zero ? Register.Field.allCases[previousIndex] : nil
         }
-        
     }
 }
