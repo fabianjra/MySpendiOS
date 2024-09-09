@@ -9,21 +9,23 @@ import Combine
 
 class NewTransactionViewModel: BaseViewModel {
     
-    @Published var newTransaction = NewTransaction()
+    @Published var model = NewTransaction()
     @Published var showDatePicker = false
     
+    func onAppear() {
+        model.dateString = Utils.dateToStringShort(date: model.selectedDate)
+    }
+    
     func addNewTransaction() async -> ResponseModel {
-        errorMessage = ""
-
-        if newTransaction.amount.isEmptyOrWhitespace() || newTransaction.categoryId.isEmptyOrWhitespace() {
+        if model.amount.isEmptyOrWhitespace() || model.categoryId.isEmptyOrWhitespace() {
             return ResponseModel(.error, ConstantMessages.emptySpaces.localizedDescription)
         }
         
-        let transactionModel = TransactionModel(amount: Double(newTransaction.amount) ?? .zero, //TODO: Revisar cuando pueda ser error.
-                                                date: newTransaction.dateString,
-                                                categoryId: newTransaction.categoryId,
-                                                detail: newTransaction.notes,
-                                                type: newTransaction.transactionType)
+        let transactionModel = TransactionModel(amount: Double(model.amount) ?? .zero, //TODO: Revisar cuando pueda ser error.
+                                                date: model.dateString,
+                                                categoryId: model.categoryId,
+                                                detail: model.notes,
+                                                type: model.transactionType)
         
         var response = ResponseModel()
         

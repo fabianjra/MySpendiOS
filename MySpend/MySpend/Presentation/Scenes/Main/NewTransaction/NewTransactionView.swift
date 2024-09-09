@@ -11,8 +11,10 @@ struct NewTransactionView: View {
     
     @Environment(\.dismiss) var dismiss
     
-    @StateObject var newTransactionVM = NewTransactionViewModel()
+    @StateObject var viewModel = NewTransactionViewModel()
     @FocusState private var focusedField: NewTransaction.Field?
+    
+    let notesId = "notes"
     
     var body: some View {
         ScrollViewReader { scrollViewProxy in
@@ -27,38 +29,36 @@ struct NewTransactionView: View {
                 
                 
                 // MARK: SEGMENT
-                
                 VStack {
-                    PickerSegmented(selection: $newTransactionVM.newTransaction.transactionType,
+                    PickerSegmented(selection: $viewModel.model.transactionType,
                                     segments: TransactionTypeEnum.allCases)
                     .padding(.bottom)
                 }
                 
                 // MARK: DATE
-                
                 VStack {
-                    TextFieldReadOnly(text: $newTransactionVM.newTransaction.dateString,
+                    TextFieldReadOnly(text: $viewModel.model.dateString,
                                       iconLeading: Image.calendar,
                                       colorDisabled: false)
                     .onTapGesture {
-                        newTransactionVM.showDatePicker = true
+                        viewModel.showDatePicker = true
                     }
-                    .sheet(isPresented: $newTransactionVM.showDatePicker) {
+                    .sheet(isPresented: $viewModel.showDatePicker) {
                         NavigationView {
                             
                             DatePicker("",
-                                       selection: $newTransactionVM.newTransaction.selectedDate,
+                                       selection: $viewModel.model.selectedDate,
                                        displayedComponents: .date)
                             .padding(.horizontal)
                             .datePickerStyle(.graphical)
-                            .onChange(of: newTransactionVM.newTransaction.selectedDate, { oldValue, newValue in
-                                newTransactionVM.newTransaction.dateString = Utils.dateToStringShort(date: newValue)
+                            .onChange(of: viewModel.model.selectedDate, { oldValue, newValue in
+                                viewModel.model.dateString = Utils.dateToStringShort(date: newValue)
                                 //let day = selectedDate.formatted(.dateTime.day())
                             })
                             .toolbar {
                                 ToolbarItem(placement: .cancellationAction) {
                                     Button("Today") {
-                                        newTransactionVM.newTransaction.selectedDate = .now
+                                        viewModel.model.selectedDate = .now
                                     }
                                     .padding()
                                     .padding(.top)
@@ -66,7 +66,7 @@ struct NewTransactionView: View {
                                 
                                 ToolbarItem(placement: .confirmationAction) {
                                     Button("Done") {
-                                        newTransactionVM.showDatePicker = false
+                                        viewModel.showDatePicker = false
                                     }
                                     .padding()
                                     .padding(.top)
@@ -77,42 +77,39 @@ struct NewTransactionView: View {
                         .presentationDetents([.height(ConstantFrames.calendarHeight)])
                         
                     }
-                    .onAppear {
-                        newTransactionVM.newTransaction.dateString = Utils.dateToStringShort(date: newTransactionVM.newTransaction.selectedDate)
-                    }
                 }
                 
                 
                 // MARK: TEXTFIELDS
-                
                 VStack {
-                    TextField("", text: $newTransactionVM.newTransaction.amount, prompt:
+                    TextField("", text: $viewModel.model.amount, prompt:
                                 Text("Amount").foregroundColor(.textFieldPlaceholder))
-                    .keyboardType(.decimalPad)
-                    .textFieldStyle(TextFieldIconStyle($newTransactionVM.newTransaction.amount,
+                    .textFieldStyle(TextFieldIconStyle($viewModel.model.amount,
                                                        iconLeading: Image.dolarSquareFill,
-                                                       textLimit: 12,
-                                                       errorMessage: $newTransactionVM.errorMessage))
+                                                       textLimit: ConstantViews.amoutMaxLength,
+                                                       errorMessage: $viewModel.errorMessage))
+                    .keyboardType(.decimalPad)
                     .focused($focusedField, equals: .amount)
+                    .modifier(AddKeyboardToolbar(focusedField: $focusedField))
                     
                     
                     //TODO: Change to sheet list (loading and showing all categories).
-                    TextField("", text: $newTransactionVM.newTransaction.categoryId, prompt:
+                    TextField("", text: $viewModel.model.categoryId, prompt:
                                 Text("Category").foregroundColor(.textFieldPlaceholder))
-                    .textFieldStyle(TextFieldIconStyle($newTransactionVM.newTransaction.categoryId,
+                    .textFieldStyle(TextFieldIconStyle($viewModel.model.categoryId,
                                                        iconLeading: Image.stackFill,
-                                                       errorMessage: $newTransactionVM.errorMessage))
+                                                       errorMessage: $viewModel.errorMessage))
                     .focused($focusedField, equals: .category)
                     .onSubmit { process() }
                     
                     
-                    TextField("", text: $newTransactionVM.newTransaction.notes, prompt:
+                    TextField("", text: $viewModel.model.notes, prompt:
                                 Text("Notes").foregroundColor(.textFieldPlaceholder))
-                    .textFieldStyle(TextFieldIconStyle($newTransactionVM.newTransaction.notes,
-                                                       errorMessage: $newTransactionVM.errorMessage))
+                    .textFieldStyle(TextFieldIconStyle($viewModel.model.notes,
+                                                       errorMessage: $viewModel.errorMessage))
+                    .id(notesId)
                     .focused($focusedField, equals: .notes)
                     .padding(.bottom)
-                    .id("notes")
                     .onSubmit { process() }
                 }
                 .modifier(AddKeyboardToolbar(focusedField: $focusedField)) //TODO: No se esta mostrando
@@ -124,21 +121,24 @@ struct NewTransactionView: View {
                     Button("Accept") {
                         process()
                     }
-                    .buttonStyle(ButtonPrimaryStyle(isLoading: $newTransactionVM.isLoading))
+                    .buttonStyle(ButtonPrimaryStyle(isLoading: $viewModel.isLoading))
                     .padding(.vertical)
                     .padding(.bottom)
                     
                     
-                    TextError(message: newTransactionVM.errorMessage)
+                    TextError(message: viewModel.errorMessage)
                 }
                 
                 Spacer()
+            }
+            .onAppear {
+                viewModel.onAppear()
             }
             .onChange(of: focusedField) { _, newFocusedField in
                 if focusedField == .notes {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
                         withAnimation {
-                            scrollViewProxy.scrollTo("notes", anchor: .bottom)
+                            scrollViewProxy.scrollTo(notesId, anchor: .bottom)
                         }
                         
                     }
@@ -149,12 +149,12 @@ struct NewTransactionView: View {
     
     private func process() {
         Task {
-            let result = await newTransactionVM.addNewTransaction()
+            let result = await viewModel.addNewTransaction()
             
             if result.status.isSuccess {
                 dismiss()
             } else {
-                newTransactionVM.errorMessage = result.message
+                viewModel.errorMessage = result.message
             }
         }
     }

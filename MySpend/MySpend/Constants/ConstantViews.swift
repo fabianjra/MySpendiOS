@@ -17,6 +17,7 @@ struct ConstantViews {
     static let transactionsMaxLines: Int = 1
     static let messageMaxLines: Int = 3
     static let passwordMinimumLength: Int = 6
+    static let amoutMaxLength: Int = 12
     
     // MARK: TEXTFIELD CHARACTER LIMIT
     static let textLimitGeneral: Int = 50
