@@ -16,25 +16,5 @@ struct Register {
         case email
         case password
         case passwordConfirm
-        
-        func next() -> Register.Field? {
-            guard let currentIndex = Register.Field.allCases.firstIndex(of: self) else {
-                return nil
-            }
-            
-            // Verifica si hay un siguiente campo.
-            let nextIndex = Register.Field.allCases.index(after: currentIndex)
-            return nextIndex < Register.Field.allCases.endIndex ? Register.Field.allCases[nextIndex] : nil
-        }
-        
-        func previous() -> Register.Field? {
-            guard let currentIndex = Register.Field.allCases.firstIndex(of: self) else {
-                return nil
-            }
-            
-            // Verifica si hay un campo anterior.
-            let previousIndex = Register.Field.allCases.index(before: currentIndex)
-            return currentIndex > .zero ? Register.Field.allCases[previousIndex] : nil
-        }
     }
 }

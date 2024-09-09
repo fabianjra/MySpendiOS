@@ -51,6 +51,7 @@
 		1F4C9B592C5C78DD00C403B3 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4C9B582C5C78DD00C403B3 /* Double+Extensions.swift */; };
 		1F4C9B5B2C5C847100C403B3 /* UtilsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4C9B5A2C5C847100C403B3 /* UtilsStore.swift */; };
 		1F4C9B5E2C5CA48E00C403B3 /* PickerSegmented.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4C9B5D2C5CA48E00C403B3 /* PickerSegmented.swift */; };
+		1F501D9A2C8E8253008D4085 /* CaseIterable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F501D992C8E8253008D4085 /* CaseIterable+Extensions.swift */; };
 		1F5CC57C2A6648E400C214FE /* DividerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5CC57B2A6648E400C214FE /* DividerView.swift */; };
 		1F5CC57E2A664EFB00C214FE /* TextFieldEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5CC57D2A664EFB00C214FE /* TextFieldEmail.swift */; };
 		1F5CC5802A6653AF00C214FE /* TextFieldPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5CC57F2A6653AF00C214FE /* TextFieldPassword.swift */; };
@@ -182,6 +183,7 @@
 		1F4C9B582C5C78DD00C403B3 /* Double+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
 		1F4C9B5A2C5C847100C403B3 /* UtilsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilsStore.swift; sourceTree = "<group>"; };
 		1F4C9B5D2C5CA48E00C403B3 /* PickerSegmented.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerSegmented.swift; sourceTree = "<group>"; };
+		1F501D992C8E8253008D4085 /* CaseIterable+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CaseIterable+Extensions.swift"; sourceTree = "<group>"; };
 		1F5CC57B2A6648E400C214FE /* DividerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DividerView.swift; sourceTree = "<group>"; };
 		1F5CC57D2A664EFB00C214FE /* TextFieldEmail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldEmail.swift; sourceTree = "<group>"; };
 		1F5CC57F2A6653AF00C214FE /* TextFieldPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldPassword.swift; sourceTree = "<group>"; };
@@ -649,6 +651,7 @@
 				1F7486BA2A68D4A30063AC35 /* Fonts+Extensions.swift */,
 				1F64B0AA2A70CFC3004AC825 /* String+Extensions.swift */,
 				1F4C9B582C5C78DD00C403B3 /* Double+Extensions.swift */,
+				1F501D992C8E8253008D4085 /* CaseIterable+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -979,6 +982,7 @@
 				1F7437B42A668BCD0039EFD4 /* Gestures+Extensions.swift in Sources */,
 				1F697E082C5B3C22009529EF /* ResponseModel.swift in Sources */,
 				1FA08EE42C5D99480019000B /* RegisterViewModel.swift in Sources */,
+				1F501D9A2C8E8253008D4085 /* CaseIterable+Extensions.swift in Sources */,
 				1F64B0AD2A70D647004AC825 /* TextFieldReadOnly.swift in Sources */,
 				1F9462EB2A7B4D8200F5CBFB /* HeaderNavigator.swift in Sources */,
 				1F06414D2A7232D300C19084 /* RootView.swift in Sources */,

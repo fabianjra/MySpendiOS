@@ -52,32 +52,8 @@ struct LoginView: View {
                 .buttonStyle(ButtonLinkStyle())
                 .padding(.bottom)   
             }
-            .toolbar {
-                ToolbarItemGroup(placement: .keyboard) {
-                    HStack {
-                        Button {
-                            focusedField = focusedField?.previous()
-                        } label: {
-                            Image.chevronUp
-                        }
-                        .disabled(focusedField == Login.Field.allCases.first)
-                        
-                        Button {
-                            focusedField = focusedField?.next()
-                        } label: {
-                            Image.chevronDown
-                        }
-                        .disabled(focusedField == Login.Field.allCases.last)
-                        
-                        Spacer()
-                        
-                        Button("Done") {
-                            focusedField = nil
-                        }
-                    }
-                }
-            }
-
+            .modifier(AddKeyboardToolbar(focusedField: $focusedField))
+            
             
             // MARK: DIVISION
             HStack {

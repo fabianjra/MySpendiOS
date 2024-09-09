@@ -265,3 +265,88 @@ struct SizeCalculator: ViewModifier {
             )
     }
 }
+
+/**
+ This `ViewModifier` adds a toolbar above the keyboard that allows users to navigate between text fields or dismiss the keyboard by tapping a "Done" button.
+ 
+ The toolbar contains two buttons:
+ - One to navigate to the previous text field (if applicable).
+ - One to navigate to the next text field (if applicable).
+ 
+ It utilizes a generic `Field` that conforms to both `Hashable` and `CaseIterable`, which means it works with enums representing form fields, providing a way to move between the fields dynamically.
+ 
+ The modifier handles the logic for enabling or disabling the "Next" and "Previous" buttons based on the current focused field's position in the `allCases` sequence.
+
+ **Example:**
+ ```swift
+ struct ContentView: View {
+     @FocusState private var focusedField: Login.Field?
+     
+     var body: some View {
+         Form {
+             TextField("Email", text: $email)
+                 .focused($focusedField, equals: .email)
+             
+             TextField("Password", text: $password)
+                 .focused($focusedField, equals: .password)
+         }
+         .addKeyboardToolbar(focusedField: $focusedField)
+     }
+ }
+```
+ 
+ - Parameters:
+    - focusedField: A FocusState binding that tracks the currently focused text field. It uses an enum representing the form fields.
+ 
+ - Authors: Fabian Rodriguez
+
+ - Version: 1.0
+
+ - Date: September 2024
+ */
+struct AddKeyboardToolbar<Field: Hashable & CaseIterable>: ViewModifier {
+    
+    var focusedField: FocusState<Field?>.Binding
+
+    func body(content: Content) -> some View {
+        content
+            .toolbar {
+                ToolbarItemGroup(placement: .keyboard) {
+                    HStack {
+
+                        // Go to previus textfield
+                        Button {
+                            focusedField.wrappedValue = focusedField.wrappedValue?.previous()
+                        } label: {
+                            Image.chevronUp
+                        }
+                        .disabled(focusedField.wrappedValue == Field.allCases.first)
+
+                        // Go to next textfield
+                        Button {
+                            focusedField.wrappedValue = focusedField.wrappedValue?.next()
+                        } label: {
+                            Image.chevronDown
+                        }
+                        
+                        /*
+                         A generic type like Field in the ViewModifier cannot inherit from Array or automatically have access to array properties (.first, .last, etc.) just by conforming to CaseIterable.
+                         This is because allCases is a sequence (AllCases), not an array.
+                         
+                         However, a close alternative is to convert the sequence into an array within the ViewModifier.
+                         This gives access to the array properties that are needed.
+                         By doing so, it allows efficient access to .first and .last, and can be encapsulated within the modifier.
+                         */
+                        .disabled(focusedField.wrappedValue == Array(Field.allCases).last)
+
+                        Spacer()
+
+                        // Close keyboard
+                        Button("Done") {
+                            focusedField.wrappedValue = nil
+                        }
+                    }
+                }
+            }
+    }
+}

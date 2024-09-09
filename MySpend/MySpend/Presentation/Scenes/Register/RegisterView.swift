@@ -61,32 +61,7 @@ struct RegisterView: View {
                 
                 TextError(message: viewModel.errorMessage)
             }
-            .toolbar {
-                ToolbarItemGroup(placement: .keyboard) {
-                    HStack {
-                        Button {
-                            focusedField = focusedField?.previous()
-                        } label: {
-                            Image.chevronUp
-                        }
-                        .disabled(focusedField == Register.Field.allCases.first)
-                        
-                        Button {
-                            focusedField = focusedField?.next()
-                        } label: {
-                            Image.chevronDown
-                        }
-                        .disabled(focusedField == Register.Field.allCases.last)
-                        
-                        Spacer()
-                        
-                        Button("Done") {
-                            focusedField = nil
-                        }
-                    }
-                }
-            }
-            
+            .modifier(AddKeyboardToolbar(focusedField: $focusedField))
         }
         .disabled(viewModel.isLoading)
     }
