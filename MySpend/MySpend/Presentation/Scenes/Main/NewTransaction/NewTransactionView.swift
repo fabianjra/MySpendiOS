@@ -53,6 +53,7 @@ struct NewTransactionView: View {
                                 .padding(.horizontal)
                                 .datePickerStyle(.graphical)
                                 .frame(height: ConstantFrames.calendarHeight)
+                                .padding()
                                 .onChange(of: viewModel.model.selectedDate, { oldValue, newValue in
                                     viewModel.model.dateString = Utils.dateToStringShort(date: newValue)
                                     //let day = selectedDate.formatted(.dateTime.day())
