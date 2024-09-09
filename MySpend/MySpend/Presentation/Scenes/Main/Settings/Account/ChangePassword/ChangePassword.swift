@@ -12,7 +12,7 @@ struct ChangePassword {
     var userNewPassword: String = ""
     var userNewPasswordConfirm: String = ""
     
-    enum Field: Hashable {
+    enum Field: Hashable, CaseIterable {
         case userPassword
         case newPassword
         case newPasswordConfirm

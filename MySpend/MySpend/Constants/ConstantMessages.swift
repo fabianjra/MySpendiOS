@@ -34,7 +34,8 @@ extension ConstantMessages: LocalizedError {
         case .emptySpaces: return NSLocalizedString("Fill the empty spaces.", comment: "")
         case .creationPasswordIsDifferent: return NSLocalizedString("The password and confirm password are different.", comment: "")
         case .newPasswordIsDifferent: return NSLocalizedString("New password and confirm password are different.", comment: "")
-        case .passwordIsShort: return NSLocalizedString("The password should be larger than 6 characters.", comment: "")
+        case .passwordIsShort: return NSLocalizedString("The password should be larger than \(ConstantViews.passwordMinimumLength) characters.", 
+                                                        comment: "")
         case .userNotLoggedIn: return NSLocalizedString("User is not logged in.", comment: "")
         case .userNotExists: return NSLocalizedString("User is not exists.", comment: "")
         case .userIsValidated: return NSLocalizedString("User is already validated.", comment: "")

@@ -11,6 +11,7 @@ struct ResumeView: View {
     
     @ObservedObject var viewModel: ResumeViewModel
     @EnvironmentObject var authViewModel: AuthViewModel
+    @State var currencySymbol: CurrencySymbol = .dollar //TODO: Agregar a UserDefaults.
     
 //    init(model: Resume = Resume()) {
 //        /*
@@ -61,7 +62,7 @@ struct ResumeView: View {
                             
                             Spacer()
                             
-                            TextPlain(message: "$ \(item.amount.roundedToTwoDecimalsString())")
+                            TextPlain(message: "\(currencySymbol.rawValue) \(item.amount.roundedToTwoDecimalsString())")
                         }
                         .padding(.vertical, ConstantViews.textResumeSpacing)
                         .padding(.horizontal)
@@ -76,7 +77,7 @@ struct ResumeView: View {
                               size: .big)
                     Spacer()
                     
-                    TextPlain(message: "$ \(viewModel.model.totalBalance.roundedToTwoDecimalsString())",
+                    TextPlain(message: "\(currencySymbol.rawValue) \(viewModel.model.totalBalance.roundedToTwoDecimalsString())",
                               size: .big)
                 }
             }
@@ -88,7 +89,7 @@ struct ResumeView: View {
  
         }
         .onAppear {
-            print("Router count RESUME: \(Router.shared.path.count)")
+            print("Router count RESUME: \(Router.shared.path.count)") //TODO: Delete.
             Task {
                 await viewModel.onAppear(authViewModel)
             }

@@ -14,15 +14,15 @@ enum TabViewIcons: String, CaseIterable, Identifiable {
     
     var iconSelected: Image {
         switch self {
-        case .resume: return Image.dolarSquareFill
-        case .settings: return Image.sliderHorizontal
+        case .resume: return Image.tabResumeFill
+        case .settings: return Image.tabSettingsFill
         }
     }
     
     var iconDeselected: Image {
         switch self {
-        case .resume: return Image.dolarSquare
-        case .settings: return Image.sliderHorizontal
+        case .resume: return Image.tabResume
+        case .settings: return Image.tabSettings
         }
     }
     

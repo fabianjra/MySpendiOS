@@ -31,9 +31,15 @@ struct HistoryView: View {
             } else {
                 if viewModel.model.transactions.isEmpty {
                     Spacer()
-                    TextPlain(message: "No transactions added",
+                    TextPlain(message: "No transactions",
                               family: .semibold,
-                              size: .bigXL)
+                              size: .bigXL,
+                              aligment: .center)
+                    .padding(.vertical)
+                    
+                    TextPlain(message: "Try adding a new one in the + button",
+                              size: .big,
+                              aligment: .center)
                     Spacer()
                 } else {
                     VStack {                    Picker("Transaction type", selection: $viewModel.model.historyFormat) {

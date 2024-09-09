@@ -19,7 +19,7 @@ struct NewTransaction {
     var categoryId: String = ""
     var notes: String = ""
 
-    enum Field: Hashable {
+    enum Field: Hashable, CaseIterable {
         case amount
         case category
         case notes

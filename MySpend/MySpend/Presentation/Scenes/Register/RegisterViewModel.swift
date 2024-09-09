@@ -18,7 +18,7 @@ class RegisterViewModel: BaseViewModel {
             return ResponseModel(.error, ConstantMessages.emptySpaces.localizedDescription)
         }
         
-        if register.password.count < 6 || register.passwordConfirm.count < 6 {
+        if register.password.count < ConstantViews.passwordMinimumLength || register.passwordConfirm.count < ConstantViews.passwordMinimumLength {
             return ResponseModel(.error, ConstantMessages.passwordIsShort.localizedDescription)
         }
         

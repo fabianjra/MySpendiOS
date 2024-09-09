@@ -26,15 +26,13 @@ struct ChangePasswordView: View {
             
             // MARK: FIELDS
             VStack(spacing: ConstantViews.formSpacing) {
-                
                 TextFieldPassword(placeHolder: "Current password",
                                   text: $changePasswordVM.model.userPassword,
                                   errorMessage: $changePasswordVM.errorMessage,
                                   iconLeading: Image.lockFill)
                 .textContentType(.password)
                 .focused($focusedField, equals: .userPassword)
-                .submitLabel(.next)
-                .onSubmit { focusedField = .newPassword }
+                .onSubmit { changePassword() }
                 
                 
                 TextFieldPassword(placeHolder: "New password",
@@ -43,8 +41,7 @@ struct ChangePasswordView: View {
                                   iconLeading: Image.checkmark)
                 .textContentType(.newPassword)
                 .focused($focusedField, equals: .newPassword)
-                .submitLabel(.next)
-                .onSubmit { focusedField = .newPasswordConfirm }
+                .onSubmit { changePassword() }
                 
                 
                 TextFieldPassword(placeHolder: "Confirm new password",
@@ -54,12 +51,11 @@ struct ChangePasswordView: View {
                 .padding(.bottom)
                 .textContentType(.newPassword)
                 .focused($focusedField, equals: .newPasswordConfirm)
-                .submitLabel(.done)
-                .onSubmit {
-                    changePassword()
-                }
-                
-                
+                .onSubmit { changePassword() }
+            }
+            .modifier(AddKeyboardToolbar(focusedField: $focusedField))
+            
+            VStack {
                 Button("Change password") {
                     changePassword()
                 }

@@ -34,7 +34,6 @@ struct ChangeNameView: View {
                               iconLeading: Image.checkmark,
                               errorMessage: $changeNameVM.errorMessage)
                 .padding(.bottom)
-                .submitLabel(.done)
                 .onSubmit {
                     Task {
                         await changeNameVM.changeUserName()

@@ -52,6 +52,7 @@
 		1F4C9B5B2C5C847100C403B3 /* UtilsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4C9B5A2C5C847100C403B3 /* UtilsStore.swift */; };
 		1F4C9B5E2C5CA48E00C403B3 /* PickerSegmented.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4C9B5D2C5CA48E00C403B3 /* PickerSegmented.swift */; };
 		1F501D9A2C8E8253008D4085 /* CaseIterable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F501D992C8E8253008D4085 /* CaseIterable+Extensions.swift */; };
+		1F501D9C2C8E8A41008D4085 /* CurrencySymbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F501D9B2C8E8A41008D4085 /* CurrencySymbol.swift */; };
 		1F5CC57C2A6648E400C214FE /* DividerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5CC57B2A6648E400C214FE /* DividerView.swift */; };
 		1F5CC57E2A664EFB00C214FE /* TextFieldEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5CC57D2A664EFB00C214FE /* TextFieldEmail.swift */; };
 		1F5CC5802A6653AF00C214FE /* TextFieldPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5CC57F2A6653AF00C214FE /* TextFieldPassword.swift */; };
@@ -184,6 +185,7 @@
 		1F4C9B5A2C5C847100C403B3 /* UtilsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilsStore.swift; sourceTree = "<group>"; };
 		1F4C9B5D2C5CA48E00C403B3 /* PickerSegmented.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerSegmented.swift; sourceTree = "<group>"; };
 		1F501D992C8E8253008D4085 /* CaseIterable+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CaseIterable+Extensions.swift"; sourceTree = "<group>"; };
+		1F501D9B2C8E8A41008D4085 /* CurrencySymbol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencySymbol.swift; sourceTree = "<group>"; };
 		1F5CC57B2A6648E400C214FE /* DividerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DividerView.swift; sourceTree = "<group>"; };
 		1F5CC57D2A664EFB00C214FE /* TextFieldEmail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldEmail.swift; sourceTree = "<group>"; };
 		1F5CC57F2A6653AF00C214FE /* TextFieldPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldPassword.swift; sourceTree = "<group>"; };
@@ -725,6 +727,7 @@
 				1F46B4112A79885D003A9550 /* ConstantValidations.swift */,
 				1F171F282A7CC90D00A0A33E /* ConstantEmojis.swift */,
 				1F0E9AB52C5C62B300675CE8 /* ConstantFB.swift */,
+				1F501D9B2C8E8A41008D4085 /* CurrencySymbol.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -970,6 +973,7 @@
 				1F65D9612C7287D30023CC5D /* History.swift in Sources */,
 				1F19D96A2A4A933200137EA0 /* ConstantShapes.swift in Sources */,
 				1F14081D2A5910D300181500 /* ButtonLinkStyle.swift in Sources */,
+				1F501D9C2C8E8A41008D4085 /* CurrencySymbol.swift in Sources */,
 				1F5CC5822A6657F800C214FE /* TextFieldName.swift in Sources */,
 				1F7486BB2A68D4A30063AC35 /* Fonts+Extensions.swift in Sources */,
 				1F4C9B592C5C78DD00C403B3 /* Double+Extensions.swift in Sources */,

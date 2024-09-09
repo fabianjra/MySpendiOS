@@ -10,26 +10,31 @@ import SwiftUI
 
 extension Image {
     
+    // MARK: CURRENCY
+    static let dolarSquare = Image(systemName: "dollarsign.circle") // $
+    static let dolarSquareFill = Image(systemName: "dollarsign.circle.fill")
+    
     // MARK: BUTTON
     static let plus = Image(systemName: "plus")
+    static let stack = Image(systemName: "mail.stack") // History
+    static let stackFill = Image(systemName: "mail.stack.fill")
     
     // MARK: TEXFIELD
-    static let envelopeFill = Image(systemName: "envelope.fill") //Email
-    static let lockFill = Image(systemName: "lock.fill") //Password
-    static let personFill = Image(systemName: "person.fill") //Name
-    static let checkmark = Image(systemName: "checkmark") //Password confirmation
-    static let calendar = Image(systemName: "calendar") //Date
+    static let envelopeFill = Image(systemName: "envelope.fill") // Email
+    static let lockFill = Image(systemName: "lock.fill") // Password
+    static let personFill = Image(systemName: "person.fill") // Name
+    static let checkmark = Image(systemName: "checkmark") // Password confirmation
+    static let calendar = Image(systemName: "calendar") // Date
     
     // MARK: TABVIEW
-    static let dolarSquare = Image(systemName: "dollarsign.square") //Resume
-    static let dolarSquareFill = Image(systemName: "dollarsign.square.fill")
-    static let stack = Image(systemName: "mail.stack") //History
-    static let stackFill = Image(systemName: "mail.stack.fill")
-    static let sliderHorizontal = Image(systemName: "slider.horizontal.3") //Settings
+    static let tabResume = Image(systemName: "list.bullet.rectangle") // Resume
+    static let tabResumeFill = Image(systemName: "list.bullet.rectangle.fill")
+    static let tabSettings = Image(systemName: "gear.circle") // Settings
+    static let tabSettingsFill = Image(systemName: "gear.circle.fill")
     
     // MARK: LIST
-    static let listBulletClipboard = Image(systemName: "list.bullet.clipboard") //Categories
-    static let listBulletClipboardFill = Image(systemName: "list.bullet.clipboard.fill") //Categories
+    static let listBulletClipboard = Image(systemName: "list.bullet.clipboard") // Categories
+    static let listBulletClipboardFill = Image(systemName: "list.bullet.clipboard.fill")
     
     // MARK: NAVIGATION
     static let arrowRight = Image(systemName: "arrow.right") // ->

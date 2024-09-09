@@ -23,10 +23,12 @@ struct MainView: View {
     var body: some View {
         ZStack(alignment: .bottom) {
             
-            /// Los tabView siempre estan cargadas en memoria, su totalidad de vistas,
-            /// en este caso las 5 vistas estan cargadas en memoria.
-            /// Por eso, se se hace scroll en la vista principal, se cambia de vista y luego vuelve,
-            /// la vista permanece como quedó.
+            /*
+             Los tabView siempre estan cargadas en memoria, su totalidad de vistas,
+             en este caso las 5 vistas estan cargadas en memoria.
+             Por eso, se se hace scroll en la vista principal, se cambia de vista y luego vuelve,
+             la vista permanece como quedó.
+             */
             TabView(selection: $selectedTab) {
                 
                 /// Los tags permiten que las vistas cambien entre una seleccion u otra en el TabView.
@@ -41,7 +43,7 @@ struct MainView: View {
         }
         .edgesIgnoringSafeArea(.bottom)
         .onAppear {
-            //Disable Swipe to go back.
+            /// Disable Swipe to go back when ResumeView is showing.
             AppState.shared.swipeEnabled = false
         }
         .onDisappear {

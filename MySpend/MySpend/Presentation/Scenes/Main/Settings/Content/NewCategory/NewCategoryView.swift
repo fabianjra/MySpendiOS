@@ -24,46 +24,57 @@ struct NewCategoryView: View {
             .padding(.vertical)
             
             
-            PickerSegmented(selection: $newCategoryVM.model.categoryType,
-                            segments: TransactionTypeEnum.allCases)
-            .padding(.bottom)
+            // MARK: SEGMENT
+            
+            VStack {
+                PickerSegmented(selection: $newCategoryVM.model.categoryType,
+                                segments: TransactionTypeEnum.allCases)
+                .padding(.bottom)
+            }
             
             
-            TextField("", text: $newCategoryVM.model.name,
-                      prompt: Text("Name").foregroundColor(.textFieldPlaceholder))
-            .textFieldStyle(TextFieldIconStyle($newCategoryVM.model.name,
-                                               errorMessage: $newCategoryVM.errorMessage))
+            // MARK: TEXTFIELDS
             
-            TextField("", text: $newCategoryVM.model.icon,
-                      prompt: Text("Icon").foregroundColor(.textFieldPlaceholder))
-            .textFieldStyle(TextFieldIconStyle($newCategoryVM.model.icon,
-                                               errorMessage: $newCategoryVM.errorMessage))
-            .padding(.bottom)
+            VStack {
+                TextField("", text: $newCategoryVM.model.name,
+                          prompt: Text("Name").foregroundColor(.textFieldPlaceholder))
+                .textFieldStyle(TextFieldIconStyle($newCategoryVM.model.name,
+                                                   errorMessage: $newCategoryVM.errorMessage))
+                .keyboardType(.alphabet)
+                .onSubmit { process() }
+                
+                TextField("", text: $newCategoryVM.model.icon,
+                          prompt: Text("Icon").foregroundColor(.textFieldPlaceholder))
+                .textFieldStyle(TextFieldIconStyle($newCategoryVM.model.icon,
+                                                   errorMessage: $newCategoryVM.errorMessage))
+                .padding(.bottom)
+            }
             
             
-            Button("Accept") {
-                Task {
-                    let result = await newCategoryVM.addNewCategory()
-                    
-                    if result.status.isSuccess {
-                        dismiss()
-                    } else {
-                        newCategoryVM.errorMessage = result.message
-                    }
+            // MARK: BUTTONS
+            
+            VStack {
+                Button("Accept") {
+                    process()
                 }
+                .buttonStyle(ButtonPrimaryStyle(isLoading: $newCategoryVM.isLoading))
+                .padding(.vertical)
+                
+
+                TextError(message: newCategoryVM.errorMessage)
             }
-            .buttonStyle(ButtonPrimaryStyle(isLoading: $newCategoryVM.isLoading))
-            .padding(.vertical)
-            .padding(.bottom)
+        }
+    }
+    
+    private func process() {
+        Task {
+            let result = await newCategoryVM.addNewCategory()
             
-            Button("Cancel") {
+            if result.status.isSuccess {
                 dismiss()
+            } else {
+                newCategoryVM.errorMessage = result.message
             }
-            .buttonStyle(ButtonPrimaryStyle(color: [Color.warning]))
-            .padding(.horizontal)
-            
-            
-            TextError(message: newCategoryVM.errorMessage)
         }
     }
 }
