@@ -42,11 +42,11 @@ struct NewTransactionView: View {
                                           iconLeading: Image.calendar,
                                           colorDisabled: false)
                         .onTapGesture {
+                            focusedField = nil
                             viewModel.showDatePicker = true
                         }
                         .sheet(isPresented: $viewModel.showDatePicker) {
                             NavigationStack {
-                                
                                 DatePicker("",
                                            selection: $viewModel.model.selectedDate,
                                            displayedComponents: .date)
@@ -76,7 +76,6 @@ struct NewTransactionView: View {
                             }
                             .presentationCornerRadius(ConstantRadius.cornersModal)
                             .presentationDetents([.height(ConstantFrames.calendarHeight)])
-                            
                         }
                     }
                     
