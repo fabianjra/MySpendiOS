@@ -45,7 +45,7 @@ struct NewTransactionView: View {
                             viewModel.showDatePicker = true
                         }
                         .sheet(isPresented: $viewModel.showDatePicker) {
-                            NavigationView {
+                            NavigationStack {
                                 
                                 DatePicker("",
                                            selection: $viewModel.model.selectedDate,
