@@ -6,14 +6,35 @@
 //
 
 import SwiftUI
+import Firebase
 
 @MainActor
-class BaseViewModel: ObservableObject {
+public class BaseViewModel: ObservableObject {
     
     @Published var isLoading: Bool = false
     @Published var errorMessage = ""
+    @Published var disabled: Bool = false
     
-    func performWithLoader(_ work: @escaping () async -> Void) async {
+    public func validateCurrentUser() {
+        if AuthFB().currentUser == nil {
+            disabled = true
+            errorMessage = ConstantMessages.userNotLoggedIn.localizedDescription
+        }
+    }
+    
+    public func performWithCurrentUser(_ work: @escaping (_ currentUser: User) -> Void) {
+        errorMessage = ""
+        
+        guard let currentUser = AuthFB().currentUser else {
+            disabled = true
+            errorMessage = ConstantMessages.userNotLoggedIn.localizedDescription
+            return
+        }
+        
+        work(currentUser)
+    }
+    
+    public func performWithLoader(_ work: @escaping () async -> Void) async {
         errorMessage = ""
         
         withAnimation {
@@ -27,5 +48,26 @@ class BaseViewModel: ObservableObject {
         }
         
         await work()
+    }
+    
+    public func performWithLoader(_ work: @escaping (_ currentUser: User) async -> Void) async {
+        errorMessage = ""
+        
+        guard let currentUser = AuthFB().currentUser else {
+            errorMessage = ConstantMessages.userNotLoggedIn.localizedDescription
+            return
+        }
+        
+        withAnimation {
+            isLoading = true
+        }
+        
+        defer {
+            withAnimation {
+                isLoading = false
+            }
+        }
+        
+        await work(currentUser)
     }
 }

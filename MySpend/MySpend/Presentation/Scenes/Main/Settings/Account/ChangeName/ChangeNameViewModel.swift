@@ -8,20 +8,8 @@
 import Firebase
 
 class ChangeNameViewModel: BaseViewModel {
-
-    @Published var model = ChangeName()
-    @Published var disabled: Bool = false
     
-    //TODO: Pasar disabled y la funcion de validacion de currentUser a BaseViewModel
-    private func getCurrentUser() -> User? {
-        guard let currentUser = AuthFB().currentUser else {
-            disabled = true
-            errorMessage = ConstantMessages.userNotLoggedIn.localizedDescription
-            return nil
-        }
-        
-        return currentUser
-    }
+    @Published var model = ChangeName()
     
     func changeUserName() async {
         if model.newUserName.isEmptyOrWhitespace() {
@@ -29,15 +17,11 @@ class ChangeNameViewModel: BaseViewModel {
             return
         }
         
-        guard let currentUser = getCurrentUser() else {
-            return
-        }
-        
         await performWithLoader {
             do {
-                try await AuthFB().updateUser(newUserName: self.model.newUserName, forUser: currentUser)
+                try await AuthFB().updateUser(newUserName: self.model.newUserName)
                 
-                self.errorMessage = "Name changed to: \(currentUser.displayName ?? "")"
+                self.errorMessage = "Name updated"
             } catch {
                 self.errorMessage = error.localizedDescription
             }
@@ -45,10 +29,8 @@ class ChangeNameViewModel: BaseViewModel {
     }
     
     func onAppear() {
-        guard let currentUser = getCurrentUser() else {
-            return
+        performWithCurrentUser { currentUser in
+            self.model.userName = currentUser.displayName ?? ""
         }
-        
-        model.userName = currentUser.displayName ?? ""
     }
 }

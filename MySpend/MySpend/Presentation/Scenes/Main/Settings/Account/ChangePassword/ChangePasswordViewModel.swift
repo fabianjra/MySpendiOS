@@ -10,7 +10,6 @@ import Foundation
 class ChangePasswordViewModel: BaseViewModel {
     
     @Published var model = ChangePassword()
-    @Published var disabled: Bool = false
     
     func validateChangePassword() async {
         
@@ -34,13 +33,6 @@ class ChangePasswordViewModel: BaseViewModel {
             } catch {
                 self.errorMessage = error.localizedDescription
             }
-        }
-    }
-    
-    func onAppear() {
-        if AuthFB().currentUser == nil {
-            disabled = true
-            errorMessage = ConstantMessages.userNotLoggedIn.localizedDescription
         }
     }
 }

@@ -68,7 +68,7 @@ struct ChangePasswordView: View {
         }
         .disabled(changePasswordVM.isLoading)
         .onAppear {
-            changePasswordVM.onAppear()
+            changePasswordVM.validateCurrentUser()
         }
     }
     

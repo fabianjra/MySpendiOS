@@ -71,8 +71,15 @@ struct AuthFB {
         //try await sendEmailRegisteredUser() //Commented: Will send only via: Validation User View.
     }
 
-    func updateUser(newUserName: String, forUser user: User?) async throws {
-        guard let user = user else {
+    func updateUser(newUserName: String, forUser user: User) async throws {
+        let changeRequest = user.createProfileChangeRequest()
+        changeRequest.displayName = newUserName
+        
+        try await changeRequest.commitChanges()
+    }
+    
+    func updateUser(newUserName: String) async throws {
+        guard let user = currentUser else {
             throw ConstantMessages.userNotLoggedIn
         }
         
