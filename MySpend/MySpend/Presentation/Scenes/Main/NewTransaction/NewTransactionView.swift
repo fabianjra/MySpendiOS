@@ -42,42 +42,7 @@ struct NewTransactionView: View {
                                           iconLeading: Image.calendar,
                                           colorDisabled: false)
                         .onTapGesture {
-                            focusedField = nil
                             viewModel.showDatePicker = true
-                        }
-                        .sheet(isPresented: $viewModel.showDatePicker) {
-                            NavigationStack {
-                                DatePicker("",
-                                           selection: $viewModel.model.selectedDate,
-                                           displayedComponents: .date)
-                                .padding(.horizontal)
-                                .datePickerStyle(.graphical)
-                                .frame(height: ConstantFrames.calendarHeight)
-                                .padding()
-                                .onChange(of: viewModel.model.selectedDate, { oldValue, newValue in
-                                    viewModel.model.dateString = Utils.dateToStringShort(date: newValue)
-                                    //let day = selectedDate.formatted(.dateTime.day())
-                                })
-                                .toolbar {
-                                    ToolbarItem(placement: .cancellationAction) {
-                                        Button("Today") {
-                                            viewModel.model.selectedDate = .now
-                                        }
-                                        .padding()
-                                        .padding(.top)
-                                    }
-                                    
-                                    ToolbarItem(placement: .confirmationAction) {
-                                        Button("Done") {
-                                            viewModel.showDatePicker = false
-                                        }
-                                        .padding()
-                                        .padding(.top)
-                                    }
-                                }
-                            }
-                            .presentationCornerRadius(ConstantRadius.cornersModal)
-                            .presentationDetents([.height(ConstantFrames.calendarHeight)])
                         }
                     }
                     
@@ -144,6 +109,40 @@ struct NewTransactionView: View {
                             
                         }
                     }
+                }
+                .sheet(isPresented: $viewModel.showDatePicker) {
+                    NavigationStack {
+                        DatePicker("",
+                                   selection: $viewModel.model.selectedDate,
+                                   displayedComponents: .date)
+                        .padding(.horizontal)
+                        .datePickerStyle(.graphical)
+                        .frame(height: ConstantFrames.calendarHeight)
+                        .padding()
+                        .onChange(of: viewModel.model.selectedDate, { oldValue, newValue in
+                            viewModel.model.dateString = Utils.dateToStringShort(date: newValue)
+                            //let day = selectedDate.formatted(.dateTime.day())
+                        })
+                        .toolbar {
+                            ToolbarItem(placement: .cancellationAction) {
+                                Button("Today") {
+                                    viewModel.model.selectedDate = .now
+                                }
+                                .padding()
+                                .padding(.top)
+                            }
+                            
+                            ToolbarItem(placement: .confirmationAction) {
+                                Button("Done") {
+                                    viewModel.showDatePicker = false
+                                }
+                                .padding()
+                                .padding(.top)
+                            }
+                        }
+                    }
+                    .presentationCornerRadius(ConstantRadius.cornersModal)
+                    .presentationDetents([.height(ConstantFrames.calendarHeight)])
                 }
             }
         }
