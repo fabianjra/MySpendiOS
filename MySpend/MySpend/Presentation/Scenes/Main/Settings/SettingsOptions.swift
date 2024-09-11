@@ -55,9 +55,9 @@ enum AccountOptions: String, CaseIterable, Identifiable {
     var view: some View {
         switch self {
         //"for: .navigationBar" is disabling the navigator to navigate the next View.
-        case .changeName: ChangeNameView().toolbar(.hidden)
-        case .changePassword:ChangePasswordView().toolbar(.hidden)
-        case .validateAccount: ValidateAccountView().toolbar(.hidden)
+        case .changeName: ChangeNameView().toolbar(.hidden, for: .navigationBar)
+        case .changePassword:ChangePasswordView().toolbar(.hidden, for: .navigationBar)
+        case .validateAccount: ValidateAccountView().toolbar(.hidden, for: .navigationBar)
         }
     }
 }
@@ -85,7 +85,7 @@ enum ContentOptions: String, CaseIterable, Identifiable {
     var view: some View {
         switch self {
         //"for: .navigationBar" is disabling the navigator to navigate the next View.
-        case .categories: CategoriesView().toolbar(.hidden)
+        case .categories: CategoriesView().toolbar(.hidden, for: .navigationBar)
         }
     }
 }

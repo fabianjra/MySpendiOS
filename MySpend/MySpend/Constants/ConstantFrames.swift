@@ -7,11 +7,10 @@
 
 import UIKit
 
-struct ConstantFrames {
+public struct ConstantFrames {
     static let textFieldHeight: CGFloat = 50.0
     static let dividerHeight: CGFloat = 0.7
     static let screenSize = UIScreen.main.bounds.size
-    static let tabViewIcon: CGFloat = 20.0
     static let tabViewHeight: CGFloat = 75.0
     static let calendarHeight: CGFloat = 440.0
     
@@ -22,7 +21,7 @@ struct ConstantFrames {
     static let roundedButtonIcon: CGFloat = 35.0
 }
 
-enum FrameSize {
+public enum FrameSize {
     case width
     case height
     
@@ -37,6 +36,13 @@ enum FrameSize {
         switch self {
         case .width: return 20.0
         case .height: return 20.0
+        }
+    }
+    
+    var tabViewIcon: CGFloat {
+        switch self {
+        case .width: return 25.0
+        case .height: return 25.0
         }
     }
 }

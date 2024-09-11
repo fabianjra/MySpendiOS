@@ -43,14 +43,14 @@ struct RootView: View {
             .navigationDestination(for: Router.Destination.self) { destination in
                 switch destination {
                 case .main:
-                    MainView()
-                        .toolbar(.hidden)
+                    MainView() //For: When go from register.
+                        .toolbar(.hidden, for: .navigationBar)
                 case .register:
                     RegisterView()
-                        .toolbar(.hidden)
+                        .toolbar(.hidden, for: .navigationBar)
                 case .history:
                     HistoryView()
-                        .toolbar(.hidden)
+                        .toolbar(.hidden, for: .navigationBar)
                 }
             }
         }

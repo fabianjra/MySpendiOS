@@ -9,9 +9,8 @@ import SwiftUI
 
 struct ResumeView: View {
     
-    @ObservedObject var viewModel: ResumeViewModel
     @EnvironmentObject var authViewModel: AuthViewModel
-    @State var currencySymbol: CurrencySymbol = .dollar //TODO: Agregar a UserDefaults.
+    @ObservedObject var viewModel: ResumeViewModel
     
 //    init(model: Resume = Resume()) {
 //        /*
@@ -62,7 +61,7 @@ struct ResumeView: View {
                             
                             Spacer()
                             
-                            TextPlain(message: "\(currencySymbol.rawValue) \(item.amount.roundedToTwoDecimalsString())")
+                            TextPlain(message: "\(viewModel.currencySymbol.rawValue) \(item.amount.roundedToTwoDecimalsString())")
                         }
                         .padding(.vertical, ConstantViews.textResumeSpacing)
                         .padding(.horizontal)
@@ -77,7 +76,7 @@ struct ResumeView: View {
                               size: .big)
                     Spacer()
                     
-                    TextPlain(message: "\(currencySymbol.rawValue) \(viewModel.model.totalBalance.roundedToTwoDecimalsString())",
+                    TextPlain(message: "\(viewModel.currencySymbol.rawValue) \(viewModel.model.totalBalance.roundedToTwoDecimalsString())",
                               size: .big)
                 }
             }
@@ -89,17 +88,8 @@ struct ResumeView: View {
  
         }
         .onAppear {
-            print("Router count RESUME: \(Router.shared.path.count)") //TODO: Delete.
             Task {
                 await viewModel.onAppear(authViewModel)
-            }
-        }
-        .onDisappear {
-            //TODO: Verificar que sea necesario limpiar el viewModel, ya que la vista desaparece.
-            if authViewModel.currentUser == nil {
-                viewModel.model.transactions = []
-                viewModel.model.totalBalance = 0
-                viewModel.model.userName = ""
             }
         }
     }

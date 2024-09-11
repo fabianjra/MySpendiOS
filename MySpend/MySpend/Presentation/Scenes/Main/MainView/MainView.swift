@@ -9,12 +9,8 @@ import SwiftUI
 
 struct MainView: View {
     
-    @StateObject private var resumeVM = ResumeViewModel()
-    @State private var selectedTab: TabViewIcons = .resume
-    
-    @State private var showNewItemModal = false
-    
     @EnvironmentObject var authViewModel: AuthViewModel
+    @StateObject private var viewModel = ResumeViewModel()
     
     init() {
         UITabBar.appearance().isHidden = true
@@ -29,10 +25,10 @@ struct MainView: View {
              Por eso, se se hace scroll en la vista principal, se cambia de vista y luego vuelve,
              la vista permanece como quedó.
              */
-            TabView(selection: $selectedTab) {
+            TabView(selection: $viewModel.selectedTab) {
                 
                 /// Los tags permiten que las vistas cambien entre una seleccion u otra en el TabView.
-                ResumeView(viewModel: resumeVM)
+                ResumeView(viewModel: viewModel)
                     .tag(TabViewIcons.resume)
                 
                 SettingsView()
@@ -49,8 +45,7 @@ struct MainView: View {
         .onDisappear {
             AppState.shared.swipeEnabled = true
         }
-        
-        .sheet(isPresented: $showNewItemModal) {
+        .sheet(isPresented: $viewModel.showNewTransactionModal) {
             NewTransactionView()
                 .presentationDetents([.large])
                 .presentationCornerRadius(ConstantRadius.cornersModal)
@@ -59,13 +54,11 @@ struct MainView: View {
     
     var tabView: some View {
         TabViewContainer {
-            
-            showNewItemModal = true
-            
+            viewModel.showNewTransactionModal = true
         } content: {
             ForEach(TabViewIcons.allCases, id: \.id) { item in
                 
-                TabViewButton(selectedTab: $selectedTab, item: item)
+                TabViewButton(selectedTab: $viewModel.selectedTab, item: item)
                     .padding(.horizontal, ConstantViews.paddingTabViewHorizontal)
                     .padding(.bottom)
                 

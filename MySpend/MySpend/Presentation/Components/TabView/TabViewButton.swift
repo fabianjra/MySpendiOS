@@ -21,8 +21,8 @@ struct TabViewButton: View {
                                     imageSelected: item.iconSelected,
                                     imageDeselected: item.iconDeselected)
                 
-                .frame(width: ConstantFrames.tabViewIcon,
-                       height: ConstantFrames.tabViewIcon)
+                .frame(width: FrameSize.width.tabViewIcon,
+                       height: FrameSize.height.tabViewIcon)
                 
                 .tint(selectedTab == item ?
                       Color.tabViewIconSelected
