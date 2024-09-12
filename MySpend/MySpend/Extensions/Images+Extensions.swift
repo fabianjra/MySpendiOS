@@ -11,11 +11,11 @@ import SwiftUI
 extension Image {
     
     // MARK: CURRENCY
-    static let dolarSquare = Image(systemName: "dollarsign.circle") // $
-    static let dolarSquareFill = Image(systemName: "dollarsign.circle.fill")
+    static let dollar = Image(systemName: "dollarsign") // $
+    static let colon = Image(systemName: "coloncurrencysign") // ₡
     
     // MARK: VIEW
-    static let checkmarkCircleFill = Image(systemName: "checkmark.circle.fill") // Password confirmation
+    static let checkmarkCircleFill = Image(systemName: "checkmark.circle.fill") // Validate Account logo.
     static let checkmarkCircle = Image(systemName: "checkmark.circle")
     
     // MARK: BUTTON
@@ -28,6 +28,8 @@ extension Image {
     static let lockFill = Image(systemName: "lock.fill") // Password
     static let personFill = Image(systemName: "person.fill") // Name
     static let calendar = Image(systemName: "calendar") // Date
+    static let checkmark = Image(systemName: "checkmark") // Password confirmation
+    
     
     // MARK: TABVIEW
     static let tabResume = Image(systemName: "list.bullet.rectangle") // Resume

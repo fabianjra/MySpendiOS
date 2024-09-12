@@ -38,7 +38,7 @@ struct ChangePasswordView: View {
                 TextFieldPassword(placeHolder: "New password",
                                   text: $changePasswordVM.model.userNewPassword,
                                   errorMessage: $changePasswordVM.errorMessage,
-                                  iconLeading: Image.checkmarkCircleFill)
+                                  iconLeading: Image.checkmark)
                 .textContentType(.newPassword)
                 .focused($focusedField, equals: .newPassword)
                 .onSubmit { changePassword() }
@@ -47,7 +47,7 @@ struct ChangePasswordView: View {
                 TextFieldPassword(placeHolder: "Confirm new password",
                                   text: $changePasswordVM.model.userNewPasswordConfirm,
                                   errorMessage: $changePasswordVM.errorMessage,
-                                  iconLeading: Image.checkmarkCircleFill)
+                                  iconLeading: Image.checkmark)
                 .padding(.bottom)
                 .textContentType(.newPassword)
                 .focused($focusedField, equals: .newPasswordConfirm)
