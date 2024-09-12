@@ -17,11 +17,11 @@ class NewTransactionViewModel: BaseViewModel {
     }
     
     func addNewTransaction() async -> ResponseModel {
-        if model.amount.isEmptyOrWhitespace() || model.categoryId.isEmptyOrWhitespace() {
+        if model.categoryId.isEmptyOrWhitespace() {
             return ResponseModel(.error, ConstantMessages.emptySpaces.localizedDescription)
         }
         
-        let transactionModel = TransactionModel(amount: Double(model.amount) ?? .zero, //TODO: Revisar cuando pueda ser error.
+        let transactionModel = TransactionModel(amount: model.amount,
                                                 date: model.dateString,
                                                 categoryId: model.categoryId,
                                                 detail: model.notes,

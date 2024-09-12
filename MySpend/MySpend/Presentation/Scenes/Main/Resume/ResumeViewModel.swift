@@ -12,7 +12,7 @@ class ResumeViewModel: BaseViewModel {
     @Published var model = Resume()
     @Published var showNewTransactionModal = false
     @Published var selectedTab: TabViewIcons = .resume
-    @Published var currencySymbol: CurrencySymbol = .dollar //TODO: Agregar a UserDefaults.
+    @Published var currencySymbol: ConstantCurrency.Symbol = .dollar //TODO: Agregar a UserDefaults.
     
     init(model: Resume = Resume()) {
         self.model = model

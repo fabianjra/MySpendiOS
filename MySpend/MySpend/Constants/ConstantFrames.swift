@@ -45,4 +45,11 @@ public enum FrameSize {
         case .height: return 25.0
         }
     }
+    
+    var checkMarkIcon: CGFloat {
+        switch self {
+        case .width: return 100.0
+        case .height: return 100.0
+        }
+    }
 }

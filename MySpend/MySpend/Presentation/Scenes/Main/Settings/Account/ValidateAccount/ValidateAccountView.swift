@@ -44,6 +44,22 @@ struct ValidateAccountView: View {
     
     private var userIsValidatedBody: some View {
         VStack {
+            
+            LinearGradient(colors: Color.primaryGradiant,
+                           startPoint: .leading,
+                           endPoint: .trailing)
+            .mask {
+                Image.checkmarkCircleFill
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+            }
+            .frame(width: FrameSize.width.checkMarkIcon,
+                   height: FrameSize.height.checkMarkIcon,
+                   alignment: .center)
+            .padding(.bottom)
+            
+            //Image(uiImage: ConstantEmojis.fest.textToImage(size: ConstantFrames.emojiSize))
+            
             TextPlain(message: ConstantMessages.userIsValidated.localizedDescription,
                       family: .semibold,
                       size: .bigL,
@@ -54,9 +70,6 @@ struct ValidateAccountView: View {
                       size: .big,
                       aligment: .center)
             .padding(.bottom)
-            
-            Image(uiImage: ConstantEmojis.fest.textToImage(size: ConstantFrames.emojiSize))
-                .padding(.bottom)
             
             Button("Go back") {
                 dismiss()

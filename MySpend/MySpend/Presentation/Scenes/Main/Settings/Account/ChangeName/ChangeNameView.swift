@@ -31,7 +31,7 @@ struct ChangeNameView: View {
                 
                 TextFieldName(placeHolder: "New name",
                               text: $changeNameVM.model.newUserName,
-                              iconLeading: Image.checkmark,
+                              iconLeading: Image.checkmarkCircleFill,
                               errorMessage: $changeNameVM.errorMessage)
                 .padding(.bottom)
                 .onSubmit {

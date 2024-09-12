@@ -14,6 +14,10 @@ extension Image {
     static let dolarSquare = Image(systemName: "dollarsign.circle") // $
     static let dolarSquareFill = Image(systemName: "dollarsign.circle.fill")
     
+    // MARK: VIEW
+    static let checkmarkCircleFill = Image(systemName: "checkmark.circle.fill") // Password confirmation
+    static let checkmarkCircle = Image(systemName: "checkmark.circle")
+    
     // MARK: BUTTON
     static let plus = Image(systemName: "plus")
     static let stack = Image(systemName: "mail.stack") // History
@@ -23,7 +27,6 @@ extension Image {
     static let envelopeFill = Image(systemName: "envelope.fill") // Email
     static let lockFill = Image(systemName: "lock.fill") // Password
     static let personFill = Image(systemName: "person.fill") // Name
-    static let checkmark = Image(systemName: "checkmark") // Password confirmation
     static let calendar = Image(systemName: "calendar") // Date
     
     // MARK: TABVIEW

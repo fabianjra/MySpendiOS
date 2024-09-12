@@ -49,12 +49,13 @@ struct NewTransactionView: View {
                     
                     // MARK: TEXTFIELDS
                     VStack {
-                        TextField("", text: $viewModel.model.amount, prompt:
-                                    Text("Amount").foregroundColor(.textFieldPlaceholder))
-                        .textFieldStyle(TextFieldIconStyle($viewModel.model.amount,
+                        TextField("", 
+                                  value: $viewModel.model.amount, 
+                                  format: .number.precision(.fractionLength(ConstantCurrency.fractionLength)),
+                                  prompt: Text("Amount").foregroundColor(.textFieldPlaceholder))
+                        .textFieldStyle(TextFieldDecimalIconStyle($viewModel.model.amount,
                                                            iconLeading: Image.dolarSquareFill,
-                                                           textLimit: ConstantViews.amoutMaxLength,
-                                                           errorMessage: $viewModel.errorMessage))
+                                                           textLimit: ConstantViews.amoutMaxLength))
                         .keyboardType(.decimalPad)
                         .focused($focusedField, equals: .amount)
                         

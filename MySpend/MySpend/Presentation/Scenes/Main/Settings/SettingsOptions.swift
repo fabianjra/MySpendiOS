@@ -39,7 +39,7 @@ enum AccountOptions: String, CaseIterable, Identifiable {
         switch self {
         case .changeName: return Image.personFill
         case .changePassword: return Image.lockFill
-        case .validateAccount: return Image.checkmark
+        case .validateAccount: return Image.checkmarkCircleFill
         }
     }
     

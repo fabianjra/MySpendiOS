@@ -60,7 +60,7 @@ struct HistoryView: View {
                                     
                                     Spacer()
                                     
-                                    TextPlain(message: "$\(item.amount.roundedToTwoDecimalsString())",
+                                    TextPlain(message: "$\(item.amount.description)",
                                               lineLimit: ConstantViews.transactionsMaxLines)
                                 }
                                 .padding(.vertical, ConstantViews.textResumeSpacing)

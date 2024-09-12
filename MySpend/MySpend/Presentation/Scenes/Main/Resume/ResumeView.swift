@@ -61,7 +61,7 @@ struct ResumeView: View {
                             
                             Spacer()
                             
-                            TextPlain(message: "\(viewModel.currencySymbol.rawValue) \(item.amount.roundedToTwoDecimalsString())")
+                            TextPlain(message: "\(viewModel.currencySymbol.rawValue) \(item.amount.description)")
                         }
                         .padding(.vertical, ConstantViews.textResumeSpacing)
                         .padding(.horizontal)
@@ -76,7 +76,7 @@ struct ResumeView: View {
                               size: .big)
                     Spacer()
                     
-                    TextPlain(message: "\(viewModel.currencySymbol.rawValue) \(viewModel.model.totalBalance.roundedToTwoDecimalsString())",
+                    TextPlain(message: "\(viewModel.currencySymbol.rawValue) \(viewModel.model.totalBalance)",
                               size: .big)
                 }
             }
