@@ -50,19 +50,25 @@ struct NewTransactionView: View {
                     // MARK: TEXTFIELDS
                     VStack {
                         TextField("", 
-                                  value: $viewModel.model.amount, 
-                                  format: .number.precision(.fractionLength(ConstantCurrency.fractionLength)),
+                                  text: $viewModel.model.amount,
                                   prompt: Text("Amount").foregroundColor(.textFieldPlaceholder))
-                        .textFieldStyle(TextFieldDecimalIconStyle($viewModel.model.amount,
+                        .textFieldStyle(TextFieldIconStyle($viewModel.model.amount,
                                                            iconLeading: Image.dollar,
-                                                           textLimit: ConstantViews.amoutMaxLength))
+                                                           textLimit: ConstantViews.amoutMaxLength,
+                                                           errorMessage: $viewModel.errorMessage))
                         .keyboardType(.decimalPad)
                         .focused($focusedField, equals: .amount)
+                        .onChange(of: viewModel.model.amount) { oldValue, newValue in
+                            print(oldValue)
+                            print("*************")
+                            print(newValue)
+                        }
                         
                         
                         //TODO: Change to sheet list (loading and showing all categories).
-                        TextField("", text: $viewModel.model.categoryId, prompt:
-                                    Text("Category").foregroundColor(.textFieldPlaceholder))
+                        TextField("", 
+                                  text: $viewModel.model.categoryId,
+                                  prompt: Text("Category").foregroundColor(.textFieldPlaceholder))
                         .textFieldStyle(TextFieldIconStyle($viewModel.model.categoryId,
                                                            iconLeading: Image.stackFill,
                                                            errorMessage: $viewModel.errorMessage))
@@ -70,8 +76,9 @@ struct NewTransactionView: View {
                         .onSubmit { process() }
                         
                         
-                        TextField("", text: $viewModel.model.notes, prompt:
-                                    Text("Notes").foregroundColor(.textFieldPlaceholder))
+                        TextField("", 
+                                  text: $viewModel.model.notes,
+                                  prompt: Text("Notes").foregroundColor(.textFieldPlaceholder))
                         .textFieldStyle(TextFieldIconStyle($viewModel.model.notes,
                                                            errorMessage: $viewModel.errorMessage))
                         .id(notesId)

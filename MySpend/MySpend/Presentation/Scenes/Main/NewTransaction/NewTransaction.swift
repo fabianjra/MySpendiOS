@@ -15,7 +15,7 @@ struct NewTransaction {
     var dateString: String = ""
     var selectedDate: Date = .now
     
-    var amount: Decimal = .zero
+    var amount: String = ""
     var categoryId: String = ""
     var notes: String = ""
 

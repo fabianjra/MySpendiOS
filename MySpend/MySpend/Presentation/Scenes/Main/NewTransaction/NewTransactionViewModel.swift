@@ -5,7 +5,7 @@
 //  Created by Fabian Rodriguez on 2/8/24.
 //
 
-import Combine
+import Foundation
 
 class NewTransactionViewModel: BaseViewModel {
     
@@ -21,7 +21,7 @@ class NewTransactionViewModel: BaseViewModel {
             return ResponseModel(.error, ConstantMessages.emptySpaces.localizedDescription)
         }
         
-        let transactionModel = TransactionModel(amount: model.amount,
+        let transactionModel = TransactionModel(amount: Decimal(string: model.amount) ?? .zero,
                                                 date: model.dateString,
                                                 categoryId: model.categoryId,
                                                 detail: model.notes,

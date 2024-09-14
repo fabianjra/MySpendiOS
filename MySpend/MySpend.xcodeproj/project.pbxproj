@@ -32,7 +32,6 @@
 		1F222F552C65D09F0017A1BE /* ValidateAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F222F542C65D09F0017A1BE /* ValidateAccountViewModel.swift */; };
 		1F222F5C2C65DCFF0017A1BE /* Resume.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F222F5B2C65DCFF0017A1BE /* Resume.swift */; };
 		1F222F5E2C65DD080017A1BE /* ResumeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F222F5D2C65DD080017A1BE /* ResumeViewModel.swift */; };
-		1F312FE02C92811A00D2E866 /* TextFieldDecimalIconStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F312FDF2C92811A00D2E866 /* TextFieldDecimalIconStyle.swift */; };
 		1F312FE22C928E2000D2E866 /* ConstantCurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F312FE12C928E2000D2E866 /* ConstantCurrency.swift */; };
 		1F3A953D2C5D68D4008AAE50 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3A953C2C5D68D4008AAE50 /* LoginViewModel.swift */; };
 		1F3A953F2C5D6F82008AAE50 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3A953E2C5D6F82008AAE50 /* Login.swift */; };
@@ -163,7 +162,6 @@
 		1F222F542C65D09F0017A1BE /* ValidateAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateAccountViewModel.swift; sourceTree = "<group>"; };
 		1F222F5B2C65DCFF0017A1BE /* Resume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resume.swift; sourceTree = "<group>"; };
 		1F222F5D2C65DD080017A1BE /* ResumeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeViewModel.swift; sourceTree = "<group>"; };
-		1F312FDF2C92811A00D2E866 /* TextFieldDecimalIconStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldDecimalIconStyle.swift; sourceTree = "<group>"; };
 		1F312FE12C928E2000D2E866 /* ConstantCurrency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantCurrency.swift; sourceTree = "<group>"; };
 		1F3A953C2C5D68D4008AAE50 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		1F3A953E2C5D6F82008AAE50 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
@@ -313,7 +311,6 @@
 			isa = PBXGroup;
 			children = (
 				1F19D9632A4A583800137EA0 /* TextFieldIconStyle.swift */,
-				1F312FDF2C92811A00D2E866 /* TextFieldDecimalIconStyle.swift */,
 			);
 			path = Styles;
 			sourceTree = "<group>";
@@ -924,7 +921,6 @@
 				1F5CC57C2A6648E400C214FE /* DividerView.swift in Sources */,
 				1F222F432C65A72C0017A1BE /* ChangeName.swift in Sources */,
 				1FC2E6712C5DC474007EA785 /* NewTransaction.swift in Sources */,
-				1F312FE02C92811A00D2E866 /* TextFieldDecimalIconStyle.swift in Sources */,
 				1F46B4122A79885D003A9550 /* ConstantValidations.swift in Sources */,
 				1F312FE22C928E2000D2E866 /* ConstantCurrency.swift in Sources */,
 				1FB8BB992A5BB181002DED1F /* SemiCircleShape.swift in Sources */,
