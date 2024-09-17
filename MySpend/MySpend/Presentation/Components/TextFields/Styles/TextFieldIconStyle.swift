@@ -88,9 +88,26 @@ struct TextFieldIconStyle: TextFieldStyle {
                         let locale = Locale.current
                         let decimalSeparator = locale.decimalSeparator ?? "."
                         
-                        //Filter to only numbers:
+                        // Filter to only numbers or decimal:
                         let allowedCharacters = CharacterSet(charactersIn: "0123456789" + decimalSeparator)
                         var filteredValue = text.unicodeScalars.filter { allowedCharacters.contains($0) }
+                        
+                        // Validate for only one decimal symbol:
+                            var alreadyDecimalDigited = false
+                        
+                            filteredValue = filteredValue.filter {
+                                
+                                if String($0) == decimalSeparator {
+                                    if alreadyDecimalDigited {
+                                        return false
+                                    } else {
+                                        alreadyDecimalDigited = true
+                                        return true
+                                    }
+                                }
+                                return true
+                            }
+
                         
                         text = String(String.UnicodeScalarView(filteredValue))
                     }
