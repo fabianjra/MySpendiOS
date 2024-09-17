@@ -7,6 +7,7 @@
 
 struct ConstantCurrency {
     
+    static let amoutMaxLength: Int = 12
     static let fractionLength: Int = 2
     
     public enum Symbol: String {

@@ -54,7 +54,7 @@ struct NewTransactionView: View {
                                   prompt: Text("Amount").foregroundColor(.textFieldPlaceholder))
                         .textFieldStyle(TextFieldIconStyle($viewModel.model.amount,
                                                            iconLeading: Image.dollar,
-                                                           textLimit: ConstantViews.amoutMaxLength,
+                                                           textLimit: ConstantCurrency.amoutMaxLength,
                                                            errorMessage: $viewModel.errorMessage))
                         .keyboardType(.decimalPad)
                         .focused($focusedField, equals: .amount)
