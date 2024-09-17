@@ -20,6 +20,7 @@ struct TextFieldIconStyle: TextFieldStyle {
     private let foregroundColor: Color
     private let backgroundColor: Color
     
+    private var isAmount: Bool = false
     @State private var isError: Bool = false
     @Binding private var errorMessage: String
     
@@ -34,6 +35,7 @@ struct TextFieldIconStyle: TextFieldStyle {
                 textLimit: Int = ConstantViews.textLimitGeneral,
                 foregroundColor: Color = Color.textFieldForeground,
                 backgroundColor: Color = Color.textfieldBackground,
+                isAmout: Bool = false,
                 errorMessage: Binding<String> = .constant(""),
                 showFocusedIndicador: Bool = true,
                 submitLabel: SubmitLabel = .done) {
@@ -45,6 +47,7 @@ struct TextFieldIconStyle: TextFieldStyle {
         self.textLimit = textLimit
         self.foregroundColor = foregroundColor
         self.backgroundColor = backgroundColor
+        self.isAmount = isAmout
         self._errorMessage = errorMessage
         self.showFocusedIndicador = showFocusedIndicador
         self.submitLabel = submitLabel
@@ -79,6 +82,19 @@ struct TextFieldIconStyle: TextFieldStyle {
                     if text.count > textLimit {
                         text = String(text.prefix(textLimit))
                     }
+                    
+                    if isAmount {
+                        
+                        let locale = Locale.current
+                        let decimalSeparator = locale.decimalSeparator ?? "."
+                        
+                        //Filter to only numbers:
+                        let allowedCharacters = CharacterSet(charactersIn: "0123456789" + decimalSeparator)
+                        var filteredValue = text.unicodeScalars.filter { allowedCharacters.contains($0) }
+                        
+                        text = String(String.UnicodeScalarView(filteredValue))
+                    }
+                    
                 })
                 .onChange(of: errorMessage) {
                     if text.isEmpty && !errorMessage.isEmpty {

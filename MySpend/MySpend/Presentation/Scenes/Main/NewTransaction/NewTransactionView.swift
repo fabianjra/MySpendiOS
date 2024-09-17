@@ -55,15 +55,10 @@ struct NewTransactionView: View {
                         .textFieldStyle(TextFieldIconStyle($viewModel.model.amount,
                                                            iconLeading: Image.dollar,
                                                            textLimit: ConstantCurrency.amoutMaxLength,
+                                                           isAmout: true,
                                                            errorMessage: $viewModel.errorMessage))
                         .keyboardType(.decimalPad)
                         .focused($focusedField, equals: .amount)
-                        .onChange(of: viewModel.model.amount) { oldValue, newValue in
-                            print(oldValue)
-                            print("*************")
-                            print(newValue)
-                        }
-                        
                         
                         //TODO: Change to sheet list (loading and showing all categories).
                         TextField("", 
