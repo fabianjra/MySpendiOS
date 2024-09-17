@@ -152,6 +152,7 @@ struct NewTransactionView: View {
     }
     
     private func process() {
+        focusedField = .none
         Task {
             let result = await viewModel.addNewTransaction()
             
