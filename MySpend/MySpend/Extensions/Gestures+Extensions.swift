@@ -31,7 +31,7 @@ extension UINavigationController: UIGestureRecognizerDelegate {
 }
 
 
-extension UIApplication {
+extension UIApplication: UIGestureRecognizerDelegate {
     
     /**
      Tap anywhere to hide the keyboard:
@@ -70,9 +70,6 @@ extension UIApplication {
         
         window.addGestureRecognizer(tapGesture)
     }
-}
-
-extension UIApplication: UIGestureRecognizerDelegate {
     
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         

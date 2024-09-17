@@ -48,8 +48,8 @@ struct Loader: View {
 
 
 #Preview {
+    @Previewable @State var showLoader: Bool = true
     VStack {
-        @State var showLoader: Bool = true
         
         ZStack {
             LinearGradient(colors: Color.primaryGradiant,

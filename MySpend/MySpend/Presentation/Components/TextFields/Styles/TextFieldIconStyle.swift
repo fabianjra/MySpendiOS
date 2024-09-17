@@ -73,12 +73,8 @@ struct TextFieldIconStyle: TextFieldStyle {
                     /// Clean error messages on screen. Var taken from Father View.
                     errorMessage = ""
                     
-                    if text.isEmpty {
-                        isError = true
-                    } else {
-                        isError = false
-                    }
-                    
+                    isError = text.isEmpty
+
                     /// Validate the limit character count. Delete extra characters typed.
                     if text.count > textLimit {
                         text = String(text.prefix(textLimit))
@@ -122,8 +118,8 @@ struct TextFieldIconStyle: TextFieldStyle {
 }
 
 #Preview {
+    @Previewable @State var text = ""
     VStack {
-        @State var text = ""
         
         //Nothing:
         TextField("", text: $text)
