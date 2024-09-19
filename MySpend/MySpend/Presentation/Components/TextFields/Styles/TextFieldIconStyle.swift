@@ -24,6 +24,7 @@ struct TextFieldIconStyle: TextFieldStyle {
     @State private var isError: Bool = false
     @Binding private var errorMessage: String
     
+    private var showErrorIndicador: Bool
     private var showFocusedIndicador: Bool
     private var submitLabel: SubmitLabel
     @FocusState private var isFocused: Bool
@@ -37,6 +38,7 @@ struct TextFieldIconStyle: TextFieldStyle {
                 backgroundColor: Color = Color.textfieldBackground,
                 isAmout: Bool = false,
                 errorMessage: Binding<String> = .constant(""),
+                showErrorIndicador: Bool = true,
                 showFocusedIndicador: Bool = true,
                 submitLabel: SubmitLabel = .done) {
         
@@ -49,6 +51,7 @@ struct TextFieldIconStyle: TextFieldStyle {
         self.backgroundColor = backgroundColor
         self.isAmount = isAmout
         self._errorMessage = errorMessage
+        self.showErrorIndicador = showErrorIndicador
         self.showFocusedIndicador = showFocusedIndicador
         self.submitLabel = submitLabel
     }
@@ -139,7 +142,7 @@ struct TextFieldIconStyle: TextFieldStyle {
                 }
             }
             
-            if isError {
+            if isError && showErrorIndicador {
                 RoundedRectangle(cornerRadius: .infinity)
                     .stroke(LinearGradient(
                         colors: [Color.warning],

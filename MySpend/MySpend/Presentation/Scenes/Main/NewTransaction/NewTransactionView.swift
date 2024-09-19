@@ -75,7 +75,8 @@ struct NewTransactionView: View {
                                   text: $viewModel.model.notes,
                                   prompt: Text("Notes").foregroundColor(.textFieldPlaceholder))
                         .textFieldStyle(TextFieldIconStyle($viewModel.model.notes,
-                                                           errorMessage: $viewModel.errorMessage))
+                                                           errorMessage: $viewModel.errorMessage,
+                                                           showErrorIndicador: false))
                         .id(notesId)
                         .focused($focusedField, equals: .notes)
                         .padding(.bottom)
