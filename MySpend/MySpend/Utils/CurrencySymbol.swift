@@ -8,5 +8,10 @@
 class CurrencySymbol {
     static let shared = CurrencySymbol()
     
-    var currencySumbol = "$"
+    var description: Symbol = .dollar //TODO: Agregar a UserDefaults Y Shared class.
+    
+    public enum Symbol: String {
+        case dollar = "$"
+        case colon = "₡"
+    }
 }

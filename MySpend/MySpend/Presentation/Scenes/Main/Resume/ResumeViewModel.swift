@@ -12,7 +12,6 @@ class ResumeViewModel: BaseViewModel {
     @Published var model = Resume()
     @Published var showNewTransactionModal = false
     @Published var selectedTab: TabViewIcons = .resume
-    @Published var currencySymbol: ConstantCurrency.Symbol = .dollar //TODO: Agregar a UserDefaults Y Shared class.
     
     init(model: Resume = Resume()) {
         self.model = model
@@ -21,7 +20,7 @@ class ResumeViewModel: BaseViewModel {
     func onAppear(_ authViewModel: AuthViewModel) async {
         
         withAnimation {
-            model.totalBalanceFormatted = ConstantCurrency.zeroAmoutString.addCurrencySymbol(currencySymbol.rawValue)
+            model.totalBalanceFormatted = ConstantCurrency.zeroAmoutString.addCurrencySymbol()
         }
         
         if let user = authViewModel.currentUser {
@@ -69,7 +68,7 @@ class ResumeViewModel: BaseViewModel {
         withAnimation {
             for item in model.transactions {
                 model.totalBalance += item.amount
-                model.totalBalanceFormatted = model.totalBalance.convertAmountDecimalToString().addCurrencySymbol(currencySymbol.rawValue)
+                model.totalBalanceFormatted = model.totalBalance.convertAmountDecimalToString().addCurrencySymbol()
             }
         }
     }

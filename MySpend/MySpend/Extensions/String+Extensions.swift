@@ -9,10 +9,10 @@ import UIKit
 
 extension String {
     
-    public func addCurrencySymbol(_ symbol: String) -> String {
+    public func addCurrencySymbol() -> String {
         // if there is roughly < 30 substrings to attach together, then concatenation is faster
         // if there is roughly > 30 substrings to attach together, then interpolation is faster
-        return "\(symbol) \(self)"
+        return "\(CurrencySymbol.shared.description.rawValue) \(self)"
     }
     
     /**

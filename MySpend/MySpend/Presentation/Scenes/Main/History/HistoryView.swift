@@ -62,8 +62,8 @@ struct HistoryView: View {
                                               lineLimit: ConstantViews.transactionsMaxLines)
                                     
                                     Spacer()
-                                    //TODO: Agregar symbol Currency
-                                    TextPlain(message: item.amount.convertAmountDecimalToString(),
+
+                                    TextPlain(message: item.amount.convertAmountDecimalToString().addCurrencySymbol(),
                                               lineLimit: ConstantViews.transactionsMaxLines)
                                 }
                                 .padding(.vertical, ConstantViews.textResumeSpacing)

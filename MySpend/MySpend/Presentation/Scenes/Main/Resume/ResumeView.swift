@@ -62,7 +62,7 @@ struct ResumeView: View {
                             
                             Spacer()
                             
-                            TextPlain(message: item.amount.convertAmountDecimalToString().addCurrencySymbol(viewModel.currencySymbol.rawValue),
+                            TextPlain(message: item.amount.convertAmountDecimalToString().addCurrencySymbol(),
                                       lineLimit: ConstantViews.transactionsMaxLines)
                         }
                         .padding(.vertical, ConstantViews.textResumeSpacing)
