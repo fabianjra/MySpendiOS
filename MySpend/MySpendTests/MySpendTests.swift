@@ -9,15 +9,21 @@ import XCTest
 //@testable import MySpend //Migrar a iOS 17
 
 final class MySpendTests: XCTestCase {
-
+    
+    //This function allow us to declare or instanciate values or variables, before the tests run.
+    //By default, Xcode adds "class" to this function. It has to be removed.
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
 
+    //This function runs after each Test run.
+    //For example: Can be used to erase some storage in "UserDefaults".
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
+    //All test function have to start with "test" in the function name.
+    
     func testExample() throws {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
@@ -32,5 +38,4 @@ final class MySpendTests: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
-
 }

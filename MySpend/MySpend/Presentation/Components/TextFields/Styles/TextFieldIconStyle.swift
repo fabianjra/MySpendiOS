@@ -87,31 +87,33 @@ struct TextFieldIconStyle: TextFieldStyle {
                     }
                     
                     if isAmount {
+                        let decimalSeparator = UtilsCurrency.getLocalDecimalSeparator()
                         
-                        let locale = Locale.current
-                        let decimalSeparator = locale.decimalSeparator ?? "."
+                        /// Filter to only numbers or decimal:
+                        var allowedCharacters = CharacterSet.decimalDigits
+                        allowedCharacters.insert(charactersIn: decimalSeparator)
                         
-                        // Filter to only numbers or decimal:
-                        let allowedCharacters = CharacterSet(charactersIn: "0123456789" + decimalSeparator)
                         var filteredValue = text.unicodeScalars.filter { allowedCharacters.contains($0) }
                         
-                        // Validate for only one decimal symbol:
-                            var alreadyDecimalDigited = false
+                        var alreadyDecimalDigited = false
                         
-                            filteredValue = filteredValue.filter {
-                                
-                                if String($0) == decimalSeparator {
-                                    if alreadyDecimalDigited {
-                                        return false
-                                    } else {
-                                        alreadyDecimalDigited = true
-                                        return true
-                                    }
+                        /// Recorre el string para validar que solo exista un simbolo decimal:
+                        filteredValue = filteredValue.filter {
+                            
+                            if String($0) == decimalSeparator {
+                                if alreadyDecimalDigited {
+                                    return false
+                                } else {
+                                    alreadyDecimalDigited = true
+                                    return true
                                 }
-                                return true
                             }
-
+                            return true
+                        }
                         
+                        ///Los UnicodeScalar son representaciones numéricas de los caracteres en el sistema Unicode.
+                        ///Cada carácter tiene un "punto de código" (code point) que se usa para codificar ese carácter en una cadena.
+                        ///Por ejemplo, el carácter A tiene el punto de código 65, y el carácter é tiene un punto de código más alto.
                         text = String(String.UnicodeScalarView(filteredValue))
                     }
                     
@@ -127,7 +129,7 @@ struct TextFieldIconStyle: TextFieldStyle {
         }
         .foregroundColor(foregroundColor)
         
-        //if apply disabled background, all textfield will change to gray when a view is loading.
+        /// if apply disabled background, all textfield will change to gray when a view is loading.
         //.background(isEnabled ? backgroundColor : Color.disabledBackground)
         .background(backgroundColor)
         .cornerRadius(.infinity)

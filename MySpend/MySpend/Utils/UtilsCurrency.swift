@@ -9,6 +9,11 @@ import Foundation
 
 public struct UtilsCurrency {
     
+    public static func getLocalDecimalSeparator() -> String {
+        let formatter = getLocalFormatter()
+        return formatter.decimalSeparator ?? "."
+    }
+    
     /**
      Converts a string representing a monetary value into a `Decimal` value based on the current locale's number format.
 
@@ -17,10 +22,13 @@ public struct UtilsCurrency {
      **Example:**
      ```swift
      let decimalValue = Utils.amountStringToDecimal("1,234.56")
-     print(decimalValue) // Prints "1234.56" (or based on the locale's number format)
+     print(decimalValue) // Prints "1234.56"
+     
+     let withoutValue = Utils.amountStringToDecimal("1234")
+     print(withoutValue) // Prints "1234"
      
      let invalidValue = Utils.amountStringToDecimal("invalid")
-     print(invalidValue) // Prints "0.0"
+     print(invalidValue) // Prints "0"
      ```
      
      - Parameter amount: A String representing the monetary value to be converted to Decimal. The string should be formatted according to the locale's decimal separator and thousands separator
@@ -34,15 +42,16 @@ public struct UtilsCurrency {
     public static func amountStringToDecimal(_ amount: String) -> Decimal {
         let formatter = UtilsCurrency.getLocalFormatter()
         
-        let amountDecimal: Decimal
-        
         if let amountCasted = formatter.number(from: amount) {
-            amountDecimal = amountCasted.decimalValue
+            var amountDecimal = amountCasted.decimalValue
+            
+            // Redondear a 2 decimales
+            var roundedDecimal = Decimal()
+            NSDecimalRound(&roundedDecimal, &amountDecimal, 2, .bankers)
+            return roundedDecimal
         } else {
-            amountDecimal = .zero
+            return .zero
         }
-        
-        return amountDecimal
     }
     
     /**
@@ -54,7 +63,7 @@ public struct UtilsCurrency {
      ```swift
      let formatter = UtilCurrency.getLocalFormatter()
      let formattedNumber = formatter.number(from: "1234.567")
-     print(formattedNumber) // Prints "1,234.57" or "1.234,57" depending on locale
+     print(formattedNumber) // Prints "1234.57" or "1234,57" depending on locale
      ```
      
      - Returns: A NumberFormatter configured with locale settings, decimal number style, and rounding mode
@@ -144,7 +153,7 @@ public struct UtilsCurrency {
 
      - Date: September 2024
      */
-    public static func roundIfMoreThanTwoDecimals(_ input: String) -> String? {
+    private static func roundIfMoreThanTwoDecimals(_ input: String) -> String? {
         // 1. Crear un NumberFormatter para identificar el separador decimal
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
