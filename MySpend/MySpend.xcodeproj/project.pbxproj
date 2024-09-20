@@ -110,6 +110,8 @@
 		1FC94CD12A5A6E01005CA0B6 /* TabViewIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC94CD02A5A6E01005CA0B6 /* TabViewIcons.swift */; };
 		1FD2E9832C53267D00E68602 /* TransactionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD2E9822C53267D00E68602 /* TransactionModel.swift */; };
 		1FD2E9852C5329F800E68602 /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD2E9842C5329F800E68602 /* CategoryModel.swift */; };
+		1FD66FE52C9E13AA0056D514 /* Decimal+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD66FE42C9E13A40056D514 /* Decimal+Extensions.swift */; };
+		1FD66FE72C9E1AB70056D514 /* CurrencySymbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD66FE62C9E1AAF0056D514 /* CurrencySymbol.swift */; };
 		1FE7C6752A47C7790070B988 /* Montserrat-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1F9D79C02A47C09D00F55418 /* Montserrat-Light.ttf */; };
 		1FE7C6762A47C77B0070B988 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1F9D79C12A47C09D00F55418 /* Montserrat-Regular.ttf */; };
 		1FE7C6772A47C77D0070B988 /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1F9D79C22A47C09D00F55418 /* Montserrat-SemiBold.ttf */; };
@@ -244,6 +246,8 @@
 		1FC94CD02A5A6E01005CA0B6 /* TabViewIcons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewIcons.swift; sourceTree = "<group>"; };
 		1FD2E9822C53267D00E68602 /* TransactionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionModel.swift; sourceTree = "<group>"; };
 		1FD2E9842C5329F800E68602 /* CategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryModel.swift; sourceTree = "<group>"; };
+		1FD66FE42C9E13A40056D514 /* Decimal+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Decimal+Extensions.swift"; sourceTree = "<group>"; };
+		1FD66FE62C9E1AAF0056D514 /* CurrencySymbol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencySymbol.swift; sourceTree = "<group>"; };
 		1FE7C6802A47DA1F0070B988 /* Colors+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Colors+Extensions.swift"; sourceTree = "<group>"; };
 		1FE7C6822A47DDF40070B988 /* ConstantRadius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantRadius.swift; sourceTree = "<group>"; };
 		1FE7C6872A48027C0070B988 /* Images+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Images+Extensions.swift"; sourceTree = "<group>"; };
@@ -322,6 +326,7 @@
 		1F19D96B2A4ACC2C00137EA0 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				1FD66FE62C9E1AAF0056D514 /* CurrencySymbol.swift */,
 				1F2750F82C9D02F300AD4E31 /* UtilsCurrency.swift */,
 				1F19D96D2A4ACC3D00137EA0 /* Utils.swift */,
 				1FC94CC92A5A4588005CA0B6 /* Logs.swift */,
@@ -652,6 +657,7 @@
 		1FC94CC62A5A4185005CA0B6 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				1FD66FE42C9E13A40056D514 /* Decimal+Extensions.swift */,
 				1FE7C6872A48027C0070B988 /* Images+Extensions.swift */,
 				1FE7C6802A47DA1F0070B988 /* Colors+Extensions.swift */,
 				1FC94CC72A5A42B2005CA0B6 /* Views+Extensions.swift */,
@@ -921,6 +927,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FD66FE72C9E1AB70056D514 /* CurrencySymbol.swift in Sources */,
 				1F7486B72A68C4250063AC35 /* TextError.swift in Sources */,
 				1FC94CC82A5A42B2005CA0B6 /* Views+Extensions.swift in Sources */,
 				1F46B4172A799CFD003A9550 /* ResumeView.swift in Sources */,
@@ -978,6 +985,7 @@
 				1F46B4212A79E10C003A9550 /* AuthFB.swift in Sources */,
 				1F46B41F2A79D9BB003A9550 /* PRUEBAS_SessionStore.swift in Sources */,
 				1F06414A2A722AFB00C19084 /* ConstantMessages.swift in Sources */,
+				1FD66FE52C9E13AA0056D514 /* Decimal+Extensions.swift in Sources */,
 				1F65D9612C7287D30023CC5D /* History.swift in Sources */,
 				1F19D96A2A4A933200137EA0 /* ConstantShapes.swift in Sources */,
 				1F14081D2A5910D300181500 /* ButtonLinkStyle.swift in Sources */,

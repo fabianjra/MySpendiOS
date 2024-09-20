@@ -21,7 +21,7 @@ class NewTransactionViewModel: BaseViewModel {
             return ResponseModel(.error, ConstantMessages.emptySpaces.localizedDescription)
         }
         
-        let amount = UtilsCurrency.amountStringToDecimal(model.amount)
+        let amount = UtilsCurrency.convertAmountStringToDecimal(model.amount)
         
         let transactionModel = TransactionModel(amount: amount,
                                                 date: model.dateString,

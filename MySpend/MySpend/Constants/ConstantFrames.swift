@@ -52,4 +52,11 @@ public enum FrameSize {
         case .height: return 100.0
         }
     }
+    
+    var loaderFullScreen: CGFloat {
+        switch self {
+        case .width: return 100.0
+        case .height: return 100.0
+        }
+    }
 }

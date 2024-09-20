@@ -12,13 +12,18 @@ class ResumeViewModel: BaseViewModel {
     @Published var model = Resume()
     @Published var showNewTransactionModal = false
     @Published var selectedTab: TabViewIcons = .resume
-    @Published var currencySymbol: ConstantCurrency.Symbol = .dollar //TODO: Agregar a UserDefaults.
+    @Published var currencySymbol: ConstantCurrency.Symbol = .dollar //TODO: Agregar a UserDefaults Y Shared class.
     
     init(model: Resume = Resume()) {
         self.model = model
     }
 
     func onAppear(_ authViewModel: AuthViewModel) async {
+        
+        withAnimation {
+            model.totalBalanceFormatted = ConstantCurrency.zeroAmoutString.addCurrencySymbol(currencySymbol.rawValue)
+        }
+        
         if let user = authViewModel.currentUser {
             
             // The user's ID, unique to the Firebase project.
@@ -61,9 +66,11 @@ class ResumeViewModel: BaseViewModel {
             }
         }
         
-        model.totalBalance = 0
-        for item in model.transactions {
-            model.totalBalance += item.amount
+        withAnimation {
+            for item in model.transactions {
+                model.totalBalance += item.amount
+                model.totalBalanceFormatted = model.totalBalance.convertAmountDecimalToString().addCurrencySymbol(currencySymbol.rawValue)
+            }
         }
     }
 }

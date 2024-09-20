@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HistoryView: View {
-    
+    //TODO: Pasar el viewModel por parametro.
     @StateObject var viewModel = HistoryViewModel()
     
     var body: some View {
@@ -26,7 +26,10 @@ struct HistoryView: View {
                                    startPoint: .leading,
                                    endPoint: .trailing)
                     .mask(Loader()
-                        .frame(width: 100, height: 100))
+                        .frame(width: FrameSize.width.loaderFullScreen,
+                               height: FrameSize.height.loaderFullScreen,
+                               alignment: .center)
+                    )
                 }
             } else {
                 if viewModel.model.transactions.isEmpty {
@@ -42,7 +45,8 @@ struct HistoryView: View {
                               aligment: .center)
                     Spacer()
                 } else {
-                    VStack {                    Picker("Transaction type", selection: $viewModel.model.historyFormat) {
+                    VStack {
+                        Picker("Transaction type", selection: $viewModel.model.historyFormat) {
                         ForEach(HistoryFormatEnum.allCases, id: \.self) { type in
                             Text(type.rawValue)
                         }
@@ -56,11 +60,10 @@ struct HistoryView: View {
                                 HStack {
                                     TextPlain(message: item.categoryId.description,
                                               lineLimit: ConstantViews.transactionsMaxLines)
-                                    .truncationMode(.middle)
                                     
                                     Spacer()
-                                    
-                                    TextPlain(message: "$\(item.amount.description)",
+                                    //TODO: Agregar symbol Currency
+                                    TextPlain(message: item.amount.convertAmountDecimalToString(),
                                               lineLimit: ConstantViews.transactionsMaxLines)
                                 }
                                 .padding(.vertical, ConstantViews.textResumeSpacing)
@@ -91,7 +94,7 @@ struct HistoryView: View {
                                             categoryId: "Diario",
                                             detail: "Nota",
                                             type: .expense)
-        let transaction2 = TransactionModel(amount: 3000,
+        let transaction2 = TransactionModel(amount: 3000.9,
                                             date: "25/05/2024",
                                             categoryId: "Gastos mensuales del mes abc abc abcdefthijklmnbrto adfsafsdf a saf",
                                             detail: "Nota",
@@ -101,12 +104,12 @@ struct HistoryView: View {
                                             categoryId: "No category",
                                             detail: "Nota",
                                             type: .expense)
-        let transaction4 = TransactionModel(amount: 301928564721,
+        let transaction4 = TransactionModel(amount: 301928564721.328,
                                             date: "01/05/2023",
                                             categoryId: "Gastos mensuales del mes abc abc abcdefthijklmnbrto adfsafsdf a saf",
                                             detail: "Nota",
                                             type: .expense)
-        let transaction5 = TransactionModel(amount: 3000,
+        let transaction5 = TransactionModel(amount: 3000.1,
                                             date: "25/05/2024",
                                             categoryId: "Gastos mensuales",
                                             detail: "Nota",

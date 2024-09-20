@@ -40,7 +40,7 @@ struct ResumeView: View {
             .padding(.bottom)
             
             
-            // MARK: CONTENT
+            // MARK: HISTORY BUTTON
             VStack {
                 Button("History") {
                     Router.shared.path.append(Router.Destination.history)
@@ -57,11 +57,13 @@ struct ResumeView: View {
                 ScrollView(showsIndicators: false) {
                     ForEach(viewModel.model.transactions) { item in
                         HStack {
-                            TextPlain(message: item.categoryId.description)
+                            TextPlain(message: item.categoryId.description,
+                                      lineLimit: ConstantViews.transactionsMaxLines)
                             
                             Spacer()
                             
-                            TextPlain(message: "\(viewModel.currencySymbol.rawValue) \(item.amount.description)")
+                            TextPlain(message: item.amount.convertAmountDecimalToString().addCurrencySymbol(viewModel.currencySymbol.rawValue),
+                                      lineLimit: ConstantViews.transactionsMaxLines)
                         }
                         .padding(.vertical, ConstantViews.textResumeSpacing)
                         .padding(.horizontal)
@@ -71,12 +73,13 @@ struct ResumeView: View {
                 DividerView()
                     .background(.blue)
                 
+                // MARK: TOTAL BALANCE
                 HStack {
                     TextPlain(message: "Balance", 
                               size: .big)
                     Spacer()
                     
-                    TextPlain(message: "\(viewModel.currencySymbol.rawValue) \(viewModel.model.totalBalance)",
+                    TextPlain(message: viewModel.model.totalBalanceFormatted,
                               size: .big)
                 }
             }
@@ -102,12 +105,12 @@ struct ResumeView: View {
                                             categoryId: "01",
                                             detail: "Nota",
                                             type: .expense)
-        let transaction2 = TransactionModel(amount: 3000,
+        let transaction2 = TransactionModel(amount: 3000.00,
                                             date: "25/05/2024",
                                             categoryId: "02",
                                             detail: "Nota",
                                             type: .expense)
-        let transaction3 = TransactionModel(amount: 100,
+        let transaction3 = TransactionModel(amount: 100.12,
                                             date: "01/12/2003",
                                             categoryId: "03",
                                             detail: "Nota",
@@ -118,16 +121,65 @@ struct ResumeView: View {
                                             detail: "Nota",
                                             type: .expense)
         
-        let transactionArray = [transaction1, transaction2, transaction3, transaction4]
+        let transaction5 = TransactionModel(amount: 270046.7802,
+                                            date: "01/05/2023",
+                                            categoryId: "05",
+                                            detail: "Nota",
+                                            type: .expense)
+        
+        let transactionArray = [transaction1, transaction2, transaction3, transaction4, transaction5]
         
         let resume = Resume(userName: "vista previa",
                             transactions: transactionArray,
-                            totalBalance: 0.0)
+                            totalBalance: .zero)
         
         let resumeVM = ResumeViewModel(model: resume)
         
         ResumeView(viewModel: resumeVM)
             .environment(\.locale, .init(identifier: "es"))
+            .environmentObject(AuthViewModel())
+    }
+}
+
+#Preview("Saturated content") {
+    VStack {
+        let transaction1 = TransactionModel(amount: 56000234234.23434,
+                                            date: "25/05/1990",
+                                            categoryId: "alsjdfasjflkasj dflkasjdlkfjaslkfjalsk asd f",
+                                            detail: "Nota",
+                                            type: .expense)
+        let transaction2 = TransactionModel(amount: 3002342340.00,
+                                            date: "25/05/2024",
+                                            categoryId: "02",
+                                            detail: "Nota",
+                                            type: .expense)
+        let transaction3 = TransactionModel(amount: 100.12,
+                                            date: "01/12/2003",
+                                            categoryId: "asdfasdfasdfasdfk jkfj askjf aksjf ksjf kasjf kasf jk",
+                                            detail: "Nota",
+                                            type: .expense)
+        let transaction4 = TransactionModel(amount: 27677776763244437674.23423434,
+                                            date: "01/05/2023",
+                                            categoryId: "asdf asfa",
+                                            detail: "Nota",
+                                            type: .expense)
+        
+        let transaction5 = TransactionModel(amount: 270046.7802,
+                                            date: "01/05/2023",
+                                            categoryId: "05",
+                                            detail: "Nota",
+                                            type: .expense)
+        
+        let transactionArray = [transaction1, transaction2, transaction3, transaction4, transaction5]
+        
+        let resume = Resume(userName: "vista previa",
+                            transactions: transactionArray,
+                            totalBalance: .zero)
+        
+        let resumeVM = ResumeViewModel(model: resume)
+        
+        ResumeView(viewModel: resumeVM)
+            .environment(\.locale, .init(identifier: "en"))
             .environmentObject(AuthViewModel())
     }
 }

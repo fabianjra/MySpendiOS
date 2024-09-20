@@ -1,0 +1,19 @@
+//
+//  Decimal+Extensions.swift
+//  MySpend
+//
+//  Created by Fabian Rodriguez on 20/9/24.
+//
+
+import Foundation
+
+extension Decimal {
+    
+    public func convertAmountDecimalToString() -> String {
+        let formatter = UtilsCurrency.getLocalFormatter()
+        let decimalNumber = NSDecimalNumber(decimal: self)
+        let formattedString = formatter.string(from: decimalNumber) ?? ConstantCurrency.zeroAmoutString
+        
+        return formattedString
+    }
+}

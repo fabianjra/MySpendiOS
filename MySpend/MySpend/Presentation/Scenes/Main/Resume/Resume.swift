@@ -10,5 +10,6 @@ import Foundation
 struct Resume {
     var userName: String = ""
     var transactions: [TransactionModel] = []
-    var totalBalance: Decimal = 0
+    var totalBalance: Decimal = .zero
+    var totalBalanceFormatted: String = ""
 }

@@ -9,6 +9,12 @@ import UIKit
 
 extension String {
     
+    public func addCurrencySymbol(_ symbol: String) -> String {
+        // if there is roughly < 30 substrings to attach together, then concatenation is faster
+        // if there is roughly > 30 substrings to attach together, then interpolation is faster
+        return "\(symbol) \(self)"
+    }
+    
     /**
      Validate if a String is empty incluiding white spaces.
      

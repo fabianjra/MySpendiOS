@@ -9,9 +9,17 @@ import Foundation
 
 public struct UtilsCurrency {
     
+//    public static func convertAmountDecimalToString(_ amount: Decimal) -> String {
+//        let formatter = getLocalFormatter()
+//        let decimalNumber = NSDecimalNumber(decimal: amount)
+//        let formattedString = formatter.string(from: decimalNumber) ?? ConstantCurrency.zeroAmoutString
+//        
+//        return formattedString
+//    }
+    
     public static func getLocalDecimalSeparator() -> String {
         let formatter = getLocalFormatter()
-        return formatter.decimalSeparator ?? "."
+        return formatter.decimalSeparator ?? ConstantCurrency.defaultDecimalSeparator
     }
     
     /**
@@ -39,7 +47,7 @@ public struct UtilsCurrency {
 
      - Date: September 2024
      */
-    public static func amountStringToDecimal(_ amount: String) -> Decimal {
+    public static func convertAmountStringToDecimal(_ amount: String) -> Decimal {
         let formatter = UtilsCurrency.getLocalFormatter()
         
         if let amountCasted = formatter.number(from: amount) {
@@ -47,7 +55,12 @@ public struct UtilsCurrency {
             
             // Redondear a 2 decimales
             var roundedDecimal = Decimal()
-            NSDecimalRound(&roundedDecimal, &amountDecimal, 2, .bankers)
+            
+            NSDecimalRound(&roundedDecimal,
+                           &amountDecimal,
+                           ConstantCurrency.fractionLength,
+                           .bankers)
+            
             return roundedDecimal
         } else {
             return .zero
@@ -72,7 +85,7 @@ public struct UtilsCurrency {
      
      - Date: Sepember 2024
      */
-    private static func getLocalFormatter() -> NumberFormatter {
+    public static func getLocalFormatter() -> NumberFormatter {
         let formatter = NumberFormatter()
         
         formatter.locale = Locale.current
