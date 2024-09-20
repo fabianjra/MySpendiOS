@@ -43,7 +43,9 @@ struct ResumeView: View {
             // MARK: HISTORY BUTTON
             VStack {
                 Button("History") {
-                    Router.shared.path.append(Router.Destination.history)
+                    //Router.shared.path.append(Router.Destination.history(historyViewModel))
+                    viewModel.navigateToHistory = true
+
                 }
                 .buttonStyle(ButtonHorizontalStyle(subTitle: "Go to history",
                                                    iconLeading: Image.stackFill))
@@ -91,9 +93,15 @@ struct ResumeView: View {
  
         }
         .onAppear {
+            print("Router count RESUME: \(Router.shared.path.count)")
             Task {
                 await viewModel.onAppear(authViewModel)
             }
+        }
+        .navigationDestination(isPresented: $viewModel.navigateToHistory) {
+            let historyViewModel = HistoryViewModel(transactions: viewModel.model.transactions)
+            HistoryView(viewModel: historyViewModel)
+                .toolbar(.hidden, for: .navigationBar)
         }
     }
 }

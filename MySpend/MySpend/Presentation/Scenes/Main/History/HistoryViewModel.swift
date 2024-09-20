@@ -9,26 +9,12 @@ import Combine
 
 class HistoryViewModel: BaseViewModel {
     
+    @Published var transactions: [TransactionModel]
     @Published var model: History
     
-    init(model: History = History()) {
+    init(transactions: [TransactionModel], model: History = History()) {
+        self.transactions = transactions
         self.model = model
     }
     
-    func getTransactions() async {
-        await performWithLoader {
-            do {
-                //#if DEBUG || TARGET_OS_SIMULATOR
-                #if targetEnvironment(simulator)
-                    //No cargar datos cuando se esta corriendo en simulador.
-                self.model.transactions = try await DatabaseStore().getTransactions()
-                #else
-                    //Otra accion en caso de que no sea DEBUG o Simulator.
-                self.model.transactions = try await DatabaseStore().getTransactions()
-                #endif
-            } catch {
-                self.errorMessage = error.localizedDescription
-            }
-        }
-    }
 }

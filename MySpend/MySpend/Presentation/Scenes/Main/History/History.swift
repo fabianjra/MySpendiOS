@@ -8,7 +8,6 @@
 import Foundation
 
 struct History {
-    var transactions: [TransactionModel] = []
     var historyFormat: HistoryFormatEnum = .month
 }
 

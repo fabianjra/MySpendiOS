@@ -48,9 +48,9 @@ struct RootView: View {
                 case .register:
                     RegisterView()
                         .toolbar(.hidden, for: .navigationBar)
-                case .history:
-                    HistoryView()
-                        .toolbar(.hidden, for: .navigationBar)
+//                case .history:
+//                    HistoryView()
+//                        .toolbar(.hidden, for: .navigationBar)
                 }
             }
         }

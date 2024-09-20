@@ -12,17 +12,13 @@ class ResumeViewModel: BaseViewModel {
     @Published var model = Resume()
     @Published var showNewTransactionModal = false
     @Published var selectedTab: TabViewIcons = .resume
+    @Published var navigateToHistory: Bool = false
     
     init(model: Resume = Resume()) {
         self.model = model
     }
-
+    
     func onAppear(_ authViewModel: AuthViewModel) async {
-        
-        withAnimation {
-            model.totalBalanceFormatted = ConstantCurrency.zeroAmoutString.addCurrencySymbol()
-        }
-        
         if let user = authViewModel.currentUser {
             
             // The user's ID, unique to the Firebase project.
@@ -51,25 +47,27 @@ class ResumeViewModel: BaseViewModel {
         
         await performWithLoader {
             do {
-            //#if DEBUG || TARGET_OS_SIMULATOR
-            #if targetEnvironment(simulator)
+                //#if DEBUG || TARGET_OS_SIMULATOR
+                #if targetEnvironment(simulator)
                 //No cargar datos cuando se esta corriendo en simulador.
                 self.model.transactions = try await DatabaseStore().getTransactions()
-            #else
+                #else
                 //Otra accion en caso de que no sea DEBUG o Simulator.
                 self.model.transactions = try await DatabaseStore().getTransactions()
-            #endif
+                #endif
                 
             } catch {
                 self.errorMessage = error.localizedDescription
             }
         }
         
-        withAnimation {
-            for item in model.transactions {
-                model.totalBalance += item.amount
-                model.totalBalanceFormatted = model.totalBalance.convertAmountDecimalToString().addCurrencySymbol()
-            }
+        // Se debe borrar la cantidad en el onAppear porque sino seguria sumandose infinitamente.
+        model.totalBalance = .zero
+        model.totalBalanceFormatted = ConstantCurrency.zeroAmoutString.addCurrencySymbol()
+        
+        for item in model.transactions {
+            model.totalBalance += item.amount
+            model.totalBalanceFormatted = model.totalBalance.convertAmountDecimalToString().addCurrencySymbol()
         }
     }
 }

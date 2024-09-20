@@ -12,9 +12,9 @@ class Router: ObservableObject {
 
     static let shared: Router = Router()
     
-    enum Destination: Hashable {
+    enum Destination {
         case main
-        case history
+        //case history
         case register
     }
 }

@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct HistoryView: View {
-    //TODO: Pasar el viewModel por parametro.
-    @StateObject var viewModel = HistoryViewModel()
+    
+    @ObservedObject var viewModel: HistoryViewModel
     
     var body: some View {
         ContentContainer {
@@ -32,7 +32,7 @@ struct HistoryView: View {
                     )
                 }
             } else {
-                if viewModel.model.transactions.isEmpty {
+                if viewModel.transactions.isEmpty {
                     Spacer()
                     TextPlain(message: "No transactions",
                               family: .semibold,
@@ -56,7 +56,7 @@ struct HistoryView: View {
                         //.colorMultiply(.primaryLeading)
                     
                         ScrollView(showsIndicators: false) {
-                            ForEach(viewModel.model.transactions) { item in
+                            ForEach(viewModel.transactions) { item in
                                 HStack {
                                     TextPlain(message: item.categoryId.description,
                                               lineLimit: ConstantViews.transactionsMaxLines)
@@ -81,7 +81,7 @@ struct HistoryView: View {
         .onAppear {
             print("Router count HISTORY: \(Router.shared.path.count)")
             Task {
-                await viewModel.getTransactions()
+                //await viewModel.getTransactions()
             }
         }
     }
@@ -116,8 +116,7 @@ struct HistoryView: View {
                                             type: .expense)
         
         let transactionArray = [transaction1, transaction2, transaction3, transaction4, transaction5]
-        let model = History(transactions: transactionArray)
-        let viewModel = HistoryViewModel(model: model)
+        let viewModel = HistoryViewModel(transactions: transactionArray, model: History())
         
         HistoryView(viewModel: viewModel)
             .environment(\.locale, .init(identifier: "es"))
@@ -125,6 +124,9 @@ struct HistoryView: View {
 }
 
 #Preview("No content") {
-    HistoryView()
-        .environment(\.locale, .init(identifier: "es"))
+    VStack {
+        let viewModel = HistoryViewModel(transactions: [], model: History())
+        HistoryView(viewModel: viewModel)
+            .environment(\.locale, .init(identifier: "es"))
+    }
 }
