@@ -35,7 +35,7 @@ struct TextFieldIconStyle: TextFieldStyle {
                 iconLeading: Image? = nil,
                 textLimit: Int = ConstantViews.textLimitGeneral,
                 foregroundColor: Color = Color.textFieldForeground,
-                backgroundColor: Color = Color.textfieldBackground,
+                backgroundColor: Color = Color.textFieldBackground,
                 isAmout: Bool = false,
                 errorMessage: Binding<String> = .constant(""),
                 showErrorIndicador: Bool = true,

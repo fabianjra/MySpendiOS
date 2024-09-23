@@ -33,7 +33,7 @@ struct PickerSegmented: UIViewRepresentable {
         uiView.setTitleTextAttributes([.font: Font.montserratToUIFont(.light),.foregroundColor: UIColor(.disabledForeground)],
                                       for: .normal)
         
-        uiView.backgroundColor = UIColor(.textfieldBackground)
+        uiView.backgroundColor = UIColor(.textFieldBackground)
     }
     
     class Coordinator: NSObject {
