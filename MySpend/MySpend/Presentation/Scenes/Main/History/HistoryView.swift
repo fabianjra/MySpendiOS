@@ -80,9 +80,6 @@ struct HistoryView: View {
         }
         .onAppear {
             print("Router count HISTORY: \(Router.shared.path.count)")
-            Task {
-                //await viewModel.getTransactions()
-            }
         }
     }
 }

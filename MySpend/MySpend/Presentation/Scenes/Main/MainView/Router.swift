@@ -14,7 +14,6 @@ class Router: ObservableObject {
     
     enum Destination {
         case main
-        //case history
         case register
     }
 }
