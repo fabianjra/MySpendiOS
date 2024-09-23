@@ -50,5 +50,5 @@ struct TextFieldPassword: View {
                           iconLeading: Image.lockFill)
     }
     .padding()
-    .background(Color.background)
+    .background(Color.backgroundBottom)
 }

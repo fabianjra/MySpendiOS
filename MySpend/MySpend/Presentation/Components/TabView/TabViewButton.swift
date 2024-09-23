@@ -43,7 +43,7 @@ struct TabViewButton: View {
     @Previewable @State var selectedTab: TabViewIcons = .resume
     ZStack {
         
-        Color.background
+        Color.backgroundBottom
         
         HStack {
             TabViewButton(selectedTab: $selectedTab, item: .resume)

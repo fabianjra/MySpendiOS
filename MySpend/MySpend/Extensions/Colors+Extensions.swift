@@ -15,7 +15,7 @@ extension Color {
     static let secondaryGradiant: Array = [Color.secondaryLeading,
                                          Color.secondaryTrailing]
     static let backgroundContentGradient = RadialGradient(colors: [Color.backgroundTop,
-                                                           Color.background],
+                                                                   Color.backgroundBottom],
                                                           center: .top,
                                                           startRadius: .zero,
                                                           endRadius: ConstantColors.endRadiusBackground)

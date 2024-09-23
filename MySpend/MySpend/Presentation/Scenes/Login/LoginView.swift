@@ -15,7 +15,7 @@ struct LoginView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
  
     var body: some View {
-        FormContainer {
+        LogContainer {
             
             // MARK: HEADER
             HeaderNavigator(subTitle: "Log in to your account", onlyTitle: true)

@@ -35,5 +35,5 @@ struct TextFieldEmail: View {
                        errorMessage: .constant(""))
     }
     .padding()
-    .background(Color.background)
+    .background(Color.backgroundBottom)
 }

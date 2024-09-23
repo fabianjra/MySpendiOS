@@ -13,7 +13,7 @@ struct RegisterView: View {
     @FocusState private var focusedField: Register.Field?
     
     var body: some View {
-        FormContainer {
+        LogContainer {
             
             // MARK: HEADER
             HeaderNavigator(subTitle: "Register new user")

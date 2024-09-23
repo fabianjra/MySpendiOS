@@ -60,5 +60,5 @@ struct TextPlain: View {
         
         Spacer()
     }
-    .background(Color.background)
+    .background(Color.backgroundBottom)
 }

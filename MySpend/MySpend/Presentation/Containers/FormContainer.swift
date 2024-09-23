@@ -1,8 +1,8 @@
 //
-//  FormScrollContainer.swift
+//  FormContainer.swift
 //  MySpend
 //
-//  Created by Fabian Rodriguez on 1/8/23.
+//  Created by Fabian Rodriguez on 22/9/24.
 //
 
 import SwiftUI
@@ -15,7 +15,7 @@ struct FormContainer<Content: View>: View {
     
     var content: () -> Content
     
-    init(addPading: Bool = true, 
+    init(addPading: Bool = true,
          scrollable: Bool = false,
          showsIndicators: Bool = false,
          @ViewBuilder content: @escaping () -> Content) {
@@ -32,15 +32,29 @@ struct FormContainer<Content: View>: View {
                 .padding(.all, addPading ? nil : .zero)
         }
         .scrollDisabled(!scrollable)
-        .background(LinearGradient(colors: Color.backgroundFormGradiant,
-                                   startPoint: .leading,
-                                   endPoint: .trailing))
+        
+        .background(RadialGradient(colors: [Color.backgroundFormLight,
+                                            Color.backgroundFormDark],
+                                   center: .top,
+                                   startRadius: .zero,
+                                   endRadius: ConstantColors.endRadiusBackground))
     }
 }
 
-#Preview {
+#Preview("1 component") {
     FormContainer {
         TextFieldEmail(text: .constant(""),
                        errorMessage: .constant(""))
+    }
+}
+
+#Preview("2 components") {
+    FormContainer {
+        TextFieldEmail(text: .constant(""),
+                       errorMessage: .constant(""))
+        
+        TextFieldPassword(text: .constant(""),
+                          errorMessage: .constant(""),
+                          iconLeading: Image.lockFill)
     }
 }

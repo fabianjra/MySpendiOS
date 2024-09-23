@@ -76,6 +76,6 @@ struct SectionContainer<Content: View>: View {
             }
         }
         .padding()
-        .background(Color.background)
+        .background(Color.backgroundBottom)
     }
 }

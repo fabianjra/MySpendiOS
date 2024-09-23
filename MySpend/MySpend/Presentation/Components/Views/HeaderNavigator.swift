@@ -109,5 +109,5 @@ struct HeaderNavigator: View {
                         subTitle: "Only Subtitle",
                         onlyTitle: true)
     }
-    .background(Color.background)
+    .background(Color.backgroundBottom)
 }

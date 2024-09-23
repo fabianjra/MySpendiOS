@@ -93,5 +93,5 @@ struct ButtonHorizontalStyle: ButtonStyle {
         .buttonStyle(ButtonHorizontalStyle(subTitle: "subtitle for button"))
     }
     .padding()
-    .background(Color.background)
+    .background(Color.backgroundBottom)
 }

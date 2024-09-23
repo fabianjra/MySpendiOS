@@ -21,7 +21,7 @@ struct ButtonLinkStyle: ButtonStyle {
 
 #Preview {
     ZStack {
-        Color.background
+        Color.backgroundBottom
         
         Button("Button Primary") {
             print("button pressed")

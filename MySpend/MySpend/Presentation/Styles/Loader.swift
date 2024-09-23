@@ -74,5 +74,5 @@ struct Loader: View {
         ProgressView()
             .tint(Color.textPrimaryForeground)
     }
-    .background(Color.background)
+    .background(Color.backgroundBottom)
 }

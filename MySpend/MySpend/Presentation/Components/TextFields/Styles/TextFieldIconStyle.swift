@@ -196,5 +196,5 @@ struct TextFieldIconStyle: TextFieldStyle {
         }
     }
     .padding()
-    .background(Color.background)
+    .background(Color.backgroundBottom)
 }

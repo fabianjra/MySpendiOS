@@ -106,5 +106,5 @@ struct ButtonPrimaryStyle: ButtonStyle {
         //.environment(\.isEnabled, false)
     }
     .padding()
-    .background(Color.background)
+    .background(Color.backgroundBottom)
 }

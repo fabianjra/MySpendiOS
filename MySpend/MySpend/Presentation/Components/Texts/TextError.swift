@@ -22,7 +22,7 @@ struct TextError: View {
 
 #Preview {
     ZStack {
-        Color.background
+        Color.backgroundBottom
         
         TextError(message: "Error while processing")
     }

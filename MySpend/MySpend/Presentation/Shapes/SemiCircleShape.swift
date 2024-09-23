@@ -77,7 +77,7 @@ struct SemiCircleShapeCurved: Shape {
 #Preview {
     ZStack {
         
-        Color.background
+        Color.backgroundBottom
         
         VStack {
             Color.tabViewBackground

@@ -41,5 +41,5 @@ struct TextFieldReadOnly: View {
                           colorDisabled: false)
     }
     .padding()
-    .background(Color.background)
+    .background(Color.backgroundBottom)
 }

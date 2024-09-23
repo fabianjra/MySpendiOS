@@ -17,7 +17,7 @@ struct DividerView: View {
 
 #Preview {
     ZStack {
-        Color.background
+        Color.backgroundBottom
         
         DividerView()
     }

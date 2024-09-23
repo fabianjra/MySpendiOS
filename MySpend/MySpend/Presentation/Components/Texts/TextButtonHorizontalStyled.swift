@@ -98,5 +98,5 @@ struct TextButtonHorizontalStyled: View {
         TextButtonHorizontalStyled(text: "Button without nothing")
     }
     .padding()
-    .background(Color.background)
+    .background(Color.backgroundBottom)
 }

@@ -33,5 +33,5 @@ struct ButtonNavigationBack: View {
         //.padding(.leading, -((saveSize.width / 2) - 20)) //If need to use ZStack.
     }
     .padding()
-    .background(Color.background)
+    .background(Color.backgroundBottom)
 }
