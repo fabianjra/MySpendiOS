@@ -42,13 +42,17 @@ struct ResumeView: View {
             
             // MARK: HISTORY BUTTON
             VStack {
-                Button("History") {
-                    //Router.shared.path.append(Router.Destination.history)
-                    viewModel.navigateToHistory = true
-
+                NavigationLink {
+                    let historyViewModel = HistoryViewModel(transactions: viewModel.model.transactions)
+                    
+                    HistoryView(viewModel: historyViewModel)
+                        .toolbar(.hidden, for: .navigationBar)
+                } label: {
+                    TextButtonHorizontalStyled(text: "History",
+                                               subTitle: "Go to history",
+                                               iconLeading: Image.stackFill,
+                                               iconTrailing: Image.arrowRight)
                 }
-                .buttonStyle(ButtonHorizontalStyle(subTitle: "Go to history",
-                                                   iconLeading: Image.stackFill))
             }
             
             
@@ -97,19 +101,6 @@ struct ResumeView: View {
             Task {
                 await viewModel.onAppear(authViewModel)
             }
-        }
-        /*
-         Navigation sin el Stack provoca la siguiente alerta:
-         
-         Do not put a navigation destination modifier inside a "lazy” container, like `List` or `LazyVStack`. These containers create child views only when needed to render on screen. Add the navigation destination modifier outside these containers so that the navigation stack can always see the destination. There's a misplaced `navigationDestination(isPresented:destination:)` modifier presenting `ModifiedContent<HistoryView, ToolbarAppearanceModifier>`. It will be ignored in a future release.
-         
-         No se esta utilizando List o LazyVStack, por lo que no genera problemas, pero la alerta se sigue mostrando.
-         */
-        .navigationDestination(isPresented: $viewModel.navigateToHistory) {
-            let historyViewModel = HistoryViewModel(transactions: viewModel.model.transactions)
-            
-            HistoryView(viewModel: historyViewModel)
-                .toolbar(.hidden, for: .navigationBar)
         }
     }
 }

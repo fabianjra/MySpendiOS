@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TextViewStyledButton: View {
+struct TextButtonPrimaryStyled: View {
     
     let text: String
 
@@ -28,5 +28,5 @@ struct TextViewStyledButton: View {
 }
 
 #Preview {
-    TextViewStyledButton(text: "Button style")
+    TextButtonPrimaryStyled(text: "Button style")
 }
