@@ -18,6 +18,9 @@ struct ButtonNavigation: View {
             function()
         } label: {
             image
+            //Necesario para centrar los textos del header.
+                .frame(width: FrameSize.width.headerButton,
+                       height: FrameSize.height.headerButton)
                 .font(.montserrat(size: .bigXXL))
                 .foregroundColor(tintColor)
                 .fontWeight(.ultraLight)

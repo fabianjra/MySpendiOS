@@ -25,6 +25,13 @@ public enum FrameSize {
     case width
     case height
 
+    var headerButton: CGFloat {
+        switch self {
+        case .width: return 30.0
+        case .height: return 30.0
+        }
+    }
+    
     var navIconCategoryList: CGFloat {
         switch self {
         case .width: return 20.0

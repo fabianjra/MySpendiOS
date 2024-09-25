@@ -124,10 +124,6 @@ struct HeaderNavigator: View {
                         subTitleWeight: .light,
                         subTitleSize: .body)
         
-        HeaderNavigator(title: "Title",
-                        subTitle: "Subtitle",
-                        onlyTitle: true)
-        
         DividerView()
         
         HeaderNavigator(title: "Title and close",
@@ -140,10 +136,6 @@ struct HeaderNavigator: View {
                         subTitle: "Press right button to close",
                         showLeadingAction: false,
                         showTrailingAction: true)
-        
-        HeaderNavigator(title: "Only close",
-                        subTitle: "Press right button to close",
-                        onlyTitle: true)
         
         DividerView()
         
