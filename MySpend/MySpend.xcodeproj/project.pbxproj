@@ -61,7 +61,7 @@
 		1F5CC57E2A664EFB00C214FE /* TextFieldEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5CC57D2A664EFB00C214FE /* TextFieldEmail.swift */; };
 		1F5CC5802A6653AF00C214FE /* TextFieldPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5CC57F2A6653AF00C214FE /* TextFieldPassword.swift */; };
 		1F5CC5822A6657F800C214FE /* TextFieldName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5CC5812A6657F800C214FE /* TextFieldName.swift */; };
-		1F5CC5842A6662A200C214FE /* ButtonNavigationBack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5CC5832A6662A200C214FE /* ButtonNavigationBack.swift */; };
+		1F5CC5842A6662A200C214FE /* ButtonNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5CC5832A6662A200C214FE /* ButtonNavigation.swift */; };
 		1F6344002A47A8C400081BCD /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 1F6343FF2A47A8C400081BCD /* README.md */; };
 		1F64B09D2A7089C5004AC825 /* SettingsOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F64B09C2A7089C5004AC825 /* SettingsOptions.swift */; };
 		1F64B0A12A70AA94004AC825 /* ListContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F64B0A02A70AA94004AC825 /* ListContainer.swift */; };
@@ -200,7 +200,7 @@
 		1F5CC57D2A664EFB00C214FE /* TextFieldEmail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldEmail.swift; sourceTree = "<group>"; };
 		1F5CC57F2A6653AF00C214FE /* TextFieldPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldPassword.swift; sourceTree = "<group>"; };
 		1F5CC5812A6657F800C214FE /* TextFieldName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldName.swift; sourceTree = "<group>"; };
-		1F5CC5832A6662A200C214FE /* ButtonNavigationBack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonNavigationBack.swift; sourceTree = "<group>"; };
+		1F5CC5832A6662A200C214FE /* ButtonNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonNavigation.swift; sourceTree = "<group>"; };
 		1F6343FF2A47A8C400081BCD /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		1F64B09C2A7089C5004AC825 /* SettingsOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsOptions.swift; sourceTree = "<group>"; };
 		1F64B0A02A70AA94004AC825 /* ListContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListContainer.swift; sourceTree = "<group>"; };
@@ -726,7 +726,7 @@
 			isa = PBXGroup;
 			children = (
 				1F1408172A58FB8200181500 /* Styles */,
-				1F5CC5832A6662A200C214FE /* ButtonNavigationBack.swift */,
+				1F5CC5832A6662A200C214FE /* ButtonNavigation.swift */,
 				1F7486C22A6A3F770063AC35 /* ButtonRounded.swift */,
 			);
 			path = Buttons;
@@ -981,7 +981,7 @@
 				1FA08EE22C5D993C0019000B /* Register.swift in Sources */,
 				1FE7C6882A48027C0070B988 /* Images+Extensions.swift in Sources */,
 				1F19D9642A4A583800137EA0 /* TextFieldIconStyle.swift in Sources */,
-				1F5CC5842A6662A200C214FE /* ButtonNavigationBack.swift in Sources */,
+				1F5CC5842A6662A200C214FE /* ButtonNavigation.swift in Sources */,
 				1FFD5FA32A8B35A300A53050 /* ButtonHorizontalStyle.swift in Sources */,
 				1F46B4192A79A267003A9550 /* ContentContainer.swift in Sources */,
 				1FC94CBC2A5A1DB7005CA0B6 /* TextButtonPrimaryStyled.swift in Sources */,

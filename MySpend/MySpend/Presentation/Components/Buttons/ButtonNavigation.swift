@@ -7,19 +7,19 @@
 
 import SwiftUI
 
-struct ButtonNavigationBack: View {
+struct ButtonNavigation: View {
     
-    let color: Color
+    var image: Image = Image.chevronLeft
+    var tintColor: Color = Color.textPrimaryForeground
     let function: () -> Void
     
     var body: some View {
         Button {
             function()
         } label: {
-            Image.chevronLeft
-                .resizable()
-                .frame(width: FrameSize.width.buttonBack, height: FrameSize.height.buttonBack)
-                .foregroundColor(color)
+            image
+                .font(.montserrat(size: .bigXXL))
+                .foregroundColor(tintColor)
                 .fontWeight(.ultraLight)
         }
     }
@@ -27,9 +27,9 @@ struct ButtonNavigationBack: View {
 
 #Preview {
     VStack {
-        ButtonNavigationBack(color: Color.textPrimaryForeground) { print("pressed") }
+        ButtonNavigation() { print("pressed") }
         
-        ButtonNavigationBack(color: Color.red) { print("pressed") }
+        ButtonNavigation(image: Image.xmarkCircle, tintColor: Color.red) { print("pressed") }
         //.padding(.leading, -((saveSize.width / 2) - 20)) //If need to use ZStack.
     }
     .padding()

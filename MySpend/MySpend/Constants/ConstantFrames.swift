@@ -24,14 +24,7 @@ public struct ConstantFrames {
 public enum FrameSize {
     case width
     case height
-    
-    var buttonBack: CGFloat {
-        switch self {
-        case .width: return 15.0
-        case .height: return 30.0
-        }
-    }
-    
+
     var navIconCategoryList: CGFloat {
         switch self {
         case .width: return 20.0

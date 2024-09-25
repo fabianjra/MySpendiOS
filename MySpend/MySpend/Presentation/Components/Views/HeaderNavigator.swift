@@ -26,6 +26,12 @@ struct HeaderNavigator: View {
     
     // MARK: VALIDATION
     let onlyTitle: Bool
+    let showLeadingAction: Bool
+    
+    // MARK: RIGHT ACTION (to dimiss by default)
+    let showTrailingAction: Bool
+    let trailingImage: Image
+    let trailingAction: (() -> Void)? //Optional because dont need to excecute everytime this view is called.
     
     init(title: String = "mySpend",
          titleWeight: Font.Family = .thin,
@@ -34,7 +40,11 @@ struct HeaderNavigator: View {
          subTitleWeight: Font.Family = .light,
          subTitleSize: Font.Sizes = .body,
          textColor: Color = Color.textPrimaryForeground,
-         onlyTitle: Bool = false) {
+         onlyTitle: Bool = false,
+         showLeadingAction: Bool = true,
+         showTrailingAction: Bool = false,
+         trailingImage: Image = Image.xmarkCircle,
+         trailingAction: (() -> Void)? = nil) {
         
         self.title = title
         self.titleWeight = titleWeight
@@ -44,29 +54,32 @@ struct HeaderNavigator: View {
         self.subTitleSize = subTitleSize
         self.textColor = textColor
         self.onlyTitle = onlyTitle
+        self.showLeadingAction = showLeadingAction
+        self.showTrailingAction = showTrailingAction
+        self.trailingImage = trailingImage
+        self.trailingAction = trailingAction
     }
     
     var body: some View {
         if onlyTitle {
-            VStack(spacing: ConstantViews.textHeaderSpacing) {
-                titleAndSubtitle
-            }
+            titleAndSubtitle
         } else {
             HStack {
-                ButtonNavigationBack(color: textColor) {
+                ButtonNavigation(tintColor: textColor) {
                     
                     //TODO: Posible solucion para remover el ultimo item del navigationPath.
                     //El problema es que no funciona cuando es Swipe to go Back, porque no se utiliza este botón.
                     //Parece que dismiss borra el ultimo item igualmente, cuando se pasa de un tab a otro, en el TabView.
-//                    if Router.shared.path.count > 0 {
-//                        Router.shared.path.removeLast()
-//                    } else {
-//                        dismiss()
-//                    }
+                    //                    if Router.shared.path.count > 0 {
+                    //                        Router.shared.path.removeLast()
+                    //                    } else {
+                    //                        dismiss()
+                    //                    }
                     
                     dismiss()
                 }
-                    .padding(.leading)
+                .modifier(Show(isVisible: showLeadingAction))
+                .padding(.leading)
                 
                 Spacer()
                 
@@ -74,8 +87,8 @@ struct HeaderNavigator: View {
                 
                 Spacer()
                 
-                ButtonNavigationBack(color: textColor) {}
-                    .hidden()
+                ButtonNavigation(image: trailingImage, tintColor: textColor) { trailingAction?() }
+                    .modifier(Show(isVisible: showTrailingAction))
                     .padding(.trailing)
             }
         }
@@ -83,18 +96,26 @@ struct HeaderNavigator: View {
     
     private var titleAndSubtitle: some View {
         VStack(spacing: ConstantViews.textHeaderSpacing) {
-            Text(title)
-                .foregroundColor(textColor)
-                .font(.montserrat(titleWeight, size: titleSize))
+            TextPlain(message: title,
+                      color: textColor,
+                      family: titleWeight,
+                      size: titleSize,
+                      aligment: .center,
+                      lineLimit: ConstantViews.headerMaxLines,
+                      truncateMode: .middle)
             
-            Text(subTitle)
-                .foregroundColor(textColor)
-                .font(.montserrat(subTitleWeight, size: subTitleSize))
+            TextPlain(message: subTitle,
+                      color: textColor,
+                      family: subTitleWeight,
+                      size: subTitleSize,
+                      aligment: .center,
+                      lineLimit: ConstantViews.headerMaxLines,
+                      truncateMode: .middle)
         }
     }
 }
 
-#Preview {
+#Preview("Navigation header") {
     VStack {
         HeaderNavigator(title: "Title",
                         titleWeight: .thin,
@@ -102,6 +123,33 @@ struct HeaderNavigator: View {
                         subTitle: "Subtitle",
                         subTitleWeight: .light,
                         subTitleSize: .body)
+        
+        HeaderNavigator(title: "Title",
+                        subTitle: "Subtitle",
+                        onlyTitle: true)
+        
+        DividerView()
+        
+        HeaderNavigator(title: "Title and close",
+                        subTitle: "Press right button to close",
+                        showTrailingAction: true)
+        
+        DividerView()
+        
+        HeaderNavigator(title: "Only close",
+                        subTitle: "Press right button to close",
+                        showLeadingAction: false,
+                        showTrailingAction: true)
+        
+        HeaderNavigator(title: "Only close",
+                        subTitle: "Press right button to close",
+                        onlyTitle: true)
+        
+        DividerView()
+        
+        HeaderNavigator(title: "Truncated text because its too large to show entirely",
+                        subTitle: "truncated subtitle because its too large to show entirely",
+                        showTrailingAction: true)
         
         DividerView()
         

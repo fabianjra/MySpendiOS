@@ -20,7 +20,8 @@ struct NewCategoryView: View {
                             titleWeight: .regular,
                             titleSize: .bigXL,
                             subTitle: "Enter the new category details",
-                            onlyTitle: true)
+                            showLeadingAction: false,
+                            showTrailingAction: true) { dismiss() }
             .padding(.vertical)
             
             

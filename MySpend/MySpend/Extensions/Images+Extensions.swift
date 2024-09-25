@@ -48,11 +48,14 @@ extension Image {
     static let chevronRight = Image(systemName: "chevron.right") // <
     static let chevronUp = Image(systemName: "chevron.up")
     static let chevronDown = Image(systemName: "chevron.down")
+    static let xmarkCircle = Image(systemName: "xmark.circle")
+    static let xmarkCircleFIll = Image(systemName: "xmark.circle.fill")
     
     // MARK: GENERAL
     static let warningFill = Image(systemName: "exclamationmark.triangle.fill")
     static let arrowTurnUpLeft = Image(systemName: "arrowshape.turn.up.left")
     static let arrowTurnUpLeftFill = Image(systemName: "arrowshape.turn.up.left.fill")
+    static let xmark = Image(systemName: "xmark")
 
     // MARK: FUNCTIONS
     static func imageSelected(_ condition: Bool, imageSelected: Image, imageDeselected: Image) -> Image {

@@ -24,8 +24,9 @@ struct NewTransactionView: View {
                     HeaderNavigator(title: "New transaction",
                                     titleWeight: .regular,
                                     titleSize: .bigXL,
-                                    subTitle: "Enter the new transation details",
-                                    onlyTitle: true)
+                                    subTitle: "Enter transation details",
+                                    showLeadingAction: false,
+                                    showTrailingAction: true) { dismiss() }
                     .padding(.vertical)
                     
                     
