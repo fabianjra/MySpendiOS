@@ -34,13 +34,13 @@ class CategoriesViewModel: BaseViewModel {
     
     func onAppear() {
         do {
-            listener = try DatabaseStore().listenCategoriesChanges { [weak self] categoriesLoaded in
+            listener = try DatabaseStore().listenUserChanges { [weak self] userLoaded in
                 guard let self = self else {
                     Logs.WriteMessage("GUARD evito crear el listenCategoriesChanges ya que no se logro obtener self.")
                     return
                 }
                 
-                self.categories = categoriesLoaded
+                self.categories = userLoaded?.categoryList ?? []
             }
         } catch {
             errorMessage = error.localizedDescription

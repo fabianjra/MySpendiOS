@@ -199,10 +199,10 @@ struct DatabaseStore {
      addSnapshotListener: Este método de Firestore agrega un listener a un documento, lo que significa que se ejecutará cada vez que ese documento cambie.
      Esto es útil para actualizar automáticamente la UI cuando cambian los datos en la base de datos.
      
-     Cuando la función listenCategoriesChanges detecte un cambio en las categorías, actualizará automáticamente la propiedad categories en tu ViewModel,
-     y gracias al enlace reactivo de SwiftUI, la vista CategoriesView se actualizará en tiempo real.
+     Cuando la función listenUserChanges detecte un cambio en la base de datos, actualizará automáticamente la propiedad categories en el ViewModel,
+     y gracias al enlace reactivo de SwiftUI, el View se actualizará en tiempo real.
      
-     Con esta implementación, tu vista se actualizará automáticamente cuando se agreguen, eliminen o modifiquen categorías en Firebase Firestore.
+     Con esta implementación, el View se actualizará automáticamente cuando se agreguen, eliminen o modifiquen datos en Firebase Firestore.
      No se tendrá que salir y volver a entrar en la vista para ver los cambios.
      
      **Notes:**
@@ -214,8 +214,8 @@ struct DatabaseStore {
      
      func startListeningForCategoryChanges() {
          do {
-             listener = try DatabaseStore.listenCategoriesChanges { [weak self] categoriesLoaded in
-                 self?.categories = categoriesLoaded
+             listener = try DatabaseStore.listenUserChanges { [weak self] userLoaded in
+                 self?.categories = userLoaded
              }
          } catch {
              errorMessage = error.localizedDescription
@@ -240,7 +240,7 @@ struct DatabaseStore {
      
      - Date: Aug 2024
      */
-    func listenCategoriesChanges(listener: @escaping ([CategoryModel]) -> Void) throws -> ListenerRegistration? {
+    func listenUserChanges(listener: @escaping (UserModel?) -> Void) throws -> ListenerRegistration? {
         guard let userId = currentUser?.uid else {
             throw ConstantMessages.userNotLoggedIn
         }
@@ -253,33 +253,35 @@ struct DatabaseStore {
             if let error = error {
                 Logs.WriteCatchExeption(error: error)
                 throwableError = error
-                listener([])
+                listener(nil)
                 return
             }
             
             guard let documentSnapshot = documentSnapshot,
                   let data = documentSnapshot.data() else {
-                Logs.WriteCatchExeption(error: Logs.createError(domain: .databaseStore, code: 99))
+                Logs.WriteCatchExeption(error: Logs.createError(domain: .databaseStore,
+                                                                code: 99,
+                                                                description: "Could not get the user document by ID"))
                 throwableError = error
-                listener([])
+                listener(nil)
                 return
             }
             
             do {
                 let decodedDocument = try UtilsStore.decodeModelFB(data: data, forModel: UserModel.self)
-                let categories = decodedDocument.categoryList ?? []
-                listener(categories)
+                
+                listener(decodedDocument)
             } catch {
                 Logs.WriteCatchExeption(error: error)
                 throwableError = error
-                listener([])
+                listener(nil)
             }
         }
         
         if let error = throwableError {
             throw error
         }
-
+        
         return firestoreListener
     }
 }
