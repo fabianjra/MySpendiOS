@@ -32,7 +32,6 @@ class ResumeViewModel: BaseViewModel {
         #endif
         
         performWithCurrentUser { currentUser in
-            
             self.model.userName = currentUser.displayName ?? ""
             
             let userDocument = UtilsStore.userCollectionReference.document(currentUser.uid)
@@ -77,7 +76,7 @@ class ResumeViewModel: BaseViewModel {
             
             let _: String = user.providerID
             let _: String = user.uid
-            let displayName: String? = user.displayName
+            let _: String? = user.displayName
             let _: URL? = user.photoURL
             let _: String? = user.email
             

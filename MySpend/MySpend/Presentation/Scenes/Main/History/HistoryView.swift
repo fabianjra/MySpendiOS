@@ -19,56 +19,42 @@ struct HistoryView: View {
                             titleSize: .bigXL)
             .padding(.bottom)
             
-            
-            if viewModel.isLoading {
-                ZStack {
-                    LinearGradient(colors: Color.primaryGradiant,
-                                   startPoint: .leading,
-                                   endPoint: .trailing)
-                    .mask(Loader()
-                        .frame(width: FrameSize.width.loaderFullScreen,
-                               height: FrameSize.height.loaderFullScreen,
-                               alignment: .center)
-                    )
-                }
+            if viewModel.transactions.isEmpty {
+                Spacer()
+                TextPlain(message: "No transactions",
+                          family: .semibold,
+                          size: .bigXL,
+                          aligment: .center)
+                .padding(.vertical)
+                
+                TextPlain(message: "Try adding a new one in the + button",
+                          size: .big,
+                          aligment: .center)
+                Spacer()
             } else {
-                if viewModel.transactions.isEmpty {
-                    Spacer()
-                    TextPlain(message: "No transactions",
-                              family: .semibold,
-                              size: .bigXL,
-                              aligment: .center)
-                    .padding(.vertical)
-                    
-                    TextPlain(message: "Try adding a new one in the + button",
-                              size: .big,
-                              aligment: .center)
-                    Spacer()
-                } else {
-                    VStack {
-                        Picker("Transaction type", selection: $viewModel.model.historyFormat) {
+                VStack {
+                    Picker("Transaction type", selection: $viewModel.model.historyFormat) {
                         ForEach(HistoryFormatEnum.allCases, id: \.self) { type in
                             Text(type.rawValue)
                         }
                     }
                     .pickerStyle(.segmented)
                     .padding(.bottom)
-                        //.colorMultiply(.primaryLeading)
+                    //.colorMultiply(.primaryLeading)
                     
-                        ScrollView(showsIndicators: false) {
-                            ForEach(viewModel.transactions) { item in
-                                HStack {
-                                    TextPlain(message: item.categoryId.description,
-                                              lineLimit: ConstantViews.transactionsMaxLines)
-                                    
-                                    Spacer()
-
-                                    TextPlain(message: item.amount.convertAmountDecimalToString().addCurrencySymbol(),
-                                              lineLimit: ConstantViews.transactionsMaxLines)
-                                }
-                                .padding(.vertical, ConstantViews.textResumeSpacing)
-                                .padding(.horizontal)
+                    ScrollView(showsIndicators: false) {
+                        ForEach(viewModel.transactions) { item in
+                            HStack {
+                                TextPlain(message: item.categoryId.description,
+                                          lineLimit: ConstantViews.transactionsMaxLines)
+                                
+                                Spacer()
+                                
+                                TextPlain(message: item.amount.convertAmountDecimalToString().addCurrencySymbol(),
+                                          lineLimit: ConstantViews.transactionsMaxLines)
                             }
+                            .padding(.vertical, ConstantViews.textResumeSpacing)
+                            .padding(.horizontal)
                         }
                     }
                 }

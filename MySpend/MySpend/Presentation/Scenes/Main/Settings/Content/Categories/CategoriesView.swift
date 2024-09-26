@@ -89,14 +89,15 @@ struct CategoriesView: View {
 }
 
 #Preview("Screen filled") {
+    
     @Previewable @State var arrayCategories: [CategoryModel] = (1...40).map { item in
         
         CategoryModel(icon: "person.fill",
                       name: "\(item) Categoria prueba",
                       categoryType: .expense)
     }
+    
     VStack {
-        
         let categoriesVM = CategoriesViewModel(categories: arrayCategories)
         CategoriesView(viewModel: categoriesVM)
     }
