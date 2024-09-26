@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ResumeView: View {
     
-    @EnvironmentObject var authViewModel: AuthViewModel
     @ObservedObject var viewModel: ResumeViewModel
     
 //    init(model: Resume = Resume()) {
@@ -98,9 +97,7 @@ struct ResumeView: View {
         }
         .onAppear {
             print("Router count RESUME: \(Router.shared.path.count)")
-            Task {
-                await viewModel.onAppear(authViewModel)
-            }
+            viewModel.fetchData()
         }
     }
 }
@@ -144,7 +141,6 @@ struct ResumeView: View {
         
         ResumeView(viewModel: resumeVM)
             .environment(\.locale, .init(identifier: "es"))
-            .environmentObject(AuthViewModel())
     }
 }
 
@@ -187,12 +183,10 @@ struct ResumeView: View {
         
         ResumeView(viewModel: resumeVM)
             .environment(\.locale, .init(identifier: "en"))
-            .environmentObject(AuthViewModel())
     }
 }
 
 #Preview("No content") {
     ResumeView(viewModel: ResumeViewModel())
         .environment(\.locale, .init(identifier: "en"))
-        .environmentObject(AuthViewModel())
 }

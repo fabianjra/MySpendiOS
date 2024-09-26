@@ -11,6 +11,7 @@ class CategoriesViewModel: BaseViewModel {
     
     @Published var categories: [CategoryModel]
     
+    //init for previews.
     init(categories: [CategoryModel] = []) {
         self.categories = categories
     }
@@ -36,7 +37,7 @@ class CategoriesViewModel: BaseViewModel {
                         return
                     }
                     
-                    self.categories = userLoaded?.categoryList ?? []
+                    categories = userLoaded?.categoryList ?? []
                 }
             } catch {
                 self.errorMessage = error.localizedDescription
