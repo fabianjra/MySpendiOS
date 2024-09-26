@@ -61,38 +61,51 @@ struct ResumeView: View {
             if viewModel.isLoading {
                 LoaderView()
             } else {
-                VStack {
-                    ScrollView(showsIndicators: false) {
-                        ForEach(viewModel.model.transactions) { item in
-                            HStack {
-                                TextPlain(message: item.categoryId.description,
-                                          lineLimit: ConstantViews.transactionsMaxLines)
-                                
-                                Spacer()
-                                
-                                TextPlain(message: item.amount.convertAmountDecimalToString().addCurrencySymbol(),
-                                          lineLimit: ConstantViews.transactionsMaxLines)
+                if viewModel.model.transactions.isEmpty {
+                    Spacer()
+                    TextPlain(message: "No transactions",
+                              family: .semibold,
+                              size: .bigXL,
+                              aligment: .center)
+                    .padding(.vertical)
+                    
+                    TextPlain(message: "Try adding a new one in the + button",
+                              size: .big,
+                              aligment: .center)
+                    Spacer()
+                } else {
+                    VStack {
+                        ScrollView(showsIndicators: false) {
+                            ForEach(viewModel.model.transactions) { item in
+                                HStack {
+                                    TextPlain(message: item.categoryId.description,
+                                              lineLimit: ConstantViews.transactionsMaxLines)
+                                    
+                                    Spacer()
+                                    
+                                    TextPlain(message: item.amount.convertAmountDecimalToString().addCurrencySymbol(),
+                                              lineLimit: ConstantViews.transactionsMaxLines)
+                                }
+                                .padding(.vertical, ConstantViews.textResumeSpacing)
+                                .padding(.horizontal)
                             }
-                            .padding(.vertical, ConstantViews.textResumeSpacing)
-                            .padding(.horizontal)
+                        }
+                        
+                        DividerView()
+                            .background(.blue)
+                        
+                        // MARK: TOTAL BALANCE
+                        HStack {
+                            TextPlain(message: "Balance",
+                                      size: .big)
+                            Spacer()
+                            
+                            TextPlain(message: viewModel.model.totalBalanceFormatted,
+                                      size: .big)
                         }
                     }
-                    
-                    DividerView()
-                        .background(.blue)
-                    
-                    // MARK: TOTAL BALANCE
-                    HStack {
-                        TextPlain(message: "Balance",
-                                  size: .big)
-                        Spacer()
-                        
-                        TextPlain(message: viewModel.model.totalBalanceFormatted,
-                                  size: .big)
-                    }
+                    .padding(.bottom, ConstantViews.paddingBottomResumeview)
                 }
-                .padding(.bottom, ConstantViews.paddingBottomResumeview)
-                
             }
             
             //Tiene un efecto no deseado al transicionar entre tab y tab.

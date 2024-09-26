@@ -26,10 +26,6 @@ struct HistoryView: View {
                           size: .bigXL,
                           aligment: .center)
                 .padding(.vertical)
-                
-                TextPlain(message: "Try adding a new one in the + button",
-                          size: .big,
-                          aligment: .center)
                 Spacer()
             } else {
                 VStack {
