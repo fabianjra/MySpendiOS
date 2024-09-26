@@ -54,7 +54,7 @@ struct Repository {
      
      - Date: Aug 2024
      */
-    func listenDocumentChanges<T: Decodable>(forModel modelType: T.Type, document: DocumentReference, listener: @escaping (T?) -> Void) throws -> ListenerRegistration? {
+    public func listenDocumentChanges<T: Decodable>(forModel modelType: T.Type, document: DocumentReference, listener: @escaping (T?) -> Void) throws -> ListenerRegistration? {
         var throwableError: Error?
         
         let firestoreListener = document.addSnapshotListener { documentSnapshot, error in

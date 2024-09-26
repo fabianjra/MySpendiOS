@@ -50,7 +50,7 @@ class ResumeViewModel: BaseViewModel {
                 //#if DEBUG || TARGET_OS_SIMULATOR
                 #if targetEnvironment(simulator)
                 //No cargar datos cuando se esta corriendo en simulador.
-                self.model.transactions = try await AllDatabaseStore().getTransactions()
+                self.model.transactions = try await TransactionsDatabase().getTransactions()
                 #else
                 //Otra accion en caso de que no sea DEBUG o Simulator.
                 self.model.transactions = try await AllDatabaseStore().getTransactions()

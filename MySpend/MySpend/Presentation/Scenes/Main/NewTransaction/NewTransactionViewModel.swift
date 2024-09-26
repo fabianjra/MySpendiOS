@@ -33,7 +33,7 @@ class NewTransactionViewModel: BaseViewModel {
         
         await performWithLoader {
             do {
-                try await AllDatabaseStore().addNewTransaction(transactionModel: transactionModel)
+                try await TransactionsDatabase().addNewTransaction(transactionModel: transactionModel)
                 response = ResponseModel(.successful)
             } catch {
                 Logs.WriteCatchExeption(error: error)

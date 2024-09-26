@@ -9,7 +9,7 @@ import Firebase
 struct UtilsStore {
     
     static let db = Firestore.firestore()
-    static let userRef = db.collection(ConstantFB.Collections.users)
+    static let userCollectionReference = db.collection(ConstantFB.Collections.users)
 
     static func encodeModelFB<T: Encodable>(_ model: T) throws -> [String: Any] {
         return try Firestore.Encoder().encode(model)

@@ -39,7 +39,7 @@ class CategoriesViewModel: BaseViewModel {
             return
         }
         
-        let userDocument = UtilsStore.userRef.document(userId)
+        let userDocument = UtilsStore.userCollectionReference.document(userId)
         
         do {
             listener = try Repository().listenDocumentChanges(forModel: UserModel.self, document: userDocument) { [weak self] userLoaded in

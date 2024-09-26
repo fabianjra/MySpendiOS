@@ -92,7 +92,7 @@ struct AuthFB {
     func storeUserDocument(forUser user: UserModel) async throws {
         
         let encodedUser = try UtilsStore.encodeModelFB(user)
-        let createRequest = UtilsStore.userRef.document(user.id)
+        let createRequest = UtilsStore.userCollectionReference.document(user.id)
         
         try await createRequest.setData(encodedUser)
     }
