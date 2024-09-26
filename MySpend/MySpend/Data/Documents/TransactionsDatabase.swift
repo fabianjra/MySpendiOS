@@ -96,7 +96,7 @@ struct TransactionsDatabase {
      
      - Date: August 2024
      */
-    func getTransactions() async throws -> [TransactionModel] {
+    private func getTransactions() async throws -> [TransactionModel] {
         guard let userId = currentUser?.uid else {
             throw ConstantMessages.userNotLoggedIn
         }
