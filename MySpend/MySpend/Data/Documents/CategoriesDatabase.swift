@@ -64,6 +64,13 @@ struct CategoriesDatabase {
         }
     }
     
+    /**
+     Only for fetch data once. Should use listen to fetch asyncronus.
+     
+     - Authors: Fabian Rodriguez.
+     
+     - Date: August 2024
+     */
     private func getCategories() async throws -> [CategoryModel] {
         guard let userId = currentUser?.uid else {
             throw ConstantMessages.userNotLoggedIn

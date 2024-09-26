@@ -26,7 +26,7 @@ struct TransactionsDatabase {
      
      - Authors: Fabian Rodriguez.
      
-     - Date: Aug 2024
+     - Date: August 2024
      */
     func addNewTransaction(transactionModel: TransactionModel) async throws {
         
@@ -90,7 +90,7 @@ struct TransactionsDatabase {
     }
     
     /**
-     Only for getting transactions once. Should use listen to load all transactions.
+     Only for fetch data once. Should use listen to fetch asyncronus.
      
      - Authors: Fabian Rodriguez.
      

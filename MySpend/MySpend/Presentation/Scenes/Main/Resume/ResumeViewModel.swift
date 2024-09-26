@@ -53,7 +53,7 @@ class ResumeViewModel: BaseViewModel {
                 self.model.transactions = try await TransactionsDatabase().getTransactions()
                 #else
                 //Otra accion en caso de que no sea DEBUG o Simulator.
-                self.model.transactions = try await AllDatabaseStore().getTransactions()
+                self.model.transactions = try await TransactionsDatabase().getTransactions()
                 #endif
                 
             } catch {

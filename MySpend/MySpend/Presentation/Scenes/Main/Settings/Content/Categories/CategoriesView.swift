@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CategoriesView: View {
     
-    @StateObject var categoriesVM = CategoriesViewModel()
+    @StateObject var viewModel = CategoriesViewModel()
     @State private var showNewItemModal = false
     
     var body: some View {
@@ -24,7 +24,7 @@ struct CategoriesView: View {
             
             ZStack(alignment: .bottomTrailing) {
                 ListContainer {
-                    ForEach(categoriesVM.categories) { category in
+                    ForEach(viewModel.categories) { category in
                         HStack {
                             let icon = Utils.getIconFromString(category.icon)
                             
@@ -52,7 +52,7 @@ struct CategoriesView: View {
             }
         }
         .onAppear {
-            categoriesVM.onAppear()
+            viewModel.fetchData()
         }
         .sheet(isPresented: $showNewItemModal) {
             NewCategoryView()
@@ -84,7 +84,7 @@ struct CategoriesView: View {
         
         let categoriesVM = CategoriesViewModel(categories: categories)
         
-        CategoriesView(categoriesVM: categoriesVM)
+        CategoriesView(viewModel: categoriesVM)
     }
 }
 
@@ -98,7 +98,7 @@ struct CategoriesView: View {
     VStack {
         
         let categoriesVM = CategoriesViewModel(categories: arrayCategories)
-        CategoriesView(categoriesVM: categoriesVM)
+        CategoriesView(viewModel: categoriesVM)
     }
 }
 
