@@ -23,7 +23,7 @@ class CategoriesViewModel: BaseViewModel {
             //No cargar datos cuando se esta corriendo en simulador.
         #else
             //Otra accion en caso de que no sea DEBUG o Simulator. Ejem: Dispositivo fisico.
-            categories = try await DatabaseStore().getCategories()
+            categories = try await AllDatabaseStore().getCategories()
         #endif
         } catch {
             errorMessage = error.localizedDescription
@@ -33,8 +33,16 @@ class CategoriesViewModel: BaseViewModel {
     private var listener: ListenerRegistration?
     
     func onAppear() {
+        
+        guard let userId = AuthFB().currentUser?.uid else {
+            errorMessage = ConstantMessages.userNotLoggedIn.localizedDescription
+            return
+        }
+        
+        let userDocument = UtilsStore.userRef.document(userId)
+        
         do {
-            listener = try UserDatabase().listenUserChanges { [weak self] userLoaded in
+            listener = try Repository().listenDocumentChanges(forModel: UserModel.self, document: userDocument) { [weak self] userLoaded in
                 guard let self = self else {
                     Logs.WriteMessage("GUARD evito crear el listenCategoriesChanges ya que no se logro obtener self.")
                     return

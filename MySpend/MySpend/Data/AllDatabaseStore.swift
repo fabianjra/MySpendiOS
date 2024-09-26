@@ -7,7 +7,7 @@
 
 import Firebase
 
-struct DatabaseStore {
+struct AllDatabaseStore {
     
     var currentUser: User? = Auth.auth().currentUser
     

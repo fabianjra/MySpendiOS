@@ -7,9 +7,7 @@
 
 import Firebase
 
-struct UserDatabase {
-    
-    var currentUser: User? = Auth.auth().currentUser
+struct Repository {
     
     /**
      addSnapshotListener: Este método de Firestore agrega un listener a un documento, lo que significa que se ejecutará cada vez que ese documento cambie.
@@ -56,16 +54,10 @@ struct UserDatabase {
      
      - Date: Aug 2024
      */
-    func listenUserChanges(listener: @escaping (UserModel?) -> Void) throws -> ListenerRegistration? {
-        guard let userId = currentUser?.uid else {
-            throw ConstantMessages.userNotLoggedIn
-        }
-        
-        let userDocument = UtilsStore.userRef.document(userId)
-        
+    func listenDocumentChanges<T: Decodable>(forModel modelType: T.Type, document: DocumentReference, listener: @escaping (T?) -> Void) throws -> ListenerRegistration? {
         var throwableError: Error?
         
-        let firestoreListener = userDocument.addSnapshotListener { documentSnapshot, error in
+        let firestoreListener = document.addSnapshotListener { documentSnapshot, error in
             if let error = error {
                 Logs.WriteCatchExeption(error: error)
                 throwableError = error
@@ -77,14 +69,14 @@ struct UserDatabase {
                   let data = documentSnapshot.data() else {
                 Logs.WriteCatchExeption(error: Logs.createError(domain: .databaseStore,
                                                                 code: 99,
-                                                                description: "Could not get the user document by ID"))
+                                                                description: "Could not get data from documentSnapshot"))
                 throwableError = error
                 listener(nil)
                 return
             }
             
             do {
-                let decodedDocument = try UtilsStore.decodeModelFB(data: data, forModel: UserModel.self)
+                let decodedDocument = try UtilsStore.decodeModelFB(data: data, forModel: modelType)
                 
                 listener(decodedDocument)
             } catch {
