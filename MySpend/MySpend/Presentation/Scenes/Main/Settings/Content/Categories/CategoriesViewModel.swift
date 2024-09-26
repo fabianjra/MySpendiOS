@@ -34,7 +34,7 @@ class CategoriesViewModel: BaseViewModel {
     
     func onAppear() {
         do {
-            listener = try DatabaseStore().listenUserChanges { [weak self] userLoaded in
+            listener = try UserDatabase().listenUserChanges { [weak self] userLoaded in
                 guard let self = self else {
                     Logs.WriteMessage("GUARD evito crear el listenCategoriesChanges ya que no se logro obtener self.")
                     return
