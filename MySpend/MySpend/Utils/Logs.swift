@@ -46,7 +46,7 @@ enum Logs {
      - Date: February 2023
      */
     static func WriteCatchExeption(_ message: String? = nil, file: String = #file, function: String = #function, line: Int = #line, error: Error) {
-        print("Error in catch - \(message ?? ""), called by: \(file.components(separatedBy: "/").last ?? file) - \(function), at line: \(line). Description: ", error)
+        print("MYSPEND Handled catch error: \(message ?? ""), called by: \(file.components(separatedBy: "/").last ?? file) - \(function), at line: \(line). Description: ", error)
     }
     
     /**
@@ -115,5 +115,7 @@ enum Logs {
     
     enum ErrorDomain: String {
         case databaseStore = "com.mySpend.DatabaseStore"
+        case transactionsDatabase = "com.mySpend.TransactionsDatabase"
+        case categoriesDatabase = "com.mySpend.CategoriesDatabase"
     }
 }

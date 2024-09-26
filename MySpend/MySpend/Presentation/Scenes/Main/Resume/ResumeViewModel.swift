@@ -39,7 +39,10 @@ class ResumeViewModel: BaseViewModel {
             do {
                 self.listener = try Repository().listenDocumentChanges(forModel: UserModel.self, document: userDocument) { [weak self] userLoaded in
                     guard let self = self else {
-                        Logs.WriteMessage("GUARD evito crear el listenDocumentChanges ya que no se logro obtener self.")
+                        Logs.WriteCatchExeption("GUARD evito crear el listenDocumentChanges ya que no se logro obtener self para Transactions",
+                                                error: Logs.createError(domain: .transactionsDatabase,
+                                                                        code: 99,
+                                                                        description: "Could not get self"))
                         return
                     }
                     
