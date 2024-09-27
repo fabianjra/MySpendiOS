@@ -21,14 +21,6 @@ struct AuthFB {
         try Auth.auth().signOut()
     }
     
-    func getUserName() throws -> String {
-        if let user = currentUser {
-            return user.displayName ?? ""
-        } else {
-            throw ConstantMessages.userNotLoggedIn
-        }
-    }
-    
     //TODO: Agregar funcion de Transaccion para que sea atomico (Se complete todo o no haga ninguna accion).
     func updatePassword(actualPassword: String, newPasword: String) async throws {
         guard let user = currentUser else {
@@ -66,9 +58,7 @@ struct AuthFB {
         
         let userModel = UserModel(id: user.uid, fullname: user.displayName ?? "", email: user.email ?? "", transactions: [], categoryList: [])
         
-        try await storeUserDocument(forUser: userModel)
-        
-        //try await sendEmailRegisteredUser() //Commented: Will send only via: Validation User View.
+        try await UserDatabase().storeUserDocument(forUser: userModel)
     }
 
     func updateUser(newUserName: String, forUser user: User) async throws {
@@ -83,20 +73,9 @@ struct AuthFB {
             throw ConstantMessages.userNotLoggedIn
         }
         
-        let changeRequest = user.createProfileChangeRequest()
-        changeRequest.displayName = newUserName
-        
-        try await changeRequest.commitChanges()
+        try await updateUser(newUserName: newUserName, forUser: user)
     }
-    
-    func storeUserDocument(forUser user: UserModel) async throws {
-        
-        let encodedUser = try UtilsStore.encodeModelFB(user)
-        let createRequest = UtilsStore.userCollectionReference.document(user.id)
-        
-        try await createRequest.setData(encodedUser)
-    }
-    
+
     func sendEmailRegisteredUser() async throws {
         guard let user = currentUser else {
             throw ConstantMessages.userNotLoggedIn
