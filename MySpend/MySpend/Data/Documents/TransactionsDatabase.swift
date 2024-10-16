@@ -8,20 +8,7 @@
 import Firebase
 
 struct TransactionsDatabase: UserValidationProtocol {
-    
-    var currentUser: User? = AuthFB().currentUser
-    
-    func addNewDocument(_ model: TransactionModel) async throws {
-        
-        let currentUserId = try validateCurrentUser(currentUser).uid
-        
-        let subCollectionRef = UtilsFB.userSubCollectionRef(CollectionsFB.transactions, for: currentUserId)
-
-        let newDocumentEncoded = try UtilsFB.encodeModelFB(model)
-        
-        //En este caso Firebase genera un ID automaticamente para el nuevo documento creado con addDocument.
-        try await subCollectionRef.addDocument(data: newDocumentEncoded)
-    }
+    private var currentUser: User? = AuthFB().currentUser
 }
 
 struct TransactionsDatabase_ORIGINAL {

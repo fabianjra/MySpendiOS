@@ -31,7 +31,7 @@ class NewTransactionViewModel: BaseViewModel {
         
         await performWithLoader {
             do {
-                try await TransactionsDatabase().addNewDocument(self.model)
+                try await Repository().addNewDocument(self.model, forSubCollection: .transactions)
                 
                 response = ResponseModel(.successful)
             } catch {
