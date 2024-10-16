@@ -9,9 +9,9 @@ import Firebase
 struct UtilsFB {
     
     static var db = Firestore.firestore()
-    static var userCollectionRef = db.collection(ConstantFB.Collections.users.rawValue)
+    static var userCollectionRef = db.collection(CollectionsFB.users.rawValue)
     
-    static func userSubCollectionRef(_ collection: ConstantFB.Collections, for userID: String) -> CollectionReference {
+    static func userSubCollectionRef(_ collection: CollectionsFB, for userID: String) -> CollectionReference {
         return userCollectionRef
             .document(userID)
             .collection(collection.rawValue)

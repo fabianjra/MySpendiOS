@@ -7,27 +7,26 @@
 
 import Foundation
 
-//TODO: Remover esta para utilizar el modelo de NewTransaction
 struct TransactionModel: Identifiable, Codable {
-    public var id = UUID().uuidString
-    let amount: Decimal
-    let date: String
-    let categoryId: String
-    let detail: String?
-    let type: TransactionTypeEnum
+    var id = ""
+    var amount: Decimal = .zero
+    var date: String = ""
+    var category: String = ""
+    var notes: String = ""
+    var transactionType: TransactionType = .expense
     
     enum CodingKeys: String, CodingKey {
         case id
         case amount
         case date
-        case categoryId
-        case detail
-        case type
+        case category
+        case notes
+        case transactionType
     }
-}
-
-enum TransactionTypeEnum: String, CaseIterable, Identifiable, Codable {
-    public var id: Self { self }
-    case expense = "expense"
-    case income = "income"
+    
+    enum Field: Hashable, CaseIterable {
+        case amount
+        case category
+        case notes
+    }
 }

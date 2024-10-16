@@ -11,16 +11,16 @@ struct CategoriesDatabase: UserValidationProtocol {
     
     var currentUser: User? = AuthFB().currentUser
     
-    func addNewCategory(_ categoryModel: CategoryModel) async throws {
+    func addNewDocument(_ model: CategoryModel) async throws {
         
         let currentUserId = try validateCurrentUser(currentUser).uid
         
-        let categoriesRef = UtilsFB.userSubCollectionRef(ConstantFB.Collections.categories, for: currentUserId)
+        let subCollectionRef = UtilsFB.userSubCollectionRef(CollectionsFB.categories, for: currentUserId)
 
-        let newCategoryEncoded = try UtilsFB.encodeModelFB(categoryModel)
+        let newDocumentEncoded = try UtilsFB.encodeModelFB(model)
         
         //En este caso Firebase genera un ID automaticamente para el nuevo documento de categoria con addDocument.
-        try await categoriesRef.addDocument(data: newCategoryEncoded)
+        try await subCollectionRef.addDocument(data: newDocumentEncoded)
     }
 }
 

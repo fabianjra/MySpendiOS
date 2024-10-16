@@ -11,7 +11,7 @@ struct CategoryModel: Identifiable, Codable, Equatable  {
     var id: String = ""
     var icon: String = ""
     var name: String = ""
-    var categoryType: TransactionTypeEnum = .expense
+    var categoryType: TransactionType = .expense
     
     enum CodingKeys: String, CodingKey {
         case id

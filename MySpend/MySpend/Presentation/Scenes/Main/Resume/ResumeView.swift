@@ -78,7 +78,7 @@ struct ResumeView: View {
                         ScrollView(showsIndicators: false) {
                             ForEach(viewModel.model.transactions) { item in
                                 HStack {
-                                    TextPlain(message: item.categoryId.description,
+                                    TextPlain(message: item.category.description,
                                               lineLimit: ConstantViews.transactionsMaxLines)
                                     
                                     Spacer()
@@ -124,30 +124,30 @@ struct ResumeView: View {
     VStack {
         let transaction1 = TransactionModel(amount: 56000,
                                             date: "25/05/1990",
-                                            categoryId: "01",
-                                            detail: "Nota",
-                                            type: .expense)
+                                            category: "01",
+                                            notes: "Nota",
+                                            transactionType: .expense)
         let transaction2 = TransactionModel(amount: 3000.00,
                                             date: "25/05/2024",
-                                            categoryId: "02",
-                                            detail: "Nota",
-                                            type: .expense)
+                                            category: "02",
+                                            notes: "Nota",
+                                            transactionType: .expense)
         let transaction3 = TransactionModel(amount: 100.12,
                                             date: "01/12/2003",
-                                            categoryId: "03",
-                                            detail: "Nota",
-                                            type: .expense)
+                                            category: "03",
+                                            notes: "Nota",
+                                            transactionType: .expense)
         let transaction4 = TransactionModel(amount: 270000,
                                             date: "01/05/2023",
-                                            categoryId: "04",
-                                            detail: "Nota",
-                                            type: .expense)
+                                            category: "04",
+                                            notes: "Nota",
+                                            transactionType: .expense)
         
         let transaction5 = TransactionModel(amount: 270046.7802,
                                             date: "01/05/2023",
-                                            categoryId: "05",
-                                            detail: "Nota",
-                                            type: .expense)
+                                            category: "05",
+                                            notes: "Nota",
+                                            transactionType: .expense)
         
         let transactionArray = [transaction1, transaction2, transaction3, transaction4, transaction5]
         
@@ -166,30 +166,30 @@ struct ResumeView: View {
     VStack {
         let transaction1 = TransactionModel(amount: 56000234234.23434,
                                             date: "25/05/1990",
-                                            categoryId: "alsjdfasjflkasj dflkasjdlkfjaslkfjalsk asd f",
-                                            detail: "Nota",
-                                            type: .expense)
+                                            category: "alsjdfasjflkasj dflkasjdlkfjaslkfjalsk asd f",
+                                            notes: "Nota",
+                                            transactionType: .expense)
         let transaction2 = TransactionModel(amount: 3002342340.00,
                                             date: "25/05/2024",
-                                            categoryId: "02",
-                                            detail: "Nota",
-                                            type: .expense)
+                                            category: "02",
+                                            notes: "Nota",
+                                            transactionType: .expense)
         let transaction3 = TransactionModel(amount: 100.12,
                                             date: "01/12/2003",
-                                            categoryId: "asdfasdfasdfasdfk jkfj askjf aksjf ksjf kasjf kasf jk",
-                                            detail: "Nota",
-                                            type: .expense)
+                                            category: "asdfasdfasdfasdfk jkfj askjf aksjf ksjf kasjf kasf jk",
+                                            notes: "Nota",
+                                            transactionType: .expense)
         let transaction4 = TransactionModel(amount: 27677776763244437674.23423434,
                                             date: "01/05/2023",
-                                            categoryId: "asdf asfa",
-                                            detail: "Nota",
-                                            type: .expense)
+                                            category: "asdf asfa",
+                                            notes: "Nota",
+                                            transactionType: .expense)
         
         let transaction5 = TransactionModel(amount: 270046.7802,
                                             date: "01/05/2023",
-                                            categoryId: "05",
-                                            detail: "Nota",
-                                            type: .expense)
+                                            category: "05",
+                                            notes: "Nota",
+                                            transactionType: .expense)
         
         let transactionArray = [transaction1, transaction2, transaction3, transaction4, transaction5]
         

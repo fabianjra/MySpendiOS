@@ -1,5 +1,5 @@
 //
-//  DatabaseStore.swift
+//  TransactionsDatabase.swift
 //  MySpend
 //
 //  Created by Fabian Rodriguez on 2/8/24.
@@ -7,7 +7,24 @@
 
 import Firebase
 
-struct TransactionsDatabase {
+struct TransactionsDatabase: UserValidationProtocol {
+    
+    var currentUser: User? = AuthFB().currentUser
+    
+    func addNewDocument(_ model: TransactionModel) async throws {
+        
+        let currentUserId = try validateCurrentUser(currentUser).uid
+        
+        let subCollectionRef = UtilsFB.userSubCollectionRef(CollectionsFB.transactions, for: currentUserId)
+
+        let newDocumentEncoded = try UtilsFB.encodeModelFB(model)
+        
+        //En este caso Firebase genera un ID automaticamente para el nuevo documento de categoria con addDocument.
+        try await subCollectionRef.addDocument(data: newDocumentEncoded)
+    }
+}
+
+struct TransactionsDatabase_ORIGINAL {
     
     var currentUser: User? = Auth.auth().currentUser
     

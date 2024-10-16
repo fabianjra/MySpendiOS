@@ -41,7 +41,7 @@ struct HistoryView: View {
                     ScrollView(showsIndicators: false) {
                         ForEach(viewModel.transactions) { item in
                             HStack {
-                                TextPlain(message: item.categoryId.description,
+                                TextPlain(message: item.category.description,
                                           lineLimit: ConstantViews.transactionsMaxLines)
                                 
                                 Spacer()
@@ -70,29 +70,29 @@ struct HistoryView: View {
     VStack {
         let transaction1 = TransactionModel(amount: 56000,
                                             date: "25/05/1990",
-                                            categoryId: "Diario",
-                                            detail: "Nota",
-                                            type: .expense)
+                                            category: "Diario",
+                                            notes: "Nota",
+                                            transactionType: .expense)
         let transaction2 = TransactionModel(amount: 3000.9,
                                             date: "25/05/2024",
-                                            categoryId: "Gastos mensuales del mes abc abc abcdefthijklmnbrto adfsafsdf a saf",
-                                            detail: "Nota",
-                                            type: .expense)
+                                            category: "Gastos mensuales del mes abc abc abcdefthijklmnbrto adfsafsdf a saf",
+                                            notes: "Nota",
+                                            transactionType: .expense)
         let transaction3 = TransactionModel(amount: 100,
                                             date: "01/12/2003",
-                                            categoryId: "No category",
-                                            detail: "Nota",
-                                            type: .expense)
+                                            category: "No category",
+                                            notes: "Nota",
+                                            transactionType: .expense)
         let transaction4 = TransactionModel(amount: 301928564721.328,
                                             date: "01/05/2023",
-                                            categoryId: "Gastos mensuales del mes abc abc abcdefthijklmnbrto adfsafsdf a saf",
-                                            detail: "Nota",
-                                            type: .expense)
+                                            category: "Gastos mensuales del mes abc abc abcdefthijklmnbrto adfsafsdf a saf",
+                                            notes: "Nota",
+                                            transactionType: .expense)
         let transaction5 = TransactionModel(amount: 3000.1,
                                             date: "25/05/2024",
-                                            categoryId: "Gastos mensuales",
-                                            detail: "Nota",
-                                            type: .expense)
+                                            category: "Gastos mensuales",
+                                            notes: "Nota",
+                                            transactionType: .expense)
         
         let transactionArray = [transaction1, transaction2, transaction3, transaction4, transaction5]
         let viewModel = HistoryViewModel(transactions: transactionArray, model: History())

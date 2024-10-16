@@ -29,7 +29,7 @@ struct NewCategoryView: View {
             
             VStack {
                 PickerSegmented(selection: $newCategoryVM.model.categoryType,
-                                segments: TransactionTypeEnum.allCases)
+                                segments: TransactionType.allCases)
                 .padding(.bottom)
             }
             

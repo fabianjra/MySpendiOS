@@ -12,7 +12,7 @@ struct NewTransactionView: View {
     @Environment(\.dismiss) var dismiss
     
     @StateObject var viewModel = NewTransactionViewModel()
-    @FocusState private var focusedField: NewTransaction.Field?
+    @FocusState private var focusedField: TransactionModel.Field?
     
     let notesId = "notes"
     
@@ -33,13 +33,13 @@ struct NewTransactionView: View {
                     // MARK: SEGMENT
                     VStack {
                         PickerSegmented(selection: $viewModel.model.transactionType,
-                                        segments: TransactionTypeEnum.allCases)
+                                        segments: TransactionType.allCases)
                         .padding(.bottom)
                     }
                     
                     // MARK: DATE
                     VStack {
-                        TextFieldReadOnly(text: $viewModel.model.dateString,
+                        TextFieldReadOnly(text: $viewModel.model.date,
                                           iconLeading: Image.calendar,
                                           colorDisabled: false)
                         .onTapGesture {
@@ -51,9 +51,9 @@ struct NewTransactionView: View {
                     // MARK: TEXTFIELDS
                     VStack {
                         TextField("", 
-                                  text: $viewModel.model.amount,
+                                  text: $viewModel.amountString,
                                   prompt: Text("Amount").foregroundColor(.textFieldPlaceholder))
-                        .textFieldStyle(TextFieldIconStyle($viewModel.model.amount,
+                        .textFieldStyle(TextFieldIconStyle($viewModel.amountString,
                                                            iconLeading: Image.dollar,
                                                            textLimit: ConstantCurrency.amoutMaxLength,
                                                            isAmout: true,
@@ -63,9 +63,9 @@ struct NewTransactionView: View {
                         
                         //TODO: Change to sheet list (loading and showing all categories).
                         TextField("", 
-                                  text: $viewModel.model.categoryId,
+                                  text: $viewModel.model.category,
                                   prompt: Text("Category").foregroundColor(.textFieldPlaceholder))
-                        .textFieldStyle(TextFieldIconStyle($viewModel.model.categoryId,
+                        .textFieldStyle(TextFieldIconStyle($viewModel.model.category,
                                                            iconLeading: Image.stackFill,
                                                            errorMessage: $viewModel.errorMessage))
                         .focused($focusedField, equals: .category)
@@ -118,20 +118,20 @@ struct NewTransactionView: View {
                 .sheet(isPresented: $viewModel.showDatePicker) {
                     NavigationStack {
                         DatePicker("",
-                                   selection: $viewModel.model.selectedDate,
+                                   selection: $viewModel.selectedDate,
                                    displayedComponents: .date)
                         .padding(.horizontal)
                         .datePickerStyle(.graphical)
                         .frame(height: ConstantFrames.calendarHeight)
                         .padding()
-                        .onChange(of: viewModel.model.selectedDate, { oldValue, newValue in
-                            viewModel.model.dateString = Utils.dateToStringShort(date: newValue)
+                        .onChange(of: viewModel.selectedDate, { oldValue, newValue in
+                            viewModel.model.date = Utils.dateToStringShort(date: newValue)
                             //let day = selectedDate.formatted(.dateTime.day())
                         })
                         .toolbar {
                             ToolbarItem(placement: .cancellationAction) {
                                 Button("Today") {
-                                    viewModel.model.selectedDate = .now
+                                    viewModel.selectedDate = .now
                                 }
                                 .padding()
                                 .padding(.top)
@@ -155,15 +155,15 @@ struct NewTransactionView: View {
     
     private func process() {
         focusedField = .none
-//        Task {
-//            let result = await viewModel.addNewTransaction()
-//            
-//            if result.status.isSuccess {
-//                dismiss()
-//            } else {
-//                viewModel.errorMessage = result.message
-//            }
-//        }
+        Task {
+            let result = await viewModel.addNewTransaction()
+            
+            if result.status.isSuccess {
+                dismiss()
+            } else {
+                viewModel.errorMessage = result.message
+            }
+        }
     }
 }
 
