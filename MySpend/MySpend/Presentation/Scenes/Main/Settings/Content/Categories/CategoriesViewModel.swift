@@ -29,9 +29,9 @@ class CategoriesViewModel: BaseViewModel {
         
         performWithCurrentUser { currentUser in
             
-            let categoriesCollectionRef = UtilsFB.userSubCollectionRef(.categories, for: currentUser.uid)
+            let collectionRef = UtilsFB.userSubCollectionRef(.categories, for: currentUser.uid)
             
-            self.listener = ListenersFB().listenCollectionChanges(collection: categoriesCollectionRef) { [weak self] documentSnapshots, error in
+            self.listener = ListenersFB().listenCollectionChanges(collection: collectionRef) { [weak self] documentsSnapshots, error in
                 
                 guard let self = self else {
                     Logs.WriteMessage("Guard evito crear el listener ya que no se logro obtener self")
@@ -45,7 +45,7 @@ class CategoriesViewModel: BaseViewModel {
                 }
                 
                 //TODO: Cambiar logica ya que cada vez que se hace un cambio, recorre todo la coleccion y la vuelve a llenar:
-                categories = documentSnapshots.compactMap { documentSnapshot in
+                categories = documentsSnapshots.compactMap { documentSnapshot in
                     let data = documentSnapshot.data()
                     
                     if let data = data {
@@ -57,7 +57,7 @@ class CategoriesViewModel: BaseViewModel {
                         }
                     }
                     
-                    Logs.WriteMessage("Error al decodificar el documento de categories y pasarlo a CategoryModel")
+                    Logs.WriteMessage("Error al decodificar el documento y pasarlo al Modelo")
                     return nil //En caso de que data o decodedModel sea nil, los ignora.
                 }
             }
