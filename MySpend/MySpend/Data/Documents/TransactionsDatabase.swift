@@ -19,7 +19,7 @@ struct TransactionsDatabase: UserValidationProtocol {
 
         let newDocumentEncoded = try UtilsFB.encodeModelFB(model)
         
-        //En este caso Firebase genera un ID automaticamente para el nuevo documento de categoria con addDocument.
+        //En este caso Firebase genera un ID automaticamente para el nuevo documento creado con addDocument.
         try await subCollectionRef.addDocument(data: newDocumentEncoded)
     }
 }

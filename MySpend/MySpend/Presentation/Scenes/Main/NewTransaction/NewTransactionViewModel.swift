@@ -23,9 +23,8 @@ class NewTransactionViewModel: BaseViewModel {
             return ResponseModel(.error, ConstantMessages.emptySpaces.localizedDescription)
         }
         
-        //TODO: Darle formato pero al string:
+        //Firebase necesita guardar el valor como decimal, pero los formatos al monto se trabajan en string en pantalla:
         let amountDecimal = UtilsCurrency.convertAmountStringToDecimal(amountString)
-        
         model.amount = amountDecimal
         
         var response = ResponseModel()
@@ -43,32 +42,4 @@ class NewTransactionViewModel: BaseViewModel {
         
         return response
     }
-    
-//    func addNewTransaction() async -> ResponseModel {
-//        if model.categoryId.isEmptyOrWhitespace() {
-//            return ResponseModel(.error, ConstantMessages.emptySpaces.localizedDescription)
-//        }
-//        
-//        let amount = UtilsCurrency.convertAmountStringToDecimal(model.amount)
-//        
-//        let transactionModel = TransactionModel(amount: amount,
-//                                                date: model.dateString,
-//                                                categoryId: model.categoryId,
-//                                                detail: model.notes,
-//                                                type: model.transactionType)
-//        
-//        var response = ResponseModel()
-//        
-//        await performWithLoader {
-//            do {
-//                try await TransactionsDatabase().addNewTransaction(transactionModel: transactionModel)
-//                response = ResponseModel(.successful)
-//            } catch {
-//                Logs.WriteCatchExeption(error: error)
-//                response = ResponseModel(.error, error.localizedDescription)
-//            }
-//        }
-//        
-//        return response
-//    }
 }
