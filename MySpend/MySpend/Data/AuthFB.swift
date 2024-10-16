@@ -9,7 +9,7 @@ import Firebase
 //import FirebaseFirestoreSwift
 
 // Updated To use Firebase with Async/Await || Version 10.17.0
-struct AuthFB {
+struct AuthFB: UserValidationProtocol {
     
     var currentUser: User? = Auth.auth().currentUser
     
@@ -23,9 +23,7 @@ struct AuthFB {
     
     //TODO: Agregar funcion de Transaccion para que sea atomico (Se complete todo o no haga ninguna accion).
     func updatePassword(actualPassword: String, newPasword: String) async throws {
-        guard let user = currentUser else {
-            throw ConstantMessages.userNotLoggedIn
-        }
+        let user = try validateCurrentUser(currentUser)
         
         let userEmail = user.email ?? ""
         
@@ -56,7 +54,8 @@ struct AuthFB {
         
         try await updateUser(newUserName: username, forUser: user)
         
-        let userModel = UserModel(id: user.uid, fullname: user.displayName ?? "", email: user.email ?? "", transactions: [], categoryList: [])
+        //let userModel = UserModel(id: user.uid, fullname: user.displayName ?? "", email: user.email ?? "", transactions: [], categoryList: [])
+        let userModel = UserModel(id: user.uid, fullname: user.displayName ?? "", email: user.email ?? "")
         
         try await UserDatabase().storeUserDocument(forUser: userModel)
     }
@@ -69,17 +68,13 @@ struct AuthFB {
     }
     
     func updateUser(newUserName: String) async throws {
-        guard let user = currentUser else {
-            throw ConstantMessages.userNotLoggedIn
-        }
+        let user = try validateCurrentUser(currentUser)
         
         try await updateUser(newUserName: newUserName, forUser: user)
     }
 
     func sendEmailRegisteredUser() async throws {
-        guard let user = currentUser else {
-            throw ConstantMessages.userNotLoggedIn
-        }
+        let user = try validateCurrentUser(currentUser)
         
         try await user.sendEmailVerification()
     }

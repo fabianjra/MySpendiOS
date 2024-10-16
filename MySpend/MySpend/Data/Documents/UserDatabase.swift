@@ -9,8 +9,8 @@ struct UserDatabase {
     
     func storeUserDocument(forUser user: UserModel) async throws {
         
-        let encodedUser = try UtilsStore.encodeModelFB(user)
-        let createRequest = UtilsStore.userCollectionReference.document(user.id)
+        let encodedUser = try UtilsFB.encodeModelFB(user)
+        let createRequest = UtilsFB.userCollectionRef.document(user.id)
         
         try await createRequest.setData(encodedUser)
     }

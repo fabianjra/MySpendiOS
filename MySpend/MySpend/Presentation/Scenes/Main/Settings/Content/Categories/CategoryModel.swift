@@ -8,7 +8,7 @@
 import Foundation
 
 struct CategoryModel: Identifiable, Codable, Equatable  {
-    public var id = UUID().uuidString
+    var id: String = ""
     var icon: String = ""
     var name: String = ""
     var categoryType: TransactionTypeEnum = .expense

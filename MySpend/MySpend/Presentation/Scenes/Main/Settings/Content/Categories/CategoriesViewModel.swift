@@ -11,7 +11,7 @@ class CategoriesViewModel: BaseViewModel {
     
     @Published var categories: [CategoryModel]
     
-    //init for previews.
+    //init for Canvas Previews.
     init(categories: [CategoryModel] = []) {
         self.categories = categories
     }
@@ -28,22 +28,38 @@ class CategoriesViewModel: BaseViewModel {
         #endif
         
         performWithCurrentUser { currentUser in
-            let userDocument = UtilsStore.userCollectionReference.document(currentUser.uid)
             
-            do {
-                self.listener = try Repository().listenDocumentChanges(forModel: UserModel.self, document: userDocument) { [weak self] userLoaded in
-                    guard let self = self else {
-                        Logs.WriteCatchExeption("GUARD evito crear el listenDocumentChanges ya que no se logro obtener self para Categories",
-                                                error: Logs.createError(domain: .categoriesDatabase,
-                                                                        code: 99,
-                                                                        description: "Could not get self"))
-                        return
+            let categoriesCollectionRef = UtilsFB.userSubCollectionRef(.categories, for: currentUser.uid)
+            
+            self.listener = ListenersFB().listenCollectionChanges(collection: categoriesCollectionRef) { [weak self] documentSnapshots, error in
+                
+                guard let self = self else {
+                    Logs.WriteMessage("Guard evito crear el listener ya que no se logro obtener self")
+                    return
+                }
+                
+                if let error = error {
+                    errorMessage = error.localizedDescription
+                    Logs.WriteCatchExeption(error: error)
+                    return
+                }
+                
+                //TODO: Cambiar logica ya que cada vez que se hace un cambio, recorre todo la coleccion y la vuelve a llenar:
+                categories = documentSnapshots.compactMap { documentSnapshot in
+                    let data = documentSnapshot.data()
+                    
+                    if let data = data {
+                        let decodedModel = try? UtilsFB.decodeModelFB(data: data, forModel: CategoryModel.self)
+                        
+                        if var decodedModel = decodedModel {
+                            decodedModel.id = documentSnapshot.documentID
+                            return decodedModel
+                        }
                     }
                     
-                    categories = userLoaded?.categoryList ?? []
+                    Logs.WriteMessage("Error al decodificar el documento de categories y pasarlo a CategoryModel")
+                    return nil //En caso de que data o decodedModel sea nil, los ignora.
                 }
-            } catch {
-                self.errorMessage = error.localizedDescription
             }
         }
     }

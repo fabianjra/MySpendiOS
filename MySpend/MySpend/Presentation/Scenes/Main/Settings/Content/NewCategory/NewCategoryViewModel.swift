@@ -20,7 +20,7 @@ class NewCategoryViewModel: BaseViewModel {
         
         await performWithLoader {
             do {
-                try await CategoriesDatabase().addNewCategory(categoryModel: self.model)
+                try await CategoriesDatabase().addNewCategory(self.model)
                 
                 response = ResponseModel(.successful)
             } catch {

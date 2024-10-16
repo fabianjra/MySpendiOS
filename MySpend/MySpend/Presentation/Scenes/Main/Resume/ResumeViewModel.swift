@@ -34,10 +34,10 @@ class ResumeViewModel: BaseViewModel {
         performWithCurrentUser { currentUser in
             self.model.userName = currentUser.displayName ?? ""
             
-            let userDocument = UtilsStore.userCollectionReference.document(currentUser.uid)
+            let userDocument = UtilsFB.userCollectionRef.document(currentUser.uid)
             
             do {
-                self.listener = try Repository().listenDocumentChanges(forModel: UserModel.self, document: userDocument) { [weak self] userLoaded in
+                self.listener = try ListenersFB().listenDocumentChanges(forModel: UserModel.self, document: userDocument) { [weak self] userLoaded in
                     guard let self = self else {
                         Logs.WriteCatchExeption("GUARD evito crear el listenDocumentChanges ya que no se logro obtener self para Transactions",
                                                 error: Logs.createError(domain: .transactionsDatabase,
@@ -46,7 +46,7 @@ class ResumeViewModel: BaseViewModel {
                         return
                     }
                     
-                    model.transactions = userLoaded?.transactions ?? []
+                    //model.transactions = userLoaded?.transactions ?? []
                     
                     // Se debe borrar la cantidad en el onAppear porque sino seguria sumandose infinitamente.
                     model.totalBalance = .zero

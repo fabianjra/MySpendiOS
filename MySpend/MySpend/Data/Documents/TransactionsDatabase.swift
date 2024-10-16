@@ -28,66 +28,66 @@ struct TransactionsDatabase {
      
      - Date: August 2024
      */
-    func addNewTransaction(transactionModel: TransactionModel) async throws {
-        
-        guard let userId = currentUser?.uid else {
-            throw ConstantMessages.userNotLoggedIn
-        }
-        
-        let userRefDocument = UtilsStore.userCollectionReference.document(userId)
-        
-        do {
-            let _ = try await UtilsStore.db.runTransaction { (transaction, errorPointer) -> Any? in
-                
-                let userDocument: DocumentSnapshot
-                
-                do {
-                    userDocument = try transaction.getDocument(userRefDocument)
-                } catch let error as NSError {
-                    /// Al usar return nil, estás indicando a Firestore que la transacción no debe completarse en ese intento, y Firestore manejará los reintentos automaticamente por debejo.
-                    errorPointer?.pointee = error
-                    Logs.WriteCatchExeption(error: error)
-                    return nil
-                }
-                
-                var user: UserModel
-                
-                do {
-                    user = try userDocument.data(as: UserModel.self)
-                } catch let error as NSError {
-                    errorPointer?.pointee = error
-                    Logs.WriteCatchExeption(error: error)
-                    return nil
-                }
-                
-                if user.transactions == nil {
-                    user.transactions = []
-                }
-                
-                user.transactions?.append(transactionModel)
-                
-                do {
-                    try transaction.setData(from: user, forDocument: userRefDocument)
-                } catch let error {
-                    errorPointer?.pointee = error as NSError
-                    Logs.WriteCatchExeption(error: error)
-                    return nil
-                }
-                
-                return nil
-            }
-        } catch {
-            /*
-             Cuando se usa runTransaction de Firestore, los errores que ocurren dentro del bloque de transacción son manejados
-             y propagados a través del parámetro errorPointer.
-             Estos errores se capturan en el bloque catch externo de esta funcion addNewTransaction.
-             Si no se vuelve a lanzar el error (throw error), el error se consume y no se propaga más allá de la función,
-             lo que puede hacer que el error no sea manejado adecuadamente por la parte de tu código que llama a addNewTransaction.
-             */
-            Logs.WriteCatchExeption(error: error)
-            throw error
-        }
-    }
+//    func addNewTransaction(transactionModel: TransactionModel) async throws {
+//        
+//        guard let userId = currentUser?.uid else {
+//            throw ConstantMessages.userNotLoggedIn
+//        }
+//        
+//        let userRefDocument = UtilsStore.userCollectionReference.document(userId)
+//        
+//        do {
+//            let _ = try await UtilsStore.db.runTransaction { (transaction, errorPointer) -> Any? in
+//                
+//                let userDocument: DocumentSnapshot
+//                
+//                do {
+//                    userDocument = try transaction.getDocument(userRefDocument)
+//                } catch let error as NSError {
+//                    /// Al usar return nil, estás indicando a Firestore que la transacción no debe completarse en ese intento, y Firestore manejará los reintentos automaticamente por debejo.
+//                    errorPointer?.pointee = error
+//                    Logs.WriteCatchExeption(error: error)
+//                    return nil
+//                }
+//                
+//                var user: UserModel
+//                
+//                do {
+//                    user = try userDocument.data(as: UserModel.self)
+//                } catch let error as NSError {
+//                    errorPointer?.pointee = error
+//                    Logs.WriteCatchExeption(error: error)
+//                    return nil
+//                }
+//                
+//                if user.transactions == nil {
+//                    user.transactions = []
+//                }
+//                
+//                user.transactions?.append(transactionModel)
+//                
+//                do {
+//                    try transaction.setData(from: user, forDocument: userRefDocument)
+//                } catch let error {
+//                    errorPointer?.pointee = error as NSError
+//                    Logs.WriteCatchExeption(error: error)
+//                    return nil
+//                }
+//                
+//                return nil
+//            }
+//        } catch {
+//            /*
+//             Cuando se usa runTransaction de Firestore, los errores que ocurren dentro del bloque de transacción son manejados
+//             y propagados a través del parámetro errorPointer.
+//             Estos errores se capturan en el bloque catch externo de esta funcion addNewTransaction.
+//             Si no se vuelve a lanzar el error (throw error), el error se consume y no se propaga más allá de la función,
+//             lo que puede hacer que el error no sea manejado adecuadamente por la parte de tu código que llama a addNewTransaction.
+//             */
+//            Logs.WriteCatchExeption(error: error)
+//            throw error
+//        }
+//    }
     
     /**
      Only for fetch data once. Should use listen to fetch asyncronus.
@@ -96,25 +96,25 @@ struct TransactionsDatabase {
      
      - Date: August 2024
      */
-    private func getTransactions() async throws -> [TransactionModel] {
-        guard let userId = currentUser?.uid else {
-            throw ConstantMessages.userNotLoggedIn
-        }
-        
-        let userDocument = UtilsStore.userCollectionReference.document(userId)
-        
-        let documentSnapshot = try await userDocument.getDocument()
-        
-        guard let data = documentSnapshot.data() else {
-            return []
-        }
-        
-        let decodedDocument = try UtilsStore.decodeModelFB(data: data, forModel: UserModel.self)
-        
-        guard let transactions = decodedDocument.transactions else {
-            return []
-        }
-        
-        return transactions
-    }
+//    private func getTransactions() async throws -> [TransactionModel] {
+//        guard let userId = currentUser?.uid else {
+//            throw ConstantMessages.userNotLoggedIn
+//        }
+//        
+//        let userDocument = UtilsStore.userCollectionReference.document(userId)
+//        
+//        let documentSnapshot = try await userDocument.getDocument()
+//        
+//        guard let data = documentSnapshot.data() else {
+//            return []
+//        }
+//        
+//        let decodedDocument = try UtilsStore.decodeModelFB(data: data, forModel: UserModel.self)
+//        
+//        guard let transactions = decodedDocument.transactions else {
+//            return []
+//        }
+//        
+//        return transactions
+//    }
 }

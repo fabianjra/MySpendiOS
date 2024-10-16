@@ -69,10 +69,10 @@ enum Logs {
      
      - Date: February 2023
      */
-    static func WriteMessage(_ obj: Any?) {
-        print("///*****************************************///")
-        print(obj ?? "-----------------------------------------------------")
-        print("///*****************************************///")
+    static func WriteMessage(_ obj: Any) {
+        print("///************************** CUSTOM MESSSAGE **************************///")
+        print(obj)
+        print("///************************ END CUSTOM MESSSAGE ************************///")
     }
     
     /**

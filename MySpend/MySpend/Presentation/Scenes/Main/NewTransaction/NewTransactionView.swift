@@ -155,15 +155,15 @@ struct NewTransactionView: View {
     
     private func process() {
         focusedField = .none
-        Task {
-            let result = await viewModel.addNewTransaction()
-            
-            if result.status.isSuccess {
-                dismiss()
-            } else {
-                viewModel.errorMessage = result.message
-            }
-        }
+//        Task {
+//            let result = await viewModel.addNewTransaction()
+//            
+//            if result.status.isSuccess {
+//                dismiss()
+//            } else {
+//                viewModel.errorMessage = result.message
+//            }
+//        }
     }
 }
 

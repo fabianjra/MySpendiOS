@@ -1,13 +1,14 @@
 //
-//  UserDatabase.swift
+//  ListenersFB.swift
 //  MySpend
 //
 //  Created by Fabian Rodriguez on 25/9/24.
 //
 
 import Firebase
+import FirebaseFirestore
 
-struct Repository {
+struct ListenersFB {
     
     /**
      addSnapshotListener: Este método de Firestore agrega un listener a un documento, lo que significa que se ejecutará cada vez que ese documento cambie.
@@ -21,28 +22,30 @@ struct Repository {
      
      **Notes:**
      - Debe utilizarse con: `deinit`. Aquí removemos el listener cuando el ViewModel se destruye, lo cual es una buena práctica para evitar fugas de memoria.
+     - Observer Pattern: Escucha los cambios en un documento y notifica a un listener (observador) cada vez que se produce un cambio.
+     - Callback Pattern: El método recibe una función de callback (el listener) que será llamada cuando se obtienen los datos.
      
      **Example:**
      ```swift
      private var listener: ListenerRegistration?
      
      func startListeningForCategoryChanges() {
-         do {
-             listener = try DatabaseStore.listenUserChanges { [weak self] userLoaded in
-                 self?.categories = userLoaded
-             }
-         } catch {
-             errorMessage = error.localizedDescription
-         }
+     do {
+     listener = try DatabaseStore.listenUserChanges { [weak self] userLoaded in
+     self?.categories = userLoaded
+     }
+     } catch {
+     errorMessage = error.localizedDescription
+     }
      }
      
      deinit {
-         listener?.remove()
+     listener?.remove()
      }
      ```
      
      - Parameters:
-        - listener:Closure que devulve el data obtenido del addSnapshotListener.
+     - listener:Closure que devulve el data obtenido del addSnapshotListener.
      
      - Returns: ListenerRegistration opcional (propiedad de Firebase)
      
@@ -67,16 +70,17 @@ struct Repository {
             
             guard let documentSnapshot = documentSnapshot,
                   let data = documentSnapshot.data() else {
-                Logs.WriteCatchExeption(error: Logs.createError(domain: .databaseStore,
-                                                                code: 99,
-                                                                description: "Could not get data from documentSnapshot"))
+                let error = Logs.createError(domain: .databaseStore,
+                                             code: 99,
+                                             description: "Could not get data from documentSnapshot")
+                Logs.WriteCatchExeption(error: error)
                 throwableError = error
                 listener(nil)
                 return
             }
             
             do {
-                let decodedDocument = try UtilsStore.decodeModelFB(data: data, forModel: modelType)
+                let decodedDocument = try UtilsFB.decodeModelFB(data: data, forModel: modelType)
                 
                 listener(decodedDocument)
             } catch {
@@ -92,4 +96,30 @@ struct Repository {
         
         return firestoreListener
     }
+    
+    
+    public func listenCollectionChanges(collection: CollectionReference, listener: @escaping ([DocumentSnapshot], Error?) -> Void) -> ListenerRegistration? {
+        let firestoreListener = collection.addSnapshotListener { querySnapshot, error in
+            if let error = error {
+                Logs.WriteCatchExeption(error: error)
+                listener([], error)
+                return
+            }
+            
+            guard let querySnapshot = querySnapshot else {
+                let error = Logs.createError(domain: .databaseStore,
+                                             code: 99,
+                                             description: "Could not get data from collection snapshot")
+                Logs.WriteCatchExeption(error: error)
+                listener([], error)
+                return
+            }
+            
+            listener(querySnapshot.documents, nil)
+        }
+        
+        return firestoreListener
+    }
+    
+    
 }

@@ -8,7 +8,8 @@
 import Foundation
 
 enum ConstantFB {
-    enum Collections {
-        static let users: String = "users"
+    enum Collections: String {
+        case users = "users"
+        case categories = "categories"
     }
 }
