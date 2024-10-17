@@ -9,7 +9,7 @@ import Firebase
 
 struct Repository: UserValidationProtocol {
     
-    var currentUser: User? = AuthFB().currentUser
+    private var currentUser = AuthFB().currentUser
     
     /**
      This function adds a new document to a Firestore subcollection based on the given model.
@@ -52,9 +52,7 @@ struct Repository: UserValidationProtocol {
     func addNewDocument<T: Codable>(_ model: T, forSubCollection collection: CollectionsFB) async throws {
         
         let currentUserId = try validateCurrentUser(currentUser).uid
-        
         let subCollectionRef = UtilsFB.userSubCollectionRef(collection, for: currentUserId)
-        
         let newDocumentEncoded = try UtilsFB.encodeModelFB(model)
         
         //En este caso Firebase genera un ID automaticamente para el nuevo documento con addDocument.

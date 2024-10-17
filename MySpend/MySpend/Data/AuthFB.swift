@@ -9,9 +9,9 @@ import Firebase
 //import FirebaseFirestoreSwift
 
 // Updated To use Firebase with Async/Await || Version 10.17.0
-struct AuthFB: UserValidationProtocol {
+public struct AuthFB: UserValidationProtocol {
     
-    var currentUser: User? = Auth.auth().currentUser
+    public var currentUser: User? = Auth.auth().currentUser
     
     func singIn(_ email: String, password: String) async throws {
         try await Auth.auth().signIn(withEmail: email, password: password)
