@@ -110,13 +110,12 @@ struct ResumeView: View {
                         }
                     }
                     .padding(.bottom, ConstantViews.paddingBottomResumeview)
+                    
+                    //Tiene un efecto no deseado al transicionar entre tab y tab.
+                    //TODO: Revisar si con listener se comporta diferente.
+                    //.redacted(reason: viewModel.isLoading ? .placeholder : [])
                 }
             }
-            
-            //Tiene un efecto no deseado al transicionar entre tab y tab.
-            //TODO: Revisar si con listener se comporta diferente.
-            //.redacted(reason: viewModel.isLoading ? .placeholder : [])
- 
         }
         .onAppear {
             print("Router count RESUME: \(Router.shared.path.count)")

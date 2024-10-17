@@ -15,7 +15,9 @@ struct PickerSegmented: UIViewRepresentable {
     func makeUIView(context: Context) -> UISegmentedControl {
         
         let segmentedControl = UISegmentedControl(items: segments.map { $0.rawValue })
-        segmentedControl.addTarget(context.coordinator, action: #selector(Coordinator.valueChanged), for: .valueChanged)
+        segmentedControl.addTarget(context.coordinator,
+                                   action: #selector(Coordinator.valueChanged),
+                                   for: .valueChanged)
         return segmentedControl
     }
     
@@ -23,14 +25,14 @@ struct PickerSegmented: UIViewRepresentable {
         
         uiView.selectedSegmentIndex = segments.firstIndex(of: selection) ?? 0
         
-        uiView.selectedSegmentTintColor = UIColor(selection == .expense ?
-            .warning : .primaryTrailing)
+        uiView.selectedSegmentTintColor = UIColor(selection == .expense ? .warning : .primaryTrailing)
         
         uiView.setTitleTextAttributes([.font: Font.montserratToUIFont(.light),
                                        .foregroundColor: UIColor(.textPrimaryForeground)],
                                       for: .selected)
         
-        uiView.setTitleTextAttributes([.font: Font.montserratToUIFont(.light),.foregroundColor: UIColor(.disabledForeground)],
+        uiView.setTitleTextAttributes([.font: Font.montserratToUIFont(.light),
+                                       .foregroundColor: UIColor(.disabledForeground)],
                                       for: .normal)
         
         uiView.backgroundColor = UIColor(.textFieldBackground)
