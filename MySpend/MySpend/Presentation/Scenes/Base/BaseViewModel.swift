@@ -22,7 +22,7 @@ public class BaseViewModel: ObservableObject {
         }
     }
     
-    public func performWithCurrentUser(_ work: @escaping (_ currentUser: User) -> Void) {
+    public func performWithCurrentUser(_ action: @escaping (_ currentUser: User) -> Void) {
         errorMessage = ""
         
         guard let currentUser = AuthFB().currentUser else {
@@ -31,10 +31,10 @@ public class BaseViewModel: ObservableObject {
             return
         }
         
-        work(currentUser)
+        action(currentUser)
     }
     
-    public func performWithLoader(_ work: @escaping () async -> Void) async {
+    public func performWithLoader(_ action: @escaping () async -> Void) async {
         errorMessage = ""
         
         withAnimation {
@@ -47,10 +47,10 @@ public class BaseViewModel: ObservableObject {
             }
         }
         
-        await work()
+        await action()
     }
     
-    public func performWithLoader(_ work: @escaping (_ currentUser: User) async -> Void) async {
+    public func performWithLoader(_ action: @escaping (_ currentUser: User) async -> Void) async {
         errorMessage = ""
         
         guard let currentUser = AuthFB().currentUser else {
@@ -68,6 +68,6 @@ public class BaseViewModel: ObservableObject {
             }
         }
         
-        await work(currentUser)
+        await action(currentUser)
     }
 }

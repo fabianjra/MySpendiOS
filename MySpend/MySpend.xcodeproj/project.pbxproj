@@ -305,6 +305,7 @@
 		1F06414B2A7232C900C19084 /* Root */ = {
 			isa = PBXGroup;
 			children = (
+				1F65D9622C72D10E0023CC5D /* Router.swift */,
 				1F06414C2A7232D300C19084 /* RootView.swift */,
 			);
 			path = Root;
@@ -354,7 +355,6 @@
 			isa = PBXGroup;
 			children = (
 				1FC94CBE2A5A2CB7005CA0B6 /* MainView.swift */,
-				1F65D9622C72D10E0023CC5D /* Router.swift */,
 			);
 			path = MainView;
 			sourceTree = "<group>";
