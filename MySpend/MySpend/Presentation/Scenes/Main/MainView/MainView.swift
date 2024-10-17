@@ -9,7 +9,6 @@ import SwiftUI
 
 struct MainView: View {
     
-    @EnvironmentObject var authViewModel: AuthViewModel
     @StateObject private var viewModel = ResumeViewModel()
     
     init() {
@@ -21,7 +20,7 @@ struct MainView: View {
             
             /*
              Los tabView siempre estan cargadas en memoria, su totalidad de vistas,
-             en este caso las 5 vistas estan cargadas en memoria.
+             en este caso las 2 vistas estan cargadas en memoria.
              Por eso, se se hace scroll en la vista principal, se cambia de vista y luego vuelve,
              la vista permanece como quedó.
              */

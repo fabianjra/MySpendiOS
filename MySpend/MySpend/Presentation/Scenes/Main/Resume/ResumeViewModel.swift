@@ -5,7 +5,6 @@
 //  Created by Fabian Rodriguez on 8/8/24.
 //
 
-//import SwiftUI
 import FirebaseFirestore
 
 class ResumeViewModel: BaseViewModel {
@@ -15,12 +14,18 @@ class ResumeViewModel: BaseViewModel {
     @Published var selectedTab: TabViewIcons = .resume
     @Published var navigateToHistory: Bool = false
     
-    //init for previews.
+    //init for Canvas Previews.
     init(model: Resume = Resume()) {
         self.model = model
     }
     
     private var listener: ListenerRegistration?
+    
+    func onAppear() {
+        performWithCurrentUser { currentUser in
+            self.model.userName = currentUser.displayName ?? ""
+        }
+    }
     
     func fetchData() {
         
@@ -32,11 +37,9 @@ class ResumeViewModel: BaseViewModel {
         #endif
         
         performWithCurrentUser { currentUser in
-            self.model.userName = currentUser.displayName ?? ""
-            
             let collectionRef = UtilsFB.userSubCollectionRef(.transactions, for: currentUser.uid)
             
-            self.listener = ListenersFB().listenCollection(collection: collectionRef) { [weak self] documentsSnapshot, error in
+            self.listener = ListenersFB().listenCollectionChanges(collection: collectionRef) { [weak self] documentsChange, error in
                 
                 guard let self = self else {
                     Logs.WriteMessage("Guard evito crear el listener ya que no se logro obtener self")
@@ -49,77 +52,55 @@ class ResumeViewModel: BaseViewModel {
                     return
                 }
                 
-                //TODO: Cambiar logica ya que cada vez que se hace un cambio, recorre todo la coleccion y la vuelve a llenar:
-                model.transactions = documentsSnapshot.compactMap { documentSnapshot in
-                    let data = documentSnapshot.data()
-                    
-                    if let data = data {
-                        let decodedModel = try? UtilsFB.decodeModelFB(data: data, forModel: TransactionModel.self)
+                for change in documentsChange {
+                    switch change.type {
                         
-                        if var decodedModel = decodedModel {
-                            decodedModel.id = documentSnapshot.documentID
-                            return decodedModel
+                        //La primera vez que se llama al listener, se reciben todos los documentos como "added", y después solo se reciben las diferencias.
+                    case .added:
+                        let data = change.document.data()
+                        let decodedDocument = try? UtilsFB.decodeModelFB(data: data, forModel: TransactionModel.self)
+                        
+                        if var decodedDocument = decodedDocument {
+                            
+                            //Permite validar que no se dupliquen items.
+                            if !model.transactions.contains(where: { $0.id == change.document.documentID }) {
+                                decodedDocument.id = change.document.documentID
+                                model.transactions.append(decodedDocument)
+                            }
                         }
+                        
+                    case .modified:
+                        if let index = model.transactions.firstIndex(where: { $0.id == change.document.documentID }) {
+                            let data = change.document.data()
+                            
+                            if var decodedDocument = try? UtilsFB.decodeModelFB(data: data, forModel: TransactionModel.self) {
+                                decodedDocument.id = change.document.documentID
+                                model.transactions[index] = decodedDocument
+                            } else {
+                                Logs.WriteMessage("Error al decodificar el documento y pasarlo al Modelo")
+                            }
+                        }
+                        
+                    case .removed:
+                        model.transactions.removeAll(where: { $0.id == change.document.documentID })
+                        
+                    default:
+                        Logs.WriteMessage("Nothing modified in the documentChange")
                     }
-                    
-                    Logs.WriteMessage("Error al decodificar el documento y pasarlo al Modelo")
-                    return nil //En caso de que data o decodedModel sea nil, los ignora.
                 }
                 
+                //TODO: Refactorizar, ya que se recorrera de nuevo con cada cambio.
                 // Se debe borrar la cantidad en el onAppear porque sino seguria sumandose infinitamente.
                 model.totalBalance = .zero
                 model.totalBalanceFormatted = ConstantCurrency.zeroAmoutString.addCurrencySymbol()
                 
                 for item in model.transactions {
                     model.totalBalance += item.amount
-                    model.totalBalanceFormatted = model.totalBalance.convertAmountDecimalToString().addCurrencySymbol()
                 }
+                model.totalBalanceFormatted = model.totalBalance.convertAmountDecimalToString().addCurrencySymbol()
             }
         }
     }
-    
-    
-    
-    
-//    func fetchData_ORGINAL() {
-//        
-//        //#if DEBUG || TARGET_OS_SIMULATOR
-//#if targetEnvironment(simulator)
-//        //No cargar datos cuando se esta corriendo en simulador.
-//#else
-//        //Otra accion en caso de que no sea DEBUG o Simulator. Ejem: Dispositivo fisico.
-//#endif
-//        performWithCurrentUser { currentUser in
-//            self.model.userName = currentUser.displayName ?? ""
-//            
-//            let userDocument = UtilsFB.userCollectionRef.document(currentUser.uid)
-//            
-//            do {
-//                self.listener = try ListenersFB().listenDocumentChanges(forModel: UserModel.self, document: userDocument) { [weak self] userLoaded in
-//                    guard let self = self else {
-//                        Logs.WriteCatchExeption("GUARD evito crear el listenDocumentChanges ya que no se logro obtener self para Transactions",
-//                                                error: Logs.createError(domain: .transactionsDatabase,
-//                                                                        code: 99,
-//                                                                        description: "Could not get self"))
-//                        return
-//                    }
-//                    
-//                    //model.transactions = userLoaded?.transactions ?? []
-//                    
-//                    // Se debe borrar la cantidad en el onAppear porque sino seguria sumandose infinitamente.
-//                    model.totalBalance = .zero
-//                    model.totalBalanceFormatted = ConstantCurrency.zeroAmoutString.addCurrencySymbol()
-//                    
-//                    for item in model.transactions {
-//                        model.totalBalance += item.amount
-//                        model.totalBalanceFormatted = model.totalBalance.convertAmountDecimalToString().addCurrencySymbol()
-//                    }
-//                }
-//            } catch {
-//                self.errorMessage = error.localizedDescription
-//            }
-//        }
-//    }
     
     deinit {
         listener?.remove()
@@ -145,6 +126,60 @@ class ResumeViewModel: BaseViewModel {
             for info in user.multiFactor.enrolledFactors {
                 multiFactorString += info.displayName ?? "[DispayName]"
                 multiFactorString += " "
+            }
+        }
+    }
+    
+    
+    
+    
+    //***************************
+    //TODO: ORIGINAL - SIN USO.
+    //***************************
+    func fetchData_ORIGINAL() {
+
+        performWithCurrentUser { currentUser in
+            self.model.userName = currentUser.displayName ?? ""
+            
+            let collectionRef = UtilsFB.userSubCollectionRef(.transactions, for: currentUser.uid)
+            
+            self.listener = ListenersFB().listenCollection(collection: collectionRef) { [weak self] documentsSnapshot, error in
+                
+                guard let self = self else {
+                    Logs.WriteMessage("Guard evito crear el listener ya que no se logro obtener self")
+                    return
+                }
+                
+                if let error = error {
+                    errorMessage = error.localizedDescription
+                    Logs.WriteCatchExeption(error: error)
+                    return
+                }
+                
+                model.transactions = documentsSnapshot.compactMap { documentSnapshot in
+                    let data = documentSnapshot.data()
+                    
+                    if let data = data {
+                        let decodedModel = try? UtilsFB.decodeModelFB(data: data, forModel: TransactionModel.self)
+                        
+                        if var decodedModel = decodedModel {
+                            decodedModel.id = documentSnapshot.documentID
+                            return decodedModel
+                        }
+                    }
+                    
+                    Logs.WriteMessage("Error al decodificar el documento y pasarlo al Modelo")
+                    return nil //En caso de que data o decodedModel sea nil, los ignora.
+                }
+                
+                // Se debe borrar la cantidad en el onAppear porque sino seguria sumandose infinitamente.
+                model.totalBalance = .zero
+                model.totalBalanceFormatted = ConstantCurrency.zeroAmoutString.addCurrencySymbol()
+                
+                for item in model.transactions {
+                    model.totalBalance += item.amount
+                    model.totalBalanceFormatted = model.totalBalance.convertAmountDecimalToString().addCurrencySymbol()
+                }
             }
         }
     }

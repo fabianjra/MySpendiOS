@@ -189,7 +189,7 @@ public struct ListenersFB {
      
      **Example:**
      ```swift
-     self.listener = ListenersFB().listeCollectionChanges(collection: collectionRef) { [weak self] documentChange, error in
+     self.listener = ListenersFB().listenCollectionChanges(collection: collectionRef) { [weak self] documentChange, error in
      guard let self = self else { return }
     
      if let error = error {
@@ -221,7 +221,7 @@ public struct ListenersFB {
      
      - Date: October 2024
      */
-    public func listeCollectionChanges(collection: CollectionReference, listener: @escaping ([DocumentChange], Error?) -> Void) -> ListenerRegistration? {
+    public func listenCollectionChanges(collection: CollectionReference, listener: @escaping ([DocumentChange], Error?) -> Void) -> ListenerRegistration? {
         let firestoreListener = collection.addSnapshotListener { querySnapshot, error in
             
             if let error = error {

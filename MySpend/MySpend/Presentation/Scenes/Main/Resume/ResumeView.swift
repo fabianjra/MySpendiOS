@@ -114,6 +114,9 @@ struct ResumeView: View {
  
         }
         .onAppear {
+            viewModel.onAppear()
+        }
+        .onFirstAppear {
             print("Router count RESUME: \(Router.shared.path.count)")
             viewModel.fetchData()
         }
