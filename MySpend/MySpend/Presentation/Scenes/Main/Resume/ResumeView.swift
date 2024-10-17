@@ -26,12 +26,17 @@ struct ResumeView: View {
             // MARK: HEADER
             HStack {
                 VStack(alignment: .leading) {
-                    Text("Hello \(viewModel.model.userName) \(ConstantEmojis.greeting)")
-                        .font(.montserrat(.semibold, size: .big))
-                        .lineLimit(ConstantViews.messageMaxLines)
                     
-                    Text("Welcome back")
-                        .font(.montserrat(.light, size: .small))
+                    TextPlain(message: "Hello \(viewModel.model.userName) \(ConstantEmojis.greeting)",
+                              family: .semibold,
+                              size: .big,
+                              lineLimit: ConstantViews.singleTextMaxLines,
+                              truncateMode: .tail)
+                    
+                    TextPlain(message: "Welcome back",
+                              family: .light,
+                              size: .small,
+                              lineLimit: ConstantViews.singleTextMaxLines)
                 }
                 .foregroundColor(Color.textPrimaryForeground)
                 Spacer()
@@ -79,12 +84,12 @@ struct ResumeView: View {
                             ForEach(viewModel.model.transactions) { item in
                                 HStack {
                                     TextPlain(message: item.category.description,
-                                              lineLimit: ConstantViews.transactionsMaxLines)
+                                              lineLimit: ConstantViews.singleTextMaxLines)
                                     
                                     Spacer()
                                     
                                     TextPlain(message: item.amount.convertAmountDecimalToString().addCurrencySymbol(),
-                                              lineLimit: ConstantViews.transactionsMaxLines)
+                                              lineLimit: ConstantViews.singleTextMaxLines)
                                 }
                                 .padding(.vertical, ConstantViews.textResumeSpacing)
                                 .padding(.horizontal)

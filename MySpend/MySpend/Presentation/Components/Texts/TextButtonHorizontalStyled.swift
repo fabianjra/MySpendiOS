@@ -48,12 +48,12 @@ struct TextButtonHorizontalStyled: View {
                 Text(text)
                     .font(.montserrat(size: .big))
                     .foregroundColor(Color.buttonForeground)
-                    .lineLimit(ConstantViews.buttonMaxLines)
+                    .lineLimit(ConstantViews.singleTextMaxLines)
                 
                 Text(subTitle)
                     .font(.montserrat(size: .small))
                     .foregroundColor(Color.textFieldPlaceholder)
-                    .lineLimit(ConstantViews.buttonMaxLines)
+                    .lineLimit(ConstantViews.singleTextMaxLines)
             }
             .padding(.horizontal)
             

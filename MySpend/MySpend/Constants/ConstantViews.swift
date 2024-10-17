@@ -13,9 +13,7 @@ struct ConstantViews {
     static let buttonBorderWidth: CGFloat = 6.0
     
     // MARK: TEXT
-    static let headerMaxLines: Int = 1
-    static let buttonMaxLines: Int = 1
-    static let transactionsMaxLines: Int = 1
+    static let singleTextMaxLines: Int = 1
     static let messageMaxLines: Int = 3
     static let passwordMinimumLength: Int = 6
     

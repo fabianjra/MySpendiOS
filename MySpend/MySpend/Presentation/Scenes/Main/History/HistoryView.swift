@@ -42,12 +42,12 @@ struct HistoryView: View {
                         ForEach(viewModel.transactions) { item in
                             HStack {
                                 TextPlain(message: item.category.description,
-                                          lineLimit: ConstantViews.transactionsMaxLines)
+                                          lineLimit: ConstantViews.singleTextMaxLines)
                                 
                                 Spacer()
                                 
                                 TextPlain(message: item.amount.convertAmountDecimalToString().addCurrencySymbol(),
-                                          lineLimit: ConstantViews.transactionsMaxLines)
+                                          lineLimit: ConstantViews.singleTextMaxLines)
                             }
                             .padding(.vertical, ConstantViews.textResumeSpacing)
                             .padding(.horizontal)

@@ -22,7 +22,7 @@ struct TextPlain: View {
          family: Font.Family = .regular,
          size: Font.Sizes = .body,
          aligment: TextAlignment = .leading,
-         lineLimit: Int = .max,
+         lineLimit: Int = ConstantViews.singleTextMaxLines,
          truncateMode: Text.TruncationMode = .tail) {
         self.message = message
         self.color = color

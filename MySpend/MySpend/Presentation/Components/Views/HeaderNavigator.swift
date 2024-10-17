@@ -101,7 +101,7 @@ struct HeaderNavigator: View {
                       family: titleWeight,
                       size: titleSize,
                       aligment: .center,
-                      lineLimit: ConstantViews.headerMaxLines,
+                      lineLimit: ConstantViews.singleTextMaxLines,
                       truncateMode: .middle)
             
             TextPlain(message: subTitle,
@@ -109,7 +109,7 @@ struct HeaderNavigator: View {
                       family: subTitleWeight,
                       size: subTitleSize,
                       aligment: .center,
-                      lineLimit: ConstantViews.headerMaxLines,
+                      lineLimit: ConstantViews.singleTextMaxLines,
                       truncateMode: .middle)
         }
     }
