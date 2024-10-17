@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MainView: View {
     
-    @StateObject private var viewModel = ResumeViewModel()
+    @StateObject private var viewModel = MainViewModel()
     
     init() {
         UITabBar.appearance().isHidden = true
@@ -27,7 +27,7 @@ struct MainView: View {
             TabView(selection: $viewModel.selectedTab) {
                 
                 /// Los tags permiten que las vistas cambien entre una seleccion u otra en el TabView.
-                ResumeView(viewModel: viewModel)
+                ResumeView()
                     .tag(TabViewIcons.resume)
                 
                 SettingsView()

@@ -10,9 +10,6 @@ import FirebaseFirestore
 class ResumeViewModel: BaseViewModel {
     
     @Published var model = Resume()
-    @Published var showNewTransactionModal = false
-    @Published var selectedTab: TabViewIcons = .resume
-    @Published var navigateToHistory: Bool = false
     
     //init for Canvas Previews.
     init(model: Resume = Resume()) {

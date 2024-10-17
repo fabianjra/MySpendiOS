@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ResumeView: View {
     
-    @ObservedObject var viewModel: ResumeViewModel
+    @StateObject var viewModel = ResumeViewModel()
     
 //    init(model: Resume = Resume()) {
 //        /*
@@ -114,10 +114,10 @@ struct ResumeView: View {
  
         }
         .onAppear {
+            print("Router count RESUME: \(Router.shared.path.count)")
             viewModel.onAppear()
         }
         .onFirstAppear {
-            print("Router count RESUME: \(Router.shared.path.count)")
             viewModel.fetchData()
         }
     }
