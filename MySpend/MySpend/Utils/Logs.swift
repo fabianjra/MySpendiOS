@@ -117,5 +117,6 @@ enum Logs {
         case databaseStore = "com.mySpend.DatabaseStore"
         case transactionsDatabase = "com.mySpend.TransactionsDatabase"
         case categoriesDatabase = "com.mySpend.CategoriesDatabase"
+        case listenersFB = "com.mySpend.ListenersFB"
     }
 }

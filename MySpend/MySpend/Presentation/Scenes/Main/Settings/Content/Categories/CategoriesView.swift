@@ -52,7 +52,9 @@ struct CategoriesView: View {
             }
         }
         .onAppear {
-            viewModel.fetchData()
+            Task {
+             await viewModel.fetchData()
+            }
         }
         .sheet(isPresented: $showNewItemModal) {
             NewCategoryView()

@@ -60,6 +60,7 @@ public struct ListenersFB {
         var throwableError: Error?
         
         let firestoreListener = document.addSnapshotListener { documentSnapshot, error in
+            
             if let error = error {
                 Logs.WriteCatchExeption(error: error)
                 throwableError = error
@@ -69,7 +70,7 @@ public struct ListenersFB {
             
             guard let documentSnapshot = documentSnapshot,
                   let data = documentSnapshot.data() else {
-                let error = Logs.createError(domain: .databaseStore,
+                let error = Logs.createError(domain: .listenersFB,
                                              code: 99,
                                              description: "Could not get data from documentSnapshot")
                 Logs.WriteCatchExeption(error: error)
@@ -152,6 +153,7 @@ public struct ListenersFB {
      */
     public func listenCollection(collection: CollectionReference, listener: @escaping ([DocumentSnapshot], Error?) -> Void) -> ListenerRegistration? {
         let firestoreListener = collection.addSnapshotListener { querySnapshot, error in
+            
             if let error = error {
                 Logs.WriteCatchExeption(error: error)
                 listener([], error)
@@ -159,7 +161,7 @@ public struct ListenersFB {
             }
             
             guard let querySnapshot = querySnapshot else {
-                let error = Logs.createError(domain: .databaseStore,
+                let error = Logs.createError(domain: .listenersFB,
                                              code: 99,
                                              description: "Could not get data from collection snapshot")
                 Logs.WriteCatchExeption(error: error)
@@ -172,4 +174,81 @@ public struct ListenersFB {
         
         return firestoreListener
     }
+    
+    /**
+     This function listens for real-time changes in a Firestore collection and returns only the changes that occurred between the previous snapshot and the current one.
+     The function utilizes Firestore's addSnapshotListener to monitor changes in the specified collection, and it passes an array of DocumentChange objects (which represent the changes in the collection) or an error, if one occurs, to the provided listener closure.
+     
+     - The function starts a listener using Firestore's addSnapshotListener. This listener observes changes to the specified Firestore collection in real-time.
+     - In case of an error during the retrieval of the data, the error is logged, and an empty array with the error is returned via the listener closure.
+     - If there’s no error but no valid querySnapshot was retrieved, a custom error is created and returned.
+     - The function checks whether the querySnapshot is empty or if no document changes are present. If so, it calls the listener with an empty array, meaning no changes have occurred.
+     - Otherwise, it retrieves the list of changes (documentChanges) from the snapshot and returns it via the listener closure.
+
+
+     
+     **Example:**
+     ```swift
+     self.listener = ListenersFB().listeCollectionChanges(collection: collectionRef) { [weak self] documentChange, error in
+     guard let self = self else { return }
+    
+     if let error = error {
+        print("Error listening to changes: \(error.localizedDescription)")
+        return
+     }
+    
+    for change in documentChange {
+        switch change.type {
+        case .added:
+            // Handle added document
+        case .modified:
+            // Handle modified document
+        case .removed:
+            // Handle removed document
+        }
+     }
+     ```
+     
+     - Parameters:
+        - collection:The Firestore collection that is being monitored for changes. A reference to a specific Firestore collection from which data is retrieved in real-time.
+        - listener: A closure that gets called each time changes occur in the collection.
+     
+     - Returns: Returns a ListenerRegistration object that represents the active Firestore listener. This object can be used to stop the listener when it's no longer needed. If no listener is registered, it returns nil.
+     
+     - Authors: Fabian Rodriguez
+     
+     - Version: 1.0
+     
+     - Date: October 2024
+     */
+    public func listeCollectionChanges(collection: CollectionReference, listener: @escaping ([DocumentChange], Error?) -> Void) -> ListenerRegistration? {
+        let firestoreListener = collection.addSnapshotListener { querySnapshot, error in
+            
+            if let error = error {
+                Logs.WriteCatchExeption(error: error)
+                listener([], error)
+                return
+            }
+            
+            guard let querySnapshot = querySnapshot else {
+                let error = Logs.createError(domain: .listenersFB,
+                                             code: 99,
+                                             description: "Could not get the query snapshot")
+                Logs.WriteCatchExeption(error: error)
+                listener([], error)
+                return
+            }
+            
+            if querySnapshot.isEmpty || querySnapshot.documentChanges.isEmpty {
+                listener([], nil)
+                return
+
+            }
+            
+            listener(querySnapshot.documentChanges, nil)
+        }
+        
+        return firestoreListener
+    }
+    
 }

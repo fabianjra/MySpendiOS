@@ -32,6 +32,7 @@ class ResumeViewModel: BaseViewModel {
         #endif
         
         performWithCurrentUser { currentUser in
+            self.model.userName = currentUser.displayName ?? ""
             
             let collectionRef = UtilsFB.userSubCollectionRef(.transactions, for: currentUser.uid)
             
