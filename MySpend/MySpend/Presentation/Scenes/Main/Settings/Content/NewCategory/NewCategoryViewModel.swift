@@ -10,6 +10,7 @@ import Foundation
 class NewCategoryViewModel: BaseViewModel {
     
     @Published var model = CategoryModel()
+    @Published var showIconsModal = false
     
     func addNewCategory() async -> ResponseModel {
         if model.name.isEmptyOrWhitespace() {

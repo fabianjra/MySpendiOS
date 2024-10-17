@@ -11,7 +11,7 @@ struct NewCategoryView: View {
     
     @Environment(\.dismiss) var dismiss
     
-    @StateObject var newCategoryVM = NewCategoryViewModel()
+    @StateObject var viewModel = NewCategoryViewModel()
     
     var body: some View {
         FormContainer {
@@ -28,7 +28,7 @@ struct NewCategoryView: View {
             // MARK: SEGMENT
             
             VStack {
-                PickerSegmented(selection: $newCategoryVM.model.categoryType,
+                PickerSegmented(selection: $viewModel.model.categoryType,
                                 segments: TransactionType.allCases)
                 .padding(.bottom)
             }
@@ -37,16 +37,18 @@ struct NewCategoryView: View {
             // MARK: TEXTFIELDS
             
             VStack {
-                TextFieldCategoryName(text: $newCategoryVM.model.name,
-                                      errorMessage: $newCategoryVM.errorMessage)
+                TextFieldCategoryName(text: $viewModel.model.name,
+                                      errorMessage: $viewModel.errorMessage)
                 .onSubmit { process() }
                 
-                //TODO: Change to sheet list (loading and showing icons).
-                TextField("", text: $newCategoryVM.model.icon,
-                          prompt: Text("Icon").foregroundColor(.textFieldPlaceholder))
-                .textFieldStyle(TextFieldIconStyle($newCategoryVM.model.icon,
-                                                   errorMessage: $newCategoryVM.errorMessage))
+
+                TextFieldReadOnly(placeHolder: "Icon",
+                                  text: $viewModel.model.icon,
+                                  colorDisabled: false)
                 .padding(.bottom)
+                .onTapGesture {
+                    viewModel.showIconsModal = true
+                }
             }
             
             
@@ -56,23 +58,67 @@ struct NewCategoryView: View {
                 Button("Accept") {
                     process()
                 }
-                .buttonStyle(ButtonPrimaryStyle(isLoading: $newCategoryVM.isLoading))
+                .buttonStyle(ButtonPrimaryStyle(isLoading: $viewModel.isLoading))
                 .padding(.vertical)
                 
 
-                TextError(message: newCategoryVM.errorMessage)
+                TextError(message: viewModel.errorMessage)
             }
         }
+        .sheet(isPresented: $viewModel.showIconsModal) {
+            modal
+        }
+    }
+    
+    var modal: some View {
+        NavigationStack {
+            ContentContainer(addPading: false) {
+                ListContainer {
+                    
+                    SectionContainer(header: "Food & Drink") {
+                        
+                        Button("Food") {
+                            viewModel.model.icon = "fork.knife"
+                            viewModel.showIconsModal = false
+                        }
+                        
+                        Button("Coffe") {
+                            viewModel.model.icon = "cup.and.saucer.fill"
+                            viewModel.showIconsModal = false
+                        }
+                    }
+                }
+            }
+            .toolbar {
+                ToolbarItem(placement: .destructiveAction) {
+                    Button {
+                        viewModel.showIconsModal = false
+                    } label: {
+                        Image.xmarkCircle
+                            .resizable()
+                            .frame(width: FrameSize.width.headerButton,
+                                   height: FrameSize.height.headerButton)
+                            .font(.montserrat(size: .bigXXL))
+                            .foregroundColor(Color.textPrimaryForeground)
+                            .fontWeight(.ultraLight)
+                    }
+                    .padding()
+                    .padding(.top)
+                }
+            }
+        }
+        .presentationCornerRadius(ConstantRadius.cornersModal)
+        .presentationDetents([.large])
     }
     
     private func process() {
         Task {
-            let result = await newCategoryVM.addNewCategory()
+            let result = await viewModel.addNewCategory()
             
             if result.status.isSuccess {
                 dismiss()
             } else {
-                newCategoryVM.errorMessage = result.message
+                viewModel.errorMessage = result.message
             }
         }
     }
