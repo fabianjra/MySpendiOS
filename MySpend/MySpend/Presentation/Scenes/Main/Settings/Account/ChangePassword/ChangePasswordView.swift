@@ -28,8 +28,7 @@ struct ChangePasswordView: View {
             VStack(spacing: ConstantViews.formSpacing) {
                 TextFieldPassword(placeHolder: "Current password",
                                   text: $changePasswordVM.model.userPassword,
-                                  errorMessage: $changePasswordVM.errorMessage,
-                                  iconLeading: Image.lockFill)
+                                  errorMessage: $changePasswordVM.errorMessage)
                 .textContentType(.password)
                 .focused($focusedField, equals: .userPassword)
                 .onSubmit { changePassword() }
@@ -37,8 +36,8 @@ struct ChangePasswordView: View {
                 
                 TextFieldPassword(placeHolder: "New password",
                                   text: $changePasswordVM.model.userNewPassword,
-                                  errorMessage: $changePasswordVM.errorMessage,
-                                  iconLeading: Image.checkmark)
+                                  iconLeading: Image.checkmark,
+                                  errorMessage: $changePasswordVM.errorMessage)
                 .textContentType(.newPassword)
                 .focused($focusedField, equals: .newPassword)
                 .onSubmit { changePassword() }
@@ -46,8 +45,8 @@ struct ChangePasswordView: View {
                 
                 TextFieldPassword(placeHolder: "Confirm new password",
                                   text: $changePasswordVM.model.userNewPasswordConfirm,
-                                  errorMessage: $changePasswordVM.errorMessage,
-                                  iconLeading: Image.checkmark)
+                                  iconLeading: Image.checkmark,
+                                  errorMessage: $changePasswordVM.errorMessage)
                 .padding(.bottom)
                 .textContentType(.newPassword)
                 .focused($focusedField, equals: .newPasswordConfirm)

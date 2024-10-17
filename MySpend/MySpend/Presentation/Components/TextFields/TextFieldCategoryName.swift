@@ -1,17 +1,17 @@
 //
-//  TextFieldName.swift
+//  TextFieldCategoryName.swift
 //  MySpend
 //
-//  Created by Fabian Rodriguez on 17/7/23.
+//  Created by Fabian Rodriguez on 17/10/24.
 //
 
 import SwiftUI
 
-struct TextFieldName: View {
+struct TextFieldCategoryName: View {
     
     var placeHolder: String = "Name"
     @Binding var text: String
-    var iconLeading: Image = Image.personFill
+    var iconLeading: Image? = nil
     
     @Binding var errorMessage: String
     
@@ -23,14 +23,13 @@ struct TextFieldName: View {
                                            iconLeading: iconLeading,
                                            textLimit: ConstantViews.textLimitName,
                                            errorMessage: $errorMessage))
-        .textContentType(.name)
         .keyboardType(.alphabet)
     }
 }
 
 #Preview {
     VStack {
-        TextFieldName(text: .constant(""),
+        TextFieldCategoryName(text: .constant(""),
                       errorMessage: .constant(""))
     }
     .padding()

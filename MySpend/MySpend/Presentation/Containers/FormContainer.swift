@@ -54,7 +54,6 @@ struct FormContainer<Content: View>: View {
                        errorMessage: .constant(""))
         
         TextFieldPassword(text: .constant(""),
-                          errorMessage: .constant(""),
-                          iconLeading: Image.lockFill)
+                          errorMessage: .constant(""))
     }
 }

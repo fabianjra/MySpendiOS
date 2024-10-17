@@ -9,25 +9,13 @@ import SwiftUI
 
 struct TextFieldPassword: View {
     
-    private let placeHolder: String
-    @Binding private var text: String
+    var placeHolder: String = "Password"
+    @Binding var text: String
+    var iconLeading: Image = Image.lockFill
     
-    @Binding private var errorMessage: String
-    private let iconLeading: Image
-    
-    init(placeHolder: String = "Password",
-         text: Binding<String>,
-         errorMessage: Binding<String>,
-         iconLeading: Image) {
-        
-        self.placeHolder = placeHolder
-        self._text = text
-        self._errorMessage = errorMessage
-        self.iconLeading = iconLeading
-    }
-    
+    @Binding var errorMessage: String
+
     var body: some View {
-        
         SecureField("", text: $text,
                     prompt: Text(placeHolder).foregroundColor(.textFieldPlaceholder))
         
@@ -46,8 +34,8 @@ struct TextFieldPassword: View {
 #Preview {
     VStack {
         TextFieldPassword(text: .constant(""),
-                          errorMessage: .constant(""),
-                          iconLeading: Image.lockFill)
+                          iconLeading: Image.lockFill,
+                          errorMessage: .constant(""))
     }
     .padding()
     .background(Color.backgroundBottom)

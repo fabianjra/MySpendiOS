@@ -9,16 +9,18 @@ import SwiftUI
 
 struct TextFieldEmail: View {
     
+    var placeHolder: String = "Email"
     @Binding var text: String
+    var iconLeading: Image = Image.envelopeFill
+    
     @Binding var errorMessage: String
     
     var body: some View {
-        TextField("",
-                  text: $text,
-                  prompt: Text("Email").foregroundColor(.textFieldPlaceholder))
+        TextField("",text: $text,
+                  prompt: Text(placeHolder).foregroundColor(.textFieldPlaceholder))
         
         .textFieldStyle(TextFieldIconStyle($text,
-                                           iconLeading: Image.envelopeFill,
+                                           iconLeading: iconLeading,
                                            textLimit: ConstantViews.textLimitEmail,
                                            errorMessage: $errorMessage))
         .autocapitalization(.none)

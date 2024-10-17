@@ -50,16 +50,10 @@ struct NewTransactionView: View {
                     
                     // MARK: TEXTFIELDS
                     VStack {
-                        TextField("", 
-                                  text: $viewModel.amountString,
-                                  prompt: Text("Amount").foregroundColor(.textFieldPlaceholder))
-                        .textFieldStyle(TextFieldIconStyle($viewModel.amountString,
-                                                           iconLeading: Image.dollar,
-                                                           textLimit: ConstantCurrency.amoutMaxLength,
-                                                           isAmout: true,
-                                                           errorMessage: $viewModel.errorMessage))
-                        .keyboardType(.decimalPad)
+                        TextFieldAmount(text: $viewModel.amountString,
+                                        errorMessage: $viewModel.errorMessage)
                         .focused($focusedField, equals: .amount)
+                        .onSubmit { process() }
                         
                         //TODO: Change to sheet list (loading and showing all categories).
                         TextField("", 
@@ -69,25 +63,18 @@ struct NewTransactionView: View {
                                                            iconLeading: Image.stackFill,
                                                            errorMessage: $viewModel.errorMessage))
                         .focused($focusedField, equals: .category)
-                        .onSubmit { process() }
                         
+                        TextFieldNotes(text: $viewModel.model.notes)
+                            .id(notesId)
+                            .focused($focusedField, equals: .notes)
+                            .padding(.bottom)
+                            .onSubmit { process() }
                         
-                        TextField("", 
-                                  text: $viewModel.model.notes,
-                                  prompt: Text("Notes").foregroundColor(.textFieldPlaceholder))
-                        .textFieldStyle(TextFieldIconStyle($viewModel.model.notes,
-                                                           errorMessage: $viewModel.errorMessage,
-                                                           showErrorIndicador: false))
-                        .id(notesId)
-                        .focused($focusedField, equals: .notes)
-                        .padding(.bottom)
-                        .onSubmit { process() }
                     }
                     .modifier(AddKeyboardToolbar(focusedField: $focusedField))
                     
                     
                     // MARK: BUTTONS
-                    
                     VStack {
                         Button("Accept") {
                             process()

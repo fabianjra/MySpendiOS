@@ -31,8 +31,7 @@ struct LoginView: View {
                 .onSubmit { login() }
                 
                 TextFieldPassword(text: $loginVM.login.password,
-                                  errorMessage: $loginVM.errorMessage,
-                                  iconLeading: Image.lockFill)
+                                  errorMessage: $loginVM.errorMessage)
                 .padding(.bottom)
                 .focused($focusedField, equals: .password)
                 .onSubmit { login() }

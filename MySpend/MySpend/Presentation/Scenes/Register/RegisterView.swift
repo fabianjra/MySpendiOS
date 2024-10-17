@@ -36,8 +36,7 @@ struct RegisterView: View {
                 
                 
                 TextFieldPassword(text: $viewModel.register.password,
-                                  errorMessage: $viewModel.errorMessage,
-                                  iconLeading: Image.lockFill)
+                                  errorMessage: $viewModel.errorMessage)
                 .textContentType(.newPassword)
                 .focused($focusedField, equals: .password)
                 .onSubmit { registerNewUser() }
@@ -45,8 +44,8 @@ struct RegisterView: View {
                 
                 TextFieldPassword(placeHolder: "Confirm password",
                                   text: $viewModel.register.passwordConfirm,
-                                  errorMessage: $viewModel.errorMessage,
-                                  iconLeading: Image.checkmark)
+                                  iconLeading: Image.checkmark,
+                                  errorMessage: $viewModel.errorMessage)
                 .padding(.bottom)
                 .textContentType(.newPassword)
                 .focused($focusedField, equals: .passwordConfirm)

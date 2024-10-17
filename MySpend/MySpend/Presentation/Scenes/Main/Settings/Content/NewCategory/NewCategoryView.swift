@@ -37,13 +37,11 @@ struct NewCategoryView: View {
             // MARK: TEXTFIELDS
             
             VStack {
-                TextField("", text: $newCategoryVM.model.name,
-                          prompt: Text("Name").foregroundColor(.textFieldPlaceholder))
-                .textFieldStyle(TextFieldIconStyle($newCategoryVM.model.name,
-                                                   errorMessage: $newCategoryVM.errorMessage))
-                .keyboardType(.alphabet)
+                TextFieldCategoryName(text: $newCategoryVM.model.name,
+                                      errorMessage: $newCategoryVM.errorMessage)
                 .onSubmit { process() }
                 
+                //TODO: Change to sheet list (loading and showing icons).
                 TextField("", text: $newCategoryVM.model.icon,
                           prompt: Text("Icon").foregroundColor(.textFieldPlaceholder))
                 .textFieldStyle(TextFieldIconStyle($newCategoryVM.model.icon,

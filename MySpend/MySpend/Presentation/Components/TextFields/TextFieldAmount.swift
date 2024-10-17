@@ -1,37 +1,37 @@
 //
-//  TextFieldName.swift
+//  TextFieldAmount.swift
 //  MySpend
 //
-//  Created by Fabian Rodriguez on 17/7/23.
+//  Created by Fabian Rodriguez on 17/10/24.
 //
 
 import SwiftUI
 
-struct TextFieldName: View {
+struct TextFieldAmount: View {
     
-    var placeHolder: String = "Name"
+    var placeHolder: String = "Amount"
     @Binding var text: String
-    var iconLeading: Image = Image.personFill
+    var iconLeading: Image = Image.dollar
     
     @Binding var errorMessage: String
     
     var body: some View {
-        TextField("", text: $text,
+        TextField("",text: $text,
                   prompt: Text(placeHolder).foregroundColor(.textFieldPlaceholder))
         
         .textFieldStyle(TextFieldIconStyle($text,
                                            iconLeading: iconLeading,
-                                           textLimit: ConstantViews.textLimitName,
+                                           textLimit: ConstantCurrency.amoutMaxLength,
+                                           isAmout: true,
                                            errorMessage: $errorMessage))
-        .textContentType(.name)
-        .keyboardType(.alphabet)
+        .keyboardType(.decimalPad)
     }
 }
 
 #Preview {
     VStack {
-        TextFieldName(text: .constant(""),
-                      errorMessage: .constant(""))
+        TextFieldAmount(text: .constant(""),
+                       errorMessage: .constant(""))
     }
     .padding()
     .background(Color.backgroundBottom)
