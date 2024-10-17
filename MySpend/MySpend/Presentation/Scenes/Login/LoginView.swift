@@ -79,15 +79,29 @@ struct LoginView: View {
                     .font(.montserrat())
                 
                 HStack {
-                    //TODO: Add button for social networks
-                    Image.envelopeFill
+                    Image("apple")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: FrameSize.width.socialNetwork,
+                               height: FrameSize.height.socialNetwork)
                         .padding()
+                        .shadow(radius: ConstantRadius.shadow)
                     
-                    Image.lockFill
+                    Image("facebook")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: FrameSize.width.socialNetwork,
+                               height: FrameSize.height.socialNetwork)
                         .padding()
+                        .shadow(radius: ConstantRadius.shadow)
                     
-                    Image.envelopeFill
+                    Image("google")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: FrameSize.width.socialNetwork,
+                               height: FrameSize.height.socialNetwork)
                         .padding()
+                        .shadow(radius: ConstantRadius.shadow)
                 }
             }
             .padding(.bottom)

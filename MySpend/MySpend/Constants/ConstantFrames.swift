@@ -46,6 +46,13 @@ public enum FrameSize {
         }
     }
     
+    var socialNetwork: CGFloat {
+        switch self {
+        case .width: return 50.0
+        case .height: return 50.0
+        }
+    }
+    
     var checkMarkIcon: CGFloat {
         switch self {
         case .width: return 100.0
