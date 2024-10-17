@@ -35,7 +35,7 @@ class ResumeViewModel: BaseViewModel {
             
             let collectionRef = UtilsFB.userSubCollectionRef(.transactions, for: currentUser.uid)
             
-            self.listener = ListenersFB().listenCollectionChanges(collection: collectionRef) { [weak self] documentsSnapshot, error in
+            self.listener = ListenersFB().listenCollection(collection: collectionRef) { [weak self] documentsSnapshot, error in
                 
                 guard let self = self else {
                     Logs.WriteMessage("Guard evito crear el listener ya que no se logro obtener self")

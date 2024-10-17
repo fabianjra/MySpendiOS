@@ -7,7 +7,7 @@
 
 import FirebaseFirestore
 
-struct ListenersFB {
+public struct ListenersFB {
     
     /**
      addSnapshotListener: Este método de Firestore agrega un listener a un documento, lo que significa que se ejecutará cada vez que ese documento cambie.
@@ -30,7 +30,7 @@ struct ListenersFB {
      
      func startListeningForCategoryChanges() {
         do {
-            listener = try DatabaseStore.listenUserChanges { [weak self] userLoaded in
+            listener = try ListenersFB.listenDocument { [weak self] userLoaded in
             self?.categories = userLoaded
             }
         } catch {
@@ -56,7 +56,7 @@ struct ListenersFB {
      
      - Date: Aug 2024
      */
-    public func listenDocumentChanges<T: Decodable>(forModel modelType: T.Type, document: DocumentReference, listener: @escaping (T?) -> Void) throws -> ListenerRegistration? {
+    public func listenDocument<T: Decodable>(forModel modelType: T.Type, document: DocumentReference, listener: @escaping (T?) -> Void) throws -> ListenerRegistration? {
         var throwableError: Error?
         
         let firestoreListener = document.addSnapshotListener { documentSnapshot, error in
@@ -111,7 +111,7 @@ struct ListenersFB {
      
      func startListeningForCategoryChanges() {
         do {
-            listener = ListenersFB().listenCollectionChanges(collection: collectionRef) { [weak self] documentsSnapshots, error in
+            listener = ListenersFB().listenCollection(collection: collectionRef) { [weak self] documentsSnapshots, error in
             
             categories = documentsSnapshots.compactMap { documentSnapshot in
                 let data = documentSnapshot.data()
@@ -150,7 +150,7 @@ struct ListenersFB {
      
      - Date: October 2024
      */
-    public func listenCollectionChanges(collection: CollectionReference, listener: @escaping ([DocumentSnapshot], Error?) -> Void) -> ListenerRegistration? {
+    public func listenCollection(collection: CollectionReference, listener: @escaping ([DocumentSnapshot], Error?) -> Void) -> ListenerRegistration? {
         let firestoreListener = collection.addSnapshotListener { querySnapshot, error in
             if let error = error {
                 Logs.WriteCatchExeption(error: error)
@@ -172,6 +172,4 @@ struct ListenersFB {
         
         return firestoreListener
     }
-    
-    
 }

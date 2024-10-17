@@ -31,7 +31,7 @@ class CategoriesViewModel: BaseViewModel {
             
             let collectionRef = UtilsFB.userSubCollectionRef(.categories, for: currentUser.uid)
             
-            self.listener = ListenersFB().listenCollectionChanges(collection: collectionRef) { [weak self] documentsSnapshots, error in
+            self.listener = ListenersFB().listenCollection(collection: collectionRef) { [weak self] documentsSnapshots, error in
                 
                 guard let self = self else {
                     Logs.WriteMessage("Guard evito crear el listener ya que no se logro obtener self")
