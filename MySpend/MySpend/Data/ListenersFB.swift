@@ -5,7 +5,6 @@
 //  Created by Fabian Rodriguez on 25/9/24.
 //
 
-import Firebase
 import FirebaseFirestore
 
 struct ListenersFB {
@@ -30,22 +29,22 @@ struct ListenersFB {
      private var listener: ListenerRegistration?
      
      func startListeningForCategoryChanges() {
-     do {
-     listener = try DatabaseStore.listenUserChanges { [weak self] userLoaded in
-     self?.categories = userLoaded
-     }
-     } catch {
-     errorMessage = error.localizedDescription
-     }
+        do {
+            listener = try DatabaseStore.listenUserChanges { [weak self] userLoaded in
+            self?.categories = userLoaded
+            }
+        } catch {
+            errorMessage = error.localizedDescription
+        }
      }
      
      deinit {
-     listener?.remove()
+        listener?.remove()
      }
      ```
      
      - Parameters:
-     - listener:Closure que devulve el data obtenido del addSnapshotListener.
+        - listener:Closure que devulve el data obtenido del addSnapshotListener.
      
      - Returns: ListenerRegistration opcional (propiedad de Firebase)
      
@@ -97,7 +96,60 @@ struct ListenersFB {
         return firestoreListener
     }
     
-    
+    /**
+     This function listens for changes in a Firestore collection and passes the resulting documents and errors (if any) to the provided closure.
+     It does not need to throw an error because the error handling is managed internally.
+     In case of any error during the listening process, the error is logged and passed to the closure, while an empty list of documents is returned.
+     
+     The function uses addSnapshotListener to asynchronously listen for changes in a Firestore collection.
+     When a change occurs (or when the initial data is fetched), the listener is triggered, providing either the documents or an error, depending on the result.
+     Errors are handled internally and propagated through the listener closure, avoiding the need for throwing errors.
+     
+     **Example:**
+     ```swift
+     private var listener: ListenerRegistration?
+     
+     func startListeningForCategoryChanges() {
+        do {
+            listener = ListenersFB().listenCollectionChanges(collection: collectionRef) { [weak self] documentsSnapshots, error in
+            
+            categories = documentsSnapshots.compactMap { documentSnapshot in
+                let data = documentSnapshot.data()
+            
+                if let data = data {
+                    let decodedModel = try? UtilsFB.decodeModelFB(data: data, forModel: CategoryModel.self)
+                    
+                    if var decodedModel = decodedModel {
+                        decodedModel.id = documentSnapshot.documentID
+                        return decodedModel
+                    }
+                }
+                
+                Logs.WriteMessage("Error al decodificar el documento y pasarlo al Modelo")
+                return nil
+            }
+        } catch {
+        errorMessage = error.localizedDescription
+        }
+     }
+     
+     deinit {
+        listener?.remove()
+     }
+     ```
+     
+     - Parameters:
+        - collection:A CollectionReference that points to the Firestore collection you want to observe.
+        - listener: A closure that receives two parameters: 1: An array of DocumentSnapshot representing the documents in the collection. 2: An Error? that will be nil if no error occurred or will contain an error object if something went wrong during the snapshot retrieval.
+     
+     - Returns: Returns a ListenerRegistration? object that represents the Firestore listener. You can use this object to stop listening for changes by calling its remove() method.
+     
+     - Authors: Fabian Rodriguez
+     
+     - Version: 1.0
+     
+     - Date: October 2024
+     */
     public func listenCollectionChanges(collection: CollectionReference, listener: @escaping ([DocumentSnapshot], Error?) -> Void) -> ListenerRegistration? {
         let firestoreListener = collection.addSnapshotListener { querySnapshot, error in
             if let error = error {
