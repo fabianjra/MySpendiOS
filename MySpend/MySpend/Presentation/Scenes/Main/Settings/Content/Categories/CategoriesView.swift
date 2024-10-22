@@ -30,8 +30,8 @@ struct CategoriesView: View {
                             
                             if let image = icon {
                                 image
-                                    .frame(width: FrameSize.width.navIconCategoryList,
-                                           height: FrameSize.height.navIconCategoryList)
+                                    .frame(width: FrameSize.width.iconCategoryList,
+                                           height: FrameSize.height.iconCategoryList)
                             }
                             
                             Text(category.name)

@@ -32,7 +32,7 @@ public enum FrameSize {
         }
     }
     
-    var navIconCategoryList: CGFloat {
+    var iconCategoryList: CGFloat {
         switch self {
         case .width: return 20.0
         case .height: return 20.0
@@ -64,6 +64,13 @@ public enum FrameSize {
         switch self {
         case .width: return 100.0
         case .height: return 100.0
+        }
+    }
+    
+    var iconSelect: CGFloat {
+        switch self {
+        case .width: return 50.0
+        case .height: return 50.0
         }
     }
 }

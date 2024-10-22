@@ -41,11 +41,31 @@ struct NewCategoryView: View {
                                       errorMessage: $viewModel.errorMessage)
                 .onSubmit { process() }
                 
-
-                TextFieldReadOnly(placeHolder: "Icon",
-                                  text: $viewModel.model.icon,
-                                  colorDisabled: false)
-                .padding(.bottom)
+                //TODO: Agregar estilo rectangular con icono de eliminar el icono elegido.
+                HStack {
+                    TextPlain(message: "Icon:", size: .big)
+                    
+                    Image(systemName: viewModel.model.icon)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: FrameSize.width.iconSelect,
+                               height: FrameSize.height.iconSelect)
+                        .padding()
+                    
+                    Button {
+                        viewModel.model.icon = ""
+                    } label: {
+                        Image.xmarkCircle
+                            .resizable()
+                            .frame(width: FrameSize.width.headerButton,
+                                   height: FrameSize.height.headerButton)
+                            .font(.montserrat(size: .bigXXL))
+                            .foregroundColor(Color.textPrimaryForeground)
+                            .fontWeight(.ultraLight)
+                    }
+                    .padding()
+                    .padding(.top)
+                }
                 .onTapGesture {
                     viewModel.showIconsModal = true
                 }
@@ -73,21 +93,23 @@ struct NewCategoryView: View {
     var modal: some View {
         NavigationStack {
             ContentContainer(addPading: false) {
-                ListContainer {
-                    
-                    SectionContainer(header: "Food & Drink") {
-                        
-                        Button("Food") {
-                            viewModel.model.icon = "fork.knife"
-                            viewModel.showIconsModal = false
-                        }
-                        
-                        Button("Coffe") {
-                            viewModel.model.icon = "cup.and.saucer.fill"
-                            viewModel.showIconsModal = false
-                        }
-                    }
+                
+                NewCategoryModalContent(header: "Bills", arrayIcons: ConstantIcons.BillsFill) { icon in
+                    selectIcon(icon)
                 }
+                .padding(.bottom)
+                
+                NewCategoryModalContent(header: "Food and Drink", arrayIcons: ConstantIcons.FoodDrinkFill) { icon in
+                    selectIcon(icon)
+                }
+                .padding(.top)
+                .padding(.bottom)
+                
+                NewCategoryModalContent(header: "Household", arrayIcons: ConstantIcons.HouseholdFill) { icon in
+                    selectIcon(icon)
+                }
+                .padding(.top)
+                .padding(.bottom)
             }
             .toolbar {
                 ToolbarItem(placement: .destructiveAction) {
@@ -111,6 +133,11 @@ struct NewCategoryView: View {
         .presentationDetents([.large])
     }
     
+    private func selectIcon(_ icon: String) {
+        viewModel.model.icon = icon
+        viewModel.showIconsModal = false
+    }
+    
     private func process() {
         Task {
             let result = await viewModel.addNewCategory()
@@ -124,6 +151,6 @@ struct NewCategoryView: View {
     }
 }
 
-#Preview {
+#Preview("Add new category") {
     NewCategoryView()
 }

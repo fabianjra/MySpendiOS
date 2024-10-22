@@ -9,7 +9,7 @@ import Foundation
 
 struct CategoryModel: Identifiable, Codable, Equatable  {
     var id: String = ""
-    var icon: String = ""
+    var icon: String = ConstantIcons.defaultIcon
     var name: String = ""
     var categoryType: TransactionType = .expense
     

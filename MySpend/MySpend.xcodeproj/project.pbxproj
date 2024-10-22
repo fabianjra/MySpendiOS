@@ -107,6 +107,9 @@
 		1FB8BB9B2A5BB1E4002DED1F /* RoundedCornersShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB8BB9A2A5BB1E4002DED1F /* RoundedCornersShape.swift */; };
 		1FB8BB9D2A5BC728002DED1F /* ConstantColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB8BB9C2A5BC728002DED1F /* ConstantColors.swift */; };
 		1FBAFA5E2CA5103300C09470 /* LoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBAFA5D2CA5103300C09470 /* LoaderView.swift */; };
+		1FC0F4AF2CC7460E00EC576A /* ConstantIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC0F4AE2CC7460400EC576A /* ConstantIcons.swift */; };
+		1FC0F4B32CC7565400EC576A /* NewCategoryModalContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC0F4B22CC7564F00EC576A /* NewCategoryModalContent.swift */; };
+		1FC0F4B52CC75A8700EC576A /* TextFieldCategoryIconStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC0F4B42CC75A7D00EC576A /* TextFieldCategoryIconStyle.swift */; };
 		1FC2E6732C5DC567007EA785 /* NewTransactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC2E6722C5DC567007EA785 /* NewTransactionViewModel.swift */; };
 		1FC36BA82C816B24002EF932 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 1FC36BA72C816B24002EF932 /* FirebaseStorage */; };
 		1FC36BAA2C816BFF002EF932 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 1FC36BA92C816BFF002EF932 /* FirebaseFirestore */; };
@@ -257,6 +260,9 @@
 		1FB8BB9A2A5BB1E4002DED1F /* RoundedCornersShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCornersShape.swift; sourceTree = "<group>"; };
 		1FB8BB9C2A5BC728002DED1F /* ConstantColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantColors.swift; sourceTree = "<group>"; };
 		1FBAFA5D2CA5103300C09470 /* LoaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoaderView.swift; sourceTree = "<group>"; };
+		1FC0F4AE2CC7460400EC576A /* ConstantIcons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantIcons.swift; sourceTree = "<group>"; };
+		1FC0F4B22CC7564F00EC576A /* NewCategoryModalContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCategoryModalContent.swift; sourceTree = "<group>"; };
+		1FC0F4B42CC75A7D00EC576A /* TextFieldCategoryIconStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldCategoryIconStyle.swift; sourceTree = "<group>"; };
 		1FC2E6722C5DC567007EA785 /* NewTransactionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTransactionViewModel.swift; sourceTree = "<group>"; };
 		1FC36BAB2C816F44002EF932 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		1FC94CBB2A5A1DB7005CA0B6 /* TextButtonPrimaryStyled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextButtonPrimaryStyled.swift; sourceTree = "<group>"; };
@@ -344,6 +350,7 @@
 			isa = PBXGroup;
 			children = (
 				1F19D9632A4A583800137EA0 /* TextFieldIconStyle.swift */,
+				1FC0F4B42CC75A7D00EC576A /* TextFieldCategoryIconStyle.swift */,
 			);
 			path = Styles;
 			sourceTree = "<group>";
@@ -633,6 +640,7 @@
 			children = (
 				1FAA87DD2C69A01000700CD6 /* NewCategoryView.swift */,
 				1FAA87DB2C69A00500700CD6 /* NewCategoryViewModel.swift */,
+				1FC0F4B22CC7564F00EC576A /* NewCategoryModalContent.swift */,
 			);
 			path = NewCategory;
 			sourceTree = "<group>";
@@ -761,6 +769,7 @@
 		1FE7C67F2A47DA0B0070B988 /* Constants */ = {
 			isa = PBXGroup;
 			children = (
+				1FC0F4AE2CC7460400EC576A /* ConstantIcons.swift */,
 				1FE7C6822A47DDF40070B988 /* ConstantRadius.swift */,
 				1F19D9652A4A764B00137EA0 /* ConstantFrames.swift */,
 				1F19D9672A4A7A7000137EA0 /* ConstantViews.swift */,
@@ -981,6 +990,7 @@
 				1F46B4122A79885D003A9550 /* ConstantValidations.swift in Sources */,
 				1F312FE22C928E2000D2E866 /* ConstantCurrency.swift in Sources */,
 				1FB8BB992A5BB181002DED1F /* SemiCircleShape.swift in Sources */,
+				1FC0F4B52CC75A8700EC576A /* TextFieldCategoryIconStyle.swift in Sources */,
 				1F0641482A72280500C19084 /* ValidateAccountView.swift in Sources */,
 				1F20E7762CC1BE890061CDB8 /* TextFieldNotes.swift in Sources */,
 				1F4C9B5B2C5C847100C403B3 /* UtilsFB.swift in Sources */,
@@ -1055,9 +1065,11 @@
 				1F697E082C5B3C22009529EF /* ResponseModel.swift in Sources */,
 				1FA08EE42C5D99480019000B /* RegisterViewModel.swift in Sources */,
 				1F501D9A2C8E8253008D4085 /* CaseIterable+Extensions.swift in Sources */,
+				1FC0F4AF2CC7460E00EC576A /* ConstantIcons.swift in Sources */,
 				1F64B0AD2A70D647004AC825 /* TextFieldReadOnly.swift in Sources */,
 				1F9462EB2A7B4D8200F5CBFB /* HeaderNavigator.swift in Sources */,
 				1FF6205C2CA4FE730031F416 /* CategoriesDatabase.swift in Sources */,
+				1FC0F4B32CC7565400EC576A /* NewCategoryModalContent.swift in Sources */,
 				1F06414D2A7232D300C19084 /* RootView.swift in Sources */,
 				1F7486C32A6A3F770063AC35 /* ButtonRounded.swift in Sources */,
 				1F222F5E2C65DD080017A1BE /* ResumeViewModel.swift in Sources */,
