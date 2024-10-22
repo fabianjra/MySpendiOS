@@ -73,4 +73,11 @@ public enum FrameSize {
         case .height: return 50.0
         }
     }
+    
+    var iconShowcase: CGFloat {
+        switch self {
+        case .width: return 30.0
+        case .height: return 30.0
+        }
+    }
 }

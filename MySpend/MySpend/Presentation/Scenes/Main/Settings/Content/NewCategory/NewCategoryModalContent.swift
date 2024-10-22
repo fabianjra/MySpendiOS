@@ -27,6 +27,10 @@ struct NewCategoryModalContent: View {
                             action(icon)
                         } label: {
                             Image(systemName: icon)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: FrameSize.width.iconShowcase,
+                                       height: FrameSize.height.iconShowcase)
                                 .tint(Color.textPrimaryForeground)
                         }
                     }
