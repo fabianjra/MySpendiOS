@@ -9,7 +9,7 @@ import Foundation
 
 struct CategoryModel: Identifiable, Codable, Equatable  {
     var id: String = ""
-    var icon: String = Icons.defaultIcon.rawValue
+    var icon: String = Icons.household.list.first ?? "tag.fill"
     var name: String = ""
     var categoryType: TransactionType = .expense
     

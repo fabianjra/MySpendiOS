@@ -6,14 +6,12 @@
 //
 
 public enum Icons: String, CaseIterable {
-    case defaultIcon = "tag.fill"
     case bills = "Bills"
     case foodAndDrink = "Food and Drink"
     case household = "Household"
     
     var list: [String] {
         switch self {
-        case .defaultIcon: return []
         case .bills:
             return [
                 "lightbulb.fill", "spigot.fill", "house.fill", "play.tv.fill", "tv.badge.wifi.fill",
@@ -29,7 +27,7 @@ public enum Icons: String, CaseIterable {
             ]
         case .household:
             return [
-                "house.fill", "tag.fill", "creditcard.fill", "banknote.fill", "wallet.pass.fill",
+                "tag.fill", "house.fill", "creditcard.fill", "banknote.fill", "wallet.pass.fill",
                 "bag.fill", "gym.bag.fill", "handbag.fill", "person.fill", "figure.arms.open",
                 "figure.2.arms.open", "figure.2.and.child.holdinghands", "figure.and.child.holdinghands",
                 "envelope.fill", "paperclip", "list.clipboard.fill"
