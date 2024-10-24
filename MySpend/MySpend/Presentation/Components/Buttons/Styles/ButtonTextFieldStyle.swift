@@ -21,8 +21,8 @@ struct ButtonTextFieldStyle: ButtonStyle {
                 Image(systemName: icon)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: FrameSize.width.iconShowcase,
-                           height: FrameSize.height.iconShowcase)
+                    .frame(width: FrameSize.width.iconInsideTextField,
+                           height: FrameSize.height.iconInsideTextField)
                     .foregroundColor(Color.textFieldForeground)
             } else {
                 TextPlain(message: "No selected",
@@ -35,8 +35,8 @@ struct ButtonTextFieldStyle: ButtonStyle {
                 Image.xmarkCircleFIll
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: FrameSize.width.iconShowcase,
-                           height: FrameSize.height.iconShowcase)
+                    .frame(width: FrameSize.width.iconInsideTextField,
+                           height: FrameSize.height.iconInsideTextField)
                     .foregroundColor(Color.textFieldPlaceholder)
                     .padding(.trailing)
                     .onTapGesture {
@@ -65,7 +65,7 @@ struct ButtonTextFieldStyle: ButtonStyle {
         Button("Icon:") {
             print("button pressed")
         }
-        .buttonStyle(ButtonTextFieldStyle(icon: "envelope") {})
+        .buttonStyle(ButtonTextFieldStyle(icon: "envelope.fill") {})
         //.disabled(true)
         
         Button("No icon") {

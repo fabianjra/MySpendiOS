@@ -22,7 +22,7 @@ struct NewCategoryView: View {
                             subTitle: "Enter the new category details",
                             showLeadingAction: false,
                             showTrailingAction: true) { dismiss() }
-            .padding(.vertical)
+                .padding(.vertical)
             
             
             // MARK: SEGMENT
@@ -44,8 +44,8 @@ struct NewCategoryView: View {
                     viewModel.showIconsModal = true
                 }
                 .buttonStyle(ButtonTextFieldStyle(icon: viewModel.model.icon, actionClear: {
-                        viewModel.model.icon = ""
-                    }))
+                    viewModel.model.icon = ""
+                }))
             }
             
             
@@ -57,7 +57,7 @@ struct NewCategoryView: View {
                 .buttonStyle(ButtonPrimaryStyle(isLoading: $viewModel.isLoading))
                 .padding(.vertical)
                 
-
+                
                 TextError(message: viewModel.errorMessage)
             }
         }
@@ -68,11 +68,12 @@ struct NewCategoryView: View {
     
     var modal: some View {
         NavigationStack {
-            ContentContainer(addPading: false) {
+            FormContainer(addPading: false, scrollable: true, showsIndicators: false, backgroundCenter: .center) {
                 
                 NewCategoryModalContent(header: "Bills", arrayIcons: ConstantIcons.BillsFill) { icon in
                     selectIcon(icon)
                 }
+                .padding(.top)
                 .padding(.bottom)
                 
                 NewCategoryModalContent(header: "Food and Drink", arrayIcons: ConstantIcons.FoodDrinkFill) { icon in
@@ -104,6 +105,17 @@ struct NewCategoryView: View {
                     .padding(.top)
                 }
             }
+            .toolbarBackground(.hidden, for: .navigationBar)
+            .overlay(
+                Rectangle()
+                    .fill(Color.backgroundFormDark)
+                    .frame(height: ConstantFrames.toolbarNavigationBarHeight)
+                    .edgesIgnoringSafeArea(.top)
+                    .shadow(color: Color.backgroundFormDark.opacity(ConstantColors.opacityToolbarNavigationBar),
+                            radius: ConstantRadius.shadow,
+                            y: ConstantRadius.shadowToolbarNavigationBarY)
+                , alignment: .top
+            )
         }
         .presentationCornerRadius(ConstantRadius.cornersModal)
         .presentationDetents([.large])

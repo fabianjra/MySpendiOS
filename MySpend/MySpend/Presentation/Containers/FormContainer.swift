@@ -9,20 +9,26 @@ import SwiftUI
 
 struct FormContainer<Content: View>: View {
     
-    let addPading: Bool
-    let scrollable: Bool
-    let showsIndicators: Bool
+    private let addPading: Bool
+    private let scrollable: Bool
+    private let showsIndicators: Bool
+    private let backgroundColor: Array<Color>
+    private let backgroundCenter: UnitPoint
     
     var content: () -> Content
     
     init(addPading: Bool = true,
          scrollable: Bool = false,
          showsIndicators: Bool = false,
+         backgroundColor: Array<Color> = [Color.backgroundFormLight, Color.backgroundFormDark],
+         backgroundCenter: UnitPoint = .top,
          @ViewBuilder content: @escaping () -> Content) {
         
         self.scrollable = scrollable
         self.showsIndicators = showsIndicators
         self.addPading = addPading
+        self.backgroundColor = backgroundColor
+        self.backgroundCenter = backgroundCenter
         self.content = content
     }
     
@@ -33,9 +39,8 @@ struct FormContainer<Content: View>: View {
         }
         .scrollDisabled(!scrollable)
         
-        .background(RadialGradient(colors: [Color.backgroundFormLight,
-                                            Color.backgroundFormDark],
-                                   center: .top,
+        .background(RadialGradient(colors: backgroundColor,
+                                   center: backgroundCenter,
                                    startRadius: .zero,
                                    endRadius: ConstantColors.endRadiusBackground))
     }

@@ -13,6 +13,7 @@ public struct ConstantFrames {
     static let screenSize = UIScreen.main.bounds.size
     static let tabViewHeight: CGFloat = 75.0
     static let calendarHeight: CGFloat = 440.0
+    static let toolbarNavigationBarHeight: CGFloat = 55.0
     
     // MARK: IMAGES
     static let emojiSize: CGFloat = 50.0
@@ -36,51 +37,34 @@ public enum FrameSize {
     }
     
     var iconCategoryList: CGFloat {
-        switch self {
-        case .width: return 20.0
-        case .height: return 20.0
-        }
+        return 20.0
     }
-    
+
     var tabViewIcon: CGFloat {
-        switch self {
-        case .width: return 25.0
-        case .height: return 25.0
-        }
+        return 25.0
     }
-    
+
     var socialNetwork: CGFloat {
-        switch self {
-        case .width: return 50.0
-        case .height: return 50.0
-        }
+        return 50.0
     }
     
     var checkMarkIcon: CGFloat {
-        switch self {
-        case .width: return 100.0
-        case .height: return 100.0
-        }
+        return 100.0
     }
     
     var loaderFullScreen: CGFloat {
-        switch self {
-        case .width: return 100.0
-        case .height: return 100.0
-        }
+        return 100.0
     }
-    
+
     var iconSelect: CGFloat {
-        switch self {
-        case .width: return 50.0
-        case .height: return 50.0
-        }
+        return 50.0
+    }
+
+    var iconShowcase: CGFloat {
+        return 30.0
     }
     
-    var iconShowcase: CGFloat {
-        switch self {
-        case .width: return 30.0
-        case .height: return 30.0
-        }
+    var iconInsideTextField: CGFloat {
+        return 25.0
     }
 }
