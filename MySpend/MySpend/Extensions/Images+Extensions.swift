@@ -41,13 +41,18 @@ extension Image {
     static let listBulletClipboard = Image(systemName: "list.bullet.clipboard") // Categories
     static let listBulletClipboardFill = Image(systemName: "list.bullet.clipboard.fill")
     
-    // MARK: NAVIGATION
+    // MARK: ARROWS
+    static let arrowUp = Image(systemName: "arrow.up") //
     static let arrowRight = Image(systemName: "arrow.right") // ->
     static let arrowBackward = Image(systemName: "arrow.backward") // <-
+    
+    // MARK: CHEVRON
     static let chevronLeft = Image(systemName: "chevron.left") // <
     static let chevronRight = Image(systemName: "chevron.right") // <
     static let chevronUp = Image(systemName: "chevron.up")
     static let chevronDown = Image(systemName: "chevron.down")
+    
+    // MARK: XMARK
     static let xmarkCircle = Image(systemName: "xmark.circle")
     static let xmarkCircleFIll = Image(systemName: "xmark.circle.fill")
     

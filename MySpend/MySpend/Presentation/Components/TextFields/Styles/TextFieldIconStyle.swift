@@ -152,6 +152,7 @@ struct TextFieldIconStyle: TextFieldStyle {
                         endPoint: .trailing), lineWidth: ConstantShapes.textFieldLineWidth)
             }
         }
+        .frame(maxWidth: ConstantFrames.iPadMaxWidth)
     }
 }
 

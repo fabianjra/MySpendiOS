@@ -68,6 +68,7 @@ struct LoginView: View {
                     DividerView()
                 }
             }
+            .frame(maxWidth: ConstantFrames.iPadMaxWidth)
             .padding(.bottom)
             
             

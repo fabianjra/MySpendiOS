@@ -9,20 +9,10 @@ import SwiftUI
 
 struct ButtonHorizontalStyle: ButtonStyle {
     
-    @Environment(\.isEnabled) private var isEnabled: Bool
-    
-    private let subTitle: String
-    private let color: Array<Color>
-    private let iconLeading: Image?
-    
-    init(color: Array<Color> = Color.secondaryGradiant,
-         subTitle: String = "",
-         iconLeading: Image? = nil) {
-        self.subTitle = subTitle
-        self.color = color
-        self.iconLeading = iconLeading
-    }
-    
+    var subTitle: String = ""
+    var color: Array<Color> = Color.secondaryGradiant
+    var iconLeading: Image? = nil
+
     func makeBody(configuration: Configuration) -> some View {
         HStack {
             
@@ -64,7 +54,7 @@ struct ButtonHorizontalStyle: ButtonStyle {
         .padding(.leading)
         
         // MARK: SHAPE
-        .frame(maxWidth: .infinity)
+        .frame(maxWidth: ConstantFrames.iPadMaxWidth)
         .padding(.vertical)
         .background(LinearGradient(colors: color,
                                    startPoint: .top,

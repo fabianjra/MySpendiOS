@@ -89,6 +89,7 @@
 		1F7486C92A6A5DC90063AC35 /* ButtonScaleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7486C82A6A5DC90063AC35 /* ButtonScaleStyle.swift */; };
 		1F7486CB2A6F72D20063AC35 /* TabViewButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7486CA2A6F72D20063AC35 /* TabViewButton.swift */; };
 		1F7B0B662CA7240200FD30D5 /* UserDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7B0B652CA723FF00FD30D5 /* UserDatabase.swift */; };
+		1F7F86AA2CC9DE5500AF854E /* ButtonTextFieldStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7F86A92CC9DE5500AF854E /* ButtonTextFieldStyle.swift */; };
 		1F9462EB2A7B4D8200F5CBFB /* HeaderNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9462EA2A7B4D8200F5CBFB /* HeaderNavigator.swift */; };
 		1F9462EE2A7B54EC00F5CBFB /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9462ED2A7B54EC00F5CBFB /* Loader.swift */; };
 		1F9F16D42AFC926D003CB599 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9F16D32AFC926D003CB599 /* UserModel.swift */; };
@@ -109,7 +110,6 @@
 		1FBAFA5E2CA5103300C09470 /* LoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBAFA5D2CA5103300C09470 /* LoaderView.swift */; };
 		1FC0F4AF2CC7460E00EC576A /* ConstantIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC0F4AE2CC7460400EC576A /* ConstantIcons.swift */; };
 		1FC0F4B32CC7565400EC576A /* NewCategoryModalContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC0F4B22CC7564F00EC576A /* NewCategoryModalContent.swift */; };
-		1FC0F4B52CC75A8700EC576A /* TextFieldCategoryIconStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC0F4B42CC75A7D00EC576A /* TextFieldCategoryIconStyle.swift */; };
 		1FC2E6732C5DC567007EA785 /* NewTransactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC2E6722C5DC567007EA785 /* NewTransactionViewModel.swift */; };
 		1FC36BA82C816B24002EF932 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 1FC36BA72C816B24002EF932 /* FirebaseStorage */; };
 		1FC36BAA2C816BFF002EF932 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 1FC36BA92C816BFF002EF932 /* FirebaseFirestore */; };
@@ -241,6 +241,7 @@
 		1F7486C82A6A5DC90063AC35 /* ButtonScaleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonScaleStyle.swift; sourceTree = "<group>"; };
 		1F7486CA2A6F72D20063AC35 /* TabViewButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewButton.swift; sourceTree = "<group>"; };
 		1F7B0B652CA723FF00FD30D5 /* UserDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDatabase.swift; sourceTree = "<group>"; };
+		1F7F86A92CC9DE5500AF854E /* ButtonTextFieldStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonTextFieldStyle.swift; sourceTree = "<group>"; };
 		1F9462EA2A7B4D8200F5CBFB /* HeaderNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderNavigator.swift; sourceTree = "<group>"; };
 		1F9462ED2A7B54EC00F5CBFB /* Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
 		1F9D79C02A47C09D00F55418 /* Montserrat-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Light.ttf"; sourceTree = "<group>"; };
@@ -262,7 +263,6 @@
 		1FBAFA5D2CA5103300C09470 /* LoaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoaderView.swift; sourceTree = "<group>"; };
 		1FC0F4AE2CC7460400EC576A /* ConstantIcons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantIcons.swift; sourceTree = "<group>"; };
 		1FC0F4B22CC7564F00EC576A /* NewCategoryModalContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCategoryModalContent.swift; sourceTree = "<group>"; };
-		1FC0F4B42CC75A7D00EC576A /* TextFieldCategoryIconStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldCategoryIconStyle.swift; sourceTree = "<group>"; };
 		1FC2E6722C5DC567007EA785 /* NewTransactionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTransactionViewModel.swift; sourceTree = "<group>"; };
 		1FC36BAB2C816F44002EF932 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		1FC94CBB2A5A1DB7005CA0B6 /* TextButtonPrimaryStyled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextButtonPrimaryStyled.swift; sourceTree = "<group>"; };
@@ -330,6 +330,7 @@
 			children = (
 				1F1408182A58FB9400181500 /* ButtonPrimaryStyle.swift */,
 				1FFD5FA22A8B35A300A53050 /* ButtonHorizontalStyle.swift */,
+				1F7F86A92CC9DE5500AF854E /* ButtonTextFieldStyle.swift */,
 				1F14081C2A5910D300181500 /* ButtonLinkStyle.swift */,
 				1F7486C82A6A5DC90063AC35 /* ButtonScaleStyle.swift */,
 			);
@@ -350,7 +351,6 @@
 			isa = PBXGroup;
 			children = (
 				1F19D9632A4A583800137EA0 /* TextFieldIconStyle.swift */,
-				1FC0F4B42CC75A7D00EC576A /* TextFieldCategoryIconStyle.swift */,
 			);
 			path = Styles;
 			sourceTree = "<group>";
@@ -990,7 +990,6 @@
 				1F46B4122A79885D003A9550 /* ConstantValidations.swift in Sources */,
 				1F312FE22C928E2000D2E866 /* ConstantCurrency.swift in Sources */,
 				1FB8BB992A5BB181002DED1F /* SemiCircleShape.swift in Sources */,
-				1FC0F4B52CC75A8700EC576A /* TextFieldCategoryIconStyle.swift in Sources */,
 				1F0641482A72280500C19084 /* ValidateAccountView.swift in Sources */,
 				1F20E7762CC1BE890061CDB8 /* TextFieldNotes.swift in Sources */,
 				1F4C9B5B2C5C847100C403B3 /* UtilsFB.swift in Sources */,
@@ -1055,6 +1054,7 @@
 				1F7486BB2A68D4A30063AC35 /* Fonts+Extensions.swift in Sources */,
 				1F4C9B592C5C78DD00C403B3 /* Double+Extensions.swift in Sources */,
 				1F3043812CC06D050079DB90 /* TransactionType.swift in Sources */,
+				1F7F86AA2CC9DE5500AF854E /* ButtonTextFieldStyle.swift in Sources */,
 				1F5CC5802A6653AF00C214FE /* TextFieldPassword.swift in Sources */,
 				1F1408222A59254F00181500 /* RegisterView.swift in Sources */,
 				1F222F522C65C6BD0017A1BE /* ChangePasswordViewModel.swift in Sources */,

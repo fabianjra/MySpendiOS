@@ -40,7 +40,7 @@ struct ButtonPrimaryStyle: ButtonStyle {
                 Color.disabledForeground)
         
         // MARK: SHAPE
-            .frame(maxWidth: .infinity)
+            .frame(maxWidth: ConstantFrames.iPadMaxWidth)
             .padding(.vertical)
             .background(
                 

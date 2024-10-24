@@ -9,29 +9,13 @@ import SwiftUI
 
 struct TextPlain: View {
     
-    let message: String
-    let color: Color
-    let family: Font.Family
-    let size: Font.Sizes
-    let aligment: TextAlignment
-    let lineLimit: Int
-    let truncateMode: Text.TruncationMode
-    
-    init(message: String,
-         color: Color = Color.textPrimaryForeground,
-         family: Font.Family = .regular,
-         size: Font.Sizes = .body,
-         aligment: TextAlignment = .leading,
-         lineLimit: Int = ConstantViews.singleTextMaxLines,
-         truncateMode: Text.TruncationMode = .tail) {
-        self.message = message
-        self.color = color
-        self.family = family
-        self.size = size
-        self.aligment = aligment
-        self.lineLimit = lineLimit
-        self.truncateMode = truncateMode
-    }
+    var message: String
+    var color: Color = Color.textPrimaryForeground
+    var family: Font.Family = .regular
+    var size: Font.Sizes = .body
+    var aligment: TextAlignment = .leading
+    var lineLimit: Int = ConstantViews.singleTextMaxLines
+    var truncateMode: Text.TruncationMode = .tail
     
     var body: some View {
         Text(message)

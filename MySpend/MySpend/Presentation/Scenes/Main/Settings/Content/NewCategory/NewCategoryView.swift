@@ -26,54 +26,30 @@ struct NewCategoryView: View {
             
             
             // MARK: SEGMENT
-            
             VStack {
                 PickerSegmented(selection: $viewModel.model.categoryType,
                                 segments: TransactionType.allCases)
+                .frame(maxWidth: ConstantFrames.iPadMaxWidth)
                 .padding(.bottom)
             }
             
             
             // MARK: TEXTFIELDS
-            
             VStack {
                 TextFieldCategoryName(text: $viewModel.model.name,
                                       errorMessage: $viewModel.errorMessage)
                 .onSubmit { process() }
                 
-                //TODO: Agregar estilo rectangular con icono de eliminar el icono elegido.
-                HStack {
-                    TextPlain(message: "Icon:", size: .big)
-                    
-                    Image(systemName: viewModel.model.icon)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: FrameSize.width.iconSelect,
-                               height: FrameSize.height.iconSelect)
-                        .padding()
-                    
-                    Button {
-                        viewModel.model.icon = ""
-                    } label: {
-                        Image.xmarkCircle
-                            .resizable()
-                            .frame(width: FrameSize.width.headerButton,
-                                   height: FrameSize.height.headerButton)
-                            .font(.montserrat(size: .bigXXL))
-                            .foregroundColor(Color.textPrimaryForeground)
-                            .fontWeight(.ultraLight)
-                    }
-                    .padding()
-                    .padding(.top)
-                }
-                .onTapGesture {
+                Button("") {
                     viewModel.showIconsModal = true
                 }
+                .buttonStyle(ButtonTextFieldStyle(icon: viewModel.model.icon, actionClear: {
+                        viewModel.model.icon = ""
+                    }))
             }
             
             
             // MARK: BUTTONS
-            
             VStack {
                 Button("Accept") {
                     process()
