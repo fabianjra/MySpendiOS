@@ -60,7 +60,7 @@ struct ValidateAccountView: View {
             
             //Image(uiImage: ConstantEmojis.fest.textToImage(size: ConstantFrames.emojiSize))
             
-            TextPlain(message: ConstantMessages.userIsValidated.localizedDescription,
+            TextPlain(message: Messages.userIsValidated.localizedDescription,
                       family: .semibold,
                       size: .bigL,
                       aligment: .center)

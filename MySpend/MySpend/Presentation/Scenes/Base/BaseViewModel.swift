@@ -18,7 +18,7 @@ public class BaseViewModel: ObservableObject {
     public func validateCurrentUser() {
         if AuthFB().currentUser == nil {
             disabled = true
-            errorMessage = ConstantMessages.userNotLoggedIn.localizedDescription
+            errorMessage = Messages.userNotLoggedIn.localizedDescription
         }
     }
     
@@ -27,7 +27,7 @@ public class BaseViewModel: ObservableObject {
         
         guard let currentUser = AuthFB().currentUser else {
             disabled = true
-            errorMessage = ConstantMessages.userNotLoggedIn.localizedDescription
+            errorMessage = Messages.userNotLoggedIn.localizedDescription
             return
         }
         
@@ -54,7 +54,7 @@ public class BaseViewModel: ObservableObject {
         errorMessage = ""
         
         guard let currentUser = AuthFB().currentUser else {
-            errorMessage = ConstantMessages.userNotLoggedIn.localizedDescription
+            errorMessage = Messages.userNotLoggedIn.localizedDescription
             return
         }
         

@@ -1,5 +1,5 @@
 //
-//  ConstantMessages.swift
+//  Messages.swift
 //  MySpend
 //
 //  Created by Fabian Rodriguez on 26/7/23.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum ConstantMessages: String, Error {
+public enum Messages: String, Error {
     case empty
     case successful
     case generic
@@ -24,7 +24,7 @@ public enum ConstantMessages: String, Error {
     case emailSent
 }
 
-extension ConstantMessages: LocalizedError {
+extension Messages: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .empty: return NSLocalizedString("", comment: "")

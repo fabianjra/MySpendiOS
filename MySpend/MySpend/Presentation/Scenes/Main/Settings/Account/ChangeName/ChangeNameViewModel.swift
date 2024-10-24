@@ -13,7 +13,7 @@ class ChangeNameViewModel: BaseViewModel {
     
     func changeUserName() async {
         if model.newUserName.isEmptyOrWhitespace() {
-            errorMessage = ConstantMessages.emptySpace.localizedDescription
+            errorMessage = Messages.emptySpace.localizedDescription
             return
         }
         

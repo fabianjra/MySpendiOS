@@ -12,14 +12,14 @@
 		1F042E8D2CA124D900831062 /* FormContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F042E8C2CA124D400831062 /* FormContainer.swift */; };
 		1F0641462A72234900C19084 /* ChangePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0641452A72234900C19084 /* ChangePasswordView.swift */; };
 		1F0641482A72280500C19084 /* ValidateAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0641472A72280500C19084 /* ValidateAccountView.swift */; };
-		1F06414A2A722AFB00C19084 /* ConstantMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0641492A722AFB00C19084 /* ConstantMessages.swift */; };
+		1F06414A2A722AFB00C19084 /* Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0641492A722AFB00C19084 /* Messages.swift */; };
 		1F06414D2A7232D300C19084 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F06414C2A7232D300C19084 /* RootView.swift */; };
 		1F0E9AB62C5C62B300675CE8 /* ConstantFB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0E9AB52C5C62B300675CE8 /* ConstantFB.swift */; };
 		1F1408192A58FB9400181500 /* ButtonPrimaryStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1408182A58FB9400181500 /* ButtonPrimaryStyle.swift */; };
 		1F14081B2A590FC600181500 /* ConstantAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F14081A2A590FC600181500 /* ConstantAnimations.swift */; };
 		1F14081D2A5910D300181500 /* ButtonLinkStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F14081C2A5910D300181500 /* ButtonLinkStyle.swift */; };
 		1F1408222A59254F00181500 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1408212A59254F00181500 /* RegisterView.swift */; };
-		1F171F292A7CC90D00A0A33E /* ConstantEmojis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F171F282A7CC90D00A0A33E /* ConstantEmojis.swift */; };
+		1F171F292A7CC90D00A0A33E /* Emojis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F171F282A7CC90D00A0A33E /* Emojis.swift */; };
 		1F19D9642A4A583800137EA0 /* TextFieldIconStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F19D9632A4A583800137EA0 /* TextFieldIconStyle.swift */; };
 		1F19D9662A4A764B00137EA0 /* ConstantFrames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F19D9652A4A764B00137EA0 /* ConstantFrames.swift */; };
 		1F19D9682A4A7A7000137EA0 /* ConstantViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F19D9672A4A7A7000137EA0 /* ConstantViews.swift */; };
@@ -162,14 +162,14 @@
 		1F042E8C2CA124D400831062 /* FormContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormContainer.swift; sourceTree = "<group>"; };
 		1F0641452A72234900C19084 /* ChangePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordView.swift; sourceTree = "<group>"; };
 		1F0641472A72280500C19084 /* ValidateAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateAccountView.swift; sourceTree = "<group>"; };
-		1F0641492A722AFB00C19084 /* ConstantMessages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantMessages.swift; sourceTree = "<group>"; };
+		1F0641492A722AFB00C19084 /* Messages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Messages.swift; sourceTree = "<group>"; };
 		1F06414C2A7232D300C19084 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		1F0E9AB52C5C62B300675CE8 /* ConstantFB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantFB.swift; sourceTree = "<group>"; };
 		1F1408182A58FB9400181500 /* ButtonPrimaryStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonPrimaryStyle.swift; sourceTree = "<group>"; };
 		1F14081A2A590FC600181500 /* ConstantAnimations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantAnimations.swift; sourceTree = "<group>"; };
 		1F14081C2A5910D300181500 /* ButtonLinkStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonLinkStyle.swift; sourceTree = "<group>"; };
 		1F1408212A59254F00181500 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
-		1F171F282A7CC90D00A0A33E /* ConstantEmojis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantEmojis.swift; sourceTree = "<group>"; };
+		1F171F282A7CC90D00A0A33E /* Emojis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emojis.swift; sourceTree = "<group>"; };
 		1F19D9632A4A583800137EA0 /* TextFieldIconStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldIconStyle.swift; sourceTree = "<group>"; };
 		1F19D9652A4A764B00137EA0 /* ConstantFrames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantFrames.swift; sourceTree = "<group>"; };
 		1F19D9672A4A7A7000137EA0 /* ConstantViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantViews.swift; sourceTree = "<group>"; };
@@ -779,7 +779,6 @@
 				1F14081A2A590FC600181500 /* ConstantAnimations.swift */,
 				1FB8BB9C2A5BC728002DED1F /* ConstantColors.swift */,
 				1F46B4112A79885D003A9550 /* ConstantValidations.swift */,
-				1F171F282A7CC90D00A0A33E /* ConstantEmojis.swift */,
 				1F312FE12C928E2000D2E866 /* ConstantCurrency.swift */,
 			);
 			path = Constants;
@@ -813,9 +812,10 @@
 		1FFD9D5E2CCA14DB00553BD7 /* Enums */ = {
 			isa = PBXGroup;
 			children = (
+				1F171F282A7CC90D00A0A33E /* Emojis.swift */,
 				1FFD9D5F2CCA14FC00553BD7 /* FrameSize.swift */,
+				1F0641492A722AFB00C19084 /* Messages.swift */,
 				1FC0F4AE2CC7460400EC576A /* Icons.swift */,
-				1F0641492A722AFB00C19084 /* ConstantMessages.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -1050,13 +1050,13 @@
 				1FC94CBC2A5A1DB7005CA0B6 /* TextButtonPrimaryStyled.swift in Sources */,
 				1F222F502C65C6B00017A1BE /* ChangePassword.swift in Sources */,
 				1FD2E9852C5329F800E68602 /* CategoryModel.swift in Sources */,
-				1F171F292A7CC90D00A0A33E /* ConstantEmojis.swift in Sources */,
+				1F171F292A7CC90D00A0A33E /* Emojis.swift in Sources */,
 				1F042E892CA1104800831062 /* TextButtonHorizontalStyled.swift in Sources */,
 				1FC94CD12A5A6E01005CA0B6 /* TabViewIcons.swift in Sources */,
 				1F46B4212A79E10C003A9550 /* AuthFB.swift in Sources */,
 				1F46B41F2A79D9BB003A9550 /* PRUEBAS_SessionStore.swift in Sources */,
 				1F7B0B662CA7240200FD30D5 /* UserDatabase.swift in Sources */,
-				1F06414A2A722AFB00C19084 /* ConstantMessages.swift in Sources */,
+				1F06414A2A722AFB00C19084 /* Messages.swift in Sources */,
 				1FD66FE52C9E13AA0056D514 /* Decimal+Extensions.swift in Sources */,
 				1F65D9612C7287D30023CC5D /* History.swift in Sources */,
 				1F19D96A2A4A933200137EA0 /* ConstantShapes.swift in Sources */,

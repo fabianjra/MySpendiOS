@@ -23,7 +23,7 @@ struct ResponseModel {
     let status: Status
     let message: String
     
-    init(_ status: Status = .successful, _ message: String = ConstantMessages.successful.localizedDescription) {
+    init(_ status: Status = .successful, _ message: String = Messages.successful.localizedDescription) {
         self.status = status
         self.message = message
     }

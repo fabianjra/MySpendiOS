@@ -15,15 +15,15 @@ class RegisterViewModel: BaseViewModel {
         if register.name.isEmptyOrWhitespace() || register.email.isEmptyOrWhitespace() ||
             register.password.isEmptyOrWhitespace() || register.passwordConfirm.isEmptyOrWhitespace() {
             
-            return ResponseModel(.error, ConstantMessages.emptySpaces.localizedDescription)
+            return ResponseModel(.error, Messages.emptySpaces.localizedDescription)
         }
         
         if register.password.count < ConstantViews.passwordMinimumLength || register.passwordConfirm.count < ConstantViews.passwordMinimumLength {
-            return ResponseModel(.error, ConstantMessages.passwordIsShort.localizedDescription)
+            return ResponseModel(.error, Messages.passwordIsShort.localizedDescription)
         }
         
         if register.password != register.passwordConfirm {
-            return ResponseModel(.error, ConstantMessages.creationPasswordIsDifferent.localizedDescription)
+            return ResponseModel(.error, Messages.creationPasswordIsDifferent.localizedDescription)
         }
         
         var response = ResponseModel()

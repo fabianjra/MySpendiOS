@@ -20,7 +20,7 @@ class NewTransactionViewModel: BaseViewModel {
     
     func addNewTransaction() async -> ResponseModel {
         if model.category.isEmptyOrWhitespace() {
-            return ResponseModel(.error, ConstantMessages.emptySpaces.localizedDescription)
+            return ResponseModel(.error, Messages.emptySpaces.localizedDescription)
         }
         
         //Firebase necesita guardar el valor como decimal, pero los formatos del monto en pantalla se trabajan en string:

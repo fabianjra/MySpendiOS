@@ -14,7 +14,7 @@ class NewCategoryViewModel: BaseViewModel {
     
     func addNewCategory() async -> ResponseModel {
         if model.name.isEmptyOrWhitespace() {
-            return ResponseModel(.error, ConstantMessages.emptySpaces.localizedDescription)
+            return ResponseModel(.error, Messages.emptySpaces.localizedDescription)
         }
         
         var response = ResponseModel()

@@ -39,7 +39,7 @@ struct TransactionsDatabase_ORIGINAL {
     func addNewTransaction(transactionModel: TransactionModel) async throws {
         
         guard let userId = currentUser?.uid else {
-            throw ConstantMessages.userNotLoggedIn
+            throw Messages.userNotLoggedIn
         }
         
         let userRefDocument = UtilsFB.userCollectionRef.document(userId)
@@ -106,7 +106,7 @@ struct TransactionsDatabase_ORIGINAL {
      */
     private func getTransactions() async throws -> [TransactionModel] {
         guard let userId = currentUser?.uid else {
-            throw ConstantMessages.userNotLoggedIn
+            throw Messages.userNotLoggedIn
         }
         
         let userDocument = UtilsFB.userCollectionRef.document(userId)
