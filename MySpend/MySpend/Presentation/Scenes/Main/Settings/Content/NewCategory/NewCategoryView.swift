@@ -70,23 +70,13 @@ struct NewCategoryView: View {
         NavigationStack {
             FormContainer(addPading: false, scrollable: true, showsIndicators: false, backgroundCenter: .center) {
                 
-                NewCategoryModalContent(header: "Bills", arrayIcons: ConstantIcons.BillsFill) { icon in
-                    selectIcon(icon)
+                ForEach(ConstantIcons.iconList, id: \.self) { icons in
+                    NewCategoryModalContent(header: icons.name, arrayIcons: icons.list) { icon in
+                        selectIcon(icon)
+                    }
+                    .padding(.top)
+                    .padding(.bottom)
                 }
-                .padding(.top)
-                .padding(.bottom)
-                
-                NewCategoryModalContent(header: "Food and Drink", arrayIcons: ConstantIcons.FoodDrinkFill) { icon in
-                    selectIcon(icon)
-                }
-                .padding(.top)
-                .padding(.bottom)
-                
-                NewCategoryModalContent(header: "Household", arrayIcons: ConstantIcons.HouseholdFill) { icon in
-                    selectIcon(icon)
-                }
-                .padding(.top)
-                .padding(.bottom)
             }
             .toolbar {
                 ToolbarItem(placement: .destructiveAction) {

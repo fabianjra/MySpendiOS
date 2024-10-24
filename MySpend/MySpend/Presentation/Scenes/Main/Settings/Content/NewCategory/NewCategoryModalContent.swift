@@ -42,6 +42,6 @@ struct NewCategoryModalContent: View {
 }
 
 #Preview("Content Modal") {
-    NewCategoryModalContent(header: "Bills", arrayIcons: ConstantIcons.BillsFill) { _ in }
+    NewCategoryModalContent(header: "Bills", arrayIcons: ConstantIcons.iconList.first!.list) { _ in }
         .background(Color.backgroundContentGradient)
 }

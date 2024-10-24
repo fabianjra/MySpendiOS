@@ -5,10 +5,19 @@
 //  Created by Fabian Rodriguez on 21/10/24.
 //
 
+struct Icons: Hashable {
+    let name: String
+    let list: [String]
+}
+
 struct ConstantIcons {
+    
+    static let iconList: [Icons] = [billsFillModel, foodDrinkFillModel, householdFillModel]
+    
     static let defaultIcon: String = "tag.fill"
     
-    static let BillsFill: [String] = ["lightbulb.fill",
+    private static let billsFillModel: Icons = Icons(name: "Bills", list: billsFill)
+    private static let billsFill: [String] = ["lightbulb.fill",
                                       "spigot.fill",
                                       "house.fill",
                                       "play.tv.fill",
@@ -24,7 +33,8 @@ struct ConstantIcons {
                                       "externaldrive.connected.to.line.below.fill",
                                       "icloud.fill" ]
     
-    static let FoodDrinkFill: [String] = ["fork.knife",
+    private static let foodDrinkFillModel: Icons = Icons(name: "Food and Drink", list: foodDrinkFill)
+    private static let foodDrinkFill: [String] = ["fork.knife",
                                           "wineglass.fill",
                                           "cup.and.saucer.fill",
                                           "mug.fill",
@@ -38,7 +48,8 @@ struct ConstantIcons {
                                           "popcorn.fill",
                                           "frying.pan.fill", "cart.fill", "basket.fill"]
     
-    static let HouseholdFill: [String] = ["house.fill",
+    private static let householdFillModel: Icons = Icons(name: "Household", list: householdFill)
+    private static let householdFill: [String] = ["house.fill",
                                           "tag.fill",
                                           "creditcard.fill",
                                           "banknote.fill",
