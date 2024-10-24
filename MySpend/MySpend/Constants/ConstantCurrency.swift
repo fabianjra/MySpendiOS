@@ -6,7 +6,6 @@
 //
 
 public struct ConstantCurrency {
-    
     public static let amoutMaxLength: Int = 12
     public static let fractionLength: Int = 2
     public static let zeroAmoutString: String = "0.00"

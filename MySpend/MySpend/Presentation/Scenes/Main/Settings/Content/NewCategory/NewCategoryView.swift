@@ -70,8 +70,8 @@ struct NewCategoryView: View {
         NavigationStack {
             FormContainer(addPading: false, scrollable: true, showsIndicators: false, backgroundCenter: .center) {
                 
-                ForEach(ConstantIcons.iconList, id: \.self) { icons in
-                    NewCategoryModalContent(header: icons.name, arrayIcons: icons.list) { icon in
+                ForEach(Icons.allCases, id: \.self) { icon in
+                    NewCategoryModalContent(icon: icon) { icon in
                         selectIcon(icon)
                     }
                     .padding(.top)

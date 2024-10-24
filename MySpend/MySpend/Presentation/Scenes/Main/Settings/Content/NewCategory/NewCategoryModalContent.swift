@@ -9,20 +9,19 @@ import SwiftUI
 
 struct NewCategoryModalContent: View {
     
-    var header: String
-    var arrayIcons: [String]
+    var icon: Icons
     var action: (String) -> Void
     
     var body: some View {
         VStack {
-            SectionContainer(header: header, isInsideList: false, headerSize: .body) {
+            SectionContainer(header: icon.rawValue, isInsideList: false, headerSize: .body) {
                 
                 let columns = [
                     GridItem(.adaptive(minimum: ConstantViews.gridSpacing))
                 ]
                 
                 LazyVGrid(columns: columns, alignment: .center, spacing: ConstantViews.formSpacing) {
-                    ForEach(arrayIcons, id: \.self) { icon in
+                    ForEach(icon.list, id: \.self) { icon in
                         Button {
                             action(icon)
                         } label: {
@@ -41,7 +40,7 @@ struct NewCategoryModalContent: View {
     }
 }
 
-#Preview("Content Modal") {
-    NewCategoryModalContent(header: "Bills", arrayIcons: ConstantIcons.iconList.first!.list) { _ in }
+#Preview {
+    NewCategoryModalContent(icon: Icons.bills) { _ in }
         .background(Color.backgroundContentGradient)
 }

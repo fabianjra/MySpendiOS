@@ -1,5 +1,5 @@
 //
-//  ErrorMessages.swift
+//  ConstantMessages.swift
 //  MySpend
 //
 //  Created by Fabian Rodriguez on 26/7/23.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum ConstantMessages: String, Error {
+public enum ConstantMessages: String, Error {
     case empty
     case successful
     case generic
