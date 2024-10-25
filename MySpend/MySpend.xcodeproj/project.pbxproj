@@ -88,6 +88,7 @@
 		1F7486C72A6A57310063AC35 /* TabViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7486C62A6A57310063AC35 /* TabViewContainer.swift */; };
 		1F7486C92A6A5DC90063AC35 /* ButtonScaleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7486C82A6A5DC90063AC35 /* ButtonScaleStyle.swift */; };
 		1F7486CB2A6F72D20063AC35 /* TabViewButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7486CA2A6F72D20063AC35 /* TabViewButton.swift */; };
+		1F7ABD262CCC5CED0023FBA4 /* DatePickerModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7ABD252CCC5CE80023FBA4 /* DatePickerModalView.swift */; };
 		1F7B0B662CA7240200FD30D5 /* UserDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7B0B652CA723FF00FD30D5 /* UserDatabase.swift */; };
 		1F7F86AA2CC9DE5500AF854E /* ButtonTextFieldStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7F86A92CC9DE5500AF854E /* ButtonTextFieldStyle.swift */; };
 		1F9462EB2A7B4D8200F5CBFB /* HeaderNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9462EA2A7B4D8200F5CBFB /* HeaderNavigator.swift */; };
@@ -243,6 +244,7 @@
 		1F7486C62A6A57310063AC35 /* TabViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewContainer.swift; sourceTree = "<group>"; };
 		1F7486C82A6A5DC90063AC35 /* ButtonScaleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonScaleStyle.swift; sourceTree = "<group>"; };
 		1F7486CA2A6F72D20063AC35 /* TabViewButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewButton.swift; sourceTree = "<group>"; };
+		1F7ABD252CCC5CE80023FBA4 /* DatePickerModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerModalView.swift; sourceTree = "<group>"; };
 		1F7B0B652CA723FF00FD30D5 /* UserDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDatabase.swift; sourceTree = "<group>"; };
 		1F7F86A92CC9DE5500AF854E /* ButtonTextFieldStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonTextFieldStyle.swift; sourceTree = "<group>"; };
 		1F9462EA2A7B4D8200F5CBFB /* HeaderNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderNavigator.swift; sourceTree = "<group>"; };
@@ -619,6 +621,7 @@
 			children = (
 				1FFA5D592A8B57CC00AC0519 /* NewTransactionView.swift */,
 				1FC2E6722C5DC567007EA785 /* NewTransactionViewModel.swift */,
+				1F7ABD252CCC5CE80023FBA4 /* DatePickerModalView.swift */,
 			);
 			path = NewTransaction;
 			sourceTree = "<group>";
@@ -1070,6 +1073,7 @@
 				1FC94CC52A5A4034005CA0B6 /* ViewModifiers.swift in Sources */,
 				1FAA87D52C697F1000700CD6 /* CategoriesViewModel.swift in Sources */,
 				1F222F452C65A7370017A1BE /* ChangeNameViewModel.swift in Sources */,
+				1F7ABD262CCC5CED0023FBA4 /* DatePickerModalView.swift in Sources */,
 				1F222F4D2C65C1AD0017A1BE /* BaseViewModel.swift in Sources */,
 				1FC36BAC2C816F44002EF932 /* AuthViewModel.swift in Sources */,
 				1FA08EE22C5D993C0019000B /* Register.swift in Sources */,

@@ -103,38 +103,7 @@ struct NewTransactionView: View {
                     }
                 }
                 .sheet(isPresented: $viewModel.showDatePicker) {
-                    NavigationStack {
-                        DatePicker("",
-                                   selection: $viewModel.selectedDate,
-                                   displayedComponents: .date)
-                        .padding(.horizontal)
-                        .datePickerStyle(.graphical)
-                        .frame(height: ConstantFrames.calendarHeight)
-                        .padding()
-                        .onChange(of: viewModel.selectedDate, { oldValue, newValue in
-                            viewModel.model.date = Utils.dateToStringShort(date: newValue)
-                            //let day = selectedDate.formatted(.dateTime.day())
-                        })
-                        .toolbar {
-                            ToolbarItem(placement: .cancellationAction) {
-                                Button("Today") {
-                                    viewModel.selectedDate = .now
-                                }
-                                .padding()
-                                .padding(.top)
-                            }
-                            
-                            ToolbarItem(placement: .confirmationAction) {
-                                Button("Done") {
-                                    viewModel.showDatePicker = false
-                                }
-                                .padding()
-                                .padding(.top)
-                            }
-                        }
-                    }
-                    .presentationCornerRadius(ConstantRadius.cornersModal)
-                    .presentationDetents([.height(ConstantFrames.calendarHeight)])
+                    DatePickerModalView(viewModel: viewModel)
                 }
             }
         }
