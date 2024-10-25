@@ -57,9 +57,7 @@ struct ValidateAccountView: View {
                    height: FrameSize.height.checkMarkIcon,
                    alignment: .center)
             .padding(.bottom)
-            
-            //Image(uiImage: ConstantEmojis.fest.textToImage(size: ConstantFrames.emojiSize))
-            
+
             TextPlain(message: Messages.userIsValidated.localizedDescription,
                       family: .semibold,
                       size: .bigL,
@@ -83,7 +81,9 @@ struct ValidateAccountView: View {
     private var sendEmailBody: some View {
         VStack(spacing: ConstantViews.formSpacing) {
             
-            TextPlain(message: "Send the information to your email account and follow next steps.", aligment: .center)
+            TextPlain(message: "Send the information to your email account and follow next steps.",
+                      aligment: .center,
+                      lineLimit: ConstantViews.messageMaxLines)
             
             
             Button("Send email") {

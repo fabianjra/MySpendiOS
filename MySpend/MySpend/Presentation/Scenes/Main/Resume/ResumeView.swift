@@ -27,7 +27,7 @@ struct ResumeView: View {
             HStack {
                 VStack(alignment: .leading) {
                     
-                    TextPlain(message: "Hello \(viewModel.model.userName) \(Emojis.greeting)",
+                    TextPlain(message: "Hello \(viewModel.model.userName) \(Emojis.greeting.rawValue)",
                               family: .semibold,
                               size: .big,
                               lineLimit: ConstantViews.singleTextMaxLines,
