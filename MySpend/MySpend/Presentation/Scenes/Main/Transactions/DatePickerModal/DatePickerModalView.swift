@@ -8,24 +8,26 @@
 import SwiftUI
 
 struct DatePickerModalView: View {
-    
-    @ObservedObject var viewModel: NewTransactionViewModel
+
+    @Binding var model: TransactionModel
+    @Binding var showModal: Bool
+    @Binding var selectedDate: Date
     
     var body: some View {
         NavigationStack {
-            DatePicker("", selection: $viewModel.selectedDate, displayedComponents: .date)
+            DatePicker("", selection: $selectedDate, displayedComponents: .date)
             .padding(.horizontal)
             .datePickerStyle(.graphical)
             .frame(height: ConstantFrames.calendarHeight)
             .padding()
-            .onChange(of: viewModel.selectedDate, { oldValue, newValue in
-                viewModel.model.date = Utils.dateToStringShort(date: newValue)
+            .onChange(of: selectedDate, { oldValue, newValue in
+                model.date = Utils.dateToStringShort(date: newValue)
                 //let day = selectedDate.formatted(.dateTime.day())
             })
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Today") {
-                        viewModel.selectedDate = .now
+                        selectedDate = .now
                     }
                     .padding()
                     .padding(.top)
@@ -33,7 +35,7 @@ struct DatePickerModalView: View {
                 
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Done") {
-                        viewModel.showDatePicker = false
+                        showModal = false
                     }
                     .padding()
                     .padding(.top)
@@ -46,23 +48,26 @@ struct DatePickerModalView: View {
 }
 
 #Preview {
-    @Previewable @StateObject var viewModel = NewTransactionViewModel()
+    @Previewable @State var model = TransactionModel()
+    @Previewable @State var showModal = true
+    @Previewable @State var selectedDate = Date.now
+    
     
     ZStack(alignment: .top) {
         Color.backgroundBottom
         VStack {
             Spacer()
-            TextPlain(message: "Selected date: \(viewModel.selectedDate)")
+            TextPlain(message: "Selected date: \(selectedDate)")
             
             Button("Show modal") {
-                viewModel.showDatePicker = true
+                showModal = true
             }
             Spacer()
         }
-    }.sheet(isPresented: $viewModel.showDatePicker) {
-        DatePickerModalView(viewModel: viewModel)
+    }.sheet(isPresented: $showModal) {
+        DatePickerModalView(model: $model, showModal: $showModal, selectedDate: $selectedDate)
     }
     .onAppear {
-        viewModel.showDatePicker = true
+        showModal = true
     }
 }

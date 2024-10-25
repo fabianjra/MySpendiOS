@@ -103,7 +103,9 @@ struct NewTransactionView: View {
                     }
                 }
                 .sheet(isPresented: $viewModel.showDatePicker) {
-                    DatePickerModalView(viewModel: viewModel)
+                    DatePickerModalView(model: $viewModel.model,
+                                        showModal: $viewModel.showDatePicker,
+                                        selectedDate: $viewModel.selectedDate)
                 }
             }
         }

@@ -577,6 +577,23 @@
 			path = Containers;
 			sourceTree = "<group>";
 		};
+		1F7ABD272CCC62540023FBA4 /* Transactions */ = {
+			isa = PBXGroup;
+			children = (
+				1F7ABD282CCC62660023FBA4 /* DatePickerModal */,
+				1FA08EE72C5DC1B50019000B /* NewTransaction */,
+			);
+			path = Transactions;
+			sourceTree = "<group>";
+		};
+		1F7ABD282CCC62660023FBA4 /* DatePickerModal */ = {
+			isa = PBXGroup;
+			children = (
+				1F7ABD252CCC5CE80023FBA4 /* DatePickerModalView.swift */,
+			);
+			path = DatePickerModal;
+			sourceTree = "<group>";
+		};
 		1F9D79BE2A47C08200F55418 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -621,7 +638,6 @@
 			children = (
 				1FFA5D592A8B57CC00AC0519 /* NewTransactionView.swift */,
 				1FC2E6722C5DC567007EA785 /* NewTransactionViewModel.swift */,
-				1F7ABD252CCC5CE80023FBA4 /* DatePickerModalView.swift */,
 			);
 			path = NewTransaction;
 			sourceTree = "<group>";
@@ -637,7 +653,7 @@
 		1FAA87D12C697EF000700CD6 /* Category */ = {
 			isa = PBXGroup;
 			children = (
-				1FAADBE92CCB4CA600D9544D /* IconList */,
+				1FAADBE92CCB4CA600D9544D /* IconListModal */,
 				1FAADBE32CCB369E00D9544D /* Categories */,
 				1FAA87D82C699FE700700CD6 /* NewCategory */,
 				1FAADBE42CCB36CE00D9544D /* ModifyCategory */,
@@ -673,12 +689,12 @@
 			path = ModifyCategory;
 			sourceTree = "<group>";
 		};
-		1FAADBE92CCB4CA600D9544D /* IconList */ = {
+		1FAADBE92CCB4CA600D9544D /* IconListModal */ = {
 			isa = PBXGroup;
 			children = (
 				1FAADBEA2CCB4CBE00D9544D /* IconListModalView.swift */,
 			);
-			path = IconList;
+			path = IconListModal;
 			sourceTree = "<group>";
 		};
 		1FAEE6CE2A47A9A200630367 /* Login */ = {
@@ -724,7 +740,7 @@
 				1F1E85492A6F7AB400CEEBBC /* MainView */,
 				1F46B4152A799CE6003A9550 /* Resume */,
 				1F65D95B2C7287AC0023CC5D /* History */,
-				1FA08EE72C5DC1B50019000B /* NewTransaction */,
+				1F7ABD272CCC62540023FBA4 /* Transactions */,
 				1F1E854A2A6F7ADF00CEEBBC /* Settings */,
 			);
 			path = Main;
