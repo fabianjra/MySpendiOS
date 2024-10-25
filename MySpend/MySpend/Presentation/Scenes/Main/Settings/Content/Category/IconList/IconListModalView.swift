@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct IconListModalView: View {
-
+    
     @Binding var model: CategoryModel
     @Binding var showModal: Bool
     
@@ -17,9 +17,30 @@ struct IconListModalView: View {
             FormContainer(addPading: false, scrollable: true, showsIndicators: false, backgroundCenter: .center) {
                 
                 ForEach(Icons.allCases, id: \.self) { icon in
-                    IconListView(icon: icon) { icon in
-                        model.icon = icon
-                        showModal = false
+                    VStack {
+                        SectionContainer(header: icon.rawValue, isInsideList: false, headerSize: .body) {
+                            
+                            let columns = [
+                                GridItem(.adaptive(minimum: ConstantViews.gridSpacing))
+                            ]
+                            
+                            LazyVGrid(columns: columns, alignment: .center, spacing: ConstantViews.formSpacing) {
+                                ForEach(icon.list, id: \.self) { icon in
+                                    Button {
+                                        model.icon = icon
+                                        showModal = false
+                                    } label: {
+                                        Image(systemName: icon)
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: FrameSize.width.iconShowcase,
+                                                   height: FrameSize.height.iconShowcase)
+                                            .tint(Color.textPrimaryForeground)
+                                    }
+                                }
+                            }
+                        }
+                        .padding(.horizontal)
                     }
                     .padding(.top)
                     .padding(.bottom)
@@ -60,5 +81,23 @@ struct IconListModalView: View {
 }
 
 #Preview {
-    IconListModalView(model: .constant(CategoryModel()), showModal: .constant(true))
+    @Previewable @State var showModal: Bool = true
+    @Previewable @State var model = CategoryModel()
+    
+    ZStack(alignment: .top) {
+        Color.backgroundBottom
+        VStack {
+            Spacer()
+            TextPlain(message: "Icono: \(model.icon)")
+            
+            Image(systemName: model.icon)
+            
+            Button("Show modal") {
+                showModal = true
+            }
+            Spacer()
+        }
+    }.sheet(isPresented: $showModal) {
+        IconListModalView(model: $model, showModal: $showModal)
+    }
 }
