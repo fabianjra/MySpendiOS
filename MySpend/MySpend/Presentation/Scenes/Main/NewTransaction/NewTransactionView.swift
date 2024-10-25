@@ -17,7 +17,7 @@ struct NewTransactionView: View {
     let notesId = "notes"
     
     var body: some View {
-        NavigationStack { // Needed to show toolBar Keyboard.
+        NavigationStack { // This is needed for showing toolBar Keyboard.
             ScrollViewReader { scrollViewProxy in
                 FormContainer {
                     
@@ -138,6 +138,7 @@ struct NewTransactionView: View {
                 }
             }
         }
+        .disabled(viewModel.isLoading)
     }
     
     private func process() {
