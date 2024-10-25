@@ -10,6 +10,7 @@ import FirebaseFirestore
 class CategoriesViewModel: BaseViewModel {
     
     @Published var categories: [CategoryModel]
+    @Published var categoryType: TransactionType = .expense
     
     //init for Canvas Previews.
     init(categories: [CategoryModel] = []) {

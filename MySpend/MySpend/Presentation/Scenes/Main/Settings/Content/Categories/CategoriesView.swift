@@ -21,10 +21,24 @@ struct CategoriesView: View {
                             subTitle: "Select or add categories",
                             subTitleWeight: .regular)
             .padding(.horizontal)
+            .padding(.bottom)
+            
+            
+            VStack {
+                PickerSegmented(selection: $viewModel.categoryType,
+                                segments: TransactionType.allCases)
+                .frame(maxWidth: ConstantFrames.iPadMaxWidth)
+            }
+            .padding(.horizontal)
+            .padding(.bottom)
+            
             
             ZStack(alignment: .bottomTrailing) {
                 ListContainer {
-                    ForEach(viewModel.categories) { category in
+                    
+                    let categoriesFiltered = viewModel.categories.filter { $0.categoryType == viewModel.categoryType }
+                    
+                    ForEach(categoriesFiltered) { category in
                         HStack {
                             let icon = Utils.getIconFromString(category.icon)
                             
@@ -64,27 +78,28 @@ struct CategoriesView: View {
 
 #Preview("Content") {
     VStack {
-        let category1 = CategoryModel(icon: "envelope.fill",
-                                      name: "Gasolina",
-                                      categoryType: .expense)
-        let category2 = CategoryModel(icon: "arrowshape.turn.up.left.fill",
-                                      name: "Comida",
-                                      categoryType: .income)
-        let category3 = CategoryModel(icon: "",
-                                      name: "Sin icono",
-                                      categoryType: .expense)
-        let category4 = CategoryModel(icon: "", 
-                                      name: "String vacio",
-                                      categoryType: .expense)
-        let category5 = CategoryModel(icon: "person.fill", 
-                                      name: "Turismo",
-                                      categoryType: .income)
+        let array = [
+            CategoryModel(icon: "envelope.fill",
+                          name: "Expense 1",
+                          categoryType: .expense),
+            CategoryModel(icon: "arrowshape.turn.up.left.fill",
+                          name: "Income 1",
+                          categoryType: .income),
+            CategoryModel(icon: "xmark",
+                          name: "Expense 2",
+                          categoryType: .expense),
+            CategoryModel(icon: "",
+                          name: "Expense 3",
+                          categoryType: .expense),
+            
+            CategoryModel(icon: "person.fill",
+                          name: "Income 2",
+                          categoryType: .income)
+        ]
         
-        let categories = [category1, category2, category3, category4, category5]
+        let viewModel = CategoriesViewModel(categories: array)
         
-        let categoriesVM = CategoriesViewModel(categories: categories)
-        
-        CategoriesView(viewModel: categoriesVM)
+        CategoriesView(viewModel: viewModel)
     }
 }
 
@@ -98,11 +113,11 @@ struct CategoriesView: View {
     }
     
     VStack {
-        let categoriesVM = CategoriesViewModel(categories: arrayCategories)
-        CategoriesView(viewModel: categoriesVM)
+        let viewModel = CategoriesViewModel(categories: arrayCategories)
+        CategoriesView(viewModel: viewModel)
     }
 }
 
-#Preview("Withou content") {
-        CategoriesView()
+#Preview("Without content") {
+    CategoriesView()
 }
