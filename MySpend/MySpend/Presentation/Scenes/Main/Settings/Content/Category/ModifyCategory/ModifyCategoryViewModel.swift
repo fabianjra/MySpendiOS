@@ -41,7 +41,7 @@ class ModifyCategoryViewModel: BaseViewModel {
     func deleteCategory() async -> ResponseModel {
         var response = ResponseModel()
         
-        await performWithLoader {
+        await performWithLoaderSecondary {
             do {
                 try await Repository().deleteDocument(self.model.id, forSubCollection: .categories)
                 

@@ -38,7 +38,6 @@ struct ModifyCategoryView: View {
             VStack {
                 TextFieldCategoryName(text: $viewModel.model.name,
                                       errorMessage: $viewModel.errorMessage)
-                .onSubmit { process() }
                 
                 Button("") {
                     viewModel.showIconsModal = true
@@ -61,7 +60,7 @@ struct ModifyCategoryView: View {
                 Button("Delete") {
                     viewModel.showAlert = true
                 }
-                .buttonStyle(ButtonPrimaryStyle(color: [Color.warning],isLoading: $viewModel.isLoading))
+                .buttonStyle(ButtonPrimaryStyle(color: [Color.warning], isLoading: $viewModel.isLoadingSecondary))
                 .padding(.vertical)
                 .alert("Delete category", isPresented: $viewModel.showAlert) {
                     Button("Delete", role: .destructive) { delete() }
@@ -74,7 +73,7 @@ struct ModifyCategoryView: View {
                 TextError(message: viewModel.errorMessage)
             }
         }
-        .disabled(viewModel.isLoading)
+        .disabled(viewModel.isLoading || viewModel.isLoadingSecondary)
         .sheet(isPresented: $viewModel.showIconsModal) {
             IconListModalView(model: $viewModel.model, showModal: $viewModel.showIconsModal)
         }
