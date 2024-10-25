@@ -1,25 +1,27 @@
 //
-//  NewCategoryView.swift
+//  ModifyCategoryView.swift
 //  MySpend
 //
-//  Created by Fabian Rodriguez on 11/8/24.
+//  Created by Fabian Rodriguez on 24/10/24.
 //
 
 import SwiftUI
 
-struct NewCategoryView: View {
+struct ModifyCategoryView: View {
     
     @Environment(\.dismiss) var dismiss
     
-    @StateObject var viewModel = NewCategoryViewModel()
+    @ObservedObject var viewModel: ModifyCategoryViewModel
+    
+    @State private var showAlert = false
     
     var body: some View {
         FormContainer {
             
-            HeaderNavigator(title: "New category",
+            HeaderNavigator(title: "Modify category",
                             titleWeight: .regular,
                             titleSize: .bigXL,
-                            subTitle: "Enter the new category details",
+                            subTitle: "Modify the category details",
                             showLeadingAction: false,
                             showTrailingAction: true) { dismiss() }
                 .padding(.vertical)
@@ -51,11 +53,24 @@ struct NewCategoryView: View {
             
             // MARK: BUTTONS
             VStack {
-                Button("Accept") {
+                Button("Modify") {
                     process()
                 }
                 .buttonStyle(ButtonPrimaryStyle(isLoading: $viewModel.isLoading))
                 .padding(.vertical)
+                
+                //TODO: Cambiar estilo de boton por uno solamente bordes pintados.
+                Button("Delete") {
+                    showAlert = true
+                }
+                .buttonStyle(ButtonPrimaryStyle(color: [Color.warning],isLoading: $viewModel.isLoading))
+                .padding(.vertical)
+                .alert("Delete category", isPresented: $showAlert) {
+                    Button("Delete", role: .destructive) { delete() }
+                    Button("Cancel", role: .cancel) { }
+                } message: {
+                    Text("Want to delete this category? \n This action cannot be undone.")
+                }
                 
                 
                 TextError(message: viewModel.errorMessage)
@@ -66,12 +81,13 @@ struct NewCategoryView: View {
         }
     }
     
+    //TODO: Sacar a vista separada para ser reutilizada por New and Modify category.
     var modal: some View {
         NavigationStack {
             FormContainer(addPading: false, scrollable: true, showsIndicators: false, backgroundCenter: .center) {
                 
                 ForEach(Icons.allCases, id: \.self) { icon in
-                    NewCategoryModalContent(icon: icon) { icon in
+                    IconListView(icon: icon) { icon in
                         selectIcon(icon)
                     }
                     .padding(.top)
@@ -118,7 +134,19 @@ struct NewCategoryView: View {
     
     private func process() {
         Task {
-            let result = await viewModel.addNewCategory()
+            let result = ResponseModel()//TODO: Add remove.
+            
+            if result.status.isSuccess {
+                dismiss()
+            } else {
+                viewModel.errorMessage = result.message
+            }
+        }
+    }
+    
+    private func delete() {
+        Task {
+            let result = await viewModel.deleteCategory()
             
             if result.status.isSuccess {
                 dismiss()
@@ -130,5 +158,11 @@ struct NewCategoryView: View {
 }
 
 #Preview("Add new category") {
-    NewCategoryView()
+    VStack {
+        let viewmodel = ModifyCategoryViewModel(model: CategoryModel(id: "",
+                                                                     icon: "envelope",
+                                                                     name: "Categoria sample",
+                                                                     categoryType: .income))
+        ModifyCategoryView(viewModel: viewmodel)
+    }
 }

@@ -1,5 +1,5 @@
 //
-//  NewCategoryModalContent.swift
+//  IconListView.swift
 //  MySpend
 //
 //  Created by Fabian Rodriguez on 21/10/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct NewCategoryModalContent: View {
+struct IconListView: View {
     
     var icon: Icons
     var action: (String) -> Void
@@ -41,6 +41,6 @@ struct NewCategoryModalContent: View {
 }
 
 #Preview {
-    NewCategoryModalContent(icon: Icons.bills) { _ in }
+    IconListView(icon: Icons.bills) { _ in }
         .background(Color.backgroundContentGradient)
 }

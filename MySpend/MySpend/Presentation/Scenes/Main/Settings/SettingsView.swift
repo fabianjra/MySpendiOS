@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SettingsView: View {
     
-    @State private var showingAlert = false
+    @State private var showAlert = false
     @EnvironmentObject var authViewModel: AuthViewModel
     
     var body: some View {
@@ -46,12 +46,12 @@ struct SettingsView: View {
                 SectionContainer(header: "Login") {
                     
                     Button("Log out") {
-                        showingAlert = true
+                        showAlert = true
                     }
                     .foregroundColor(Color.warning)
                     .font(.montserrat(.semibold))
                     
-                    .alert("Want to log out?", isPresented: $showingAlert) {
+                    .alert("Want to log out?", isPresented: $showAlert) {
                         
                         Button("Log out", role: .destructive) {
                             do {

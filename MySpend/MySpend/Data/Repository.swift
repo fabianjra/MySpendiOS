@@ -7,7 +7,7 @@
 
 import Firebase
 
-struct Repository: UserValidationProtocol {
+public struct Repository: UserValidationProtocol {
     
     private var currentUser = AuthFB().currentUser
     
@@ -17,35 +17,21 @@ struct Repository: UserValidationProtocol {
      The operation is asynchronous and throws errors if something goes wrong during the process.
      
      - The function first validates the current user's credentials and retrieves the user's ID.
-     - It then creates a reference to the specified subcollection for the authenticated user.
+     - Creates a reference to the specified subcollection for the authenticated user.
      - The given model is encoded into a Firestore-compatible format.
-     - Firebase generates a unique document ID automatically when the new document is added to the subcollection using `addDocument.
+     - Firebase generates a unique document ID automatically when the new document is added to the subcollection using `addDocument`.
 
      
      **Example:**
      ```swift
-     private var listener: ListenerRegistration?
+     @Published var model = CategoryModel()
      
-     func startListeningForCategoryChanges() {
-        do {
-            listener = try DatabaseStore.listenUserChanges { [weak self] userLoaded in
-            self?.categories = userLoaded
-            }
-        } catch {
-            errorMessage = error.localizedDescription
-        }
-     }
-     
-     deinit {
-        listener?.remove()
-     }
+     try await Repository().addNewDocument(model, forSubCollection: .categories)
      ```
      
      - Parameters:
         - model: A generic parameter `T` conforming to `Codable`. This is the model object that will be encoded and stored as a document in Firestore.
         - collection: A value of the enum type `CollectionsFB` that specifies the Firestore subcollection where the new document will be added.
-     
-     - Returns: ListenerRegistration opcional (propiedad de Firebase)
      
      - Throws: The function throws an error if: 1: The current user validation fails. 2: The model cannot be encoded properly. 3: There are issues when interacting with Firestore (e.g., network issues or permission errors).
      
@@ -53,7 +39,7 @@ struct Repository: UserValidationProtocol {
      
      - Version: 1.0
      
-     - Date: Aug 2024
+     - Date: August 2024
      */
     func addNewDocument<T: Codable>(_ model: T, forSubCollection collection: CollectionsFB) async throws {
         
@@ -63,5 +49,84 @@ struct Repository: UserValidationProtocol {
         
         //En este caso Firebase genera un ID automaticamente para el nuevo documento con addDocument.
         try await subCollectionRef.addDocument(data: newDocumentEncoded)
+    }
+    
+    /**
+     This function modifies an existing document to a Firestore subcollection based on the given model.
+     It uses Firebase to modify the document based on a given DocumentID.
+     The operation is asynchronous and throws errors if something goes wrong during the process.
+     
+     - The function first validates the current user's credentials and retrieves the user's ID.
+     - Creates a reference to the specified subcollection for the authenticated user and goes to the specific document based on the ID.
+     - The given model is encoded into a Firestore-compatible format.
+     - Firebase updates the document using `setData`.
+
+     
+     **Example:**
+     ```swift
+     @Published var model = CategoryModel()
+     
+     try await Repository().modifyDocument(model, documentId: model.id, forSubCollection: .categories)
+     ```
+     
+     - Parameters:
+        - model: A generic parameter `T` conforming to `Codable`. This is the model object that will be encoded and stored as a document in Firestore.
+        - documentId: The ID of the document that want to update.
+        - collection: A value of the enum type `CollectionsFB` that specifies the Firestore subcollection where the new document will be modified.
+     
+     - Throws: The function throws an error if: 1: The current user validation fails. 2: The model cannot be encoded properly. 3: There are issues when interacting with Firestore (e.g., network issues or permission errors).
+     
+     - Authors: Fabian Rodriguez
+     
+     - Version: 1.0
+     
+     - Date: October 2024
+     */
+    func modifyDocument<T: Codable>(_ model: T, documentId: String, forSubCollection collection: CollectionsFB) async throws {
+        
+        let currentUserId = try validateCurrentUser(currentUser).uid
+        let subCollectionRef = UtilsFB.userSubCollectionRef(collection, for: currentUserId)
+        let document = subCollectionRef.document(documentId)
+        let newDocumentEncoded = try UtilsFB.encodeModelFB(model)
+        
+        try await document.setData(newDocumentEncoded)
+    }
+    
+    /**
+     This function delete an existing document to a Firestore subcollection.
+     It uses Firebase to delete the document based on a given DocumentID.
+     The operation is asynchronous and throws errors if something goes wrong during the process.
+     
+     - The function first validates the current user's credentials and retrieves the user's ID.
+     - Creates a reference to the specified subcollection for the authenticated user and goes to the specific document based on the ID.
+     - Firebase deletes the document using `delete`.
+
+     
+     **Example:**
+     ```swift
+     @Published var model = CategoryModel()
+     
+     try await Repository().delete(documentId: model.id, forSubCollection: .categories)
+     ```
+     
+     - Parameters:
+        - documentId: The ID of the document that want to delete.
+        - collection: A value of the enum type `CollectionsFB` that specifies the Firestore subcollection where the new document will be deleted.
+     
+     - Throws: The function throws an error if: 1: The current user validation fails. 2: The model cannot be encoded properly. 3: There are issues when interacting with Firestore (e.g., network issues or permission errors).
+     
+     - Authors: Fabian Rodriguez
+     
+     - Version: 1.0
+     
+     - Date: October 2024
+     */
+    func deleteDocument(_ documentId: String, forSubCollection collection: CollectionsFB) async throws {
+        
+        let currentUserId = try validateCurrentUser(currentUser).uid
+        let subCollectionRef = UtilsFB.userSubCollectionRef(collection, for: currentUserId)
+        let document = subCollectionRef.document(documentId)
+        
+        try await document.delete()
     }
 }
