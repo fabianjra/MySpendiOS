@@ -10,11 +10,11 @@ import Foundation
 class ModifyCategoryViewModel: BaseViewModel {
     
     @Published var model: CategoryModel
-    @Published var showIconsModal: Bool
+    @Published var showIconsModal = false
+    @Published var showAlert = false
     
-    init(model: CategoryModel, showIconsModal: Bool = false) {
+    init(model: CategoryModel) {
         self.model = model
-        self.showIconsModal = showIconsModal
     }
     
     func modifyCategory() async -> ResponseModel {

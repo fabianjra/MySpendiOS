@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ChangeNameView: View {
     
-    @StateObject private var changeNameVM = ChangeNameViewModel()
+    @StateObject private var viewModel = ChangeNameViewModel()
     
     var body: some View {
         FormContainer {
@@ -26,36 +26,36 @@ struct ChangeNameView: View {
             // MARK: FIELDS
             VStack(spacing: ConstantViews.formSpacing) {
                 
-                TextFieldReadOnly(text: $changeNameVM.model.userName, iconLeading: Image.personFill)
+                TextFieldReadOnly(text: $viewModel.model.userName, iconLeading: Image.personFill)
                 
                 
                 TextFieldName(placeHolder: "New name",
-                              text: $changeNameVM.model.newUserName,
+                              text: $viewModel.model.newUserName,
                               iconLeading: Image.checkmark,
-                              errorMessage: $changeNameVM.errorMessage)
+                              errorMessage: $viewModel.errorMessage)
                 .padding(.bottom)
                 .onSubmit {
                     Task {
-                        await changeNameVM.changeUserName()
+                        await viewModel.changeUserName()
                     }
                 }
                 
                 
                 Button("Change name") {
                     Task {
-                        await changeNameVM.changeUserName()
+                        await viewModel.changeUserName()
                     }
                 }
-                .buttonStyle(ButtonPrimaryStyle(isLoading: $changeNameVM.isLoading))
-                .disabled(changeNameVM.disabled)
+                .buttonStyle(ButtonPrimaryStyle(isLoading: $viewModel.isLoading))
+                .disabled(viewModel.disabled)
                 
                 
-                TextError(message: changeNameVM.errorMessage)
+                TextError(message: viewModel.errorMessage)
             }
         }
-        .disabled(changeNameVM.isLoading)
+        .disabled(viewModel.isLoading)
         .onAppear {
-            changeNameVM.onAppear()
+            viewModel.onAppear()
         }
     }
 }

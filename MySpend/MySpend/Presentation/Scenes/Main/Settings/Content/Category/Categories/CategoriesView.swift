@@ -10,7 +10,6 @@ import SwiftUI
 struct CategoriesView: View {
     
     @StateObject var viewModel = CategoriesViewModel()
-    @State private var showNewItemModal = false
     
     var body: some View {
         ContentContainer(addPading: false) {
@@ -48,7 +47,10 @@ struct CategoriesView: View {
                                            height: FrameSize.height.iconCategoryList)
                             }
                             
-                            Text(category.name)
+                            Button(category.name) {
+                                viewModel.categoryToModify = category
+                                viewModel.showModifyItemModal = true
+                            }
                             
                             Spacer()
                             
@@ -59,7 +61,7 @@ struct CategoriesView: View {
                 }
                 
                 ButtonRounded {
-                    showNewItemModal = true
+                    viewModel.showNewItemModal = true
                 }
                 .padding(.trailing, ConstantViews.paddingButtonAddCategory)
                 .padding(.bottom, ConstantViews.paddingButtonAddCategory)
@@ -68,8 +70,15 @@ struct CategoriesView: View {
         .onAppear {
             viewModel.fetchData()
         }
-        .sheet(isPresented: $showNewItemModal) {
+        .sheet(isPresented: $viewModel.showNewItemModal) {
             NewCategoryView()
+                .presentationDetents([.large])
+                .presentationCornerRadius(ConstantRadius.cornersModal)
+        }
+        .sheet(isPresented: $viewModel.showModifyItemModal) {
+            let modifyCategoryVieModel = ModifyCategoryViewModel(model: viewModel.categoryToModify)
+            
+            ModifyCategoryView(viewModel: modifyCategoryVieModel)
                 .presentationDetents([.large])
                 .presentationCornerRadius(ConstantRadius.cornersModal)
         }

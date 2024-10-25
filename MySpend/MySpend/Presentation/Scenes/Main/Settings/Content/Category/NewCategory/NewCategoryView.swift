@@ -61,6 +61,7 @@ struct NewCategoryView: View {
                 TextError(message: viewModel.errorMessage)
             }
         }
+        .disabled(viewModel.isLoading)
         .sheet(isPresented: $viewModel.showIconsModal) {
             modal
         }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ChangePasswordView: View {
     
-    @StateObject private var changePasswordVM = ChangePasswordViewModel()
+    @StateObject private var viewModel = ChangePasswordViewModel()
     @FocusState private var focusedField: ChangePassword.Field?
     
     var body: some View {
@@ -27,26 +27,26 @@ struct ChangePasswordView: View {
             // MARK: FIELDS
             VStack(spacing: ConstantViews.formSpacing) {
                 TextFieldPassword(placeHolder: "Current password",
-                                  text: $changePasswordVM.model.userPassword,
-                                  errorMessage: $changePasswordVM.errorMessage)
+                                  text: $viewModel.model.userPassword,
+                                  errorMessage: $viewModel.errorMessage)
                 .textContentType(.password)
                 .focused($focusedField, equals: .userPassword)
                 .onSubmit { changePassword() }
                 
                 
                 TextFieldPassword(placeHolder: "New password",
-                                  text: $changePasswordVM.model.userNewPassword,
+                                  text: $viewModel.model.userNewPassword,
                                   iconLeading: Image.checkmark,
-                                  errorMessage: $changePasswordVM.errorMessage)
+                                  errorMessage: $viewModel.errorMessage)
                 .textContentType(.newPassword)
                 .focused($focusedField, equals: .newPassword)
                 .onSubmit { changePassword() }
                 
                 
                 TextFieldPassword(placeHolder: "Confirm new password",
-                                  text: $changePasswordVM.model.userNewPasswordConfirm,
+                                  text: $viewModel.model.userNewPasswordConfirm,
                                   iconLeading: Image.checkmark,
-                                  errorMessage: $changePasswordVM.errorMessage)
+                                  errorMessage: $viewModel.errorMessage)
                 .padding(.bottom)
                 .textContentType(.newPassword)
                 .focused($focusedField, equals: .newPasswordConfirm)
@@ -58,22 +58,22 @@ struct ChangePasswordView: View {
                 Button("Change password") {
                     changePassword()
                 }
-                .buttonStyle(ButtonPrimaryStyle(isLoading: $changePasswordVM.isLoading))
-                .disabled(changePasswordVM.disabled)
+                .buttonStyle(ButtonPrimaryStyle(isLoading: $viewModel.isLoading))
+                .disabled(viewModel.disabled)
                 
                 
-                TextError(message: changePasswordVM.errorMessage)
+                TextError(message: viewModel.errorMessage)
             }
         }
-        .disabled(changePasswordVM.isLoading)
+        .disabled(viewModel.isLoading)
         .onAppear {
-            changePasswordVM.validateCurrentUser()
+            viewModel.validateCurrentUser()
         }
     }
     
     private func changePassword() {
         Task {
-            await changePasswordVM.validateChangePassword()
+            await viewModel.validateChangePassword()
         }
     }
 }

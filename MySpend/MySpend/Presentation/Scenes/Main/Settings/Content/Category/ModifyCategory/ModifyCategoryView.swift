@@ -13,8 +13,6 @@ struct ModifyCategoryView: View {
     
     @ObservedObject var viewModel: ModifyCategoryViewModel
     
-    @State private var showAlert = false
-    
     var body: some View {
         FormContainer {
             
@@ -61,11 +59,11 @@ struct ModifyCategoryView: View {
                 
                 //TODO: Cambiar estilo de boton por uno solamente bordes pintados.
                 Button("Delete") {
-                    showAlert = true
+                    viewModel.showAlert = true
                 }
                 .buttonStyle(ButtonPrimaryStyle(color: [Color.warning],isLoading: $viewModel.isLoading))
                 .padding(.vertical)
-                .alert("Delete category", isPresented: $showAlert) {
+                .alert("Delete category", isPresented: $viewModel.showAlert) {
                     Button("Delete", role: .destructive) { delete() }
                     Button("Cancel", role: .cancel) { }
                 } message: {
@@ -76,6 +74,7 @@ struct ModifyCategoryView: View {
                 TextError(message: viewModel.errorMessage)
             }
         }
+        .disabled(viewModel.isLoading)
         .sheet(isPresented: $viewModel.showIconsModal) {
             modal
         }
@@ -134,7 +133,7 @@ struct ModifyCategoryView: View {
     
     private func process() {
         Task {
-            let result = ResponseModel()//TODO: Add remove.
+            let result = await viewModel.modifyCategory()
             
             if result.status.isSuccess {
                 dismiss()

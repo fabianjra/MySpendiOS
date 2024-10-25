@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LoginView: View {
     
-    @StateObject var loginVM = LoginViewModel()
+    @StateObject var viewModel = LoginViewModel()
     @FocusState private var focusedField: Login.Field?
     
     @EnvironmentObject var authViewModel: AuthViewModel
@@ -25,13 +25,13 @@ struct LoginView: View {
             // MARK: LOGIN
             VStack(spacing: ConstantViews.formSpacing) {
                 
-                TextFieldEmail(text: $loginVM.login.email,
-                               errorMessage: $loginVM.errorMessage)
+                TextFieldEmail(text: $viewModel.login.email,
+                               errorMessage: $viewModel.errorMessage)
                 .focused($focusedField, equals: .email)
                 .onSubmit { login() }
                 
-                TextFieldPassword(text: $loginVM.login.password,
-                                  errorMessage: $loginVM.errorMessage)
+                TextFieldPassword(text: $viewModel.login.password,
+                                  errorMessage: $viewModel.errorMessage)
                 .padding(.bottom)
                 .focused($focusedField, equals: .password)
                 .onSubmit { login() }
@@ -40,9 +40,9 @@ struct LoginView: View {
                 Button("Login") {
                     login()
                 }
-                .buttonStyle(ButtonPrimaryStyle(isLoading: $loginVM.isLoading))
+                .buttonStyle(ButtonPrimaryStyle(isLoading: $viewModel.isLoading))
                 
-                TextError(message: loginVM.errorMessage)
+                TextError(message: viewModel.errorMessage)
                 
                 
                 Button("Forgot password?") {
@@ -117,7 +117,7 @@ struct LoginView: View {
             }
             .padding(.top)
         }
-        .disabled(loginVM.isLoading)
+        .disabled(viewModel.isLoading)
         .onAppear {
             authViewModel.listenAuthentificationState()
         }
@@ -125,7 +125,7 @@ struct LoginView: View {
     
     private func login() {
         Task {
-            await loginVM.validateLogin()
+            await viewModel.validateLogin()
         }
     }
 }
