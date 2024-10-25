@@ -76,9 +76,7 @@ struct CategoriesView: View {
                 .presentationCornerRadius(ConstantRadius.cornersModal)
         }
         .sheet(isPresented: $viewModel.showModifyItemModal) {
-            let modifyCategoryVieModel = ModifyCategoryViewModel(model: viewModel.categoryToModify)
-            
-            ModifyCategoryView(viewModel: modifyCategoryVieModel)
+            ModifyCategoryView(model: $viewModel.categoryToModify)
                 .presentationDetents([.large])
                 .presentationCornerRadius(ConstantRadius.cornersModal)
         }

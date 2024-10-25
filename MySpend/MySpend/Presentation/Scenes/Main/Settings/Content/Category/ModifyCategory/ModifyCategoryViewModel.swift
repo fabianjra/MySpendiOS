@@ -9,15 +9,10 @@ import Foundation
 
 class ModifyCategoryViewModel: BaseViewModel {
     
-    @Published var model: CategoryModel
     @Published var showIconsModal = false
     @Published var showAlert = false
     
-    init(model: CategoryModel) {
-        self.model = model
-    }
-    
-    func modifyCategory() async -> ResponseModel {
+    func modifyCategory(_ model: CategoryModel) async -> ResponseModel {
         if model.name.isEmptyOrWhitespace() {
             return ResponseModel(.error, Messages.emptySpaces.localizedDescription)
         }
@@ -26,7 +21,7 @@ class ModifyCategoryViewModel: BaseViewModel {
         
         await performWithLoader {
             do {
-                try await Repository().modifyDocument(self.model, documentId: self.model.id, forSubCollection: .categories)
+                try await Repository().modifyDocument(model, documentId: model.id, forSubCollection: .categories)
                 
                 response = ResponseModel(.successful)
             } catch {
@@ -38,12 +33,12 @@ class ModifyCategoryViewModel: BaseViewModel {
         return response
     }
     
-    func deleteCategory() async -> ResponseModel {
+    func deleteCategory(_ model: CategoryModel) async -> ResponseModel {
         var response = ResponseModel()
         
         await performWithLoaderSecondary {
             do {
-                try await Repository().deleteDocument(self.model.id, forSubCollection: .categories)
+                try await Repository().deleteDocument(model.id, forSubCollection: .categories)
                 
                 response = ResponseModel(.successful)
             } catch {
