@@ -10,16 +10,7 @@ import SwiftUI
 struct TransactionView: View {
     
     @StateObject var viewModel = TransactionViewModel()
-    
-    //    init(model: Resume = Resume()) {
-    //        /*
-    //         * SwiftUI ensures that the following initialization uses the
-    //         * closure only once during the lifetime of the view, so
-    //         * later changes to the view's name input have no effect.
-    //         */
-    //        _resumeVM = StateObject(wrappedValue: ResumeViewModel(model: model))
-    //    }
-    
+
     var body: some View {
         ContentContainer {
             
@@ -193,7 +184,7 @@ struct TransactionView: View {
     }
 }
 
-#Preview("No content EN") {
+#Preview("No content ES") {
     TransactionView(viewModel: TransactionViewModel())
-        .environment(\.locale, .init(identifier: "en"))
+        .environment(\.locale, .init(identifier: "es"))
 }

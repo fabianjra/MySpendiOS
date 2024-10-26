@@ -26,7 +26,6 @@ struct TransactionModel: Identifiable, Codable {
     
     enum Field: Hashable, CaseIterable {
         case amount
-        case category
         case notes
     }
 }

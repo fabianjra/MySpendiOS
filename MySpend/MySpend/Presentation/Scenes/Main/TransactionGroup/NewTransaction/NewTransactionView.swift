@@ -14,7 +14,7 @@ struct NewTransactionView: View {
     @StateObject var viewModel = NewTransactionViewModel()
     @FocusState private var focusedField: TransactionModel.Field?
     
-    let notesId = "notes"
+    private let notesId = "notes"
     
     var body: some View {
         NavigationStack { // This is needed for showing toolBar Keyboard.
@@ -55,14 +55,14 @@ struct NewTransactionView: View {
                         .focused($focusedField, equals: .amount)
                         .onSubmit { process() }
                         
-                        //TODO: Change to sheet list (loading and showing all categories).
-                        TextField("", 
-                                  text: $viewModel.model.category,
-                                  prompt: Text("Category").foregroundColor(.textFieldPlaceholder))
-                        .textFieldStyle(TextFieldIconStyle($viewModel.model.category,
-                                                           iconLeading: Image.stackFill,
-                                                           errorMessage: $viewModel.errorMessage))
-                        .focused($focusedField, equals: .category)
+                        
+                        TextFieldReadOnly(placeHolder: "Category",
+                                          text: $viewModel.model.category,
+                                          iconLeading: Image.stackFill,
+                                          colorDisabled: false)
+                        .onTapGesture {
+                            viewModel.showCategoryList = true
+                        }
                         
                         TextFieldNotes(text: $viewModel.model.notes)
                             .id(notesId)
@@ -71,7 +71,6 @@ struct NewTransactionView: View {
                             .onSubmit { process() }
                         
                     }
-                    .modifier(AddKeyboardToolbar(focusedField: $focusedField))
                     
                     
                     // MARK: BUTTONS
@@ -106,6 +105,9 @@ struct NewTransactionView: View {
                     DatePickerModalView(model: $viewModel.model,
                                         showModal: $viewModel.showDatePicker,
                                         selectedDate: $viewModel.selectedDate)
+                }
+                .sheet(isPresented: $viewModel.showCategoryList) {
+                    Color.red //TODO: Show categorylist to select.
                 }
             }
         }

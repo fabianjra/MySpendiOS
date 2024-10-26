@@ -10,9 +10,12 @@ import Foundation
 class NewTransactionViewModel: BaseViewModel {
     
     @Published var model = TransactionModel()
-    @Published var showDatePicker = false
+    
     @Published var selectedDate: Date = .now
     @Published var amountString: String = ""
+    
+    @Published var showDatePicker = false
+    @Published var showCategoryList = false
     
     func onAppear() {
         model.date = Utils.dateToStringShort(date: selectedDate)
