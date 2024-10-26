@@ -340,6 +340,16 @@
 			path = CaseIterables;
 			sourceTree = "<group>";
 		};
+		1F0FA3C52CCC7C09009DDB4E /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				1F171F282A7CC90D00A0A33E /* Emojis.swift */,
+				1FFD9D5F2CCA14FC00553BD7 /* FrameSize.swift */,
+				1F0641492A722AFB00C19084 /* Messages.swift */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
 		1F1408172A58FB8200181500 /* Styles */ = {
 			isa = PBXGroup;
 			children = (
@@ -489,18 +499,18 @@
 		1F4C24812A47A6DA00CCAF6D /* MySpend */ = {
 			isa = PBXGroup;
 			children = (
+				1F4C24822A47A6DA00CCAF6D /* MySpendApp.swift */,
 				1F9F16D22AFC9257003CB599 /* Model */,
 				1F46B41D2A79D9A9003A9550 /* Data */,
 				1FC94CC62A5A4185005CA0B6 /* Extensions */,
 				1F19D96B2A4ACC2C00137EA0 /* Utils */,
 				1FFD9D5E2CCA14DB00553BD7 /* Enums */,
 				1FE7C67F2A47DA0B0070B988 /* Constants */,
-				1F9D79BE2A47C08200F55418 /* Resources */,
 				1FC94CCB2A5A45C6005CA0B6 /* Presentation */,
-				1F4C24822A47A6DA00CCAF6D /* MySpendApp.swift */,
 				1F4C24862A47A6DC00CCAF6D /* Assets.xcassets */,
 				1F9D79C42A47C0F000F55418 /* Info.plist */,
 				1F002A832C52F9D400F98C5A /* GoogleService-Info.plist */,
+				1F9D79BE2A47C08200F55418 /* Resources */,
 				1F4C24882A47A6DC00CCAF6D /* Preview Content */,
 				1FC94CC22A5A3732005CA0B6 /* LaunchScreen.storyboard */,
 			);
@@ -856,9 +866,7 @@
 			isa = PBXGroup;
 			children = (
 				1F0FA3C32CCC7B99009DDB4E /* CaseIterables */,
-				1F171F282A7CC90D00A0A33E /* Emojis.swift */,
-				1FFD9D5F2CCA14FC00553BD7 /* FrameSize.swift */,
-				1F0641492A722AFB00C19084 /* Messages.swift */,
+				1F0FA3C52CCC7C09009DDB4E /* Constants */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
