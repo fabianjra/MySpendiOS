@@ -101,13 +101,17 @@ struct NewTransactionView: View {
                         }
                     }
                 }
+                .onChange(of: viewModel.model.transactionType) {
+                    viewModel.model.category = CategoryModel() //Clean category beacause won't be the same TransactionType (Exponse, income).
+                }
                 .sheet(isPresented: $viewModel.showDatePicker) {
                     DatePickerModalView(model: $viewModel.model,
                                         showModal: $viewModel.showDatePicker,
                                         selectedDate: $viewModel.selectedDate)
                 }
                 .sheet(isPresented: $viewModel.showCategoryList) {
-                    SelectCategoryModalView(selectedCategory: $viewModel.model.category)
+                    SelectCategoryModalView(selectedCategory: $viewModel.model.category,
+                                            transactionType: viewModel.model.transactionType)
                         .presentationDetents([.large])
                         .presentationCornerRadius(ConstantRadius.cornersModal)
                 }

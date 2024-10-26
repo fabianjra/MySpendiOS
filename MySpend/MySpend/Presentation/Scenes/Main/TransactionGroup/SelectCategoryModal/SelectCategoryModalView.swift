@@ -13,7 +13,7 @@ struct SelectCategoryModalView: View {
     
     @StateObject var viewModel = CategoryViewModel()
     @Binding var selectedCategory: CategoryModel
-    
+    var transactionType: TransactionType
     
     var body: some View {
         ContentContainer(addPading: false) {
@@ -25,23 +25,15 @@ struct SelectCategoryModalView: View {
                             subTitleWeight: .regular,
                             showLeadingAction: false,
                             showTrailingAction: true)
-            .padding(.horizontal)
+            .padding(.top)
             .padding(.vertical)
-            
-            
-            VStack {
-                PickerSegmented(selection: $viewModel.categoryType,
-                                segments: TransactionType.allCases)
-                .frame(maxWidth: ConstantFrames.iPadMaxWidth)
-            }
             .padding(.horizontal)
-            .padding(.bottom)
             
             
             ZStack(alignment: .bottomTrailing) {
                 ListContainer {
                     
-                    let categoriesFiltered = viewModel.categories.filter { $0.categoryType == viewModel.categoryType }
+                    let categoriesFiltered = viewModel.categories.filter { $0.categoryType == transactionType }
                     
                     ForEach(categoriesFiltered) { category in
                         HStack {
@@ -107,6 +99,6 @@ struct SelectCategoryModalView: View {
         
         let viewModel = CategoryViewModel(categories: array)
         
-        SelectCategoryModalView(viewModel: viewModel, selectedCategory: .constant(CategoryModel()))
+        SelectCategoryModalView(viewModel: viewModel, selectedCategory: .constant(CategoryModel()), transactionType: .expense)
     }
 }
