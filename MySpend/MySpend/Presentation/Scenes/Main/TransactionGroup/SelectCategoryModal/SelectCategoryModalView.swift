@@ -31,31 +31,36 @@ struct SelectCategoryModalView: View {
             
             
             ZStack(alignment: .bottomTrailing) {
-                ListContainer {
-                    
-                    let categoriesFiltered = viewModel.categories.filter { $0.categoryType == transactionType }
-                    
-                    ForEach(categoriesFiltered) { category in
-                        HStack {
-                            let icon = Utils.getIconFromString(category.icon)
-                            
-                            if let image = icon {
-                                image
-                                    .frame(width: FrameSize.width.iconCategoryList,
-                                           height: FrameSize.height.iconCategoryList)
+                
+                let categoriesFiltered = viewModel.categories.filter { $0.categoryType == transactionType }
+                
+                if categoriesFiltered.isEmpty {
+                    NoContentView(title: "No categories",
+                                  rotationDegress: ConstantAnimations.rotationArrowBottomTrailing)
+                } else {
+                    ListContainer {
+                        ForEach(categoriesFiltered) { category in
+                            HStack {
+                                let icon = Utils.getIconFromString(category.icon)
+                                
+                                if let image = icon {
+                                    image
+                                        .frame(width: FrameSize.width.iconCategoryList,
+                                               height: FrameSize.height.iconCategoryList)
+                                }
+                                
+                                Button(category.name) {
+                                    selectedCategory = category
+                                    dismiss()
+                                }
+                                
+                                Spacer()
+                                
+                                Image.chevronRight
                             }
-                            
-                            Button(category.name) {
-                                selectedCategory = category
-                                dismiss()
-                            }
-                            
-                            Spacer()
-                            
-                            Image.chevronRight
                         }
+                        .listRowBackground(Color.listRowBackground) //Background for each row.
                     }
-                    .listRowBackground(Color.listRowBackground) //Background for each row.
                 }
                 
                 ButtonRounded {
@@ -76,7 +81,7 @@ struct SelectCategoryModalView: View {
     }
 }
 
-#Preview {
+#Preview("Content EN") {
     VStack {
         let array = [
             CategoryModel(icon: "envelope.fill",
@@ -100,5 +105,13 @@ struct SelectCategoryModalView: View {
         let viewModel = CategoryViewModel(categories: array)
         
         SelectCategoryModalView(viewModel: viewModel, selectedCategory: .constant(CategoryModel()), transactionType: .expense)
+            .environment(\.locale, .init(identifier: "en"))
+    }
+}
+
+#Preview("No content ES") {
+    VStack {
+        SelectCategoryModalView(viewModel: CategoryViewModel(), selectedCategory: .constant(CategoryModel()), transactionType: .expense)
+            .environment(\.locale, .init(identifier: "es"))
     }
 }

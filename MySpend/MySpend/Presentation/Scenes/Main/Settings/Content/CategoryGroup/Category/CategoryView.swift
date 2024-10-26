@@ -36,31 +36,8 @@ struct CategoryView: View {
                 let categoriesFiltered = viewModel.categories.filter { $0.categoryType == viewModel.categoryType }
                 
                 if categoriesFiltered.isEmpty {
-                    VStack {
-                        Spacer()
-                        TextPlain(message: "No transactions",
-                                  family: .semibold,
-                                  size: .bigXL,
-                                  aligment: .center)
-                        .padding(.vertical)
-                        
-                        TextPlain(message: "Try adding a new one in the + button",
-                                  size: .big,
-                                  aligment: .center,
-                                  lineLimit: ConstantViews.messageMaxLines)
-                        Spacer()
-                        
-                        Image.arrowTurnUpLeft
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: FrameSize.width.iconAddNewData,
-                                   height: FrameSize.width.iconAddNewData)
-                            .fontWeight(.ultraLight)
-                            .foregroundStyle(Color.textPrimaryForeground)
-                            .rotationEffect(.degrees(ConstantAnimations.rotationArrowBottomTrailing))
-                        
-                        Spacer()
-                    }
+                    NoContentView(title: "No categories",
+                                  rotationDegress: ConstantAnimations.rotationArrowBottomTrailing)
                 } else {
                     ListContainer {
                         ForEach(categoriesFiltered) { category in

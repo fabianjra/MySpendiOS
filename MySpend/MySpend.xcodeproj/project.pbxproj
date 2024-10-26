@@ -93,6 +93,7 @@
 		1F9462EE2A7B54EC00F5CBFB /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9462ED2A7B54EC00F5CBFB /* Loader.swift */; };
 		1F9DD6D02CCCA9EB0093F55D /* SelectCategoryModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9DD6CF2CCCA9E40093F55D /* SelectCategoryModalView.swift */; };
 		1F9DD6D22CCCC3510093F55D /* TextFieldReadOnlySelectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9DD6D12CCCC3490093F55D /* TextFieldReadOnlySelectable.swift */; };
+		1F9DD6D42CCCCFA20093F55D /* NoContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9DD6D32CCCCF9A0093F55D /* NoContentView.swift */; };
 		1F9F16D42AFC926D003CB599 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9F16D32AFC926D003CB599 /* UserModel.swift */; };
 		1FA08EE22C5D993C0019000B /* Register.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA08EE12C5D993C0019000B /* Register.swift */; };
 		1FA08EE42C5D99480019000B /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA08EE32C5D99480019000B /* RegisterViewModel.swift */; };
@@ -254,6 +255,7 @@
 		1F9D79C42A47C0F000F55418 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1F9DD6CF2CCCA9E40093F55D /* SelectCategoryModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCategoryModalView.swift; sourceTree = "<group>"; };
 		1F9DD6D12CCCC3490093F55D /* TextFieldReadOnlySelectable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldReadOnlySelectable.swift; sourceTree = "<group>"; };
+		1F9DD6D32CCCCF9A0093F55D /* NoContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoContentView.swift; sourceTree = "<group>"; };
 		1F9F16D32AFC926D003CB599 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		1FA08EE12C5D993C0019000B /* Register.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Register.swift; sourceTree = "<group>"; };
 		1FA08EE32C5D99480019000B /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
@@ -558,6 +560,7 @@
 		1F5CC57A2A6648D000C214FE /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				1F9DD6D32CCCCF9A0093F55D /* NoContentView.swift */,
 				1F5CC57B2A6648E400C214FE /* DividerView.swift */,
 				1F9462EA2A7B4D8200F5CBFB /* HeaderNavigator.swift */,
 				1FBAFA5D2CA5103300C09470 /* LoaderView.swift */,
@@ -1148,6 +1151,7 @@
 				1F64B0AD2A70D647004AC825 /* TextFieldReadOnly.swift in Sources */,
 				1F9462EB2A7B4D8200F5CBFB /* HeaderNavigator.swift in Sources */,
 				1FF6205C2CA4FE730031F416 /* CategoriesDatabase.swift in Sources */,
+				1F9DD6D42CCCCFA20093F55D /* NoContentView.swift in Sources */,
 				1FAADBE62CCB36FC00D9544D /* ModifyCategoryViewModel.swift in Sources */,
 				1F06414D2A7232D300C19084 /* RootView.swift in Sources */,
 				1F7486C32A6A3F770063AC35 /* ButtonRounded.swift in Sources */,

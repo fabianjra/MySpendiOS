@@ -58,30 +58,7 @@ struct TransactionView: View {
                 LoaderView()
             } else {
                 if viewModel.transactions.isEmpty {
-                    Spacer()
-                    TextPlain(message: "No transactions",
-                              family: .semibold,
-                              size: .bigXL,
-                              aligment: .center)
-                    .padding(.vertical)
-                    
-                    TextPlain(message: "Try adding a new one in the + button",
-                              size: .big,
-                              aligment: .center,
-                              lineLimit: ConstantViews.messageMaxLines)
-                    
-                    Spacer()
-                    
-                    Image.arrowTurnUpLeft
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: FrameSize.width.iconAddNewData,
-                               height: FrameSize.width.iconAddNewData)
-                        .fontWeight(.ultraLight)
-                        .foregroundStyle(Color.textPrimaryForeground)
-                        .rotationEffect(.degrees(ConstantAnimations.rotationArrowBottomCenter))
-                    
-                    Spacer()
+                    NoContentView(title: "No transactions")
                     Spacer()
                 } else {
                     VStack {
