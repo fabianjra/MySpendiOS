@@ -19,6 +19,7 @@ struct TextFieldNotes: View {
         .textFieldStyle(TextFieldIconStyle($text,
                                            textLimit: ConstantViews.textMaxLength,
                                            showErrorIndicador: false))
+        .keyboardType(.alphabet)
     }
 }
 
