@@ -9,10 +9,9 @@ import Foundation
 
 class NewCategoryViewModel: BaseViewModel {
     
-    @Published var model = CategoryModel()
     @Published var showIconsModal = false
     
-    func addNewCategory() async -> ResponseModel {
+    func addNewCategory(_ model: CategoryModel) async -> ResponseModel {
         if model.name.isEmptyOrWhitespace() {
             return ResponseModel(.error, Messages.emptySpaces.localizedDescription)
         }
@@ -21,7 +20,7 @@ class NewCategoryViewModel: BaseViewModel {
         
         await performWithLoader {
             do {
-                try await Repository().addNewDocument(self.model, forSubCollection: .categories)
+                try await Repository().addNewDocument(model, forSubCollection: .categories)
                 
                 response = ResponseModel(.successful)
             } catch {

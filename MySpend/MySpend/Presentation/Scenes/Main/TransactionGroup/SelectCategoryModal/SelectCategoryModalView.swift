@@ -69,7 +69,7 @@ struct SelectCategoryModalView: View {
             viewModel.fetchData()
         }
         .sheet(isPresented: $viewModel.showNewItemModal) {
-            NewCategoryView()
+            NewCategoryView(model: CategoryModel(categoryType: transactionType))
                 .presentationDetents([.large])
                 .presentationCornerRadius(ConstantRadius.cornersModal)
         }

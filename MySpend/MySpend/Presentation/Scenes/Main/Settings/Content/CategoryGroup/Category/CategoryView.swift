@@ -70,7 +70,7 @@ struct CategoryView: View {
             viewModel.fetchData()
         }
         .sheet(isPresented: $viewModel.showNewItemModal) {
-            NewCategoryView()
+            NewCategoryView(model: CategoryModel(categoryType: viewModel.categoryType))
                 .presentationDetents([.large])
                 .presentationCornerRadius(ConstantRadius.cornersModal)
         }

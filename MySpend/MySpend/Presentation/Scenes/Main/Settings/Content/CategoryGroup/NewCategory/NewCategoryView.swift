@@ -11,6 +11,7 @@ struct NewCategoryView: View {
     
     @Environment(\.dismiss) var dismiss
     
+    @State var model: CategoryModel
     @StateObject var viewModel = NewCategoryViewModel()
     
     var body: some View {
@@ -27,7 +28,7 @@ struct NewCategoryView: View {
             
             // MARK: SEGMENT
             VStack {
-                PickerSegmented(selection: $viewModel.model.categoryType,
+                PickerSegmented(selection: $model.categoryType,
                                 segments: TransactionType.allCases)
                 .frame(maxWidth: ConstantFrames.iPadMaxWidth)
                 .padding(.bottom)
@@ -36,22 +37,22 @@ struct NewCategoryView: View {
             
             // MARK: TEXTFIELDS
             VStack {
-                TextFieldCategoryName(text: $viewModel.model.name,
+                TextFieldCategoryName(text: $model.name,
                                       errorMessage: $viewModel.errorMessage)
                 .onSubmit { process() }
                 
                 Button("") {
                     viewModel.showIconsModal = true
                 }
-                .buttonStyle(ButtonTextFieldStyle(icon: viewModel.model.icon, actionClear: {
-                    viewModel.model.icon = ""
+                .buttonStyle(ButtonTextFieldStyle(icon: model.icon, actionClear: {
+                    model.icon = ""
                 }))
             }
             
             
             // MARK: BUTTONS
             VStack {
-                Button("Accept") {
+                Button("Add") {
                     process()
                 }
                 .buttonStyle(ButtonPrimaryStyle(isLoading: $viewModel.isLoading))
@@ -63,13 +64,13 @@ struct NewCategoryView: View {
         }
         .disabled(viewModel.isLoading)
         .sheet(isPresented: $viewModel.showIconsModal) {
-            IconListModalView(model: $viewModel.model, showModal: $viewModel.showIconsModal)
+            IconListModalView(model: $model, showModal: $viewModel.showIconsModal)
         }
     }
      
     private func process() {
         Task {
-            let result = await viewModel.addNewCategory()
+            let result = await viewModel.addNewCategory(model)
             
             if result.status.isSuccess {
                 dismiss()
@@ -81,5 +82,5 @@ struct NewCategoryView: View {
 }
 
 #Preview("Add new category") {
-    NewCategoryView()
+    NewCategoryView(model: CategoryModel())
 }
