@@ -9,20 +9,23 @@ import FirebaseFirestore
 
 class TransactionViewModel: BaseViewModel {
     
-    @Published var model = Resume()
+    @Published var userName: String = ""
+    @Published var transactions: [TransactionModel]
+    @Published var totalBalance: Decimal = .zero
+    @Published var totalBalanceFormatted: String = ""
     
     //init for Canvas Previews.
-    init(model: Resume = Resume()) {
-        self.model = model
+    init(transactions: [TransactionModel] = []) {
+        self.transactions = transactions
     }
-    
-    private var listener: ListenerRegistration?
     
     func onAppear() {
         performWithCurrentUser { currentUser in
-            self.model.userName = currentUser.displayName ?? ""
+            self.userName = currentUser.displayName ?? ""
         }
     }
+    
+    private var listener: ListenerRegistration?
     
     func fetchData() {
         
@@ -60,26 +63,26 @@ class TransactionViewModel: BaseViewModel {
                         if var decodedDocument = decodedDocument {
                             
                             //Permite validar que no se dupliquen items.
-                            if !model.transactions.contains(where: { $0.id == change.document.documentID }) {
+                            if !transactions.contains(where: { $0.id == change.document.documentID }) {
                                 decodedDocument.id = change.document.documentID
-                                model.transactions.append(decodedDocument)
+                                transactions.append(decodedDocument)
                             }
                         }
                         
                     case .modified:
-                        if let index = model.transactions.firstIndex(where: { $0.id == change.document.documentID }) {
+                        if let index = transactions.firstIndex(where: { $0.id == change.document.documentID }) {
                             let data = change.document.data()
                             
                             if var decodedDocument = try? UtilsFB.decodeModelFB(data: data, forModel: TransactionModel.self) {
                                 decodedDocument.id = change.document.documentID
-                                model.transactions[index] = decodedDocument
+                                transactions[index] = decodedDocument
                             } else {
                                 Logs.WriteMessage("Error al decodificar el documento y pasarlo al Modelo")
                             }
                         }
                         
                     case .removed:
-                        model.transactions.removeAll(where: { $0.id == change.document.documentID })
+                        transactions.removeAll(where: { $0.id == change.document.documentID })
                         
                     default:
                         Logs.WriteMessage("Nothing modified in the documentChange")
@@ -88,13 +91,13 @@ class TransactionViewModel: BaseViewModel {
                 
                 //TODO: Refactorizar, ya que se recorrera de nuevo con cada cambio.
                 // Se debe borrar la cantidad en el onAppear porque sino seguria sumandose infinitamente.
-                model.totalBalance = .zero
-                model.totalBalanceFormatted = ConstantCurrency.zeroAmoutString.addCurrencySymbol()
+                totalBalance = .zero
+                totalBalanceFormatted = ConstantCurrency.zeroAmoutString.addCurrencySymbol()
                 
-                for item in model.transactions {
-                    model.totalBalance += item.amount
+                for item in transactions {
+                    totalBalance += item.amount
                 }
-                model.totalBalanceFormatted = model.totalBalance.convertAmountDecimalToString().addCurrencySymbol()
+                totalBalanceFormatted = totalBalance.convertAmountDecimalToString().addCurrencySymbol()
             }
         }
     }
@@ -103,6 +106,7 @@ class TransactionViewModel: BaseViewModel {
         listener?.remove()
     }
     
+    //TODO: Implementar o borrar.
     private func PREUBAS_CAMPOS_DE_FIREBASE() {
         
         let authViewModel = AuthViewModel()
@@ -123,60 +127,6 @@ class TransactionViewModel: BaseViewModel {
             for info in user.multiFactor.enrolledFactors {
                 multiFactorString += info.displayName ?? "[DispayName]"
                 multiFactorString += " "
-            }
-        }
-    }
-    
-    
-    
-    
-    //***************************
-    //TODO: ORIGINAL - SIN USO.
-    //***************************
-    func fetchData_ORIGINAL() {
-
-        performWithCurrentUser { currentUser in
-            self.model.userName = currentUser.displayName ?? ""
-            
-            let collectionRef = UtilsFB.userSubCollectionRef(.transactions, for: currentUser.uid)
-            
-            self.listener = ListenersFB().listenCollection(collection: collectionRef) { [weak self] documentsSnapshot, error in
-                
-                guard let self = self else {
-                    Logs.WriteMessage("Guard evito crear el listener ya que no se logro obtener self")
-                    return
-                }
-                
-                if let error = error {
-                    errorMessage = error.localizedDescription
-                    Logs.WriteCatchExeption(error: error)
-                    return
-                }
-                
-                model.transactions = documentsSnapshot.compactMap { documentSnapshot in
-                    let data = documentSnapshot.data()
-                    
-                    if let data = data {
-                        let decodedModel = try? UtilsFB.decodeModelFB(data: data, forModel: TransactionModel.self)
-                        
-                        if var decodedModel = decodedModel {
-                            decodedModel.id = documentSnapshot.documentID
-                            return decodedModel
-                        }
-                    }
-                    
-                    Logs.WriteMessage("Error al decodificar el documento y pasarlo al Modelo")
-                    return nil //En caso de que data o decodedModel sea nil, los ignora.
-                }
-                
-                // Se debe borrar la cantidad en el onAppear porque sino seguria sumandose infinitamente.
-                model.totalBalance = .zero
-                model.totalBalanceFormatted = ConstantCurrency.zeroAmoutString.addCurrencySymbol()
-                
-                for item in model.transactions {
-                    model.totalBalance += item.amount
-                    model.totalBalanceFormatted = model.totalBalance.convertAmountDecimalToString().addCurrencySymbol()
-                }
             }
         }
     }

@@ -1,5 +1,5 @@
 //
-//  TransactionHistory.swift
+//  DateInterval.swift
 //  MySpend
 //
 //  Created by Fabian Rodriguez on 18/8/24.
@@ -7,11 +7,7 @@
 
 import Foundation
 
-struct TransactionHistory {
-    var historyFormat: HistoryFormatEnum = .month
-}
-
-enum HistoryFormatEnum: String, CaseIterable {
+enum DateTimeInterval: String, CaseIterable {
     case day = "Daily"
     case week = "Weekly"
     case month = "Monthly"

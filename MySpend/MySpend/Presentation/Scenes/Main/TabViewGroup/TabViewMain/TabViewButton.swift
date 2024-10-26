@@ -42,7 +42,6 @@ struct TabViewButton: View {
 #Preview {
     @Previewable @State var selectedTab: TabViewIcons = .transaction
     ZStack {
-        
         Color.backgroundBottom
         
         HStack {

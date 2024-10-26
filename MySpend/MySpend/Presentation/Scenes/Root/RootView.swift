@@ -32,7 +32,7 @@ struct RootView: View {
         NavigationStack(path: $router.path) {
             VStack {
                 if authViewModel.currentUser != nil {
-                    MainView()
+                    TabViewMain()
                 } else {
                     LoginView()
                 }
@@ -43,7 +43,7 @@ struct RootView: View {
             .navigationDestination(for: Router.Destination.self) { destination in
                 switch destination {
                 case .main:
-                    MainView() //For: When go from register.
+                    TabViewMain() //For: When go from register.
                         .toolbar(.hidden, for: .navigationBar)
                 case .register:
                     RegisterView()

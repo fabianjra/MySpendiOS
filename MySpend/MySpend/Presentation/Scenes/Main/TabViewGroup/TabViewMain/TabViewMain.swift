@@ -1,5 +1,5 @@
 //
-//  MainView.swift
+//  TabViewMain.swift
 //  MySpend
 //
 //  Created by Fabian Rodriguez on 8/7/23.
@@ -7,9 +7,11 @@
 
 import SwiftUI
 
-struct MainView: View {
+struct TabViewMain: View {
     
-    @StateObject private var viewModel = MainViewModel()
+    @State var showNewTransactionModal = false
+    @State var selectedTab: TabViewIcons = .transaction
+    @State var navigateToHistory: Bool = false
     
     init() {
         UITabBar.appearance().isHidden = true
@@ -24,7 +26,7 @@ struct MainView: View {
              Por eso, se se hace scroll en la vista principal, se cambia de vista y luego vuelve,
              la vista permanece como quedó.
              */
-            TabView(selection: $viewModel.selectedTab) {
+            TabView(selection: $selectedTab) {
                 
                 /// Los tags permiten que las vistas cambien entre una seleccion u otra en el TabView.
                 TransactionView()
@@ -44,7 +46,7 @@ struct MainView: View {
         .onDisappear {
             AppState.shared.swipeEnabled = true
         }
-        .sheet(isPresented: $viewModel.showNewTransactionModal) {
+        .sheet(isPresented: $showNewTransactionModal) {
             NewTransactionView()
                 .presentationDetents([.large])
                 .presentationCornerRadius(ConstantRadius.cornersModal)
@@ -53,11 +55,11 @@ struct MainView: View {
     
     var tabView: some View {
         TabViewContainer {
-            viewModel.showNewTransactionModal = true
+            showNewTransactionModal = true
         } content: {
             ForEach(TabViewIcons.allCases, id: \.id) { item in
                 
-                TabViewButton(selectedTab: $viewModel.selectedTab, item: item)
+                TabViewButton(selectedTab: $selectedTab, item: item)
                     .padding(.horizontal, ConstantViews.paddingTabViewHorizontal)
                     .padding(.bottom)
                 
@@ -70,6 +72,6 @@ struct MainView: View {
 }
 
 #Preview {
-    MainView()
+    TabViewMain()
         .environmentObject(AuthViewModel())
 }

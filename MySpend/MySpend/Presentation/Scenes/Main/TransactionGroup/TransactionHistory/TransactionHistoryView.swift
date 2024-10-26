@@ -29,8 +29,8 @@ struct TransactionHistoryView: View {
                 Spacer()
             } else {
                 VStack {
-                    Picker("Transaction type", selection: $viewModel.model.historyFormat) {
-                        ForEach(HistoryFormatEnum.allCases, id: \.self) { type in
+                    Picker("Transaction type", selection: $viewModel.historyFormat) {
+                        ForEach(DateTimeInterval.allCases, id: \.self) { type in
                             Text(type.rawValue)
                         }
                     }
@@ -66,46 +66,42 @@ struct TransactionHistoryView: View {
     }
 }
 
-#Preview("With Content") {
+#Preview("With Content ES") {
     VStack {
-        let transaction1 = TransactionModel(amount: 56000,
-                                            date: "25/05/1990",
-                                            category: "Diario",
-                                            notes: "Nota",
-                                            transactionType: .expense)
-        let transaction2 = TransactionModel(amount: 3000.9,
-                                            date: "25/05/2024",
-                                            category: "Gastos mensuales del mes abc abc abcdefthijklmnbrto adfsafsdf a saf",
-                                            notes: "Nota",
-                                            transactionType: .expense)
-        let transaction3 = TransactionModel(amount: 100,
-                                            date: "01/12/2003",
-                                            category: "No category",
-                                            notes: "Nota",
-                                            transactionType: .expense)
-        let transaction4 = TransactionModel(amount: 301928564721.328,
-                                            date: "01/05/2023",
-                                            category: "Gastos mensuales del mes abc abc abcdefthijklmnbrto adfsafsdf a saf",
-                                            notes: "Nota",
-                                            transactionType: .expense)
-        let transaction5 = TransactionModel(amount: 3000.1,
-                                            date: "25/05/2024",
-                                            category: "Gastos mensuales",
-                                            notes: "Nota",
-                                            transactionType: .expense)
+        let array = [TransactionModel(amount: 56000,
+                                      date: "25/05/1990",
+                                      category: "Diario",
+                                      notes: "Nota",
+                                      transactionType: .expense),
+                     TransactionModel(amount: 3000.9,
+                                      date: "25/05/2024",
+                                      category: "Gastos mensuales del mes abc abc abcdefthijklmnbrto adfsafsdf a saf",
+                                      notes: "Nota",
+                                      transactionType: .expense),
+                     TransactionModel(amount: 100,
+                                      date: "01/12/2003",
+                                      category: "No category",
+                                      notes: "Nota",
+                                      transactionType: .expense),
+                     TransactionModel(amount: 301928564721.328,
+                                      date: "01/05/2023",
+                                      category: "Gastos mensuales del mes abc abc abcdefthijklmnbrto adfsafsdf a saf",
+                                      notes: "Nota",
+                                      transactionType: .expense),
+                     TransactionModel(amount: 3000.1,
+                                      date: "25/05/2024",
+                                      category: "Gastos mensuales",
+                                      notes: "Nota",
+                                      transactionType: .expense)]
         
-        let transactionArray = [transaction1, transaction2, transaction3, transaction4, transaction5]
-        let viewModel = TransactionHistoryViewModel(transactions: transactionArray, model: TransactionHistory())
-        
-        TransactionHistoryView(viewModel: viewModel)
+        TransactionHistoryView(viewModel: TransactionHistoryViewModel(transactions: array))
             .environment(\.locale, .init(identifier: "es"))
     }
 }
 
-#Preview("No content") {
+#Preview("No content EN") {
     VStack {
-        let viewModel = TransactionHistoryViewModel(transactions: [], model: TransactionHistory())
-        TransactionHistoryView(viewModel: viewModel)
-            .environment(\.locale, .init(identifier: "es"))
+        TransactionHistoryView(viewModel: TransactionHistoryViewModel())
+            .environment(\.locale, .init(identifier: "en"))
     }
 }
