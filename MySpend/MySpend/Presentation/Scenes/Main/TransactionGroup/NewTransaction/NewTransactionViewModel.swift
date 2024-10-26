@@ -22,7 +22,7 @@ class NewTransactionViewModel: BaseViewModel {
     }
     
     func addNewTransaction() async -> ResponseModel {
-        if model.category.isEmptyOrWhitespace() {
+        if model.category.name.isEmptyOrWhitespace() {
             return ResponseModel(.error, Messages.emptySpaces.localizedDescription)
         }
         

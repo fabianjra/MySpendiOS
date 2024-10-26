@@ -57,7 +57,7 @@ struct NewTransactionView: View {
                         
                         
                         TextFieldReadOnly(placeHolder: "Category",
-                                          text: $viewModel.model.category,
+                                          text: $viewModel.model.category.name,
                                           iconLeading: Image.stackFill,
                                           colorDisabled: false)
                         .onTapGesture {
@@ -107,7 +107,7 @@ struct NewTransactionView: View {
                                         selectedDate: $viewModel.selectedDate)
                 }
                 .sheet(isPresented: $viewModel.showCategoryList) {
-                    Color.red //TODO: Cambiar por seleccion de category
+                    SelectCategoryModalView(selectedCategory: $viewModel.model.category)
                         .presentationDetents([.large])
                         .presentationCornerRadius(ConstantRadius.cornersModal)
                 }
@@ -115,11 +115,7 @@ struct NewTransactionView: View {
         }
         .disabled(viewModel.isLoading)
     }
-    
-    var modal: some View {
-        Text("categories")
-    }
-    
+
     private func process() {
         focusedField = .none
         Task {

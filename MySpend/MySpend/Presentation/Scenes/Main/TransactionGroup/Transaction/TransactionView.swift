@@ -74,7 +74,7 @@ struct TransactionView: View {
                         ScrollView(showsIndicators: false) {
                             ForEach(viewModel.transactions) { item in
                                 HStack {
-                                    TextPlain(message: item.category.description,
+                                    TextPlain(message: item.category.name,
                                               lineLimit: ConstantViews.singleTextMaxLines)
                                     
                                     Spacer()
@@ -122,27 +122,27 @@ struct TransactionView: View {
     VStack {
         let array = [TransactionModel(amount: 56000,
                                       date: "25/05/1990",
-                                      category: "01",
+                                      category: CategoryModel(name: "01"),
                                       notes: "Nota",
                                       transactionType: .expense),
                      TransactionModel(amount: 3000.00,
                                       date: "25/05/2024",
-                                      category: "02",
+                                      category: CategoryModel(name: "02"),
                                       notes: "Nota",
                                       transactionType: .expense),
                      TransactionModel(amount: 100.12,
                                       date: "01/12/2003",
-                                      category: "03",
+                                      category: CategoryModel(name: "03"),
                                       notes: "Nota",
                                       transactionType: .expense),
                      TransactionModel(amount: 270046.7802,
                                       date: "01/05/2023",
-                                      category: "05",
+                                      category: CategoryModel(name: "04"),
                                       notes: "Nota",
                                       transactionType: .expense),
                      TransactionModel(amount: 270000,
                                       date: "01/05/2023",
-                                      category: "04",
+                                      category: CategoryModel(name: "05"),
                                       notes: "Nota",
                                       transactionType: .expense)]
 
@@ -155,27 +155,27 @@ struct TransactionView: View {
     VStack {
         let array = [TransactionModel(amount: 56000234234.23434,
                                       date: "25/05/1990",
-                                      category: "alsjdfasjflkasj dflkasjdlkfjaslkfjalsk asd f",
+                                      category: CategoryModel(name: "01"),
                                       notes: "Nota",
                                       transactionType: .expense),
                      TransactionModel(amount: 3002342340.00,
                                       date: "25/05/2024",
-                                      category: "02",
+                                      category: CategoryModel(name: "02"),
                                       notes: "Nota",
                                       transactionType: .expense),
                      TransactionModel(amount: 100.12,
                                       date: "01/12/2003",
-                                      category: "asdfasdfasdfasdfk jkfj askjf aksjf ksjf kasjf kasf jk",
+                                      category: CategoryModel(name: "03"),
                                       notes: "Nota",
                                       transactionType: .expense),
                      TransactionModel(amount: 27677776763244437674.23423434,
                                       date: "01/05/2023",
-                                      category: "asdf asfa",
+                                      category: CategoryModel(name: "04"),
                                       notes: "Nota",
                                       transactionType: .expense),
                      TransactionModel(amount: 270046.7802,
                                       date: "01/05/2023",
-                                      category: "05",
+                                      category: CategoryModel(name: "05"),
                                       notes: "Nota",
                                       transactionType: .expense)]
 

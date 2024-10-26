@@ -11,7 +11,7 @@ struct TransactionModel: Identifiable, Codable {
     var id = ""
     var amount: Decimal = .zero
     var date: String = ""
-    var category: String = ""
+    var category: CategoryModel = CategoryModel()
     var notes: String = ""
     var transactionType: TransactionType = .expense
     
