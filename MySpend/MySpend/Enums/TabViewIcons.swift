@@ -9,8 +9,9 @@ import SwiftUI
 
 enum TabViewIcons: String, CaseIterable, Identifiable {
     public var id: Self { self }
-    case transaction = "Transactions" //Transaction will be inside of this view.
-    case settings = "Settings" //Categories will be inside of this view.
+    
+    case transaction = "Transactions"
+    case settings = "Settings"
     
     var iconSelected: Image {
         switch self {

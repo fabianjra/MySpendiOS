@@ -30,7 +30,7 @@ struct TransactionHistoryView: View {
             } else {
                 VStack {
                     Picker("Transaction type", selection: $viewModel.historyFormat) {
-                        ForEach(DateTimeInterval.allCases, id: \.self) { type in
+                        ForEach(DateTimeInterval.allCases) { type in
                             Text(type.rawValue)
                         }
                     }

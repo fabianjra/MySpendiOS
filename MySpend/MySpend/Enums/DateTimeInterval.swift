@@ -7,7 +7,9 @@
 
 import Foundation
 
-enum DateTimeInterval: String, CaseIterable {
+enum DateTimeInterval: String, CaseIterable, Identifiable {
+    public var id: Self { self }
+    
     case day = "Daily"
     case week = "Weekly"
     case month = "Monthly"

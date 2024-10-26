@@ -16,7 +16,7 @@ struct IconListModalView: View {
         NavigationStack {
             FormContainer(addPading: false, scrollable: true, showsIndicators: false, backgroundCenter: .center) {
                 
-                ForEach(Icons.allCases, id: \.self) { icon in
+                ForEach(CategoryIcons.allCases) { icon in
                     VStack {
                         SectionContainer(header: icon.rawValue, isInsideList: false, headerSize: .body) {
                             

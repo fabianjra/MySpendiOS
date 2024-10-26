@@ -1,11 +1,13 @@
 //
-//  Icons.swift
+//  CategoryIcons.swift
 //  MySpend
 //
 //  Created by Fabian Rodriguez on 21/10/24.
 //
 
-public enum Icons: String, CaseIterable {
+public enum CategoryIcons: String, CaseIterable, Identifiable {
+    public var id: Self { self }
+    
     case bills = "Bills"
     case foodAndDrink = "Food and Drink"
     case household = "Household"

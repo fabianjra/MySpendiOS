@@ -7,6 +7,7 @@
 
 enum TransactionType: String, CaseIterable, Identifiable, Codable {
     public var id: Self { self }
+    
     case expense = "expense"
     case income = "income"
 }
