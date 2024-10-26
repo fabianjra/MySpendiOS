@@ -11,7 +11,7 @@ struct ModifyCategoryView: View {
     
     @Environment(\.dismiss) var dismiss
     
-    @Binding var model: CategoryModel
+    @Binding var modelLoaded: CategoryModel
     @StateObject var viewModel = ModifyCategoryViewModel()
     
     var body: some View {
@@ -28,7 +28,7 @@ struct ModifyCategoryView: View {
             
             // MARK: SEGMENT
             VStack {
-                PickerSegmented(selection: $model.categoryType,
+                PickerSegmented(selection: $modelLoaded.categoryType,
                                 segments: TransactionType.allCases)
                 .frame(maxWidth: ConstantFrames.iPadMaxWidth)
                 .padding(.bottom)
@@ -37,14 +37,14 @@ struct ModifyCategoryView: View {
             
             // MARK: TEXTFIELDS
             VStack {
-                TextFieldCategoryName(text: $model.name,
+                TextFieldCategoryName(text: $modelLoaded.name,
                                       errorMessage: $viewModel.errorMessage)
                 
                 Button("") {
                     viewModel.showIconsModal = true
                 }
-                .buttonStyle(ButtonTextFieldStyle(icon: model.icon, actionClear: {
-                    model.icon = ""
+                .buttonStyle(ButtonTextFieldStyle(icon: modelLoaded.icon, actionClear: {
+                    modelLoaded.icon = ""
                 }))
             }
             
@@ -76,13 +76,13 @@ struct ModifyCategoryView: View {
         }
         .disabled(viewModel.isLoading || viewModel.isLoadingSecondary)
         .sheet(isPresented: $viewModel.showIconsModal) {
-            IconListModalView(model: $model, showModal: $viewModel.showIconsModal)
+            IconListModalView(model: $modelLoaded, showModal: $viewModel.showIconsModal)
         }
     }
     
     private func process() {
         Task {
-            let result = await viewModel.modifyCategory(model)
+            let result = await viewModel.modifyCategory(modelLoaded)
             
             if result.status.isSuccess {
                 dismiss()
@@ -94,7 +94,7 @@ struct ModifyCategoryView: View {
     
     private func delete() {
         Task {
-            let result = await viewModel.deleteCategory(model)
+            let result = await viewModel.deleteCategory(modelLoaded)
             
             if result.status.isSuccess {
                 dismiss()
@@ -111,6 +111,6 @@ struct ModifyCategoryView: View {
                                                   name: "Categoria sample",
                                                   categoryType: .income)
     VStack {
-        ModifyCategoryView(model: $model)
+        ModifyCategoryView(modelLoaded: $model)
     }
 }

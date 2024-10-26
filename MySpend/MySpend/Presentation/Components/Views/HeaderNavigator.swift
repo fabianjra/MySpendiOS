@@ -12,54 +12,27 @@ struct HeaderNavigator: View {
     @Environment(\.dismiss) private var dismiss
     
     // MARK: TITLE
-    let title: String
-    let titleWeight: Font.Family
-    let titleSize: Font.Sizes
+    var title: String = "mySpend"
+    var titleWeight: Font.Family = .thin
+    var titleSize: Font.Sizes = .bigXXL
     
     // MARK: SUBTITLE
-    let subTitle: String
-    let subTitleWeight: Font.Family
-    let subTitleSize: Font.Sizes
+    var subTitle: String = ""
+    var subTitleWeight: Font.Family = .light
+    var subTitleSize: Font.Sizes = .body
     
     // MARK: GENERAL
-    let textColor: Color
+    var textColor: Color = Color.textPrimaryForeground
     
     // MARK: VALIDATION
-    let onlyTitle: Bool
-    let showLeadingAction: Bool
+    var onlyTitle: Bool = false
+    var showLeadingAction: Bool = true
     
     // MARK: RIGHT ACTION (to dimiss by default)
-    let showTrailingAction: Bool
-    let trailingImage: Image
-    let trailingAction: (() -> Void)? //Optional because dont need to excecute everytime this view is called.
-    
-    init(title: String = "mySpend",
-         titleWeight: Font.Family = .thin,
-         titleSize: Font.Sizes = .bigXXL,
-         subTitle: String = "",
-         subTitleWeight: Font.Family = .light,
-         subTitleSize: Font.Sizes = .body,
-         textColor: Color = Color.textPrimaryForeground,
-         onlyTitle: Bool = false,
-         showLeadingAction: Bool = true,
-         showTrailingAction: Bool = false,
-         trailingImage: Image = Image.xmarkCircle,
-         trailingAction: (() -> Void)? = nil) {
-        
-        self.title = title
-        self.titleWeight = titleWeight
-        self.titleSize = titleSize
-        self.subTitle = subTitle
-        self.subTitleWeight = subTitleWeight
-        self.subTitleSize = subTitleSize
-        self.textColor = textColor
-        self.onlyTitle = onlyTitle
-        self.showLeadingAction = showLeadingAction
-        self.showTrailingAction = showTrailingAction
-        self.trailingImage = trailingImage
-        self.trailingAction = trailingAction
-    }
-    
+    var showTrailingAction: Bool = false
+    var trailingImage: Image = Image.xmarkCircle
+    var trailingAction: (() -> Void)? = nil //Optional because dont need to excecute everytime this view is called.
+
     var body: some View {
         if onlyTitle {
             titleAndSubtitle

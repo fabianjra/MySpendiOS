@@ -19,7 +19,7 @@ struct NewCategoryView: View {
             HeaderNavigator(title: "New category",
                             titleWeight: .regular,
                             titleSize: .bigXL,
-                            subTitle: "Enter the new category details",
+                            subTitle: "Enter the category details",
                             showLeadingAction: false,
                             showTrailingAction: true)
                 .padding(.vertical)
