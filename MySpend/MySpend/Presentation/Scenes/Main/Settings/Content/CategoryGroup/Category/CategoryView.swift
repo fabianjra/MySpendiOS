@@ -1,5 +1,5 @@
 //
-//  CategoriesView.swift
+//  CategoryView.swift
 //  MySpend
 //
 //  Created by Fabian Rodriguez on 11/8/24.
@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct CategoriesView: View {
+struct CategoryView: View {
     
-    @StateObject var viewModel = CategoriesViewModel()
+    @StateObject var viewModel = CategoryViewModel()
     
     var body: some View {
         ContentContainer(addPading: false) {
@@ -104,9 +104,9 @@ struct CategoriesView: View {
                           categoryType: .income)
         ]
         
-        let viewModel = CategoriesViewModel(categories: array)
+        let viewModel = CategoryViewModel(categories: array)
         
-        CategoriesView(viewModel: viewModel)
+        CategoryView(viewModel: viewModel)
     }
 }
 
@@ -120,11 +120,11 @@ struct CategoriesView: View {
     }
     
     VStack {
-        let viewModel = CategoriesViewModel(categories: arrayCategories)
-        CategoriesView(viewModel: viewModel)
+        let viewModel = CategoryViewModel(categories: arrayCategories)
+        CategoryView(viewModel: viewModel)
     }
 }
 
 #Preview("Without content") {
-    CategoriesView()
+    CategoryView()
 }

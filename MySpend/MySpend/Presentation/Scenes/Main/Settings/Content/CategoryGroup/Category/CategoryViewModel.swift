@@ -1,5 +1,5 @@
 //
-//  CategoriesViewModel.swift
+//  CategoryViewModel.swift
 //  MySpend
 //
 //  Created by Fabian Rodriguez on 11/8/24.
@@ -7,7 +7,7 @@
 
 import FirebaseFirestore
 
-class CategoriesViewModel: BaseViewModel {
+class CategoryViewModel: BaseViewModel {
     
     @Published var categories: [CategoryModel]
     @Published var categoryType: TransactionType = .expense

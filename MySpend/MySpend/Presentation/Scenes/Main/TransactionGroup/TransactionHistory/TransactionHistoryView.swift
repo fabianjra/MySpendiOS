@@ -1,5 +1,5 @@
 //
-//  HistoryView.swift
+//  TransactionHistoryView.swift
 //  MySpend
 //
 //  Created by Fabian Rodriguez on 18/8/24.
@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct HistoryView: View {
+struct TransactionHistoryView: View {
     
-    @ObservedObject var viewModel: HistoryViewModel
+    @ObservedObject var viewModel: TransactionHistoryViewModel
     
     var body: some View {
         ContentContainer {
@@ -95,17 +95,17 @@ struct HistoryView: View {
                                             transactionType: .expense)
         
         let transactionArray = [transaction1, transaction2, transaction3, transaction4, transaction5]
-        let viewModel = HistoryViewModel(transactions: transactionArray, model: History())
+        let viewModel = TransactionHistoryViewModel(transactions: transactionArray, model: TransactionHistory())
         
-        HistoryView(viewModel: viewModel)
+        TransactionHistoryView(viewModel: viewModel)
             .environment(\.locale, .init(identifier: "es"))
     }
 }
 
 #Preview("No content") {
     VStack {
-        let viewModel = HistoryViewModel(transactions: [], model: History())
-        HistoryView(viewModel: viewModel)
+        let viewModel = TransactionHistoryViewModel(transactions: [], model: TransactionHistory())
+        TransactionHistoryView(viewModel: viewModel)
             .environment(\.locale, .init(identifier: "es"))
     }
 }

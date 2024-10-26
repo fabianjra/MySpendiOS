@@ -1,5 +1,5 @@
 //
-//  ResumeView.swift
+//  TransactionView.swift
 //  MySpend
 //
 //  Created by Fabian Rodriguez on 1/8/23.
@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct ResumeView: View {
+struct TransactionView: View {
     
-    @StateObject var viewModel = ResumeViewModel()
+    @StateObject var viewModel = TransactionViewModel()
     
 //    init(model: Resume = Resume()) {
 //        /*
@@ -47,9 +47,9 @@ struct ResumeView: View {
             // MARK: HISTORY BUTTON
             VStack {
                 NavigationLink {
-                    let historyViewModel = HistoryViewModel(transactions: viewModel.model.transactions)
+                    let historyViewModel = TransactionHistoryViewModel(transactions: viewModel.model.transactions)
                     
-                    HistoryView(viewModel: historyViewModel)
+                    TransactionHistoryView(viewModel: historyViewModel)
                         .toolbar(.hidden, for: .navigationBar)
                 } label: {
                     TextButtonHorizontalStyled(text: "History",
@@ -162,9 +162,9 @@ struct ResumeView: View {
                             transactions: transactionArray,
                             totalBalance: .zero)
         
-        let resumeVM = ResumeViewModel(model: resume)
+        let resumeVM = TransactionViewModel(model: resume)
         
-        ResumeView(viewModel: resumeVM)
+        TransactionView(viewModel: resumeVM)
             .environment(\.locale, .init(identifier: "es"))
     }
 }
@@ -204,14 +204,14 @@ struct ResumeView: View {
                             transactions: transactionArray,
                             totalBalance: .zero)
         
-        let resumeVM = ResumeViewModel(model: resume)
+        let resumeVM = TransactionViewModel(model: resume)
         
-        ResumeView(viewModel: resumeVM)
+        TransactionView(viewModel: resumeVM)
             .environment(\.locale, .init(identifier: "en"))
     }
 }
 
 #Preview("No content") {
-    ResumeView(viewModel: ResumeViewModel())
+    TransactionView(viewModel: TransactionViewModel())
         .environment(\.locale, .init(identifier: "en"))
 }

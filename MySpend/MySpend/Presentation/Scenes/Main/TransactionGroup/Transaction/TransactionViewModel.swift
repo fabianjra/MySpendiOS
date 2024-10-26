@@ -1,5 +1,5 @@
 //
-//  ResumeViewModel.swift
+//  TransactionViewModel.swift
 //  MySpend
 //
 //  Created by Fabian Rodriguez on 8/8/24.
@@ -7,7 +7,7 @@
 
 import FirebaseFirestore
 
-class ResumeViewModel: BaseViewModel {
+class TransactionViewModel: BaseViewModel {
     
     @Published var model = Resume()
     
