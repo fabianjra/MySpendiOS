@@ -32,31 +32,59 @@ struct CategoryView: View {
             
             
             ZStack(alignment: .bottomTrailing) {
-                ListContainer {
-                    
-                    let categoriesFiltered = viewModel.categories.filter { $0.categoryType == viewModel.categoryType }
-                    
-                    ForEach(categoriesFiltered) { category in
-                        HStack {
-                            let icon = Utils.getIconFromString(category.icon)
-                            
-                            if let image = icon {
-                                image
-                                    .frame(width: FrameSize.width.iconCategoryList,
-                                           height: FrameSize.height.iconCategoryList)
-                            }
-                            
-                            Button(category.name) {
-                                viewModel.categoryToModify = category
-                                viewModel.showModifyItemModal = true
-                            }
-                            
-                            Spacer()
-                            
-                            Image.chevronRight
-                        }
+                
+                let categoriesFiltered = viewModel.categories.filter { $0.categoryType == viewModel.categoryType }
+                
+                if categoriesFiltered.isEmpty {
+                    VStack {
+                        Spacer()
+                        TextPlain(message: "No transactions",
+                                  family: .semibold,
+                                  size: .bigXL,
+                                  aligment: .center)
+                        .padding(.vertical)
+                        
+                        TextPlain(message: "Try adding a new one in the + button",
+                                  size: .big,
+                                  aligment: .center,
+                                  lineLimit: ConstantViews.messageMaxLines)
+                        Spacer()
+                        
+                        Image.arrowTurnUpLeft
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: FrameSize.width.iconAddNewData,
+                                   height: FrameSize.width.iconAddNewData)
+                            .fontWeight(.ultraLight)
+                            .foregroundStyle(Color.textPrimaryForeground)
+                            .rotationEffect(.degrees(ConstantAnimations.rotationArrowBottomTrailing))
+                        
+                        Spacer()
                     }
-                    .listRowBackground(Color.listRowBackground) //Background for each row.
+                } else {
+                    ListContainer {
+                        ForEach(categoriesFiltered) { category in
+                            HStack {
+                                let icon = Utils.getIconFromString(category.icon)
+                                
+                                if let image = icon {
+                                    image
+                                        .frame(width: FrameSize.width.iconCategoryList,
+                                               height: FrameSize.height.iconCategoryList)
+                                }
+                                
+                                Button(category.name) {
+                                    viewModel.categoryToModify = category
+                                    viewModel.showModifyItemModal = true
+                                }
+                                
+                                Spacer()
+                                
+                                Image.chevronRight
+                            }
+                        }
+                        .listRowBackground(Color.listRowBackground) //Background for each row.
+                    }
                 }
                 
                 ButtonRounded {
@@ -124,6 +152,6 @@ struct CategoryView: View {
     }
 }
 
-#Preview("Without content") {
+#Preview("No content") {
     CategoryView()
 }

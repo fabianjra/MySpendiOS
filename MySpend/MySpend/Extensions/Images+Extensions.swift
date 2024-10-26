@@ -59,6 +59,7 @@ extension Image {
     // MARK: GENERAL
     static let warningFill = Image(systemName: "exclamationmark.triangle.fill")
     static let arrowTurnUpLeft = Image(systemName: "arrowshape.turn.up.left")
+    static let arrowTurnUpRight = Image(systemName: "arrowshape.turn.up.right")
     static let arrowTurnUpLeftFill = Image(systemName: "arrowshape.turn.up.left.fill")
     static let xmark = Image(systemName: "xmark")
 

@@ -49,4 +49,8 @@ public enum FrameSize {
     var iconInsideTextField: CGFloat {
         return 25.0
     }
+    
+    var iconAddNewData: CGFloat {
+        return 150.0
+    }
 }

@@ -67,7 +67,21 @@ struct TransactionView: View {
                     
                     TextPlain(message: "Try adding a new one in the + button",
                               size: .big,
-                              aligment: .center)
+                              aligment: .center,
+                              lineLimit: ConstantViews.messageMaxLines)
+                    
+                    Spacer()
+                    
+                    Image.arrowTurnUpLeft
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: FrameSize.width.iconAddNewData,
+                               height: FrameSize.width.iconAddNewData)
+                        .fontWeight(.ultraLight)
+                        .foregroundStyle(Color.textPrimaryForeground)
+                        .rotationEffect(.degrees(ConstantAnimations.rotationArrowBottomCenter))
+                    
+                    Spacer()
                     Spacer()
                 } else {
                     VStack {
