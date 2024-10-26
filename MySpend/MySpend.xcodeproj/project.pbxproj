@@ -329,6 +329,17 @@
 			path = Root;
 			sourceTree = "<group>";
 		};
+		1F0FA3C32CCC7B99009DDB4E /* CaseIterables */ = {
+			isa = PBXGroup;
+			children = (
+				1FC94CD02A5A6E01005CA0B6 /* TabViewIcons.swift */,
+				1F3043802CC06D040079DB90 /* TransactionType.swift */,
+				1F65D9602C7287D30023CC5D /* DateTimeInterval.swift */,
+				1FC0F4AE2CC7460400EC576A /* CategoryIcons.swift */,
+			);
+			path = CaseIterables;
+			sourceTree = "<group>";
+		};
 		1F1408172A58FB8200181500 /* Styles */ = {
 			isa = PBXGroup;
 			children = (
@@ -844,10 +855,7 @@
 		1FFD9D5E2CCA14DB00553BD7 /* Enums */ = {
 			isa = PBXGroup;
 			children = (
-				1FC94CD02A5A6E01005CA0B6 /* TabViewIcons.swift */,
-				1F3043802CC06D040079DB90 /* TransactionType.swift */,
-				1F65D9602C7287D30023CC5D /* DateTimeInterval.swift */,
-				1FC0F4AE2CC7460400EC576A /* CategoryIcons.swift */,
+				1F0FA3C32CCC7B99009DDB4E /* CaseIterables */,
 				1F171F282A7CC90D00A0A33E /* Emojis.swift */,
 				1FFD9D5F2CCA14FC00553BD7 /* FrameSize.swift */,
 				1F0641492A722AFB00C19084 /* Messages.swift */,

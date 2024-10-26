@@ -1,5 +1,5 @@
 //
-//  DateInterval.swift
+//  DateTimeInterval.swift
 //  MySpend
 //
 //  Created by Fabian Rodriguez on 18/8/24.
