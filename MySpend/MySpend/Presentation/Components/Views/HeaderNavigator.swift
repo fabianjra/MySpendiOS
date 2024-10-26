@@ -87,9 +87,15 @@ struct HeaderNavigator: View {
                 
                 Spacer()
                 
-                ButtonNavigation(image: trailingImage, tintColor: textColor) { trailingAction?() }
-                    .modifier(Show(isVisible: showTrailingAction))
-                    .padding(.trailing)
+                ButtonNavigation(image: trailingImage, tintColor: textColor) {
+                    if let trailingAction = trailingAction {
+                        trailingAction()
+                    } else {
+                        dismiss() // Default value for trailing action: Close the Sheet or Go Back.
+                    }
+                }
+                .modifier(Show(isVisible: showTrailingAction))
+                .padding(.trailing)
             }
         }
     }

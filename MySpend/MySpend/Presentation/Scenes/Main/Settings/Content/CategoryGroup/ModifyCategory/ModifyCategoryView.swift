@@ -22,7 +22,7 @@ struct ModifyCategoryView: View {
                             titleSize: .bigXL,
                             subTitle: "Modify the category details",
                             showLeadingAction: false,
-                            showTrailingAction: true) { dismiss() }
+                            showTrailingAction: true)
                 .padding(.vertical)
             
             

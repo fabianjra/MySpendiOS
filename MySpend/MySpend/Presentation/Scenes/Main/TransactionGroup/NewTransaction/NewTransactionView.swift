@@ -26,7 +26,7 @@ struct NewTransactionView: View {
                                     titleSize: .bigXL,
                                     subTitle: "Enter transation details",
                                     showLeadingAction: false,
-                                    showTrailingAction: true) { dismiss() }
+                                    showTrailingAction: true)
                     .padding(.vertical)
                     
                     
@@ -107,11 +107,17 @@ struct NewTransactionView: View {
                                         selectedDate: $viewModel.selectedDate)
                 }
                 .sheet(isPresented: $viewModel.showCategoryList) {
-                    Color.red //TODO: Show categorylist to select.
+                    Color.red //TODO: Cambiar por seleccion de category
+                        .presentationDetents([.large])
+                        .presentationCornerRadius(ConstantRadius.cornersModal)
                 }
             }
         }
         .disabled(viewModel.isLoading)
+    }
+    
+    var modal: some View {
+        Text("categories")
     }
     
     private func process() {

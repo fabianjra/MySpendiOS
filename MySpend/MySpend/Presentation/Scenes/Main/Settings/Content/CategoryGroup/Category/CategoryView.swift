@@ -22,7 +22,6 @@ struct CategoryView: View {
             .padding(.horizontal)
             .padding(.bottom)
             
-            
             VStack {
                 PickerSegmented(selection: $viewModel.categoryType,
                                 segments: TransactionType.allCases)
