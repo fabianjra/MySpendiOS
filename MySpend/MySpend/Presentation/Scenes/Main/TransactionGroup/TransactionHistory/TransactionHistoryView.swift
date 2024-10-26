@@ -29,7 +29,7 @@ struct TransactionHistoryView: View {
                 Spacer()
             } else {
                 VStack {
-                    Picker("Transaction type", selection: $viewModel.historyFormat) {
+                    Picker("Time interval", selection: $viewModel.dateTimeInvertal) {
                         ForEach(DateTimeInterval.allCases) { type in
                             Text(type.rawValue)
                         }
@@ -68,29 +68,34 @@ struct TransactionHistoryView: View {
 
 #Preview("With Content ES") {
     VStack {
-        let array = [TransactionModel(amount: 56000,
+        let array = [TransactionModel(id:"01",
+                                      amount: 56000,
                                       date: "25/05/1990",
-                                      category: CategoryModel(name: "01"),
+                                      category: CategoryModel(id: "01", name: "Gasolina"),
                                       notes: "Nota",
                                       transactionType: .expense),
-                     TransactionModel(amount: 3000.9,
+                     TransactionModel(id:"02",
+                                      amount: 3000.9,
                                       date: "25/05/2024",
-                                      category: CategoryModel(name: "02"),
+                                      category: CategoryModel(id: "02", name: "Comida"),
                                       notes: "Nota",
                                       transactionType: .expense),
-                     TransactionModel(amount: 100,
+                     TransactionModel(id:"03",
+                                      amount: 100,
                                       date: "01/12/2003",
-                                      category: CategoryModel(name: "03"),
+                                      category: CategoryModel(id: "02", name: "Comida"),
                                       notes: "Nota",
                                       transactionType: .expense),
-                     TransactionModel(amount: 301928564721.328,
+                     TransactionModel(id:"04",
+                                      amount: 301928564721.328,
                                       date: "01/05/2023",
-                                      category: CategoryModel(name: "04"),
+                                      category: CategoryModel(id: "01", name: "Gasolina"),
                                       notes: "Nota",
                                       transactionType: .expense),
-                     TransactionModel(amount: 3000.1,
+                     TransactionModel(id:"05",
+                                      amount: 3000.1,
                                       date: "25/05/2024",
-                                      category: CategoryModel(name: "05"),
+                                      category: CategoryModel(id:"03", name: "Snacks"),
                                       notes: "Nota",
                                       transactionType: .expense)]
         

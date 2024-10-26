@@ -13,6 +13,7 @@ class TransactionViewModel: BaseViewModel {
     @Published var transactions: [TransactionModel]
     @Published var totalBalance: Decimal = .zero
     @Published var totalBalanceFormatted: String = ""
+    @Published var dateTimeInvertal: DateTimeInterval = .month
     
     //init for Canvas Previews.
     init(transactions: [TransactionModel] = []) {
@@ -30,11 +31,11 @@ class TransactionViewModel: BaseViewModel {
     func fetchData() {
         
         //#if DEBUG || TARGET_OS_SIMULATOR
-        #if targetEnvironment(simulator)
+#if targetEnvironment(simulator)
         //No cargar datos cuando se esta corriendo en simulador.
-        #else
+#else
         //Otra accion en caso de que no sea DEBUG o Simulator. Ejem: Dispositivo fisico.
-        #endif
+#endif
         
         performWithCurrentUser { currentUser in
             let collectionRef = UtilsFB.userSubCollectionRef(.transactions, for: currentUser.uid)

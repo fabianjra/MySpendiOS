@@ -62,6 +62,15 @@ struct TransactionView: View {
                     Spacer()
                 } else {
                     VStack {
+                        
+                        Picker("Time interval", selection: $viewModel.dateTimeInvertal) {
+                            ForEach(DateTimeInterval.allCases) { type in
+                                Text(type.rawValue)
+                            }
+                        }
+                        .pickerStyle(.segmented)
+                        .padding(.bottom)
+                        
                         ScrollView(showsIndicators: false) {
                             ForEach(viewModel.transactions) { item in
                                 HStack {
@@ -111,29 +120,34 @@ struct TransactionView: View {
 
 #Preview("With Content ES") {
     VStack {
-        let array = [TransactionModel(amount: 56000,
+        let array = [TransactionModel(id: "01",
+            amount: 56000,
                                       date: "25/05/1990",
-                                      category: CategoryModel(name: "01"),
+                                      category: CategoryModel(id: "01",name: "Gasolina"),
                                       notes: "Nota",
                                       transactionType: .expense),
-                     TransactionModel(amount: 3000.00,
+                     TransactionModel(id: "02",
+                        amount: 3000.00,
                                       date: "25/05/2024",
-                                      category: CategoryModel(name: "02"),
+                                      category: CategoryModel(id: "02",name: "Comida"),
                                       notes: "Nota",
                                       transactionType: .expense),
-                     TransactionModel(amount: 100.12,
+                     TransactionModel(id: "03",
+                        amount: 100.12,
                                       date: "01/12/2003",
-                                      category: CategoryModel(name: "03"),
+                                      category: CategoryModel(id: "02",name: "Comida"),
                                       notes: "Nota",
                                       transactionType: .expense),
-                     TransactionModel(amount: 270046.7802,
+                     TransactionModel(id: "04",
+                        amount: 270046.7802,
                                       date: "01/05/2023",
-                                      category: CategoryModel(name: "04"),
+                                      category: CategoryModel(id: "01",name: "Gasolina"),
                                       notes: "Nota",
                                       transactionType: .expense),
-                     TransactionModel(amount: 270000,
+                     TransactionModel(id: "05",
+                        amount: 270000,
                                       date: "01/05/2023",
-                                      category: CategoryModel(name: "05"),
+                                      category: CategoryModel(id: "03",name: "Snacks"),
                                       notes: "Nota",
                                       transactionType: .expense)]
 
@@ -144,29 +158,34 @@ struct TransactionView: View {
 
 #Preview("Saturated content EN") {
     VStack {
-        let array = [TransactionModel(amount: 56000234234.23434,
+        let array = [TransactionModel(id: "01",
+            amount: 56000234234.23434,
                                       date: "25/05/1990",
-                                      category: CategoryModel(name: "01a sdfas dfas fsaf sa f"),
+                                      category: CategoryModel(id: "01",name: "01a sdfas dfas fsaf sa f"),
                                       notes: "Nota",
                                       transactionType: .expense),
-                     TransactionModel(amount: 3002342340.00,
+                     TransactionModel(id: "02",
+                        amount: 3002342340.00,
                                       date: "25/05/2024",
-                                      category: CategoryModel(name: "02a dfas fas fsaf asf saf "),
+                                      category: CategoryModel(id: "02",name: "02a dfas fas fsaf asf saf "),
                                       notes: "Nota",
                                       transactionType: .expense),
-                     TransactionModel(amount: 100.12,
+                     TransactionModel(id: "03",
+                        amount: 100.12,
                                       date: "01/12/2003",
-                                      category: CategoryModel(name: "03a sfsa fdasdfasdfasfsaf"),
+                                      category: CategoryModel(id: "03",name: "03a sfsa fdasdfasdfasfsaf"),
                                       notes: "Nota",
                                       transactionType: .expense),
-                     TransactionModel(amount: 27677776763244437674.23423434,
+                     TransactionModel(id: "04",
+                        amount: 27677776763244437674.23423434,
                                       date: "01/05/2023",
-                                      category: CategoryModel(name: "0435345345325235325"),
+                                      category: CategoryModel(id: "04",name: "0435345345325235325"),
                                       notes: "Nota",
                                       transactionType: .expense),
-                     TransactionModel(amount: 270046.7802,
+                     TransactionModel(id: "05",
+                        amount: 270046.7802,
                                       date: "01/05/2023",
-                                      category: CategoryModel(name: "05 fsa fsaf asd fsaf sa fas fsa "),
+                                      category: CategoryModel(id: "05",name: "05 fsa fsaf asd fsaf sa fas fsa "),
                                       notes: "Nota",
                                       transactionType: .expense)]
 

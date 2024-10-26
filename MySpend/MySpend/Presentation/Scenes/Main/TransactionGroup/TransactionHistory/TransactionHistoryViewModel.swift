@@ -6,12 +6,11 @@
 //
 
 import Foundation
-import Combine
 
 class TransactionHistoryViewModel: BaseViewModel {
     
     @Published var transactions: [TransactionModel]
-    @Published var historyFormat: DateTimeInterval = .month
+    @Published var dateTimeInvertal: DateTimeInterval = .month
 
     init(transactions: [TransactionModel] = []) {
         self.transactions = transactions
