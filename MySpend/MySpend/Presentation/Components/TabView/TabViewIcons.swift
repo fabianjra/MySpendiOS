@@ -9,19 +9,19 @@ import SwiftUI
 
 enum TabViewIcons: String, CaseIterable, Identifiable {
     public var id: Self { self }
-    case resume //History will be inside of this view.
-    case settings //Categories will be inside of this view.
+    case transaction = "Transactions" //Transaction will be inside of this view.
+    case settings = "Settings" //Categories will be inside of this view.
     
     var iconSelected: Image {
         switch self {
-        case .resume: return Image.tabResumeFill
+        case .transaction: return Image.tabResumeFill
         case .settings: return Image.tabSettingsFill
         }
     }
     
     var iconDeselected: Image {
         switch self {
-        case .resume: return Image.tabResume
+        case .transaction: return Image.tabResume
         case .settings: return Image.tabSettings
         }
     }

@@ -28,7 +28,7 @@ struct MainView: View {
                 
                 /// Los tags permiten que las vistas cambien entre una seleccion u otra en el TabView.
                 TransactionView()
-                    .tag(TabViewIcons.resume)
+                    .tag(TabViewIcons.transaction)
                 
                 SettingsView()
                     .tag(TabViewIcons.settings)

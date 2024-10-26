@@ -29,7 +29,7 @@ struct TabViewButton: View {
                       : Color.tabViewIconDeselected)
                 
                 
-                Text(item.rawValue.capitalized)
+                Text(item.rawValue)
                     .font(.montserrat(size: .small))
                     .tint(selectedTab == item ?
                           Color.tabViewIconSelected
@@ -40,13 +40,13 @@ struct TabViewButton: View {
 }
 
 #Preview {
-    @Previewable @State var selectedTab: TabViewIcons = .resume
+    @Previewable @State var selectedTab: TabViewIcons = .transaction
     ZStack {
         
         Color.backgroundBottom
         
         HStack {
-            TabViewButton(selectedTab: $selectedTab, item: .resume)
+            TabViewButton(selectedTab: $selectedTab, item: .transaction)
         }
         .background(Color.textPrimaryForeground)
     }

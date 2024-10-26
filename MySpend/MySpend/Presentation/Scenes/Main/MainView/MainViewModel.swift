@@ -9,6 +9,6 @@ import Foundation
 
 class MainViewModel: BaseViewModel {
     @Published var showNewTransactionModal = false
-    @Published var selectedTab: TabViewIcons = .resume
+    @Published var selectedTab: TabViewIcons = .transaction
     @Published var navigateToHistory: Bool = false
 }
