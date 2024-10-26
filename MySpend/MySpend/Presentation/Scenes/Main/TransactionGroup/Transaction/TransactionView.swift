@@ -10,7 +10,7 @@ import SwiftUI
 struct TransactionView: View {
     
     @StateObject var viewModel = TransactionViewModel()
-
+    
     var body: some View {
         ContentContainer {
             
@@ -121,36 +121,36 @@ struct TransactionView: View {
 #Preview("With Content ES") {
     VStack {
         let array = [TransactionModel(id: "01",
-            amount: 56000,
+                                      amount: 56000,
                                       date: "25/05/1990",
                                       category: CategoryModel(id: "01",name: "Gasolina"),
                                       notes: "Nota",
                                       transactionType: .expense),
                      TransactionModel(id: "02",
-                        amount: 3000.00,
+                                      amount: 3000.00,
                                       date: "25/05/2024",
                                       category: CategoryModel(id: "02",name: "Comida"),
                                       notes: "Nota",
                                       transactionType: .expense),
                      TransactionModel(id: "03",
-                        amount: 100.12,
+                                      amount: 100.12,
                                       date: "01/12/2003",
                                       category: CategoryModel(id: "02",name: "Comida"),
                                       notes: "Nota",
                                       transactionType: .expense),
                      TransactionModel(id: "04",
-                        amount: 270046.7802,
+                                      amount: 270046.7802,
                                       date: "01/05/2023",
                                       category: CategoryModel(id: "01",name: "Gasolina"),
                                       notes: "Nota",
                                       transactionType: .expense),
                      TransactionModel(id: "05",
-                        amount: 270000,
+                                      amount: 270000,
                                       date: "01/05/2023",
                                       category: CategoryModel(id: "03",name: "Snacks"),
                                       notes: "Nota",
                                       transactionType: .expense)]
-
+        
         TransactionView(viewModel: TransactionViewModel(transactions: array))
             .environment(\.locale, .init(identifier: "es"))
     }
@@ -159,36 +159,36 @@ struct TransactionView: View {
 #Preview("Saturated content EN") {
     VStack {
         let array = [TransactionModel(id: "01",
-            amount: 56000234234.23434,
+                                      amount: 56000234234.23434,
                                       date: "25/05/1990",
                                       category: CategoryModel(id: "01",name: "01a sdfas dfas fsaf sa f"),
                                       notes: "Nota",
                                       transactionType: .expense),
                      TransactionModel(id: "02",
-                        amount: 3002342340.00,
+                                      amount: 3002342340.00,
                                       date: "25/05/2024",
                                       category: CategoryModel(id: "02",name: "02a dfas fas fsaf asf saf "),
                                       notes: "Nota",
                                       transactionType: .expense),
                      TransactionModel(id: "03",
-                        amount: 100.12,
+                                      amount: 100.12,
                                       date: "01/12/2003",
                                       category: CategoryModel(id: "03",name: "03a sfsa fdasdfasdfasfsaf"),
                                       notes: "Nota",
                                       transactionType: .expense),
                      TransactionModel(id: "04",
-                        amount: 27677776763244437674.23423434,
+                                      amount: 27677776763244437674.23423434,
                                       date: "01/05/2023",
                                       category: CategoryModel(id: "04",name: "0435345345325235325"),
                                       notes: "Nota",
                                       transactionType: .expense),
                      TransactionModel(id: "05",
-                        amount: 270046.7802,
+                                      amount: 270046.7802,
                                       date: "01/05/2023",
                                       category: CategoryModel(id: "05",name: "05 fsa fsaf asd fsaf sa fas fsa "),
                                       notes: "Nota",
                                       transactionType: .expense)]
-
+        
         TransactionView(viewModel: TransactionViewModel(transactions: array))
             .environment(\.locale, .init(identifier: "en"))
     }
