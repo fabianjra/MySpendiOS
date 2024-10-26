@@ -78,8 +78,7 @@ struct TextFieldIconStyle: TextFieldStyle {
                     
                     /// Clean error messages on screen. Var taken from Father View.
                     errorMessage = ""
-                    
-                    isError = text.isEmpty
+                    isError = false
 
                     /// Validate the limit character count. Delete extra characters typed.
                     if text.count > textLimit {

@@ -92,6 +92,7 @@
 		1F9462EB2A7B4D8200F5CBFB /* HeaderNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9462EA2A7B4D8200F5CBFB /* HeaderNavigator.swift */; };
 		1F9462EE2A7B54EC00F5CBFB /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9462ED2A7B54EC00F5CBFB /* Loader.swift */; };
 		1F9DD6D02CCCA9EB0093F55D /* SelectCategoryModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9DD6CF2CCCA9E40093F55D /* SelectCategoryModalView.swift */; };
+		1F9DD6D22CCCC3510093F55D /* TextFieldReadOnlySelectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9DD6D12CCCC3490093F55D /* TextFieldReadOnlySelectable.swift */; };
 		1F9F16D42AFC926D003CB599 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9F16D32AFC926D003CB599 /* UserModel.swift */; };
 		1FA08EE22C5D993C0019000B /* Register.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA08EE12C5D993C0019000B /* Register.swift */; };
 		1FA08EE42C5D99480019000B /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA08EE32C5D99480019000B /* RegisterViewModel.swift */; };
@@ -252,6 +253,7 @@
 		1F9D79C32A47C09D00F55418 /* Montserrat-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Thin.ttf"; sourceTree = "<group>"; };
 		1F9D79C42A47C0F000F55418 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1F9DD6CF2CCCA9E40093F55D /* SelectCategoryModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCategoryModalView.swift; sourceTree = "<group>"; };
+		1F9DD6D12CCCC3490093F55D /* TextFieldReadOnlySelectable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldReadOnlySelectable.swift; sourceTree = "<group>"; };
 		1F9F16D32AFC926D003CB599 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		1FA08EE12C5D993C0019000B /* Register.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Register.swift; sourceTree = "<group>"; };
 		1FA08EE32C5D99480019000B /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
@@ -856,6 +858,7 @@
 				1F5CC57F2A6653AF00C214FE /* TextFieldPassword.swift */,
 				1F5CC5812A6657F800C214FE /* TextFieldName.swift */,
 				1F64B0AC2A70D647004AC825 /* TextFieldReadOnly.swift */,
+				1F9DD6D12CCCC3490093F55D /* TextFieldReadOnlySelectable.swift */,
 				1F20E7732CC1B6DB0061CDB8 /* TextFieldAmount.swift */,
 				1F20E7772CC1C6240061CDB8 /* TextFieldCategoryName.swift */,
 				1F20E7752CC1BE890061CDB8 /* TextFieldNotes.swift */,
@@ -1134,6 +1137,7 @@
 				1F5CC5802A6653AF00C214FE /* TextFieldPassword.swift in Sources */,
 				1F1408222A59254F00181500 /* RegisterView.swift in Sources */,
 				1F222F522C65C6BD0017A1BE /* ChangePasswordViewModel.swift in Sources */,
+				1F9DD6D22CCCC3510093F55D /* TextFieldReadOnlySelectable.swift in Sources */,
 				1F64B09D2A7089C5004AC825 /* SettingsOptions.swift in Sources */,
 				1FB8BB9D2A5BC728002DED1F /* ConstantColors.swift in Sources */,
 				1F7437B42A668BCD0039EFD4 /* Gestures+Extensions.swift in Sources */,

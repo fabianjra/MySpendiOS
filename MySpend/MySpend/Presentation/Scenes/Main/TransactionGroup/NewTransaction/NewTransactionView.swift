@@ -56,10 +56,11 @@ struct NewTransactionView: View {
                         .onSubmit { process() }
                         
                         
-                        TextFieldReadOnly(placeHolder: "Category",
-                                          text: $viewModel.model.category.name,
-                                          iconLeading: Image.stackFill,
-                                          colorDisabled: false)
+                        TextFieldReadOnlySelectable(placeHolder: "Category",
+                                                    text: $viewModel.model.category.name,
+                                                    iconLeading: Image.stackFill,
+                                                    colorDisabled: false,
+                                                    errorMessage: $viewModel.errorMessage)
                         .onTapGesture {
                             viewModel.showCategoryList = true
                         }
@@ -69,7 +70,6 @@ struct NewTransactionView: View {
                             .focused($focusedField, equals: .notes)
                             .padding(.bottom)
                             .onSubmit { process() }
-                        
                     }
                     
                     
@@ -102,6 +102,7 @@ struct NewTransactionView: View {
                     }
                 }
                 .onChange(of: viewModel.model.transactionType) {
+                    viewModel.errorMessage = ""
                     viewModel.model.category = CategoryModel() //Clean category beacause won't be the same TransactionType (Exponse, income).
                 }
                 .sheet(isPresented: $viewModel.showDatePicker) {
