@@ -41,13 +41,14 @@ struct TransactionHistoryView: View {
                     ScrollView(showsIndicators: false) {
                         ForEach(viewModel.transactions) { item in
                             HStack {
-                                TextPlain(message: item.category.name,
-                                          lineLimit: ConstantViews.singleTextMaxLines)
+                                VStack(alignment: .leading) {
+                                    TextPlain(message: item.category.name)
+                                    TextPlain(message: item.date, size: .small)
+                                }
                                 
                                 Spacer()
                                 
-                                TextPlain(message: item.amount.convertAmountDecimalToString().addCurrencySymbol(),
-                                          lineLimit: ConstantViews.singleTextMaxLines)
+                                TextPlain(message: item.amount.convertAmountDecimalToString().addCurrencySymbol())
                             }
                             .padding(.vertical, ConstantViews.transactionsListVerticalSpacing)
                             .padding(.horizontal)
@@ -68,36 +69,36 @@ struct TransactionHistoryView: View {
 
 #Preview("With Content ES") {
     VStack {
-        let array = [TransactionModel(id:"01",
-                                      amount: 56000,
-                                      date: "25/05/1990",
-                                      category: CategoryModel(id: "01", name: "Gasolina"),
-                                      notes: "Nota",
-                                      transactionType: .expense),
-                     TransactionModel(id:"02",
-                                      amount: 3000.9,
-                                      date: "25/05/2024",
-                                      category: CategoryModel(id: "02", name: "Comida"),
-                                      notes: "Nota",
-                                      transactionType: .expense),
-                     TransactionModel(id:"03",
+        let array = [TransactionModel(id: "01",
                                       amount: 100,
-                                      date: "01/12/2003",
-                                      category: CategoryModel(id: "02", name: "Comida"),
+                                      date: "25/05/1990",
+                                      category: CategoryModel(id: "01", name: "Gasolina", categoryType: .expense),
                                       notes: "Nota",
                                       transactionType: .expense),
-                     TransactionModel(id:"04",
-                                      amount: 301928564721.328,
-                                      date: "01/05/2023",
-                                      category: CategoryModel(id: "01", name: "Gasolina"),
-                                      notes: "Nota",
-                                      transactionType: .expense),
-                     TransactionModel(id:"05",
-                                      amount: 3000.1,
+                     TransactionModel(id: "02",
+                                      amount: 200,
                                       date: "25/05/2024",
-                                      category: CategoryModel(id:"03", name: "Snacks"),
+                                      category: CategoryModel(id: "02",name: "Comida", categoryType: .expense),
                                       notes: "Nota",
-                                      transactionType: .expense)]
+                                      transactionType: .expense),
+                     TransactionModel(id: "03",
+                                      amount: 50,
+                                      date: "01/12/2003",
+                                      category: CategoryModel(id: "02",name: "Comida", categoryType: .expense),
+                                      notes: "Nota",
+                                      transactionType: .expense),
+                     TransactionModel(id: "04",
+                                      amount: 50,
+                                      date: "01/05/2023",
+                                      category: CategoryModel(id: "01",name: "Gasolina", categoryType: .expense),
+                                      notes: "Nota",
+                                      transactionType: .expense),
+                     TransactionModel(id: "05",
+                                      amount: 5000,
+                                      date: "01/05/2023",
+                                      category: CategoryModel(id: "03",name: "Recarga saldo", categoryType: .income),
+                                      notes: "Nota",
+                                      transactionType: .income)]
         
         TransactionHistoryView(viewModel: TransactionHistoryViewModel(transactions: array))
             .environment(\.locale, .init(identifier: "es"))
