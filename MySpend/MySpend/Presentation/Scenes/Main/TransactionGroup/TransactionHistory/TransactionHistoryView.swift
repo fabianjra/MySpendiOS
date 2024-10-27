@@ -49,7 +49,7 @@ struct TransactionHistoryView: View {
                                 TextPlain(message: item.amount.convertAmountDecimalToString().addCurrencySymbol(),
                                           lineLimit: ConstantViews.singleTextMaxLines)
                             }
-                            .padding(.vertical, ConstantViews.textResumeSpacing)
+                            .padding(.vertical, ConstantViews.transactionsListVerticalSpacing)
                             .padding(.horizontal)
                         }
                     }

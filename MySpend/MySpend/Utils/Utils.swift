@@ -93,12 +93,12 @@ struct Utils {
      
      **Example:**
      ```swift
-     if Utils.isNotRunningOnCanvasPreview() {
+     if Utils.isRunningOnCanvasPreview() {
          //Do somenthing only when the canvas preview crashes.
      }
      ```
      
-     - Returns: true if is NOT running on canvas
+     - Returns: true if is running on canvas
      
      - Authors: Fabian Rodriguez
      
@@ -106,12 +106,12 @@ struct Utils {
      
      - Date: March 2023
      */
-    static func isNotRunningOnCanvasPreview() -> Bool {
+    static func isRunningOnCanvasPreview() -> Bool {
         
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1" {
-            return false
-        } else {
             return true
+        } else {
+            return false
         }
     }
     

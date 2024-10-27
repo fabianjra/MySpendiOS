@@ -26,7 +26,7 @@ struct ConstantViews {
 
     // MARK: SPACING
     static let textHeaderSpacing: CGFloat = 5.0
-    static let textResumeSpacing: CGFloat = 5.0
+    static let transactionsListVerticalSpacing: CGFloat = 1.0
     static let formSpacing: CGFloat = 15.0
     static let gridSpacing: CGFloat = 50.0
     

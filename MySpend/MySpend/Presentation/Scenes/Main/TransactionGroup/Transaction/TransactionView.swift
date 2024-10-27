@@ -53,7 +53,7 @@ struct TransactionView: View {
             
             TextError(message: viewModel.errorMessage)
             
-            // MARK: RESUME
+            // MARK: TRANSACTIONs
             if viewModel.isLoading {
                 LoaderView()
             } else {
@@ -72,17 +72,15 @@ struct TransactionView: View {
                         .padding(.bottom)
                         
                         ScrollView(showsIndicators: false) {
-                            ForEach(viewModel.transactions) { item in
+                            ForEach(viewModel.groupedTransactions, id:\.category.id) { item in
                                 HStack {
-                                    TextPlain(message: item.category.name,
-                                              lineLimit: ConstantViews.singleTextMaxLines)
+                                    TextPlain(message: item.category.name)
                                     
                                     Spacer()
                                     
-                                    TextPlain(message: item.amount.convertAmountDecimalToString().addCurrencySymbol(),
-                                              lineLimit: ConstantViews.singleTextMaxLines)
+                                    TextPlain(message: item.totalAmount.convertAmountDecimalToString().addCurrencySymbol())
                                 }
-                                .padding(.vertical, ConstantViews.textResumeSpacing)
+                                .padding(.vertical, ConstantViews.transactionsListVerticalSpacing)
                                 .padding(.horizontal)
                             }
                         }
@@ -121,35 +119,35 @@ struct TransactionView: View {
 #Preview("With Content ES") {
     VStack {
         let array = [TransactionModel(id: "01",
-                                      amount: 56000,
+                                      amount: 100,
                                       date: "25/05/1990",
-                                      category: CategoryModel(id: "01",name: "Gasolina"),
+                                      category: CategoryModel(id: "01", name: "Gasolina", categoryType: .expense),
                                       notes: "Nota",
                                       transactionType: .expense),
                      TransactionModel(id: "02",
-                                      amount: 3000.00,
+                                      amount: 200,
                                       date: "25/05/2024",
-                                      category: CategoryModel(id: "02",name: "Comida"),
+                                      category: CategoryModel(id: "02",name: "Comida", categoryType: .expense),
                                       notes: "Nota",
                                       transactionType: .expense),
                      TransactionModel(id: "03",
-                                      amount: 100.12,
+                                      amount: 50,
                                       date: "01/12/2003",
-                                      category: CategoryModel(id: "02",name: "Comida"),
+                                      category: CategoryModel(id: "02",name: "Comida", categoryType: .expense),
                                       notes: "Nota",
                                       transactionType: .expense),
                      TransactionModel(id: "04",
-                                      amount: 270046.7802,
+                                      amount: 50,
                                       date: "01/05/2023",
-                                      category: CategoryModel(id: "01",name: "Gasolina"),
+                                      category: CategoryModel(id: "01",name: "Gasolina", categoryType: .expense),
                                       notes: "Nota",
                                       transactionType: .expense),
                      TransactionModel(id: "05",
-                                      amount: 270000,
+                                      amount: 5000,
                                       date: "01/05/2023",
-                                      category: CategoryModel(id: "03",name: "Snacks"),
+                                      category: CategoryModel(id: "03",name: "Recarga saldo", categoryType: .income),
                                       notes: "Nota",
-                                      transactionType: .expense)]
+                                      transactionType: .income)]
         
         TransactionView(viewModel: TransactionViewModel(transactions: array))
             .environment(\.locale, .init(identifier: "es"))
