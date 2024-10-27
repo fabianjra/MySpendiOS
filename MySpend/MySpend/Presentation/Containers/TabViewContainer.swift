@@ -10,8 +10,8 @@ import SwiftUI
 struct TabViewContainer<Content: View>: View {
 
     let aligment: Alignment
-    var function: () -> Void
-    var content: () -> Content
+    let function: () -> Void
+    let content: () -> Content
     
     init(aligment: Alignment = .bottom, function: @escaping () -> Void, @ViewBuilder content: @escaping () -> Content) {
         self.aligment = aligment
@@ -43,9 +43,5 @@ struct TabViewContainer<Content: View>: View {
 }
 
 #Preview {
-    TabViewContainer {
-        print("Button add pressed")
-    } content: {
-        
-    }
+    TabViewContainer { } content: { }
 }

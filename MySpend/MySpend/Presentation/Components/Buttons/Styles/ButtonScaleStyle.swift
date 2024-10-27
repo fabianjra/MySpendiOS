@@ -1,5 +1,5 @@
 //
-//  ButtonRoundedStyle.swift
+//  ButtonScaleStyle.swift
 //  MySpend
 //
 //  Created by Fabian Rodriguez on 21/7/23.

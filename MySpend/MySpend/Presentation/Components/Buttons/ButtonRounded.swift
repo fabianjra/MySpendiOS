@@ -9,33 +9,22 @@ import SwiftUI
 
 struct ButtonRounded: View {
     
-    private let icon: Image
-    private let color: Array<Color>
-    private let function: () -> Void
-    
-    init(icon: Image = Image.plus,
-         color: Array<Color> = Color.primaryGradiant,
-         function: @escaping () -> Void) {
-        
-        self.icon = icon
-        self.color = color
-        self.function = function
-    }
+    let icon: Image = Image.plus
+    let color: Color = Color.primaryLeading
+    let function: () -> Void
     
     var body: some View {
         Button(action: function, label: {
             icon
                 .resizable()
-                .frame(width: ConstantFrames.roundedButtonIcon, height: ConstantFrames.roundedButtonIcon)
+                .frame(width: ConstantFrames.roundedButtonIcon,
+                       height: ConstantFrames.roundedButtonIcon)
                 .foregroundColor(Color.buttonForeground)
         })
         .padding()
-        .background(
-            LinearGradient(colors: color,
-                           startPoint: .leading,
-                           endPoint: .trailing)
-            .overlay(Circle().stroke(Color.buttonForeground, lineWidth: ConstantViews.buttonBorderWidth))
-        )
+        .background(color)
+        .overlay(Circle().stroke(Color.buttonForeground,
+                                 lineWidth: ConstantViews.buttonBorderWidth))
         .clipShape(Circle())
         .shadow(color: .shadow.opacity(ConstantColors.opacityHalf),
                 radius: ConstantRadius.shadow)
@@ -43,5 +32,5 @@ struct ButtonRounded: View {
 }
 
 #Preview {
-    ButtonRounded(function: { print("hola") })
+    ButtonRounded(function: { })
 }
