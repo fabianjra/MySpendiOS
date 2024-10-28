@@ -14,4 +14,13 @@ enum DateTimeInterval: String, CaseIterable, Identifiable {
     case week = "Weekly"
     case month = "Monthly"
     case year = "Yearly"
+    
+    var today: String {
+        switch self {
+        case .day: return "Today"
+        case .week: return "This Week"
+        case .month: return "This Month"
+        case .year: return "This Year"
+        }
+    }
 }

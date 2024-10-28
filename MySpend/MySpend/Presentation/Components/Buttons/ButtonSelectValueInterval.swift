@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ButtonSelectValueInterval: View {
     
-    let text: String = "This month"
+    var text: String
     
     let iconLeading: Image = Image.chevronLeft
     let iconTrailing: Image = Image.chevronRight
@@ -21,6 +21,16 @@ struct ButtonSelectValueInterval: View {
     let actionCenter: () -> Void
     let actionLeading: () -> Void
     
+    init(_ text: String,
+         actionTrailing: @escaping () -> Void,
+         actionCenter: @escaping () -> Void,
+         actionLeading: @escaping () -> Void) {
+        self.text = text
+        self.actionTrailing = actionTrailing
+        self.actionCenter = actionCenter
+        self.actionLeading = actionLeading
+    }
+    
     var body: some View {
         VStack {
             HStack(spacing: ConstantViews.selectValueIntervalSpacing) {
@@ -29,8 +39,9 @@ struct ButtonSelectValueInterval: View {
                 } label: {
                     iconLeading
                         .resizable()
+                        .aspectRatio(contentMode: .fit)
                         .frame(width: FrameSize.width.buttonSelectValueInterval,
-                               height: FrameSize.width.buttonSelectValueInterval)
+                               height: FrameSize.height.buttonSelectValueInterval)
                         .foregroundColor(Color.buttonForeground)
                         .padding()
                         .background(backgroundColor)
@@ -45,9 +56,9 @@ struct ButtonSelectValueInterval: View {
                 Button {
                     actionCenter()
                 } label: {
-                    TextPlain(message: text, size: .big)
-                        .frame(height: FrameSize.height.buttonSelectValueIntervalCenter)
-                        .frame(width: FrameSize.width.buttonSelectValueIntervalCenter)
+                    TextPlain(message: text)
+                        .frame(width: FrameSize.width.buttonSelectValueIntervalCenter,
+                               height: FrameSize.height.buttonSelectValueInterval)
                         .padding()
                         .background(backgroundColor)
                 }
@@ -59,8 +70,9 @@ struct ButtonSelectValueInterval: View {
                 } label: {
                     iconTrailing
                         .resizable()
+                        .aspectRatio(contentMode: .fit)
                         .frame(width: FrameSize.width.buttonSelectValueInterval,
-                               height: FrameSize.width.buttonSelectValueInterval)
+                               height: FrameSize.height.buttonSelectValueInterval)
                         .foregroundColor(Color.buttonForeground)
                         .padding()
                         .background(backgroundColor)
@@ -76,7 +88,7 @@ struct ButtonSelectValueInterval: View {
 }
 
 #Preview {
-    ButtonSelectValueInterval {
+    ButtonSelectValueInterval("Today") {
         
     } actionCenter: {
         

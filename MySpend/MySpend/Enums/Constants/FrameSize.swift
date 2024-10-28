@@ -60,15 +60,15 @@ public enum FrameSize {
     
     var buttonSelectValueInterval: CGFloat {
         switch self {
-        case .width: return 20.0
-        case .height: return 20.0
+        case .width: return 30.0
+        case .height: return 15.0
         }
     }
     
     var buttonSelectValueIntervalCenter: CGFloat {
         switch self {
-        case .width: return 150
-        case .height: return 20.0
+        case .width: return 100
+        case .height: return 15.0
         }
     }
 }

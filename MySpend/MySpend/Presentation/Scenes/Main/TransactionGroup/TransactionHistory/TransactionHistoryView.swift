@@ -62,6 +62,18 @@ struct TransactionHistoryView: View {
             .padding(.bottom)
             //.colorMultiply(.primaryLeading)
             
+            TextPlain(message: "Fecha filtrada")
+            
+            ButtonSelectValueInterval(viewModel.dateTimeInvertal.today) {
+                
+            } actionCenter: {
+                
+            } actionLeading: {
+                
+            }
+            .padding(.bottom)
+
+            
             ScrollView(showsIndicators: false) {
                 ForEach(viewModel.transactions) { item in
                     VStack {
