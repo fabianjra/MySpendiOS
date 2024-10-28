@@ -63,7 +63,7 @@ struct SelectCategoryModalView: View {
                     }
                 }
                 
-                ButtonRoundedView {
+                ButtonRounded {
                     viewModel.showNewItemModal = true
                 }
                 .padding(.trailing, ConstantViews.paddingButtonAddCategory)

@@ -1,5 +1,5 @@
 //
-//  ButtonRoundedView.swift
+//  ButtonRounded.swift
 //  MySpend
 //
 //  Created by Fabian Rodriguez on 20/7/23.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ButtonRoundedView: View {
+struct ButtonRounded: View {
     
     let icon: Image = Image.plus
     let color: Color = Color.primaryLeading
@@ -36,5 +36,5 @@ struct ButtonRoundedView: View {
 }
 
 #Preview {
-    ButtonRoundedView(action: { })
+    ButtonRounded(action: { })
 }

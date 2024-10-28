@@ -14,6 +14,8 @@ struct ModifyCategoryView: View {
     @Binding var modelLoaded: CategoryModel
     @StateObject var viewModel = ModifyCategoryViewModel()
     
+    @FocusState private var focusedField: CategoryModel.Field?
+    
     var body: some View {
         FormContainer {
             
@@ -39,6 +41,7 @@ struct ModifyCategoryView: View {
             VStack {
                 TextFieldCategoryName(text: $modelLoaded.name,
                                       errorMessage: $viewModel.errorMessage)
+                .focused($focusedField, equals: .name)
                 
                 Button("") {
                     viewModel.showIconsModal = true
@@ -74,10 +77,13 @@ struct ModifyCategoryView: View {
                 TextError(message: viewModel.errorMessage)
             }
         }
-        .disabled(viewModel.isLoading || viewModel.isLoadingSecondary)
+        .onAppear {
+            focusedField = .name
+        }
         .sheet(isPresented: $viewModel.showIconsModal) {
             IconListModalView(model: $modelLoaded, showModal: $viewModel.showIconsModal)
         }
+        .disabled(viewModel.isLoading || viewModel.isLoadingSecondary)
     }
     
     private func process() {

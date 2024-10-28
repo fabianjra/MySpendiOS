@@ -19,4 +19,8 @@ struct CategoryModel: Identifiable, Codable, Equatable  {
         case name
         case categoryType
     }
+    
+    enum Field: Hashable, CaseIterable {
+        case name
+    }
 }

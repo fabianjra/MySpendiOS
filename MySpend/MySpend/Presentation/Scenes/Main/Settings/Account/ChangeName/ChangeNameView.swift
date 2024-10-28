@@ -11,6 +11,8 @@ struct ChangeNameView: View {
     
     @StateObject private var viewModel = ChangeNameViewModel()
     
+    @FocusState private var focusedField: ChangeName.Field?
+    
     var body: some View {
         FormContainer {
             
@@ -34,6 +36,7 @@ struct ChangeNameView: View {
                               iconLeading: Image.checkmark,
                               errorMessage: $viewModel.errorMessage)
                 .padding(.bottom)
+                .focused($focusedField, equals: .newUserName)
                 .onSubmit {
                     Task {
                         await viewModel.changeUserName()
@@ -53,10 +56,11 @@ struct ChangeNameView: View {
                 TextError(message: viewModel.errorMessage)
             }
         }
-        .disabled(viewModel.isLoading)
         .onAppear {
+            focusedField = .newUserName
             viewModel.onAppear()
         }
+        .disabled(viewModel.isLoading)
     }
 }
 
