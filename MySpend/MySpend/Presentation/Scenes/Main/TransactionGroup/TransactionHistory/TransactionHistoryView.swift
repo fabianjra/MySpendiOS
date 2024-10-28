@@ -88,6 +88,16 @@ struct TransactionHistoryView: View {
                             .opacity(ConstantColors.opacityHalf)
                     }
                     .contentShape(Rectangle()) // For the Spacers() to be also Touchables.
+                    
+                    //TODO: Implementar el swipeAction con LIST.
+//                    .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+//                        Button {
+//                            
+//                        } label: {
+//                            Label("Delete", systemImage: "trash")
+//                        }
+//                        .tint(Color.warning)
+//                    }
                     .onTapGesture {
                         viewModel.transactionToModify = item
                         viewModel.showModifyTransactionModal = true

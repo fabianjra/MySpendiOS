@@ -14,7 +14,6 @@ struct ButtonRounded: View {
     let action: () -> Void
     
     var body: some View {
-        
         VStack {
             icon
                 .resizable()
