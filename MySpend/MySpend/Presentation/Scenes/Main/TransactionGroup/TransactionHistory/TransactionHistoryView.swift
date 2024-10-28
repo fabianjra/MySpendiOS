@@ -83,12 +83,11 @@ struct TransactionHistoryView: View {
                             TextPlain(message: item.amount.convertAmountDecimalToString().addCurrencySymbol())
                         }
                         .padding(.vertical, ConstantViews.transactionsListVerticalSpacing)
-                        .padding(.horizontal)
                         
-                        DividerView(height: 0.3)
-                            .padding(.horizontal)
+                        DividerView()
                     }
-                    .onTapGesture { //TODO: No esta siendo detectable donde no hay vista, o sea en el espacer.
+                    .contentShape(Rectangle()) // For the Spacers() to be also Touchables.
+                    .onTapGesture {
                         viewModel.transactionToModify = item
                         viewModel.showModifyTransactionModal = true
                     }
