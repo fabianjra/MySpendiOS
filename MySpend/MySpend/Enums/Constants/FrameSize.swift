@@ -12,10 +12,7 @@ public enum FrameSize {
     case height
 
     var headerButton: CGFloat {
-        switch self {
-        case .width: return 30.0
-        case .height: return 30.0
-        }
+        return 30.0
     }
     
     var iconCategoryList: CGFloat {
@@ -52,5 +49,12 @@ public enum FrameSize {
     
     var iconAddNewData: CGFloat {
         return 150.0
+    }
+    
+    var calendar: CGFloat {
+        switch self {
+        case .width: return 320.0
+        case .height: return 440.0
+        }
     }
 }

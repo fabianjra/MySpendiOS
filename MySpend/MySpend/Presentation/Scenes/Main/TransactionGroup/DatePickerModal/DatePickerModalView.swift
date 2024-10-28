@@ -16,10 +16,9 @@ struct DatePickerModalView: View {
     var body: some View {
         NavigationStack {
             DatePicker("", selection: $selectedDate, displayedComponents: .date)
-            .padding(.horizontal)
             .datePickerStyle(.graphical)
-            .frame(height: ConstantFrames.calendarHeight)
-            .padding()
+            .frame(width: FrameSize.width.calendar, height: FrameSize.width.calendar)
+            .scaleEffect(ConstantViews.calendarScale)
             .onChange(of: selectedDate, { oldValue, newValue in
                 model.date = Utils.dateToStringShort(date: newValue)
                 //let day = selectedDate.formatted(.dateTime.day())
@@ -43,7 +42,7 @@ struct DatePickerModalView: View {
             }
         }
         .presentationCornerRadius(ConstantRadius.cornersModal)
-        .presentationDetents([.height(ConstantFrames.calendarHeight)])
+        .presentationDetents([.height(FrameSize.height.calendar)])
     }
 }
 

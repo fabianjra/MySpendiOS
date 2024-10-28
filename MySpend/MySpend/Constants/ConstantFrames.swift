@@ -12,7 +12,6 @@ public struct ConstantFrames {
     static let dividerHeight: CGFloat = 0.7
     static let screenSize = UIScreen.main.bounds.size
     static let tabViewHeight: CGFloat = 75.0
-    static let calendarHeight: CGFloat = 440.0
     static let toolbarNavigationBarHeight: CGFloat = 55.0
     
     // MARK: IMAGES
