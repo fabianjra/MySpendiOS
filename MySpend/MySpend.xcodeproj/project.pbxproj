@@ -136,6 +136,8 @@
 		1FE7C6812A47DA1F0070B988 /* Colors+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE7C6802A47DA1F0070B988 /* Colors+Extensions.swift */; };
 		1FE7C6832A47DDF40070B988 /* ConstantRadius.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE7C6822A47DDF40070B988 /* ConstantRadius.swift */; };
 		1FE7C6882A48027C0070B988 /* Images+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE7C6872A48027C0070B988 /* Images+Extensions.swift */; };
+		1FF394902CCF347F009704E7 /* ModifyTransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF3948F2CCF3478009704E7 /* ModifyTransactionView.swift */; };
+		1FF394922CCF3516009704E7 /* ModifyTransactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF394912CCF3513009704E7 /* ModifyTransactionViewModel.swift */; };
 		1FF6205A2CA4F4450031F416 /* ListenersFB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF620592CA4F4200031F416 /* ListenersFB.swift */; };
 		1FF6205C2CA4FE730031F416 /* CategoriesDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF6205B2CA4FE6B0031F416 /* CategoriesDatabase.swift */; };
 		1FFA5D5A2A8B57CC00AC0519 /* NewTransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFA5D592A8B57CC00AC0519 /* NewTransactionView.swift */; };
@@ -288,6 +290,8 @@
 		1FE7C6802A47DA1F0070B988 /* Colors+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Colors+Extensions.swift"; sourceTree = "<group>"; };
 		1FE7C6822A47DDF40070B988 /* ConstantRadius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantRadius.swift; sourceTree = "<group>"; };
 		1FE7C6872A48027C0070B988 /* Images+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Images+Extensions.swift"; sourceTree = "<group>"; };
+		1FF3948F2CCF3478009704E7 /* ModifyTransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyTransactionView.swift; sourceTree = "<group>"; };
+		1FF394912CCF3513009704E7 /* ModifyTransactionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyTransactionViewModel.swift; sourceTree = "<group>"; };
 		1FF620592CA4F4200031F416 /* ListenersFB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListenersFB.swift; sourceTree = "<group>"; };
 		1FF6205B2CA4FE6B0031F416 /* CategoriesDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesDatabase.swift; sourceTree = "<group>"; };
 		1FFA5D592A8B57CC00AC0519 /* NewTransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTransactionView.swift; sourceTree = "<group>"; };
@@ -606,6 +610,7 @@
 				1F46B4152A799CE6003A9550 /* Transaction */,
 				1F65D95B2C7287AC0023CC5D /* TransactionHistory */,
 				1FA08EE72C5DC1B50019000B /* NewTransaction */,
+				1FF3948E2CCF33DC009704E7 /* ModifyTransaction */,
 				1F9DD6CE2CCCA9D70093F55D /* SelectCategoryModal */,
 				1F7ABD282CCC62660023FBA4 /* DatePickerModal */,
 			);
@@ -869,6 +874,15 @@
 			path = TextFields;
 			sourceTree = "<group>";
 		};
+		1FF3948E2CCF33DC009704E7 /* ModifyTransaction */ = {
+			isa = PBXGroup;
+			children = (
+				1FF3948F2CCF3478009704E7 /* ModifyTransactionView.swift */,
+				1FF394912CCF3513009704E7 /* ModifyTransactionViewModel.swift */,
+			);
+			path = ModifyTransaction;
+			sourceTree = "<group>";
+		};
 		1FF620582CA4F40D0031F416 /* Documents */ = {
 			isa = PBXGroup;
 			children = (
@@ -1102,7 +1116,9 @@
 				1F3A953D2C5D68D4008AAE50 /* LoginViewModel.swift in Sources */,
 				1F64B0A62A70B828004AC825 /* SectionContainer.swift in Sources */,
 				1F3A95412C5D74CC008AAE50 /* TransactionsDatabase.swift in Sources */,
+				1FF394902CCF347F009704E7 /* ModifyTransactionView.swift in Sources */,
 				1FE7C6832A47DDF40070B988 /* ConstantRadius.swift in Sources */,
+				1FF394922CCF3516009704E7 /* ModifyTransactionViewModel.swift in Sources */,
 				1F0641462A72234900C19084 /* ChangePasswordView.swift in Sources */,
 				1FC94CC52A5A4034005CA0B6 /* ViewModifiers.swift in Sources */,
 				1FAA87D52C697F1000700CD6 /* CategoryViewModel.swift in Sources */,

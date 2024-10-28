@@ -112,7 +112,7 @@ struct ModifyCategoryView: View {
 }
 
 #Preview {
-    @Previewable @State var model = CategoryModel(id: "",
+    @Previewable @State var model = CategoryModel(id: "01",
                                                   icon: "envelope",
                                                   name: "Categoria sample",
                                                   categoryType: .income)

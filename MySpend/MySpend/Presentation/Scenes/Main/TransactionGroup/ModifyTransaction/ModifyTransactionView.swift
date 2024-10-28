@@ -1,17 +1,18 @@
 //
-//  ModalNewTransaction.swift
+//  ModifyTransactionView.swift
 //  MySpend
 //
-//  Created by Fabian Rodriguez on 15/8/23.
+//  Created by Fabian Rodriguez on 27/10/24.
 //
 
 import SwiftUI
 
-struct NewTransactionView: View {
+struct ModifyTransactionView: View {
     
     @Environment(\.dismiss) var dismiss
     
-    @StateObject var viewModel = NewTransactionViewModel()
+    @Binding var modelLoaded: TransactionModel
+    @StateObject var viewModel = ModifyTransactionViewModel()
     @FocusState private var focusedField: TransactionModel.Field?
     
     private let notesId = "notes"
@@ -21,10 +22,10 @@ struct NewTransactionView: View {
             ScrollViewReader { scrollViewProxy in
                 FormContainer {
                     
-                    HeaderNavigator(title: "New transaction",
+                    HeaderNavigator(title: "Modify transaction",
                                     titleWeight: .regular,
                                     titleSize: .bigXL,
-                                    subTitle: "Enter transation details",
+                                    subTitle: "Modify the transaction details",
                                     showLeadingAction: false,
                                     showTrailingAction: true)
                     .padding(.vertical)
@@ -32,14 +33,14 @@ struct NewTransactionView: View {
                     
                     // MARK: SEGMENT
                     VStack {
-                        PickerSegmented(selection: $viewModel.model.transactionType,
+                        PickerSegmented(selection: $modelLoaded.transactionType,
                                         segments: TransactionType.allCases)
                         .padding(.bottom)
                     }
                     
                     // MARK: DATE
                     VStack {
-                        TextFieldReadOnly(text: $viewModel.model.date,
+                        TextFieldReadOnly(text: $modelLoaded.date,
                                           iconLeading: Image.calendar,
                                           colorDisabled: false)
                         .onTapGesture {
@@ -56,7 +57,7 @@ struct NewTransactionView: View {
                         
                         
                         TextFieldReadOnlySelectable(placeHolder: "Category",
-                                                    text: $viewModel.model.category.name,
+                                                    text: $modelLoaded.category.name,
                                                     iconLeading: Image.stackFill,
                                                     colorDisabled: false,
                                                     errorMessage: $viewModel.errorMessage)
@@ -64,7 +65,7 @@ struct NewTransactionView: View {
                             viewModel.showCategoryList = true
                         }
                         
-                        TextFieldNotes(text: $viewModel.model.notes)
+                        TextFieldNotes(text: $modelLoaded.notes)
                             .id(notesId)
                             .focused($focusedField, equals: .notes)
                             .padding(.bottom)
@@ -73,12 +74,25 @@ struct NewTransactionView: View {
                     
                     // MARK: BUTTONS
                     VStack {
-                        Button("Accept") {
+                        Button("Modify") {
                             process()
                         }
                         .buttonStyle(ButtonPrimaryStyle(isLoading: $viewModel.isLoading))
                         .padding(.vertical)
                         .padding(.bottom)
+                        
+                        //TODO: Cambiar estilo de boton por uno solamente bordes pintados.
+                        Button("Delete") {
+                            viewModel.showAlert = true
+                        }
+                        .buttonStyle(ButtonPrimaryStyle(color: [Color.warning], isLoading: $viewModel.isLoadingSecondary))
+                        .padding(.vertical)
+                        .alert("Delete transaction", isPresented: $viewModel.showAlert) {
+                            Button("Delete", role: .destructive) { delete() }
+                            Button("Cancel", role: .cancel) { }
+                        } message: {
+                            Text("Want to delete this transaction? \n This action cannot be undone.")
+                        }
                         
                         
                         TextError(message: viewModel.errorMessage)
@@ -87,7 +101,7 @@ struct NewTransactionView: View {
                     Spacer()
                 }
                 .onAppear {
-                    viewModel.onAppear()
+                    viewModel.onAppear(modelLoaded)
                 }
                 .onChange(of: focusedField) { _, newFocusedField in
                     if focusedField == .notes {
@@ -99,30 +113,43 @@ struct NewTransactionView: View {
                         }
                     }
                 }
-                .onChange(of: viewModel.model.transactionType) {
+                .onChange(of: modelLoaded.transactionType) {
                     viewModel.errorMessage = ""
-                    viewModel.model.category = CategoryModel() //Clean category beacause won't be the same TransactionType (Exponse, income).
+                    modelLoaded.category = CategoryModel() //Clean category beacause won't be the same TransactionType (Exponse, income).
                 }
                 .sheet(isPresented: $viewModel.showDatePicker) {
-                    DatePickerModalView(model: $viewModel.model,
+                    DatePickerModalView(model: $modelLoaded,
                                         showModal: $viewModel.showDatePicker,
                                         selectedDate: $viewModel.selectedDate)
                 }
                 .sheet(isPresented: $viewModel.showCategoryList) {
-                    SelectCategoryModalView(selectedCategory: $viewModel.model.category,
-                                            transactionType: viewModel.model.transactionType)
-                        .presentationDetents([.large])
-                        .presentationCornerRadius(ConstantRadius.cornersModal)
+                    SelectCategoryModalView(selectedCategory: $modelLoaded.category,
+                                            transactionType: modelLoaded.transactionType)
+                    .presentationDetents([.large])
+                    .presentationCornerRadius(ConstantRadius.cornersModal)
                 }
             }
         }
-        .disabled(viewModel.isLoading)
+        .disabled(viewModel.isLoading || viewModel.isLoadingSecondary)
     }
-
+    
     private func process() {
         focusedField = .none
         Task {
-            let result = await viewModel.addNewTransaction()
+            let result = await viewModel.modifyTransaction(modelLoaded)
+            
+            if result.status.isSuccess {
+                dismiss()
+            } else {
+                viewModel.errorMessage = result.message
+            }
+        }
+    }
+    
+    private func delete() {
+        focusedField = .none
+        Task {
+            let result = await viewModel.deleteTransaction(modelLoaded)
             
             if result.status.isSuccess {
                 dismiss()
@@ -134,5 +161,16 @@ struct NewTransactionView: View {
 }
 
 #Preview {
-    NewTransactionView()
+    @Previewable @State var model = TransactionModel(id: "01",
+                                                     amount: 2500.00,
+                                                     date: "02/01/1990",
+                                                     category: CategoryModel(id: "01",
+                                                                             icon: CategoryIcons.foodAndDrink.list[.zero],
+                                                                             name: "Comidas",
+                                                                             categoryType: .expense),
+                                                     notes: "notas cargadas",
+                                                     transactionType: .expense)
+    VStack {
+        ModifyTransactionView(modelLoaded: $model)
+    }
 }

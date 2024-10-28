@@ -31,6 +31,11 @@ struct TransactionHistoryView: View {
         .onAppear {
             print("Router count HISTORY: \(Router.shared.path.count)")
         }
+        .sheet(isPresented: $viewModel.showModifyTransactionModal) {
+            ModifyTransactionView(modelLoaded: $viewModel.transactionToModify)
+                .presentationDetents([.large])
+                .presentationCornerRadius(ConstantRadius.cornersModal)
+        }
     }
     
     var emptyView: some View {
@@ -84,7 +89,8 @@ struct TransactionHistoryView: View {
                             .padding(.horizontal)
                     }
                     .onTapGesture {
-                        //TODO: Show Modal Modify Transaction
+                        viewModel.transactionToModify = item
+                        viewModel.showModifyTransactionModal = true
                     }
                 }
             }
