@@ -21,11 +21,11 @@ struct ModifyTransactionView: View {
         NavigationStack { // This is needed for showing toolBar Keyboard.
             ScrollViewReader { scrollViewProxy in
                 FormContainer {
-                    
+                    //TODO: El texto se corta en dispositivos mas pequenos, hacer salto de linea
                     HeaderNavigator(title: "Modify transaction",
                                     titleWeight: .regular,
-                                    titleSize: .bigXL,
-                                    subTitle: "Modify the transaction details",
+                                    titleSize: .bigL,
+                                    subTitle: "Modify transaction details",
                                     showLeadingAction: false,
                                     showTrailingAction: true)
                     .padding(.vertical)
@@ -79,7 +79,6 @@ struct ModifyTransactionView: View {
                         }
                         .buttonStyle(ButtonPrimaryStyle(isLoading: $viewModel.isLoading))
                         .padding(.vertical)
-                        .padding(.bottom)
                         
                         //TODO: Cambiar estilo de boton por uno solamente bordes pintados.
                         Button("Delete") {

@@ -74,14 +74,14 @@ struct HeaderNavigator: View {
     }
     
     private var titleAndSubtitle: some View {
-        VStack(spacing: ConstantViews.textHeaderSpacing) {
+        VStack {
             TextPlain(message: title,
                       color: textColor,
                       family: titleWeight,
                       size: titleSize,
                       aligment: .center,
                       lineLimit: ConstantViews.singleTextMaxLines,
-                      truncateMode: .middle)
+                      truncateMode: .tail)
             
             TextPlain(message: subTitle,
                       color: textColor,
@@ -89,7 +89,7 @@ struct HeaderNavigator: View {
                       size: subTitleSize,
                       aligment: .center,
                       lineLimit: ConstantViews.singleTextMaxLines,
-                      truncateMode: .middle)
+                      truncateMode: .tail)
         }
     }
 }
