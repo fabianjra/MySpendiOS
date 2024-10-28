@@ -122,9 +122,6 @@ struct TextFieldIconStyle: TextFieldStyle {
                         isError = true
                     } 
                 }
-                .onTapGesture {
-                    isFocused = true
-                }
         }
         .foregroundColor(foregroundColor)
         
@@ -152,6 +149,9 @@ struct TextFieldIconStyle: TextFieldStyle {
             }
         }
         .frame(maxWidth: ConstantFrames.iPadMaxWidth)
+        .onTapGesture {
+            isFocused = true
+        }
     }
 }
 

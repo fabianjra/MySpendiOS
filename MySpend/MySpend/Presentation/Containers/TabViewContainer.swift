@@ -21,7 +21,7 @@ struct TabViewContainer<Content: View>: View {
     
     var body: some View {
         ZStack(alignment: aligment) {
-            ButtonRounded {
+            ButtonRoundedView {
                 function()
             }
             .padding(.bottom, ConstantViews.paddingButtonRoundedBottomForCurvedTabview)
