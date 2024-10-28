@@ -85,6 +85,7 @@ struct TransactionHistoryView: View {
                         .padding(.vertical, ConstantViews.transactionsListVerticalSpacing)
                         
                         DividerView()
+                            .opacity(ConstantColors.opacityHalf)
                     }
                     .contentShape(Rectangle()) // For the Spacers() to be also Touchables.
                     .onTapGesture {
