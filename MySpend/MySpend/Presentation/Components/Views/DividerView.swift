@@ -8,9 +8,14 @@
 import SwiftUI
 
 struct DividerView: View {
+    
+    var height: CGFloat = ConstantFrames.dividerHeight
+    var maxWidth: CGFloat = ConstantFrames.iPadMaxWidth
+    
     var body: some View {
         Divider()
-            .frame(height: ConstantFrames.dividerHeight)
+            .frame(height: height)
+            .frame(maxWidth: maxWidth)
             .overlay(Color.divider)
     }
 }
