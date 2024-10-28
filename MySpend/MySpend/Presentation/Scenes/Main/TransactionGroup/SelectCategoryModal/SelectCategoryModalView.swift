@@ -78,40 +78,58 @@ struct SelectCategoryModalView: View {
                 .presentationDetents([.large])
                 .presentationCornerRadius(ConstantRadius.cornersModal)
         }
+        .presentationDetents([.large])
+        .presentationCornerRadius(ConstantRadius.cornersModal)
     }
 }
 
-#Preview("Content EN") {
-    VStack {
+#Preview("Expenses ES") {
+    @Previewable @State var showModal = true
+    @Previewable @State var selectedCategory = CategoryModel(id: "01",
+                                                             icon: CategoryIcons.bills.list[0],
+                                                             name: "Expense 1",
+                                                             categoryType: .expense)
+    ZStack(alignment: .top) {
+        Color.backgroundBottom
+        VStack {
+            Spacer()
+            TextPlain(message: "Selected category: \(selectedCategory.name)")
+            
+            Button("Show modal") {
+                showModal = true
+            }
+            Spacer()
+        }
+    }.sheet(isPresented: $showModal) {
         let array = [
-            CategoryModel(icon: "envelope.fill",
+            CategoryModel(id: "01",
+                          icon: CategoryIcons.bills.list[0],
                           name: "Expense 1",
                           categoryType: .expense),
-            CategoryModel(icon: "arrowshape.turn.up.left.fill",
+            CategoryModel(id: "02",
+                          icon: CategoryIcons.bills.list[1],
                           name: "Income 1",
                           categoryType: .income),
-            CategoryModel(icon: "xmark",
+            CategoryModel(id: "03",
+                          icon: CategoryIcons.bills.list[2],
                           name: "Expense 2",
                           categoryType: .expense),
-            CategoryModel(icon: "",
+            CategoryModel(id: "04",
+                          icon: "",
                           name: "Expense 3",
                           categoryType: .expense),
-            
-            CategoryModel(icon: "person.fill",
+            CategoryModel(id: "05",
+                          icon: CategoryIcons.bills.list[3],
                           name: "Income 2",
                           categoryType: .income)
         ]
         
         let viewModel = CategoryViewModel(categories: array)
         
-        SelectCategoryModalView(viewModel: viewModel, selectedCategory: .constant(CategoryModel()), transactionType: .expense)
-            .environment(\.locale, .init(identifier: "en"))
-    }
-}
-
-#Preview("No content ES") {
-    VStack {
-        SelectCategoryModalView(viewModel: CategoryViewModel(), selectedCategory: .constant(CategoryModel()), transactionType: .expense)
+        SelectCategoryModalView(viewModel: viewModel, selectedCategory: $selectedCategory, transactionType: .expense)
             .environment(\.locale, .init(identifier: "es"))
+    }
+    .onAppear {
+        showModal = true
     }
 }

@@ -88,7 +88,7 @@ struct TransactionHistoryView: View {
                         DividerView(height: 0.3)
                             .padding(.horizontal)
                     }
-                    .onTapGesture {
+                    .onTapGesture { //TODO: No esta siendo detectable donde no hay vista, o sea en el espacer.
                         viewModel.transactionToModify = item
                         viewModel.showModifyTransactionModal = true
                     }

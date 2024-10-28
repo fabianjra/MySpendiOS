@@ -52,7 +52,6 @@ struct DatePickerModalView: View {
     @Previewable @State var showModal = true
     @Previewable @State var selectedDate = Date.now
     
-    
     ZStack(alignment: .top) {
         Color.backgroundBottom
         VStack {
