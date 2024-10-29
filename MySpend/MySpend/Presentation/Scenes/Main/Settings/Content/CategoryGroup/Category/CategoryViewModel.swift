@@ -49,35 +49,39 @@ class CategoryViewModel: BaseViewModel {
                     return
                 }
                 
-                for change in documentsChange {
-                    switch change.type {
-                        
-                        //La primera vez que se llama al listener, se reciben todos los documentos como "added", y después solo se reciben las diferencias.
-                    case .added:
-                        let data = change.document.data()
-                        let decodedDocument = try? UtilsFB.decodeModelFB(data: data, forModel: CategoryModel.self)
-                        
-                        if var decodedDocument = decodedDocument {
-                            //if !categories.contains(where: { $0.id == change.document.documentID }) { } //Permite validar que no se dupliquen items.
-                            decodedDocument.id = change.document.documentID
-                            categories.append(decodedDocument)
-                        }
-                        
-                    case .modified:
-                        if let index = categories.firstIndex(where: { $0.id == change.document.documentID }) {
-                            let data = change.document.data()
+                if documentsChange.isEmpty {
+                    categories.removeAll()
+                } else {
+                    for change in documentsChange {
+                        switch change.type {
                             
-                            if var decodedDocument = try? UtilsFB.decodeModelFB(data: data, forModel: CategoryModel.self) {
+                            //La primera vez que se llama al listener, se reciben todos los documentos como "added", y después solo se reciben las diferencias.
+                        case .added:
+                            let data = change.document.data()
+                            let decodedDocument = try? UtilsFB.decodeModelFB(data: data, forModel: CategoryModel.self)
+                            
+                            if var decodedDocument = decodedDocument {
+                                //if !categories.contains(where: { $0.id == change.document.documentID }) { } //Permite validar que no se dupliquen items.
                                 decodedDocument.id = change.document.documentID
-                                categories[index] = decodedDocument
+                                categories.append(decodedDocument)
                             }
+                            
+                        case .modified:
+                            if let index = categories.firstIndex(where: { $0.id == change.document.documentID }) {
+                                let data = change.document.data()
+                                
+                                if var decodedDocument = try? UtilsFB.decodeModelFB(data: data, forModel: CategoryModel.self) {
+                                    decodedDocument.id = change.document.documentID
+                                    categories[index] = decodedDocument
+                                }
+                            }
+                            
+                        case .removed:
+                            categories.removeAll(where: { $0.id == change.document.documentID })
+                            
+                        default:
+                            Logs.WriteMessage("Nothing modified in the documentChange")
                         }
-                        
-                    case .removed:
-                        categories.removeAll(where: { $0.id == change.document.documentID })
-                        
-                    default:
-                        Logs.WriteMessage("Nothing modified in the documentChange")
                     }
                 }
             }

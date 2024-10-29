@@ -239,7 +239,7 @@ public struct ListenersFB {
                 return
             }
             
-            if querySnapshot.isEmpty || querySnapshot.documentChanges.isEmpty {
+            if querySnapshot.documentChanges.isEmpty {
                 listener([], nil)
                 return
 
