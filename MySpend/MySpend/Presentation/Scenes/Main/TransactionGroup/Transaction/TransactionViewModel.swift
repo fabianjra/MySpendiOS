@@ -63,6 +63,13 @@ class TransactionViewModel: BaseViewModel {
                     return
                 }
                 
+                //TODO: Revisar:
+                /*
+                 Revisar la implementacion de un Protocol HasStringID para los modelos de CategoryModel y TransactionModel y asi hacer todo generico del lado del ListenersFB().
+                 El problema es que se pasaria un array para modificarlo del otro lado, lo que implica pasar un ValueType y es inmutable,
+                 por lo que se tendria que crear una copia del otro lado y devolver esa copia para hacerle encima al array de este ViewModels.
+                 Lo mejor es dejarlo como esta por ahora, ya que crear una instancia nueva del array en el otro lado impica costo de rendimiento, ya que seria en cada cambio.
+                 */
                 if documentsChange.isEmpty {
                     transactions.removeAll()
                 } else {
