@@ -16,11 +16,17 @@ class NewCategoryViewModel: BaseViewModel {
             return ResponseModel(.error, Messages.emptySpaces.localizedDescription)
         }
         
+        var mutableModel = model
+        mutableModel.dateCreated = .now
+        mutableModel.datemodified = .now
+        
         var response = ResponseModel()
         
-        await performWithLoader {
+        await performWithLoader { currentUser in
             do {
-                try await Repository().addNewDocument(model, forSubCollection: .categories)
+                mutableModel.userId = currentUser.uid
+                
+                try await Repository().addNewDocument(mutableModel, forSubCollection: .categories)
                 
                 response = ResponseModel(.successful)
             } catch {

@@ -77,6 +77,11 @@
          <EnvironmentVariable
             key = "IDEPreferLogStreaming"
             value = "YES"
+            isEnabled = "NO">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "TZ"
+            value = "EST"
             isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>

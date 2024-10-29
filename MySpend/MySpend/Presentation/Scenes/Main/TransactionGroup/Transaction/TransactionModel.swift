@@ -14,6 +14,9 @@ struct TransactionModel: Identifiable, Codable {
     var category: CategoryModel = CategoryModel()
     var notes: String = ""
     var transactionType: TransactionType = .expense
+    var dateCreated: Date = .init()
+    var datemodified: Date = .init()
+    var userId: String = ""
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -22,6 +25,9 @@ struct TransactionModel: Identifiable, Codable {
         case category
         case notes
         case transactionType
+        case dateCreated
+        case datemodified
+        case userId
     }
     
     enum Field: Hashable, CaseIterable {

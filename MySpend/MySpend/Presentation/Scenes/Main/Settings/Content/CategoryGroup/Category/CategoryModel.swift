@@ -12,12 +12,18 @@ struct CategoryModel: Identifiable, Codable, Equatable  {
     var icon: String = CategoryIcons.household.list.first ?? "tag.fill"
     var name: String = ""
     var categoryType: TransactionType = .expense
+    var dateCreated: Date = .init()
+    var datemodified: Date = .init()
+    var userId: String = ""
     
     enum CodingKeys: String, CodingKey {
         case id
         case icon
         case name
         case categoryType
+        case dateCreated
+        case datemodified
+        case userId
     }
     
     enum Field: Hashable, CaseIterable {

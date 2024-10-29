@@ -17,11 +17,14 @@ class ModifyCategoryViewModel: BaseViewModel {
             return ResponseModel(.error, Messages.emptySpaces.localizedDescription)
         }
         
+        var mutableModel = model
+        mutableModel.datemodified = .now
+        
         var response = ResponseModel()
         
         await performWithLoader {
             do {
-                try await Repository().modifyDocument(model, documentId: model.id, forSubCollection: .categories)
+                try await Repository().modifyDocument(mutableModel, documentId: model.id, forSubCollection: .categories)
                 
                 response = ResponseModel(.successful)
             } catch {

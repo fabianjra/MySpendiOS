@@ -31,6 +31,7 @@ class ModifyTransactionViewModel: BaseViewModel {
         
         let amountDecimal = UtilsCurrency.convertAmountStringToDecimal(amountString)
         mutableModel.amount = amountDecimal
+        mutableModel.datemodified = .now
         
         var response = ResponseModel()
         

@@ -29,11 +29,15 @@ class NewTransactionViewModel: BaseViewModel {
         //Firebase necesita guardar el valor como decimal, pero los formatos del monto en pantalla se trabajan en string:
         let amountDecimal = UtilsCurrency.convertAmountStringToDecimal(amountString)
         model.amount = amountDecimal
+        model.dateCreated = .now
+        model.datemodified = .now
         
         var response = ResponseModel()
         
-        await performWithLoader {
+        await performWithLoader { currentUser in
             do {
+                self.model.userId = currentUser.uid
+                
                 try await Repository().addNewDocument(self.model, forSubCollection: .transactions)
                 
                 response = ResponseModel(.successful)
