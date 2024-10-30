@@ -61,7 +61,7 @@ public enum FrameSize {
     var buttonSelectValueInterval: CGFloat {
         switch self {
         case .width: return 30.0
-        case .height: return 15.0
+        case .height: return 20.0
         }
     }
     

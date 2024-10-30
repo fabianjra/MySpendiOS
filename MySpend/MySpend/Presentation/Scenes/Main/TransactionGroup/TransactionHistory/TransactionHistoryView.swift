@@ -62,20 +62,30 @@ struct TransactionHistoryView: View {
             .padding(.bottom)
             //.colorMultiply(.primaryLeading)
             
-            TextPlain(message: "Fecha filtrada")
-            
-            ButtonSelectValueInterval(viewModel.dateTimeInvertal.today) {
+            //TODO: Refactorizar para poder navegar entre años tambien, al pasar de diciembre.
+            ButtonSelectValueInterval(viewModel.monthSymbols[viewModel.selectedMonth]) {
+                if viewModel.selectedMonth > 0 {
+                    viewModel.selectedMonth -= 1
+                }
                 
             } actionCenter: {
                 
             } actionLeading: {
-                
+                if viewModel.selectedMonth < 11 {
+                    viewModel.selectedMonth += 1
+                }
             }
             .padding(.bottom)
 
             
             ScrollView(showsIndicators: false) {
-                ForEach(viewModel.transactions.sorted(by: { $0.dateTransaction > $1.dateTransaction })) { item in
+                
+                let viewModelSorted = viewModel.transactions
+                    .filter { Calendar.current.component(.month, from: $0.dateTransaction) == viewModel.selectedMonth + 1 }
+                    .sorted(by: { $0.dateTransaction > $1.dateTransaction })
+                
+                
+                ForEach(viewModelSorted) { item in
                     VStack {
                         HStack {
                             Image(systemName: item.category.icon)

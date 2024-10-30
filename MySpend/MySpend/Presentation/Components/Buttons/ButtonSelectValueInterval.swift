@@ -20,7 +20,7 @@ struct ButtonSelectValueInterval: View {
     let actionTrailing: () -> Void
     let actionCenter: () -> Void
     let actionLeading: () -> Void
-    
+
     init(_ text: String,
          actionTrailing: @escaping () -> Void,
          actionCenter: @escaping () -> Void,
@@ -44,11 +44,11 @@ struct ButtonSelectValueInterval: View {
                                height: FrameSize.height.buttonSelectValueInterval)
                         .foregroundColor(Color.buttonForeground)
                         .padding()
-                        .background(backgroundColor)
-                        .clipShape(.rect(
-                            topLeadingRadius: .infinity,
-                            bottomLeadingRadius: .infinity)
-                        )
+                        //.background(backgroundColor)
+//                        .clipShape(.rect(
+//                            topLeadingRadius: .infinity,
+//                            bottomLeadingRadius: .infinity)
+//                        )
                 }
                 .buttonStyle(ButtonScaleStyle())
                 
@@ -60,7 +60,6 @@ struct ButtonSelectValueInterval: View {
                         .frame(width: FrameSize.width.buttonSelectValueIntervalCenter,
                                height: FrameSize.height.buttonSelectValueInterval)
                         .padding()
-                        .background(backgroundColor)
                 }
                 .buttonStyle(ButtonScaleStyle())
                 
@@ -75,11 +74,6 @@ struct ButtonSelectValueInterval: View {
                                height: FrameSize.height.buttonSelectValueInterval)
                         .foregroundColor(Color.buttonForeground)
                         .padding()
-                        .background(backgroundColor)
-                        .clipShape(.rect(
-                            bottomTrailingRadius: .infinity,
-                            topTrailingRadius: .infinity)
-                        )
                 }
                 .buttonStyle(ButtonScaleStyle())
             }
@@ -88,11 +82,16 @@ struct ButtonSelectValueInterval: View {
 }
 
 #Preview {
-    ButtonSelectValueInterval("Today") {
+    ZStack {
+        Color.backgroundBottom
         
-    } actionCenter: {
-        
-    } actionLeading: {
-        
+        ButtonSelectValueInterval("Today") {
+            
+        } actionCenter: {
+            
+        } actionLeading: {
+            
+        }
     }
+    
 }
