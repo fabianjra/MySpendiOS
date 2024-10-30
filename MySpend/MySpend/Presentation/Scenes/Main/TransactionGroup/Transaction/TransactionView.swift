@@ -72,7 +72,7 @@ struct TransactionView: View {
                         .padding(.bottom)
                         
                         ScrollView(showsIndicators: false) {
-                            ForEach(viewModel.groupedTransactions, id:\.category.id) { item in
+                            ForEach(viewModel.groupedTransactions.sorted(by: { $0.totalAmount > $1.totalAmount }), id:\.category.id) { item in
                                 HStack {
                                     TextPlain(message: item.category.name)
                                     

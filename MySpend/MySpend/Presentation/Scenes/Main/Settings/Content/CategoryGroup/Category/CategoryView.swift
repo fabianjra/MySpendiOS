@@ -40,7 +40,7 @@ struct CategoryView: View {
                                   rotationDegress: ConstantAnimations.rotationArrowBottomTrailing)
                 } else {
                     ListContainer {
-                        ForEach(categoriesFiltered) { category in
+                        ForEach(categoriesFiltered.sorted(by: { $0.datemodified > $1.datemodified })) { category in
                             HStack {
                                 let icon = Utils.getIconFromString(category.icon)
                                 

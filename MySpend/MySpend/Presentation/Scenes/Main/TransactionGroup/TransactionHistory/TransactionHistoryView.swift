@@ -75,7 +75,7 @@ struct TransactionHistoryView: View {
 
             
             ScrollView(showsIndicators: false) {
-                ForEach(viewModel.transactions) { item in
+                ForEach(viewModel.transactions.sorted(by: { $0.dateTransaction > $1.dateTransaction })) { item in
                     VStack {
                         HStack {
                             Image(systemName: item.category.icon)
