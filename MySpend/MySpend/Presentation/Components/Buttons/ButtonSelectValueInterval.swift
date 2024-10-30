@@ -40,18 +40,19 @@ struct ButtonSelectValueInterval: View {
                     iconLeading
                         .resizable()
                         .aspectRatio(contentMode: .fit)
+                        .fontWeight(.thin)
                         .frame(width: FrameSize.width.buttonSelectValueInterval,
                                height: FrameSize.height.buttonSelectValueInterval)
                         .foregroundColor(Color.buttonForeground)
                         .padding()
-                        //.background(backgroundColor)
+                        .contentShape(Rectangle())
 //                        .clipShape(.rect(
 //                            topLeadingRadius: .infinity,
 //                            bottomLeadingRadius: .infinity)
 //                        )
                 }
                 .buttonStyle(ButtonScaleStyle())
-                
+
                 
                 Button {
                     actionCenter()
@@ -60,6 +61,7 @@ struct ButtonSelectValueInterval: View {
                         .frame(width: FrameSize.width.buttonSelectValueIntervalCenter,
                                height: FrameSize.height.buttonSelectValueInterval)
                         .padding()
+                        .contentShape(Rectangle())
                 }
                 .buttonStyle(ButtonScaleStyle())
                 
@@ -70,10 +72,12 @@ struct ButtonSelectValueInterval: View {
                     iconTrailing
                         .resizable()
                         .aspectRatio(contentMode: .fit)
+                        .fontWeight(.thin)
                         .frame(width: FrameSize.width.buttonSelectValueInterval,
                                height: FrameSize.height.buttonSelectValueInterval)
                         .foregroundColor(Color.buttonForeground)
                         .padding()
+                        .contentShape(Rectangle())
                 }
                 .buttonStyle(ButtonScaleStyle())
             }
@@ -85,7 +89,7 @@ struct ButtonSelectValueInterval: View {
     ZStack {
         Color.backgroundBottom
         
-        ButtonSelectValueInterval("Today") {
+        ButtonSelectValueInterval("January") {
             
         } actionCenter: {
             
