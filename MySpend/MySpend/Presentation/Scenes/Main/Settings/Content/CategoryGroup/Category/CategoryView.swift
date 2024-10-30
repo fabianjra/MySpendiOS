@@ -33,14 +33,16 @@ struct CategoryView: View {
             
             ZStack(alignment: .bottomTrailing) {
                 
-                let categoriesFiltered = viewModel.categories.filter { $0.categoryType == viewModel.categoryType }
+                let categoriesFiltered = viewModel.categories
+                    .filter { $0.categoryType == viewModel.categoryType }
+                    .sorted(by: { $0.dateCreated > $1.dateCreated })
                 
                 if categoriesFiltered.isEmpty {
                     NoContentView(title: "No categories",
                                   rotationDegress: ConstantAnimations.rotationArrowBottomTrailing)
                 } else {
                     ListContainer {
-                        ForEach(categoriesFiltered.sorted(by: { $0.datemodified > $1.datemodified })) { category in
+                        ForEach(categoriesFiltered) { category in
                             HStack {
                                 let icon = Utils.getIconFromString(category.icon)
                                 
@@ -59,8 +61,22 @@ struct CategoryView: View {
                                 
                                 Image.chevronRight
                             }
+                            .listRowBackground(Color.listRowBackground) //Background for each row.
+                            .swipeActions(edge: .trailing) {
+                                Button {
+                                    viewModel.showAlertDelete = true
+                                } label: {
+                                    Label.delete
+                                }
+                                .tint(Color.warning)
+                            }
+                            .alert("Delete category", isPresented: $viewModel.showAlertDelete) {
+                                Button("Delete", role: .destructive) { delete(category) }
+                                Button("Cancel", role: .cancel) { }
+                            } message: {
+                                Text("Want to delete this category? \n This action cannot be undone.")
+                            }
                         }
-                        .listRowBackground(Color.listRowBackground) //Background for each row.
                     }
                 }
                 
@@ -85,25 +101,40 @@ struct CategoryView: View {
                 .presentationCornerRadius(ConstantRadius.cornersModal)
         }
     }
+    
+    private func delete(_ swipedModel: CategoryModel) {
+        Task {
+            let result = await viewModel.deleteCategory(swipedModel)
+            
+            if result.status.isError {
+                viewModel.errorMessage = result.message
+            }
+        }
+    }
 }
 
 #Preview("Content") {
     VStack {
         let array = [
-            CategoryModel(icon: "envelope.fill",
+            CategoryModel(id: UUID().uuidString,
+                          icon: "envelope.fill",
                           name: "Expense 1",
                           categoryType: .expense),
-            CategoryModel(icon: "arrowshape.turn.up.left.fill",
+            CategoryModel(id: UUID().uuidString,
+                          icon: "arrowshape.turn.up.left.fill",
                           name: "Income 1",
                           categoryType: .income),
-            CategoryModel(icon: "xmark",
+            CategoryModel(id: UUID().uuidString,
+                          icon: "xmark",
                           name: "Expense 2",
                           categoryType: .expense),
-            CategoryModel(icon: "",
+            CategoryModel(id: UUID().uuidString,
+                          icon: "",
                           name: "Expense 3",
                           categoryType: .expense),
             
-            CategoryModel(icon: "person.fill",
+            CategoryModel(id: UUID().uuidString,
+                          icon: "person.fill",
                           name: "Income 2",
                           categoryType: .income)
         ]
@@ -118,7 +149,8 @@ struct CategoryView: View {
     
     @Previewable @State var arrayCategories: [CategoryModel] = (1...40).map { item in
         
-        CategoryModel(icon: "person.fill",
+        CategoryModel(id: UUID().uuidString,
+                      icon: "person.fill",
                       name: "\(item) Categoria prueba",
                       categoryType: .expense)
     }

@@ -15,6 +15,7 @@ class CategoryViewModel: BaseViewModel {
     
     @Published var showNewItemModal = false
     @Published var showModifyItemModal = false
+    @Published var showAlertDelete = false
     
     //init for Canvas Previews.
     init(categories: [CategoryModel] = []) {
@@ -22,6 +23,10 @@ class CategoryViewModel: BaseViewModel {
     }
     
     private var listener: ListenerRegistration?
+    
+    deinit {
+        listener?.remove()
+    }
     
     func fetchData() {
         
@@ -96,7 +101,20 @@ class CategoryViewModel: BaseViewModel {
         }
     }
     
-    deinit {
-        listener?.remove()
+    func deleteCategory(_ model: CategoryModel) async -> ResponseModel {
+        var response = ResponseModel()
+        
+        await performWithLoaderSecondary {
+            do {
+                try await Repository().deleteDocument(model.id, forSubCollection: .categories)
+                
+                response = ResponseModel(.successful)
+            } catch {
+                Logs.WriteCatchExeption(error: error)
+                response = ResponseModel(.error, error.localizedDescription)
+            }
+        }
+        
+        return response
     }
 }
