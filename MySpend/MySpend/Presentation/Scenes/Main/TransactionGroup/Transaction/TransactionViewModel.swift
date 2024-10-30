@@ -18,6 +18,9 @@ class TransactionViewModel: BaseViewModel {
     @Published var groupedTransactions: [(category: CategoryModel, totalAmount: Decimal)] = []
     @Published var totalBalance: Decimal = .zero
     @Published var totalBalanceFormatted: String = ConstantCurrency.zeroAmoutString.addCurrencySymbol()
+    
+    @Published var totalIncomeFormatted: String = ConstantCurrency.zeroAmoutString.addCurrencySymbol()
+    @Published var totalExpensesFormatted: String = ConstantCurrency.zeroAmoutString.addCurrencySymbol()
 
     
     //init for Canvas Previews.
@@ -165,6 +168,9 @@ class TransactionViewModel: BaseViewModel {
             .reduce(Decimal.zero) { $0 + $1.amount }
         
         totalBalance = totalIncome - totalExpenses
+        
+        totalIncomeFormatted = totalIncome.convertAmountDecimalToString().addCurrencySymbol()
+        totalExpensesFormatted = totalExpenses.convertAmountDecimalToString().addCurrencySymbol()
         totalBalanceFormatted = totalBalance.convertAmountDecimalToString().addCurrencySymbol()
     }
     

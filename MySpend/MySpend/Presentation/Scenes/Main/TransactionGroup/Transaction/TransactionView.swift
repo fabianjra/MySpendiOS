@@ -80,7 +80,7 @@ struct TransactionView: View {
                                     
                                     TextPlain(message: item.totalAmount.convertAmountDecimalToString().addCurrencySymbol())
                                 }
-                                .padding(.vertical, ConstantViews.transactionsListVerticalSpacing)
+                                .padding(.vertical, ConstantViews.minimumSpacing)
                                 .padding(.horizontal)
                             }
                         }
@@ -88,14 +88,27 @@ struct TransactionView: View {
                         DividerView()
                             .background(.blue)
                         
-                        // MARK: TOTAL BALANCE
+                        // MARK: BALANCES
                         HStack {
-                            TextPlain(message: "Balance",
-                                      size: .big)
+                            TextPlain(message: "Incomes")
                             Spacer()
-                            
-                            TextPlain(message: viewModel.totalBalanceFormatted,
-                                      size: .big)
+                            TextPlain(message: viewModel.totalIncomeFormatted)
+                        }
+                        .padding(.bottom, ConstantViews.minimumSpacing)
+                        
+                        
+                        HStack {
+                            TextPlain(message: "Expenses")
+                            Spacer()
+                            TextPlain(message: viewModel.totalExpensesFormatted)
+                        }
+                        .padding(.bottom, ConstantViews.minimumSpacing)
+                        
+                        
+                        HStack {
+                            TextPlain(message: "Total balance", size: .big)
+                            Spacer()
+                            TextPlain(message: viewModel.totalBalanceFormatted, size: .big)
                         }
                     }
                     .padding(.bottom, ConstantViews.paddingBottomResumeview)

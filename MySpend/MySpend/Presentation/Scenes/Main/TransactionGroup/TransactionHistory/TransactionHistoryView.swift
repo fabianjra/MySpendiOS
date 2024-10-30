@@ -94,7 +94,7 @@ struct TransactionHistoryView: View {
                             
                             TextPlain(message: item.amount.convertAmountDecimalToString().addCurrencySymbol())
                         }
-                        .padding(.vertical, ConstantViews.transactionsListVerticalSpacing)
+                        .padding(.vertical, ConstantViews.minimumSpacing)
                         
                         DividerView()
                             .opacity(ConstantColors.opacityHalf)
