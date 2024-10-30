@@ -87,7 +87,7 @@ struct TransactionHistoryView: View {
                             
                             VStack(alignment: .leading) {
                                 TextPlain(message: item.category.name)
-                                TextPlain(message: item.date, size: .small)
+                                TextPlain(message: item.dateTransaction.toStringShortLocale(), size: .small)
                             }
                             
                             Spacer()
@@ -124,31 +124,31 @@ struct TransactionHistoryView: View {
     VStack {
         let array = [TransactionModel(id: "01",
                                       amount: 100,
-                                      date: "25/05/1990",
+                                      dateTransaction: .now,
                                       category: CategoryModel(id: "01", icon: CategoryIcons.bills.list[0], name: "Gasolina", categoryType: .expense),
                                       notes: "Nota",
                                       transactionType: .expense),
                      TransactionModel(id: "02",
                                       amount: 200,
-                                      date: "25/05/2024",
+                                      dateTransaction: .now,
                                       category: CategoryModel(id: "02", icon: CategoryIcons.bills.list[1],name: "Comida", categoryType: .expense),
                                       notes: "Nota",
                                       transactionType: .expense),
                      TransactionModel(id: "03",
                                       amount: 50,
-                                      date: "01/12/2003",
+                                      dateTransaction: .now,
                                       category: CategoryModel(id: "02", icon: CategoryIcons.foodAndDrink.list[0],name: "Comida", categoryType: .expense),
                                       notes: "Nota",
                                       transactionType: .expense),
                      TransactionModel(id: "04",
                                       amount: 50,
-                                      date: "01/05/2023",
+                                      dateTransaction: .now,
                                       category: CategoryModel(id: "01", icon: CategoryIcons.household.list[0],name: "Gasolina", categoryType: .expense),
                                       notes: "Nota",
                                       transactionType: .expense),
                      TransactionModel(id: "05",
                                       amount: 5000,
-                                      date: "01/05/2023",
+                                      dateTransaction: .now,
                                       category: CategoryModel(id: "03", icon: CategoryIcons.household.list[1],name: "Recarga saldo", categoryType: .income),
                                       notes: "Nota",
                                       transactionType: .income)]

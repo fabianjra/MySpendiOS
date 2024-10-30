@@ -58,12 +58,20 @@ class CategoryViewModel: BaseViewModel {
                             //La primera vez que se llama al listener, se reciben todos los documentos como "added", y después solo se reciben las diferencias.
                         case .added:
                             let data = change.document.data()
-                            let decodedDocument = try? UtilsFB.decodeModelFB(data: data, forModel: CategoryModel.self)
                             
-                            if var decodedDocument = decodedDocument {
-                                //if !categories.contains(where: { $0.id == change.document.documentID }) { } //Permite validar que no se dupliquen items.
-                                decodedDocument.id = change.document.documentID
-                                categories.append(decodedDocument)
+                            do {
+                                var decodedDocument = try UtilsFB.decodeModelFB(data: data, forModel: CategoryModel.self)
+                                
+                                // If the new category is already with same ID in the categories array, don't add it again.
+                                if categories.contains(where: { $0.id == change.document.documentID }) {
+                                    let error = Logs.createError(domain: .listenerCategories, error: .addDuplicatedDocument(change.document.documentID))
+                                    Logs.WriteCatchExeption(Errors.addDuplicatedDocument(change.document.documentID).errorDescription, error: error)
+                                } else {
+                                    decodedDocument.id = change.document.documentID
+                                    categories.append(decodedDocument)
+                                }
+                            } catch {
+                                Logs.WriteCatchExeption(Errors.decodeDocument(change.document.documentID).errorDescription, error: error)
                             }
                             
                         case .modified:

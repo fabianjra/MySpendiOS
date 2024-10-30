@@ -58,7 +58,7 @@ struct ValidateAccountView: View {
                    alignment: .center)
             .padding(.bottom)
 
-            TextPlain(message: Messages.userIsValidated.localizedDescription,
+            TextPlain(message: Errors.userIsValidated.localizedDescription,
                       family: .semibold,
                       size: .bigL,
                       aligment: .center)

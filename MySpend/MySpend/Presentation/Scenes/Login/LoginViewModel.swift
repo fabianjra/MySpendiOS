@@ -13,7 +13,7 @@ class LoginViewModel: BaseViewModel {
     
     func validateLogin() async {
         if login.email.isEmptyOrWhitespace() || login.password.isEmptyOrWhitespace() {
-            errorMessage = Messages.emptySpaces.localizedDescription
+            errorMessage = Errors.emptySpaces.localizedDescription
             return
         }
         

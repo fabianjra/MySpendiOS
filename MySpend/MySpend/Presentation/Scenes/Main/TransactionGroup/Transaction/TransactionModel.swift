@@ -10,7 +10,7 @@ import Foundation
 struct TransactionModel: Identifiable, Codable {
     var id = ""
     var amount: Decimal = .zero
-    var date: String = ""
+    var dateTransaction: Date = .init()
     var category: CategoryModel = CategoryModel()
     var notes: String = ""
     var transactionType: TransactionType = .expense
@@ -21,7 +21,7 @@ struct TransactionModel: Identifiable, Codable {
     enum CodingKeys: String, CodingKey {
         case id
         case amount
-        case date
+        case dateTransaction
         case category
         case notes
         case transactionType

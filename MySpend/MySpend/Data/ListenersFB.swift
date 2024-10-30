@@ -68,11 +68,8 @@ public struct ListenersFB {
                 return
             }
             
-            guard let documentSnapshot = documentSnapshot,
-                  let data = documentSnapshot.data() else {
-                let error = Logs.createError(domain: .listenersFB,
-                                             code: 99,
-                                             description: "Could not get data from documentSnapshot")
+            guard let documentSnapshot = documentSnapshot, let data = documentSnapshot.data() else {
+                let error = Logs.createError(domain: .listenerDocumentFB, error: .notGetDataFromDocument)
                 Logs.WriteCatchExeption(error: error)
                 throwableError = error
                 listener(nil)
@@ -161,9 +158,7 @@ public struct ListenersFB {
             }
             
             guard let querySnapshot = querySnapshot else {
-                let error = Logs.createError(domain: .listenersFB,
-                                             code: 99,
-                                             description: "Could not get data from collection snapshot")
+                let error = Logs.createError(domain: .listenerCollectionFB, error: .notGetDataFromCollection)
                 Logs.WriteCatchExeption(error: error)
                 listener([], error)
                 return
@@ -231,9 +226,7 @@ public struct ListenersFB {
             }
             
             guard let querySnapshot = querySnapshot else {
-                let error = Logs.createError(domain: .listenersFB,
-                                             code: 99,
-                                             description: "Could not get the query snapshot")
+                let error = Logs.createError(domain: .listenerCollectionChangesFB, error: .notGetDataFromCollectionChanges)
                 Logs.WriteCatchExeption(error: error)
                 listener([], error)
                 return

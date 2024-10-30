@@ -12,7 +12,7 @@
 		1F042E8D2CA124D900831062 /* FormContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F042E8C2CA124D400831062 /* FormContainer.swift */; };
 		1F0641462A72234900C19084 /* ChangePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0641452A72234900C19084 /* ChangePasswordView.swift */; };
 		1F0641482A72280500C19084 /* ValidateAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0641472A72280500C19084 /* ValidateAccountView.swift */; };
-		1F06414A2A722AFB00C19084 /* Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0641492A722AFB00C19084 /* Messages.swift */; };
+		1F06414A2A722AFB00C19084 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0641492A722AFB00C19084 /* Errors.swift */; };
 		1F06414D2A7232D300C19084 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F06414C2A7232D300C19084 /* RootView.swift */; };
 		1F0E9AB62C5C62B300675CE8 /* ConstantFB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0E9AB52C5C62B300675CE8 /* ConstantFB.swift */; };
 		1F138DF92CCF62000003FBEB /* ButtonSelectValueInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F138DF82CCF61CD0003FBEB /* ButtonSelectValueInterval.swift */; };
@@ -79,6 +79,7 @@
 		1F65D9612C7287D30023CC5D /* DateTimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F65D9602C7287D30023CC5D /* DateTimeInterval.swift */; };
 		1F65D9632C72D10E0023CC5D /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F65D9622C72D10E0023CC5D /* Router.swift */; };
 		1F697E082C5B3C22009529EF /* ResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F697E072C5B3C22009529EF /* ResponseModel.swift */; };
+		1F6FAEB92CD1D13C008CD39F /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6FAEB82CD1D138008CD39F /* Date+Extensions.swift */; };
 		1F7437B42A668BCD0039EFD4 /* Gestures+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7437B32A668BCD0039EFD4 /* Gestures+Extensions.swift */; };
 		1F7486B72A68C4250063AC35 /* TextError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7486B62A68C4250063AC35 /* TextError.swift */; };
 		1F7486BB2A68D4A30063AC35 /* Fonts+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7486BA2A68D4A30063AC35 /* Fonts+Extensions.swift */; };
@@ -169,7 +170,7 @@
 		1F042E8C2CA124D400831062 /* FormContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormContainer.swift; sourceTree = "<group>"; };
 		1F0641452A72234900C19084 /* ChangePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordView.swift; sourceTree = "<group>"; };
 		1F0641472A72280500C19084 /* ValidateAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateAccountView.swift; sourceTree = "<group>"; };
-		1F0641492A722AFB00C19084 /* Messages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Messages.swift; sourceTree = "<group>"; };
+		1F0641492A722AFB00C19084 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		1F06414C2A7232D300C19084 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		1F0E9AB52C5C62B300675CE8 /* ConstantFB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantFB.swift; sourceTree = "<group>"; };
 		1F138DF82CCF61CD0003FBEB /* ButtonSelectValueInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonSelectValueInterval.swift; sourceTree = "<group>"; };
@@ -239,6 +240,7 @@
 		1F65D9602C7287D30023CC5D /* DateTimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimeInterval.swift; sourceTree = "<group>"; };
 		1F65D9622C72D10E0023CC5D /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		1F697E072C5B3C22009529EF /* ResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseModel.swift; sourceTree = "<group>"; };
+		1F6FAEB82CD1D138008CD39F /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		1F7437B32A668BCD0039EFD4 /* Gestures+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Gestures+Extensions.swift"; sourceTree = "<group>"; };
 		1F7486B62A68C4250063AC35 /* TextError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextError.swift; sourceTree = "<group>"; };
 		1F7486BA2A68D4A30063AC35 /* Fonts+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Fonts+Extensions.swift"; sourceTree = "<group>"; };
@@ -357,7 +359,7 @@
 			children = (
 				1F171F282A7CC90D00A0A33E /* Emojis.swift */,
 				1FFD9D5F2CCA14FC00553BD7 /* FrameSize.swift */,
-				1F0641492A722AFB00C19084 /* Messages.swift */,
+				1F0641492A722AFB00C19084 /* Errors.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -786,6 +788,7 @@
 		1FC94CC62A5A4185005CA0B6 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				1F6FAEB82CD1D138008CD39F /* Date+Extensions.swift */,
 				1FD66FE42C9E13A40056D514 /* Decimal+Extensions.swift */,
 				1FE7C6872A48027C0070B988 /* Images+Extensions.swift */,
 				1FE7C6802A47DA1F0070B988 /* Colors+Extensions.swift */,
@@ -1146,7 +1149,7 @@
 				1F46B4212A79E10C003A9550 /* AuthFB.swift in Sources */,
 				1F46B41F2A79D9BB003A9550 /* PRUEBAS_SessionStore.swift in Sources */,
 				1F7B0B662CA7240200FD30D5 /* UserDatabase.swift in Sources */,
-				1F06414A2A722AFB00C19084 /* Messages.swift in Sources */,
+				1F06414A2A722AFB00C19084 /* Errors.swift in Sources */,
 				1FD66FE52C9E13AA0056D514 /* Decimal+Extensions.swift in Sources */,
 				1F65D9612C7287D30023CC5D /* DateTimeInterval.swift in Sources */,
 				1F19D96A2A4A933200137EA0 /* ConstantShapes.swift in Sources */,
@@ -1169,6 +1172,7 @@
 				1F501D9A2C8E8253008D4085 /* CaseIterable+Extensions.swift in Sources */,
 				1FC0F4AF2CC7460E00EC576A /* CategoryIcons.swift in Sources */,
 				1F64B0AD2A70D647004AC825 /* TextFieldReadOnly.swift in Sources */,
+				1F6FAEB92CD1D13C008CD39F /* Date+Extensions.swift in Sources */,
 				1F9462EB2A7B4D8200F5CBFB /* HeaderNavigator.swift in Sources */,
 				1FF6205C2CA4FE730031F416 /* CategoriesDatabase.swift in Sources */,
 				1F9DD6D42CCCCFA20093F55D /* NoContentView.swift in Sources */,

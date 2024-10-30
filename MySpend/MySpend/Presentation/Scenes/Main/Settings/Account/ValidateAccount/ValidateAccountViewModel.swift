@@ -20,9 +20,9 @@ class ValidateAccountViewModel: BaseViewModel {
                     
                     try await AuthFB().sendEmailRegisteredUser()
                     
-                    self.errorMessage = Messages.emailSent.localizedDescription
+                    self.errorMessage = Errors.emailSent.localizedDescription
                 } else {
-                    self.errorMessage = Messages.userIsValidated.localizedDescription
+                    self.errorMessage = Errors.userIsValidated.localizedDescription
                 }
             } catch {
                 self.errorMessage = error.localizedDescription

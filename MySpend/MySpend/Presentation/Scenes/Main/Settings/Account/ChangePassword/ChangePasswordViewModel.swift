@@ -15,12 +15,12 @@ class ChangePasswordViewModel: BaseViewModel {
         
         if model.userPassword.isEmptyOrWhitespace() || model.userNewPassword.isEmptyOrWhitespace()
             || model.userNewPasswordConfirm.isEmptyOrWhitespace() {
-            errorMessage = Messages.emptySpaces.localizedDescription
+            errorMessage = Errors.emptySpaces.localizedDescription
             return
         }
         
         if model.userNewPassword != model.userNewPasswordConfirm {
-            errorMessage = Messages.newPasswordIsDifferent.localizedDescription
+            errorMessage = Errors.newPasswordIsDifferent.localizedDescription
             return
         }
         

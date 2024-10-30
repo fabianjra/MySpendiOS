@@ -11,19 +11,15 @@ class NewTransactionViewModel: BaseViewModel {
     
     @Published var model = TransactionModel()
     
-    @Published var selectedDate: Date = .now
+    @Published var dateString: String = Date.now.toStringShortLocale()
     @Published var amountString: String = ""
     
     @Published var showDatePicker = false
     @Published var showCategoryList = false
     
-    func onAppear() {
-        model.date = Utils.dateToStringShort(date: selectedDate)
-    }
-    
     func addNewTransaction() async -> ResponseModel {
         if model.category.name.isEmptyOrWhitespace() {
-            return ResponseModel(.error, Messages.emptySpaces.localizedDescription)
+            return ResponseModel(.error, Errors.emptySpaces.localizedDescription)
         }
         
         //Firebase necesita guardar el valor como decimal, pero los formatos del monto en pantalla se trabajan en string:

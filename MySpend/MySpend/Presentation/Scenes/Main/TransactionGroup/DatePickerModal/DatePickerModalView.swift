@@ -8,38 +8,37 @@
 import SwiftUI
 
 struct DatePickerModalView: View {
-
+    
     @Binding var model: TransactionModel
+    @Binding var dateString: String
     @Binding var showModal: Bool
-    @Binding var selectedDate: Date
     
     var body: some View {
         NavigationStack {
-            DatePicker("", selection: $selectedDate, displayedComponents: .date)
-            .datePickerStyle(.graphical)
-            .frame(width: FrameSize.width.calendar, height: FrameSize.width.calendar)
-            .scaleEffect(ConstantViews.calendarScale)
-            .onChange(of: selectedDate, { oldValue, newValue in
-                model.date = Utils.dateToStringShort(date: newValue)
-                //let day = selectedDate.formatted(.dateTime.day())
-            })
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Today") {
-                        selectedDate = .now
-                    }
-                    .padding()
-                    .padding(.top)
+            DatePicker("", selection: $model.dateTransaction, displayedComponents: .date)
+                .datePickerStyle(.graphical)
+                .frame(width: FrameSize.width.calendar, height: FrameSize.width.calendar)
+                .scaleEffect(ConstantViews.calendarScale)
+                .onChange(of: model.dateTransaction) { _, newValue in
+                    dateString = newValue.toStringShortLocale()
                 }
-                
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("Done") {
-                        showModal = false
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button("Today") {
+                            model.dateTransaction = .now
+                        }
+                        .padding()
+                        .padding(.top)
                     }
-                    .padding()
-                    .padding(.top)
+                    
+                    ToolbarItem(placement: .confirmationAction) {
+                        Button("Done") {
+                            showModal = false
+                        }
+                        .padding()
+                        .padding(.top)
+                    }
                 }
-            }
         }
         .presentationCornerRadius(ConstantRadius.cornersModal)
         .presentationDetents([.height(FrameSize.height.calendar)])
@@ -49,13 +48,12 @@ struct DatePickerModalView: View {
 #Preview {
     @Previewable @State var model = TransactionModel()
     @Previewable @State var showModal = true
-    @Previewable @State var selectedDate = Date.now
+    @Previewable @State var dateString = ""
     
     ZStack(alignment: .top) {
         Color.backgroundBottom
         VStack {
-            Spacer()
-            TextPlain(message: "Selected date: \(selectedDate)")
+            TextPlain(message: "Selected date: \(dateString)")
             
             Button("Show modal") {
                 showModal = true
@@ -63,9 +61,10 @@ struct DatePickerModalView: View {
             Spacer()
         }
     }.sheet(isPresented: $showModal) {
-        DatePickerModalView(model: $model, showModal: $showModal, selectedDate: $selectedDate)
+        DatePickerModalView(model: $model, dateString: $dateString, showModal: $showModal)
     }
     .onAppear {
+        dateString = model.dateTransaction.toStringShortLocale()
         showModal = true
     }
 }

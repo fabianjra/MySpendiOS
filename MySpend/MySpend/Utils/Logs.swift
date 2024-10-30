@@ -103,20 +103,24 @@ enum Logs {
      
      - Date: Aug 2024
      */
-    static func createError(domain: ErrorDomain, code: Int, userInfo: [String: Any]? = nil, description: String? = nil) -> NSError {
+    static func createError(domain: ErrorDomain, error: Errors, userInfo: [String: Any]? = nil) -> NSError {
         var fullUserInfo = userInfo ?? [:]
         
-        if let description = description {
-            fullUserInfo[NSLocalizedDescriptionKey] = description
-        }
+        fullUserInfo[NSLocalizedDescriptionKey] = error.errorDescription
         
-        return NSError(domain: domain.rawValue, code: code, userInfo: fullUserInfo)
+        return NSError(domain: domain.rawValue, code: error.code, userInfo: fullUserInfo)
     }
     
     enum ErrorDomain: String {
         case databaseStore = "com.mySpend.DatabaseStore"
         case transactionsDatabase = "com.mySpend.TransactionsDatabase"
         case categoriesDatabase = "com.mySpend.CategoriesDatabase"
-        case listenersFB = "com.mySpend.ListenersFB"
+        
+        case listenerDocumentFB = "com.mySpend.ListenersFB.listenDocument"
+        case listenerCollectionFB = "com.mySpend.ListenersFB.listenCollection"
+        case listenerCollectionChangesFB = "com.mySpend.ListenersFB.listenCollectionChanges"
+        
+        case listenerTransactions = "com.mySpend.TransactionsViewModel.listenCollectionChanges"
+        case listenerCategories = "com.mySpend.CategoryViewModel.listenCollectionChanges"
     }
 }

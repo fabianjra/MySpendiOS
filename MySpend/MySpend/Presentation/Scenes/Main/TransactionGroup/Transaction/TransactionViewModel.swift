@@ -84,15 +84,20 @@ class TransactionViewModel: BaseViewModel {
                             //La primera vez que se llama al listener, se reciben todos los documentos como "added", y después solo se reciben las diferencias.
                         case .added:
                             let data = change.document.data()
-                            let decodedDocument = try? UtilsFB.decodeModelFB(data: data, forModel: TransactionModel.self)
                             
-                            if var decodedDocument = decodedDocument {
+                            do {
+                               var decodedDocument = try UtilsFB.decodeModelFB(data: data, forModel: TransactionModel.self)
                                 
-                                //Permite validar que no se dupliquen items.
-                                if !transactions.contains(where: { $0.id == change.document.documentID }) {
+                                // If the new transaction is already with same ID in the transaction array, don't add it again.
+                                if transactions.contains(where: { $0.id == change.document.documentID }) {
+                                    let error = Logs.createError(domain: .listenerTransactions, error: .addDuplicatedDocument(change.document.documentID))
+                                    Logs.WriteCatchExeption(Errors.addDuplicatedDocument(change.document.documentID).errorDescription, error: error)
+                                } else {
                                     decodedDocument.id = change.document.documentID
                                     transactions.append(decodedDocument)
                                 }
+                            } catch {
+                                Logs.WriteCatchExeption(Errors.decodeDocument(change.document.documentID).errorDescription, error: error)
                             }
                             
                         case .modified:

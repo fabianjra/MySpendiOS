@@ -40,7 +40,7 @@ struct ModifyTransactionView: View {
                     
                     // MARK: DATE
                     VStack {
-                        TextFieldReadOnly(text: $modelLoaded.date,
+                        TextFieldReadOnly(text: $viewModel.dateString,
                                           iconLeading: Image.calendar,
                                           colorDisabled: false)
                         .onTapGesture {
@@ -114,12 +114,12 @@ struct ModifyTransactionView: View {
                 }
                 .onChange(of: modelLoaded.transactionType) {
                     viewModel.errorMessage = ""
-                    modelLoaded.category = CategoryModel() //Clean category beacause won't be the same TransactionType (Exponse, income).
+                    modelLoaded.category = CategoryModel() //Clean the category beacause won't be the same TransactionType (Exponse, income).
                 }
                 .sheet(isPresented: $viewModel.showDatePicker) {
                     DatePickerModalView(model: $modelLoaded,
-                                        showModal: $viewModel.showDatePicker,
-                                        selectedDate: $viewModel.selectedDate)
+                                        dateString: $viewModel.dateString,
+                                        showModal: $viewModel.showDatePicker)
                 }
                 .sheet(isPresented: $viewModel.showCategoryList) {
                     SelectCategoryModalView(selectedCategory: $modelLoaded.category,
@@ -160,7 +160,7 @@ struct ModifyTransactionView: View {
 #Preview {
     @Previewable @State var model = TransactionModel(id: "01",
                                                      amount: 2500.00,
-                                                     date: "02/01/1990",
+                                                     dateTransaction: .now,
                                                      category: CategoryModel(id: "01",
                                                                              icon: CategoryIcons.foodAndDrink.list[.zero],
                                                                              name: "Comidas",

@@ -9,7 +9,7 @@ import Foundation
 
 class ModifyTransactionViewModel: BaseViewModel {
     
-    @Published var selectedDate: Date = .now
+    @Published var dateString: String = ""
     @Published var amountString: String = ""
     
     @Published var showDatePicker = false
@@ -17,13 +17,13 @@ class ModifyTransactionViewModel: BaseViewModel {
     @Published var showAlert = false
     
     func onAppear(_ model: TransactionModel) {
-        selectedDate = Utils.stringShortDateToDate(dateShort: model.date)
+        dateString = model.dateTransaction.toStringShortLocale()
         amountString = model.amount.convertAmountDecimalToString()
     }
     
     func modifyTransaction(_ model: TransactionModel) async -> ResponseModel {
         if model.category.name.isEmptyOrWhitespace() {
-            return ResponseModel(.error, Messages.emptySpaces.localizedDescription)
+            return ResponseModel(.error, Errors.emptySpaces.localizedDescription)
         }
         
         //Firebase necesita guardar el valor como decimal, pero los formatos del monto en pantalla se trabajan en string:

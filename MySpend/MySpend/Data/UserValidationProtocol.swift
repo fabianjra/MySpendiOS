@@ -14,7 +14,7 @@ protocol UserValidationProtocol {
 extension UserValidationProtocol {
     func validateCurrentUser(_ currentUser: User?) throws -> User {
         guard let currentUser = currentUser else {
-            throw Messages.userNotLoggedIn
+            throw Errors.userNotLoggedIn
         }
         
         return currentUser

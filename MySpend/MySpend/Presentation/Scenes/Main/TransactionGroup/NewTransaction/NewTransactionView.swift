@@ -39,7 +39,7 @@ struct NewTransactionView: View {
                     
                     // MARK: DATE
                     VStack {
-                        TextFieldReadOnly(text: $viewModel.model.date,
+                        TextFieldReadOnly(text: $viewModel.dateString,
                                           iconLeading: Image.calendar,
                                           colorDisabled: false)
                         .onTapGesture {
@@ -86,9 +86,6 @@ struct NewTransactionView: View {
                     
                     Spacer()
                 }
-                .onAppear {
-                    viewModel.onAppear()
-                }
                 .onChange(of: focusedField) { _, newFocusedField in
                     if focusedField == .notes {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
@@ -105,8 +102,8 @@ struct NewTransactionView: View {
                 }
                 .sheet(isPresented: $viewModel.showDatePicker) {
                     DatePickerModalView(model: $viewModel.model,
-                                        showModal: $viewModel.showDatePicker,
-                                        selectedDate: $viewModel.selectedDate)
+                                        dateString: $viewModel.dateString,
+                                        showModal: $viewModel.showDatePicker)
                 }
                 .sheet(isPresented: $viewModel.showCategoryList) {
                     SelectCategoryModalView(selectedCategory: $viewModel.model.category,

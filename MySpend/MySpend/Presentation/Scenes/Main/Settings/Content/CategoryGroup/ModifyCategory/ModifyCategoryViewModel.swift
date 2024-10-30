@@ -14,7 +14,7 @@ class ModifyCategoryViewModel: BaseViewModel {
     
     func modifyCategory(_ model: CategoryModel) async -> ResponseModel {
         if model.name.isEmptyOrWhitespace() {
-            return ResponseModel(.error, Messages.emptySpaces.localizedDescription)
+            return ResponseModel(.error, Errors.emptySpaces.localizedDescription)
         }
         
         var mutableModel = model
