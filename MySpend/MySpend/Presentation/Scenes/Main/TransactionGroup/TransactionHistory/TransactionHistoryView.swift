@@ -116,12 +116,19 @@ struct TransactionHistoryView: View {
                                 Image.chevronRight
                                     .foregroundStyle(Color.textPrimaryForeground)
                             }
-                            
-                            DividerView()
-                                .opacity(ConstantColors.opacityHalf)
+                            .alignmentGuide(.listRowSeparatorLeading) { _ in
+                                //Removes the padding Leading in the RowSeparator.
+                                return .zero
+                            }
+                            .alignmentGuide(.listRowSeparatorTrailing) { viewDimensions in
+                                //Removes the padding Trailing in the RowSeparator.
+                                return viewDimensions[.listRowSeparatorTrailing]
+                            }
+                            .padding(.horizontal)
                         }
                         .frame(height: FrameSize.height.rowForListTransactionHistory)
-                        .listRowSeparator(.hidden)
+                        .listRowInsets(EdgeInsets(top: .zero, leading: .zero, bottom: .zero, trailing: .zero))
+                        .listRowSeparatorTint(Color.textPrimaryForeground.opacity(ConstantColors.opacityHalf))
                         .swipeActions(edge: .trailing) {
                             Button {
                                 selectedModel = item
@@ -137,6 +144,7 @@ struct TransactionHistoryView: View {
                         } message: {
                             Text("Want to delete this category? \n This action cannot be undone.")
                         }
+                        .padding(.vertical, ConstantViews.mediumSpacing)
                     }
                     .listRowBackground(Color.clear)
                 }
