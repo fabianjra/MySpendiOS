@@ -62,7 +62,6 @@ struct TransactionHistoryView: View {
             }
             .pickerStyle(.segmented)
             .padding(.horizontal)
-            .padding(.bottom)
             //.colorMultiply(.primaryLeading)
             
             //TODO: Refactorizar para poder navegar entre años tambien, al pasar de diciembre.
@@ -78,7 +77,6 @@ struct TransactionHistoryView: View {
                     viewModel.selectedMonth += 1
                 }
             }
-            .padding(.bottom)
             
             
             VStack {
