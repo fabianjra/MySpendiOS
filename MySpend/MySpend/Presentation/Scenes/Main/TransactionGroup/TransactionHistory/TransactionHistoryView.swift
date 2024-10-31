@@ -151,11 +151,11 @@ struct TransactionHistoryView: View {
                             }
                             .tint(Color.warning)
                         }
-                        .alert("Delete category", isPresented: $viewModel.showAlertDelete) {
+                        .alert("Delete transaction", isPresented: $viewModel.showAlertDelete) {
                             Button("Delete", role: .destructive) { delete() }
                             Button("Cancel", role: .cancel) { }
                         } message: {
-                            Text("Want to delete this category? \n This action cannot be undone.")
+                            Text("Want to delete this transaction? \n This action cannot be undone.")
                         }
                         .padding(.vertical, ConstantViews.mediumSpacing)
                     }
