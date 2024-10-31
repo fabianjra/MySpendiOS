@@ -9,5 +9,5 @@ import SwiftUI
 
 extension Label where Title == Text, Icon == Image {
     static let delete = Label("Delete", systemImage: "trash")
+    static let edit = Label("Edit", systemImage: "square.and.pencil")
 }
-

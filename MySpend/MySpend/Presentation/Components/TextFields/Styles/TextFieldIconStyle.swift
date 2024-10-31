@@ -143,7 +143,7 @@ struct TextFieldIconStyle: TextFieldStyle {
             if isError && showErrorIndicador {
                 RoundedRectangle(cornerRadius: .infinity)
                     .stroke(LinearGradient(
-                        colors: [Color.warning],
+                        colors: [Color.alert],
                         startPoint: .leading,
                         endPoint: .trailing), lineWidth: ConstantShapes.textFieldLineWidth)
             }

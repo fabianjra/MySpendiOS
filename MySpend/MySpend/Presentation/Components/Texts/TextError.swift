@@ -13,7 +13,7 @@ struct TextError: View {
     
     var body: some View {
         Text(message)
-            .foregroundColor(Color.warning)
+            .foregroundColor(Color.alert)
             .font(.montserrat(.semibold))
             .multilineTextAlignment(.center)
             .lineLimit(ConstantViews.messageMaxLines)

@@ -141,6 +141,14 @@ struct TransactionHistoryView: View {
                             } label: {
                                 Label.delete
                             }
+                            .tint(Color.alert)
+                            
+                            Button {
+                                viewModel.transactionToModify = item
+                                viewModel.showModifyTransactionModal = true
+                            } label: {
+                                Label.edit
+                            }
                             .tint(Color.warning)
                         }
                         .alert("Delete category", isPresented: $viewModel.showAlertDelete) {

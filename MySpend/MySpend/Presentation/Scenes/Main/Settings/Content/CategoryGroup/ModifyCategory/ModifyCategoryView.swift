@@ -64,7 +64,7 @@ struct ModifyCategoryView: View {
                 Button("Delete") {
                     viewModel.showAlert = true
                 }
-                .buttonStyle(ButtonPrimaryStyle(color: [Color.warning], isLoading: $viewModel.isLoadingSecondary))
+                .buttonStyle(ButtonPrimaryStyle(color: [Color.alert], isLoading: $viewModel.isLoadingSecondary))
                 .padding(.vertical)
                 .alert("Delete category", isPresented: $viewModel.showAlert) {
                     Button("Delete", role: .destructive) { delete() }

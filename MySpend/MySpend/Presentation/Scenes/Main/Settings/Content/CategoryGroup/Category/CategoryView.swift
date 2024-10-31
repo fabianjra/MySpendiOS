@@ -70,7 +70,7 @@ struct CategoryView: View {
                                 } label: {
                                     Label.delete
                                 }
-                                .tint(Color.warning)
+                                .tint(Color.alert)
                             }
                             .alert("Delete category", isPresented: $viewModel.showAlertDelete) {
                                 Button("Delete", role: .destructive) { delete() }

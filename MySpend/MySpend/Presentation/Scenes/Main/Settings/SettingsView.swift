@@ -48,7 +48,7 @@ struct SettingsView: View {
                     Button("Log out") {
                         showAlert = true
                     }
-                    .foregroundColor(Color.warning)
+                    .foregroundColor(Color.alert)
                     .font(.montserrat(.semibold))
                     
                     .alert("Want to log out?", isPresented: $showAlert) {

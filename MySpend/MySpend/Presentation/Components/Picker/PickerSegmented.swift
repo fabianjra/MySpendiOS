@@ -25,17 +25,17 @@ struct PickerSegmented: UIViewRepresentable {
         
         uiView.selectedSegmentIndex = segments.firstIndex(of: selection) ?? 0
         
-        uiView.selectedSegmentTintColor = UIColor(selection == .expense ? .warning : .primaryTrailing)
+        uiView.selectedSegmentTintColor = UIColor(selection == .expense ? Color.alert : Color.primaryTrailing)
         
         uiView.setTitleTextAttributes([.font: Font.montserratToUIFont(.light),
-                                       .foregroundColor: UIColor(.textPrimaryForeground)],
+                                       .foregroundColor: UIColor(Color.textPrimaryForeground)],
                                       for: .selected)
         
         uiView.setTitleTextAttributes([.font: Font.montserratToUIFont(.light),
-                                       .foregroundColor: UIColor(.disabledForeground)],
+                                       .foregroundColor: UIColor(Color.disabledForeground)],
                                       for: .normal)
         
-        uiView.backgroundColor = UIColor(.textFieldBackground)
+        uiView.backgroundColor = UIColor(Color.textFieldBackground)
     }
     
     class Coordinator: NSObject {
