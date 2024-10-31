@@ -71,4 +71,11 @@ public enum FrameSize {
         case .height: return 15.0
         }
     }
+    
+    var rowForListTransactionHistory: CGFloat {
+        switch self {
+        case .width: return ConstantFrames.iPadMaxWidth
+        case .height: return 40.0
+        }
+    }
 }

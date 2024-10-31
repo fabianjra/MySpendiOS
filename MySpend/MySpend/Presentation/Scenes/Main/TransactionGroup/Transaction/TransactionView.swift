@@ -38,9 +38,7 @@ struct TransactionView: View {
             // MARK: HISTORY BUTTON
             VStack {
                 NavigationLink {
-                    let historyViewModel = TransactionHistoryViewModel(transactions: viewModel.transactions)
-                    
-                    TransactionHistoryView(viewModel: historyViewModel)
+                    TransactionHistoryView(transactionsLoaded: $viewModel.transactions)
                         .toolbar(.hidden, for: .navigationBar)
                 } label: {
                     TextButtonHorizontalStyled(text: "History",

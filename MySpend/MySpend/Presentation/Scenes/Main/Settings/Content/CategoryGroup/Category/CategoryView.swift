@@ -10,6 +10,7 @@ import SwiftUI
 struct CategoryView: View {
     
     @StateObject var viewModel = CategoryViewModel()
+    @State private var selectedModel: CategoryModel?
     
     var body: some View {
         ContentContainer(addPading: false) {
@@ -64,6 +65,7 @@ struct CategoryView: View {
                             .listRowBackground(Color.listRowBackground) //Background for each row.
                             .swipeActions(edge: .trailing) {
                                 Button {
+                                    selectedModel = category
                                     viewModel.showAlertDelete = true
                                 } label: {
                                     Label.delete
@@ -71,7 +73,7 @@ struct CategoryView: View {
                                 .tint(Color.warning)
                             }
                             .alert("Delete category", isPresented: $viewModel.showAlertDelete) {
-                                Button("Delete", role: .destructive) { delete(category) }
+                                Button("Delete", role: .destructive) { delete() }
                                 Button("Cancel", role: .cancel) { }
                             } message: {
                                 Text("Want to delete this category? \n This action cannot be undone.")
@@ -102,12 +104,14 @@ struct CategoryView: View {
         }
     }
     
-    private func delete(_ swipedModel: CategoryModel) {
+    private func delete() {
         Task {
-            let result = await viewModel.deleteCategory(swipedModel)
-            
-            if result.status.isError {
-                viewModel.errorMessage = result.message
+            if let selectedModel {
+                let result = await viewModel.deleteCategory(selectedModel)
+                
+                if result.status.isError {
+                    viewModel.errorMessage = result.message
+                }
             }
         }
     }

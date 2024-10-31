@@ -33,7 +33,7 @@ struct ButtonSelectValueInterval: View {
     
     var body: some View {
         VStack {
-            HStack(spacing: ConstantViews.selectValueIntervalSpacing) {
+            HStack(spacing: ConstantViews.mediumSpacing) {
                 Button {
                     actionTrailing()
                 } label: {
