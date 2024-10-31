@@ -104,7 +104,12 @@ struct TransactionHistoryView: View {
                                 }
                                 
                                 VStack(alignment: .leading) {
-                                    TextPlain(message: item.category.name)
+                                    if item.notes.isEmptyOrWhitespace(){
+                                        TextPlain(message: item.category.name)
+                                    } else {
+                                        TextPlain(message: item.notes)
+                                    }
+                                    
                                     TextPlain(message: item.dateTransaction.toStringShortLocale(), size: .small)
                                 }
                                 
@@ -172,31 +177,31 @@ struct TransactionHistoryView: View {
                                   amount: 100,
                                   dateTransaction: .now,
                                   category: CategoryModel(id: "01", icon: CategoryIcons.bills.list[0], name: "Gasolina", categoryType: .expense),
-                                  notes: "Nota",
+                                  notes: "",
                                   transactionType: .expense),
                  TransactionModel(id: "02",
                                   amount: 200,
                                   dateTransaction: .now + 1,
                                   category: CategoryModel(id: "02", icon: CategoryIcons.bills.list[1],name: "Comida", categoryType: .expense),
-                                  notes: "Nota",
+                                  notes: "Fue un almuerzo de trabajo",
                                   transactionType: .expense),
                  TransactionModel(id: "03",
                                   amount: 50,
                                   dateTransaction: .now + 2,
                                   category: CategoryModel(id: "02", icon: CategoryIcons.foodAndDrink.list[0],name: "Comida", categoryType: .expense),
-                                  notes: "Nota",
+                                  notes: "",
                                   transactionType: .expense),
                  TransactionModel(id: "04",
                                   amount: 50,
                                   dateTransaction: .now + 3,
                                   category: CategoryModel(id: "01", icon: CategoryIcons.household.list[0],name: "Gasolina", categoryType: .expense),
-                                  notes: "Nota",
+                                  notes: "",
                                   transactionType: .expense),
                  TransactionModel(id: "05",
                                   amount: 5000,
                                   dateTransaction: .now + 4,
                                   category: CategoryModel(id: "03", icon: CategoryIcons.household.list[1],name: "Recarga saldo", categoryType: .income),
-                                  notes: "Nota",
+                                  notes: "Nota: recarga",
                                   transactionType: .income)]
     VStack {
         TransactionHistoryView(transactionsLoaded: $array)
