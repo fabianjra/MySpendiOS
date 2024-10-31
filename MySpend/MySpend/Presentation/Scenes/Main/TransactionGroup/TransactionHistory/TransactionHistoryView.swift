@@ -121,6 +121,7 @@ struct TransactionHistoryView: View {
                                 .opacity(ConstantColors.opacityHalf)
                         }
                         .frame(height: FrameSize.height.rowForListTransactionHistory)
+                        .listRowSeparator(.hidden)
                         .swipeActions(edge: .trailing) {
                             Button {
                                 selectedModel = item
