@@ -178,37 +178,63 @@ struct TransactionHistoryView: View {
 }
 
 #Preview("With Content ES") {
-    
-    @Previewable @State var array = [TransactionModel(id: "01",
+    @Previewable @State var array = [TransactionModel(id: UUID().uuidString,
                                   amount: 100,
                                   dateTransaction: .now,
-                                  category: CategoryModel(id: "01", icon: CategoryIcons.bills.list[0], name: "Gasolina", categoryType: .expense),
+                                  category: CategoryModel(id: UUID().uuidString,
+                                                          icon: CategoryIcons.bills.list[0],
+                                                          name: "Gasolina",
+                                                          categoryType: .expense),
                                   notes: "",
                                   transactionType: .expense),
-                 TransactionModel(id: "02",
+                 TransactionModel(id: UUID().uuidString,
                                   amount: 200,
                                   dateTransaction: .now + 1,
-                                  category: CategoryModel(id: "02", icon: CategoryIcons.bills.list[1],name: "Comida", categoryType: .expense),
+                                  category: CategoryModel(id: UUID().uuidString,
+                                                          icon: CategoryIcons.bills.list[1],
+                                                          name: "Comida",
+                                                          categoryType: .expense),
                                   notes: "Fue un almuerzo de trabajo",
                                   transactionType: .expense),
-                 TransactionModel(id: "03",
+                 TransactionModel(id: UUID().uuidString,
                                   amount: 50,
                                   dateTransaction: .now + 2,
-                                  category: CategoryModel(id: "02", icon: CategoryIcons.foodAndDrink.list[0],name: "Comida", categoryType: .expense),
+                                  category: CategoryModel(id: UUID().uuidString,
+                                                          icon: CategoryIcons.foodAndDrink.list[0],
+                                                          name: "Comida",
+                                                          categoryType: .expense),
                                   notes: "",
                                   transactionType: .expense),
-                 TransactionModel(id: "04",
+                 TransactionModel(id: UUID().uuidString,
                                   amount: 50,
                                   dateTransaction: .now + 3,
-                                  category: CategoryModel(id: "01", icon: CategoryIcons.household.list[0],name: "Gasolina", categoryType: .expense),
+                                  category: CategoryModel(id: UUID().uuidString,
+                                                          icon: CategoryIcons.household.list[0],
+                                                          name: "Gasolina",
+                                                          categoryType: .expense),
                                   notes: "",
-                                  transactionType: .expense),
-                 TransactionModel(id: "05",
-                                  amount: 5000,
-                                  dateTransaction: .now + 4,
-                                  category: CategoryModel(id: "03", icon: CategoryIcons.household.list[1],name: "Recarga saldo", categoryType: .income),
-                                  notes: "Nota: recarga",
-                                  transactionType: .income)]
+                                  transactionType: .expense)]
+    VStack {
+        TransactionHistoryView(transactionsLoaded: $array)
+            .environment(\.locale, .init(identifier: "es"))
+    }
+}
+
+#Preview("Saturated Content EN") {
+    
+    @Previewable @State var array: [TransactionModel] = (1...Int.random(in:10...40)).map { item in
+        
+        TransactionModel(id: UUID().uuidString,
+                         amount: Decimal(Double.random(in: 10.99...7456825682.99)),
+                         dateTransaction: .now,
+                         category: CategoryModel(id: UUID().uuidString,
+                                                 icon: CategoryIcons.bills.list.randomElement()!,
+                                                 name: "nombre categoria - CategoryModel",
+                                                 categoryType: .expense),
+                         notes: "",
+                         transactionType: .expense)
+    }
+    
     VStack {
         TransactionHistoryView(transactionsLoaded: $array)
             .environment(\.locale, .init(identifier: "es"))
