@@ -71,6 +71,14 @@ struct CategoryView: View {
                                     Label.delete
                                 }
                                 .tint(Color.alert)
+                                
+                                Button {
+                                    viewModel.categoryToModify = category
+                                    viewModel.showModifyItemModal = true
+                                } label: {
+                                    Label.edit
+                                }
+                                .tint(Color.warning)
                             }
                             .alert("Delete category", isPresented: $viewModel.showAlertDelete) {
                                 Button("Delete", role: .destructive) { delete() }

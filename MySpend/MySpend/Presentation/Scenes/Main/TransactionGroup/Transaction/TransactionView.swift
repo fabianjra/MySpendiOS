@@ -90,7 +90,9 @@ struct TransactionView: View {
                         HStack {
                             TextPlain(message: "Incomes")
                             Spacer()
-                            TextPlain(message: viewModel.totalIncomeFormatted)
+                            TextPlain(message: viewModel.totalIncomeFormatted,
+                                      color: Color.primaryLeading,
+                                      family: .semibold)
                         }
                         .padding(.bottom, ConstantViews.minimumSpacing)
                         
@@ -98,7 +100,9 @@ struct TransactionView: View {
                         HStack {
                             TextPlain(message: "Expenses")
                             Spacer()
-                            TextPlain(message: viewModel.totalExpensesFormatted)
+                            TextPlain(message: viewModel.totalExpensesFormatted,
+                                      color: Color.alert,
+                                      family: .semibold)
                         }
                         .padding(.bottom, ConstantViews.minimumSpacing)
                         
@@ -127,36 +131,46 @@ struct TransactionView: View {
     }
 }
 
-#Preview("With Content ES") {
+#Preview("Content ES") {
     VStack {
         let array = [TransactionModel(id: "01",
                                       amount: 100,
                                       dateTransaction: .now,
-                                      category: CategoryModel(id: "01", name: "Gasolina", categoryType: .expense),
+                                      category: CategoryModel(id: "01",
+                                                              name: "Gasolina",
+                                                              categoryType: .expense),
                                       notes: "Nota",
                                       transactionType: .expense),
                      TransactionModel(id: "02",
                                       amount: 200,
                                       dateTransaction: .now,
-                                      category: CategoryModel(id: "02",name: "Comida", categoryType: .expense),
+                                      category: CategoryModel(id: "02",
+                                                              name: "Comida",
+                                                              categoryType: .expense),
                                       notes: "Nota",
                                       transactionType: .expense),
                      TransactionModel(id: "03",
                                       amount: 50,
                                       dateTransaction: .now,
-                                      category: CategoryModel(id: "02",name: "Comida", categoryType: .expense),
+                                      category: CategoryModel(id: "02",
+                                                              name: "Comida",
+                                                              categoryType: .expense),
                                       notes: "Nota",
                                       transactionType: .expense),
                      TransactionModel(id: "04",
                                       amount: 50,
                                       dateTransaction: .now,
-                                      category: CategoryModel(id: "01",name: "Gasolina", categoryType: .expense),
+                                      category: CategoryModel(id: "01",
+                                                              name: "Gasolina",
+                                                              categoryType: .expense),
                                       notes: "Nota",
                                       transactionType: .expense),
                      TransactionModel(id: "05",
                                       amount: 5000,
                                       dateTransaction: .now,
-                                      category: CategoryModel(id: "03",name: "Recarga saldo", categoryType: .income),
+                                      category: CategoryModel(id: "03",
+                                                              name: "Recarga saldo",
+                                                              categoryType: .income),
                                       notes: "Nota",
                                       transactionType: .income)]
         

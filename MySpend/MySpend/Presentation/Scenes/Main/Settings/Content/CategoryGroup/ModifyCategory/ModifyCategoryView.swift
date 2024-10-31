@@ -42,6 +42,7 @@ struct ModifyCategoryView: View {
                 TextFieldCategoryName(text: $modelLoaded.name,
                                       errorMessage: $viewModel.errorMessage)
                 .focused($focusedField, equals: .name)
+                .onSubmit { process() }
                 
                 Button("") {
                     viewModel.showIconsModal = true
