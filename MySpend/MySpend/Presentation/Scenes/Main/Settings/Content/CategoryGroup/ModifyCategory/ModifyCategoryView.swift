@@ -12,6 +12,8 @@ struct ModifyCategoryView: View {
     @Environment(\.dismiss) var dismiss
     
     @Binding var modelLoaded: CategoryModel
+    @Binding var categoryType: TransactionType
+    
     @StateObject var viewModel = ModifyCategoryViewModel()
     
     @FocusState private var focusedField: CategoryModel.Field?
@@ -30,7 +32,7 @@ struct ModifyCategoryView: View {
             
             // MARK: SEGMENT
             VStack {
-                PickerSegmented(selection: $modelLoaded.categoryType,
+                PickerSegmented(selection: $categoryType,
                                 segments: TransactionType.allCases)
                 .frame(maxWidth: ConstantFrames.iPadMaxWidth)
                 .padding(.bottom)
@@ -89,7 +91,7 @@ struct ModifyCategoryView: View {
     
     private func process() {
         Task {
-            let result = await viewModel.modifyCategory(modelLoaded)
+            let result = await viewModel.modifyCategory(modelLoaded, categoryType: categoryType)
             
             if result.status.isSuccess {
                 dismiss()
@@ -118,6 +120,6 @@ struct ModifyCategoryView: View {
                                                   name: "Categoria sample",
                                                   categoryType: .income)
     VStack {
-        ModifyCategoryView(modelLoaded: $model)
+        ModifyCategoryView(modelLoaded: $model, categoryType: .constant(.expense))
     }
 }

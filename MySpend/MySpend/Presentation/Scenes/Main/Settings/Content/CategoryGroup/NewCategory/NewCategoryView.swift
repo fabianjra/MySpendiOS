@@ -11,9 +11,8 @@ struct NewCategoryView: View {
     
     @Environment(\.dismiss) var dismiss
     
-    @State var model: CategoryModel
+    @Binding var categoryType: TransactionType
     @StateObject var viewModel = NewCategoryViewModel()
-    
     @FocusState private var focusedField: CategoryModel.Field?
     
     var body: some View {
@@ -30,7 +29,7 @@ struct NewCategoryView: View {
             
             // MARK: SEGMENT
             VStack {
-                PickerSegmented(selection: $model.categoryType,
+                PickerSegmented(selection: $categoryType,
                                 segments: TransactionType.allCases)
                 .frame(maxWidth: ConstantFrames.iPadMaxWidth)
                 .padding(.bottom)
@@ -39,7 +38,7 @@ struct NewCategoryView: View {
             
             // MARK: TEXTFIELDS
             VStack {
-                TextFieldCategoryName(text: $model.name,
+                TextFieldCategoryName(text: $viewModel.model.name,
                                       errorMessage: $viewModel.errorMessage)
                 .focused($focusedField, equals: .name)
                 .onSubmit { process() }
@@ -47,8 +46,8 @@ struct NewCategoryView: View {
                 Button("") {
                     viewModel.showIconsModal = true
                 }
-                .buttonStyle(ButtonTextFieldStyle(icon: model.icon, actionClear: {
-                    model.icon = ""
+                .buttonStyle(ButtonTextFieldStyle(icon: viewModel.model.icon, actionClear: {
+                    viewModel.model.icon = ""
                 }))
             }
             
@@ -69,14 +68,14 @@ struct NewCategoryView: View {
             focusedField = .name
         }
         .sheet(isPresented: $viewModel.showIconsModal) {
-            IconListModalView(model: $model, showModal: $viewModel.showIconsModal)
+            IconListModalView(model: $viewModel.model, showModal: $viewModel.showIconsModal)
         }
         .disabled(viewModel.isLoading)
     }
      
     private func process() {
         Task {
-            let result = await viewModel.addNewCategory(model)
+            let result = await viewModel.addNewCategory(categoryType)
             
             if result.status.isSuccess {
                 dismiss()
@@ -88,5 +87,5 @@ struct NewCategoryView: View {
 }
 
 #Preview("Add new category") {
-    NewCategoryView(model: CategoryModel())
+    NewCategoryView(categoryType: .constant(.expense))
 }

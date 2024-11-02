@@ -12,12 +12,13 @@ class ModifyCategoryViewModel: BaseViewModel {
     @Published var showIconsModal = false
     @Published var showAlert = false
     
-    func modifyCategory(_ model: CategoryModel) async -> ResponseModel {
+    func modifyCategory(_ model: CategoryModel, categoryType: TransactionType) async -> ResponseModel {
         if model.name.isEmptyOrWhitespace() {
             return ResponseModel(.error, Errors.emptySpaces.localizedDescription)
         }
         
         var mutableModel = model
+        mutableModel.categoryType = categoryType
         mutableModel.datemodified = .now
         
         var response = ResponseModel()

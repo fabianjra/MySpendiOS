@@ -9,9 +9,9 @@ import SwiftUI
 
 struct TabViewMain: View {
     
-    @State var showNewTransactionModal = false
-    @State var selectedTab: TabViewIcons = .transaction
-    @State var navigateToHistory: Bool = false
+    @State private var showNewTransactionModal = false
+    @State private var selectedTab: TabViewIcons = .transaction
+    @State private var navigateToHistory: Bool = false
     
     init() {
         UITabBar.appearance().isHidden = true

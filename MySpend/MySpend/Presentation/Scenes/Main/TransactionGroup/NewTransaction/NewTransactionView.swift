@@ -107,7 +107,7 @@ struct NewTransactionView: View {
                 }
                 .sheet(isPresented: $viewModel.showCategoryList) {
                     SelectCategoryModalView(selectedCategory: $viewModel.model.category,
-                                            transactionType: viewModel.model.transactionType)
+                                            categoryType: viewModel.model.transactionType)
                 }
             }
         }

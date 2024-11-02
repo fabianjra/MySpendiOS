@@ -119,10 +119,6 @@ struct TransactionsDatabase_ORIGINAL {
         
         let decodedDocument = try UtilsFB.decodeModelFB(data: data, forModel: UserModel.self)
         
-//        guard let transactions = decodedDocument.transactions else {
-//            return []
-//        }
-        
         return []
     }
 }

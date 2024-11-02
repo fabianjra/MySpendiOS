@@ -11,9 +11,10 @@ struct SelectCategoryModalView: View {
     
     @Environment(\.dismiss) var dismiss
     
-    @StateObject var viewModel = CategoryViewModel()
     @Binding var selectedCategory: CategoryModel
-    var transactionType: TransactionType
+    @StateObject var viewModel = CategoryViewModel()
+    
+    var categoryType: TransactionType
     
     var body: some View {
         ContentContainer(addPading: false) {
@@ -32,7 +33,7 @@ struct SelectCategoryModalView: View {
             
             ZStack(alignment: .bottomTrailing) {
                 
-                let categoriesFiltered = viewModel.categories.filter { $0.categoryType == transactionType }
+                let categoriesFiltered = viewModel.categories.filter { $0.categoryType == categoryType }
                 
                 if categoriesFiltered.isEmpty {
                     NoContentView(title: "No categories",
@@ -74,7 +75,8 @@ struct SelectCategoryModalView: View {
             viewModel.fetchData()
         }
         .sheet(isPresented: $viewModel.showNewItemModal) {
-            NewCategoryView(model: CategoryModel(categoryType: transactionType))
+            //TODO: Hacer dinamico ese constante para que modifique el categoryType de esta vista y no tener que volver atras si se quiere modificar el expense o income.
+            NewCategoryView(categoryType: .constant(categoryType))
                 .presentationDetents([.large])
                 .presentationCornerRadius(ConstantRadius.cornersModal)
         }
@@ -126,7 +128,7 @@ struct SelectCategoryModalView: View {
         
         let viewModel = CategoryViewModel(categories: array)
         
-        SelectCategoryModalView(viewModel: viewModel, selectedCategory: $selectedCategory, transactionType: .expense)
+        SelectCategoryModalView(selectedCategory: $selectedCategory, viewModel: viewModel, categoryType: .expense)
             .environment(\.locale, .init(identifier: "es"))
     }
     .onAppear {

@@ -158,11 +158,11 @@ struct CategoriesDatabase_PRUEBAS {
         // AGREGAR:
         
         //A veces no hay un ID significativo para el documento y es más conveniente dejar que Cloud Firestore genere automáticamente un ID, con addDocument.
-        let nuevaCategoria = try await UtilsFB.db.collection("users").document(currentUser!.uid).collection("categories").addDocument(data: newCategoryModelData)
+        let _ = try await UtilsFB.db.collection("users").document(currentUser!.uid).collection("categories").addDocument(data: newCategoryModelData)
         
         
         //String del ID de la nueva categiria
-        let categoriaDocID = documento.documentID
+        let _ = documento.documentID
         
         
         

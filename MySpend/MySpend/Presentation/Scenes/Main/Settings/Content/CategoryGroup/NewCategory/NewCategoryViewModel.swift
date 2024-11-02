@@ -9,24 +9,25 @@ import Foundation
 
 class NewCategoryViewModel: BaseViewModel {
     
+    @Published var model = CategoryModel()
     @Published var showIconsModal = false
     
-    func addNewCategory(_ model: CategoryModel) async -> ResponseModel {
+    func addNewCategory(_ categoryType: TransactionType) async -> ResponseModel {
         if model.name.isEmptyOrWhitespace() {
             return ResponseModel(.error, Errors.emptySpaces.localizedDescription)
         }
         
-        var mutableModel = model
-        mutableModel.dateCreated = .now
-        mutableModel.datemodified = .now
+        model.categoryType = categoryType
+        model.dateCreated = .now
+        model.datemodified = .now
         
         var response = ResponseModel()
         
         await performWithLoader { currentUser in
             do {
-                mutableModel.userId = currentUser.uid
+                self.model.userId = currentUser.uid
                 
-                try await Repository().addNewDocument(mutableModel, forSubCollection: .categories)
+                try await Repository().addNewDocument(self.model, forSubCollection: .categories)
                 
                 response = ResponseModel(.successful)
             } catch {
