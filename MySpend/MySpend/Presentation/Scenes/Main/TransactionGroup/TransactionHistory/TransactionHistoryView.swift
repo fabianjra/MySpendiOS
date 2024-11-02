@@ -11,7 +11,7 @@ struct TransactionHistoryView: View {
     
     @Binding var transactionsLoaded: [TransactionModel]
     @StateObject var viewModel = TransactionHistoryViewModel()
-    @State private var selectedModel: TransactionModel?
+    @State private var selectedModel = TransactionModel()
     
     var body: some View {
         ContentContainer(addPading: false) {
@@ -34,7 +34,7 @@ struct TransactionHistoryView: View {
             print("Router count HISTORY: \(Router.shared.path.count)")
         }
         .sheet(isPresented: $viewModel.showModifyTransactionModal) {
-            ModifyTransactionView(modelLoaded: $viewModel.transactionToModify)
+            ModifyTransactionView(modelLoaded: $selectedModel)
                 .presentationDetents([.large])
                 .presentationCornerRadius(ConstantRadius.cornersModal)
         }
@@ -97,7 +97,7 @@ struct TransactionHistoryView: View {
                                 
                                 
                                 Button("") {
-                                    viewModel.transactionToModify = item
+                                    selectedModel = item
                                     viewModel.showModifyTransactionModal = true
                                 }
                                 
@@ -142,7 +142,7 @@ struct TransactionHistoryView: View {
                             .tint(Color.alert)
                             
                             Button {
-                                viewModel.transactionToModify = item
+                                selectedModel = item
                                 viewModel.showModifyTransactionModal = true
                             } label: {
                                 Label.edit
@@ -166,12 +166,10 @@ struct TransactionHistoryView: View {
     
     private func delete() {
         Task {
-            if let selectedModel {
-                let result = await viewModel.deleteTransaction(selectedModel)
-                
-                if result.status.isError {
-                    viewModel.errorMessage = result.message
-                }
+            let result = await viewModel.deleteTransaction(selectedModel)
+            
+            if result.status.isError {
+                viewModel.errorMessage = result.message
             }
         }
     }

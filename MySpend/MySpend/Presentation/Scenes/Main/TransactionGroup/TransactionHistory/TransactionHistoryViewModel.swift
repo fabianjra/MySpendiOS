@@ -9,8 +9,6 @@ import Foundation
 
 class TransactionHistoryViewModel: BaseViewModel {
     
-    @Published var transactionToModify = TransactionModel()
-    
     @Published var dateTimeInvertal: DateTimeInterval = .month
     @Published var selectedMonth: Int = .zero // Indice de 0 a 11, siendo enero = 0
 
