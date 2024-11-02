@@ -25,6 +25,7 @@ struct TabViewContainer<Content: View>: View {
                 function()
             }
             .padding(.bottom, ConstantViews.paddingButtonRoundedBottomForCurvedTabview)
+            .zIndex(1)
             
             Color.tabViewBackground
                 .clipShape(SemiCircleShapeCurved())
