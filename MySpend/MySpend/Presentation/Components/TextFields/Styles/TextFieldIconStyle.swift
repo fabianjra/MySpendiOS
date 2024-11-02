@@ -122,6 +122,19 @@ struct TextFieldIconStyle: TextFieldStyle {
                         isError = true
                     } 
                 }
+            
+            if isFocused {
+                Image.xmarkCircleFIll
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: FrameSize.width.iconInsideTextField,
+                           height: FrameSize.height.iconInsideTextField)
+                    .foregroundColor(Color.textFieldPlaceholder)
+                    .padding(.trailing)
+                    .onTapGesture {
+                        text = ""
+                    }
+            }
         }
         .foregroundColor(foregroundColor)
         
@@ -156,7 +169,7 @@ struct TextFieldIconStyle: TextFieldStyle {
 }
 
 #Preview {
-    @Previewable @State var text = ""
+    @Previewable @State var text = "asdfsfasdf asdf asf s asdf saf sf saf sa4w5345345354345"
     VStack {
         
         //Nothing:
