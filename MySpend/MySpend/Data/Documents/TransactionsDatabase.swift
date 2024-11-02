@@ -117,7 +117,7 @@ struct TransactionsDatabase_ORIGINAL {
             return []
         }
         
-        let decodedDocument = try UtilsFB.decodeModelFB(data: data, forModel: UserModel.self)
+        let _ = try UtilsFB.decodeModelFB(data: data, forModel: UserModel.self)
         
         return []
     }

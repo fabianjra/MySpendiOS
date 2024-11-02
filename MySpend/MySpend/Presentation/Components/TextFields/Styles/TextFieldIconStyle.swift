@@ -20,7 +20,7 @@ struct TextFieldIconStyle: TextFieldStyle {
     private let foregroundColor: Color
     private let backgroundColor: Color
     
-    private var isAmount: Bool = false
+    private var isAmount: Bool
     @State private var isError: Bool = false
     @Binding private var errorMessage: String
     
