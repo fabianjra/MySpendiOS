@@ -10,7 +10,7 @@ import SwiftUI
 struct CategoryView: View {
     
     @StateObject var viewModel = CategoryViewModel()
-    @State private var selectedModel: CategoryModel?
+    @State private var selectedModel = CategoryModel()
     
     var body: some View {
         ContentContainer(addPading: false) {
@@ -54,7 +54,7 @@ struct CategoryView: View {
                                 }
                                 
                                 Button(category.name) {
-                                    viewModel.categoryToModify = category
+                                    selectedModel = category
                                     viewModel.showModifyItemModal = true
                                 }
                                 
@@ -73,7 +73,7 @@ struct CategoryView: View {
                                 .tint(Color.alert)
                                 
                                 Button {
-                                    viewModel.categoryToModify = category
+                                    selectedModel = category
                                     viewModel.showModifyItemModal = true
                                 } label: {
                                     Label.edit
@@ -106,7 +106,7 @@ struct CategoryView: View {
                 .presentationCornerRadius(ConstantRadius.cornersModal)
         }
         .sheet(isPresented: $viewModel.showModifyItemModal) {
-            ModifyCategoryView(modelLoaded: $viewModel.categoryToModify)
+            ModifyCategoryView(modelLoaded: $selectedModel)
                 .presentationDetents([.large])
                 .presentationCornerRadius(ConstantRadius.cornersModal)
         }
@@ -114,12 +114,10 @@ struct CategoryView: View {
     
     private func delete() {
         Task {
-            if let selectedModel {
-                let result = await viewModel.deleteCategory(selectedModel)
-                
-                if result.status.isError {
-                    viewModel.errorMessage = result.message
-                }
+            let result = await viewModel.deleteCategory(selectedModel)
+            
+            if result.status.isError {
+                viewModel.errorMessage = result.message
             }
         }
     }

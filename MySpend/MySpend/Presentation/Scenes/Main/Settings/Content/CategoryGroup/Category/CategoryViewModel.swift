@@ -11,7 +11,6 @@ class CategoryViewModel: BaseViewModel {
     
     @Published var categories: [CategoryModel]
     @Published var categoryType: TransactionType = .expense
-    @Published var categoryToModify = CategoryModel()
     
     @Published var showNewItemModal = false
     @Published var showModifyItemModal = false
