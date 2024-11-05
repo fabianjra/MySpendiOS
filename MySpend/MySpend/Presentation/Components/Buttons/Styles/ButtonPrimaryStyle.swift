@@ -29,13 +29,10 @@ struct ButtonPrimaryStyle: ButtonStyle {
             .modifier(Show(isVisible: isLoading == false))
             .font(.montserrat())
             .foregroundColor(
-                
                 //If enabled: Original foreground color.
-                isEnabled ? Color.buttonForeground :
-                    
-                    //If disabled and dont want to show foreground disabled, preserve the original color.
-                neverBgDisabled ? Color.buttonForeground :
-                    
+                //If disabled and dont want to show foreground disabled, preserve the original color.
+                isEnabled || neverBgDisabled ? Color.buttonForeground :
+
                     //If disabled and want to show foregroundDisabled: show disabled foreground color.
                 Color.disabledForeground)
         
