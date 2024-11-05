@@ -123,7 +123,7 @@ struct TextFieldIconStyle: TextFieldStyle {
                     } 
                 }
             
-            if isFocused {
+            if isFocused && !text.isEmpty {
                 Image.xmarkCircleFIll
                     .resizable()
                     .aspectRatio(contentMode: .fit)

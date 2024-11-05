@@ -84,7 +84,7 @@ struct ModifyTransactionView: View {
                         Button("Delete") {
                             viewModel.showAlert = true
                         }
-                        .buttonStyle(ButtonPrimaryStyle(color: [Color.alert], isLoading: $viewModel.isLoadingSecondary))
+                        .buttonStyle(ButtonBorderedStyle(color: [Color.alert], isLoading: $viewModel.isLoadingSecondary))
                         .padding(.vertical)
                         .alert("Delete transaction", isPresented: $viewModel.showAlert) {
                             Button("Delete", role: .destructive) { delete() }
@@ -131,7 +131,6 @@ struct ModifyTransactionView: View {
     }
     
     private func process() {
-        focusedField = .none
         Task {
             let result = await viewModel.modifyTransaction(modelLoaded)
             
@@ -144,7 +143,6 @@ struct ModifyTransactionView: View {
     }
     
     private func delete() {
-        focusedField = .none
         Task {
             let result = await viewModel.deleteTransaction(modelLoaded)
             

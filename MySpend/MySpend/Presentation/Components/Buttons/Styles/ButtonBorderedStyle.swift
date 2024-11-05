@@ -1,13 +1,13 @@
 //
-//  ButtonPrimaryStyle.swift
+//  ButtonBorderedStyle.swift
 //  MySpend
 //
-//  Created by Fabian Rodriguez on 7/7/23.
+//  Created by Fabian Rodriguez on 4/11/24.
 //
 
 import SwiftUI
 
-struct ButtonPrimaryStyle: ButtonStyle {
+struct ButtonBorderedStyle: ButtonStyle {
     
     @Environment(\.isEnabled) private var isEnabled: Bool
     
@@ -48,12 +48,11 @@ struct ButtonPrimaryStyle: ButtonStyle {
                 //If disabled and is not loading but dont want to show BackGround disabled, preserve the original color.
                 isEnabled || isLoading || neverBgDisabled ?
                 
-                backgroundButton(color) :
-                    
+                backgroundBorderedButton(color) :
+
                     //If disabled and is not loading and want to show BackGroundDisabled: show disabled background color.
-                backgroundButton([Color.disabledBackground])
+                backgroundBorderedButton([Color.disabledBackground])
             )
-            .cornerRadius(.infinity)
         
         // MARK: ANIMATIONS
             .overlay(content: {
@@ -70,10 +69,12 @@ struct ButtonPrimaryStyle: ButtonStyle {
             .animation(.easeOut(duration: ConstantAnimations.buttonScaleDuration), value: configuration.isPressed)
     }
     
-    private func backgroundButton(_ color: [Color]) -> some View {
-        LinearGradient(colors: color,
-                       startPoint: .leading,
-                       endPoint: .trailing)
+    private func backgroundBorderedButton(_ color: [Color]) -> some View {
+        RoundedRectangle(cornerRadius: .infinity)
+            .stroke(LinearGradient(colors: color,
+                                   startPoint: .leading,
+                                   endPoint: .trailing),
+                    lineWidth: ConstantShapes.textFieldLineWidth)
     }
 }
 
@@ -82,7 +83,7 @@ struct ButtonPrimaryStyle: ButtonStyle {
         Button("Button Primary") {
             print("button pressed")
         }
-        .buttonStyle(ButtonPrimaryStyle(isLoading: .constant(true)))
+        .buttonStyle(ButtonBorderedStyle(isLoading: .constant(true)))
         //.environment(\.isEnabled, true))
         //.disabled(userEmail.isEmpty || userPassword.isEmpty) //Way to use disabled
         
@@ -90,13 +91,13 @@ struct ButtonPrimaryStyle: ButtonStyle {
         Button("Button Primary") {
             print("button pressed")
         }
-        .buttonStyle(ButtonPrimaryStyle(isLoading: .constant(false)))
+        .buttonStyle(ButtonBorderedStyle(isLoading: .constant(false)))
         
         
         Button("Button disabled") {
             print("button pressed")
         }
-        .buttonStyle(ButtonPrimaryStyle(isLoading: .constant(false)))
+        .buttonStyle(ButtonBorderedStyle(isLoading: .constant(false)))
         .disabled(true) //Correct way to disable the button
         //.environment(\.isEnabled, false)
     }

@@ -73,7 +73,7 @@ struct NewTransactionView: View {
                     
                     // MARK: BUTTONS
                     VStack {
-                        Button("Accept") {
+                        Button("Add") {
                             process()
                         }
                         .buttonStyle(ButtonPrimaryStyle(isLoading: $viewModel.isLoading))
@@ -115,7 +115,6 @@ struct NewTransactionView: View {
     }
 
     private func process() {
-        focusedField = .none
         Task {
             let result = await viewModel.addNewTransaction()
             

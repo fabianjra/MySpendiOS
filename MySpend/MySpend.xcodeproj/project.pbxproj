@@ -97,6 +97,7 @@
 		1F9DD6D22CCCC3510093F55D /* TextFieldReadOnlySelectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9DD6D12CCCC3490093F55D /* TextFieldReadOnlySelectable.swift */; };
 		1F9DD6D42CCCCFA20093F55D /* NoContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9DD6D32CCCCF9A0093F55D /* NoContentView.swift */; };
 		1F9F16D42AFC926D003CB599 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9F16D32AFC926D003CB599 /* UserModel.swift */; };
+		1FA05B762CD9D652008CF4A4 /* ButtonBorderedStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA05B752CD9D64C008CF4A4 /* ButtonBorderedStyle.swift */; };
 		1FA08EE22C5D993C0019000B /* Register.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA08EE12C5D993C0019000B /* Register.swift */; };
 		1FA08EE42C5D99480019000B /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA08EE32C5D99480019000B /* RegisterViewModel.swift */; };
 		1FAA87D52C697F1000700CD6 /* CategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FAA87D42C697F1000700CD6 /* CategoryViewModel.swift */; };
@@ -264,6 +265,7 @@
 		1F9DD6D12CCCC3490093F55D /* TextFieldReadOnlySelectable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldReadOnlySelectable.swift; sourceTree = "<group>"; };
 		1F9DD6D32CCCCF9A0093F55D /* NoContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoContentView.swift; sourceTree = "<group>"; };
 		1F9F16D32AFC926D003CB599 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		1FA05B752CD9D64C008CF4A4 /* ButtonBorderedStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonBorderedStyle.swift; sourceTree = "<group>"; };
 		1FA08EE12C5D993C0019000B /* Register.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Register.swift; sourceTree = "<group>"; };
 		1FA08EE32C5D99480019000B /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
 		1FAA87D42C697F1000700CD6 /* CategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewModel.swift; sourceTree = "<group>"; };
@@ -373,6 +375,7 @@
 				1FFD5FA22A8B35A300A53050 /* ButtonHorizontalStyle.swift */,
 				1F7F86A92CC9DE5500AF854E /* ButtonTextFieldStyle.swift */,
 				1F14081C2A5910D300181500 /* ButtonLinkStyle.swift */,
+				1FA05B752CD9D64C008CF4A4 /* ButtonBorderedStyle.swift */,
 				1F7486C82A6A5DC90063AC35 /* ButtonScaleStyle.swift */,
 			);
 			path = Styles;
@@ -1119,6 +1122,7 @@
 				1F1E854C2A6F7AFD00CEEBBC /* SettingsView.swift in Sources */,
 				1FAA87D72C697F1A00700CD6 /* CategoryView.swift in Sources */,
 				1FAEE6D02A47A9AB00630367 /* LoginView.swift in Sources */,
+				1FA05B762CD9D652008CF4A4 /* ButtonBorderedStyle.swift in Sources */,
 				1F64B0A92A70CBBF004AC825 /* ChangeNameView.swift in Sources */,
 				1F20E7742CC1B6DF0061CDB8 /* TextFieldAmount.swift in Sources */,
 				1F46B4232A7A03CD003A9550 /* TextPlain.swift in Sources */,
