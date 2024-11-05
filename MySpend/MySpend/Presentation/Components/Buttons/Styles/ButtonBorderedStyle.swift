@@ -62,6 +62,7 @@ struct ButtonBorderedStyle: ButtonStyle {
                         .padding(.vertical, ConstantViews.mediumSpacing)
                 }
             })
+            .contentShape(Rectangle())
         
         // MARK: EFFECTS
             .scaleEffect(configuration.isPressed ?
