@@ -65,24 +65,37 @@ struct TransactionHistoryView: View {
             //.colorMultiply(.primaryLeading)
             
             //TODO: Refactorizar para poder navegar entre años tambien, al pasar de diciembre.
-            ButtonSelectValueInterval(viewModel.monthSymbols[viewModel.selectedMonth]) {
-                if viewModel.selectedMonth > 0 {
-                    viewModel.selectedMonth -= 1
+            if viewModel.dateTimeInvertal == .month {
+                
+                ButtonSelectValueInterval(viewModel.monthSymbols[viewModel.selectedMonth]) {
+                    if viewModel.selectedMonth > 0 {
+                        viewModel.selectedMonth -= 1
+                    }
+                    
+                } actionCenter: {
+                    //Ir al mes actual
+                } actionLeading: {
+                    if viewModel.selectedMonth < 11 {
+                        viewModel.selectedMonth += 1
+                    }
                 }
                 
-            } actionCenter: {
-                
-            } actionLeading: {
-                if viewModel.selectedMonth < 11 {
-                    viewModel.selectedMonth += 1
+            } else if viewModel.dateTimeInvertal == .year {
+                ButtonSelectValueInterval(viewModel.selectedYear.description) {
+                    viewModel.selectedYear -= 1
+                    
+                } actionCenter: {
+                    //Ir al año actual.
+                    
+                } actionLeading: {
+                    viewModel.selectedYear += 1
                 }
             }
             
             
+            
             VStack {
-                let viewModelSorted = transactionsLoaded
-                    .filter { Calendar.current.component(.month, from: $0.dateTransaction) == viewModel.selectedMonth + 1 }
-                    .sorted(by: { $0.dateTransaction > $1.dateTransaction })
+                let viewModelSorted = viewModel.filteredTransactions(transactionsLoaded)
                 
                 List {
                     ForEach(viewModelSorted) { item in
