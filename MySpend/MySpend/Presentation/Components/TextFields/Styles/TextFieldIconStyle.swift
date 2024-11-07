@@ -132,7 +132,9 @@ struct TextFieldIconStyle: TextFieldStyle {
                     .foregroundColor(Color.textFieldPlaceholder)
                     .padding(.trailing)
                     .onTapGesture {
-                        text = ""
+                        DispatchQueue.main.async { // Allows to clean the text even if its selected by autocorrect.
+                            text = ""
+                        }
                     }
             }
         }
