@@ -88,6 +88,7 @@ struct CategoryView: View {
                             }
                         }
                     }
+                    .animation(.smooth, value: categoriesFiltered.count)
                 }
                 
                 ButtonRounded {

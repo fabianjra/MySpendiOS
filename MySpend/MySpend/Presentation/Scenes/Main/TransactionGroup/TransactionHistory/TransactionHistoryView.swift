@@ -173,6 +173,7 @@ struct TransactionHistoryView: View {
                     .listRowBackground(Color.clear)
                 }
                 .listStyle(.plain)
+                .animation(.smooth, value: viewModelSorted.count)
             }
         }
     }
