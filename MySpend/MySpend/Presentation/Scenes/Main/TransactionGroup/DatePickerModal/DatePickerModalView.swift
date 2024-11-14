@@ -40,6 +40,7 @@ struct DatePickerModalView: View {
                     }
                 }
         }
+        .presentationDragIndicator(.visible)
         .presentationCornerRadius(ConstantRadius.cornersModal)
         .presentationDetents([.height(FrameSize.height.calendar)])
     }

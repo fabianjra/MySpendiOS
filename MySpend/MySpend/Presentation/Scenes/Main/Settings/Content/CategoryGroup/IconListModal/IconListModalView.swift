@@ -75,6 +75,7 @@ struct IconListModalView: View {
                 , alignment: .top
             )
         }
+        .presentationDragIndicator(.visible)
         .presentationCornerRadius(ConstantRadius.cornersModal)
         .presentationDetents([.large])
     }

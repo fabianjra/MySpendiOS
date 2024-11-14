@@ -11,11 +11,11 @@
 \
 -Agregar descripcion de password para cambiar y registrar.\
 \
+-Agregar ver password.\
+\
 -Agregar los inicios de sesion con redes sociales.\
 \
 -Agregar PopUps para mensajes de error. (a los modfiers: .alert)\
-\
--Hacer trim a los campos de texto.\
 \
 -Agregar validacion de conexion a internet: Mostrar pantalla de \'93NO HAY CONEXION A INTERNET\'94 en pantalla de cambio de datos (nombre, password, enviar email).\
 \
@@ -25,27 +25,41 @@
 \
 -Pasar los Vstack y vista general de TransactionView y otros,a funciones separadas para separar vistas cuando se validan en: Mostrar datos o no. (Ejemplo: ResumeView muestra un mensaje de agregar transacciones cuando no existen transacciones agregadas).\
 \
--Poder modificar cada item en la vista de TransactionHistory.\
-\
--Cargar la lista de categories en la vista de Agregar Nueva Transaccion, para el campo de texto: Category.\
-\
--En TransactionView: Mostrar transacciones agrupadas por categoria y al resultado de Balance, sumar y restar valores dependiendo del tipo de transaccion (Expense, income).\
-\
 -Agregar componente nuevo para el HistoryView: Filtrar por mes, dia, anio o semana (basarse en aplicacion ya hecha de Spends).\
 \
 -Vista de ChageMyName = Cambiar por cambiar perfil para agregar nacionalidad, telefono, etc.\
 \
 -Agregar el toolbar superior para editar cada uno de los items de Categories o transacciones y eliminarlos.\
 \
--Agregar la equis de borrar texto a todos los textfield.\
+-Refactorizar el navegador de TimeInterval para no repetir codigo.\
+\
+-Agregar el navegador de intervalos de tiempos a la vista de Transactions.\
+\
+-Poder modificar items de las listas mediante Edit en la barra superior (eliminar varios items a la vez de un List)\
+\
+-Agregar el a\'f1o al navegador de mes solamente cuando no este en el mes actual. Igual con el navegador de semanas y dias.\
+\
+-Mostrar montos totales de ingresos y gastos cuando en la pantalla y History y filtrarlo por el array mostrado en pantalla.\
+\
+-Agregar colores de ingresos y gatos en la vist ad History.\
+\
+-Filtrar en la vista de History: Por tipo de categoria.\
+\
+-Permitir ordenamiento en la vista de History: Por fecha, por nombre de categoria.\
+\
+-Darle formato al campo de monto al perder el foco.\
 \
 **********************************************************************************\
 DONE:\
 \pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 \strike \strikec0 -Poder modificar cada item en la vista de TransactionHistory.\strike0\striked0 \
+\strike \strikec0 -Cargar la lista de categories en la vista de Agregar Nueva Transaccion, para el campo de texto: Category.\strike0\striked0 \
+\strike \strikec0 -En TransactionView: Mostrar transacciones agrupadas por categoria y al resultado de Balance, sumar y restar valores dependiendo del tipo de transaccion (Expense, income).\strike0\striked0 \
+\strike \strikec0 -Agregar la equis de borrar texto a todos los textfield.\strike0\striked0 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
 \cf0 \strike \strikec0 -Agregar fecha de creacion y modificacion a Categories y Transactions para poder ordenarlas despues.\strike0\striked0 \
 \strike \strikec0 -Agregar el deslizar para borrar en lista Categories y Transacciones.\strike0\striked0 \
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
-\cf0 \strike \strikec0 -Desabilitar boton History para cuando no existen transacciones en ResumeView.\strike0\striked0 \
+\strike \strikec0 -Desabilitar boton History para cuando no existen transacciones en ResumeView.\strike0\striked0 \
 -Agregar vista nueva carga Harcoded de SF Symbols para cuando se agregan nuevas categorias.\
 -Reestructurar los datos: Pasar Categories y Transactions a una tabla aparte.\
 -Agregar las consultas atomicas con listener a las transacciones en ResumeView, en History, en Categorias.\
