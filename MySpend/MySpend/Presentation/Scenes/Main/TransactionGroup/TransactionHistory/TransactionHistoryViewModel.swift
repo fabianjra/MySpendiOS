@@ -9,43 +9,65 @@ import Foundation
 
 class TransactionHistoryViewModel: BaseViewModel {
     
+    // MARK: DATE
     @Published var dateTimeInvertal: DateTimeInterval = .month
-    @Published var selectedMonth: Int = .zero // Indice de 0 a 11, siendo enero = 0
-    @Published var selectedYear: Int
-
-
+    @Published var selectedDate: Date = Date()
     let dateFormatter = DateFormatter()
-    var monthSymbols: [String] = []
     
+    // MARK: VIEW
     @Published var showAlertDelete = false
     @Published var showModifyTransactionModal = false
 
     override init() {
-        monthSymbols = dateFormatter.monthSymbols // ["January", "February", ..., "December"]
-        selectedMonth = Calendar.current.component(.month, from: Date()) - 1
-        
-        selectedYear = Calendar.current.component(.year, from: Date())
+        super.init()
+        dateFormatter.locale = Locale()
+        dateFormatter.dateStyle = .long
+        dateFormatter.timeStyle = .none
     }
     
-    func filteredTransactions(_ transactions: [TransactionModel]) -> [TransactionModel] {
-        
+    /**
+     Permite manipular la fecha segun el intervalo seleccionado
+     */
+    func adjustselectDate(by component: Calendar.Component, value: Int) {
+        if let newDate = Calendar.current.date(byAdding: component, value: value, to: selectedDate) {
+            selectedDate = newDate
+        }
+    }
+    
+    /**
+     Filtra las transacciones por intervalos de tiempo seleccionados
+     */
+    func filteredTransactions(_ transactions: [TransactionModel], for interval: DateTimeInterval) -> [TransactionModel] {
+        let calendar = Calendar.current
         let sortedTransactions = transactions.sorted(by: { $0.dateTransaction > $1.dateTransaction })
         
-        if dateTimeInvertal == .day {
-            //TODO: Filtrar por dia seleccionado. Se debe crear el array de dias en base al mes seleccionado.
+        switch interval {
             
-        } else if dateTimeInvertal == .month {
+        case .day:
             return sortedTransactions.filter {
-                Calendar.current.component(.month, from: $0.dateTransaction) == selectedMonth + 1
+                calendar.isDate($0.dateTransaction, inSameDayAs: selectedDate)
             }
             
-        } else if dateTimeInvertal == .year {
+        case .week:
+            if let weekInterval = calendar.dateInterval(of: .weekOfYear, for: selectedDate) {
+                let endOfSunday = calendar.date(byAdding: .second, value: -1, to: weekInterval.end) ?? weekInterval.end
+                
+                return sortedTransactions.filter {
+                    $0.dateTransaction >= weekInterval.start && $0.dateTransaction <= endOfSunday
+                }
+            }
+            return []
+            
+        case .month:
             return sortedTransactions.filter {
-                Calendar.current.component(.year, from: $0.dateTransaction) == selectedYear
+                calendar.isDate($0.dateTransaction, equalTo: selectedDate, toGranularity: .month)
+            }
+            
+        case .year:
+            return sortedTransactions.filter {
+                calendar.isDate($0.dateTransaction, equalTo: selectedDate, toGranularity: .year)
             }
         }
-        
-        return sortedTransactions
     }
     
     func deleteTransaction(_ model: TransactionModel) async -> ResponseModel {

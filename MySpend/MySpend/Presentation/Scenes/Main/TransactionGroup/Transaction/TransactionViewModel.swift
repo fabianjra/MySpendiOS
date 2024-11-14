@@ -119,7 +119,7 @@ class TransactionViewModel: BaseViewModel {
                             transactions.removeAll(where: { $0.id == change.document.documentID })
                             
                         default:
-                            Logs.WriteMessage("Nothing modified in the documentChange")
+                            Logs.WriteMessage("Nothing modified in the documentChange with ID: \(change.document.documentID).")
                         }
                     }
                 }

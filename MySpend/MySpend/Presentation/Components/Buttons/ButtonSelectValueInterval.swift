@@ -44,7 +44,8 @@ struct ButtonSelectValueInterval: View {
                         .frame(width: FrameSize.width.buttonSelectValueInterval,
                                height: FrameSize.height.buttonSelectValueInterval)
                         .foregroundColor(Color.buttonForeground)
-                        .padding()
+                        .padding(.vertical)
+                        .padding(.leading)
                         .contentShape(Rectangle())
 //                        .clipShape(.rect(
 //                            topLeadingRadius: .infinity,
@@ -60,7 +61,7 @@ struct ButtonSelectValueInterval: View {
                     TextPlain(message: text)
                         .frame(width: FrameSize.width.buttonSelectValueIntervalCenter,
                                height: FrameSize.height.buttonSelectValueInterval)
-                        .padding()
+                        .padding(.vertical)
                         .contentShape(Rectangle())
                 }
                 .buttonStyle(ButtonScaleStyle())
@@ -76,7 +77,8 @@ struct ButtonSelectValueInterval: View {
                         .frame(width: FrameSize.width.buttonSelectValueInterval,
                                height: FrameSize.height.buttonSelectValueInterval)
                         .foregroundColor(Color.buttonForeground)
-                        .padding()
+                        .padding(.vertical)
+                        .padding(.trailing)
                         .contentShape(Rectangle())
                 }
                 .buttonStyle(ButtonScaleStyle())

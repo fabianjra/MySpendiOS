@@ -64,41 +64,76 @@ struct TransactionHistoryView: View {
             .padding(.horizontal)
             //.colorMultiply(.primaryLeading)
             
-            //TODO: Refactorizar para poder navegar entre años tambien, al pasar de diciembre.
-            if viewModel.dateTimeInvertal == .month {
+            /// Navigate between days, weeks, months and years
+            if viewModel.dateTimeInvertal == .day {
+                let header = viewModel.selectedDate.formatted(.dateTime.day().month().year())
                 
-                ButtonSelectValueInterval(viewModel.monthSymbols[viewModel.selectedMonth]) {
-                    if viewModel.selectedMonth > 0 {
-                        viewModel.selectedMonth -= 1
+                ButtonSelectValueInterval(header) {
+                    viewModel.adjustselectDate(by: .day, value: -1)
+                } actionCenter: {
+                    viewModel.selectedDate = .now
+                } actionLeading: {
+                    viewModel.adjustselectDate(by: .day, value: 1)
+                }
+                
+            } else if viewModel.dateTimeInvertal == .week {
+                if let weekInterval = Calendar.current.dateInterval(of: .weekOfYear, for: viewModel.selectedDate) {
+                    let startOfWeek = weekInterval.start
+                    let endOfWeekSunday = Calendar.current.date(byAdding: .second, value: -1, to: weekInterval.end) ?? weekInterval.end
+                        
+                    let isSameMonth = Calendar.current.isDate(startOfWeek, equalTo: endOfWeekSunday, toGranularity: .month)
+                    
+                    
+                    let header = startOfWeek.formatted(isSameMonth ? .dateTime.day() : .dateTime.day().month()) + " - " + endOfWeekSunday.formatted(.dateTime.day().month())
+                    
+                    ButtonSelectValueInterval(header) {
+                        viewModel.adjustselectDate(by: .weekOfYear, value: -1)
+                    } actionCenter: {
+                        viewModel.selectedDate = .now
+                    } actionLeading: {
+                        viewModel.adjustselectDate(by: .weekOfYear, value: 1)
                     }
                     
-                } actionCenter: {
-                    //Ir al mes actual
-                } actionLeading: {
-                    if viewModel.selectedMonth < 11 {
-                        viewModel.selectedMonth += 1
+                } else {
+                    let header = viewModel.selectedDate.formatted(.dateTime.week())
+                    
+                    ButtonSelectValueInterval(header) {
+                        viewModel.adjustselectDate(by: .weekOfYear, value: -1)
+                    } actionCenter: {
+                        viewModel.selectedDate = .now
+                    } actionLeading: {
+                        viewModel.adjustselectDate(by: .weekOfYear, value: 1)
                     }
+                }
+                
+            } else if viewModel.dateTimeInvertal == .month {
+                let header = viewModel.selectedDate.formatted(.dateTime.month().year())
+                
+                ButtonSelectValueInterval(header) {
+                    viewModel.adjustselectDate(by: .month, value: -1)
+                } actionCenter: {
+                    viewModel.selectedDate = .now
+                } actionLeading: {
+                    viewModel.adjustselectDate(by: .month, value: 1)
                 }
                 
             } else if viewModel.dateTimeInvertal == .year {
-                ButtonSelectValueInterval(viewModel.selectedYear.description) {
-                    viewModel.selectedYear -= 1
-                    
+                let header = viewModel.selectedDate.formatted(.dateTime.year())
+                
+                ButtonSelectValueInterval(header) {
+                    viewModel.adjustselectDate(by: .year, value: -1)
                 } actionCenter: {
-                    //Ir al año actual.
-                    
+                    viewModel.selectedDate = .now
                 } actionLeading: {
-                    viewModel.selectedYear += 1
+                    viewModel.adjustselectDate(by: .year, value: 1)
                 }
             }
             
-            
-            
             VStack {
-                let viewModelSorted = viewModel.filteredTransactions(transactionsLoaded)
+                let viewModelFiltered = viewModel.filteredTransactions(transactionsLoaded, for: viewModel.dateTimeInvertal)
                 
                 List {
-                    ForEach(viewModelSorted) { item in
+                    ForEach(viewModelFiltered) { item in
                         VStack {
                             HStack {
                                 Image(systemName: item.category.icon)
@@ -173,7 +208,7 @@ struct TransactionHistoryView: View {
                     .listRowBackground(Color.clear)
                 }
                 .listStyle(.plain)
-                .animation(.smooth, value: viewModelSorted.count)
+                .animation(.default, value: viewModelFiltered.count)
             }
         }
     }
@@ -191,41 +226,59 @@ struct TransactionHistoryView: View {
 
 #Preview("With Content ES") {
     @Previewable @State var array = [TransactionModel(id: UUID().uuidString,
-                                  amount: 100,
-                                  dateTransaction: .now,
-                                  category: CategoryModel(id: UUID().uuidString,
-                                                          icon: CategoryIcons.bills.list[0],
-                                                          name: "Gasolina",
-                                                          categoryType: .expense),
-                                  notes: "",
-                                  transactionType: .expense),
-                 TransactionModel(id: UUID().uuidString,
-                                  amount: 200,
-                                  dateTransaction: .now + 1,
-                                  category: CategoryModel(id: UUID().uuidString,
-                                                          icon: CategoryIcons.bills.list[1],
-                                                          name: "Comida",
-                                                          categoryType: .expense),
-                                  notes: "Fue un almuerzo de trabajo",
-                                  transactionType: .expense),
-                 TransactionModel(id: UUID().uuidString,
-                                  amount: 50,
-                                  dateTransaction: .now + 2,
-                                  category: CategoryModel(id: UUID().uuidString,
-                                                          icon: CategoryIcons.foodAndDrink.list[0],
-                                                          name: "Comida",
-                                                          categoryType: .expense),
-                                  notes: "",
-                                  transactionType: .expense),
-                 TransactionModel(id: UUID().uuidString,
-                                  amount: 50,
-                                  dateTransaction: .now + 3,
-                                  category: CategoryModel(id: UUID().uuidString,
-                                                          icon: CategoryIcons.household.list[0],
-                                                          name: "Gasolina",
-                                                          categoryType: .expense),
-                                  notes: "",
-                                  transactionType: .expense)]
+                                                      amount: 100,
+                                                      dateTransaction: Calendar.current.date(byAdding: .month, value: 1, to: Date()) ?? .now,
+                                                      category: CategoryModel(id: UUID().uuidString,
+                                                                              icon: CategoryIcons.bills.list[0],
+                                                                              name: "Gasolina",
+                                                                              categoryType: .expense),
+                                                      notes: "",
+                                                      transactionType: .expense),
+                                     TransactionModel(id: UUID().uuidString,
+                                                      amount: 200,
+                                                      dateTransaction: .now,
+                                                      category: CategoryModel(id: UUID().uuidString,
+                                                                              icon: CategoryIcons.bills.list[1],
+                                                                              name: "Comida",
+                                                                              categoryType: .expense),
+                                                      notes: "Fue un almuerzo de trabajo",
+                                                      transactionType: .expense),
+                                     TransactionModel(id: UUID().uuidString,
+                                                      amount: 50,
+                                                      dateTransaction: Calendar.current.date(byAdding: .day, value: 13, to: Date()) ?? .now,
+                                                      category: CategoryModel(id: UUID().uuidString,
+                                                                              icon: CategoryIcons.foodAndDrink.list[0],
+                                                                              name: "Comida",
+                                                                              categoryType: .expense),
+                                                      notes: "",
+                                                      transactionType: .expense),
+                                     TransactionModel(id: UUID().uuidString,
+                                                      amount: 50,
+                                                      dateTransaction: Calendar.current.date(byAdding: .day, value: -3, to: Date()) ?? .now,
+                                                      category: CategoryModel(id: UUID().uuidString,
+                                                                              icon: CategoryIcons.household.list[0],
+                                                                              name: "Gasolina",
+                                                                              categoryType: .expense),
+                                                      notes: "",
+                                                      transactionType: .expense),
+                                     TransactionModel(id: UUID().uuidString,
+                                                      amount: 50,
+                                                      dateTransaction: Calendar.current.date(from: DateComponents(year: 2024, month: 11, day: 11)) ?? .now,
+                                                      category: CategoryModel(id: UUID().uuidString,
+                                                                              icon: CategoryIcons.household.list[0],
+                                                                              name: "Gasolina",
+                                                                              categoryType: .expense),
+                                                      notes: "",
+                                                      transactionType: .expense),
+                                     TransactionModel(id: UUID().uuidString,
+                                                      amount: 50,
+                                                      dateTransaction: Calendar.current.date(from: DateComponents(year: 2024, month: 11, day: 18)) ?? .now,
+                                                      category: CategoryModel(id: UUID().uuidString,
+                                                                              icon: CategoryIcons.household.list[0],
+                                                                              name: "Gasolina",
+                                                                              categoryType: .expense),
+                                                      notes: "",
+                                                      transactionType: .expense)]
     VStack {
         TransactionHistoryView(transactionsLoaded: $array)
             .environment(\.locale, .init(identifier: "es"))
