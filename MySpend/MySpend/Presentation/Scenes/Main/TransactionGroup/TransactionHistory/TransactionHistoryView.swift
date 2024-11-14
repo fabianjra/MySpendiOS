@@ -64,6 +64,7 @@ struct TransactionHistoryView: View {
             .padding(.horizontal)
             //.colorMultiply(.primaryLeading)
             
+            //TODO: Refactorizar para hacer una sola logica dentro del ViewModel para ir a la siguiente fecha o anterior.
             /// Navigate between days, weeks, months and years
             if viewModel.dateTimeInvertal == .day {
                 let header = viewModel.selectedDate.formatted(.dateTime.day().month().year())

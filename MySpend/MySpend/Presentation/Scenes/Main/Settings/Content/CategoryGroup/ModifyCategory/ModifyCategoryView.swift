@@ -63,12 +63,11 @@ struct ModifyCategoryView: View {
                 .buttonStyle(ButtonPrimaryStyle(isLoading: $viewModel.isLoading))
                 .padding(.vertical)
                 
-                //TODO: Cambiar estilo de boton por uno solamente bordes pintados.
+                
                 Button("Delete") {
                     viewModel.showAlert = true
                 }
-                .buttonStyle(ButtonBorderedStyle(color: [Color.alert], isLoading: $viewModel.isLoadingSecondary))
-                .padding(.vertical)
+                .buttonStyle(ButtonLinkStyle(color: Color.alert, fontfamily: .semibold, isLoading: $viewModel.isLoadingSecondary))
                 .alert("Delete category", isPresented: $viewModel.showAlert) {
                     Button("Delete", role: .destructive) { delete() }
                     Button("Cancel", role: .cancel) { }
