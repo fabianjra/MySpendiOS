@@ -56,7 +56,7 @@ struct TransactionHistoryView: View {
     var transactionsList: some View {
         VStack {
             
-            Picker("Time interval", selection: $viewModel.dateTimeInvertal) {
+            Picker("Time interval", selection: $viewModel.dateTimeIntertal) {
                 ForEach(DateTimeInterval.allCases) { type in
                     Text(type.rawValue)
                 }
@@ -65,74 +65,21 @@ struct TransactionHistoryView: View {
             .padding(.horizontal)
             //.colorMultiply(.primaryLeading)
             
-            //TODO: Refactorizar para hacer una sola logica dentro del ViewModel para ir a la siguiente fecha o anterior.
+            
+            let header = viewModel.getHeader(by: viewModel.dateTimeIntertal)
+            
             /// Navigate between days, weeks, months and years
-            if viewModel.dateTimeInvertal == .day {
-                let header = viewModel.selectedDate.formatted(.dateTime.day().month().year())
-                
-                ButtonSelectValueInterval(header) {
-                    viewModel.adjustselectDate(by: .day, value: -1)
-                } actionCenter: {
-                    viewModel.selectedDate = .now
-                } actionLeading: {
-                    viewModel.adjustselectDate(by: .day, value: 1)
-                }
-                
-            } else if viewModel.dateTimeInvertal == .week {
-                if let weekInterval = Calendar.current.dateInterval(of: .weekOfYear, for: viewModel.selectedDate) {
-                    let startOfWeek = weekInterval.start
-                    let endOfWeekSunday = Calendar.current.date(byAdding: .second, value: -1, to: weekInterval.end) ?? weekInterval.end
-                        
-                    let isSameMonth = Calendar.current.isDate(startOfWeek, equalTo: endOfWeekSunday, toGranularity: .month)
-                    
-                    
-                    let header = startOfWeek.formatted(isSameMonth ? .dateTime.day() : .dateTime.day().month()) + " - " + endOfWeekSunday.formatted(.dateTime.day().month())
-                    
-                    ButtonSelectValueInterval(header) {
-                        viewModel.adjustselectDate(by: .weekOfYear, value: -1)
-                    } actionCenter: {
-                        viewModel.selectedDate = .now
-                    } actionLeading: {
-                        viewModel.adjustselectDate(by: .weekOfYear, value: 1)
-                    }
-                    
-                } else {
-                    let header = viewModel.selectedDate.formatted(.dateTime.week())
-                    
-                    ButtonSelectValueInterval(header) {
-                        viewModel.adjustselectDate(by: .weekOfYear, value: -1)
-                    } actionCenter: {
-                        viewModel.selectedDate = .now
-                    } actionLeading: {
-                        viewModel.adjustselectDate(by: .weekOfYear, value: 1)
-                    }
-                }
-                
-            } else if viewModel.dateTimeInvertal == .month {
-                let header = viewModel.selectedDate.formatted(.dateTime.month().year())
-                
-                ButtonSelectValueInterval(header) {
-                    viewModel.adjustselectDate(by: .month, value: -1)
-                } actionCenter: {
-                    viewModel.selectedDate = .now
-                } actionLeading: {
-                    viewModel.adjustselectDate(by: .month, value: 1)
-                }
-                
-            } else if viewModel.dateTimeInvertal == .year {
-                let header = viewModel.selectedDate.formatted(.dateTime.year())
-                
-                ButtonSelectValueInterval(header) {
-                    viewModel.adjustselectDate(by: .year, value: -1)
-                } actionCenter: {
-                    viewModel.selectedDate = .now
-                } actionLeading: {
-                    viewModel.adjustselectDate(by: .year, value: 1)
-                }
+            ButtonSelectValueInterval(header) {
+                viewModel.navigateDateTime(to: .previous)
+            } actionCenter: {
+                viewModel.navigateDateTime(to: .today)
+            } actionLeading: {
+                viewModel.navigateDateTime(to: .next)
             }
+
             
             VStack {
-                let viewModelFiltered = viewModel.filteredTransactions(transactionsLoaded, for: viewModel.dateTimeInvertal)
+                let viewModelFiltered = viewModel.filteredTransactions(transactionsLoaded, for: viewModel.dateTimeIntertal)
                 
                 List {
                     ForEach(viewModelFiltered) { item in

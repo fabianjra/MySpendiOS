@@ -10,7 +10,7 @@ import Foundation
 class TransactionHistoryViewModel: BaseViewModel {
     
     // MARK: DATE
-    @Published var dateTimeInvertal: DateTimeInterval = .month
+    @Published var dateTimeIntertal: DateTimeInterval = .month
     @Published var selectedDate: Date = Date()
     let dateFormatter = DateFormatter()
     
@@ -25,18 +25,7 @@ class TransactionHistoryViewModel: BaseViewModel {
         dateFormatter.timeStyle = .none
     }
     
-    /**
-     Permite manipular la fecha segun el intervalo seleccionado
-     */
-    func adjustselectDate(by component: Calendar.Component, value: Int) {
-        if let newDate = Calendar.current.date(byAdding: component, value: value, to: selectedDate) {
-            selectedDate = newDate
-        }
-    }
-    
-    /**
-     Filtra las transacciones por intervalos de tiempo seleccionados
-     */
+    /// Filtra las transacciones por intervalos de tiempo seleccionados y las ordena en forma descendente en base a la fecha de la transaccion
     func filteredTransactions(_ transactions: [TransactionModel], for interval: DateTimeInterval) -> [TransactionModel] {
         let calendar = Calendar.current
         let sortedTransactions = transactions.sorted(by: { $0.dateTransaction > $1.dateTransaction })
@@ -85,5 +74,59 @@ class TransactionHistoryViewModel: BaseViewModel {
         }
         
         return response
+    }
+}
+
+/// Navigation between DateTime intervals
+extension TransactionHistoryViewModel {
+    
+    /// Permite manipular el valor de la fecha seleccionada para navegar segun el intervalo seleccionado.
+    func navigateDateTime(to timeNavigate: TimeNavigate) {
+        
+        if timeNavigate == .today {
+            selectedDate = .now
+        } else {
+            navigateToDateByInterval(dateTimeIntertal, to: timeNavigate)
+        }
+    }
+    
+    private func navigateToDateByInterval(_ dateTimeInterval: DateTimeInterval, to timeNavigate: TimeNavigate) {
+        
+        let timeToMove = timeNavigate == .next ? 1 : timeNavigate == .previous ? -1 : .zero
+        
+        if let newDate = Calendar.current.date(byAdding: dateTimeInterval.componentType, value: timeToMove, to: selectedDate) {
+            selectedDate = newDate
+        }
+    }
+    
+    /// Validation to show correct header based of DateTimeInterval
+    func getHeader(by timeInterval: DateTimeInterval) -> String {
+        var header = ""
+        
+        switch timeInterval {
+            
+        case .day:
+            header = selectedDate.formatted(.dateTime.day())
+            
+        case .week:
+            if let weekInterval = Calendar.current.dateInterval(of: .weekOfYear, for: selectedDate) {
+                let startOfWeek = weekInterval.start
+                let endOfWeekSunday = Calendar.current.date(byAdding: .second, value: -1, to: weekInterval.end) ?? weekInterval.end // Gets the weekOfYear minus the monday.
+                
+                let isWeekInSameMonth = Calendar.current.isDate(startOfWeek, equalTo: endOfWeekSunday, toGranularity: .month)
+
+                header = startOfWeek.formatted(isWeekInSameMonth ? .dateTime.day() : .dateTime.day().month()) + " - " + endOfWeekSunday.formatted(.dateTime.day().month())
+            } else {
+                header = selectedDate.formatted(.dateTime.week()) // It is supposed to no get here, this is only beacasue dateInterval is optional.
+            }
+            
+        case .month:
+            header = selectedDate.formatted(.dateTime.month().year())
+            
+        case .year:
+            header = selectedDate.formatted(.dateTime.year())
+        }
+        
+        return header
     }
 }

@@ -15,12 +15,21 @@ enum DateTimeInterval: String, CaseIterable, Identifiable {
     case month = "Monthly"
     case year = "Yearly"
     
-    var today: String {
+    var componentType: Calendar.Component {
         switch self {
-        case .day: return "Today"
-        case .week: return "This Week"
-        case .month: return "This Month"
-        case .year: return "This Year"
+        case .day: return .day
+        case .week: return .weekOfYear
+        case .month: return .month
+        case .year: return .year
         }
     }
+    
+//    var today: String {
+//        switch self {
+//        case .day: return "Today"
+//        case .week: return "This Week"
+//        case .month: return "This Month"
+//        case .year: return "This Year"
+//        }
+//    }
 }
