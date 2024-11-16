@@ -101,30 +101,34 @@ extension TransactionHistoryViewModel {
     
     /// Validation to show correct header based of DateTimeInterval
     func getHeader(by timeInterval: DateTimeInterval) -> String {
+        let currentLocale = Locale.current
+        
         var header = ""
         
         switch timeInterval {
             
         case .day:
-            header = selectedDate.formatted(.dateTime.day())
+            header = selectedDate.formatted(.dateTime.day().weekday().locale(currentLocale))
             
         case .week:
-            if let weekInterval = Calendar.current.dateInterval(of: .weekOfYear, for: selectedDate) {
-                let startOfWeek = weekInterval.start
-                let endOfWeekSunday = Calendar.current.date(byAdding: .second, value: -1, to: weekInterval.end) ?? weekInterval.end // Gets the weekOfYear minus the monday.
-                
-                let isWeekInSameMonth = Calendar.current.isDate(startOfWeek, equalTo: endOfWeekSunday, toGranularity: .month)
-
-                header = startOfWeek.formatted(isWeekInSameMonth ? .dateTime.day() : .dateTime.day().month()) + " - " + endOfWeekSunday.formatted(.dateTime.day().month())
-            } else {
-                header = selectedDate.formatted(.dateTime.week()) // It is supposed to no get here, this is only beacasue dateInterval is optional.
+            
+            guard let weekInterval = Calendar.current.dateInterval(of: .weekOfYear, for: selectedDate) else {
+                // It is supposed to no get here, this is only beacasue dateInterval is optional.
+                return selectedDate.formatted(.dateTime.week().locale(currentLocale))
             }
             
+            let startOfWeek = weekInterval.start
+            let endOfWeekSunday = Calendar.current.date(byAdding: .second, value: -1, to: weekInterval.end) ?? weekInterval.end // Gets the weekOfYear minus the monday.
+            
+            let isWeekInSameMonth = Calendar.current.isDate(startOfWeek, equalTo: endOfWeekSunday, toGranularity: .month)
+            
+            header = startOfWeek.formatted(isWeekInSameMonth ? .dateTime.day().locale(currentLocale) : .dateTime.day().month().locale(currentLocale)) + " - " + endOfWeekSunday.formatted(.dateTime.day().month().locale(currentLocale))
+            
         case .month:
-            header = selectedDate.formatted(.dateTime.month().year())
+            header = selectedDate.formatted(.dateTime.month().year().locale(currentLocale))
             
         case .year:
-            header = selectedDate.formatted(.dateTime.year())
+            header = selectedDate.formatted(.dateTime.year().locale(currentLocale))
         }
         
         return header
