@@ -12,19 +12,11 @@ class TransactionHistoryViewModel: BaseViewModel {
     // MARK: DATE
     @Published var dateTimeIntertal: DateTimeInterval = .month
     @Published var selectedDate: Date = Date()
-    let dateFormatter = DateFormatter()
     
     // MARK: VIEW
     @Published var showAlertDelete = false
     @Published var showModifyTransactionModal = false
 
-    override init() {
-        super.init()
-        dateFormatter.locale = Locale()
-        dateFormatter.dateStyle = .long
-        dateFormatter.timeStyle = .none
-    }
-    
     /// Filtra las transacciones por intervalos de tiempo seleccionados y las ordena en forma descendente en base a la fecha de la transaccion
     func filteredTransactions(_ transactions: [TransactionModel], for interval: DateTimeInterval) -> [TransactionModel] {
         let calendar = Calendar.current
@@ -103,62 +95,70 @@ extension TransactionHistoryViewModel {
     func getHeader(by timeInterval: DateTimeInterval) -> String {
         var header = ""
         
-        let calendar = Calendar.current
         let formatStyle = UtilsDate.getDateFormatStyleLocale()
+        let calendar = Calendar.current
+        
+        let isCurrentMonth = calendar.isDate(selectedDate, equalTo: .now, toGranularity: .month)
+        let isCurrentYear = calendar.isDate(selectedDate, equalTo: .now, toGranularity: .year)
         
         switch timeInterval {
             
         case .day:
-            
-            let isCurrentMonth = calendar.isDate(selectedDate, equalTo: .now, toGranularity: .month)
-            let isCurrentYear = calendar.isDate(selectedDate, equalTo: .now, toGranularity: .year)
-                
-            var format = formatStyle.day().weekday()
-            
-            // Agrega el mes si no está en el mes actual
-            if !isCurrentMonth {
-                format = format.month()
-            }
-            
-            // Agrega el año si no está en el año actual
-            if !isCurrentYear {
-                format = format.year()
-            }
-            
-            header = selectedDate.formatted(format)
+            header = getFormatDay(formatStyle, isCurrentMonth: isCurrentMonth, isCurrentYear: isCurrentYear)
             
         case .week:
-            
-            guard let weekInterval = Calendar.current.dateInterval(of: .weekOfYear, for: selectedDate) else {
-                // It is supposed to no get here, this is only beacasue dateInterval is optional.
-                return selectedDate.formatted(.dateTime.week().locale(Locale.current))
-            }
-            
-            let startOfWeek = weekInterval.start
-            // Gets the weekOfYear minus the monday.
-            let endOfWeekSunday = Calendar.current.date(byAdding: .second, value: -1, to: weekInterval.end) ?? weekInterval.end
-            
-            let isWeekInSameMonth = Calendar.current.isDate(startOfWeek, equalTo: endOfWeekSunday, toGranularity: .month)
-
-            // Valida que el dia en el que comienza la semana esté dentro del mismo mes cuando termina, sino, indica el mes al dia
-            // que comienza. Sino, se mostrarian fechas en meses diferentes sin indicarlo.
-            let headerLeadingFormat = isWeekInSameMonth ?
-            Date.FormatStyle.dateTime.day().locale(Locale.current) :
-            Date.FormatStyle.dateTime.day().month().locale(Locale.current)
-            
-            let headerTrailingFormat = Date.FormatStyle.dateTime.day().month().locale(Locale.current)
-            
-            header = startOfWeek.formatted(headerLeadingFormat) + " - " + endOfWeekSunday.formatted(headerTrailingFormat)
+            header = getFormatWeekday(formatStyle, calendar: calendar, isCurrentMonth: isCurrentMonth, isCurrentYear: isCurrentYear)
             
         case .month:
-            var format = formatStyle.month().year()
-            header = selectedDate.formatted(format)
+            header = getFormatMonth(formatStyle, isCurrentYear: isCurrentYear)
             
         case .year:
-            var format = formatStyle.year()
-            header = selectedDate.formatted(format)
+            header = getFormatYear(formatStyle)
         }
         
         return header
+    }
+    
+    private func getFormatDay(_ formatStyle: Date.FormatStyle, isCurrentMonth: Bool, isCurrentYear: Bool) -> String {
+        var format = isCurrentMonth ? formatStyle.day().weekday(.wide) : formatStyle.day().weekday().month()
+        
+        if !isCurrentYear {
+            format = format.year()
+        }
+        
+        return selectedDate.formatted(format)
+    }
+    
+    private func getFormatWeekday(_ formatStyle: Date.FormatStyle, calendar: Calendar, isCurrentMonth: Bool, isCurrentYear: Bool) -> String {
+        guard let weekInterval = Calendar.current.dateInterval(of: .weekOfYear, for: selectedDate) else {
+            // It is supposed to no get here, this is only beacasue dateInterval is optional.
+            return selectedDate.formatted(.dateTime.week().locale(Locale.current))
+        }
+        
+        let startOfWeek = weekInterval.start
+        // Gets the weekOfYear minus the monday.
+        let endOfWeekSunday = calendar.date(byAdding: .second, value: -1, to: weekInterval.end) ?? weekInterval.end
+        
+        let isWeekInSameMonth = calendar.isDate(startOfWeek, equalTo: endOfWeekSunday, toGranularity: .month)
+
+        let formatStyleLeading = isWeekInSameMonth ? formatStyle.day() : formatStyle.day().month()
+        
+        var formatStyleTrailing = UtilsDate.getDateFormatStyleLocale().day().month()
+        
+        if !isCurrentYear {
+            formatStyleTrailing = formatStyleTrailing.year()
+        }
+        
+        return startOfWeek.formatted(formatStyleLeading) + " - " + endOfWeekSunday.formatted(formatStyleTrailing)
+    }
+    
+    private func getFormatMonth(_ formatStyle: Date.FormatStyle, isCurrentYear: Bool) -> String {
+        let format = isCurrentYear ? formatStyle.month(.wide) : formatStyle.month().year()
+        return selectedDate.formatted(format)
+    }
+    
+    private func getFormatYear(_ formatStyle: Date.FormatStyle) -> String {
+        let format = formatStyle.year()
+        return selectedDate.formatted(format)
     }
 }
