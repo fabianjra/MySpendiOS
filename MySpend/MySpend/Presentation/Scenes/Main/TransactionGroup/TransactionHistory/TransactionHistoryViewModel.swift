@@ -101,34 +101,62 @@ extension TransactionHistoryViewModel {
     
     /// Validation to show correct header based of DateTimeInterval
     func getHeader(by timeInterval: DateTimeInterval) -> String {
-        let currentLocale = Locale.current
-        
         var header = ""
+        
+        let calendar = Calendar.current
+        let formatStyle = UtilsDate.getDateFormatStyleLocale()
         
         switch timeInterval {
             
         case .day:
-            header = selectedDate.formatted(.dateTime.day().weekday().locale(currentLocale))
+            
+            let isCurrentMonth = calendar.isDate(selectedDate, equalTo: .now, toGranularity: .month)
+            let isCurrentYear = calendar.isDate(selectedDate, equalTo: .now, toGranularity: .year)
+                
+            var format = formatStyle.day().weekday()
+            
+            // Agrega el mes si no está en el mes actual
+            if !isCurrentMonth {
+                format = format.month()
+            }
+            
+            // Agrega el año si no está en el año actual
+            if !isCurrentYear {
+                format = format.year()
+            }
+            
+            header = selectedDate.formatted(format)
             
         case .week:
             
             guard let weekInterval = Calendar.current.dateInterval(of: .weekOfYear, for: selectedDate) else {
                 // It is supposed to no get here, this is only beacasue dateInterval is optional.
-                return selectedDate.formatted(.dateTime.week().locale(currentLocale))
+                return selectedDate.formatted(.dateTime.week().locale(Locale.current))
             }
             
             let startOfWeek = weekInterval.start
-            let endOfWeekSunday = Calendar.current.date(byAdding: .second, value: -1, to: weekInterval.end) ?? weekInterval.end // Gets the weekOfYear minus the monday.
+            // Gets the weekOfYear minus the monday.
+            let endOfWeekSunday = Calendar.current.date(byAdding: .second, value: -1, to: weekInterval.end) ?? weekInterval.end
             
             let isWeekInSameMonth = Calendar.current.isDate(startOfWeek, equalTo: endOfWeekSunday, toGranularity: .month)
+
+            // Valida que el dia en el que comienza la semana esté dentro del mismo mes cuando termina, sino, indica el mes al dia
+            // que comienza. Sino, se mostrarian fechas en meses diferentes sin indicarlo.
+            let headerLeadingFormat = isWeekInSameMonth ?
+            Date.FormatStyle.dateTime.day().locale(Locale.current) :
+            Date.FormatStyle.dateTime.day().month().locale(Locale.current)
             
-            header = startOfWeek.formatted(isWeekInSameMonth ? .dateTime.day().locale(currentLocale) : .dateTime.day().month().locale(currentLocale)) + " - " + endOfWeekSunday.formatted(.dateTime.day().month().locale(currentLocale))
+            let headerTrailingFormat = Date.FormatStyle.dateTime.day().month().locale(Locale.current)
+            
+            header = startOfWeek.formatted(headerLeadingFormat) + " - " + endOfWeekSunday.formatted(headerTrailingFormat)
             
         case .month:
-            header = selectedDate.formatted(.dateTime.month().year().locale(currentLocale))
+            var format = formatStyle.month().year()
+            header = selectedDate.formatted(format)
             
         case .year:
-            header = selectedDate.formatted(.dateTime.year().locale(currentLocale))
+            var format = formatStyle.year()
+            header = selectedDate.formatted(format)
         }
         
         return header

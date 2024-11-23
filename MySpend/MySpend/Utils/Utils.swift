@@ -143,44 +143,6 @@ struct Utils {
         return getEdgeInsets().bottom != .zero
     }
     
-    /**
-     Convert a given date to string in short format: dd/MM/yyy. Ejem: 29/05/1990
-     
-     **Example:**
-     ```swift
-     DatePicker(selection: $selectedDate, displayedComponents: .date) {
-         
-     }
-     .onChange(of: selectedDate, perform: { _ in
-
-         dateString = Utils.dateToStringShort(date: selectedDate)
-         
-         let day = selectedDate.formatted(.dateTime.day())
-     })
-     ```
-     
-     - Returns: String short date: dd/MM/yyy
-     
-     - Authors: Fabian Rodriguez.
-     
-     - Date: Sep 2023
-     */
-    static func dateToStringShort(date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "es_CR")
-        dateFormatter.dateFormat = "dd/MM/yyyy"
-        return dateFormatter.string(from: date)
-    }
-    
-    static func stringShortDateToDate(dateShort: String) -> Date {
-        let dateFormatter = DateFormatter()
-        //dateFormatter.locale = Locale(identifier: "en_US_POSIX") // set locale to reliable US_POSIX
-        dateFormatter.locale = Locale(identifier: "es_CR")
-        dateFormatter.dateFormat = "dd/MM/yyy"
-        let date = dateFormatter.date(from:dateShort) ?? .now
-        return date
-    }
-    
     /// Get an FavIcon from a string text.
     /// Example: envelope.fill
     /// - Parameter iconName: SB Symbol Image name
