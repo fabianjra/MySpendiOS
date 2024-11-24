@@ -141,7 +141,7 @@ struct TransactionHistoryView: View {
                 .listStyle(.plain)
                 .animation(.default, value: viewModelFiltered.count)
                 
-                //TotalBalanceView(transactions: $viewModel.transactions)
+                TotalBalanceView(transactions: .constant(viewModelFiltered), showTotalBalance: false, addBottomSpacing: false)
             }
         }
     }
