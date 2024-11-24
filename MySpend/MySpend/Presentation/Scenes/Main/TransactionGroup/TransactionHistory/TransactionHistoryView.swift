@@ -56,31 +56,13 @@ struct TransactionHistoryView: View {
     var transactionsList: some View {
         VStack {
             
-            Picker("Time interval", selection: $viewModel.dateTimeIntertal) {
-                ForEach(DateTimeInterval.allCases) { type in
-                    Text(type.rawValue)
-                }
-            }
-            .pickerStyle(.segmented)
-            .padding(.horizontal)
-            //.colorMultiply(.primaryLeading)
+            DateIntervalNavigatorView(dateTimeInterval: $viewModel.dateTimeInterval, selectedDate: $viewModel.selectedDate)
             
+            let viewModelFiltered = viewModel.filteredTransactions(transactionsLoaded, for: viewModel.dateTimeInterval)
             
-            let header = viewModel.getHeader(by: viewModel.dateTimeIntertal)
-            
-            /// Navigate between days, weeks, months and years
-            DateIntervalNavigatorView(header) {
-                viewModel.navigateDateTime(to: .previous)
-            } actionCenter: {
-                viewModel.navigateDateTime(to: .today)
-            } actionLeading: {
-                viewModel.navigateDateTime(to: .next)
-            }
-
-            
-            VStack {
-                let viewModelFiltered = viewModel.filteredTransactions(transactionsLoaded, for: viewModel.dateTimeIntertal)
-                
+            if viewModelFiltered.isEmpty {
+                emptyView
+            } else {
                 List {
                     ForEach(viewModelFiltered) { item in
                         VStack {
@@ -173,7 +155,7 @@ struct TransactionHistoryView: View {
     }
 }
 
-#Preview("With Content ES") {
+#Preview("With Content es_CR") {
     @Previewable @State var array = [TransactionModel(id: UUID().uuidString,
                                                       amount: 100,
                                                       dateTransaction: Calendar.current.date(byAdding: .month, value: 1, to: Date()) ?? .now,
@@ -230,7 +212,7 @@ struct TransactionHistoryView: View {
                                                       transactionType: .expense)]
     VStack {
         TransactionHistoryView(transactionsLoaded: $array)
-            .environment(\.locale, .init(identifier: "es"))
+            .environment(\.locale, .init(identifier: "es_CR"))
     }
 }
 

@@ -1,5 +1,5 @@
 //
-//  ButtonSelectValueInterval.swift
+//  DateIntervalNavigatorView.swift
 //  MySpend
 //
 //  Created by Fabian Rodriguez on 28/10/24.
@@ -9,95 +9,94 @@ import SwiftUI
 
 struct DateIntervalNavigatorView: View {
     
-    var text: String
+    @Binding var dateTimeInterval: DateTimeInterval
+    @Binding var selectedDate: Date
     
-    let iconLeading: Image = Image.chevronLeft
-    let iconTrailing: Image = Image.chevronRight
-    
-    let backgroundColor: Color = Color.secondaryLeading
-    
-    // MARK: ACTIONS
-    let actionTrailing: () -> Void
-    let actionCenter: () -> Void
-    let actionLeading: () -> Void
-
-    init(_ text: String,
-         actionTrailing: @escaping () -> Void,
-         actionCenter: @escaping () -> Void,
-         actionLeading: @escaping () -> Void) {
-        self.text = text
-        self.actionTrailing = actionTrailing
-        self.actionCenter = actionCenter
-        self.actionLeading = actionLeading
-    }
+    @StateObject var viewModel = DateIntervalNavigatorViewModel()
     
     var body: some View {
         VStack {
-            HStack(spacing: ConstantViews.mediumSpacing) {
-                Button {
-                    actionTrailing()
-                } label: {
-                    iconLeading
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .fontWeight(.thin)
-                        .frame(width: FrameSize.width.buttonSelectValueInterval,
-                               height: FrameSize.height.buttonSelectValueInterval)
-                        .foregroundColor(Color.buttonForeground)
-                        .padding(.vertical)
-                        .padding(.leading)
-                        .contentShape(Rectangle())
+            timeInterval
+
+            navigator
+        }
+    }
+    
+    var timeInterval: some View {
+        Picker("Time interval", selection: $dateTimeInterval) {
+            ForEach(DateTimeInterval.allCases) { type in
+                Text(type.rawValue)
+            }
+        }
+        .pickerStyle(.segmented)
+        .padding(.horizontal)
+    }
+    
+    var navigator: some View {
+        HStack {
+            Button {
+                selectedDate = viewModel.navigateDateTime(selectedDate, to: .previous, byAdding: dateTimeInterval)
+            } label: {
+                Image.chevronLeft
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .fontWeight(.thin)
+                    .frame(width: FrameSize.width.buttonSelectValueInterval,
+                           height: FrameSize.height.buttonSelectValueInterval)
+                    .foregroundColor(Color.buttonForeground)
+                    .padding(.vertical)
+                    .padding(.leading)
+                    .contentShape(Rectangle())
 //                        .clipShape(.rect(
 //                            topLeadingRadius: .infinity,
 //                            bottomLeadingRadius: .infinity)
 //                        )
-                }
-                .buttonStyle(ButtonScaleStyle())
-
-                
-                Button {
-                    actionCenter()
-                } label: {
-                    TextPlain(message: text)
-                        .frame(width: FrameSize.width.buttonSelectValueIntervalCenter,
-                               height: FrameSize.height.buttonSelectValueInterval)
-                        .padding(.vertical)
-                        .contentShape(Rectangle())
-                }
-                .buttonStyle(ButtonScaleStyle())
-                
-                
-                Button {
-                    actionLeading()
-                } label: {
-                    iconTrailing
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .fontWeight(.thin)
-                        .frame(width: FrameSize.width.buttonSelectValueInterval,
-                               height: FrameSize.height.buttonSelectValueInterval)
-                        .foregroundColor(Color.buttonForeground)
-                        .padding(.vertical)
-                        .padding(.trailing)
-                        .contentShape(Rectangle())
-                }
-                .buttonStyle(ButtonScaleStyle())
             }
+            .buttonStyle(ButtonScaleStyle())
+
+            
+            Button {
+                selectedDate = viewModel.navigateDateTime(selectedDate, to: .today, byAdding: dateTimeInterval)
+            } label: {
+                let header = viewModel.getHeader(selectedDate, by: dateTimeInterval)
+                
+                TextPlain(message: header)
+                    .frame(width: FrameSize.width.buttonSelectValueIntervalCenter,
+                           height: FrameSize.height.buttonSelectValueInterval)
+                    .padding(.vertical)
+                    .contentShape(Rectangle())
+            }
+            .buttonStyle(ButtonScaleStyle())
+            
+            
+            Button {
+                selectedDate = viewModel.navigateDateTime(selectedDate, to: .next, byAdding: dateTimeInterval)
+            } label: {
+                Image.chevronRight
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .fontWeight(.thin)
+                    .frame(width: FrameSize.width.buttonSelectValueInterval,
+                           height: FrameSize.height.buttonSelectValueInterval)
+                    .foregroundColor(Color.buttonForeground)
+                    .padding(.vertical)
+                    .padding(.trailing)
+                    .contentShape(Rectangle())
+            }
+            .buttonStyle(ButtonScaleStyle())
         }
     }
 }
 
 #Preview {
+    
+    @Previewable @State var dateTimeInterval = DateTimeInterval.month
+    @Previewable @State var selectedDate = Date()
+    
     ZStack {
         Color.backgroundBottom
         
-        DateIntervalNavigatorView("January") {
-            
-        } actionCenter: {
-            
-        } actionLeading: {
-            
-        }
+        DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval, selectedDate: $selectedDate)
     }
     
 }

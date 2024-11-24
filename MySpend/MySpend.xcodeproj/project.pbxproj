@@ -79,6 +79,7 @@
 		1F65D9612C7287D30023CC5D /* DateTimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F65D9602C7287D30023CC5D /* DateTimeInterval.swift */; };
 		1F65D9632C72D10E0023CC5D /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F65D9622C72D10E0023CC5D /* Router.swift */; };
 		1F6812FA2CF2939200822471 /* UtilsDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6812F92CF2938C00822471 /* UtilsDate.swift */; };
+		1F6812FD2CF2A65600822471 /* DateIntervalNavigatorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6812FC2CF2A65100822471 /* DateIntervalNavigatorViewModel.swift */; };
 		1F697E082C5B3C22009529EF /* ResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F697E072C5B3C22009529EF /* ResponseModel.swift */; };
 		1F6FAEB92CD1D13C008CD39F /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6FAEB82CD1D138008CD39F /* Date+Extensions.swift */; };
 		1F7437B42A668BCD0039EFD4 /* Gestures+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7437B32A668BCD0039EFD4 /* Gestures+Extensions.swift */; };
@@ -244,6 +245,7 @@
 		1F65D9602C7287D30023CC5D /* DateTimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimeInterval.swift; sourceTree = "<group>"; };
 		1F65D9622C72D10E0023CC5D /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		1F6812F92CF2938C00822471 /* UtilsDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilsDate.swift; sourceTree = "<group>"; };
+		1F6812FC2CF2A65100822471 /* DateIntervalNavigatorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateIntervalNavigatorViewModel.swift; sourceTree = "<group>"; };
 		1F697E072C5B3C22009529EF /* ResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseModel.swift; sourceTree = "<group>"; };
 		1F6FAEB82CD1D138008CD39F /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		1F7437B32A668BCD0039EFD4 /* Gestures+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Gestures+Extensions.swift"; sourceTree = "<group>"; };
@@ -611,6 +613,7 @@
 			isa = PBXGroup;
 			children = (
 				1F138DF82CCF61CD0003FBEB /* DateIntervalNavigatorView.swift */,
+				1F6812FC2CF2A65100822471 /* DateIntervalNavigatorViewModel.swift */,
 			);
 			path = DateIntervalNavigator;
 			sourceTree = "<group>";
@@ -1212,6 +1215,7 @@
 				1F4C24832A47A6DA00CCAF6D /* MySpendApp.swift in Sources */,
 				1F20E7782CC1C62A0061CDB8 /* TextFieldCategoryName.swift in Sources */,
 				1F65D95F2C7287CC0023CC5D /* TransactionHistoryViewModel.swift in Sources */,
+				1F6812FD2CF2A65600822471 /* DateIntervalNavigatorViewModel.swift in Sources */,
 				1FB8BB9B2A5BB1E4002DED1F /* RoundedCornersShape.swift in Sources */,
 				1F64B0A12A70AA94004AC825 /* ListContainer.swift in Sources */,
 				1F7486CB2A6F72D20063AC35 /* TabViewButton.swift in Sources */,
