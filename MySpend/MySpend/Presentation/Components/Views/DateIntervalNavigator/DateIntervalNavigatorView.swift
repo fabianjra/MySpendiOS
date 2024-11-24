@@ -29,7 +29,6 @@ struct DateIntervalNavigatorView: View {
             }
         }
         .pickerStyle(.segmented)
-        .padding(.horizontal)
     }
     
     var navigator: some View {

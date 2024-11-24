@@ -14,12 +14,12 @@ struct TransactionHistoryView: View {
     @State private var selectedModel = TransactionModel()
     
     var body: some View {
-        ContentContainer(addPading: false) {
+        ContentContainer {
             
             HeaderNavigator(title: "History",
                             titleWeight: .regular,
                             titleSize: .bigXL)
-            .padding()
+            .padding(.bottom)
             
             if transactionsLoaded.isEmpty {
                 emptyView
@@ -93,7 +93,6 @@ struct TransactionHistoryView: View {
                                 Spacer()
                                 
                                 TextPlain(message: item.amount.convertAmountDecimalToString().addCurrencySymbol())
-                                    .padding(.trailing, ConstantViews.mediumSpacing)
                                 
                                 Image.chevronRight
                                     .foregroundStyle(Color.textPrimaryForeground)
@@ -106,7 +105,7 @@ struct TransactionHistoryView: View {
                                 //Removes the padding Trailing in the RowSeparator.
                                 return viewDimensions[.listRowSeparatorTrailing]
                             }
-                            .padding(.horizontal)
+                            //.padding(.horizontal)
                         }
                         .frame(height: FrameSize.height.rowForListTransactionHistory)
                         .listRowInsets(EdgeInsets(top: .zero, leading: .zero, bottom: .zero, trailing: .zero))
@@ -139,6 +138,7 @@ struct TransactionHistoryView: View {
                     .listRowBackground(Color.clear)
                 }
                 .listStyle(.plain)
+                .scrollIndicators(.hidden)
                 .animation(.default, value: viewModelFiltered.count)
                 
                 TotalBalanceView(transactions: .constant(viewModelFiltered), showTotalBalance: false, addBottomSpacing: false)

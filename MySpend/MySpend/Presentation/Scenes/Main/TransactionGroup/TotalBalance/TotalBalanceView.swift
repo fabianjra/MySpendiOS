@@ -12,12 +12,15 @@ struct TotalBalanceView: View {
     @StateObject var viewModel = TotalBalanceViewModel()
     @Binding var transactions: [TransactionModel]
     
+    var showDivider: Bool = true
     var showTotalBalance: Bool = true
     var addBottomSpacing: Bool = true
 
     var body: some View {
         VStack {
-            DividerView()
+            if showDivider {
+                DividerView()
+            }
             
             HStack {
                 TextPlain(message: "Incomes")
