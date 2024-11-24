@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct TransactionModel: Identifiable, Codable {
+struct TransactionModel: Identifiable, Codable, Equatable {
     var id = ""
     var amount: Decimal = .zero
     var dateTransaction: Date = .init()

@@ -14,14 +14,7 @@ class TransactionViewModel: BaseViewModel {
     
     // MARK: TRANSACTIONS
     @Published var transactions: [TransactionModel]
-    
-    @Published var groupedTransactions: [(category: CategoryModel, totalAmount: Decimal)] = []
-    @Published var totalBalance: Decimal = .zero
-    @Published var totalBalanceFormatted: String = ConstantCurrency.zeroAmoutString.addCurrencySymbol()
-    
-    @Published var totalIncomeFormatted: String = ConstantCurrency.zeroAmoutString.addCurrencySymbol()
-    @Published var totalExpensesFormatted: String = ConstantCurrency.zeroAmoutString.addCurrencySymbol()
-
+    @Published var groupedTransactions: UtilsCurrency.groupedTransactions = []
     
     //init for Canvas Previews.
     init(transactions: [TransactionModel] = []) {
@@ -124,56 +117,15 @@ class TransactionViewModel: BaseViewModel {
                     }
                 }
                 
-                calculateGroupedTransactions()
-                calculateTotalBalance()
+                groupedTransactions = UtilsCurrency.calculateGroupedTransactions(transactions)
             }
         }
         
         // Only to show Mock values on the Canvas Preview.
         if Utils.isRunningOnCanvasPreview() {
-            calculateGroupedTransactions()
-            calculateTotalBalance()
+            groupedTransactions = UtilsCurrency.calculateGroupedTransactions(transactions)
         }
     }
-    
-    /**
-     Esta función agrupa las transacciones por category.id y luego calcula el monto total de cada grupo.
-     El resultado se guarda en la variable groupedTransactions, que es una lista de tuplas con el modelo de categoría y el monto total.
-    */
-    private func calculateGroupedTransactions() {
-        let grouped = Dictionary(grouping: transactions) { $0.category.id }
-        
-        groupedTransactions = grouped.compactMap { (categoryId, transactions) -> (CategoryModel, Decimal)? in
-            guard let firstTransaction = transactions.first else
-            {
-                return nil
-            }
-            
-            let totalAmount = transactions.reduce(Decimal.zero) { $0 + $1.amount }
-            return (firstTransaction.category, totalAmount)
-        }
-    }
-    
-    /**
-     Esta función filtra las transacciones por transactionType, sumando los ingresos (income) y los gastos (expense).
-     Luego, calcula el balance final restando los gastos a los ingresos y formatea el balance.
-     */
-    private func calculateTotalBalance() {
-        let totalIncome = transactions
-            .filter { $0.transactionType == .income }
-            .reduce(Decimal.zero) { $0 + $1.amount }
-        
-        let totalExpenses = transactions
-            .filter { $0.transactionType == .expense }
-            .reduce(Decimal.zero) { $0 + $1.amount }
-        
-        totalBalance = totalIncome - totalExpenses
-        
-        totalIncomeFormatted = totalIncome.convertAmountDecimalToString().addCurrencySymbol()
-        totalExpensesFormatted = totalExpenses.convertAmountDecimalToString().addCurrencySymbol()
-        totalBalanceFormatted = totalBalance.convertAmountDecimalToString().addCurrencySymbol()
-    }
-    
     
     //TODO: Implementar o borrar.
     private func PREUBAS_CAMPOS_DE_FIREBASE() {

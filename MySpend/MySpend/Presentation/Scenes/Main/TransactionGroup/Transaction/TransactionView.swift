@@ -51,7 +51,7 @@ struct TransactionView: View {
             
             TextError(message: viewModel.errorMessage)
             
-            // MARK: TRANSACTIONs
+            // MARK: TRANSACTIONS
             if viewModel.isLoading {
                 LoaderView()
             } else {
@@ -82,9 +82,7 @@ struct TransactionView: View {
                             }
                         }
                         
-                        TotalBalanceView(totalIncomes: viewModel.totalIncomeFormatted,
-                                         totalExpenses: viewModel.totalExpensesFormatted,
-                                         totalBalance: viewModel.totalBalanceFormatted)
+                        TotalBalanceView(transactions: $viewModel.transactions)
                     }
                     
                     //Tiene un efecto no deseado al transicionar entre tab y tab.
