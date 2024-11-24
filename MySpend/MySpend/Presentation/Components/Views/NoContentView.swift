@@ -15,7 +15,6 @@ struct NoContentView: View {
     
     var body: some View {
         VStack {
-            Spacer()
             TextPlain(message: title,
                       family: .semibold,
                       size: .bigXL,
@@ -26,7 +25,7 @@ struct NoContentView: View {
                       size: .big,
                       aligment: .center,
                       lineLimit: ConstantViews.messageMaxLines)
-            Spacer()
+            .padding(.bottom)
             
             Image.arrowTurnUpLeft
                 .resizable()

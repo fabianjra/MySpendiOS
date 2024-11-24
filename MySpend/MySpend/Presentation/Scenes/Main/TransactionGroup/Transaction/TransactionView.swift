@@ -61,13 +61,15 @@ struct TransactionView: View {
                     VStack {
                         DateIntervalNavigatorView(dateTimeInterval: $viewModel.dateTimeInterval, selectedDate: $viewModel.selectedDate)
                         
-                        //TODO: Utilizar filtro.
                         let viewModelFiltered = UtilsTransactions.filteredTransactions(viewModel.selectedDate,
                                                                                        transactions: viewModel.transactions,
                                                                                        for: viewModel.dateTimeInterval)
                         
+                        let groupedTransactions = UtilsCurrency.calculateGroupedTransactions(viewModelFiltered)
+                            .sorted(by: { $0.totalAmount > $1.totalAmount })
+                        
                         ScrollView(showsIndicators: false) {
-                            ForEach(viewModel.groupedTransactions.sorted(by: { $0.totalAmount > $1.totalAmount }), id:\.category.id) { item in
+                            ForEach(groupedTransactions, id:\.category.id) { item in
                                 HStack {
                                     TextPlain(message: item.category.name)
                                     
@@ -81,7 +83,7 @@ struct TransactionView: View {
                         
                         TextError(message: viewModel.errorMessage)
                         
-                        TotalBalanceView(transactions: $viewModel.transactions)
+                        TotalBalanceView(transactions: .constant(viewModelFiltered)) //TODO: Cambiar por variable en viewModel para que sea Binding.
                     }
                     
                     //Tiene un efecto no deseado al transicionar entre tab y tab.
