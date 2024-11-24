@@ -81,6 +81,7 @@
 		1F6812FA2CF2939200822471 /* UtilsDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6812F92CF2938C00822471 /* UtilsDate.swift */; };
 		1F6812FD2CF2A65600822471 /* DateIntervalNavigatorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6812FC2CF2A65100822471 /* DateIntervalNavigatorViewModel.swift */; };
 		1F6813022CF2B86B00822471 /* TotalBalanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6813012CF2B86B00822471 /* TotalBalanceView.swift */; };
+		1F6813042CF2C13C00822471 /* TotalBalanceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6813032CF2C13800822471 /* TotalBalanceViewModel.swift */; };
 		1F697E082C5B3C22009529EF /* ResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F697E072C5B3C22009529EF /* ResponseModel.swift */; };
 		1F6FAEB92CD1D13C008CD39F /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6FAEB82CD1D138008CD39F /* Date+Extensions.swift */; };
 		1F7437B42A668BCD0039EFD4 /* Gestures+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7437B32A668BCD0039EFD4 /* Gestures+Extensions.swift */; };
@@ -248,6 +249,7 @@
 		1F6812F92CF2938C00822471 /* UtilsDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilsDate.swift; sourceTree = "<group>"; };
 		1F6812FC2CF2A65100822471 /* DateIntervalNavigatorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateIntervalNavigatorViewModel.swift; sourceTree = "<group>"; };
 		1F6813012CF2B86B00822471 /* TotalBalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalBalanceView.swift; sourceTree = "<group>"; };
+		1F6813032CF2C13800822471 /* TotalBalanceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalBalanceViewModel.swift; sourceTree = "<group>"; };
 		1F697E072C5B3C22009529EF /* ResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseModel.swift; sourceTree = "<group>"; };
 		1F6FAEB82CD1D138008CD39F /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		1F7437B32A668BCD0039EFD4 /* Gestures+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Gestures+Extensions.swift"; sourceTree = "<group>"; };
@@ -623,6 +625,7 @@
 		1F6812FE2CF2B83A00822471 /* TotalBalance */ = {
 			isa = PBXGroup;
 			children = (
+				1F6813032CF2C13800822471 /* TotalBalanceViewModel.swift */,
 				1F6813012CF2B86B00822471 /* TotalBalanceView.swift */,
 			);
 			path = TotalBalance;
@@ -1231,6 +1234,7 @@
 				1FB8BB9B2A5BB1E4002DED1F /* RoundedCornersShape.swift in Sources */,
 				1F64B0A12A70AA94004AC825 /* ListContainer.swift in Sources */,
 				1F7486CB2A6F72D20063AC35 /* TabViewButton.swift in Sources */,
+				1F6813042CF2C13C00822471 /* TotalBalanceViewModel.swift in Sources */,
 				1F9DD6D02CCCA9EB0093F55D /* SelectCategoryModalView.swift in Sources */,
 				1F9462EE2A7B54EC00F5CBFB /* Loader.swift in Sources */,
 				1F9F16D42AFC926D003CB599 /* UserModel.swift in Sources */,

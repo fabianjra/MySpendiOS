@@ -7,7 +7,7 @@
 
 import Foundation
 
-class DateIntervalNavigatorViewModel: ObservableObject {
+struct DateIntervalNavigatorViewModel {
     
     /// Manipulate the Date value selected by navigation on an specific TeimInterval
     func navigateDateTime(_ selectedDate: Date, to timeNavigate: TimeNavigate, byAdding dateTimeInterval: DateTimeInterval) -> Date {

@@ -12,7 +12,7 @@ struct DateIntervalNavigatorView: View {
     @Binding var dateTimeInterval: DateTimeInterval
     @Binding var selectedDate: Date
     
-    @StateObject var viewModel = DateIntervalNavigatorViewModel()
+    var viewModel = DateIntervalNavigatorViewModel()
     
     var body: some View {
         VStack {
