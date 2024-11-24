@@ -44,6 +44,7 @@ struct ModifyTransactionView: View {
                                           iconLeading: Image.calendar,
                                           colorDisabled: false)
                         .onTapGesture {
+                            focusedField = .none
                             viewModel.showDatePicker = true
                         }
                     }
@@ -62,6 +63,7 @@ struct ModifyTransactionView: View {
                                                     colorDisabled: false,
                                                     errorMessage: $viewModel.errorMessage)
                         .onTapGesture {
+                            focusedField = .none
                             viewModel.showCategoryList = true
                         }
                         
