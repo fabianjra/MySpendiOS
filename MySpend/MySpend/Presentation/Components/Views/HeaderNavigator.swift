@@ -75,7 +75,7 @@ struct HeaderNavigator: View {
     
     private var titleAndSubtitle: some View {
         VStack {
-            TextPlain(message: title,
+            TextPlain(title,
                       color: textColor,
                       family: titleWeight,
                       size: titleSize,
@@ -83,7 +83,7 @@ struct HeaderNavigator: View {
                       lineLimit: ConstantViews.singleTextMaxLines,
                       truncateMode: .tail)
             
-            TextPlain(message: subTitle,
+            TextPlain(subTitle,
                       color: textColor,
                       family: subTitleWeight,
                       size: subTitleSize,

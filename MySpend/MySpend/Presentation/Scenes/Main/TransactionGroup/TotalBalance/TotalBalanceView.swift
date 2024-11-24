@@ -23,18 +23,18 @@ struct TotalBalanceView: View {
             }
             
             HStack {
-                TextPlain(message: "Incomes")
+                TextPlain("Incomes")
                 Spacer()
-                TextPlain(message: viewModel.totalIncomeFormatted,
+                TextPlain(viewModel.totalIncomeFormatted,
                           color: Color.primaryLeading,
                           family: .semibold)
             }
             .padding(.bottom, ConstantViews.minimumSpacing)
             
             HStack {
-                TextPlain(message: "Expenses")
+                TextPlain("Expenses")
                 Spacer()
-                TextPlain(message: viewModel.totalExpensesFormatted,
+                TextPlain(viewModel.totalExpensesFormatted,
                           color: Color.alert,
                           family: .semibold)
             }
@@ -42,9 +42,9 @@ struct TotalBalanceView: View {
             
             if showTotalBalance {
                 HStack {
-                    TextPlain(message: "Total balance", size: .big)
+                    TextPlain("Total balance", size: .big)
                     Spacer()
-                    TextPlain(message: viewModel.totalBalanceFormatted, size: .big)
+                    TextPlain(viewModel.totalBalanceFormatted, size: .big)
                 }
             }
         }

@@ -58,12 +58,12 @@ struct ValidateAccountView: View {
                    alignment: .center)
             .padding(.bottom)
 
-            TextPlain(message: Errors.userIsValidated.localizedDescription,
+            TextPlain(Errors.userIsValidated.localizedDescription,
                       family: .semibold,
                       size: .bigL,
                       aligment: .center)
             
-            TextPlain(message: "No action necessary.",
+            TextPlain("No action necessary.",
                       family: .semibold,
                       size: .big,
                       aligment: .center)
@@ -81,7 +81,7 @@ struct ValidateAccountView: View {
     private var sendEmailBody: some View {
         VStack(spacing: ConstantViews.formSpacing) {
             
-            TextPlain(message: "Send the information to your email account and follow next steps.",
+            TextPlain("Send the information to your email account and follow next steps.",
                       aligment: .center,
                       lineLimit: ConstantViews.messageMaxLines)
             
@@ -95,7 +95,7 @@ struct ValidateAccountView: View {
             .disabled(viewModel.disabled)
             
             
-            TextError(message: viewModel.errorMessage)
+            TextError(viewModel.errorMessage)
         }
     }
 }

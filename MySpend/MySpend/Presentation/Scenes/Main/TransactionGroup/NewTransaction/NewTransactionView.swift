@@ -83,7 +83,7 @@ struct NewTransactionView: View {
                         .padding(.bottom)
                         
                         
-                        TextError(message: viewModel.errorMessage)
+                        TextError(viewModel.errorMessage)
                     }
                     
                     Spacer()

@@ -58,7 +58,7 @@ struct RegisterView: View {
                 .buttonStyle(ButtonPrimaryStyle(isLoading: $viewModel.isLoading))
                 
                 
-                TextError(message: viewModel.errorMessage)
+                TextError(viewModel.errorMessage)
             }
             .modifier(AddKeyboardToolbar(focusedField: $focusedField))
         }

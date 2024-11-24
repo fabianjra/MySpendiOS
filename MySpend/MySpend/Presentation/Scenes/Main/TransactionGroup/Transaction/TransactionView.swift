@@ -18,13 +18,13 @@ struct TransactionView: View {
             HStack {
                 VStack(alignment: .leading) {
                     
-                    TextPlain(message: "Hello \(viewModel.userName) \(Emojis.greeting.rawValue)",
+                    TextPlain("Hello \(viewModel.userName) \(Emojis.greeting.rawValue)",
                               family: .semibold,
                               size: .big,
                               lineLimit: ConstantViews.singleTextMaxLines,
                               truncateMode: .tail)
                     
-                    TextPlain(message: "Welcome back",
+                    TextPlain("Welcome back",
                               family: .light,
                               size: .small,
                               lineLimit: ConstantViews.singleTextMaxLines)
@@ -42,7 +42,7 @@ struct TransactionView: View {
                                            selectedDate: $viewModel.selectedDate)
                         .toolbar(.hidden, for: .navigationBar)
                 } label: {
-                    TextButtonHorizontalStyled(text: "History",
+                    TextButtonHorizontalStyled("History",
                                                subTitle: "Go to history",
                                                iconLeading: Image.stackFill,
                                                iconTrailing: Image.arrowRight)
@@ -71,17 +71,17 @@ struct TransactionView: View {
                         ScrollView(showsIndicators: false) {
                             ForEach(groupedTransactions, id:\.category.id) { item in
                                 HStack {
-                                    TextPlain(message: item.category.name)
+                                    TextPlain(item.category.name)
                                     
                                     Spacer()
                                     
-                                    TextPlain(message: item.totalAmount.convertAmountDecimalToString().addCurrencySymbol())
+                                    TextPlain(item.totalAmount.convertAmountDecimalToString().addCurrencySymbol())
                                 }
                                 .padding(.vertical, ConstantViews.minimumSpacing)
                             }
                         }
                         
-                        TextError(message: viewModel.errorMessage)
+                        TextError(viewModel.errorMessage)
                         
                         TotalBalanceView(transactions: .constant(viewModelFiltered)) //TODO: Cambiar por variable en viewModel para que sea Binding.
                     }

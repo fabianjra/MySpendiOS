@@ -15,13 +15,13 @@ struct NoContentView: View {
     
     var body: some View {
         VStack {
-            TextPlain(message: title,
+            TextPlain(title,
                       family: .semibold,
                       size: .bigXL,
                       aligment: .center)
             .padding(.vertical)
             
-            TextPlain(message: message,
+            TextPlain(message,
                       size: .big,
                       aligment: .center,
                       lineLimit: ConstantViews.messageMaxLines)

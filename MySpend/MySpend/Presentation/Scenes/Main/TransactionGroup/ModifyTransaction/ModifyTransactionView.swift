@@ -95,7 +95,7 @@ struct ModifyTransactionView: View {
                         }
                         
                         
-                        TextError(message: viewModel.errorMessage)
+                        TextError(viewModel.errorMessage)
                     }
                     
                     Spacer()

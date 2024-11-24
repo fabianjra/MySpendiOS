@@ -15,7 +15,7 @@ struct TextButtonHorizontalStyled: View {
     private let iconLeading: Image?
     private let iconTrailing: Image?
     
-    init(text: String = "",
+    init(_ text: String = "",
          color: Array<Color> = Color.secondaryGradiant,
          subTitle: String = "",
          iconLeading: Image? = nil,
@@ -81,21 +81,21 @@ struct TextButtonHorizontalStyled: View {
 
 #Preview {
     VStack {
-        TextButtonHorizontalStyled(text:"Go to hitory",
+        TextButtonHorizontalStyled("Go to hitory",
                                    subTitle: "Enter the history",
                                    iconLeading: Image.stackFill,
                                    iconTrailing: Image.arrowRight)
         
-        TextButtonHorizontalStyled(text:"Button only subtitle",
+        TextButtonHorizontalStyled("Button only subtitle",
                                    subTitle: "this is the subtitle")
         
-        TextButtonHorizontalStyled(text: "Button without nothing",
+        TextButtonHorizontalStyled("Button without nothing",
                                    iconLeading: Image.stackFill)
         
-        TextButtonHorizontalStyled(text: "Button without nothing",
+        TextButtonHorizontalStyled("Button without nothing",
                                    iconTrailing: Image.arrowBackward)
         
-        TextButtonHorizontalStyled(text: "Button without nothing")
+        TextButtonHorizontalStyled("Button without nothing")
     }
     .padding()
     .background(Color.backgroundBottom)

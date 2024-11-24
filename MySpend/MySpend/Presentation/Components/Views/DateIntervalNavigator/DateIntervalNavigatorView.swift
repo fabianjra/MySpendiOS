@@ -59,7 +59,7 @@ struct DateIntervalNavigatorView: View {
             } label: {
                 let header = viewModel.getHeader(selectedDate, by: dateTimeInterval)
                 
-                TextPlain(message: header)
+                TextPlain(header)
                     .frame(width: FrameSize.width.buttonSelectValueIntervalCenter,
                            height: FrameSize.height.buttonSelectValueInterval)
                     .padding(.vertical)

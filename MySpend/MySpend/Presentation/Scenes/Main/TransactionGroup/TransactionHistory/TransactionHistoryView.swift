@@ -31,7 +31,7 @@ struct TransactionHistoryView: View {
                 transactionsList
             }
             
-            TextError(message: viewModel.errorMessage)
+            TextError(viewModel.errorMessage)
                 .padding(.bottom)
         }
         .onAppear {
@@ -48,7 +48,7 @@ struct TransactionHistoryView: View {
     var emptyView: some View {
         VStack {
             Spacer()
-            TextPlain(message: "No transactions",
+            TextPlain("No transactions",
                       family: .semibold,
                       size: .bigXL,
                       aligment: .center)
@@ -85,17 +85,17 @@ struct TransactionHistoryView: View {
                                 
                                 VStack(alignment: .leading) {
                                     if item.notes.isEmptyOrWhitespace(){
-                                        TextPlain(message: item.category.name)
+                                        TextPlain(item.category.name)
                                     } else {
-                                        TextPlain(message: item.notes)
+                                        TextPlain(item.notes)
                                     }
                                     
-                                    TextPlain(message: item.dateTransaction.toStringShortLocale(), size: .small)
+                                    TextPlain(item.dateTransaction.toStringShortLocale(), size: .small)
                                 }
                                 
                                 Spacer()
                                 
-                                TextPlain(message: item.amount.convertAmountDecimalToString().addCurrencySymbol())
+                                TextPlain(item.amount.convertAmountDecimalToString().addCurrencySymbol())
                                 
                                 Image.chevronRight
                                     .foregroundStyle(Color.textPrimaryForeground)

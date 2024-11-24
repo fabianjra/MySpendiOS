@@ -14,7 +14,7 @@ struct ButtonTextFieldStyle: ButtonStyle {
     
     func makeBody(configuration: Configuration) -> some View {
         HStack {
-            TextPlain(message: "Icon:",
+            TextPlain("Icon:",
                       color: Color.textFieldForeground)
             
             if !icon.isEmpty {
@@ -25,7 +25,7 @@ struct ButtonTextFieldStyle: ButtonStyle {
                            height: FrameSize.height.iconInsideTextField)
                     .foregroundColor(Color.textFieldForeground)
             } else {
-                TextPlain(message: "No selected",
+                TextPlain("No selected",
                           color: Color.textFieldPlaceholder)
             }
             

@@ -76,7 +76,7 @@ struct ModifyCategoryView: View {
                 }
                 
                 
-                TextError(message: viewModel.errorMessage)
+                TextError(viewModel.errorMessage)
             }
         }
         .onAppear {

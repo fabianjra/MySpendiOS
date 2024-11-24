@@ -9,16 +9,32 @@ import SwiftUI
 
 struct TextPlain: View {
     
-    var message: String
-    var color: Color = Color.textPrimaryForeground
-    var family: Font.Family = .regular
-    var size: Font.Sizes = .body
-    var aligment: TextAlignment = .leading
-    var lineLimit: Int = ConstantViews.singleTextMaxLines
-    var truncateMode: Text.TruncationMode = .tail
+    private let text: String
+    private let color: Color
+    private let family: Font.Family
+    private let size: Font.Sizes
+    private let aligment: TextAlignment
+    private let lineLimit: Int
+    private let truncateMode: Text.TruncationMode
+    
+    init(_ text: String,
+         color: Color = .primary,
+         family: Font.Family = .regular,
+         size: Font.Sizes = .body,
+         aligment: TextAlignment = .leading,
+         lineLimit: Int = ConstantViews.singleTextMaxLines,
+         truncateMode: Text.TruncationMode = .tail) {
+        self.text = text
+        self.color = color
+        self.family = family
+        self.size = size
+        self.aligment = aligment
+        self.lineLimit = lineLimit
+        self.truncateMode = truncateMode
+    }
     
     var body: some View {
-        Text(message)
+        Text(text)
             .foregroundColor(color)
             .font(.montserrat(family, size: size))
             .multilineTextAlignment(aligment)
@@ -31,15 +47,15 @@ struct TextPlain: View {
     VStack {
         Spacer()
         
-        TextPlain(message: "This is a plain message")
+        TextPlain("This is a plain message")
             .padding()
         
-        TextPlain(message: "This is a plain message asdf asf asf asdf asdf asf  fasdf asdf asdf",
+        TextPlain("This is a plain message asdf asf asf asdf asdf asf  fasdf asdf asdf",
                   lineLimit: 1,
                   truncateMode: .middle)
         .padding()
         
-        TextPlain(message: "This is a plain message")
+        TextPlain("This is a plain message")
             .padding()
         
         Spacer()

@@ -97,7 +97,7 @@ struct SelectCategoryModalView: View {
         Color.backgroundBottom
         VStack {
             Spacer()
-            TextPlain(message: "Selected category: \(selectedCategory.name)")
+            TextPlain("Selected category: \(selectedCategory.name)")
             
             Button("Show modal") {
                 showModal = true

@@ -42,7 +42,7 @@ struct LoginView: View {
                 }
                 .buttonStyle(ButtonPrimaryStyle(isLoading: $viewModel.isLoading))
                 
-                TextError(message: viewModel.errorMessage)
+                TextError(viewModel.errorMessage)
                 
                 
                 Button("Forgot password?") {
@@ -108,7 +108,7 @@ struct LoginView: View {
             
             // MARK: REGISTER
             VStack {
-                TextPlain(message: "New user?")
+                TextPlain("New user?")
                 
                 Button("Create a new free account") {
                     Router.shared.path.append(Router.Destination.register)

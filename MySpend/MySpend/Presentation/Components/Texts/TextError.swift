@@ -9,10 +9,14 @@ import SwiftUI
 
 struct TextError: View {
     
-    let message: String
+    private let text: String
+    
+    init(_ text: String) {
+        self.text = text
+    }
     
     var body: some View {
-        Text(message)
+        Text(text)
             .foregroundColor(Color.alert)
             .font(.montserrat(.semibold))
             .multilineTextAlignment(.center)
@@ -24,6 +28,6 @@ struct TextError: View {
     ZStack {
         Color.backgroundBottom
         
-        TextError(message: "Error while processing")
+        TextError("Error while processing")
     }
 }

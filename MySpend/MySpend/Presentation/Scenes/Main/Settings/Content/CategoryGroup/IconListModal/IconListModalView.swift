@@ -89,7 +89,7 @@ struct IconListModalView: View {
         Color.backgroundBottom
         VStack {
             Spacer()
-            TextPlain(message: "Icono: \(model.icon)")
+            TextPlain("Icono: \(model.icon)")
             
             Image(systemName: model.icon)
             

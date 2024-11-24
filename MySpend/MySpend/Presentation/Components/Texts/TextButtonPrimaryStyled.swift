@@ -9,8 +9,11 @@ import SwiftUI
 
 struct TextButtonPrimaryStyled: View {
     
-    let text: String
+    private let text: String
 
+    init(_ text: String) {
+        self.text = text
+    }
     var body: some View {
         Text(text)
             // MARK: FONT FAMILY
@@ -28,5 +31,5 @@ struct TextButtonPrimaryStyled: View {
 }
 
 #Preview {
-    TextButtonPrimaryStyled(text: "Button style")
+    TextButtonPrimaryStyled("Button style")
 }

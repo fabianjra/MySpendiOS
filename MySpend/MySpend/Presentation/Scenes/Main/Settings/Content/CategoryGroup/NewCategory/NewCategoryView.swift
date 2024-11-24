@@ -61,7 +61,7 @@ struct NewCategoryView: View {
                 .padding(.vertical)
                 
                 
-                TextError(message: viewModel.errorMessage)
+                TextError(viewModel.errorMessage)
             }
         }
         .onAppear {

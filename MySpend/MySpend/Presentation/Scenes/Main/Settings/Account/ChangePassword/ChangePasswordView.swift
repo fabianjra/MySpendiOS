@@ -62,7 +62,7 @@ struct ChangePasswordView: View {
                 .disabled(viewModel.disabled)
                 
                 
-                TextError(message: viewModel.errorMessage)
+                TextError(viewModel.errorMessage)
             }
         }
         .disabled(viewModel.isLoading)

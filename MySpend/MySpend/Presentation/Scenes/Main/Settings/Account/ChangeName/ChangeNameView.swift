@@ -53,7 +53,7 @@ struct ChangeNameView: View {
                 .disabled(viewModel.disabled)
                 
                 
-                TextError(message: viewModel.errorMessage)
+                TextError(viewModel.errorMessage)
             }
         }
         .onAppear {

@@ -54,7 +54,7 @@ struct DatePickerModalView: View {
     ZStack(alignment: .top) {
         Color.backgroundBottom
         VStack {
-            TextPlain(message: "Selected date: \(dateString)")
+            TextPlain("Selected date: \(dateString)")
             
             Button("Show modal") {
                 showModal = true
