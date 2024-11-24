@@ -60,7 +60,6 @@ struct TransactionView: View {
                     Spacer()
                 } else {
                     VStack {
-                        
                         Picker("Time interval", selection: $viewModel.dateTimeInvertal) {
                             ForEach(DateTimeInterval.allCases) { type in
                                 Text(type.rawValue)
@@ -83,36 +82,10 @@ struct TransactionView: View {
                             }
                         }
                         
-                        DividerView()
-                        
-                        // MARK: BALANCES
-                        HStack {
-                            TextPlain(message: "Incomes")
-                            Spacer()
-                            TextPlain(message: viewModel.totalIncomeFormatted,
-                                      color: Color.primaryLeading,
-                                      family: .semibold)
-                        }
-                        .padding(.bottom, ConstantViews.minimumSpacing)
-                        
-                        
-                        HStack {
-                            TextPlain(message: "Expenses")
-                            Spacer()
-                            TextPlain(message: viewModel.totalExpensesFormatted,
-                                      color: Color.alert,
-                                      family: .semibold)
-                        }
-                        .padding(.bottom, ConstantViews.minimumSpacing)
-                        
-                        
-                        HStack {
-                            TextPlain(message: "Total balance", size: .big)
-                            Spacer()
-                            TextPlain(message: viewModel.totalBalanceFormatted, size: .big)
-                        }
+                        TotalBalanceView(totalIncomes: viewModel.totalIncomeFormatted,
+                                         totalExpenses: viewModel.totalExpensesFormatted,
+                                         totalBalance: viewModel.totalBalanceFormatted)
                     }
-                    .padding(.bottom, ConstantViews.paddingBottomResumeview)
                     
                     //Tiene un efecto no deseado al transicionar entre tab y tab.
                     //TODO: Revisar si con listener se comporta diferente.

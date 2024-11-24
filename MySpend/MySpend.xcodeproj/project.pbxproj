@@ -80,6 +80,7 @@
 		1F65D9632C72D10E0023CC5D /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F65D9622C72D10E0023CC5D /* Router.swift */; };
 		1F6812FA2CF2939200822471 /* UtilsDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6812F92CF2938C00822471 /* UtilsDate.swift */; };
 		1F6812FD2CF2A65600822471 /* DateIntervalNavigatorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6812FC2CF2A65100822471 /* DateIntervalNavigatorViewModel.swift */; };
+		1F6813022CF2B86B00822471 /* TotalBalanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6813012CF2B86B00822471 /* TotalBalanceView.swift */; };
 		1F697E082C5B3C22009529EF /* ResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F697E072C5B3C22009529EF /* ResponseModel.swift */; };
 		1F6FAEB92CD1D13C008CD39F /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6FAEB82CD1D138008CD39F /* Date+Extensions.swift */; };
 		1F7437B42A668BCD0039EFD4 /* Gestures+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7437B32A668BCD0039EFD4 /* Gestures+Extensions.swift */; };
@@ -246,6 +247,7 @@
 		1F65D9622C72D10E0023CC5D /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		1F6812F92CF2938C00822471 /* UtilsDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilsDate.swift; sourceTree = "<group>"; };
 		1F6812FC2CF2A65100822471 /* DateIntervalNavigatorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateIntervalNavigatorViewModel.swift; sourceTree = "<group>"; };
+		1F6813012CF2B86B00822471 /* TotalBalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalBalanceView.swift; sourceTree = "<group>"; };
 		1F697E072C5B3C22009529EF /* ResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseModel.swift; sourceTree = "<group>"; };
 		1F6FAEB82CD1D138008CD39F /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		1F7437B32A668BCD0039EFD4 /* Gestures+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Gestures+Extensions.swift"; sourceTree = "<group>"; };
@@ -618,6 +620,14 @@
 			path = DateIntervalNavigator;
 			sourceTree = "<group>";
 		};
+		1F6812FE2CF2B83A00822471 /* TotalBalance */ = {
+			isa = PBXGroup;
+			children = (
+				1F6813012CF2B86B00822471 /* TotalBalanceView.swift */,
+			);
+			path = TotalBalance;
+			sourceTree = "<group>";
+		};
 		1F7486CC2A6F78D10063AC35 /* Containers */ = {
 			isa = PBXGroup;
 			children = (
@@ -638,6 +648,7 @@
 				1F65D95B2C7287AC0023CC5D /* TransactionHistory */,
 				1FA08EE72C5DC1B50019000B /* NewTransaction */,
 				1FF3948E2CCF33DC009704E7 /* ModifyTransaction */,
+				1F6812FE2CF2B83A00822471 /* TotalBalance */,
 				1F9DD6CE2CCCA9D70093F55D /* SelectCategoryModal */,
 				1F7ABD282CCC62660023FBA4 /* DatePickerModal */,
 			);
@@ -1194,6 +1205,7 @@
 				1F64B09D2A7089C5004AC825 /* SettingsOptions.swift in Sources */,
 				1FB8BB9D2A5BC728002DED1F /* ConstantColors.swift in Sources */,
 				1F7437B42A668BCD0039EFD4 /* Gestures+Extensions.swift in Sources */,
+				1F6813022CF2B86B00822471 /* TotalBalanceView.swift in Sources */,
 				1F697E082C5B3C22009529EF /* ResponseModel.swift in Sources */,
 				1FA08EE42C5D99480019000B /* RegisterViewModel.swift in Sources */,
 				1F501D9A2C8E8253008D4085 /* CaseIterable+Extensions.swift in Sources */,
