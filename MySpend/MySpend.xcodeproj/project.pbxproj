@@ -82,6 +82,7 @@
 		1F6812FD2CF2A65600822471 /* DateIntervalNavigatorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6812FC2CF2A65100822471 /* DateIntervalNavigatorViewModel.swift */; };
 		1F6813022CF2B86B00822471 /* TotalBalanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6813012CF2B86B00822471 /* TotalBalanceView.swift */; };
 		1F6813062CF2CA8200822471 /* TotalBalanceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6813052CF2CA7E00822471 /* TotalBalanceViewModel.swift */; };
+		1F6813082CF2F3B100822471 /* UtilsTransactions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6813072CF2F3AD00822471 /* UtilsTransactions.swift */; };
 		1F697E082C5B3C22009529EF /* ResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F697E072C5B3C22009529EF /* ResponseModel.swift */; };
 		1F6FAEB92CD1D13C008CD39F /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6FAEB82CD1D138008CD39F /* Date+Extensions.swift */; };
 		1F7437B42A668BCD0039EFD4 /* Gestures+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7437B32A668BCD0039EFD4 /* Gestures+Extensions.swift */; };
@@ -250,6 +251,7 @@
 		1F6812FC2CF2A65100822471 /* DateIntervalNavigatorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateIntervalNavigatorViewModel.swift; sourceTree = "<group>"; };
 		1F6813012CF2B86B00822471 /* TotalBalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalBalanceView.swift; sourceTree = "<group>"; };
 		1F6813052CF2CA7E00822471 /* TotalBalanceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalBalanceViewModel.swift; sourceTree = "<group>"; };
+		1F6813072CF2F3AD00822471 /* UtilsTransactions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilsTransactions.swift; sourceTree = "<group>"; };
 		1F697E072C5B3C22009529EF /* ResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseModel.swift; sourceTree = "<group>"; };
 		1F6FAEB82CD1D138008CD39F /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		1F7437B32A668BCD0039EFD4 /* Gestures+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Gestures+Extensions.swift"; sourceTree = "<group>"; };
@@ -414,6 +416,7 @@
 			isa = PBXGroup;
 			children = (
 				1F19D96D2A4ACC3D00137EA0 /* Utils.swift */,
+				1F6813072CF2F3AD00822471 /* UtilsTransactions.swift */,
 				1F2750F82C9D02F300AD4E31 /* UtilsCurrency.swift */,
 				1F6812F92CF2938C00822471 /* UtilsDate.swift */,
 				1FC94CC92A5A4588005CA0B6 /* Logs.swift */,
@@ -1166,6 +1169,7 @@
 				1F3A95412C5D74CC008AAE50 /* TransactionsDatabase.swift in Sources */,
 				1FF394902CCF347F009704E7 /* ModifyTransactionView.swift in Sources */,
 				1FE7C6832A47DDF40070B988 /* ConstantRadius.swift in Sources */,
+				1F6813082CF2F3B100822471 /* UtilsTransactions.swift in Sources */,
 				1FF394922CCF3516009704E7 /* ModifyTransactionViewModel.swift in Sources */,
 				1F0641462A72234900C19084 /* ChangePasswordView.swift in Sources */,
 				1FC94CC52A5A4034005CA0B6 /* ViewModifiers.swift in Sources */,

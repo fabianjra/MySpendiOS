@@ -38,7 +38,9 @@ struct TransactionView: View {
             // MARK: HISTORY BUTTON
             VStack {
                 NavigationLink {
-                    TransactionHistoryView(transactionsLoaded: $viewModel.transactions)
+                    TransactionHistoryView(transactionsLoaded: $viewModel.transactions,
+                                           dateTimeInterval: $viewModel.dateTimeInterval,
+                                           selectedDate: $viewModel.selectedDate)
                         .toolbar(.hidden, for: .navigationBar)
                 } label: {
                     TextButtonHorizontalStyled(text: "History",
@@ -47,9 +49,8 @@ struct TransactionView: View {
                                                iconTrailing: Image.arrowRight)
                 }
             }
+            .padding(.bottom)
             
-            
-            TextError(message: viewModel.errorMessage)
             
             // MARK: TRANSACTIONS
             if viewModel.isLoading {
@@ -60,13 +61,11 @@ struct TransactionView: View {
                     Spacer()
                 } else {
                     VStack {
-                        Picker("Time interval", selection: $viewModel.dateTimeInvertal) {
-                            ForEach(DateTimeInterval.allCases) { type in
-                                Text(type.rawValue)
-                            }
-                        }
-                        .pickerStyle(.segmented)
-                        .padding(.bottom)
+                        DateIntervalNavigatorView(dateTimeInterval: $viewModel.dateTimeInterval, selectedDate: $viewModel.selectedDate)
+                        
+                        let viewModelFiltered = UtilsTransactions.filteredTransactions(viewModel.selectedDate,
+                                                                                       transactions: viewModel.transactions,
+                                                                                       for: viewModel.dateTimeInterval)
                         
                         ScrollView(showsIndicators: false) {
                             ForEach(viewModel.groupedTransactions.sorted(by: { $0.totalAmount > $1.totalAmount }), id:\.category.id) { item in
@@ -78,9 +77,10 @@ struct TransactionView: View {
                                     TextPlain(message: item.totalAmount.convertAmountDecimalToString().addCurrencySymbol())
                                 }
                                 .padding(.vertical, ConstantViews.minimumSpacing)
-                                .padding(.horizontal)
                             }
                         }
+                        
+                        TextError(message: viewModel.errorMessage)
                         
                         TotalBalanceView(transactions: $viewModel.transactions)
                     }
@@ -93,7 +93,7 @@ struct TransactionView: View {
         }
         .onAppear {
             print("Router count RESUME: \(Router.shared.path.count)")
-            viewModel.onAppear()
+            viewModel.fetchUserName()
         }
         .onFirstAppear {
             viewModel.fetchData()

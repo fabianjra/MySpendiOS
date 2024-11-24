@@ -9,8 +9,12 @@ import SwiftUI
 
 struct TransactionHistoryView: View {
     
-    @Binding var transactionsLoaded: [TransactionModel]
     @StateObject var viewModel = TransactionHistoryViewModel()
+    
+    @Binding var transactionsLoaded: [TransactionModel]
+    @Binding var dateTimeInterval: DateTimeInterval
+    @Binding var selectedDate: Date
+
     @State private var selectedModel = TransactionModel()
     
     var body: some View {
@@ -55,10 +59,9 @@ struct TransactionHistoryView: View {
     
     var transactionsList: some View {
         VStack {
+            DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval, selectedDate: $selectedDate)
             
-            DateIntervalNavigatorView(dateTimeInterval: $viewModel.dateTimeInterval, selectedDate: $viewModel.selectedDate)
-            
-            let viewModelFiltered = viewModel.filteredTransactions(transactionsLoaded, for: viewModel.dateTimeInterval)
+            let viewModelFiltered = UtilsTransactions.filteredTransactions(selectedDate, transactions: transactionsLoaded, for: dateTimeInterval)
             
             if viewModelFiltered.isEmpty {
                 emptyView
@@ -140,9 +143,9 @@ struct TransactionHistoryView: View {
                 .listStyle(.plain)
                 .scrollIndicators(.hidden)
                 .animation(.default, value: viewModelFiltered.count)
-                
-                TotalBalanceView(transactions: .constant(viewModelFiltered), showTotalBalance: false, addBottomSpacing: false)
             }
+            
+            TotalBalanceView(transactions: .constant(viewModelFiltered), showTotalBalance: false, addBottomSpacing: false)
         }
     }
     
@@ -212,8 +215,12 @@ struct TransactionHistoryView: View {
                                                                               categoryType: .expense),
                                                       notes: "",
                                                       transactionType: .expense)]
+    
+    @Previewable @State var dateTimeInterval = DateTimeInterval.month
+    @Previewable @State var selectedDate = Date()
+    
     VStack {
-        TransactionHistoryView(transactionsLoaded: $array)
+        TransactionHistoryView(transactionsLoaded: $array, dateTimeInterval: $dateTimeInterval, selectedDate: $selectedDate)
             .environment(\.locale, .init(identifier: "es_CR"))
     }
 }
@@ -233,15 +240,21 @@ struct TransactionHistoryView: View {
                          transactionType: .expense)
     }
     
+    @Previewable @State var dateTimeInterval = DateTimeInterval.month
+    @Previewable @State var selectedDate = Date()
+    
     VStack {
-        TransactionHistoryView(transactionsLoaded: $array)
-            .environment(\.locale, .init(identifier: "es"))
+        TransactionHistoryView(transactionsLoaded: $array, dateTimeInterval: $dateTimeInterval, selectedDate: $selectedDate)
+            .environment(\.locale, .init(identifier: "en_US"))
     }
 }
 
 #Preview("No content EN") {
+    @Previewable @State var dateTimeInterval = DateTimeInterval.month
+    @Previewable @State var selectedDate = Date()
+    
     VStack {
-        TransactionHistoryView(transactionsLoaded: .constant([]))
-            .environment(\.locale, .init(identifier: "en"))
+        TransactionHistoryView(transactionsLoaded: .constant([]), dateTimeInterval: $dateTimeInterval, selectedDate: $selectedDate)
+            .environment(\.locale, .init(identifier: "en_US_POSIX"))
     }
 }

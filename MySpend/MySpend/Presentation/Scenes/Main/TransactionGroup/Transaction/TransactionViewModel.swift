@@ -10,7 +10,8 @@ import FirebaseFirestore
 class TransactionViewModel: BaseViewModel {
     
     @Published var userName: String = ""
-    @Published var dateTimeInvertal: DateTimeInterval = .month
+    @Published var dateTimeInterval: DateTimeInterval = .month
+    @Published var selectedDate: Date = Date()
     
     // MARK: TRANSACTIONS
     @Published var transactions: [TransactionModel]
@@ -21,7 +22,7 @@ class TransactionViewModel: BaseViewModel {
         self.transactions = transactions
     }
     
-    func onAppear() {
+    func fetchUserName() {
         performWithCurrentUser { currentUser in
             guard let displayName = currentUser.displayName else { return }
             self.userName = displayName
