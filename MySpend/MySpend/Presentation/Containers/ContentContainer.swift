@@ -37,7 +37,8 @@ struct ContentContainer<Content: View>: View {
                                                       color: Color.backgroundContentGradient))
             
             VStack(content: content)
-                .padding(.all, addPading ? nil : .zero)
+                .padding(.top, addPading ? nil : .zero)
+                .padding(.horizontal, addPading ? nil : .zero)
         }
         .ignoresSafeArea(.keyboard) // Dont allow the view go up when show keybowrd in a modal.
     }
