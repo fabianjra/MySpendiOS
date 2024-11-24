@@ -9,9 +9,9 @@ import SwiftUI
 
 struct TabViewContainer<Content: View>: View {
 
-    let aligment: Alignment
-    let function: () -> Void
-    let content: () -> Content
+    private let aligment: Alignment
+    private let function: () -> Void
+    private let content: () -> Content
     
     init(aligment: Alignment = .bottom, function: @escaping () -> Void, @ViewBuilder content: @escaping () -> Content) {
         self.aligment = aligment

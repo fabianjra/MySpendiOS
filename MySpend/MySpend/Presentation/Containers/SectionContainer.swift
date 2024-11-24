@@ -9,11 +9,11 @@ import SwiftUI
 
 struct SectionContainer<Content: View>: View {
     
-    let header: String?
-    let isInsideList: Bool
-    let headerColor: Color
-    let headerSize: Font.Sizes
-    var content: () -> Content
+    private let header: String?
+    private let isInsideList: Bool
+    private let headerColor: Color
+    private let headerSize: Font.Sizes
+    private let content: () -> Content
     
     init(header: String? = nil,
          isInsideList: Bool? = true,

@@ -9,12 +9,12 @@ import SwiftUI
 
 struct ContentContainer<Content: View>: View {
     
-    let aligment: Alignment
-    let ignoreSafeArea: Bool
-    let addPading: Bool
-    let addBackground: Bool
+    private let aligment: Alignment
+    private let ignoreSafeArea: Bool
+    private let addPading: Bool
+    private let addBackground: Bool
     
-    var content: () -> Content
+    private let content: () -> Content
     
     init(aligment: Alignment = .top, 
          ignoreSafeArea: Bool = true,

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ListContainer<Content: View>: View {
     
-    var content: () -> Content
+    private let content: () -> Content
     
     init(@ViewBuilder content: @escaping () -> Content) {
         self.content = content

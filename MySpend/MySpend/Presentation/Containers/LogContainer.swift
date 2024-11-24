@@ -9,11 +9,11 @@ import SwiftUI
 
 struct LogContainer<Content: View>: View {
     
-    let addPading: Bool
-    let scrollable: Bool
-    let showsIndicators: Bool
+    private let addPading: Bool
+    private let scrollable: Bool
+    private let showsIndicators: Bool
     
-    var content: () -> Content
+    private let content: () -> Content
     
     init(addPading: Bool = true, 
          scrollable: Bool = false,
