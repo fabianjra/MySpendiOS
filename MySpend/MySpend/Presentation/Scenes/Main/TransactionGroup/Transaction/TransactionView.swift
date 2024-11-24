@@ -32,7 +32,6 @@ struct TransactionView: View {
                 .foregroundColor(Color.textPrimaryForeground)
                 Spacer()
             }
-            .padding(.bottom)
             
             
             // MARK: HISTORY BUTTON
@@ -49,7 +48,6 @@ struct TransactionView: View {
                                                iconTrailing: Image.arrowRight)
                 }
             }
-            .padding(.bottom)
             
             
             // MARK: TRANSACTIONS
@@ -63,6 +61,7 @@ struct TransactionView: View {
                     VStack {
                         DateIntervalNavigatorView(dateTimeInterval: $viewModel.dateTimeInterval, selectedDate: $viewModel.selectedDate)
                         
+                        //TODO: Utilizar filtro.
                         let viewModelFiltered = UtilsTransactions.filteredTransactions(viewModel.selectedDate,
                                                                                        transactions: viewModel.transactions,
                                                                                        for: viewModel.dateTimeInterval)
