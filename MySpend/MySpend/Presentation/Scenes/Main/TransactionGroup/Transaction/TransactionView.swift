@@ -84,7 +84,6 @@ struct TransactionView: View {
                         }
                         
                         DividerView()
-                            .background(.blue)
                         
                         // MARK: BALANCES
                         HStack {
