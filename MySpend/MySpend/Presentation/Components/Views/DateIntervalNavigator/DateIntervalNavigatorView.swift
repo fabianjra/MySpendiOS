@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ButtonSelectValueInterval: View {
+struct DateIntervalNavigatorView: View {
     
     var text: String
     
@@ -91,7 +91,7 @@ struct ButtonSelectValueInterval: View {
     ZStack {
         Color.backgroundBottom
         
-        ButtonSelectValueInterval("January") {
+        DateIntervalNavigatorView("January") {
             
         } actionCenter: {
             

@@ -69,7 +69,7 @@ struct TransactionHistoryView: View {
             let header = viewModel.getHeader(by: viewModel.dateTimeIntertal)
             
             /// Navigate between days, weeks, months and years
-            ButtonSelectValueInterval(header) {
+            DateIntervalNavigatorView(header) {
                 viewModel.navigateDateTime(to: .previous)
             } actionCenter: {
                 viewModel.navigateDateTime(to: .today)

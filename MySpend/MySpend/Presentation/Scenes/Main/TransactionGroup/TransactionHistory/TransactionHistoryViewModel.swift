@@ -91,7 +91,6 @@ extension TransactionHistoryViewModel {
         }
     }
     
-    /// Validation to show correct header based of DateTimeInterval
     func getHeader(by timeInterval: DateTimeInterval) -> String {
         var header = ""
         

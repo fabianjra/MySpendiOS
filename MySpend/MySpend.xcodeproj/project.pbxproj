@@ -15,7 +15,7 @@
 		1F06414A2A722AFB00C19084 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0641492A722AFB00C19084 /* Errors.swift */; };
 		1F06414D2A7232D300C19084 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F06414C2A7232D300C19084 /* RootView.swift */; };
 		1F0E9AB62C5C62B300675CE8 /* ConstantFB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0E9AB52C5C62B300675CE8 /* ConstantFB.swift */; };
-		1F138DF92CCF62000003FBEB /* ButtonSelectValueInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F138DF82CCF61CD0003FBEB /* ButtonSelectValueInterval.swift */; };
+		1F138DF92CCF62000003FBEB /* DateIntervalNavigatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F138DF82CCF61CD0003FBEB /* DateIntervalNavigatorView.swift */; };
 		1F1408192A58FB9400181500 /* ButtonPrimaryStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1408182A58FB9400181500 /* ButtonPrimaryStyle.swift */; };
 		1F14081B2A590FC600181500 /* ConstantAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F14081A2A590FC600181500 /* ConstantAnimations.swift */; };
 		1F14081D2A5910D300181500 /* ButtonLinkStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F14081C2A5910D300181500 /* ButtonLinkStyle.swift */; };
@@ -177,7 +177,7 @@
 		1F0641492A722AFB00C19084 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		1F06414C2A7232D300C19084 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		1F0E9AB52C5C62B300675CE8 /* ConstantFB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantFB.swift; sourceTree = "<group>"; };
-		1F138DF82CCF61CD0003FBEB /* ButtonSelectValueInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonSelectValueInterval.swift; sourceTree = "<group>"; };
+		1F138DF82CCF61CD0003FBEB /* DateIntervalNavigatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateIntervalNavigatorView.swift; sourceTree = "<group>"; };
 		1F1408182A58FB9400181500 /* ButtonPrimaryStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonPrimaryStyle.swift; sourceTree = "<group>"; };
 		1F14081A2A590FC600181500 /* ConstantAnimations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantAnimations.swift; sourceTree = "<group>"; };
 		1F14081C2A5910D300181500 /* ButtonLinkStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonLinkStyle.swift; sourceTree = "<group>"; };
@@ -579,6 +579,7 @@
 		1F5CC57A2A6648D000C214FE /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				1F6812FB2CF2A4DC00822471 /* DateIntervalNavigator */,
 				1F9DD6D32CCCCF9A0093F55D /* NoContentView.swift */,
 				1F5CC57B2A6648E400C214FE /* DividerView.swift */,
 				1F9462EA2A7B4D8200F5CBFB /* HeaderNavigator.swift */,
@@ -604,6 +605,14 @@
 				1F65D95E2C7287CC0023CC5D /* TransactionHistoryViewModel.swift */,
 			);
 			path = TransactionHistory;
+			sourceTree = "<group>";
+		};
+		1F6812FB2CF2A4DC00822471 /* DateIntervalNavigator */ = {
+			isa = PBXGroup;
+			children = (
+				1F138DF82CCF61CD0003FBEB /* DateIntervalNavigatorView.swift */,
+			);
+			path = DateIntervalNavigator;
 			sourceTree = "<group>";
 		};
 		1F7486CC2A6F78D10063AC35 /* Containers */ = {
@@ -856,7 +865,6 @@
 				1F1408172A58FB8200181500 /* Styles */,
 				1F5CC5832A6662A200C214FE /* ButtonNavigation.swift */,
 				1F7486C22A6A3F770063AC35 /* ButtonRounded.swift */,
-				1F138DF82CCF61CD0003FBEB /* ButtonSelectValueInterval.swift */,
 			);
 			path = Buttons;
 			sourceTree = "<group>";
@@ -1125,7 +1133,7 @@
 				1F64B0AB2A70CFC3004AC825 /* String+Extensions.swift in Sources */,
 				1F65D9632C72D10E0023CC5D /* Router.swift in Sources */,
 				1FAA87DC2C69A00500700CD6 /* NewCategoryViewModel.swift in Sources */,
-				1F138DF92CCF62000003FBEB /* ButtonSelectValueInterval.swift in Sources */,
+				1F138DF92CCF62000003FBEB /* DateIntervalNavigatorView.swift in Sources */,
 				1F1E854C2A6F7AFD00CEEBBC /* SettingsView.swift in Sources */,
 				1FAA87D72C697F1A00700CD6 /* CategoryView.swift in Sources */,
 				1FAEE6D02A47A9AB00630367 /* LoginView.swift in Sources */,
