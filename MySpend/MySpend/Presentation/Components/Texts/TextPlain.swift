@@ -18,12 +18,12 @@ struct TextPlain: View {
     private let truncateMode: Text.TruncationMode
     
     init(_ text: String,
-         color: Color = .primary,
-         family: Font.Family = .regular,
-         size: Font.Sizes = .body,
-         aligment: TextAlignment = .leading,
+         color: Color = Color.textPrimaryForeground,
+         family: Font.Family = Font.Family.regular,
+         size: Font.Sizes = Font.Sizes.body,
+         aligment: TextAlignment = TextAlignment.leading,
          lineLimit: Int = ConstantViews.singleTextMaxLines,
-         truncateMode: Text.TruncationMode = .tail) {
+         truncateMode: Text.TruncationMode = Text.TruncationMode.tail) {
         self.text = text
         self.color = color
         self.family = family

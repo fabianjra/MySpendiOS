@@ -17,7 +17,6 @@ struct TransactionView: View {
             // MARK: HEADER
             HStack {
                 VStack(alignment: .leading) {
-                    
                     TextPlain("Hello \(viewModel.userName) \(Emojis.greeting.rawValue)",
                               family: .semibold,
                               size: .big,
@@ -29,7 +28,6 @@ struct TransactionView: View {
                               size: .small,
                               lineLimit: ConstantViews.singleTextMaxLines)
                 }
-                .foregroundColor(Color.textPrimaryForeground)
                 Spacer()
             }
             
