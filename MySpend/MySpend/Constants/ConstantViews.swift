@@ -27,6 +27,8 @@ struct ConstantViews {
     // MARK: SPACING
     static let minimumSpacing: CGFloat = 1.0
     static let mediumSpacing: CGFloat = 5.0
+    static let bigSpacing: CGFloat = 10.0
+    
     static let formSpacing: CGFloat = 15.0
     static let gridSpacing: CGFloat = 50.0
     

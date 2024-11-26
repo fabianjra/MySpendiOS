@@ -43,7 +43,6 @@ struct DateIntervalNavigatorView: View {
                     .frame(width: FrameSize.width.buttonSelectValueInterval,
                            height: FrameSize.height.buttonSelectValueInterval)
                     .foregroundColor(Color.buttonForeground)
-                    .padding(.vertical)
                     .padding(.leading)
                     .contentShape(Rectangle())
 //                        .clipShape(.rect(
@@ -62,7 +61,6 @@ struct DateIntervalNavigatorView: View {
                 TextPlain(header)
                     .frame(width: FrameSize.width.buttonSelectValueIntervalCenter,
                            height: FrameSize.height.buttonSelectValueInterval)
-                    .padding(.vertical)
                     .contentShape(Rectangle())
             }
             .buttonStyle(ButtonScaleStyle())
@@ -78,24 +76,21 @@ struct DateIntervalNavigatorView: View {
                     .frame(width: FrameSize.width.buttonSelectValueInterval,
                            height: FrameSize.height.buttonSelectValueInterval)
                     .foregroundColor(Color.buttonForeground)
-                    .padding(.vertical)
                     .padding(.trailing)
                     .contentShape(Rectangle())
             }
             .buttonStyle(ButtonScaleStyle())
         }
+        .padding(.vertical, ConstantViews.mediumSpacing)
     }
 }
 
 #Preview {
-    
     @Previewable @State var dateTimeInterval = DateTimeInterval.month
     @Previewable @State var selectedDate = Date()
     
-    ZStack {
-        Color.backgroundBottom
-        
+    VStack {
         DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval, selectedDate: $selectedDate)
+            .background(Color.backgroundBottom.opacity(0.8))
     }
-    
 }

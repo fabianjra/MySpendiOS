@@ -95,7 +95,8 @@ struct TransactionHistoryView: View {
                                 
                                 Spacer()
                                 
-                                TextPlain(item.amount.convertAmountDecimalToString().addCurrencySymbol())
+                                TextPlain(item.amount.convertAmountDecimalToString().addCurrencySymbol(),
+                                          color: item.transactionType == .income ? Color.primaryLeading : Color.alert)
                                 
                                 Image.chevronRight
                                     .foregroundStyle(Color.textPrimaryForeground)
@@ -108,7 +109,6 @@ struct TransactionHistoryView: View {
                                 //Removes the padding Trailing in the RowSeparator.
                                 return viewDimensions[.listRowSeparatorTrailing]
                             }
-                            //.padding(.horizontal)
                         }
                         .frame(height: FrameSize.height.rowForListTransactionHistory)
                         .listRowInsets(EdgeInsets(top: .zero, leading: .zero, bottom: .zero, trailing: .zero))
@@ -214,7 +214,16 @@ struct TransactionHistoryView: View {
                                                                               name: "Gasolina",
                                                                               categoryType: .expense),
                                                       notes: "",
-                                                      transactionType: .expense)]
+                                                      transactionType: .expense),
+                                     TransactionModel(id: UUID().uuidString,
+                                                      amount: 500,
+                                                      dateTransaction: Calendar.current.date(from: DateComponents(year: 2024, month: 11, day: 1)) ?? .now,
+                                                      category: CategoryModel(id: UUID().uuidString,
+                                                                              icon: CategoryIcons.foodAndDrink.list[0],
+                                                                              name: "Recarga",
+                                                                              categoryType: .income),
+                                                      notes: "",
+                                                      transactionType: .income)]
     
     @Previewable @State var dateTimeInterval = DateTimeInterval.month
     @Previewable @State var selectedDate = Date()
