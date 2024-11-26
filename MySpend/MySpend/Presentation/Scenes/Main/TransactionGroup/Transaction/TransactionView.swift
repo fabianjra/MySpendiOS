@@ -101,93 +101,21 @@ struct TransactionView: View {
     }
 }
 
-#Preview("Content ES") {
+#Preview("es_CR") {
     VStack {
-        let array = [TransactionModel(id: "01",
-                                      amount: 100,
-                                      dateTransaction: Calendar.current.date(byAdding: .day, value: 1, to: .now)!,
-                                      category: CategoryModel(id: "01",
-                                                              name: "Gasolina",
-                                                              categoryType: .expense),
-                                      notes: "Nota",
-                                      transactionType: .expense),
-                     TransactionModel(id: "02",
-                                      amount: 200,
-                                      dateTransaction: Calendar.current.date(byAdding: .day, value: 4, to: .now)!,
-                                      category: CategoryModel(id: "02",
-                                                              name: "Comida",
-                                                              categoryType: .expense),
-                                      notes: "Nota",
-                                      transactionType: .expense),
-                     TransactionModel(id: "03",
-                                      amount: 50,
-                                      dateTransaction: Calendar.current.date(byAdding: .day, value: 8, to: .now)!,
-                                      category: CategoryModel(id: "02",
-                                                              name: "Comida",
-                                                              categoryType: .expense),
-                                      notes: "Nota",
-                                      transactionType: .expense),
-                     TransactionModel(id: "04",
-                                      amount: 50,
-                                      dateTransaction: Calendar.current.date(byAdding: .day, value: 2, to: .now)!,
-                                      category: CategoryModel(id: "01",
-                                                              name: "Gasolina",
-                                                              categoryType: .expense),
-                                      notes: "Nota",
-                                      transactionType: .expense),
-                     TransactionModel(id: "05",
-                                      amount: 5000,
-                                      dateTransaction: .now,
-                                      category: CategoryModel(id: "03",
-                                                              name: "Recarga saldo",
-                                                              categoryType: .income),
-                                      notes: "Nota",
-                                      transactionType: .income)]
-        
-        TransactionView(viewModel: TransactionViewModel(transactions: array))
-            .environment(\.locale, .init(identifier: "es"))
+        TransactionView(viewModel: TransactionViewModel(transactions: MockTransactions.normal))
+            .environment(\.locale, .init(identifier: "es_CR"))
     }
 }
 
-#Preview("Saturated content EN") {
+#Preview("Saturated en_US") {
     VStack {
-        let array = [TransactionModel(id: "01",
-                                      amount: 142342342354234,
-                                      dateTransaction: .now,
-                                      category: CategoryModel(id: "01", name: "Gasolina asdfsaf asdfasd fsadf as fas", categoryType: .expense),
-                                      notes: "Nota",
-                                      transactionType: .expense),
-                     TransactionModel(id: "02",
-                                      amount: 52354234532523,
-                                      dateTransaction: .now,
-                                      category: CategoryModel(id: "02",name: "Comidaasf safasdf saf sa asdffasdfasryewrrts fsadf s", categoryType: .expense),
-                                      notes: "Nota",
-                                      transactionType: .expense),
-                     TransactionModel(id: "03",
-                                      amount: 34523452345324,
-                                      dateTransaction: .now,
-                                      category: CategoryModel(id: "02",name: "Comida", categoryType: .expense),
-                                      notes: "Nota",
-                                      transactionType: .expense),
-                     TransactionModel(id: "04",
-                                      amount: 50,
-                                      dateTransaction: .now,
-                                      category: CategoryModel(id: "01",name: "Gasolina", categoryType: .expense),
-                                      notes: "Nota",
-                                      transactionType: .expense),
-                     TransactionModel(id: "05",
-                                      amount: 500523532535325320,
-                                      dateTransaction: .now,
-                                      category: CategoryModel(id: "03",name: "Recarga saldo", categoryType: .income),
-                                      notes: "Nota",
-                                      transactionType: .income)]
-        
-        TransactionView(viewModel: TransactionViewModel(transactions: array))
-            .environment(\.locale, .init(identifier: "en"))
+        TransactionView(viewModel: TransactionViewModel(transactions: MockTransactions.saturated))
+            .environment(\.locale, .init(identifier: "en_US"))
     }
 }
 
-#Preview("No content ES") {
+#Preview("No content es_ES") {
     TransactionView(viewModel: TransactionViewModel())
-        .environment(\.locale, .init(identifier: "es"))
+        .environment(\.locale, .init(identifier: "es_ES"))
 }

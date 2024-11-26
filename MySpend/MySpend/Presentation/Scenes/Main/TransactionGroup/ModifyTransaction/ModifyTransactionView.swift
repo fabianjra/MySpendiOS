@@ -157,16 +157,5 @@ struct ModifyTransactionView: View {
 }
 
 #Preview {
-    @Previewable @State var model = TransactionModel(id: "01",
-                                                     amount: 2500.00,
-                                                     dateTransaction: .now,
-                                                     category: CategoryModel(id: "01",
-                                                                             icon: CategoryIcons.foodAndDrink.list[.zero],
-                                                                             name: "Comidas",
-                                                                             categoryType: .expense),
-                                                     notes: "notas cargadas",
-                                                     transactionType: .expense)
-    VStack {
-        ModifyTransactionView(modelLoaded: $model)
-    }
+    ModifyTransactionView(modelLoaded: .constant(MockTransactions.normal.randomElement()!))
 }

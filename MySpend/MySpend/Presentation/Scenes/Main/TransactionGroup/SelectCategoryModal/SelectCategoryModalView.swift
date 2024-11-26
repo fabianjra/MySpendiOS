@@ -87,12 +87,10 @@ struct SelectCategoryModalView: View {
     }
 }
 
-#Preview("Expenses ES") {
+#Preview("Expenses es_CR") {
     @Previewable @State var showModal = true
-    @Previewable @State var selectedCategory = CategoryModel(id: "01",
-                                                             icon: CategoryIcons.bills.list[0],
-                                                             name: "Expense 1",
-                                                             categoryType: .expense)
+    @Previewable @State var selectedCategory = MocksCategories.normal.first!
+    
     ZStack(alignment: .top) {
         Color.backgroundBottom
         VStack {
@@ -105,33 +103,8 @@ struct SelectCategoryModalView: View {
             Spacer()
         }
     }.sheet(isPresented: $showModal) {
-        let array = [
-            CategoryModel(id: "01",
-                          icon: CategoryIcons.bills.list[0],
-                          name: "Expense 1",
-                          categoryType: .expense),
-            CategoryModel(id: "02",
-                          icon: CategoryIcons.bills.list[1],
-                          name: "Income 1",
-                          categoryType: .income),
-            CategoryModel(id: "03",
-                          icon: CategoryIcons.bills.list[2],
-                          name: "Expense 2",
-                          categoryType: .expense),
-            CategoryModel(id: "04",
-                          icon: "",
-                          name: "Expense 3",
-                          categoryType: .expense),
-            CategoryModel(id: "05",
-                          icon: CategoryIcons.bills.list[3],
-                          name: "Income 2",
-                          categoryType: .income)
-        ]
-        
-        let viewModel = CategoryViewModel(categories: array)
-        
-        SelectCategoryModalView(selectedCategory: $selectedCategory, viewModel: viewModel, categoryType: .expense)
-            .environment(\.locale, .init(identifier: "es"))
+        SelectCategoryModalView(selectedCategory: $selectedCategory, viewModel: CategoryViewModel(categories: MocksCategories.normal), categoryType: .expense)
+            .environment(\.locale, .init(identifier: "es_CR"))
     }
     .onAppear {
         showModal = true

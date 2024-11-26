@@ -114,10 +114,7 @@ struct ModifyCategoryView: View {
 }
 
 #Preview {
-    @Previewable @State var model = CategoryModel(id: "01",
-                                                  icon: "envelope",
-                                                  name: "Categoria sample",
-                                                  categoryType: .income)
+    @Previewable @State var model = MocksCategories.expense1
     VStack {
         ModifyCategoryView(modelLoaded: $model, categoryType: .constant(.expense))
     }

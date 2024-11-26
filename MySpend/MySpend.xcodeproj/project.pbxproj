@@ -39,6 +39,8 @@
 		1F222F5E2C65DD080017A1BE /* TransactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F222F5D2C65DD080017A1BE /* TransactionViewModel.swift */; };
 		1F2750F92C9D02F800AD4E31 /* UtilsCurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2750F82C9D02F300AD4E31 /* UtilsCurrency.swift */; };
 		1F2750FB2C9D366000AD4E31 /* CurrencyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2750FA2C9D366000AD4E31 /* CurrencyTest.swift */; };
+		1F2775DD2CF579CB00A0351D /* MockTransactions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2775DC2CF579C400A0351D /* MockTransactions.swift */; };
+		1F2775DF2CF580FE00A0351D /* MocksCategories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2775DE2CF580F800A0351D /* MocksCategories.swift */; };
 		1F30437F2CBE1EA20079DB90 /* UserValidationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F30437E2CBE1E9B0079DB90 /* UserValidationProtocol.swift */; };
 		1F3043812CC06D050079DB90 /* TransactionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3043802CC06D040079DB90 /* TransactionType.swift */; };
 		1F3043832CC088E40079DB90 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3043822CC088D70079DB90 /* Repository.swift */; };
@@ -205,6 +207,8 @@
 		1F222F5D2C65DD080017A1BE /* TransactionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewModel.swift; sourceTree = "<group>"; };
 		1F2750F82C9D02F300AD4E31 /* UtilsCurrency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilsCurrency.swift; sourceTree = "<group>"; };
 		1F2750FA2C9D366000AD4E31 /* CurrencyTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyTest.swift; sourceTree = "<group>"; };
+		1F2775DC2CF579C400A0351D /* MockTransactions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTransactions.swift; sourceTree = "<group>"; };
+		1F2775DE2CF580F800A0351D /* MocksCategories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MocksCategories.swift; sourceTree = "<group>"; };
 		1F30437E2CBE1E9B0079DB90 /* UserValidationProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserValidationProtocol.swift; sourceTree = "<group>"; };
 		1F3043802CC06D040079DB90 /* TransactionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionType.swift; sourceTree = "<group>"; };
 		1F3043822CC088D70079DB90 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
@@ -485,6 +489,8 @@
 		1F2775DB2CF5798200A0351D /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
+				1F2775DC2CF579C400A0351D /* MockTransactions.swift */,
+				1F2775DE2CF580F800A0351D /* MocksCategories.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -1205,6 +1211,7 @@
 				1F06414A2A722AFB00C19084 /* Errors.swift in Sources */,
 				1FD66FE52C9E13AA0056D514 /* Decimal+Extensions.swift in Sources */,
 				1F65D9612C7287D30023CC5D /* DateTimeInterval.swift in Sources */,
+				1F2775DF2CF580FE00A0351D /* MocksCategories.swift in Sources */,
 				1F19D96A2A4A933200137EA0 /* ConstantShapes.swift in Sources */,
 				1FFD9D602CCA14FF00553BD7 /* FrameSize.swift in Sources */,
 				1F14081D2A5910D300181500 /* ButtonLinkStyle.swift in Sources */,
@@ -1243,6 +1250,7 @@
 				1F20E7782CC1C62A0061CDB8 /* TextFieldCategoryName.swift in Sources */,
 				1F65D95F2C7287CC0023CC5D /* TransactionHistoryViewModel.swift in Sources */,
 				1F6812FD2CF2A65600822471 /* DateIntervalNavigatorViewModel.swift in Sources */,
+				1F2775DD2CF579CB00A0351D /* MockTransactions.swift in Sources */,
 				1FB8BB9B2A5BB1E4002DED1F /* RoundedCornersShape.swift in Sources */,
 				1F64B0A12A70AA94004AC825 /* ListContainer.swift in Sources */,
 				1F7486CB2A6F72D20063AC35 /* TabViewButton.swift in Sources */,

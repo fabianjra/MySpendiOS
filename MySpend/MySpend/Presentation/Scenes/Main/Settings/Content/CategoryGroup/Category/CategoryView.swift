@@ -127,54 +127,17 @@ struct CategoryView: View {
     }
 }
 
-#Preview("Content") {
-    VStack {
-        let array = [
-            CategoryModel(id: UUID().uuidString,
-                          icon: "envelope.fill",
-                          name: "Expense 1",
-                          categoryType: .expense),
-            CategoryModel(id: UUID().uuidString,
-                          icon: "arrowshape.turn.up.left.fill",
-                          name: "Income 1",
-                          categoryType: .income),
-            CategoryModel(id: UUID().uuidString,
-                          icon: "xmark",
-                          name: "Expense 2",
-                          categoryType: .expense),
-            CategoryModel(id: UUID().uuidString,
-                          icon: "",
-                          name: "Expense 3",
-                          categoryType: .expense),
-            
-            CategoryModel(id: UUID().uuidString,
-                          icon: "person.fill",
-                          name: "Income 2",
-                          categoryType: .income)
-        ]
-        
-        let viewModel = CategoryViewModel(categories: array)
-        
-        CategoryView(viewModel: viewModel)
-    }
+#Preview("es_CR") {
+    CategoryView(viewModel: CategoryViewModel(categories: MocksCategories.normal))
+        .environment(\.locale, .init(identifier: "es_CR"))
 }
 
-#Preview("Screen filled") {
-    
-    @Previewable @State var arrayCategories: [CategoryModel] = (1...40).map { item in
-        
-        CategoryModel(id: UUID().uuidString,
-                      icon: "person.fill",
-                      name: "\(item) Categoria prueba",
-                      categoryType: .expense)
-    }
-    
-    VStack {
-        let viewModel = CategoryViewModel(categories: arrayCategories)
-        CategoryView(viewModel: viewModel)
-    }
+#Preview("Saturated en_US") {
+    CategoryView(viewModel: CategoryViewModel(categories: MocksCategories.random_generated))
+        .environment(\.locale, .init(identifier: "en_US"))
 }
 
-#Preview("No content") {
+#Preview("No content es_ES") {
     CategoryView()
+        .environment(\.locale, .init(identifier: "en_ES"))
 }
