@@ -2,6 +2,7 @@
 
 mySpend es una app que te ayuda a controlar tus finazas.
 
+Se creó una lista de tareas TODO, In progress y Done en Trello: https://trello.com/b/wJz1gcrI/myspend
 
 <p>&nbsp;</p>
 
