@@ -61,13 +61,13 @@ struct TransactionHistoryView: View {
         VStack {
             DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval, selectedDate: $selectedDate)
             
-            let viewModelFiltered = UtilsTransactions.filteredTransactions(selectedDate, transactions: transactionsLoaded, for: dateTimeInterval)
+            let transactionsFiltered = UtilsTransactions.filteredTransactions(selectedDate, transactions: transactionsLoaded, for: dateTimeInterval)
             
-            if viewModelFiltered.isEmpty {
+            if transactionsFiltered.isEmpty {
                 emptyView
             } else {
                 List {
-                    ForEach(viewModelFiltered) { item in
+                    ForEach(transactionsFiltered) { item in
                         VStack {
                             HStack {
                                 Image(systemName: item.category.icon)
@@ -142,10 +142,10 @@ struct TransactionHistoryView: View {
                 }
                 .listStyle(.plain)
                 .scrollIndicators(.hidden)
-                .animation(.default, value: viewModelFiltered.count)
+                .animation(.default, value: transactionsFiltered.count)
             }
             
-            TotalBalanceView(transactions: .constant(viewModelFiltered), showTotalBalance: false, addBottomSpacing: false)
+            TotalBalanceView(transactions: .constant(transactionsFiltered), showTotalBalance: false, addBottomSpacing: false)
         }
     }
     

@@ -59,11 +59,11 @@ struct TransactionView: View {
                     VStack {
                         DateIntervalNavigatorView(dateTimeInterval: $viewModel.dateTimeInterval, selectedDate: $viewModel.selectedDate)
                         
-                        let viewModelFiltered = UtilsTransactions.filteredTransactions(viewModel.selectedDate,
+                        let transactionsFiltered = UtilsTransactions.filteredTransactions(viewModel.selectedDate,
                                                                                        transactions: viewModel.transactions,
                                                                                        for: viewModel.dateTimeInterval)
                         
-                        let groupedTransactions = UtilsCurrency.calculateGroupedTransactions(viewModelFiltered)
+                        let groupedTransactions = UtilsCurrency.calculateGroupedTransactions(transactionsFiltered)
                             .sorted(by: { $0.totalAmount > $1.totalAmount })
                         
                         ScrollView(showsIndicators: false) {
@@ -78,10 +78,11 @@ struct TransactionView: View {
                                 .padding(.vertical, ConstantViews.minimumSpacing)
                             }
                         }
+                        .animation(.default, value: transactionsFiltered.count)
                         
                         TextError(viewModel.errorMessage)
                         
-                        TotalBalanceView(transactions: .constant(viewModelFiltered)) //TODO: Cambiar por variable en viewModel para que sea Binding.
+                        TotalBalanceView(transactions: .constant(transactionsFiltered)) //TODO: Cambiar por variable en viewModel para que sea Binding.
                     }
                     
                     //Tiene un efecto no deseado al transicionar entre tab y tab.
@@ -104,7 +105,7 @@ struct TransactionView: View {
     VStack {
         let array = [TransactionModel(id: "01",
                                       amount: 100,
-                                      dateTransaction: .now,
+                                      dateTransaction: Calendar.current.date(byAdding: .day, value: 1, to: .now)!,
                                       category: CategoryModel(id: "01",
                                                               name: "Gasolina",
                                                               categoryType: .expense),
@@ -112,7 +113,7 @@ struct TransactionView: View {
                                       transactionType: .expense),
                      TransactionModel(id: "02",
                                       amount: 200,
-                                      dateTransaction: .now,
+                                      dateTransaction: Calendar.current.date(byAdding: .day, value: 4, to: .now)!,
                                       category: CategoryModel(id: "02",
                                                               name: "Comida",
                                                               categoryType: .expense),
@@ -120,7 +121,7 @@ struct TransactionView: View {
                                       transactionType: .expense),
                      TransactionModel(id: "03",
                                       amount: 50,
-                                      dateTransaction: .now,
+                                      dateTransaction: Calendar.current.date(byAdding: .day, value: 8, to: .now)!,
                                       category: CategoryModel(id: "02",
                                                               name: "Comida",
                                                               categoryType: .expense),
@@ -128,7 +129,7 @@ struct TransactionView: View {
                                       transactionType: .expense),
                      TransactionModel(id: "04",
                                       amount: 50,
-                                      dateTransaction: .now,
+                                      dateTransaction: Calendar.current.date(byAdding: .day, value: 2, to: .now)!,
                                       category: CategoryModel(id: "01",
                                                               name: "Gasolina",
                                                               categoryType: .expense),
