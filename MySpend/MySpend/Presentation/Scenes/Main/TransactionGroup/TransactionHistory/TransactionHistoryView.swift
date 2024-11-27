@@ -14,7 +14,7 @@ struct TransactionHistoryView: View {
     @Binding var transactionsLoaded: [TransactionModel]
     @Binding var dateTimeInterval: DateTimeInterval
     @Binding var selectedDate: Date
-
+    
     @State private var selectedModel = TransactionModel()
     
     var body: some View {

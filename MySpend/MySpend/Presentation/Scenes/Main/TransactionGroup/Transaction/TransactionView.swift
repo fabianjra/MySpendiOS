@@ -38,7 +38,7 @@ struct TransactionView: View {
                     TransactionHistoryView(transactionsLoaded: $viewModel.transactions,
                                            dateTimeInterval: $viewModel.dateTimeInterval,
                                            selectedDate: $viewModel.selectedDate)
-                        .toolbar(.hidden, for: .navigationBar)
+                    .toolbar(.hidden, for: .navigationBar)
                 } label: {
                     TextButtonHorizontalStyled("History",
                                                subTitle: "Go to history",
@@ -60,8 +60,8 @@ struct TransactionView: View {
                         DateIntervalNavigatorView(dateTimeInterval: $viewModel.dateTimeInterval, selectedDate: $viewModel.selectedDate)
                         
                         let transactionsFiltered = UtilsTransactions.filteredTransactions(viewModel.selectedDate,
-                                                                                       transactions: viewModel.transactions,
-                                                                                       for: viewModel.dateTimeInterval)
+                                                                                          transactions: viewModel.transactions,
+                                                                                          for: viewModel.dateTimeInterval)
                         
                         let groupedTransactions = UtilsCurrency.calculateGroupedTransactions(transactionsFiltered)
                             .sorted(by: { $0.totalAmount > $1.totalAmount })

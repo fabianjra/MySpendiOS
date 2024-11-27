@@ -83,7 +83,7 @@ class TransactionViewModel: BaseViewModel {
                             let data = change.document.data()
                             
                             do {
-                               var decodedDocument = try UtilsFB.decodeModelFB(data: data, forModel: TransactionModel.self)
+                                var decodedDocument = try UtilsFB.decodeModelFB(data: data, forModel: TransactionModel.self)
                                 
                                 // If the new transaction is already with same ID in the transaction array, don't add it again.
                                 if transactions.contains(where: { $0.id == change.document.documentID }) {
