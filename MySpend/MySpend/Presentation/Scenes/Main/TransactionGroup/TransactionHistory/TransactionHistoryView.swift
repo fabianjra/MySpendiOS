@@ -32,7 +32,6 @@ struct TransactionHistoryView: View {
             }
             
             TextError(viewModel.errorMessage)
-                .padding(.bottom)
         }
         .onAppear {
             print("Router count HISTORY: \(Router.shared.path.count)")
