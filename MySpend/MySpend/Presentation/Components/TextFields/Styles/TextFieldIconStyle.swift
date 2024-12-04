@@ -36,7 +36,7 @@ struct TextFieldIconStyle: TextFieldStyle {
                 textLimit: Int = ConstantViews.textLimitGeneral,
                 foregroundColor: Color = Color.textFieldForeground,
                 backgroundColor: Color = Color.textFieldBackground,
-                isAmout: Bool = false,
+                isAmount: Bool = false,
                 errorMessage: Binding<String> = .constant(""),
                 showErrorIndicador: Bool = true,
                 showFocusedIndicador: Bool = true,
@@ -49,7 +49,7 @@ struct TextFieldIconStyle: TextFieldStyle {
         self.textLimit = textLimit
         self.foregroundColor = foregroundColor
         self.backgroundColor = backgroundColor
-        self.isAmount = isAmout
+        self.isAmount = isAmount
         self._errorMessage = errorMessage
         self.showErrorIndicador = showErrorIndicador
         self.showFocusedIndicador = showFocusedIndicador
@@ -60,15 +60,15 @@ struct TextFieldIconStyle: TextFieldStyle {
         HStack {
             if let iconLeading = iconLeading {
                 iconLeading
-                    .frame(width: ConstantFrames.textFieldHeight, 
+                    .frame(width: ConstantFrames.textFieldHeight,
                            height: ConstantFrames.textFieldHeight)
                     .background(Color.textFieldIconBackground)
             }
             
             configuration
-                //.background(.red) //TODO: For testing
+            //.background(.red) //TODO: For testing
                 .frame(height: ConstantFrames.textFieldHeight)
-                //.background(.green) //TODO: For testing
+            //.background(.green) //TODO: For testing
                 .padding(.horizontal, iconLeading == nil ? nil : .zero)
                 .padding(.trailing, iconLeading != nil ? nil : .zero)
                 .font(.montserrat(family, size: size))
@@ -79,48 +79,23 @@ struct TextFieldIconStyle: TextFieldStyle {
                     /// Clean error messages on screen. Var taken from Father View.
                     errorMessage = ""
                     isError = false
-
-                    /// Validate the limit character count. Delete extra characters typed.
-                    if text.count > textLimit {
-                        text = String(text.prefix(textLimit))
-                    }
                     
                     if isAmount {
-                        let decimalSeparator = UtilsCurrency.getLocalDecimalSeparator()
-                        
-                        /// Filter to only numbers or decimal:
-                        var allowedCharacters = CharacterSet.decimalDigits
-                        allowedCharacters.insert(charactersIn: decimalSeparator)
-                        
-                        var filteredValue = text.unicodeScalars.filter { allowedCharacters.contains($0) }
-                        
-                        var alreadyDecimalDigited = false
-                        
-                        /// Recorre el string para validar que solo exista un simbolo decimal:
-                        filteredValue = filteredValue.filter {
-                            
-                            if String($0) == decimalSeparator {
-                                if alreadyDecimalDigited {
-                                    return false
-                                } else {
-                                    alreadyDecimalDigited = true
-                                    return true
-                                }
-                            }
-                            return true
+                        text = onChangeAmount()
+                    } else {
+                        /// Validate the limit character count. Delete extra characters typed.
+                        if text.count > textLimit {
+                            text = String(text.prefix(textLimit))
                         }
-                        
-                        ///Los UnicodeScalar son representaciones numéricas de los caracteres en el sistema Unicode.
-                        ///Cada carácter tiene un "punto de código" (code point) que se usa para codificar ese carácter en una cadena.
-                        ///Por ejemplo, el carácter A tiene el punto de código 65, y el carácter é tiene un punto de código más alto.
-                        text = String(String.UnicodeScalarView(filteredValue))
                     }
-                    
                 })
                 .onChange(of: errorMessage) {
                     if text.isEmpty && !errorMessage.isEmpty {
                         isError = true
-                    } 
+                    }
+                }
+                .onChange(of: isFocused) {
+                    onChangeFocusAmount(isFocused)
                 }
             
             if isFocused && !text.isEmpty {
@@ -168,27 +143,117 @@ struct TextFieldIconStyle: TextFieldStyle {
             isFocused = true
         }
     }
+    
+    private func onChangeAmount() -> String {
+        let decimalSeparator = UtilsCurrency.getLocalDecimalSeparator()
+        let groupingSeparator = UtilsCurrency.getLocalGroupingSeparator()
+        
+        /// Filter to only numbers or decimal:
+        var allowedCharacters = CharacterSet.decimalDigits
+        allowedCharacters.insert(charactersIn: decimalSeparator + groupingSeparator)
+        
+        var filteredValue = text.unicodeScalars.filter { allowedCharacters.contains($0) }
+        
+        var alreadyDecimalDigited = false
+        
+        /// Recorre el string para validar que solo exista un simbolo decimal:
+        filteredValue = filteredValue.filter {
+            
+            if String($0) == decimalSeparator {
+                if alreadyDecimalDigited {
+                    return false
+                } else {
+                    alreadyDecimalDigited = true
+                    return true
+                }
+            }
+            return true
+        }
+        
+        ///Los UnicodeScalar son representaciones numéricas de los caracteres en el sistema Unicode.
+        ///Cada carácter tiene un "punto de código" (code point) que se usa para codificar ese carácter en una cadena.
+        ///Por ejemplo, el carácter A tiene el punto de código 65, y el carácter é tiene un punto de código más alto.
+        ///Convierte el texto filtrado a una cadena temporal para la validación del límite:
+        //return String(String.UnicodeScalarView(filteredValue))
+        
+        var tempText = String(String.UnicodeScalarView(filteredValue))
+        
+        /// Verificar si contiene un separador decimal:
+        if tempText.contains(decimalSeparator) {
+            
+            /// Permitir hasta 15 caracteres si hay un separador decimal:
+            if tempText.count > ConstantCurrency.amoutMaxLengthWithDecimal {
+                tempText = String(tempText.prefix(ConstantCurrency.amoutMaxLengthWithDecimal))
+            }
+            
+        } else {
+            /// Si no tiene separador decimal y alcanza 12 caracteres, permitir agregarlo:
+            if tempText.count == ConstantCurrency.amoutMaxLength && text.last == Character(decimalSeparator) {
+                tempText.append(decimalSeparator)
+                
+            } else if tempText.count > ConstantCurrency.amoutMaxLength {
+                tempText = String(tempText.prefix(ConstantCurrency.amoutMaxLength))
+            }
+        }
+        
+        return tempText
+    }
+    
+    func onChangeFocusAmount(_ isFocused: Bool) {
+        let formatter = UtilsCurrency.getLocalFormatter()
+        
+        if isFocused {
+            
+            if let number = formatter.number(from: text) {
+                let decimalValue = number.decimalValue
+                
+                if decimalValue == .zero {
+                    // Si el valor es 0, limpiar
+                    text = ""
+                    
+                } else {
+                    let decimalSeparator = UtilsCurrency.getLocalDecimalSeparator()
+                    let groupingSeparator = UtilsCurrency.getLocalGroupingSeparator()
+                    
+                    let decimalParts = formatter.string(from: number)!.split(separator: decimalSeparator)
+                    
+                    if decimalParts.count > 1, decimalParts.last!.allSatisfy({ $0 == "0" || $0 == decimalSeparator.first }) {
+                        text = String(decimalParts.first!).replacingOccurrences(of: groupingSeparator, with: "")
+                    } else {
+                        // Mantener el número sin formato pero con los decimales significativos
+                        text = formatter.string(from: number)!.description.replacingOccurrences(of: groupingSeparator, with: "")
+                    }
+                }
+                
+            } else {
+                text = ""
+            }
+            
+        } else {
+            if let numberFromCast = formatter.number(from: text) {
+                
+                let decimalValue = numberFromCast.decimalValue
+                
+                if decimalValue == .zero {
+                    text = ""
+                    
+                } else {
+                    text = formatter.string(from: numberFromCast) ?? ""
+                }
+                
+            } else {
+                text = ""
+            }
+        }
+    }
 }
 
 #Preview {
     @Previewable @State var text = "asdfsfasdf asdf asf s asdf saf sf saf sa4w5345345354345"
+    @Previewable @State var amount = ""
+    
     VStack {
-        
         //Nothing:
-        TextField("", text: $text)
-            .textFieldStyle(TextFieldIconStyle($text))
-        
-        //iOS Placeholder
-        TextField("iOS placeholder", text: $text)
-            .textFieldStyle(TextFieldIconStyle($text))
-            .disabled(true)
-        
-        //With placeholder and icon, With error
-        TextField("", text: $text, prompt:
-                    Text("With placeholder and icon").foregroundColor(.textFieldPlaceholder))
-        .textFieldStyle(TextFieldIconStyle($text, iconLeading: Image.envelopeFill))
-        
-        //Nothing X2
         TextField("", text: $text)
             .textFieldStyle(TextFieldIconStyle($text))
         
@@ -197,11 +262,6 @@ struct TextFieldIconStyle: TextFieldStyle {
             .textFieldStyle(TextFieldIconStyle($text, iconLeading: Image.envelopeFill))
             .disabled(true)
         
-        //Only icon X2
-        TextField("", text: $text)
-            .textFieldStyle(TextFieldIconStyle($text, iconLeading: Image.lockFill))
-            .padding(.bottom)
-        
         VStack {
             SectionContainer(header: "Header for a TextField",
                              isInsideList: false) {
@@ -209,6 +269,15 @@ struct TextFieldIconStyle: TextFieldStyle {
                               errorMessage: .constant(""))
             }
         }
+    }
+    .padding()
+    .background(Color.backgroundBottom)
+    
+    VStack {
+        TextField("", text: $amount,
+                  prompt: Text("Enter amount").foregroundColor(.textFieldPlaceholder))
+        .textFieldStyle(TextFieldIconStyle($amount, iconLeading: Image.envelopeFill, isAmount: true))
+        
     }
     .padding()
     .background(Color.backgroundBottom)

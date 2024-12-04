@@ -18,8 +18,11 @@ public struct UtilsCurrency {
 //    }
     
     public static func getLocalDecimalSeparator() -> String {
-        let formatter = getLocalFormatter()
-        return formatter.decimalSeparator ?? ConstantCurrency.defaultDecimalSeparator
+        return Locale.current.decimalSeparator ?? ConstantCurrency.defaultDecimalSeparator
+    }
+    
+    public static func getLocalGroupingSeparator() -> String {
+        return Locale.current.groupingSeparator ?? ConstantCurrency.defaultGroupingSeparator
     }
     
     /**
@@ -89,7 +92,7 @@ public struct UtilsCurrency {
         let formatter = NumberFormatter()
         
         formatter.locale = Locale.current
-        formatter.maximumIntegerDigits = ConstantCurrency.amoutMaxLength
+        //formatter.maximumIntegerDigits = ConstantCurrency.amoutMaxLength
         formatter.minimumFractionDigits = ConstantCurrency.fractionLength
         formatter.maximumFractionDigits = ConstantCurrency.fractionLength
         
@@ -101,7 +104,7 @@ public struct UtilsCurrency {
          .scientific: Notación científica (ejemplo: 1.23E3).
          .spellOut: Convierte el número en palabras (ejemplo: "mil doscientos treinta y cuatro").
          */
-        formatter.numberStyle = .decimal
+        //formatter.numberStyle = .decimal
         
         
         // **********************
@@ -109,7 +112,7 @@ public struct UtilsCurrency {
         // **********************
         
         //formateará el número con separadores de miles (ejemplo: 1,234.56)
-        ///formatter.usesGroupingSeparator = true
+        formatter.usesGroupingSeparator = true
         
         /*
          roundingMode: Define cómo redondear los números.

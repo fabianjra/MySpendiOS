@@ -21,8 +21,7 @@ struct TextFieldAmount: View {
         
         .textFieldStyle(TextFieldIconStyle($text,
                                            iconLeading: iconLeading,
-                                           textLimit: ConstantCurrency.amoutMaxLength,
-                                           isAmout: true,
+                                           isAmount: true,
                                            errorMessage: $errorMessage))
         .keyboardType(.decimalPad)
     }
