@@ -95,7 +95,9 @@ struct TextFieldIconStyle: TextFieldStyle {
                     }
                 }
                 .onChange(of: isFocused) {
-                    onChangeFocusAmount(isFocused)
+                    if isAmount {
+                        onChangeFocusAmount(isFocused)
+                    }
                 }
             
             if isFocused && !text.isEmpty {
@@ -199,7 +201,7 @@ struct TextFieldIconStyle: TextFieldStyle {
         return tempText
     }
     
-    func onChangeFocusAmount(_ isFocused: Bool) {
+    private func onChangeFocusAmount(_ isFocused: Bool) {
         let formatter = UtilsCurrency.getLocalFormatter()
         
         if isFocused {
@@ -210,7 +212,6 @@ struct TextFieldIconStyle: TextFieldStyle {
                 if decimalValue == .zero {
                     // Si el valor es 0, limpiar
                     text = ""
-                    
                 } else {
                     let decimalSeparator = UtilsCurrency.getLocalDecimalSeparator()
                     let groupingSeparator = UtilsCurrency.getLocalGroupingSeparator()
@@ -224,7 +225,6 @@ struct TextFieldIconStyle: TextFieldStyle {
                         text = formatter.string(from: number)!.description.replacingOccurrences(of: groupingSeparator, with: "")
                     }
                 }
-                
             } else {
                 text = ""
             }
@@ -236,11 +236,9 @@ struct TextFieldIconStyle: TextFieldStyle {
                 
                 if decimalValue == .zero {
                     text = ""
-                    
                 } else {
                     text = formatter.string(from: numberFromCast) ?? ""
                 }
-                
             } else {
                 text = ""
             }

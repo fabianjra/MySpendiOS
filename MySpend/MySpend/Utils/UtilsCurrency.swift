@@ -26,51 +26,6 @@ public struct UtilsCurrency {
     }
     
     /**
-     Converts a string representing a monetary value into a `Decimal` value based on the current locale's number format.
-
-     This method uses a custom `NumberFormatter` to parse the input string. If the string is successfully converted into a `Decimal`, that value is returned. If the conversion fails, the method returns `0`.
-
-     **Example:**
-     ```swift
-     let decimalValue = Utils.amountStringToDecimal("1,234.56")
-     print(decimalValue) // Prints "1234.56"
-     
-     let withoutValue = Utils.amountStringToDecimal("1234")
-     print(withoutValue) // Prints "1234"
-     
-     let invalidValue = Utils.amountStringToDecimal("invalid")
-     print(invalidValue) // Prints "0"
-     ```
-     
-     - Parameter amount: A String representing the monetary value to be converted to Decimal. The string should be formatted according to the locale's decimal separator and thousands separator
-
-     - Returns: A Decimal representation of the given string, or 0 if the string cannot be converted
-
-     - Authors: Fabian Rodriguez
-
-     - Date: September 2024
-     */
-    public static func convertAmountStringToDecimal(_ amount: String) -> Decimal {
-        let formatter = UtilsCurrency.getLocalFormatter()
-        
-        if let amountCasted = formatter.number(from: amount) {
-            var amountDecimal = amountCasted.decimalValue
-            
-            // Redondear a 2 decimales
-            var roundedDecimal = Decimal()
-            
-            NSDecimalRound(&roundedDecimal,
-                           &amountDecimal,
-                           ConstantCurrency.fractionLength,
-                           .bankers)
-            
-            return roundedDecimal
-        } else {
-            return .zero
-        }
-    }
-    
-    /**
      Returns a localized `NumberFormatter` configured for decimal numbers based on the current locale.
      
      This formatter can be used to format numbers that include a fixed number of fractional digits (like currency).

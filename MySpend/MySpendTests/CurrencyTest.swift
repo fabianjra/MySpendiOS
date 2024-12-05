@@ -23,22 +23,22 @@ struct CurrencyTest {
     @Test("Verifica que el monto de string se covierta corretamente a decimal, conservando maximo 2 decimales redondeando en caso de ser mas de 2 decimales")
     func test_convert_string_amout_to_decimal() {
         
-        #expect(UtilsCurrency.convertAmountStringToDecimal("400\(formatter.decimalSeparator ?? ".")56") == 400.56)
+        #expect(("400\(formatter.decimalSeparator ?? ".")56".convertAmountToDecimal) == 400.56)
         
-        #expect(UtilsCurrency.convertAmountStringToDecimal("400\(formatter.decimalSeparator ?? ".")00") == 400)
+        #expect(("400\(formatter.decimalSeparator ?? ".")00".convertAmountToDecimal) == 400)
         
-        #expect(UtilsCurrency.convertAmountStringToDecimal("0\(formatter.decimalSeparator ?? ".")00") == 0)
+        #expect(("0\(formatter.decimalSeparator ?? ".")00".convertAmountToDecimal) == 0)
         
-        #expect(UtilsCurrency.convertAmountStringToDecimal("0") == 0)
+        #expect(("0".convertAmountToDecimal) == 0)
         
-        #expect(UtilsCurrency.convertAmountStringToDecimal("500") == 500)
+        #expect(("500".convertAmountToDecimal) == 500)
         
-        #expect(UtilsCurrency.convertAmountStringToDecimal("7806.8995") == 7806.90) //Redondea al siguiente valor
+        #expect(("7806.8995".convertAmountToDecimal) == 7806.90) //Redondea al siguiente valor
         
-        #expect(UtilsCurrency.convertAmountStringToDecimal("7806.8915").description == "7806.89") //Redondea sin subir el valor.
+        #expect(("7806.8915".convertAmountToDecimal).description == "7806.89") //Redondea sin subir el valor.
         
-        #expect(UtilsCurrency.convertAmountStringToDecimal("text") == 0)
+        #expect(("text".convertAmountToDecimal) == 0)
         
-        #expect(UtilsCurrency.convertAmountStringToDecimal("") == 0)
+        #expect(("".convertAmountToDecimal) == 0)
     }
 }

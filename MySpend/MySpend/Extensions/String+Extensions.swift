@@ -32,7 +32,7 @@ extension String {
      
      - Date: Feb 2023
      */
-    func isEmptyOrWhitespace() -> Bool {
+    public func isEmptyOrWhitespace() -> Bool {
         if(self.isEmpty) {
             return true
         }
@@ -55,7 +55,7 @@ extension String {
      
      - Date: Feb 2023
      */
-    func escaped() -> String {
+    public func escaped() -> String {
         return self.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? self
     }
     
@@ -80,7 +80,7 @@ extension String {
      
      - Date: Aug 2023
      */
-    func textToImage(size: CGFloat) -> UIImage {
+    public func textToImage(size: CGFloat) -> UIImage {
         let nsString = (self as NSString)
         let font = UIFont.systemFont(ofSize: size)
         let stringAttributes = [NSAttributedString.Key.font: font]
@@ -95,5 +95,50 @@ extension String {
         UIGraphicsEndImageContext()
         
         return image ?? UIImage()
+    }
+    
+    /**
+     Converts a string representing a monetary value into a `Decimal` value based on the current locale's number format.
+
+     This method uses a custom `NumberFormatter` to parse the input string. If the string is successfully converted into a `Decimal`, that value is returned. If the conversion fails, the method returns `0`.
+
+     **Example:**
+     ```swift
+     let decimalValue = Utils.amountStringToDecimal("1,234.56")
+     print(decimalValue) // Prints "1234.56"
+     
+     let withoutValue = Utils.amountStringToDecimal("1234")
+     print(withoutValue) // Prints "1234"
+     
+     let invalidValue = Utils.amountStringToDecimal("invalid")
+     print(invalidValue) // Prints "0"
+     ```
+     
+     - Parameter amount: A String representing the monetary value to be converted to Decimal. The string should be formatted according to the locale's decimal separator and thousands separator
+
+     - Returns: A Decimal representation of the given string, or 0 if the string cannot be converted
+
+     - Authors: Fabian Rodriguez
+
+     - Date: September 2024
+     */
+    public var convertAmountToDecimal: Decimal {
+        let formatter = UtilsCurrency.getLocalFormatter()
+        
+        if let amountCasted = formatter.number(from: self) {
+            var amountDecimal = amountCasted.decimalValue
+            
+            // Redondear a 2 decimales
+            var roundedDecimal = Decimal()
+            
+            NSDecimalRound(&roundedDecimal,
+                           &amountDecimal,
+                           ConstantCurrency.fractionLength,
+                           .bankers)
+            
+            return roundedDecimal
+        } else {
+            return .zero
+        }
     }
 }

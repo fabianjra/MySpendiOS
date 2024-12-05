@@ -23,7 +23,7 @@ class NewTransactionViewModel: BaseViewModel {
         }
         
         //Firebase necesita guardar el valor como decimal, pero los formatos del monto en pantalla se trabajan en string:
-        let amountDecimal = UtilsCurrency.convertAmountStringToDecimal(amountString)
+        let amountDecimal = amountString.convertAmountToDecimal
         model.amount = amountDecimal
         model.dateCreated = .now
         model.datemodified = .now
