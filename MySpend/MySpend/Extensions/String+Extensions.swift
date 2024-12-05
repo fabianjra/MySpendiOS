@@ -6,10 +6,11 @@
 //
 
 import UIKit
+import SwiftUICore
 
 extension String {
     
-    public func addCurrencySymbol() -> String {
+    public var addCurrencySymbol: String {
         // if there is roughly < 30 substrings to attach together, then concatenation is faster
         // if there is roughly > 30 substrings to attach together, then interpolation is faster
         return "\(CurrencySymbol.shared.description.rawValue) \(self)"
@@ -20,7 +21,7 @@ extension String {
      
      **Example:**
      ```swift
-     if textField.text?.isEmptyOrWhitespace() == true {
+     if textField.text?.isEmptyOrWhitespace == true {
          printContent("Is empty")
          return
      }
@@ -32,7 +33,7 @@ extension String {
      
      - Date: Feb 2023
      */
-    public func isEmptyOrWhitespace() -> Bool {
+    public var isEmptyOrWhitespace: Bool {
         if(self.isEmpty) {
             return true
         }
@@ -46,7 +47,7 @@ extension String {
      
      **Example:**
      ```swift
-     cityName.escaped()
+     cityName.escaped
      ```
      
      - Authors: Fabian Rodriguez
@@ -55,7 +56,7 @@ extension String {
      
      - Date: Feb 2023
      */
-    public func escaped() -> String {
+    public var escaped: String {
         return self.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? self
     }
     
@@ -114,8 +115,9 @@ extension String {
      print(invalidValue) // Prints "0"
      ```
      
-     - Parameter amount: A String representing the monetary value to be converted to Decimal. The string should be formatted according to the locale's decimal separator and thousands separator
-
+     - Parameters:
+        - amount: A String representing the monetary value to be converted to Decimal. The string should be formatted according to the locale's decimal separator and thousands separator
+     
      - Returns: A Decimal representation of the given string, or 0 if the string cannot be converted
 
      - Authors: Fabian Rodriguez
@@ -123,7 +125,7 @@ extension String {
      - Date: September 2024
      */
     public var convertAmountToDecimal: Decimal {
-        let formatter = UtilsCurrency.getLocalFormatter()
+        let formatter = UtilsCurrency.getLocalFormatter
         
         if let amountCasted = formatter.number(from: self) {
             var amountDecimal = amountCasted.decimalValue
@@ -140,5 +142,85 @@ extension String {
         } else {
             return .zero
         }
+    }
+    
+    /**
+     Get an Icon based on the string text SF Symbol. Example: envelope.fill
+
+     **Example:**
+     ```swift
+     let icon = category.icon.getIconFromSFSymbol
+     ```
+     
+     - Parameters:
+        - iconName: SB Symbol Image name
+
+     - Returns: SwiftUI Image
+
+     - Authors: Fabian Rodriguez
+
+     - Date: December 2024
+     */
+    public var getIconFromSFSymbol: Image? {
+        if let systemName = Optional(self) {
+            if systemName.isEmptyOrWhitespace {
+                return nil
+            } else {
+                return Image(systemName: systemName)
+            }
+        }
+        return nil
+    }
+    
+    /**
+     Rounds the input string to two decimal places if the input has more than two decimal digits. If the input has two or fewer decimal places, it returns the original input.
+
+     This method first identifies the decimal separator based on the user's locale. It then checks if the decimal part has more than two digits. If so, it rounds the number using the `.halfUp` rounding mode.
+
+     **Example:**
+     ```swift
+     let roundedValue = "1234.5678".roundIfMoreThanTwoDecimals
+     print(roundedValue) // Prints "1234.57"
+     
+     let originalValue = "1234.56".roundIfMoreThanTwoDecimals
+     print(originalValue) // Prints "1234.56"
+     ```
+     
+     - Parameters:
+        - input: A String representing the number to check and potentially round
+
+     - Returns: An optional String? which is the original input if it has two or fewer decimals, or the rounded number if it has more than two decimals
+
+     - Authors: Fabian Rodriguez
+     
+     - Date: September 2024
+     */
+    public var roundIfMoreThanTwoDecimals: String? {
+        // 1. Crear un NumberFormatter para identificar el separador decimal
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.locale = Locale.current
+        
+        // 2. Separar la parte entera de la parte decimal
+        let components = self.split(separator: formatter.decimalSeparator.first ?? ".")
+        
+        // 3. Si tiene una parte decimal, verificar cuántos dígitos tiene
+        if components.count == 2 {
+            let decimals = components[1]
+            if decimals.count > 2 {
+                // 4. Aplicar redondeo si tiene más de 2 dígitos decimales
+                formatter.maximumFractionDigits = 2
+                formatter.roundingMode = .halfUp
+                if let number = formatter.number(from: self) {
+                    return formatter.string(from: number)
+                }
+            } else {
+                // 5. Si tiene exactamente 2 o menos decimales, devolver el número original
+                return self
+            }
+        }
+        
+        // 6. Si no tiene decimales o ya está en el formato adecuado
+        return self
     }
 }

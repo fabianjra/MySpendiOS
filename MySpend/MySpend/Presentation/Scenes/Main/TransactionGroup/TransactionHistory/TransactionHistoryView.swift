@@ -80,18 +80,18 @@ struct TransactionHistoryView: View {
                             }
                             
                             VStack(alignment: .leading) {
-                                if item.notes.isEmptyOrWhitespace(){
+                                if item.notes.isEmptyOrWhitespace {
                                     TextPlain(item.category.name)
                                 } else {
                                     TextPlain(item.notes)
                                 }
                                 
-                                TextPlain(item.dateTransaction.toStringShortLocale(), size: .small)
+                                TextPlain(item.dateTransaction.toStringShortLocale, size: .small)
                             }
                             
                             Spacer()
                             
-                            TextPlain(item.amount.convertAmountDecimalToString().addCurrencySymbol(),
+                            TextPlain(item.amount.convertAmountDecimalToString.addCurrencySymbol,
                                       color: item.transactionType == .income ? Color.primaryLeading : Color.alert)
                             
                             Image.chevronRight

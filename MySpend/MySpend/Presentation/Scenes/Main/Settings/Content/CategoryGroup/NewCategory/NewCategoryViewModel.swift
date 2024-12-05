@@ -13,7 +13,7 @@ class NewCategoryViewModel: BaseViewModel {
     @Published var showIconsModal = false
     
     func addNewCategory(_ categoryType: TransactionType) async -> ResponseModel {
-        if model.name.isEmptyOrWhitespace() {
+        if model.name.isEmptyOrWhitespace {
             return ResponseModel(.error, Errors.emptySpaces.localizedDescription)
         }
         

@@ -9,7 +9,7 @@ import Foundation
 
 extension Date {
     
-    public func toStringShortLocale() -> String {
+    public var toStringShortLocale: String {
         let formatter = DateFormatter()
         formatter.locale = Locale.current
         formatter.dateStyle = .medium

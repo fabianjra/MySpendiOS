@@ -12,8 +12,8 @@ class RegisterViewModel: BaseViewModel {
     @Published var register = Register()
     
     func validateRegister() async -> ResponseModel {
-        if register.name.isEmptyOrWhitespace() || register.email.isEmptyOrWhitespace() ||
-            register.password.isEmptyOrWhitespace() || register.passwordConfirm.isEmptyOrWhitespace() {
+        if register.name.isEmptyOrWhitespace || register.email.isEmptyOrWhitespace ||
+            register.password.isEmptyOrWhitespace || register.passwordConfirm.isEmptyOrWhitespace {
             
             return ResponseModel(.error, Errors.emptySpaces.localizedDescription)
         }

@@ -17,12 +17,12 @@ class ModifyTransactionViewModel: BaseViewModel {
     @Published var showAlert = false
     
     func onAppear(_ model: TransactionModel) {
-        dateString = model.dateTransaction.toStringShortLocale()
-        amountString = model.amount.convertAmountDecimalToString()
+        dateString = model.dateTransaction.toStringShortLocale
+        amountString = model.amount.convertAmountDecimalToString
     }
     
     func modifyTransaction(_ model: TransactionModel) async -> ResponseModel {
-        if model.category.name.isEmptyOrWhitespace() {
+        if model.category.name.isEmptyOrWhitespace {
             return ResponseModel(.error, Errors.emptySpaces.localizedDescription)
         }
         

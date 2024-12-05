@@ -147,8 +147,8 @@ struct TextFieldIconStyle: TextFieldStyle {
     }
     
     private func onChangeAmount() -> String {
-        let decimalSeparator = UtilsCurrency.getLocalDecimalSeparator()
-        let groupingSeparator = UtilsCurrency.getLocalGroupingSeparator()
+        let decimalSeparator = UtilsCurrency.getLocalDecimalSeparator
+        let groupingSeparator = UtilsCurrency.getLocalGroupingSeparator
         
         /// Filter to only numbers or decimal:
         var allowedCharacters = CharacterSet.decimalDigits
@@ -202,7 +202,7 @@ struct TextFieldIconStyle: TextFieldStyle {
     }
     
     private func onChangeFocusAmount(_ isFocused: Bool) {
-        let formatter = UtilsCurrency.getLocalFormatter()
+        let formatter = UtilsCurrency.getLocalFormatter
         
         if isFocused {
             
@@ -213,8 +213,8 @@ struct TextFieldIconStyle: TextFieldStyle {
                     // Si el valor es 0, limpiar
                     text = ""
                 } else {
-                    let decimalSeparator = UtilsCurrency.getLocalDecimalSeparator()
-                    let groupingSeparator = UtilsCurrency.getLocalGroupingSeparator()
+                    let decimalSeparator = UtilsCurrency.getLocalDecimalSeparator
+                    let groupingSeparator = UtilsCurrency.getLocalGroupingSeparator
                     
                     let decimalParts = formatter.string(from: number)!.split(separator: decimalSeparator)
                     

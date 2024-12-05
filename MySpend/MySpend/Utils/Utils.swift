@@ -25,7 +25,7 @@ struct Utils {
      
      - Date: February 2023
      */
-    func getUIInterfaceOrientation() -> UIInterfaceOrientation {
+    public static var getUIInterfaceOrientation: UIInterfaceOrientation {
         
         //Not deprecated code.
         guard let firstScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
@@ -48,7 +48,7 @@ struct Utils {
      
      - Date: February 2023
      */
-    static func getFirstWindow() -> UIWindow? {
+    public static var getFirstWindow: UIWindow? {
         
         //Not deprecated code fot the windowScene:
         //'windows' was deprecated in iOS 15.0: Use UIWindowScene.windows on a relevant window scene instead
@@ -72,9 +72,9 @@ struct Utils {
      
      - Date: February 2023
      */
-    static func getActualViewController() -> UIViewController? {
-
-        guard let firstWindow = getFirstWindow() else { return nil }
+    public static var getActualViewController: UIViewController? {
+        
+        guard let firstWindow = getFirstWindow else { return nil }
         
         //Each ViewController keeps track of the view it has presented,
         //so we can move from the head to the tail, which will always be the current view
@@ -94,7 +94,7 @@ struct Utils {
      **Example:**
      ```swift
      if Utils.isRunningOnCanvasPreview() {
-         //Do somenthing only when the canvas preview crashes.
+     //Do somenthing only when the canvas preview crashes.
      }
      ```
      
@@ -106,7 +106,7 @@ struct Utils {
      
      - Date: March 2023
      */
-    static func isRunningOnCanvasPreview() -> Bool {
+    public static var isRunningOnCanvasPreview: Bool {
         
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1" {
             return true
@@ -124,7 +124,7 @@ struct Utils {
      **Example:**
      ```swift
      VStack {
-         //View
+     //View
      }
      .padding(.bottom, Utils.getEdgeInsets().bottom == .zero ? 10 : .zero) //Add padding when is iPhone SE screen.
      ```
@@ -135,26 +135,11 @@ struct Utils {
      
      - Date: May 2023
      */
-    static func getEdgeInsets() -> UIEdgeInsets {
+    public static var getEdgeInsets: UIEdgeInsets {
         return (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first(where: {$0.isKeyWindow})?.safeAreaInsets ?? .zero
     }
     
-    static func deviceHasNotch() -> Bool {
-        return getEdgeInsets().bottom != .zero
-    }
-    
-    /// Get an FavIcon from a string text.
-    /// Example: envelope.fill
-    /// - Parameter iconName: SB Symbol Image name
-    /// - Returns: SwiftUI Image
-    static func getIconFromString(_ iconName: String?) -> Image? {
-        if let systemName = iconName {
-            if systemName.isEmptyOrWhitespace() {
-                return nil
-            } else {
-                return Image(systemName: systemName)
-            }
-        }
-        return nil
-    }
+    public static var deviceHasNotch: Bool {
+        return getEdgeInsets.bottom != .zero
+    }    
 }

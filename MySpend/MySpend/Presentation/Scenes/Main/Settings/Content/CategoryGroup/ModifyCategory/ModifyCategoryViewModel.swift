@@ -13,7 +13,7 @@ class ModifyCategoryViewModel: BaseViewModel {
     @Published var showAlert = false
     
     func modifyCategory(_ model: CategoryModel, categoryType: TransactionType) async -> ResponseModel {
-        if model.name.isEmptyOrWhitespace() {
+        if model.name.isEmptyOrWhitespace {
             return ResponseModel(.error, Errors.emptySpaces.localizedDescription)
         }
         

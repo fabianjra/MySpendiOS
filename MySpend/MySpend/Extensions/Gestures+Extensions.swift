@@ -61,7 +61,7 @@ extension UIApplication: UIGestureRecognizerDelegate {
      - Date: Aug 2023
      */
     func addTapGestureRecognizer() {
-        guard let window = Utils.getFirstWindow() else { return }
+        guard let window = Utils.getFirstWindow else { return }
         
         let tapGesture = UITapGestureRecognizer(target: window, action: #selector(UIView.endEditing))
         tapGesture.requiresExclusiveTouchType = false

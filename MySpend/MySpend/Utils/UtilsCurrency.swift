@@ -9,19 +9,11 @@ import Foundation
 
 public struct UtilsCurrency {
     
-//    public static func convertAmountDecimalToString(_ amount: Decimal) -> String {
-//        let formatter = getLocalFormatter()
-//        let decimalNumber = NSDecimalNumber(decimal: amount)
-//        let formattedString = formatter.string(from: decimalNumber) ?? ConstantCurrency.zeroAmoutString
-//        
-//        return formattedString
-//    }
-    
-    public static func getLocalDecimalSeparator() -> String {
+    public static var getLocalDecimalSeparator: String {
         return Locale.current.decimalSeparator ?? ConstantCurrency.defaultDecimalSeparator
     }
     
-    public static func getLocalGroupingSeparator() -> String {
+    public static var getLocalGroupingSeparator: String {
         return Locale.current.groupingSeparator ?? ConstantCurrency.defaultGroupingSeparator
     }
     
@@ -32,7 +24,7 @@ public struct UtilsCurrency {
      
      **Example:**
      ```swift
-     let formatter = UtilCurrency.getLocalFormatter()
+     let formatter = UtilCurrency.getLocalFormatter
      let formattedNumber = formatter.number(from: "1234.567")
      print(formattedNumber) // Prints "1234.57" or "1234,57" depending on locale
      ```
@@ -43,7 +35,7 @@ public struct UtilsCurrency {
      
      - Date: Sepember 2024
      */
-    public static func getLocalFormatter() -> NumberFormatter {
+    public static var getLocalFormatter: NumberFormatter {
         let formatter = NumberFormatter()
         
         formatter.locale = Locale.current
@@ -100,57 +92,6 @@ public struct UtilsCurrency {
         ///formatter.positivePrefix = "+"
         
         return formatter
-    }
-    
-    /**
-     Rounds the input string to two decimal places if the input has more than two decimal digits. If the input has two or fewer decimal places, it returns the original input.
-
-     This method first identifies the decimal separator based on the user's locale. It then checks if the decimal part has more than two digits. If so, it rounds the number using the `.halfUp` rounding mode.
-
-     **Example:**
-     ```swift
-     let roundedValue = Utils.roundIfMoreThanTwoDecimals("1234.5678")
-     print(roundedValue) // Prints "1234.57"
-     
-     let originalValue = Utils.roundIfMoreThanTwoDecimals("1234.56")
-     print(originalValue) // Prints "1234.56"
-     ```
-     
-     - Parameter input: A String representing the number to check and potentially round
-
-     - Returns: An optional String? which is the original input if it has two or fewer decimals, or the rounded number if it has more than two decimals
-
-     - Authors: Fabian Rodriguez
-     
-     - Date: September 2024
-     */
-    private static func roundIfMoreThanTwoDecimals(_ input: String) -> String? {
-        // 1. Crear un NumberFormatter para identificar el separador decimal
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.locale = Locale.current
-        
-        // 2. Separar la parte entera de la parte decimal
-        let components = input.split(separator: formatter.decimalSeparator.first ?? ".")
-        
-        // 3. Si tiene una parte decimal, verificar cuántos dígitos tiene
-        if components.count == 2 {
-            let decimals = components[1]
-            if decimals.count > 2 {
-                // 4. Aplicar redondeo si tiene más de 2 dígitos decimales
-                formatter.maximumFractionDigits = 2
-                formatter.roundingMode = .halfUp
-                if let number = formatter.number(from: input) {
-                    return formatter.string(from: number)
-                }
-            } else {
-                // 5. Si tiene exactamente 2 o menos decimales, devolver el número original
-                return input
-            }
-        }
-        
-        // 6. Si no tiene decimales o ya está en el formato adecuado
-        return input
     }
 }
 

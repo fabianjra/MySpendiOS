@@ -123,7 +123,7 @@ class TransactionViewModel: BaseViewModel {
         }
         
         // Only to show Mock values on the Canvas Preview.
-        if Utils.isRunningOnCanvasPreview() {
+        if Utils.isRunningOnCanvasPreview {
             groupedTransactions = UtilsCurrency.calculateGroupedTransactions(transactions)
         }
     }

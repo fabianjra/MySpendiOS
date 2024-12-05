@@ -45,7 +45,7 @@ struct CategoryView: View {
                     ListContainer {
                         ForEach(categoriesFiltered) { category in
                             HStack {
-                                let icon = Utils.getIconFromString(category.icon)
+                                let icon = category.icon.getIconFromSFSymbol
                                 
                                 if let image = icon {
                                     image

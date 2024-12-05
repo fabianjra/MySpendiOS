@@ -6,7 +6,7 @@
 //
 
 extension CaseIterable where Self: Equatable {
-    func next() -> Self? {
+    public var next: Self? {
         guard let allCases = Self.allCases as? [Self],
               let currentIndex = allCases.firstIndex(of: self),
               currentIndex < allCases.count - 1 else {
@@ -15,7 +15,7 @@ extension CaseIterable where Self: Equatable {
         return allCases[currentIndex + 1]
     }
     
-    func previous() -> Self? {
+    public var previous: Self? {
         guard let allCases = Self.allCases as? [Self],
               let currentIndex = allCases.firstIndex(of: self),
               currentIndex > 0 else {

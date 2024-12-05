@@ -316,7 +316,7 @@ struct AddKeyboardToolbar<Field: Hashable & CaseIterable>: ViewModifier {
 
                         // Go to previus textfield
                         Button {
-                            focusedField.wrappedValue = focusedField.wrappedValue?.previous()
+                            focusedField.wrappedValue = focusedField.wrappedValue?.previous
                         } label: {
                             Image.chevronUp
                         }
@@ -324,7 +324,7 @@ struct AddKeyboardToolbar<Field: Hashable & CaseIterable>: ViewModifier {
 
                         // Go to next textfield
                         Button {
-                            focusedField.wrappedValue = focusedField.wrappedValue?.next()
+                            focusedField.wrappedValue = focusedField.wrappedValue?.next
                         } label: {
                             Image.chevronDown
                         }

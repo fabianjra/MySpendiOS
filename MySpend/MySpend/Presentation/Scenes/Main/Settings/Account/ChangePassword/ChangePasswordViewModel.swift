@@ -13,8 +13,8 @@ class ChangePasswordViewModel: BaseViewModel {
     
     func validateChangePassword() async {
         
-        if model.userPassword.isEmptyOrWhitespace() || model.userNewPassword.isEmptyOrWhitespace()
-            || model.userNewPasswordConfirm.isEmptyOrWhitespace() {
+        if model.userPassword.isEmptyOrWhitespace || model.userNewPassword.isEmptyOrWhitespace
+            || model.userNewPasswordConfirm.isEmptyOrWhitespace {
             errorMessage = Errors.emptySpaces.localizedDescription
             return
         }

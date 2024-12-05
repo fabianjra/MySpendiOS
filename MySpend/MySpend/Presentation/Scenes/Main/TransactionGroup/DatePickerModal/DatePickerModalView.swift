@@ -20,7 +20,7 @@ struct DatePickerModalView: View {
                 .frame(width: FrameSize.width.calendar, height: FrameSize.width.calendar)
                 .scaleEffect(ConstantViews.calendarScale)
                 .onChange(of: model.dateTransaction) { _, newValue in
-                    dateString = newValue.toStringShortLocale()
+                    dateString = newValue.toStringShortLocale
                 }
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction) {
@@ -65,7 +65,7 @@ struct DatePickerModalView: View {
         DatePickerModalView(model: $model, dateString: $dateString, showModal: $showModal)
     }
     .onAppear {
-        dateString = model.dateTransaction.toStringShortLocale()
+        dateString = model.dateTransaction.toStringShortLocale
         showModal = true
     }
 }

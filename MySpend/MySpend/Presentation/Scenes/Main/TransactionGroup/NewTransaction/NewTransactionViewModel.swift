@@ -11,14 +11,14 @@ class NewTransactionViewModel: BaseViewModel {
     
     @Published var model = TransactionModel()
     
-    @Published var dateString: String = Date.now.toStringShortLocale()
+    @Published var dateString: String = Date.now.toStringShortLocale
     @Published var amountString: String = ""
     
     @Published var showDatePicker = false
     @Published var showCategoryList = false
     
     func addNewTransaction() async -> ResponseModel {
-        if model.category.name.isEmptyOrWhitespace() {
+        if model.category.name.isEmptyOrWhitespace {
             return ResponseModel(.error, Errors.emptySpaces.localizedDescription)
         }
         

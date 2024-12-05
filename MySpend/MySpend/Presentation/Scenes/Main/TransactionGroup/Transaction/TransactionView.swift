@@ -73,7 +73,7 @@ struct TransactionView: View {
                                     
                                     Spacer()
                                     
-                                    TextPlain(item.totalAmount.convertAmountDecimalToString().addCurrencySymbol())
+                                    TextPlain(item.totalAmount.convertAmountDecimalToString.addCurrencySymbol)
                                 }
                                 .padding(.vertical, ConstantViews.minimumSpacing)
                             }

@@ -42,7 +42,7 @@ struct SelectCategoryModalView: View {
                     ListContainer {
                         ForEach(categoriesFiltered.sorted(by: { $0.datemodified > $1.datemodified })) { category in
                             HStack {
-                                let icon = Utils.getIconFromString(category.icon)
+                                let icon = category.icon.getIconFromSFSymbol
                                 
                                 if let image = icon {
                                     image

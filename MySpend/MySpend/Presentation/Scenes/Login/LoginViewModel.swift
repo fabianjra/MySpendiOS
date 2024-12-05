@@ -12,7 +12,7 @@ class LoginViewModel: BaseViewModel {
     @Published var login = Login()
     
     func validateLogin() async {
-        if login.email.isEmptyOrWhitespace() || login.password.isEmptyOrWhitespace() {
+        if login.email.isEmptyOrWhitespace || login.password.isEmptyOrWhitespace {
             errorMessage = Errors.emptySpaces.localizedDescription
             return
         }
