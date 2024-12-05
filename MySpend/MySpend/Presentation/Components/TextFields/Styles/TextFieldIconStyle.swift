@@ -176,8 +176,6 @@ struct TextFieldIconStyle: TextFieldStyle {
         ///Cada carácter tiene un "punto de código" (code point) que se usa para codificar ese carácter en una cadena.
         ///Por ejemplo, el carácter A tiene el punto de código 65, y el carácter é tiene un punto de código más alto.
         ///Convierte el texto filtrado a una cadena temporal para la validación del límite:
-        //return String(String.UnicodeScalarView(filteredValue))
-        
         var tempText = String(String.UnicodeScalarView(filteredValue))
         
         /// Verificar si contiene un separador decimal:

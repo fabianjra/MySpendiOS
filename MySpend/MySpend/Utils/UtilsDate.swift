@@ -31,14 +31,14 @@ struct UtilsDate {
      
      - Date: Sep 2023
      */
-    static func dateToStringShort(date: Date) -> String {
+    private static func dateToStringShort(date: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "es_CR")
         dateFormatter.dateFormat = "dd/MM/yyyy"
         return dateFormatter.string(from: date)
     }
     
-    static func stringShortDateToDate(dateShort: String) -> Date {
+    private static func stringShortDateToDate(dateShort: String) -> Date {
         let dateFormatter = DateFormatter()
         //dateFormatter.locale = Locale(identifier: "en_US_POSIX") // set locale to reliable US_POSIX
         dateFormatter.locale = Locale(identifier: "es_CR")
@@ -56,7 +56,7 @@ struct UtilsDate {
      
      **Example:**
      ```swift
-     let format = Date.FormatStyle().locale(Locale(identifier: UtilsDate.getLocaleCurrentCode())).day().weekday()
+     let format = Date.FormatStyle().locale(Locale(identifier: UtilsDate.getLocaleCurrentCode)).day().weekday()
      
      let dateToShow = Date().formatted(format)
      ```
@@ -67,7 +67,7 @@ struct UtilsDate {
      
      - Date: November 2024
      */
-    private static func getLocaleCurrentCode() -> String {
+    private static var getLocaleCurrentCode: String {
         return Locale.preferredLanguages.first ?? Locale.current.language.languageCode?.identifier ?? "en_US"
     }
     
@@ -80,7 +80,7 @@ struct UtilsDate {
      
      **Example:**
      ```swift
-     let dateFormatStyle = UtilsDate.getDateFormatStyleLocale()
+     let dateFormatStyle = UtilsDate.getDateFormatStyleLocale
      let formattedDate = Date.now.formatted(dateFormatStyle.day().month().year())
      print(formattedDate) // Outputs a localized date string based on the current locale
      ```
@@ -91,8 +91,8 @@ struct UtilsDate {
      
      - Date: November 2024
      */
-    static func getDateFormatStyleLocale() -> Date.FormatStyle {
-        let dateFormatStyle = Date.FormatStyle().locale(Locale(identifier: getLocaleCurrentCode()))
+    public static var getDateFormatStyleLocale: Date.FormatStyle {
+        let dateFormatStyle = Date.FormatStyle().locale(Locale(identifier: getLocaleCurrentCode))
         
         // Add new properties if needed.
         //dateFormatStyle.timeZone = TimeZone.current

@@ -28,7 +28,7 @@ struct DateIntervalNavigatorViewModel {
     func getHeader(_ selectedDate: Date, by timeInterval: DateTimeInterval) -> String {
         var header = ""
         
-        let formatStyle = UtilsDate.getDateFormatStyleLocale()
+        let formatStyle = UtilsDate.getDateFormatStyleLocale
         let calendar = Calendar.current
         
         let isCurrentMonth = calendar.isDate(selectedDate, equalTo: .now, toGranularity: .month)
@@ -76,7 +76,7 @@ struct DateIntervalNavigatorViewModel {
 
         let formatStyleLeading = isWeekInSameMonth ? formatStyle.day() : formatStyle.day().month()
         
-        var formatStyleTrailing = UtilsDate.getDateFormatStyleLocale().day().month()
+        var formatStyleTrailing = UtilsDate.getDateFormatStyleLocale.day().month()
         
         if !isCurrentYear {
             formatStyleTrailing = formatStyleTrailing.year()
