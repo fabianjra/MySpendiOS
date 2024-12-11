@@ -7,24 +7,38 @@
 
 import SwiftUI
 
-struct NewTransactionView: View {
+struct AddModifyTransactionView: View {
     
     @Environment(\.dismiss) var dismiss
     
+    @Binding var model: TransactionModel
     @StateObject var viewModel = NewTransactionViewModel()
     @FocusState private var focusedField: TransactionModel.Field?
     
-    private let notesId = "notes"
+    let isNewTransaction: Bool
+    
+    init(model: Binding<TransactionModel>? = nil, isNewTransaction: Bool = true) {
+        if let model = model {
+            self._model = model
+        } else {
+            var defaultModel = TransactionModel()
+            self._model = Binding(
+                get: { defaultModel },
+                set: { defaultModel = $0 }
+            )
+        }
+        self.isNewTransaction = isNewTransaction
+    }
     
     var body: some View {
         NavigationStack { // This is needed for showing toolBar Keyboard.
             ScrollViewReader { scrollViewProxy in
                 FormContainer {
                     
-                    HeaderNavigator(title: "New transaction",
+                    HeaderNavigator(title: isNewTransaction ? "New transaction" : "Modify transaction",
                                     titleWeight: .regular,
-                                    titleSize: .bigXL,
-                                    subTitle: "Enter transation details",
+                                    titleSize: isNewTransaction ? .bigXL : .bigL,
+                                    subTitle: isNewTransaction ? "Enter transation details" : "Modify transaction details",
                                     showLeadingAction: false,
                                     showTrailingAction: true)
                     .padding(.vertical)
@@ -32,7 +46,7 @@ struct NewTransactionView: View {
                     
                     // MARK: SEGMENT
                     VStack {
-                        PickerSegmented(selection: $viewModel.model.transactionType,
+                        PickerSegmented(selection: $model.transactionType,
                                         segments: TransactionType.allCases)
                         .padding(.bottom)
                     }
@@ -57,7 +71,7 @@ struct NewTransactionView: View {
                         
                         
                         TextFieldReadOnlySelectable(placeHolder: "Category",
-                                                    text: $viewModel.model.category.name,
+                                                    text: $model.category.name,
                                                     iconLeading: Image.stackFill,
                                                     colorDisabled: false,
                                                     errorMessage: $viewModel.errorMessage)
@@ -66,8 +80,8 @@ struct NewTransactionView: View {
                             viewModel.showCategoryList = true
                         }
                         
-                        TextFieldNotes(text: $viewModel.model.notes)
-                            .id(notesId)
+                        TextFieldNotes(text: $model.notes)
+                            .id(viewModel.notesId)
                             .focused($focusedField, equals: .notes)
                             .padding(.bottom)
                     }
@@ -75,50 +89,75 @@ struct NewTransactionView: View {
                     
                     // MARK: BUTTONS
                     VStack {
-                        Button("Add") {
-                            process()
+                        Button(isNewTransaction ? "Add" : "Modify") {
+                            process(isNewTransaction ? .add : .modify)
                         }
                         .buttonStyle(ButtonPrimaryStyle(isLoading: $viewModel.isLoading))
                         .padding(.vertical)
-                        .padding(.bottom)
                         
+                        if isNewTransaction == false {
+                            Button("Delete") {
+                                viewModel.showAlert = true
+                            }
+                            .buttonStyle(ButtonLinkStyle(color: Color.alert, fontfamily: .semibold, isLoading: $viewModel.isLoadingSecondary))
+                            .alert("Delete transaction", isPresented: $viewModel.showAlert) {
+                                Button("Delete", role: .destructive) { process(.delete) }
+                                Button("Cancel", role: .cancel) { }
+                            } message: {
+                                Text("Want to delete this transaction? \n This action cannot be undone.")
+                            }
+                        }
                         
                         TextError(viewModel.errorMessage)
                     }
                     
                     Spacer()
                 }
+                .onAppear {
+                    if isNewTransaction == false {
+                        viewModel.onAppear(model)
+                    }
+                }
                 .onChange(of: focusedField) { _, newFocusedField in
                     if focusedField == .notes {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
                             withAnimation {
-                                scrollViewProxy.scrollTo(notesId, anchor: .bottom)
+                                scrollViewProxy.scrollTo(viewModel.notesId, anchor: .bottom)
                             }
                             
                         }
                     }
                 }
-                .onChange(of: viewModel.model.transactionType) {
+                .onChange(of: model.transactionType) {
                     viewModel.errorMessage = ""
-                    viewModel.model.category = CategoryModel() //Clean category beacause won't be the same TransactionType (Exponse, income).
+                    model.category = CategoryModel() //Clean category beacause won't be the same TransactionType (Exponse, income).
                 }
                 .sheet(isPresented: $viewModel.showDatePicker) {
-                    DatePickerModalView(model: $viewModel.model,
+                    DatePickerModalView(model: $model,
                                         dateString: $viewModel.dateString,
                                         showModal: $viewModel.showDatePicker)
                 }
                 .sheet(isPresented: $viewModel.showCategoryList) {
-                    SelectCategoryModalView(selectedCategory: $viewModel.model.category,
-                                            categoryType: viewModel.model.transactionType)
+                    SelectCategoryModalView(selectedCategory: $model.category,
+                                            categoryType: model.transactionType)
                 }
             }
         }
-        .disabled(viewModel.isLoading)
+        .disabled(viewModel.isLoading || viewModel.isLoadingSecondary)
     }
-
-    private func process() {
+    
+    private func process(_ processType: ProcessType) {
         Task {
-            let result = await viewModel.addNewTransaction()
+            let result: ResponseModel
+            
+            switch processType {
+            case .add:
+                result = await viewModel.addNewTransaction(model)
+            case .modify:
+                result = await viewModel.modifyTransaction(model)
+            case .delete:
+                result = await viewModel.deleteTransaction(model)
+            }
             
             if result.status.isSuccess {
                 dismiss()
@@ -129,6 +168,12 @@ struct NewTransactionView: View {
     }
 }
 
-#Preview {
-    NewTransactionView()
+#Preview("New") {
+    AddModifyTransactionView()
+}
+
+#Preview("Modify") {
+    @Previewable @State var model = MockTransactions.normal.first!
+    
+    AddModifyTransactionView(model: $model, isNewTransaction: false)
 }

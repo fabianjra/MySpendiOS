@@ -13,8 +13,6 @@ struct TextFieldAmount: View {
     @Binding var text: String
     var iconLeading: Image = Image.dollar
     
-    @Binding var errorMessage: String
-    
     var body: some View {
         TextField("",text: $text,
                   prompt: Text(placeHolder).foregroundColor(.textFieldPlaceholder))
@@ -22,15 +20,14 @@ struct TextFieldAmount: View {
         .textFieldStyle(TextFieldIconStyle($text,
                                            iconLeading: iconLeading,
                                            isAmount: true,
-                                           errorMessage: $errorMessage))
+                                           showErrorIndicador: false))
         .keyboardType(.decimalPad)
     }
 }
 
 #Preview {
     VStack {
-        TextFieldAmount(text: .constant(""),
-                       errorMessage: .constant(""))
+        TextFieldAmount(text: .constant(""))
     }
     .padding()
     .background(Color.backgroundBottom)

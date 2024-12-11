@@ -47,7 +47,7 @@ struct TabViewMain: View {
             AppState.shared.swipeEnabled = true
         }
         .sheet(isPresented: $showNewTransactionModal) {
-            NewTransactionView()
+            AddModifyTransactionView()
                 .presentationDragIndicator(.visible)
                 .presentationDetents([.large])
                 .presentationCornerRadius(ConstantRadius.cornersModal)
