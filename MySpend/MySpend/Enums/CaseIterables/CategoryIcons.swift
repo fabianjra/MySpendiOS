@@ -11,6 +11,7 @@ public enum CategoryIcons: String, CaseIterable, Identifiable {
     case bills = "Bills"
     case foodAndDrink = "Food and Drink"
     case household = "Household"
+    case travel = "Travel"
     
     var list: [String] {
         switch self {
@@ -33,6 +34,13 @@ public enum CategoryIcons: String, CaseIterable, Identifiable {
                 "bag.fill", "gym.bag.fill", "handbag.fill", "person.fill", "figure.arms.open",
                 "figure.2.arms.open", "figure.2.and.child.holdinghands", "figure.and.child.holdinghands",
                 "envelope.fill", "paperclip", "list.clipboard.fill"
+            ]
+        case .travel:
+            return ["figure.walk", "figure.walk.diamond.fill", "figure.walk.triangle.fill", "figure.wave",
+                    "figure.wave.circle.fill", "airplane.circle.fill", "airplane", "airplane.arrival", "airplane.departure",
+                    "car.fill", "car.badge.gearshape.fill", "bolt.car.fill", "car.2.fill", "bus.fill", "tram.fill", "cablecar.fill",
+                    "lightrail.fill", "ferry.fill", "car.ferry.fill", "sailboat.fill", "truck.box.fill", "bicycle", "moped.fill",
+                    "motorcycle.fill", "scooter", "fuelpump.fill", "ev.charger.fill",
             ]
         }
     }
