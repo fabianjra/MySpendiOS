@@ -14,7 +14,7 @@ import SwiftUI
  manage the model data in the view and no the Binding model used for paraemter.
  
  - Parameters:
-    - model: This model shoulb be passed only when you want to modify something in the model already loaded.
+    - model: This model should be passed only when you want to modify something in the model already loaded.
 
  - Date: December 2024
  */
@@ -53,7 +53,6 @@ struct AddModifyTransactionView: View {
             self.isNewTransaction = true
             self._model = .constant(TransactionModel())
         }
-        //self.isNewTransaction = isNewTransaction
     }
     
     var body: some View {
@@ -155,7 +154,7 @@ struct AddModifyTransactionView: View {
                 }
                 .onChange(of: modelBinding.wrappedValue.transactionType) {
                     viewModel.errorMessage = ""
-                    modelBinding.wrappedValue.category = CategoryModel() //Clean category beacause won't be the same TransactionType (Exponse, income).
+                    modelBinding.wrappedValue.category = CategoryModel() /// Clean category beacause won't be the same TransactionType (Exponse, income).
                 }
                 .sheet(isPresented: $viewModel.showDatePicker) {
                     DatePickerModalView(model: modelBinding,

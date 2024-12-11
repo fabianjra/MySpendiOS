@@ -76,7 +76,7 @@ struct SelectCategoryModalView: View {
         }
         .sheet(isPresented: $viewModel.showNewItemModal) {
             //TODO: Hacer dinamico ese constante para que modifique el categoryType de esta vista y no tener que volver atras si se quiere modificar el expense o income.
-            NewCategoryView(categoryType: .constant(categoryType))
+            AddModifyCategoryView(categoryType: .constant(categoryType))
                 .presentationDragIndicator(.visible)
                 .presentationDetents([.large])
                 .presentationCornerRadius(ConstantRadius.cornersModal)
