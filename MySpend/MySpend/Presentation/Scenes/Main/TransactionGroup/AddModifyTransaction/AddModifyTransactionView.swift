@@ -26,8 +26,9 @@ struct AddModifyTransactionView: View {
     @State private var defaultModel = TransactionModel()
     
     @StateObject var viewModel = AddModifyTransactionViewModel()
-    @FocusState private var focusedField: TransactionModel.Field?
+    @Binding private var selectedDate: Date
     
+    @FocusState private var focusedField: TransactionModel.Field?
     private let isNewTransaction: Bool
     
     var modelBinding: Binding<TransactionModel> {
@@ -44,7 +45,7 @@ struct AddModifyTransactionView: View {
     }
     
     /// Way to initialize a Binding if you want to pass a value (model) or just initialize the model with default valures.
-    init(model: Binding<TransactionModel>? = nil) {
+    init(model: Binding<TransactionModel>? = nil, selectedDate: Binding<Date>) {
         if let model = model {
             self.isNewTransaction = false
             self._model = model
@@ -53,6 +54,7 @@ struct AddModifyTransactionView: View {
             self.isNewTransaction = true
             self._model = .constant(TransactionModel())
         }
+        self._selectedDate = selectedDate
     }
     
     var body: some View {
@@ -149,9 +151,9 @@ struct AddModifyTransactionView: View {
                     Spacer()
                 }
                 .onAppear {
-                    if isNewTransaction == false {
-                        viewModel.onAppear(modelBinding.wrappedValue)
-                    }
+                    viewModel.onAppear(modelBinding.wrappedValue,
+                                       selectedDate: selectedDate,
+                                       isNewTransaction: isNewTransaction)
                 }
                 .onChange(of: focusedField) { _, newFocusedField in
                     if focusedField == .notes {
@@ -168,7 +170,7 @@ struct AddModifyTransactionView: View {
                     modelBinding.wrappedValue.category = CategoryModel() /// Clean category beacause won't be the same TransactionType (Exponse, income).
                 }
                 .sheet(isPresented: $viewModel.showDatePicker) {
-                    DatePickerModalView(model: modelBinding,
+                    DatePickerModalView(selectedDate: $selectedDate,
                                         dateString: $viewModel.dateString,
                                         showModal: $viewModel.showDatePicker)
                 }
@@ -187,9 +189,9 @@ struct AddModifyTransactionView: View {
             
             switch processType {
             case .add:
-                result = await viewModel.addNewTransaction(modelBinding.wrappedValue)
+                result = await viewModel.addNewTransaction(modelBinding.wrappedValue, selectedDate: selectedDate)
             case .modify:
-                result = await viewModel.modifyTransaction(modelBinding.wrappedValue)
+                result = await viewModel.modifyTransaction(modelBinding.wrappedValue, selectedDate: selectedDate)
             case .delete:
                 result = await viewModel.deleteTransaction(modelBinding.wrappedValue)
             }
@@ -204,11 +206,13 @@ struct AddModifyTransactionView: View {
 }
 
 #Preview("New") {
-    AddModifyTransactionView()
+    @Previewable @State var selectedDate = Date()
+    AddModifyTransactionView(selectedDate: $selectedDate)
 }
 
 #Preview("Modify") {
     @Previewable @State var model = MockTransactions.normal.first!
+    @Previewable @State var selectedDate = Date()
     
-    AddModifyTransactionView(model: $model)
+    AddModifyTransactionView(model: $model, selectedDate: $selectedDate)
 }

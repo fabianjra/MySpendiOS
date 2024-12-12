@@ -11,7 +11,6 @@ class TransactionViewModel: BaseViewModel {
     
     @Published var userName: String = ""
     @Published var dateTimeInterval: DateTimeInterval = .month
-    @Published var selectedDate: Date = Date()
     
     // MARK: TRANSACTIONS
     @Published var transactions: [TransactionModel]

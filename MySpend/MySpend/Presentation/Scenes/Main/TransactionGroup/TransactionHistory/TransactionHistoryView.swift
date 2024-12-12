@@ -37,7 +37,7 @@ struct TransactionHistoryView: View {
             print("Router count HISTORY: \(Router.shared.path.count)")
         }
         .sheet(isPresented: $viewModel.showModifyTransactionModal) {
-            AddModifyTransactionView(model: $selectedModel)
+            AddModifyTransactionView(model: $selectedModel, selectedDate: $selectedDate)
                 .presentationDetents([.large])
                 .presentationCornerRadius(ConstantRadius.cornersModal)
         }

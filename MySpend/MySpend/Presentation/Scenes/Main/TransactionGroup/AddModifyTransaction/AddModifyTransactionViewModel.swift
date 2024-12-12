@@ -18,12 +18,16 @@ class AddModifyTransactionViewModel: BaseViewModel {
     
     let notesId = "notes"
     
-    func onAppear(_ model: TransactionModel) {
-        dateString = model.dateTransaction.toStringShortLocale
-        amountString = model.amount.convertAmountDecimalToString
+    func onAppear(_ model: TransactionModel, selectedDate: Date, isNewTransaction: Bool) {
+        if isNewTransaction {
+            dateString = selectedDate.toStringShortLocale
+        } else {
+            dateString = model.dateTransaction.toStringShortLocale
+            amountString = model.amount.convertAmountDecimalToString
+        }
     }
     
-    func addNewTransaction(_ model: TransactionModel) async -> ResponseModel {
+    func addNewTransaction(_ model: TransactionModel, selectedDate: Date) async -> ResponseModel {
         if model.category.name.isEmptyOrWhitespace {
             return ResponseModel(.error, Errors.emptySpaces.localizedDescription)
         }
@@ -31,6 +35,7 @@ class AddModifyTransactionViewModel: BaseViewModel {
         //Firebase necesita guardar el valor como decimal, pero los formatos del monto en pantalla se trabajan en string:
         var modelMutated = model
         modelMutated.amount = amountString.convertAmountToDecimal
+        modelMutated.dateTransaction = selectedDate
         modelMutated.dateCreated = .now
         modelMutated.datemodified = .now
         
@@ -52,14 +57,19 @@ class AddModifyTransactionViewModel: BaseViewModel {
         return response
     }
     
-    func modifyTransaction(_ model: TransactionModel) async -> ResponseModel {
+    func modifyTransaction(_ model: TransactionModel, selectedDate: Date) async -> ResponseModel {
         if model.category.name.isEmptyOrWhitespace {
             return ResponseModel(.error, Errors.emptySpaces.localizedDescription)
         }
         
         var modelMutated = model
+        modelMutated.dateTransaction = selectedDate
         modelMutated.amount = amountString.convertAmountToDecimal
         modelMutated.datemodified = .now
+        
+        if modelMutated.dateTransaction.isSameDate(selectedDate) == false {
+            modelMutated.dateTransaction = selectedDate
+        }
         
         var response = ResponseModel()
         

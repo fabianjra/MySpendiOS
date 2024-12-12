@@ -12,6 +12,7 @@ struct TabViewMain: View {
     @State private var showNewTransactionModal = false
     @State private var selectedTab: TabViewIcons = .transaction
     @State private var navigateToHistory: Bool = false
+    @State private var selectedDate: Date = Date()
     
     init() {
         UITabBar.appearance().isHidden = true
@@ -29,7 +30,7 @@ struct TabViewMain: View {
             TabView(selection: $selectedTab) {
                 
                 /// Los tags permiten que las vistas cambien entre una seleccion u otra en el TabView.
-                TransactionView()
+                TransactionView(selectedDate: $selectedDate)
                     .tag(TabViewIcons.transaction)
                 
                 SettingsView()
@@ -47,7 +48,7 @@ struct TabViewMain: View {
             AppState.shared.swipeEnabled = true
         }
         .sheet(isPresented: $showNewTransactionModal) {
-            AddModifyTransactionView()
+            AddModifyTransactionView(selectedDate: $selectedDate)
                 .presentationDetents([.large])
                 .presentationCornerRadius(ConstantRadius.cornersModal)
         }

@@ -9,23 +9,23 @@ import SwiftUI
 
 struct DatePickerModalView: View {
     
-    @Binding var model: TransactionModel
+    @Binding var selectedDate: Date
     @Binding var dateString: String
     @Binding var showModal: Bool
     
     var body: some View {
         NavigationStack {
-            DatePicker("", selection: $model.dateTransaction, displayedComponents: .date)
+            DatePicker("", selection: $selectedDate, displayedComponents: .date)
                 .datePickerStyle(.graphical)
                 .frame(width: FrameSize.width.calendar, height: FrameSize.width.calendar)
                 .scaleEffect(ConstantViews.calendarScale)
-                .onChange(of: model.dateTransaction) { _, newValue in
+                .onChange(of: selectedDate) { _, newValue in
                     dateString = newValue.toStringShortLocale
                 }
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction) {
                         Button("Today") {
-                            model.dateTransaction = .now
+                            selectedDate = .now
                         }
                         .padding()
                         .padding(.top)
@@ -47,7 +47,7 @@ struct DatePickerModalView: View {
 }
 
 #Preview {
-    @Previewable @State var model = TransactionModel()
+    @Previewable @State var selectedDate = Date()
     @Previewable @State var showModal = true
     @Previewable @State var dateString = ""
     
@@ -62,10 +62,10 @@ struct DatePickerModalView: View {
             Spacer()
         }
     }.sheet(isPresented: $showModal) {
-        DatePickerModalView(model: $model, dateString: $dateString, showModal: $showModal)
+        DatePickerModalView(selectedDate: $selectedDate, dateString: $dateString, showModal: $showModal)
     }
     .onAppear {
-        dateString = model.dateTransaction.toStringShortLocale
+        dateString = selectedDate.toStringShortLocale
         showModal = true
     }
 }

@@ -10,6 +10,7 @@ import SwiftUI
 struct TransactionView: View {
     
     @StateObject var viewModel = TransactionViewModel()
+    @Binding var selectedDate: Date
     
     var body: some View {
         ContentContainer {
@@ -37,7 +38,7 @@ struct TransactionView: View {
                 NavigationLink {
                     TransactionHistoryView(transactionsLoaded: $viewModel.transactions,
                                            dateTimeInterval: $viewModel.dateTimeInterval,
-                                           selectedDate: $viewModel.selectedDate)
+                                           selectedDate: $selectedDate)
                     .toolbar(.hidden, for: .navigationBar)
                 } label: {
                     TextButtonHorizontalStyled("History",
@@ -57,9 +58,9 @@ struct TransactionView: View {
                     Spacer()
                 } else {
                     VStack {
-                        DateIntervalNavigatorView(dateTimeInterval: $viewModel.dateTimeInterval, selectedDate: $viewModel.selectedDate)
+                        DateIntervalNavigatorView(dateTimeInterval: $viewModel.dateTimeInterval, selectedDate: $selectedDate)
                         
-                        let transactionsFiltered = UtilsTransactions.filteredTransactions(viewModel.selectedDate,
+                        let transactionsFiltered = UtilsTransactions.filteredTransactions(selectedDate,
                                                                                           transactions: viewModel.transactions,
                                                                                           for: viewModel.dateTimeInterval)
                         
@@ -102,20 +103,23 @@ struct TransactionView: View {
 }
 
 #Preview("es_CR") {
+    @Previewable @State var selectedDate = Date()
     VStack {
-        TransactionView(viewModel: TransactionViewModel(transactions: MockTransactions.normal))
+        TransactionView(viewModel: TransactionViewModel(transactions: MockTransactions.normal), selectedDate: $selectedDate)
             .environment(\.locale, .init(identifier: "es_CR"))
     }
 }
 
 #Preview("Saturated en_US") {
+    @Previewable @State var selectedDate = Date()
     VStack {
-        TransactionView(viewModel: TransactionViewModel(transactions: MockTransactions.saturated))
+        TransactionView(viewModel: TransactionViewModel(transactions: MockTransactions.saturated), selectedDate: $selectedDate)
             .environment(\.locale, .init(identifier: "en_US"))
     }
 }
 
 #Preview("No content es_ES") {
-    TransactionView(viewModel: TransactionViewModel())
+    @Previewable @State var selectedDate = Date()
+    TransactionView(viewModel: TransactionViewModel(), selectedDate: $selectedDate)
         .environment(\.locale, .init(identifier: "es_ES"))
 }
