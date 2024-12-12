@@ -93,11 +93,13 @@ struct AddModifyTransactionView: View {
                         TextFieldAmount(text: $viewModel.amountString)
                             .focused($focusedField, equals: .amount)
                             .toolbar {
-                                ToolbarItemGroup(placement: .keyboard) {
-                                    Spacer()
-                                    
-                                    Button("Done") {
-                                        focusedField = .none
+                                if focusedField == .amount {
+                                    ToolbarItemGroup(placement: .keyboard) {
+                                        Spacer()
+                                        
+                                        Button("Done") {
+                                            focusedField = .none
+                                        }
                                     }
                                 }
                             }
@@ -172,7 +174,7 @@ struct AddModifyTransactionView: View {
                 }
                 .sheet(isPresented: $viewModel.showCategoryList) {
                     SelectCategoryModalView(selectedCategory: modelBinding.category,
-                                            categoryType: modelBinding.wrappedValue.transactionType)
+                                            categoryType: modelBinding.transactionType)
                 }
             }
         }

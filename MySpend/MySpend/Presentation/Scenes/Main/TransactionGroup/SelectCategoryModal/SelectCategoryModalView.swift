@@ -14,7 +14,7 @@ struct SelectCategoryModalView: View {
     @Binding var selectedCategory: CategoryModel
     @StateObject var viewModel = CategoryViewModel()
     
-    var categoryType: TransactionType
+    @Binding var categoryType: TransactionType
     
     var body: some View {
         ContentContainer(addPading: false) {
@@ -75,8 +75,7 @@ struct SelectCategoryModalView: View {
             viewModel.fetchData()
         }
         .sheet(isPresented: $viewModel.showNewItemModal) {
-            //TODO: Hacer dinamico ese constante para que modifique el categoryType de esta vista y no tener que volver atras si se quiere modificar el expense o income.
-            AddModifyCategoryView(categoryType: .constant(categoryType))
+            AddModifyCategoryView(categoryType: $categoryType)
                 .presentationDetents([.large])
                 .presentationCornerRadius(ConstantRadius.cornersModal)
         }
@@ -101,7 +100,7 @@ struct SelectCategoryModalView: View {
             Spacer()
         }
     }.sheet(isPresented: $showModal) {
-        SelectCategoryModalView(selectedCategory: $selectedCategory, viewModel: CategoryViewModel(categories: MocksCategories.normal), categoryType: .expense)
+        SelectCategoryModalView(selectedCategory: $selectedCategory, viewModel: CategoryViewModel(categories: MocksCategories.normal), categoryType: $selectedCategory.categoryType)
             .environment(\.locale, .init(identifier: "es_CR"))
     }
     .onAppear {
