@@ -139,7 +139,7 @@ struct TransactionHistoryView: View {
             .scrollIndicators(.hidden)
             .animation(.default, value: transactionsFiltered.count)
             
-            TotalBalanceView(transactions: .constant(transactionsFiltered), showTotalBalance: false, addBottomSpacing: false)
+            TotalBalanceView(transactions: transactionsFiltered, showTotalBalance: false, addBottomSpacing: false)
         }
     }
     

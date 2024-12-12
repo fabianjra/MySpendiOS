@@ -10,7 +10,7 @@ import SwiftUI
 struct TotalBalanceView: View {
     
     @StateObject var viewModel = TotalBalanceViewModel()
-    @Binding var transactions: [TransactionModel]
+    let transactions: [TransactionModel]
     
     var showDivider: Bool = true
     var showTotalBalance: Bool = true
@@ -60,9 +60,9 @@ struct TotalBalanceView: View {
 
 #Preview {
     VStack {
-        TotalBalanceView(transactions: .constant([]))
+        TotalBalanceView(transactions: [])
         
-        TotalBalanceView(transactions: .constant([]), showTotalBalance: false, addBottomSpacing: false)
+        TotalBalanceView(transactions: [], showTotalBalance: false, addBottomSpacing: false)
     }
     .background(Color.backgroundBottom)
 }

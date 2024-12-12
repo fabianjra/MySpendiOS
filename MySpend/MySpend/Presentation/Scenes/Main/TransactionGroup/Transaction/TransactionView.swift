@@ -82,7 +82,7 @@ struct TransactionView: View {
                         
                         TextError(viewModel.errorMessage)
                         
-                        TotalBalanceView(transactions: .constant(transactionsFiltered)) //TODO: Cambiar por variable en viewModel para que sea Binding.
+                        TotalBalanceView(transactions: transactionsFiltered)
                     }
                     
                     //Tiene un efecto no deseado al transicionar entre tab y tab.

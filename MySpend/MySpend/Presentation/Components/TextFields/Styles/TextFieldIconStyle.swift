@@ -66,9 +66,9 @@ struct TextFieldIconStyle: TextFieldStyle {
             }
             
             configuration
-            //.background(.red) //TODO: For testing
+            //.background(.red) //For testing
                 .frame(height: ConstantFrames.textFieldHeight)
-            //.background(.green) //TODO: For testing
+            //.background(.green) //For testing
                 .padding(.horizontal, iconLeading == nil ? nil : .zero)
                 .padding(.trailing, iconLeading != nil ? nil : .zero)
                 .font(.montserrat(family, size: size))
