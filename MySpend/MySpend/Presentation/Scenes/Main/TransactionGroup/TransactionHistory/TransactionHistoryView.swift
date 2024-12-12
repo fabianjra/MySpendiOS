@@ -38,7 +38,6 @@ struct TransactionHistoryView: View {
         }
         .sheet(isPresented: $viewModel.showModifyTransactionModal) {
             AddModifyTransactionView(model: $selectedModel)
-                .presentationDragIndicator(.visible)
                 .presentationDetents([.large])
                 .presentationCornerRadius(ConstantRadius.cornersModal)
         }

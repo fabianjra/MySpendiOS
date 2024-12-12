@@ -48,7 +48,6 @@ struct TabViewMain: View {
         }
         .sheet(isPresented: $showNewTransactionModal) {
             AddModifyTransactionView()
-                .presentationDragIndicator(.visible)
                 .presentationDetents([.large])
                 .presentationCornerRadius(ConstantRadius.cornersModal)
         }

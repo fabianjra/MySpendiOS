@@ -92,6 +92,15 @@ struct AddModifyTransactionView: View {
                     VStack {
                         TextFieldAmount(text: $viewModel.amountString)
                             .focused($focusedField, equals: .amount)
+                            .toolbar {
+                                ToolbarItemGroup(placement: .keyboard) {
+                                    Spacer()
+                                    
+                                    Button("Done") {
+                                        focusedField = .none
+                                    }
+                                }
+                            }
                         
                         
                         TextFieldReadOnlySelectable(placeHolder: "Category",

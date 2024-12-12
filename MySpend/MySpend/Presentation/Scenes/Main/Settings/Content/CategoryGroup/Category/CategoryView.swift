@@ -103,14 +103,12 @@ struct CategoryView: View {
         }
         .sheet(isPresented: $viewModel.showNewItemModal) {
             AddModifyCategoryView(categoryType: $viewModel.categoryType)
-                .presentationDragIndicator(.visible)
                 .presentationDetents([.large])
                 .presentationCornerRadius(ConstantRadius.cornersModal)
         }
         .sheet(isPresented: $viewModel.showModifyItemModal) {
             AddModifyCategoryView(model: $selectedModel,
                                categoryType: $viewModel.categoryType)
-            .presentationDragIndicator(.visible)
             .presentationDetents([.large])
             .presentationCornerRadius(ConstantRadius.cornersModal)
         }
