@@ -28,11 +28,22 @@ struct TransactionHistoryView: View {
                             titleSize: .bigXL)
             .padding(.bottom)
             
-            if transactionsLoaded.isEmpty {
-                emptyView
-            } else {
-                transactionsList
+            ZStack {
+                if viewModel.isLoadingSecondary {
+                    LoaderView()
+                        .background(.ultraThinMaterial)
+                        .cornerRadius(ConstantRadius.corners)
+                        .padding(48)
+                        .frame(maxHeight: 330, alignment: .center)
+                }
+                
+                if transactionsLoaded.isEmpty {
+                    emptyView
+                } else {
+                    transactionsList
+                }
             }
+            
             
             TextError(viewModel.errorMessage)
         }
@@ -44,6 +55,7 @@ struct TransactionHistoryView: View {
                 .presentationDetents([.large])
                 .presentationCornerRadius(ConstantRadius.cornersModal)
         }
+        .disabled(viewModel.isLoadingSecondary)
     }
     
     var emptyView: some View {
@@ -68,15 +80,29 @@ struct TransactionHistoryView: View {
                                       trailingButtonDisabled: selectedListItems.isEmpty) {
                 selectedListItems.removeAll()
             } actionTrailing: {
-                //TODO: Eliminar seleccionados
+                viewModel.showAlertDeleteMultiple = true
             }
             
             let transactionsFiltered = UtilsTransactions.filteredTransactions(selectedDate, transactions: transactionsLoaded, for: dateTimeInterval)
             
             List {
-                ForEach(transactionsFiltered) { item in
+                ForEach(transactionsFiltered, id: \.self) { item in
                     VStack {
                         HStack {
+                            
+                            if isEditing {
+                                Image(systemName: selectedListItems.contains(item) ? ConstantColors.circleFill : ConstantColors.circle)
+                                    .foregroundStyle(Color.alert)
+                                    .transition(.scale.combined(with: .move(edge: .leading)))
+                                    .onTapGesture {
+                                        if selectedListItems.contains(item) {
+                                            selectedListItems.remove(item)
+                                        } else {
+                                            selectedListItems.insert(item)
+                                        }
+                                    }
+                            }
+                            
                             Image(systemName: item.category.icon)
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
@@ -142,6 +168,12 @@ struct TransactionHistoryView: View {
                     } message: {
                         Text("Want to delete this transaction? \n This action cannot be undone.")
                     }
+                    .alert("Delete transactions", isPresented: $viewModel.showAlertDeleteMultiple) {
+                        Button("Delete", role: .destructive) { deleteMltipleTransactions() }
+                        Button("Cancel", role: .cancel) { }
+                    } message: {
+                        Text("Want to delete these transactions? \n This action cannot be undone.")
+                    }
                     .padding(.vertical, ConstantViews.mediumSpacing)
                 }
                 .listRowBackground(Color.clear)
@@ -149,6 +181,7 @@ struct TransactionHistoryView: View {
             .listStyle(.plain)
             .scrollIndicators(.hidden)
             .animation(.default, value: transactionsFiltered.count)
+            .animation(.default, value: isEditing)
             
             TotalBalanceView(transactions: transactionsFiltered, showTotalBalance: false, addBottomSpacing: false)
         }
@@ -157,6 +190,16 @@ struct TransactionHistoryView: View {
     private func delete() {
         Task {
             let result = await viewModel.deleteTransaction(selectedModel)
+            
+            if result.status.isError {
+                viewModel.errorMessage = result.message
+            }
+        }
+    }
+    
+    private func deleteMltipleTransactions() {
+        Task {
+            let result = await viewModel.deleteMltipleTransactions(selectedListItems)
             
             if result.status.isError {
                 viewModel.errorMessage = result.message

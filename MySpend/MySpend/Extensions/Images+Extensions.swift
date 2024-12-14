@@ -18,6 +18,9 @@ extension Image {
     static let checkmarkCircleFill = Image(systemName: "checkmark.circle.fill") // Validate Account logo.
     static let checkmarkCircle = Image(systemName: "checkmark.circle")
     
+    static let circleFill = Image(systemName: "circle.fill")
+    static let circle = Image(systemName: "circle")
+
     // MARK: BUTTON
     static let plus = Image(systemName: "plus")
     static let stack = Image(systemName: "mail.stack") // History

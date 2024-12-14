@@ -129,4 +129,23 @@ public struct Repository: UserValidationProtocol {
         
         try await document.delete()
     }
+    
+    //TODO: Se debe probar
+    func deleteDocuments(_ documentIds: [String], forSubCollection collection: CollectionsFB) async throws {
+        let currentUserId = try validateCurrentUser(currentUser).uid
+        let subCollectionRef = UtilsFB.userSubCollectionRef(collection, for: currentUserId)
+        
+        /*
+         The maximum number of writes allowed in a single batch is 500, but note that each usage of FieldValue.serverTimestamp(), FieldValue.arrayUnion(), FieldValue.arrayRemove(), or FieldValue.increment() inside a batch counts as an additional write.
+         Unlike transactions, write batches are persisted offline and therefore are preferable when you don’t need to condition your writes on read data.
+         */
+        let batch = subCollectionRef.firestore.batch()
+        
+        for documentId in documentIds {
+            let document = subCollectionRef.document(documentId)
+            batch.deleteDocument(document)
+        }
+        
+        try await batch.commit()
+    }
 }

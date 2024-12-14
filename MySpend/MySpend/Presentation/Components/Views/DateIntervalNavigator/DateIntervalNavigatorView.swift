@@ -50,7 +50,7 @@ struct DateIntervalNavigatorView: View {
                         Button {
                             if let action = actionTrailing { action() }
                         } label: {
-                            TextPlain("Delete", color: Color.alert)
+                            TextPlain("Delete", color: trailingButtonDisabled ? Color.disabledForeground : Color.alert)
                         }
                         .disabled(trailingButtonDisabled)
                         .modifier(Show(isVisible: isEditing))
