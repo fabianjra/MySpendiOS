@@ -51,23 +51,24 @@ public enum FrameSize {
         return 150.0
     }
     
+    var buttonToolbarEditList: CGFloat {
+        return 45.0
+    }
+    
+    var buttonSelectValueInterval: CGFloat {
+        return 20.0
+    }
+    
     var calendar: CGFloat {
         switch self {
         case .width: return 320.0
         case .height: return 440.0
         }
     }
-    
-    var buttonSelectValueInterval: CGFloat {
-        switch self {
-        case .width: return 30.0
-        case .height: return 20.0
-        }
-    }
-    
+
     var buttonSelectValueIntervalCenter: CGFloat {
         switch self {
-        case .width: return 180
+        case .width: return 170
         case .height: return 15.0
         }
     }

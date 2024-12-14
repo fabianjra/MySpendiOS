@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CategoryModel: Identifiable, Codable, Equatable  {
+struct CategoryModel: Identifiable, Codable, Equatable, Hashable  {
     var id: String = ""
     var icon: String = CategoryIcons.household.list.first ?? "tag.fill"
     var name: String = ""

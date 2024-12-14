@@ -11,14 +11,52 @@ struct DateIntervalNavigatorView: View {
     
     @Binding var dateTimeInterval: DateTimeInterval
     @Binding var selectedDate: Date
+    @Binding var isEditing: Bool
     
     var viewModel = DateIntervalNavigatorViewModel()
+    
+    var showEditor: Bool = false
+    var actionTrailing: (() -> Void)? = nil
     
     var body: some View {
         VStack {
             timeInterval
-
-            navigator
+                .disabled(isEditing)
+                .animation(.default,value: isEditing)
+            
+            if showEditor {
+                ZStack {
+                    HStack {
+                        Button {
+                            isEditing.toggle()
+                        } label: {
+                            TextPlain(isEditing ? "Done" : "Edit")
+                        }
+                        
+                        Spacer()
+                    }
+                    
+                    navigator
+                        .buttonStyle(ButtonScaleStyle())
+                        .modifier(Show(isVisible: !isEditing))
+                    
+                    HStack {
+                        Spacer()
+                        
+                        Button {
+                            if let action = actionTrailing { action() }
+                        } label: {
+                            TextPlain("Delete", color: Color.alert)
+                        }
+                        .modifier(Show(isVisible: isEditing))
+                    }
+                }
+                .foregroundColor(Color.buttonForeground)
+            } else {
+                navigator
+                    .buttonStyle(ButtonScaleStyle())
+                    .foregroundColor(Color.buttonForeground)
+            }
         }
     }
     
@@ -42,16 +80,14 @@ struct DateIntervalNavigatorView: View {
                     .fontWeight(.thin)
                     .frame(width: FrameSize.width.buttonSelectValueInterval,
                            height: FrameSize.height.buttonSelectValueInterval)
-                    .foregroundColor(Color.buttonForeground)
-                    .padding(.leading)
+                    .padding(.leading, ConstantViews.bigSpacing)
                     .contentShape(Rectangle())
 //                        .clipShape(.rect(
 //                            topLeadingRadius: .infinity,
 //                            bottomLeadingRadius: .infinity)
 //                        )
             }
-            .buttonStyle(ButtonScaleStyle())
-
+            
             
             Button {
                 selectedDate = viewModel.navigateDateTime(selectedDate, to: .today, byAdding: dateTimeInterval)
@@ -63,7 +99,6 @@ struct DateIntervalNavigatorView: View {
                            height: FrameSize.height.buttonSelectValueInterval)
                     .contentShape(Rectangle())
             }
-            .buttonStyle(ButtonScaleStyle())
             
             
             Button {
@@ -75,11 +110,9 @@ struct DateIntervalNavigatorView: View {
                     .fontWeight(.thin)
                     .frame(width: FrameSize.width.buttonSelectValueInterval,
                            height: FrameSize.height.buttonSelectValueInterval)
-                    .foregroundColor(Color.buttonForeground)
-                    .padding(.trailing)
+                    .padding(.trailing, ConstantViews.bigSpacing)
                     .contentShape(Rectangle())
             }
-            .buttonStyle(ButtonScaleStyle())
         }
         .padding(.vertical, ConstantViews.mediumSpacing)
     }
@@ -88,9 +121,10 @@ struct DateIntervalNavigatorView: View {
 #Preview {
     @Previewable @State var dateTimeInterval = DateTimeInterval.month
     @Previewable @State var selectedDate = Date()
+    @Previewable @State var isEditing = false
     
     VStack {
-        DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval, selectedDate: $selectedDate)
+        DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval, selectedDate: $selectedDate, isEditing: $isEditing, showEditor: true)
             .background(Color.backgroundBottom.opacity(0.8))
     }
 }

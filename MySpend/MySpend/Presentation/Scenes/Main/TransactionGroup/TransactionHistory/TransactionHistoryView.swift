@@ -17,6 +17,9 @@ struct TransactionHistoryView: View {
     
     @State private var selectedModel = TransactionModel()
     
+    @State private var isEditing = false
+    @State private var selectedItems = Set<TransactionModel>()
+    
     var body: some View {
         ContentContainer {
             
@@ -57,7 +60,11 @@ struct TransactionHistoryView: View {
     
     var transactionsList: some View {
         VStack {
-            DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval, selectedDate: $selectedDate)
+            
+            DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval,
+                                      selectedDate: $selectedDate,
+                                      isEditing: $isEditing,
+                                      showEditor: true)
             
             let transactionsFiltered = UtilsTransactions.filteredTransactions(selectedDate, transactions: transactionsLoaded, for: dateTimeInterval)
             
@@ -123,7 +130,6 @@ struct TransactionHistoryView: View {
                         } label: {
                             Label.edit
                         }
-                        .tint(Color.warning)
                     }
                     .alert("Delete transaction", isPresented: $viewModel.showAlertDelete) {
                         Button("Delete", role: .destructive) { delete() }

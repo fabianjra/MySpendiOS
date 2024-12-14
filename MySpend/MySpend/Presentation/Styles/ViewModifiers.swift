@@ -142,12 +142,8 @@ struct Show: ViewModifier {
     
     @ViewBuilder
     func body(content: Content) -> some View {
-        
-        if isVisible {
-            content.opacity(1)
-        } else {
-            content.opacity(.zero)
-        }
+        content.opacity(isVisible ? 1 : .zero)
+            .animation(.default, value: isVisible)
     }
 }
 
