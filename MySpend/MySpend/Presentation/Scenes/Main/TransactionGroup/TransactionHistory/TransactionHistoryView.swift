@@ -18,7 +18,7 @@ struct TransactionHistoryView: View {
     @State private var selectedModel = TransactionModel()
     
     @State private var isEditing = false
-    @State private var selectedItems = Set<TransactionModel>()
+    @State private var selectedListItems = Set<TransactionModel>()
     
     var body: some View {
         ContentContainer {
@@ -64,7 +64,12 @@ struct TransactionHistoryView: View {
             DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval,
                                       selectedDate: $selectedDate,
                                       isEditing: $isEditing,
-                                      showEditor: true)
+                                      showEditor: true,
+                                      trailingButtonDisabled: selectedListItems.isEmpty) {
+                selectedListItems.removeAll()
+            } actionTrailing: {
+                //TODO: Eliminar seleccionados
+            }
             
             let transactionsFiltered = UtilsTransactions.filteredTransactions(selectedDate, transactions: transactionsLoaded, for: dateTimeInterval)
             

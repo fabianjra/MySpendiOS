@@ -16,6 +16,9 @@ struct DateIntervalNavigatorView: View {
     var viewModel = DateIntervalNavigatorViewModel()
     
     var showEditor: Bool = false
+    var trailingButtonDisabled: Bool = true
+    
+    var actionLeading: (() -> Void)? = nil
     var actionTrailing: (() -> Void)? = nil
     
     var body: some View {
@@ -29,6 +32,7 @@ struct DateIntervalNavigatorView: View {
                     HStack {
                         Button {
                             isEditing.toggle()
+                            if let action = actionLeading { action() }
                         } label: {
                             TextPlain(isEditing ? "Done" : "Edit")
                         }
@@ -48,6 +52,7 @@ struct DateIntervalNavigatorView: View {
                         } label: {
                             TextPlain("Delete", color: Color.alert)
                         }
+                        .disabled(trailingButtonDisabled)
                         .modifier(Show(isVisible: isEditing))
                     }
                 }
@@ -122,9 +127,14 @@ struct DateIntervalNavigatorView: View {
     @Previewable @State var dateTimeInterval = DateTimeInterval.month
     @Previewable @State var selectedDate = Date()
     @Previewable @State var isEditing = false
+    @Previewable @State var trailingButtonDisabled = true
     
     VStack {
-        DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval, selectedDate: $selectedDate, isEditing: $isEditing, showEditor: true)
+        DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval,
+                                  selectedDate: $selectedDate,
+                                  isEditing: $isEditing,
+                                  showEditor: true,
+                                  trailingButtonDisabled: trailingButtonDisabled)
             .background(Color.backgroundBottom.opacity(0.8))
     }
 }
