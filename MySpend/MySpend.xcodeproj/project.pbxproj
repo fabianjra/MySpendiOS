@@ -87,6 +87,8 @@
 		1F6813062CF2CA8200822471 /* TotalBalanceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6813052CF2CA7E00822471 /* TotalBalanceViewModel.swift */; };
 		1F6813082CF2F3B100822471 /* UtilsTransactions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6813072CF2F3AD00822471 /* UtilsTransactions.swift */; };
 		1F697E082C5B3C22009529EF /* ResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F697E072C5B3C22009529EF /* ResponseModel.swift */; };
+		1F6A7B422D0E9CD0009CC276 /* ConstantSystemImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6A7B412D0E9CC5009CC276 /* ConstantSystemImage.swift */; };
+		1F6A7B442D0EADB6009CC276 /* SortTransactions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6A7B432D0EADB0009CC276 /* SortTransactions.swift */; };
 		1F6FAEB92CD1D13C008CD39F /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6FAEB82CD1D138008CD39F /* Date+Extensions.swift */; };
 		1F7437B42A668BCD0039EFD4 /* Gestures+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7437B32A668BCD0039EFD4 /* Gestures+Extensions.swift */; };
 		1F7486B72A68C4250063AC35 /* TextError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7486B62A68C4250063AC35 /* TextError.swift */; };
@@ -255,6 +257,8 @@
 		1F6813052CF2CA7E00822471 /* TotalBalanceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalBalanceViewModel.swift; sourceTree = "<group>"; };
 		1F6813072CF2F3AD00822471 /* UtilsTransactions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilsTransactions.swift; sourceTree = "<group>"; };
 		1F697E072C5B3C22009529EF /* ResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseModel.swift; sourceTree = "<group>"; };
+		1F6A7B412D0E9CC5009CC276 /* ConstantSystemImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantSystemImage.swift; sourceTree = "<group>"; };
+		1F6A7B432D0EADB0009CC276 /* SortTransactions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortTransactions.swift; sourceTree = "<group>"; };
 		1F6FAEB82CD1D138008CD39F /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		1F7437B32A668BCD0039EFD4 /* Gestures+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Gestures+Extensions.swift"; sourceTree = "<group>"; };
 		1F7486B62A68C4250063AC35 /* TextError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextError.swift; sourceTree = "<group>"; };
@@ -371,6 +375,7 @@
 		1F0FA3C52CCC7C09009DDB4E /* Constants */ = {
 			isa = PBXGroup;
 			children = (
+				1F6A7B432D0EADB0009CC276 /* SortTransactions.swift */,
 				1F09221D2D02984700F59EA5 /* ProcessType.swift */,
 				1F9B0E0B2CE8564A00787245 /* TimeNavigate.swift */,
 				1F171F282A7CC90D00A0A33E /* Emojis.swift */,
@@ -890,6 +895,7 @@
 		1FE7C67F2A47DA0B0070B988 /* Constants */ = {
 			isa = PBXGroup;
 			children = (
+				1F6A7B412D0E9CC5009CC276 /* ConstantSystemImage.swift */,
 				1FE7C6822A47DDF40070B988 /* ConstantRadius.swift */,
 				1F19D9652A4A764B00137EA0 /* ConstantFrames.swift */,
 				1F19D9672A4A7A7000137EA0 /* ConstantViews.swift */,
@@ -1126,6 +1132,7 @@
 				1F4C9B5B2C5C847100C403B3 /* UtilsFB.swift in Sources */,
 				1FC94CBF2A5A2CB7005CA0B6 /* TabViewMain.swift in Sources */,
 				1F30437F2CBE1EA20079DB90 /* UserValidationProtocol.swift in Sources */,
+				1F6A7B442D0EADB6009CC276 /* SortTransactions.swift in Sources */,
 				1F7ABD2C2CCC6A760023FBA4 /* TransactionHistoryView.swift in Sources */,
 				1F4C9B5E2C5CA48E00C403B3 /* PickerSegmented.swift in Sources */,
 				1F19D9682A4A7A7000137EA0 /* ConstantViews.swift in Sources */,
@@ -1230,6 +1237,7 @@
 				1F9DD6D02CCCA9EB0093F55D /* SelectCategoryModalView.swift in Sources */,
 				1F9462EE2A7B54EC00F5CBFB /* Loader.swift in Sources */,
 				1F9F16D42AFC926D003CB599 /* UserModel.swift in Sources */,
+				1F6A7B422D0E9CD0009CC276 /* ConstantSystemImage.swift in Sources */,
 				1F0E9AB62C5C62B300675CE8 /* ConstantFB.swift in Sources */,
 				1FBAFA5E2CA5103300C09470 /* LoaderView.swift in Sources */,
 				1FD2E9832C53267D00E68602 /* TransactionModel.swift in Sources */,

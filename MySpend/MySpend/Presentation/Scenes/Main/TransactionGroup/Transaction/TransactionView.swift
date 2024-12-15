@@ -60,7 +60,7 @@ struct TransactionView: View {
                     VStack {
                         DateIntervalNavigatorView(dateTimeInterval: $viewModel.dateTimeInterval,
                                                   selectedDate: $selectedDate,
-                                                  isEditing: .constant(false))
+                                                  isEditing: .constant(false)){}
                         
                         let transactionsFiltered = UtilsTransactions.filteredTransactions(selectedDate,
                                                                                           transactions: viewModel.transactions,

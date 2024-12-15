@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct DateIntervalNavigatorView: View {
+struct DateIntervalNavigatorView<Content: View>: View {
     
     @Binding var dateTimeInterval: DateTimeInterval
     @Binding var selectedDate: Date
@@ -21,8 +21,8 @@ struct DateIntervalNavigatorView: View {
     var actionLeadingEdit: (() -> Void)? = nil
     var actionTrailingEdit: (() -> Void)? = nil
     
-    var actionLeadingSort: (() -> Void)? = nil
-    
+    @ViewBuilder var contentLeadingSort: () -> Content
+
     var body: some View {
         VStack {
             if showEditor {
@@ -59,11 +59,9 @@ struct DateIntervalNavigatorView: View {
             ZStack {
                 HStack {
                     if showEditor {
-                        Button {
-                            if let action = actionLeadingSort { action() }
-                        } label: {
-                            TextPlain("Sort", color: isEditing ? Color.disabledForeground : Color.buttonForeground)
-                        }
+                        Menu("Sort", content: contentLeadingSort)
+                            .menuOrder(.fixed)
+                            .foregroundStyle(isEditing ? Color.disabledForeground : Color.buttonForeground)
                     }
                     
                     Spacer()
@@ -154,14 +152,14 @@ struct DateIntervalNavigatorView: View {
                                   selectedDate: $selectedDate,
                                   isEditing: $isEditing,
                                   showEditor: true,
-                                  trailingButtonDisabled: trailingButtonDisabled)
+                                  trailingButtonDisabled: trailingButtonDisabled) {}
         .background(Color.backgroundBottom.opacity(0.8))
         
         Spacer()
         
         DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval,
                                   selectedDate: $selectedDate,
-                                  isEditing: .constant(false))
+                                  isEditing: .constant(false)) {}
         .background(Color.backgroundBottom.opacity(0.8))
         
         Spacer()

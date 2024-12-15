@@ -20,6 +20,8 @@ struct TransactionHistoryView: View {
     @State private var isEditing = false
     @State private var selectedListItems = Set<TransactionModel>()
     
+    @State private var sortTransactionsBy: SortTransactions = .byDate
+    
     var body: some View {
         ContentContainer {
             
@@ -60,6 +62,28 @@ struct TransactionHistoryView: View {
         .disabled(viewModel.isLoadingSecondary)
     }
     
+    var menuSort: some View {
+        Section {
+            Button {
+                sortTransactionsBy = .byDate
+            } label: {
+                Label.dateNewestFirst
+            }
+            
+            Button {
+                sortTransactionsBy = .byAmount
+            } label: {
+                Label.amountHighesttFirst
+            }
+            
+            Button {
+                sortTransactionsBy = .byCategoryName
+            } label: {
+                Label.categoryNameAz
+            }
+        }
+    }
+    
     var emptyView: some View {
         VStack {
             Spacer()
@@ -83,16 +107,21 @@ struct TransactionHistoryView: View {
                 selectedListItems.removeAll()
             } actionTrailingEdit: {
                 viewModel.showAlertDeleteMultiple = true
+            } contentLeadingSort: {
+                menuSort
             }
             
-            let transactionsFiltered = UtilsTransactions.filteredTransactions(selectedDate, transactions: transactionsLoaded, for: dateTimeInterval)
+            let transactionsFiltered = UtilsTransactions.filteredTransactions(selectedDate,
+                                                                              transactions: transactionsLoaded,
+                                                                              for: dateTimeInterval,
+                                                                              sortTransactions: sortTransactionsBy)
             
             List {
                 ForEach(transactionsFiltered, id: \.self) { item in
                     VStack {
                         HStack {
                             if isEditing {
-                                Image(systemName: selectedListItems.contains(item) ? ConstantColors.checkmarkCircleFill : ConstantColors.circle)
+                                Image(systemName: selectedListItems.contains(item) ? ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle)
                                     .foregroundStyle(Color.alert)
                                     .transition(.scale.combined(with: .move(edge: .leading)))
                             }
@@ -185,6 +214,7 @@ struct TransactionHistoryView: View {
             .scrollIndicators(.hidden)
             .animation(.default, value: transactionsFiltered.count)
             .animation(.default, value: isEditing)
+            .animation(.default, value: sortTransactionsBy)
             
             TotalBalanceView(transactions: transactionsFiltered, showTotalBalance: false, addBottomSpacing: false)
         }

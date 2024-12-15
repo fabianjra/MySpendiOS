@@ -8,13 +8,30 @@
 import Foundation
 
 struct UtilsTransactions {
-
+    
     /**
      Filtra las transacciones por intervalos de tiempo seleccionados y las ordena en forma descendente en base a la fecha de la transaccion
      */
-    static func filteredTransactions(_ selectedDate: Date, transactions: [TransactionModel], for interval: DateTimeInterval) -> [TransactionModel] {
+    static func filteredTransactions(_ selectedDate: Date,
+                                     transactions: [TransactionModel],
+                                     for interval: DateTimeInterval,
+                                     sortTransactions: SortTransactions? = nil) -> [TransactionModel] {
         let calendar = Calendar.current
-        let sortedTransactions = transactions.sorted(by: { $0.dateTransaction > $1.dateTransaction })
+        
+        var sortedTransactions: [TransactionModel] = transactions
+        
+        if let sortTransactions = sortTransactions {
+            switch sortTransactions {
+            case .byDate:
+                sortedTransactions.sort(by: { $0.dateTransaction > $1.dateTransaction })
+                
+            case .byAmount:
+                sortedTransactions.sort(by: { $0.amount > $1.amount })
+                
+            case .byCategoryName:
+                sortedTransactions.sort(by: { $0.category.name > $1.category.name })
+            }
+        }
         
         switch interval {
             
