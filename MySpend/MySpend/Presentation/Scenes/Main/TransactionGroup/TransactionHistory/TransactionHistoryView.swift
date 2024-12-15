@@ -30,6 +30,7 @@ struct TransactionHistoryView: View {
             
             ZStack {
                 if viewModel.isLoadingSecondary {
+                    //TODO: TEMPORAL. ANALIZAR SI SE PUEDE UTILIZAR LOADER DE OTRA FORMA.
                     LoaderView()
                         .background(.ultraThinMaterial)
                         .cornerRadius(ConstantRadius.corners)
@@ -41,6 +42,7 @@ struct TransactionHistoryView: View {
                     emptyView
                 } else {
                     transactionsList
+                        .blur(radius: viewModel.isLoadingSecondary ? 1 : .zero)
                 }
             }
             

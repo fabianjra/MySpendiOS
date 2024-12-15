@@ -17,7 +17,7 @@ public enum CategoryIcons: String, CaseIterable, Identifiable {
         switch self {
         case .bills:
             return [
-                "lightbulb.fill", "spigot.fill", "house.fill", "play.tv.fill", "tv.badge.wifi.fill",
+                "lightbulb.fill", "spigot.fill", "play.tv.fill", "tv.badge.wifi.fill",
                 "appletvremote.gen4.fill", "wifi", "wifi.router.fill", "phone.fill", "flame.fill",
                 "umbrella.fill", "chart.bar.fill", "bolt.horizontal.fill", "externaldrive.connected.to.line.below.fill",
                 "icloud.fill"
