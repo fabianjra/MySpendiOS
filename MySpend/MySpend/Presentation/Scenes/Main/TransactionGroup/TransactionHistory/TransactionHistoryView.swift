@@ -89,18 +89,10 @@ struct TransactionHistoryView: View {
                 ForEach(transactionsFiltered, id: \.self) { item in
                     VStack {
                         HStack {
-                            
                             if isEditing {
                                 Image(systemName: selectedListItems.contains(item) ? ConstantColors.checkmarkCircleFill : ConstantColors.circle)
                                     .foregroundStyle(Color.alert)
                                     .transition(.scale.combined(with: .move(edge: .leading)))
-                                    .onTapGesture {
-                                        if selectedListItems.contains(item) {
-                                            selectedListItems.remove(item)
-                                        } else {
-                                            selectedListItems.insert(item)
-                                        }
-                                    }
                             }
                             
                             Image(systemName: item.category.icon)
@@ -112,8 +104,17 @@ struct TransactionHistoryView: View {
                             
                             
                             Button("") {
-                                selectedModel = item
-                                viewModel.showModifyTransactionModal = true
+                                if isEditing {
+                                    if selectedListItems.contains(item) {
+                                        selectedListItems.remove(item)
+                                    } else {
+                                        selectedListItems.insert(item)
+                                    }
+                                } else {
+                                    selectedModel = item
+                                    viewModel.showModifyTransactionModal = true
+                                    
+                                }
                             }
                             
                             VStack(alignment: .leading) {
