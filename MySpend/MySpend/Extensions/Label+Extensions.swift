@@ -10,10 +10,12 @@ import SwiftUI
 extension Label where Title == Text, Icon == Image {
     
     // MARK: SWIPE ACTIONS
+    
     static let delete = Label("Delete", systemImage: ConstantSystemImage.trash)
     static let edit = Label("Edit", systemImage: ConstantSystemImage.squareAndPencil)
     
     // MARK: MENU SORT TRANSACTIONS
+    
     static let dateNewestFirst = Label("By date (Newest first)", systemImage: ConstantSystemImage.arrowDown)
     static let dateOldestFirst = Label("By date (Oldest first)", systemImage: ConstantSystemImage.arrowUp)
     

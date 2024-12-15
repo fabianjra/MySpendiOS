@@ -17,6 +17,7 @@ struct DateIntervalNavigatorView<Content: View>: View {
     
     var showEditor: Bool = false
     var trailingButtonDisabled: Bool = true
+    var counterSelected: Int = .zero
     
     var actionLeadingEdit: (() -> Void)? = nil
     var actionTrailingEdit: (() -> Void)? = nil
@@ -37,6 +38,9 @@ struct DateIntervalNavigatorView<Content: View>: View {
                         
                         Spacer()
                     }
+                    
+                    TextPlain("\(counterSelected) Selected")
+                        .modifier(Show(isVisible: isEditing))
                     
                     HStack {
                         Spacer()
@@ -75,7 +79,7 @@ struct DateIntervalNavigatorView<Content: View>: View {
                     Button {
                         selectedDate = viewModel.navigateDateTime(selectedDate, to: .today, byAdding: dateTimeInterval)
                     } label: {
-                        TextPlain("Today", color: isEditing ? Color.disabledForeground : Color.buttonForeground)
+                        TextPlain("Today", color: isEditing ? Color.disabledForeground : Color.textPrimaryForeground)
                     }
                 }
             }
@@ -135,7 +139,7 @@ struct DateIntervalNavigatorView<Content: View>: View {
         }
         .padding(.vertical, ConstantViews.mediumSpacing)
         .buttonStyle(ButtonScaleStyle())
-        .foregroundColor(isEditing ? Color.disabledForeground : Color.buttonForeground)
+        .foregroundColor(isEditing ? Color.disabledForeground : Color.textPrimaryForeground)
     }
 }
 

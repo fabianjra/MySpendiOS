@@ -115,7 +115,8 @@ struct TransactionHistoryView: View {
                                       selectedDate: $selectedDate,
                                       isEditing: $isEditing,
                                       showEditor: true,
-                                      trailingButtonDisabled: selectedListItems.isEmpty) {
+                                      trailingButtonDisabled: selectedListItems.isEmpty,
+                                      counterSelected: selectedListItems.count) {
                 selectedListItems.removeAll()
             } actionTrailingEdit: {
                 viewModel.showAlertDeleteMultiple = true
