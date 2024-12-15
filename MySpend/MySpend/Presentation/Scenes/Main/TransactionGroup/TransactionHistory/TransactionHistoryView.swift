@@ -63,7 +63,7 @@ struct TransactionHistoryView: View {
     }
     
     var menuSort: some View {
-        Section {
+        Section("Sort by") {
             Button {
                 if sortTransactionsBy == .byDateNewest {
                     sortTransactionsBy = .byDateOldest
