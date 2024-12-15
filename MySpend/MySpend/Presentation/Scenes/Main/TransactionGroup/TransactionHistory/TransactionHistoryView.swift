@@ -79,7 +79,7 @@ struct TransactionHistoryView: View {
                                       showEditor: true,
                                       trailingButtonDisabled: selectedListItems.isEmpty) {
                 selectedListItems.removeAll()
-            } actionTrailing: {
+            } actionTrailingEdit: {
                 viewModel.showAlertDeleteMultiple = true
             }
             
@@ -201,9 +201,10 @@ struct TransactionHistoryView: View {
     private func deleteMltipleTransactions() {
         Task {
             let result = await viewModel.deleteMltipleTransactions(selectedListItems)
-            selectedListItems.removeAll()
             
-            if result.status.isError {
+            if result.status.isSuccess {
+                selectedListItems.removeAll()
+            } else {
                 viewModel.errorMessage = result.message
             }
         }

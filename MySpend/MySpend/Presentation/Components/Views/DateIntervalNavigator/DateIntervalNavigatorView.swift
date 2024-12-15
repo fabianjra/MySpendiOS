@@ -18,21 +18,19 @@ struct DateIntervalNavigatorView: View {
     var showEditor: Bool = false
     var trailingButtonDisabled: Bool = true
     
-    var actionLeading: (() -> Void)? = nil
-    var actionTrailing: (() -> Void)? = nil
+    var actionLeadingEdit: (() -> Void)? = nil
+    var actionTrailingEdit: (() -> Void)? = nil
+    
+    var actionLeadingSort: (() -> Void)? = nil
     
     var body: some View {
         VStack {
-            timeInterval
-                .disabled(isEditing)
-                .animation(.default,value: isEditing)
-            
             if showEditor {
                 ZStack {
                     HStack {
                         Button {
                             isEditing.toggle()
-                            if let action = actionLeading { action() }
+                            if let action = actionLeadingEdit { action() }
                         } label: {
                             TextPlain(isEditing ? "Done" : "Edit")
                         }
@@ -40,15 +38,11 @@ struct DateIntervalNavigatorView: View {
                         Spacer()
                     }
                     
-                    navigator
-                        .buttonStyle(ButtonScaleStyle())
-                        .modifier(Show(isVisible: !isEditing))
-                    
                     HStack {
                         Spacer()
                         
                         Button {
-                            if let action = actionTrailing { action() }
+                            if let action = actionTrailingEdit { action() }
                         } label: {
                             TextPlain("Delete", color: trailingButtonDisabled ? Color.disabledForeground : Color.alert)
                         }
@@ -56,12 +50,38 @@ struct DateIntervalNavigatorView: View {
                         .modifier(Show(isVisible: isEditing))
                     }
                 }
-                .foregroundColor(Color.buttonForeground)
-            } else {
-                navigator
-                    .buttonStyle(ButtonScaleStyle())
-                    .foregroundColor(Color.buttonForeground)
             }
+            
+            timeInterval
+                .disabled(isEditing)
+                .animation(.default,value: isEditing)
+            
+            ZStack {
+                HStack {
+                    if showEditor {
+                        Button {
+                            if let action = actionLeadingSort { action() }
+                        } label: {
+                            TextPlain("Sort", color: isEditing ? Color.disabledForeground : Color.buttonForeground)
+                        }
+                    }
+                    
+                    Spacer()
+                }
+                
+                navigator
+                
+                HStack {
+                    Spacer()
+                    
+                    Button {
+                        selectedDate = viewModel.navigateDateTime(selectedDate, to: .today, byAdding: dateTimeInterval)
+                    } label: {
+                        TextPlain("Today", color: isEditing ? Color.disabledForeground : Color.buttonForeground)
+                    }
+                }
+            }
+            .disabled(isEditing)
         }
     }
     
@@ -87,10 +107,6 @@ struct DateIntervalNavigatorView: View {
                            height: FrameSize.height.buttonSelectValueInterval)
                     .padding(.leading, ConstantViews.bigSpacing)
                     .contentShape(Rectangle())
-//                        .clipShape(.rect(
-//                            topLeadingRadius: .infinity,
-//                            bottomLeadingRadius: .infinity)
-//                        )
             }
             
             
@@ -99,7 +115,7 @@ struct DateIntervalNavigatorView: View {
             } label: {
                 let header = viewModel.getHeader(selectedDate, by: dateTimeInterval)
                 
-                TextPlain(header)
+                TextPlain(header, color: isEditing ? Color.disabledForeground : Color.buttonForeground)
                     .frame(width: FrameSize.width.buttonSelectValueIntervalCenter,
                            height: FrameSize.height.buttonSelectValueInterval)
                     .contentShape(Rectangle())
@@ -120,21 +136,34 @@ struct DateIntervalNavigatorView: View {
             }
         }
         .padding(.vertical, ConstantViews.mediumSpacing)
+        .buttonStyle(ButtonScaleStyle())
+        .foregroundColor(isEditing ? Color.disabledForeground : Color.buttonForeground)
     }
 }
 
-#Preview {
+#Preview("With editor and without") {
     @Previewable @State var dateTimeInterval = DateTimeInterval.month
     @Previewable @State var selectedDate = Date()
     @Previewable @State var isEditing = false
     @Previewable @State var trailingButtonDisabled = true
     
     VStack {
+        Spacer()
+        
         DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval,
                                   selectedDate: $selectedDate,
                                   isEditing: $isEditing,
                                   showEditor: true,
                                   trailingButtonDisabled: trailingButtonDisabled)
-            .background(Color.backgroundBottom.opacity(0.8))
+        .background(Color.backgroundBottom.opacity(0.8))
+        
+        Spacer()
+        
+        DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval,
+                                  selectedDate: $selectedDate,
+                                  isEditing: .constant(false))
+        .background(Color.backgroundBottom.opacity(0.8))
+        
+        Spacer()
     }
 }
