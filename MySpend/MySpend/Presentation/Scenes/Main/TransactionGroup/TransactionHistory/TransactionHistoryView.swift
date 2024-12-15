@@ -55,7 +55,7 @@ struct TransactionHistoryView: View {
             print("Router count HISTORY: \(Router.shared.path.count)")
         }
         .sheet(isPresented: $viewModel.showModifyTransactionModal) {
-            AddModifyTransactionView(model: $selectedModel, selectedDate: $selectedDate)
+            AddModifyTransactionView(model: $selectedModel, selectedDate: $selectedModel.dateTransaction)
                 .presentationDetents([.large])
                 .presentationCornerRadius(ConstantRadius.cornersModal)
         }
@@ -157,7 +157,6 @@ struct TransactionHistoryView: View {
                                 } else {
                                     selectedModel = item
                                     viewModel.showModifyTransactionModal = true
-                                    
                                 }
                             }
                             
@@ -206,6 +205,7 @@ struct TransactionHistoryView: View {
                         } label: {
                             Label.edit
                         }
+                        .tint(Color.warning)
                     }
                     .alert("Delete transaction", isPresented: $viewModel.showAlertDelete) {
                         Button("Delete", role: .destructive) { delete() }
