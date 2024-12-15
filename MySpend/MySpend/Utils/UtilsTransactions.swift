@@ -35,10 +35,10 @@ struct UtilsTransactions {
                 sortedTransactions.sort(by: { $0.amount < $1.amount })
                 
             case .byCategoryNameAz:
-                sortedTransactions.sort(by: { $0.category.name > $1.category.name })
+                sortedTransactions.sort(by: { $0.category.name < $1.category.name })
                 
             case .byCategoryNameZa:
-                sortedTransactions.sort(by: { $0.category.name < $1.category.name })
+                sortedTransactions.sort(by: { $0.category.name > $1.category.name })
             }
         }
         
