@@ -6,7 +6,10 @@
 //
 
 enum SortTransactions {
-    case byDate
-    case byAmount
-    case byCategoryName
+    case byDateNewest
+    case byDateOldest
+    case byAmountHigher
+    case byAmountLower
+    case byCategoryNameAz
+    case byCategoryNameZa
 }

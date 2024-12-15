@@ -22,14 +22,23 @@ struct UtilsTransactions {
         
         if let sortTransactions = sortTransactions {
             switch sortTransactions {
-            case .byDate:
+            case .byDateNewest:
                 sortedTransactions.sort(by: { $0.dateTransaction > $1.dateTransaction })
+            
+            case .byDateOldest:
+                sortedTransactions.sort(by: { $0.dateTransaction < $1.dateTransaction })
                 
-            case .byAmount:
+            case .byAmountHigher:
                 sortedTransactions.sort(by: { $0.amount > $1.amount })
                 
-            case .byCategoryName:
+            case .byAmountLower:
+                sortedTransactions.sort(by: { $0.amount < $1.amount })
+                
+            case .byCategoryNameAz:
                 sortedTransactions.sort(by: { $0.category.name > $1.category.name })
+                
+            case .byCategoryNameZa:
+                sortedTransactions.sort(by: { $0.category.name < $1.category.name })
             }
         }
         

@@ -20,7 +20,7 @@ struct TransactionHistoryView: View {
     @State private var isEditing = false
     @State private var selectedListItems = Set<TransactionModel>()
     
-    @State private var sortTransactionsBy: SortTransactions = .byDate
+    @State private var sortTransactionsBy: SortTransactions = .byDateNewest
     
     var body: some View {
         ContentContainer {
@@ -65,21 +65,33 @@ struct TransactionHistoryView: View {
     var menuSort: some View {
         Section {
             Button {
-                sortTransactionsBy = .byDate
+                if sortTransactionsBy == .byDateNewest {
+                    sortTransactionsBy = .byDateOldest
+                } else {
+                    sortTransactionsBy = .byDateNewest
+                }
             } label: {
-                Label.dateNewestFirst
+                sortTransactionsBy == .byDateNewest ? Label.dateOldestFirst : Label.dateNewestFirst
             }
             
             Button {
-                sortTransactionsBy = .byAmount
+                if sortTransactionsBy == .byAmountHigher {
+                    sortTransactionsBy = .byAmountLower
+                } else {
+                    sortTransactionsBy = .byAmountHigher
+                }
             } label: {
-                Label.amountHighesttFirst
+                sortTransactionsBy == .byAmountHigher ? Label.amountLowestFirst : Label.amountHighesttFirst
             }
             
             Button {
-                sortTransactionsBy = .byCategoryName
+                if sortTransactionsBy == .byCategoryNameAz {
+                    sortTransactionsBy = .byCategoryNameZa
+                } else {
+                    sortTransactionsBy = .byCategoryNameAz
+                }
             } label: {
-                Label.categoryNameAz
+                sortTransactionsBy == .byCategoryNameAz ? Label.categoryNameZa : Label.categoryNameAz
             }
         }
     }
