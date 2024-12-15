@@ -14,4 +14,5 @@ struct ConstantColors {
     
     static let circle = "circle"
     static let circleFill = "circle.fill"
+    static let checkmarkCircleFill = "checkmark.circle.fill"
 }

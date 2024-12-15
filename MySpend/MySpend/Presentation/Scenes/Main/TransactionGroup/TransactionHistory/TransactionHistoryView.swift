@@ -91,7 +91,7 @@ struct TransactionHistoryView: View {
                         HStack {
                             
                             if isEditing {
-                                Image(systemName: selectedListItems.contains(item) ? ConstantColors.circleFill : ConstantColors.circle)
+                                Image(systemName: selectedListItems.contains(item) ? ConstantColors.checkmarkCircleFill : ConstantColors.circle)
                                     .foregroundStyle(Color.alert)
                                     .transition(.scale.combined(with: .move(edge: .leading)))
                                     .onTapGesture {
@@ -200,6 +200,7 @@ struct TransactionHistoryView: View {
     private func deleteMltipleTransactions() {
         Task {
             let result = await viewModel.deleteMltipleTransactions(selectedListItems)
+            selectedListItems.removeAll()
             
             if result.status.isError {
                 viewModel.errorMessage = result.message
