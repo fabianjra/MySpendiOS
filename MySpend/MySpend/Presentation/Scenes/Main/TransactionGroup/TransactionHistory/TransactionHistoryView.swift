@@ -54,10 +54,11 @@ struct TransactionHistoryView: View {
         .onAppear {
             print("Router count HISTORY: \(Router.shared.path.count)")
         }
+        .sheet(isPresented: $viewModel.showNewTransactionModal) {
+            AddModifyTransactionView(selectedDate: $selectedDate)
+        }
         .sheet(isPresented: $viewModel.showModifyTransactionModal) {
             AddModifyTransactionView(model: $selectedModel, selectedDate: $selectedModel.dateTransaction)
-                .presentationDetents([.large])
-                .presentationCornerRadius(ConstantRadius.cornersModal)
         }
         .disabled(viewModel.isLoadingSecondary)
     }

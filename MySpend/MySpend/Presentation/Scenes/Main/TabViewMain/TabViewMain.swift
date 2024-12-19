@@ -49,8 +49,6 @@ struct TabViewMain: View {
         }
         .sheet(isPresented: $showNewTransactionModal) {
             AddModifyTransactionView(selectedDate: $selectedDate)
-                .presentationDetents([.large])
-                .presentationCornerRadius(ConstantRadius.cornersModal)
         }
     }
     
