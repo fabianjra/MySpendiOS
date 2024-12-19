@@ -14,7 +14,7 @@ struct TextFieldNotes: View {
     
     var body: some View {
         TextField("",text: $text,
-                  prompt: Text(placeHolder).foregroundColor(.textFieldPlaceholder))
+                  prompt: Text(placeHolder).foregroundColor(.textFieldPlaceholder), axis: .vertical)
         
         .textFieldStyle(TextFieldIconStyle($text,
                                            textLimit: ConstantViews.textMaxLength,
