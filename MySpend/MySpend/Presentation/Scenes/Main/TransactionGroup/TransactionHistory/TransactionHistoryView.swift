@@ -17,17 +17,17 @@ struct TransactionHistoryView: View {
     
     @State private var selectedModel = TransactionModel()
     
-    @State private var isEditing = false
-    @State private var selectedListItems = Set<TransactionModel>()
-    
-    @State private var sortTransactionsBy: SortTransactions = .byDateNewest
-    
     var body: some View {
         ContentContainer {
             
             HeaderNavigator(title: "History",
                             titleWeight: .regular,
-                            titleSize: .bigXL)
+                            titleSize: .bigXL,
+                            showTrailingAction: true,
+                            trailingImage: Image.plus,
+                            trailingAction: {
+                viewModel.showNewTransactionModal = true
+            })
             .padding(.bottom)
             
             ZStack {
@@ -65,33 +65,33 @@ struct TransactionHistoryView: View {
     var menuSort: some View {
         Section("Sort by") {
             Button {
-                if sortTransactionsBy == .byDateNewest {
-                    sortTransactionsBy = .byDateOldest
+                if viewModel.sortTransactionsBy == .byDateNewest {
+                    viewModel.sortTransactionsBy = .byDateOldest
                 } else {
-                    sortTransactionsBy = .byDateNewest
+                    viewModel.sortTransactionsBy = .byDateNewest
                 }
             } label: {
-                sortTransactionsBy == .byDateNewest ? Label.dateOldestFirst : Label.dateNewestFirst
+                viewModel.sortTransactionsBy == .byDateNewest ? Label.dateOldestFirst : Label.dateNewestFirst
             }
             
             Button {
-                if sortTransactionsBy == .byAmountHigher {
-                    sortTransactionsBy = .byAmountLower
+                if viewModel.sortTransactionsBy == .byAmountHigher {
+                    viewModel.sortTransactionsBy = .byAmountLower
                 } else {
-                    sortTransactionsBy = .byAmountHigher
+                    viewModel.sortTransactionsBy = .byAmountHigher
                 }
             } label: {
-                sortTransactionsBy == .byAmountHigher ? Label.amountLowestFirst : Label.amountHighesttFirst
+                viewModel.sortTransactionsBy == .byAmountHigher ? Label.amountLowestFirst : Label.amountHighesttFirst
             }
             
             Button {
-                if sortTransactionsBy == .byCategoryNameAz {
-                    sortTransactionsBy = .byCategoryNameZa
+                if viewModel.sortTransactionsBy == .byCategoryNameAz {
+                    viewModel.sortTransactionsBy = .byCategoryNameZa
                 } else {
-                    sortTransactionsBy = .byCategoryNameAz
+                    viewModel.sortTransactionsBy = .byCategoryNameAz
                 }
             } label: {
-                sortTransactionsBy == .byCategoryNameAz ? Label.categoryNameZa : Label.categoryNameAz
+                viewModel.sortTransactionsBy == .byCategoryNameAz ? Label.categoryNameZa : Label.categoryNameAz
             }
         }
     }
@@ -113,11 +113,11 @@ struct TransactionHistoryView: View {
             
             DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval,
                                       selectedDate: $selectedDate,
-                                      isEditing: $isEditing,
+                                      isEditing: $viewModel.isEditing,
                                       showEditor: true,
-                                      trailingButtonDisabled: selectedListItems.isEmpty,
-                                      counterSelected: selectedListItems.count) {
-                selectedListItems.removeAll()
+                                      trailingButtonDisabled: viewModel.selectedListItems.isEmpty,
+                                      counterSelected: viewModel.selectedListItems.count) {
+                viewModel.selectedListItems.removeAll()
             } actionTrailingEdit: {
                 viewModel.showAlertDeleteMultiple = true
             } contentLeadingSort: {
@@ -127,14 +127,14 @@ struct TransactionHistoryView: View {
             let transactionsFiltered = UtilsTransactions.filteredTransactions(selectedDate,
                                                                               transactions: transactionsLoaded,
                                                                               for: dateTimeInterval,
-                                                                              sortTransactions: sortTransactionsBy)
+                                                                              sortTransactions: viewModel.sortTransactionsBy)
             
             List {
                 ForEach(transactionsFiltered, id: \.self) { item in
                     VStack {
                         HStack {
-                            if isEditing {
-                                Image(systemName: selectedListItems.contains(item) ? ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle)
+                            if viewModel.isEditing {
+                                Image(systemName: viewModel.selectedListItems.contains(item) ? ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle)
                                     .foregroundStyle(Color.alert)
                                     .transition(.scale.combined(with: .move(edge: .leading)))
                             }
@@ -148,11 +148,11 @@ struct TransactionHistoryView: View {
                             
                             
                             Button("") {
-                                if isEditing {
-                                    if selectedListItems.contains(item) {
-                                        selectedListItems.remove(item)
+                                if viewModel.isEditing {
+                                    if viewModel.selectedListItems.contains(item) {
+                                        viewModel.selectedListItems.remove(item)
                                     } else {
-                                        selectedListItems.insert(item)
+                                        viewModel.selectedListItems.insert(item)
                                     }
                                 } else {
                                     selectedModel = item
@@ -226,8 +226,8 @@ struct TransactionHistoryView: View {
             .listStyle(.plain)
             .scrollIndicators(.hidden)
             .animation(.default, value: transactionsFiltered.count)
-            .animation(.default, value: isEditing)
-            .animation(.default, value: sortTransactionsBy)
+            .animation(.default, value: viewModel.isEditing)
+            .animation(.default, value: viewModel.sortTransactionsBy)
             
             TotalBalanceView(transactions: transactionsFiltered, showTotalBalance: false, addBottomSpacing: false)
         }
@@ -245,11 +245,9 @@ struct TransactionHistoryView: View {
     
     private func deleteMltipleTransactions() {
         Task {
-            let result = await viewModel.deleteMltipleTransactions(selectedListItems)
+            let result = await viewModel.deleteMltipleTransactions()
             
-            if result.status.isSuccess {
-                selectedListItems.removeAll()
-            } else {
+            if result.status.isError {
                 viewModel.errorMessage = result.message
             }
         }
