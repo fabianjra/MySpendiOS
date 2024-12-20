@@ -56,9 +56,15 @@ struct TransactionHistoryView: View {
         }
         .sheet(isPresented: $viewModel.showNewTransactionModal) {
             AddModifyTransactionView(selectedDate: $selectedDate)
+                .presentationDetents([.large])
+                .presentationCornerRadius(ConstantRadius.cornersModal)
+
         }
         .sheet(isPresented: $viewModel.showModifyTransactionModal) {
             AddModifyTransactionView(model: $selectedModel, selectedDate: $selectedModel.dateTransaction)
+                .presentationDetents([.large])
+                .presentationCornerRadius(ConstantRadius.cornersModal)
+
         }
         .disabled(viewModel.isLoadingSecondary)
     }

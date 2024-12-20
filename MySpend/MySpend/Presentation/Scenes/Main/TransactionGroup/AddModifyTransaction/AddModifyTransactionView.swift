@@ -180,8 +180,6 @@ struct AddModifyTransactionView: View {
                 }
             }
         }
-        .presentationDetents([.large])
-        .presentationCornerRadius(ConstantRadius.cornersModal)
         .disabled(viewModel.isLoading || viewModel.isLoadingSecondary)
     }
     
