@@ -117,12 +117,10 @@ struct TransactionHistoryView: View {
     
     var transactionsList: some View {
         VStack {
-            
             DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval,
                                       selectedDate: $selectedDate,
                                       isEditing: $viewModel.isEditing,
                                       showEditor: true,
-                                      trailingButtonDisabled: viewModel.selectedListItems.isEmpty,
                                       counterSelected: viewModel.selectedListItems.count) {
                 viewModel.selectedListItems.removeAll()
             } actionTrailingEdit: {
@@ -197,6 +195,9 @@ struct TransactionHistoryView: View {
                     .frame(height: FrameSize.height.rowForListTransactionHistory)
                     .listRowInsets(EdgeInsets(top: .zero, leading: .zero, bottom: .zero, trailing: .zero))
                     .listRowSeparatorTint(Color.textPrimaryForeground.opacity(ConstantColors.opacityHalf))
+                    
+                    // MARK: SWIPE ACTIONS:
+                    
                     .swipeActions(edge: .trailing) {
                         Button {
                             selectedModel = item
@@ -214,12 +215,18 @@ struct TransactionHistoryView: View {
                         }
                         .tint(Color.warning)
                     }
+                    
+                    // MARK: DELETE TRANSACTION SINGLE
+                    
                     .alert("Delete transaction", isPresented: $viewModel.showAlertDelete) {
                         Button("Delete", role: .destructive) { delete() }
                         Button("Cancel", role: .cancel) { }
                     } message: {
                         Text("Want to delete this transaction? \n This action cannot be undone.")
                     }
+                    
+                    // MARK: DELETE TRANSACTION MULTIPLE
+                    
                     .alert("Delete transactions", isPresented: $viewModel.showAlertDeleteMultiple) {
                         Button("Delete", role: .destructive) { deleteMltipleTransactions() }
                         Button("Cancel", role: .cancel) { }
