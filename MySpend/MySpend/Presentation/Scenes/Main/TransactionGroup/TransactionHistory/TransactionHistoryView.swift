@@ -56,54 +56,34 @@ struct TransactionHistoryView: View {
         }
         .sheet(isPresented: $viewModel.showNewTransactionModal) {
             AddModifyTransactionView(selectedDate: $selectedDate)
-                .presentationDetents([.large])
-                .presentationCornerRadius(ConstantRadius.cornersModal)
-
         }
         .sheet(isPresented: $viewModel.showModifyTransactionModal) {
             AddModifyTransactionView(model: $selectedModel, selectedDate: $selectedModel.dateTransaction)
-                .presentationDetents([.large])
-                .presentationCornerRadius(ConstantRadius.cornersModal)
-
         }
         .disabled(viewModel.isLoadingSecondary)
     }
     
-    var menuSort: some View {
-        Section("Sort by") {
-            Button {
-                if viewModel.sortTransactionsBy == .byDateNewest {
-                    viewModel.sortTransactionsBy = .byDateOldest
-                } else {
-                    viewModel.sortTransactionsBy = .byDateNewest
-                }
-            } label: {
-                viewModel.sortTransactionsBy == .byDateNewest ? Label.dateOldestFirst : Label.dateNewestFirst
+    private func sortButton(for sortingOption: SortTransactions) -> some View {
+        Button {
+            if viewModel.sortTransactionsBy == sortingOption {
+                viewModel.sortTransactionsBy = sortingOption.toggled
+            } else {
+                viewModel.sortTransactionsBy = sortingOption
             }
-            
-            Button {
-                if viewModel.sortTransactionsBy == .byAmountHigher {
-                    viewModel.sortTransactionsBy = .byAmountLower
-                } else {
-                    viewModel.sortTransactionsBy = .byAmountHigher
-                }
-            } label: {
-                viewModel.sortTransactionsBy == .byAmountHigher ? Label.amountLowestFirst : Label.amountHighesttFirst
-            }
-            
-            Button {
-                if viewModel.sortTransactionsBy == .byCategoryNameAz {
-                    viewModel.sortTransactionsBy = .byCategoryNameZa
-                } else {
-                    viewModel.sortTransactionsBy = .byCategoryNameAz
-                }
-            } label: {
-                viewModel.sortTransactionsBy == .byCategoryNameAz ? Label.categoryNameZa : Label.categoryNameAz
-            }
+        } label: {
+            viewModel.sortTransactionsBy == sortingOption ? sortingOption.label() : sortingOption.label(inverted: false)
         }
     }
     
-    var emptyView: some View {
+    private var menuSort: some View {
+        Section("Sort by") {
+            sortButton(for: .byDateNewest)
+            sortButton(for: .byAmountHigher)
+            sortButton(for: .byCategoryNameAz)
+        }
+    }
+    
+    private var emptyView: some View {
         VStack {
             Spacer()
             TextPlain("No transactions",
@@ -115,7 +95,7 @@ struct TransactionHistoryView: View {
         }
     }
     
-    var transactionsList: some View {
+    private var transactionsList: some View {
         VStack {
             DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval,
                                       selectedDate: $selectedDate,

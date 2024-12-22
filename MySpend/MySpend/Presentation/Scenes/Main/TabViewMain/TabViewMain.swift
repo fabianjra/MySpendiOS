@@ -48,10 +48,7 @@ struct TabViewMain: View {
             AppState.shared.swipeEnabled = true
         }
         .sheet(isPresented: $showNewTransactionModal) {
-            // The "presentation" options should be here, because when those are inside the view, sometimes they are not applied.
             AddModifyTransactionView(selectedDate: $selectedDate)
-                .presentationDetents([.large])
-                .presentationCornerRadius(ConstantRadius.cornersModal)
         }
     }
     

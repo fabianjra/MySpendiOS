@@ -5,11 +5,41 @@
 //  Created by Fabian Rodriguez on 15/12/24.
 //
 
+import SwiftUI
+
 enum SortTransactions {
     case byDateNewest
     case byDateOldest
+    
     case byAmountHigher
     case byAmountLower
+    
     case byCategoryNameAz
     case byCategoryNameZa
+    
+    var toggled: SortTransactions {
+        switch self {
+        case .byDateNewest: return .byDateOldest
+        case .byDateOldest: return .byDateNewest
+            
+        case .byAmountHigher: return .byAmountLower
+        case .byAmountLower: return .byAmountHigher
+            
+        case .byCategoryNameAz: return .byCategoryNameZa
+        case .byCategoryNameZa: return .byCategoryNameAz
+        }
+    }
+    
+    func label(inverted: Bool = true) -> some View {
+        switch self {
+        case .byDateNewest: return inverted ? Label.dateOldestFirst : Label.dateNewestFirst
+        case .byDateOldest: return inverted ? Label.dateNewestFirst : Label.dateOldestFirst
+            
+        case .byAmountHigher: return inverted ? Label.amountLowestFirst : Label.amountHighesttFirst
+        case .byAmountLower: return inverted ? Label.amountHighesttFirst : Label.amountLowestFirst
+            
+        case .byCategoryNameAz: return inverted ? Label.categoryNameZa : Label.categoryNameAz
+        case .byCategoryNameZa: return inverted ? Label.categoryNameAz : Label.categoryNameZa
+        }
+    }
 }

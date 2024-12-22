@@ -180,6 +180,9 @@ struct AddModifyTransactionView: View {
                 }
             }
         }
+        // This modal sometimes dont apply the corner radius. It looks like is a SwiftUI Bug..
+        .presentationDetents([.large])
+        .presentationCornerRadius(ConstantRadius.cornersModal)
         .disabled(viewModel.isLoading || viewModel.isLoadingSecondary)
     }
     
