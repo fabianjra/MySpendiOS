@@ -24,4 +24,12 @@ extension Label where Title == Text, Icon == Image {
     
     static let categoryNameAz = Label("Category name (A-Z)", systemImage: ConstantSystemImage.arrowDown)
     static let categoryNameZa = Label("Category name (Z-A)", systemImage: ConstantSystemImage.arrowUp)
+    
+    // MARK: MENU SORT CATEGORIES
+    
+    static let creationNewestFirst = Label("Creation (Newest first)", systemImage: ConstantSystemImage.arrowUp)
+    static let creationOldestFirst = Label("Creation (Oldest first)", systemImage: ConstantSystemImage.arrowDown)
+    
+    static let nameAz = Label("Name (A-Z)", systemImage: ConstantSystemImage.arrowDown)
+    static let nameZa = Label("Name (Z-A)", systemImage: ConstantSystemImage.arrowUp)
 }

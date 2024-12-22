@@ -66,7 +66,7 @@ struct TransactionHistoryView: View {
     private func sortButton(for sortingOption: SortTransactions) -> some View {
         Button {
             if viewModel.sortTransactionsBy == sortingOption {
-                viewModel.sortTransactionsBy = sortingOption.toggled
+                viewModel.sortTransactionsBy = sortingOption.toggle
             } else {
                 viewModel.sortTransactionsBy = sortingOption
             }

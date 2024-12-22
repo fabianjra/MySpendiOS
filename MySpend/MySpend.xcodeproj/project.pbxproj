@@ -100,6 +100,7 @@
 		1F753AB52D17AD6A00139AF9 /* ListEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F753AB42D17AD6A00139AF9 /* ListEditorView.swift */; };
 		1F753AB72D17B34500139AF9 /* MenuContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F753AB62D17B34500139AF9 /* MenuContainer.swift */; };
 		1F753AB92D17B6C300139AF9 /* RowLCTCointainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F753AB82D17B69800139AF9 /* RowLCTCointainer.swift */; };
+		1F753ABB2D17E3FE00139AF9 /* SortCategories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F753ABA2D17E3F700139AF9 /* SortCategories.swift */; };
 		1F7ABD262CCC5CED0023FBA4 /* DatePickerModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7ABD252CCC5CE80023FBA4 /* DatePickerModalView.swift */; };
 		1F7ABD2C2CCC6A760023FBA4 /* TransactionHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7ABD2B2CCC6A760023FBA4 /* TransactionHistoryView.swift */; };
 		1F7B0B662CA7240200FD30D5 /* UserDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7B0B652CA723FF00FD30D5 /* UserDatabase.swift */; };
@@ -273,6 +274,7 @@
 		1F753AB42D17AD6A00139AF9 /* ListEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListEditorView.swift; sourceTree = "<group>"; };
 		1F753AB62D17B34500139AF9 /* MenuContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuContainer.swift; sourceTree = "<group>"; };
 		1F753AB82D17B69800139AF9 /* RowLCTCointainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowLCTCointainer.swift; sourceTree = "<group>"; };
+		1F753ABA2D17E3F700139AF9 /* SortCategories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortCategories.swift; sourceTree = "<group>"; };
 		1F7ABD252CCC5CE80023FBA4 /* DatePickerModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerModalView.swift; sourceTree = "<group>"; };
 		1F7ABD2B2CCC6A760023FBA4 /* TransactionHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionHistoryView.swift; sourceTree = "<group>"; };
 		1F7B0B652CA723FF00FD30D5 /* UserDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDatabase.swift; sourceTree = "<group>"; };
@@ -382,6 +384,7 @@
 			isa = PBXGroup;
 			children = (
 				1F6A7B432D0EADB0009CC276 /* SortTransactions.swift */,
+				1F753ABA2D17E3F700139AF9 /* SortCategories.swift */,
 				1F09221D2D02984700F59EA5 /* ProcessType.swift */,
 				1F9B0E0B2CE8564A00787245 /* TimeNavigate.swift */,
 				1F171F282A7CC90D00A0A33E /* Emojis.swift */,
@@ -1240,6 +1243,7 @@
 				1F4C24832A47A6DA00CCAF6D /* MySpendApp.swift in Sources */,
 				1F20E7782CC1C62A0061CDB8 /* TextFieldCategoryName.swift in Sources */,
 				1F65D95F2C7287CC0023CC5D /* TransactionHistoryViewModel.swift in Sources */,
+				1F753ABB2D17E3FE00139AF9 /* SortCategories.swift in Sources */,
 				1F6812FD2CF2A65600822471 /* DateIntervalNavigatorViewModel.swift in Sources */,
 				1F2775DD2CF579CB00A0351D /* MockTransactions.swift in Sources */,
 				1FB8BB9B2A5BB1E4002DED1F /* RoundedCornersShape.swift in Sources */,

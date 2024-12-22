@@ -17,7 +17,7 @@ enum SortTransactions {
     case byCategoryNameAz
     case byCategoryNameZa
     
-    var toggled: SortTransactions {
+    var toggle: SortTransactions {
         switch self {
         case .byDateNewest: return .byDateOldest
         case .byDateOldest: return .byDateNewest
