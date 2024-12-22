@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ButtonRounded: View {
     
+    @Environment(\.isEnabled) private var isEnabled: Bool
+    
     let icon: Image = Image.plus
     let color: Color = Color.primaryLeading
     let action: () -> Void
@@ -22,7 +24,7 @@ struct ButtonRounded: View {
                 .foregroundColor(Color.buttonForeground)
         }
         .padding()
-        .background(color)
+        .background(isEnabled ? color : Color.disabledBackground)
         .overlay(Circle().stroke(Color.buttonForeground,
                                  lineWidth: ConstantViews.buttonBorderWidth))
         .clipShape(Circle())
@@ -36,4 +38,7 @@ struct ButtonRounded: View {
 
 #Preview {
     ButtonRounded(action: { })
+    
+    ButtonRounded(action: { })
+        .disabled(true)
 }

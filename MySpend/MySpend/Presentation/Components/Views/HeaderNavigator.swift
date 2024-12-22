@@ -30,6 +30,7 @@ struct HeaderNavigator: View {
     
     // MARK: RIGHT ACTION (to dimiss by default)
     var showTrailingAction: Bool = false
+    var disabledTrailingAction: Bool = false
     var trailingImage: Image = Image.xmarkCircle
     var trailingAction: (() -> Void)? = nil //Optional because dont need to excecute everytime this view is called.
 
@@ -60,7 +61,7 @@ struct HeaderNavigator: View {
                 
                 Spacer()
                 
-                ButtonNavigation(image: trailingImage, tintColor: textColor) {
+                ButtonNavigation(image: trailingImage, tintColor: disabledTrailingAction ? Color.disabledForeground :textColor) {
                     if let trailingAction = trailingAction {
                         trailingAction()
                     } else {
@@ -68,6 +69,7 @@ struct HeaderNavigator: View {
                     }
                 }
                 .modifier(Show(isVisible: showTrailingAction))
+                .disabled(disabledTrailingAction)
                 .padding(.trailing)
             }
         }

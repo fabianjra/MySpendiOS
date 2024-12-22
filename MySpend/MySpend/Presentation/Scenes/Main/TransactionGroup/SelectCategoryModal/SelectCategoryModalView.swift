@@ -65,7 +65,7 @@ struct SelectCategoryModalView: View {
                 }
                 
                 ButtonRounded {
-                    viewModel.showNewItemModal = true
+                    viewModel.showNewCategoryModal = true
                 }
                 .padding(.trailing, ConstantViews.paddingButtonAddCategory)
                 .padding(.bottom, ConstantViews.paddingButtonAddCategory)
@@ -74,7 +74,7 @@ struct SelectCategoryModalView: View {
         .onAppear {
             viewModel.fetchData()
         }
-        .sheet(isPresented: $viewModel.showNewItemModal) {
+        .sheet(isPresented: $viewModel.showNewCategoryModal) {
             AddModifyCategoryView(categoryType: $categoryType)
                 .presentationDetents([.large])
                 .presentationCornerRadius(ConstantRadius.cornersModal)

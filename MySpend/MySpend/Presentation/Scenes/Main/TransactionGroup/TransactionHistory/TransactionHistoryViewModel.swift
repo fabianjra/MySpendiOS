@@ -15,7 +15,7 @@ class TransactionHistoryViewModel: BaseViewModel {
     @Published var showModifyTransactionModal = false
     
     @Published var isEditing = false
-    @Published var selectedListItems = Set<TransactionModel>()
+    @Published var selectedTransactions = Set<TransactionModel>()
     @Published var sortTransactionsBy: SortTransactions = .byDateNewest
     
     func deleteTransaction(_ model: TransactionModel) async -> ResponseModel {
@@ -40,11 +40,11 @@ class TransactionHistoryViewModel: BaseViewModel {
         
         await performWithLoaderSecondary {
             do {
-                let selectedDocumentIds = self.selectedListItems.map { $0.id }
+                let selectedDocumentIds = self.selectedTransactions.map { $0.id }
 
                 try await Repository().deleteDocuments(selectedDocumentIds, forSubCollection: .transactions)
                 
-                self.selectedListItems.removeAll()
+                self.selectedTransactions.removeAll()
                 response = ResponseModel(.successful)
             } catch {
                 Logs.WriteCatchExeption(error: error)

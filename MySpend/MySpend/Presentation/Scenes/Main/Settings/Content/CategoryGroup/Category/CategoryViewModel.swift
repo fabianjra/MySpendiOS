@@ -12,9 +12,19 @@ class CategoryViewModel: BaseViewModel {
     @Published var categories: [CategoryModel]
     @Published var categoryType: TransactionType = .expense
     
-    @Published var showNewItemModal = false
-    @Published var showModifyItemModal = false
+    // MARK: EDIT
+    @Published var isEditing: Bool = false
+    @Published var selectedCategories = Set<CategoryModel>()
+    
+    // MARK: SORT
+    @Published var sortCategoriesBy: SortCategories = .byNameAz
+    
+    // MARK: MODALS AND POPUPS
+    @Published var showNewCategoryModal = false
+    @Published var showModifyCategoryModal = false
+    
     @Published var showAlertDelete = false
+    @Published var showAlertDeleteMultiple = false
     
     //init for Canvas Previews.
     init(categories: [CategoryModel] = []) {
@@ -107,6 +117,26 @@ class CategoryViewModel: BaseViewModel {
             do {
                 try await Repository().deleteDocument(model.id, forSubCollection: .categories)
                 
+                response = ResponseModel(.successful)
+            } catch {
+                Logs.WriteCatchExeption(error: error)
+                response = ResponseModel(.error, error.localizedDescription)
+            }
+        }
+        
+        return response
+    }
+    
+    func deleteMltipleCategories() async -> ResponseModel {
+        var response = ResponseModel()
+        
+        await performWithLoaderSecondary {
+            do {
+                let selectedDocumentIds = self.selectedCategories.map { $0.id }
+
+                try await Repository().deleteDocuments(selectedDocumentIds, forSubCollection: .categories)
+                
+                self.selectedCategories.removeAll()
                 response = ResponseModel(.successful)
             } catch {
                 Logs.WriteCatchExeption(error: error)

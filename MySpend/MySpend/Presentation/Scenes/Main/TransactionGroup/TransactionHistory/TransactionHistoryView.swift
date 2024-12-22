@@ -24,6 +24,7 @@ struct TransactionHistoryView: View {
                             titleWeight: .regular,
                             titleSize: .bigXL,
                             showTrailingAction: true,
+                            disabledTrailingAction: viewModel.isEditing,
                             trailingImage: Image.plus,
                             trailingAction: {
                 viewModel.showNewTransactionModal = true
@@ -101,10 +102,13 @@ struct TransactionHistoryView: View {
                                       selectedDate: $selectedDate,
                                       isEditing: $viewModel.isEditing,
                                       showEditor: true,
-                                      counterSelected: viewModel.selectedListItems.count) {
-                viewModel.selectedListItems.removeAll()
+                                      counterSelected: viewModel.selectedTransactions.count) {
+                
+                viewModel.selectedTransactions.removeAll()
+                
             } actionTrailingEdit: {
                 viewModel.showAlertDeleteMultiple = true
+                
             } contentLeadingSort: {
                 menuSort
             }
@@ -119,7 +123,7 @@ struct TransactionHistoryView: View {
                     VStack {
                         HStack {
                             if viewModel.isEditing {
-                                Image(systemName: viewModel.selectedListItems.contains(item) ? ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle)
+                                Image(systemName: viewModel.selectedTransactions.contains(item) ? ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle)
                                     .foregroundStyle(Color.alert)
                                     .transition(.scale.combined(with: .move(edge: .leading)))
                             }
@@ -134,10 +138,10 @@ struct TransactionHistoryView: View {
                             
                             Button("") {
                                 if viewModel.isEditing {
-                                    if viewModel.selectedListItems.contains(item) {
-                                        viewModel.selectedListItems.remove(item)
+                                    if viewModel.selectedTransactions.contains(item) {
+                                        viewModel.selectedTransactions.remove(item)
                                     } else {
-                                        viewModel.selectedListItems.insert(item)
+                                        viewModel.selectedTransactions.insert(item)
                                     }
                                 } else {
                                     selectedModel = item

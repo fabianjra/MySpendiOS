@@ -101,6 +101,7 @@
 		1F753AB72D17B34500139AF9 /* MenuContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F753AB62D17B34500139AF9 /* MenuContainer.swift */; };
 		1F753AB92D17B6C300139AF9 /* RowLCTCointainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F753AB82D17B69800139AF9 /* RowLCTCointainer.swift */; };
 		1F753ABB2D17E3FE00139AF9 /* SortCategories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F753ABA2D17E3F700139AF9 /* SortCategories.swift */; };
+		1F753ABD2D17F7B800139AF9 /* UtilsCategories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F753ABC2D17F7B300139AF9 /* UtilsCategories.swift */; };
 		1F7ABD262CCC5CED0023FBA4 /* DatePickerModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7ABD252CCC5CE80023FBA4 /* DatePickerModalView.swift */; };
 		1F7ABD2C2CCC6A760023FBA4 /* TransactionHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7ABD2B2CCC6A760023FBA4 /* TransactionHistoryView.swift */; };
 		1F7B0B662CA7240200FD30D5 /* UserDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7B0B652CA723FF00FD30D5 /* UserDatabase.swift */; };
@@ -275,6 +276,7 @@
 		1F753AB62D17B34500139AF9 /* MenuContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuContainer.swift; sourceTree = "<group>"; };
 		1F753AB82D17B69800139AF9 /* RowLCTCointainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowLCTCointainer.swift; sourceTree = "<group>"; };
 		1F753ABA2D17E3F700139AF9 /* SortCategories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortCategories.swift; sourceTree = "<group>"; };
+		1F753ABC2D17F7B300139AF9 /* UtilsCategories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilsCategories.swift; sourceTree = "<group>"; };
 		1F7ABD252CCC5CE80023FBA4 /* DatePickerModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerModalView.swift; sourceTree = "<group>"; };
 		1F7ABD2B2CCC6A760023FBA4 /* TransactionHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionHistoryView.swift; sourceTree = "<group>"; };
 		1F7B0B652CA723FF00FD30D5 /* UserDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDatabase.swift; sourceTree = "<group>"; };
@@ -430,6 +432,7 @@
 			children = (
 				1F19D96D2A4ACC3D00137EA0 /* Utils.swift */,
 				1F6813072CF2F3AD00822471 /* UtilsTransactions.swift */,
+				1F753ABC2D17F7B300139AF9 /* UtilsCategories.swift */,
 				1F2750F82C9D02F300AD4E31 /* UtilsCurrency.swift */,
 				1F6812F92CF2938C00822471 /* UtilsDate.swift */,
 				1FC94CC92A5A4588005CA0B6 /* Logs.swift */,
@@ -1236,6 +1239,7 @@
 				1F06414D2A7232D300C19084 /* RootView.swift in Sources */,
 				1F7486C32A6A3F770063AC35 /* ButtonRounded.swift in Sources */,
 				1F222F5E2C65DD080017A1BE /* TransactionViewModel.swift in Sources */,
+				1F753ABD2D17F7B800139AF9 /* UtilsCategories.swift in Sources */,
 				1F46B4142A79976F003A9550 /* LogContainer.swift in Sources */,
 				1FFA5D5A2A8B57CC00AC0519 /* AddModifyTransactionView.swift in Sources */,
 				1F5CC57E2A664EFB00C214FE /* TextFieldEmail.swift in Sources */,
