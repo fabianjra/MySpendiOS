@@ -18,7 +18,7 @@ struct IconListModalView: View {
                 
                 ForEach(CategoryIcons.allCases) { icon in
                     VStack {
-                        SectionContainer(header: icon.rawValue, isInsideList: false, headerSize: .body) {
+                        SectionContainer(icon.rawValue, isInsideList: false, textSize: .body) {
                             
                             let columns = [
                                 GridItem(.adaptive(minimum: ConstantViews.gridSpacing))

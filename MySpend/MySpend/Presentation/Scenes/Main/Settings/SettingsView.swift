@@ -17,7 +17,7 @@ struct SettingsView: View {
             ListContainer {
                 
                 // MARK: ACCOUNT
-                SectionContainer(header: "Account") {
+                SectionContainer("Account") {
                     ForEach(AccountOptions.allCases) { option in
                         if option.showOption {
                             HStack {
@@ -30,7 +30,7 @@ struct SettingsView: View {
                 }
                 
                 // MARK: CONTENT
-                SectionContainer(header: "Content") {
+                SectionContainer("Content") {
                     ForEach(ContentOptions.allCases) { option in
                         if option.showOption {
                             HStack {
@@ -43,7 +43,7 @@ struct SettingsView: View {
                 }
                 
                 // MARK: LOG OUT
-                SectionContainer(header: "Login") {
+                SectionContainer("Login") {
                     
                     Button("Log out") {
                         showAlert = true
