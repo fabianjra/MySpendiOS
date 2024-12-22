@@ -36,7 +36,7 @@ struct CategoryView: View {
                 
                 let categoriesFiltered = viewModel.categories
                     .filter { $0.categoryType == viewModel.categoryType }
-                    .sorted(by: { $0.dateCreated > $1.dateCreated })
+                    .sorted(by: { $0.name < $1.name })
                 
                 if categoriesFiltered.isEmpty {
                     NoContentView(title: "No categories",
