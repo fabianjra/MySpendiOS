@@ -32,15 +32,11 @@ struct TransactionHistoryView: View {
             .padding(.bottom)
             
             ZStack {
-                if viewModel.isLoadingSecondary {
-                    loader
-                }
-                
                 if transactionsLoaded.isEmpty {
                     emptyView
                 } else {
                     transactionsList
-                        .blur(radius: viewModel.isLoadingSecondary ? 1 : .zero)
+                        .disabled(viewModel.isLoadingSecondary)
                 }
             }
             
@@ -56,20 +52,9 @@ struct TransactionHistoryView: View {
         .sheet(isPresented: $viewModel.showModifyTransactionModal) {
             AddModifyTransactionView(model: $selectedModel, selectedDate: $selectedModel.dateTransaction)
         }
-        .disabled(viewModel.isLoadingSecondary)
     }
     
     // MARK: VIEWS
-    
-    private var loader: some View {
-        //TODO: TEMPORAL. ANALIZAR SI SE PUEDE UTILIZAR LOADER DE OTRA FORMA PARA QUE NO SE TENGA QUE MOSTRAR LLENANDO LA PANTALLA
-        LoaderView()
-            .background(.ultraThinMaterial)
-            .cornerRadius(ConstantRadius.corners)
-            .padding(ConstantViews.paddingLoaderView)
-            .frame(maxHeight: FrameSize.height.loaderSquareBackground,
-                   alignment: .center)
-    }
     
     private var emptyView: some View {
         VStack {
@@ -178,6 +163,13 @@ struct TransactionHistoryView: View {
                             //Removes the padding Trailing in the RowSeparator.
                             return viewDimensions[.listRowSeparatorTrailing]
                         }
+                        .opacity(viewModel.isLoadingSecondary && selectedModel.id == item.id ? .zero : 1)
+                        .overlay {
+                            if viewModel.isLoadingSecondary && selectedModel.id == item.id { //TODO: Agregar loader para cuando son varias transacciones. Aqui solo aplica para una.
+                                Loader()
+                                    .foregroundColor(Color.primaryLeading)
+                            }
+                        }
                     }
                     .frame(height: FrameSize.height.rowForListTransactionHistory)
                     .listRowInsets(EdgeInsets(top: .zero, leading: .zero, bottom: .zero, trailing: .zero))
@@ -240,7 +232,9 @@ struct TransactionHistoryView: View {
         Task {
             let result = await viewModel.deleteTransaction(selectedModel)
             
-            if result.status.isError {
+            if result.status.isSuccess {
+                selectedModel = TransactionModel() //Clean the selected transaction after deleting it.
+            } else {
                 viewModel.errorMessage = result.message
             }
         }
