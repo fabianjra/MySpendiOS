@@ -16,9 +16,9 @@ struct RowLCTCointainer<Leading: View, Center: View, Trailing: View>: View {
     private let trailingContent: () -> Trailing
     
     init(disabled: Bool = false,
-         @ViewBuilder leadingContent: @escaping () -> Leading,
-         @ViewBuilder centerContent: @escaping () -> Center,
-         @ViewBuilder trailingContent: @escaping () -> Trailing) {
+         @ViewBuilder leadingContent: @escaping () -> Leading = { EmptyView() },
+         @ViewBuilder centerContent: @escaping () -> Center = { EmptyView() },
+         @ViewBuilder trailingContent: @escaping () -> Trailing = { EmptyView() }) {
         
         self.disabled = disabled
         

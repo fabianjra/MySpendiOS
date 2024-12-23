@@ -40,7 +40,7 @@ struct SelectCategoryModalView: View {
                                   rotationDegress: ConstantAnimations.rotationArrowBottomTrailing)
                 } else {
                     ListContainer {
-                        ForEach(categoriesFiltered.sorted(by: { $0.datemodified > $1.datemodified })) { category in
+                        ForEach(categoriesFiltered.sorted(by: { $0.name < $1.name })) { category in
                             HStack {
                                 let icon = category.icon.getIconFromSFSymbol
                                 

@@ -148,6 +148,44 @@ struct Show: ViewModifier {
 }
 
 /**
+ This is a view modifier that lets you hide or show views that you usually might not be able to.
+ It’s worth mentioning that a view modifier is a super helpful pattern you’d do well to commit to memory.
+ 
+ **Example:**
+ ```swift
+ @State var condition: Bool = true
+ 
+ Text("Hello world")
+    .modifier(Hidden(condition))
+ ```
+ 
+ - Parameters:
+    - hide: Boolean condition to hide or not hide the view.
+ 
+ - Authors: Fabian Rodriguez
+ 
+ - Version: 1.0
+ 
+ - Date: December 2024
+ */
+struct Hidden: ViewModifier {
+    let hide: Bool
+    
+    init(_ hide: Bool) {
+        self.hide = hide
+    }
+    
+    @ViewBuilder
+    func body(content: Content) -> some View {
+        if hide {
+            EmptyView()
+        } else {
+            content
+        }
+    }
+}
+
+/**
  Lets you ignore safe area in views with condition.
  
  **Example:**
