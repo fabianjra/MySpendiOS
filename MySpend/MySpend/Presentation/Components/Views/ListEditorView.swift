@@ -26,18 +26,21 @@ struct ListEditorView: View {
             }
             
         } centerContent: {
-            TextPlain("\(counterSelected) Selected")
-                .modifier(Show(isVisible: isEditing))
+            if isEditing {
+                TextPlain("\(counterSelected) Selected")
+            }
             
         } trailingContent: {
-            Button {
-                if let action = actionTrailingEdit { action() }
-            } label: {
-                TextPlain("Delete", color: counterSelected <= 0 ? Color.disabledForeground : Color.alert)
+            if isEditing {
+                Button {
+                    if let action = actionTrailingEdit { action() }
+                } label: {
+                    TextPlain("Delete", color: counterSelected <= 0 ? Color.disabledForeground : Color.alert)
+                }
+                .disabled(counterSelected <= 0)
             }
-            .disabled(counterSelected <= 0)
-            .modifier(Show(isVisible: isEditing))
         }
+        .animation(.default, value: isEditing)
     }
 }
 

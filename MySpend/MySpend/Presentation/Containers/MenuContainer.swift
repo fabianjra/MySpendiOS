@@ -27,11 +27,10 @@ struct MenuContainer<Content: View>: View {
     
     var body: some View {
         Menu(content: content) {
-            TextPlain(title)
+            TextPlain(title, color: disabled ? Color.disabledForeground : Color.buttonForeground)
                 .padding(.trailing, addHorizontalPadding ? nil : .zero)
         }
         .menuOrder(.fixed)
-        .foregroundStyle(disabled ? Color.disabledForeground : Color.buttonForeground)
     }
 }
 
