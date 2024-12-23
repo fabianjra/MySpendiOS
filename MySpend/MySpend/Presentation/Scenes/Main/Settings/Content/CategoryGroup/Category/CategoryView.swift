@@ -48,7 +48,7 @@ struct CategoryView: View {
             
             
             RowLCTCointainer(disabled: viewModel.isEditing) {
-                MenuContainer(disabled: viewModel.isEditing) {
+                MenuContainer(addHorizontalPadding: true, disabled: viewModel.isEditing) {
                     menuSort
                 }
             } centerContent: { } trailingContent: { }
@@ -140,6 +140,7 @@ struct CategoryView: View {
                     }
                     .animation(.default, value: categoriesFiltered.count)
                     .animation(.default, value: viewModel.isEditing)
+                    .animation(.default, value: viewModel.sortCategoriesBy)
                 }
                 
                 ButtonRounded {

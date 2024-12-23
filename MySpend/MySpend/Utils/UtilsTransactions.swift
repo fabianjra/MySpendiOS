@@ -16,7 +16,6 @@ struct UtilsTransactions {
                                      transactions: [TransactionModel],
                                      for interval: DateTimeInterval,
                                      sortTransactions: SortTransactions? = nil) -> [TransactionModel] {
-        let calendar = Calendar.current
         
         var sortedTransactions: [TransactionModel] = transactions
         
@@ -41,6 +40,8 @@ struct UtilsTransactions {
                 sortedTransactions.sort(by: { $0.category.name > $1.category.name })
             }
         }
+        
+        let calendar = Calendar.current
         
         switch interval {
             
