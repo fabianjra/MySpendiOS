@@ -60,10 +60,11 @@ public enum FrameSize {
     }
     
     var rowMenuText: CGFloat {
-        switch self {
-        case .width: return 50.0
-        case .height: return 50.0
-        }
+        return 50.0
+    }
+    
+    var loaderSquareBackground: CGFloat {
+        return 350.0
     }
     
     var calendar: CGFloat {

@@ -100,8 +100,34 @@ struct SelectCategoryModalView: View {
             Spacer()
         }
     }.sheet(isPresented: $showModal) {
-        SelectCategoryModalView(selectedCategory: $selectedCategory, viewModel: CategoryViewModel(categories: MocksCategories.normal), categoryType: $selectedCategory.categoryType)
+        SelectCategoryModalView(selectedCategory: $selectedCategory,
+                                viewModel: CategoryViewModel(categories: MocksCategories.normal),
+                                categoryType: $selectedCategory.categoryType)
             .environment(\.locale, .init(identifier: "es_CR"))
+    }
+    .onAppear {
+        showModal = true
+    }
+}
+
+#Preview("No content en_US") {
+    @Previewable @State var showModal = true
+    
+    ZStack(alignment: .top) {
+        Color.backgroundBottom
+        VStack {
+            Spacer()
+            
+            Button("Show modal") {
+                showModal = true
+            }
+            Spacer()
+        }
+    }.sheet(isPresented: $showModal) {
+        SelectCategoryModalView(selectedCategory: .constant(CategoryModel()),
+                                viewModel: CategoryViewModel(),
+                                categoryType: .constant(.expense))
+            .environment(\.locale, .init(identifier: "en_US"))
     }
     .onAppear {
         showModal = true

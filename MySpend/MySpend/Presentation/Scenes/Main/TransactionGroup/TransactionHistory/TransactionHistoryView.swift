@@ -33,12 +33,7 @@ struct TransactionHistoryView: View {
             
             ZStack {
                 if viewModel.isLoadingSecondary {
-                    //TODO: TEMPORAL. ANALIZAR SI SE PUEDE UTILIZAR LOADER DE OTRA FORMA.
-                    LoaderView()
-                        .background(.ultraThinMaterial)
-                        .cornerRadius(ConstantRadius.corners)
-                        .padding(48)
-                        .frame(maxHeight: 330, alignment: .center)
+                    loader
                 }
                 
                 if transactionsLoaded.isEmpty {
@@ -64,24 +59,16 @@ struct TransactionHistoryView: View {
         .disabled(viewModel.isLoadingSecondary)
     }
     
-    private func sortButton(for sortingOption: SortTransactions) -> some View {
-        Button {
-            if viewModel.sortTransactionsBy == sortingOption {
-                viewModel.sortTransactionsBy = sortingOption.toggle
-            } else {
-                viewModel.sortTransactionsBy = sortingOption
-            }
-        } label: {
-            viewModel.sortTransactionsBy == sortingOption ? sortingOption.label() : sortingOption.label(inverted: false)
-        }
-    }
+    // MARK: VIEWS
     
-    private var menuSort: some View {
-        Section("Sort by") {
-            sortButton(for: .byDateNewest)
-            sortButton(for: .byAmountHigher)
-            sortButton(for: .byCategoryNameAz)
-        }
+    private var loader: some View {
+        //TODO: TEMPORAL. ANALIZAR SI SE PUEDE UTILIZAR LOADER DE OTRA FORMA PARA QUE NO SE TENGA QUE MOSTRAR LLENANDO LA PANTALLA
+        LoaderView()
+            .background(.ultraThinMaterial)
+            .cornerRadius(ConstantRadius.corners)
+            .padding(ConstantViews.paddingLoaderView)
+            .frame(maxHeight: FrameSize.height.loaderSquareBackground,
+                   alignment: .center)
     }
     
     private var emptyView: some View {
@@ -93,6 +80,18 @@ struct TransactionHistoryView: View {
                       aligment: .center)
             .padding(.vertical)
             Spacer()
+        }
+    }
+    
+    private func sortButton(for sortingOption: SortTransactions) -> some View {
+        Button {
+            if viewModel.sortTransactionsBy == sortingOption {
+                viewModel.sortTransactionsBy = sortingOption.toggle
+            } else {
+                viewModel.sortTransactionsBy = sortingOption
+            }
+        } label: {
+            viewModel.sortTransactionsBy == sortingOption ? sortingOption.label() : sortingOption.label(inverted: false)
         }
     }
     
@@ -110,7 +109,11 @@ struct TransactionHistoryView: View {
                 viewModel.showAlertDeleteMultiple = true
                 
             } contentLeadingSort: {
-                menuSort
+                Section("Sort by") {
+                    sortButton(for: .byDateNewest)
+                    sortButton(for: .byAmountHigher)
+                    sortButton(for: .byCategoryNameAz)
+                }
             }
             
             let transactionsFiltered = UtilsTransactions.filteredTransactions(selectedDate,
@@ -230,6 +233,8 @@ struct TransactionHistoryView: View {
             TotalBalanceView(transactions: transactionsFiltered, showTotalBalance: false, addBottomSpacing: false)
         }
     }
+    
+    // MARK: FUNCTIONS
     
     private func delete() {
         Task {
