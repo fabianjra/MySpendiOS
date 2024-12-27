@@ -119,13 +119,14 @@ struct frameModifier: ViewModifier {
 /**
  This is a view modifier that lets you show or hide views that you usually might not be able to.
  It’s worth mentioning that a view modifier is a super helpful pattern you’d do well to commit to memory.
+ Will reserce space of its size.
  
  **Example:**
  ```swift
  @State var condition: Bool = true
  
  Text("Hello world")
-    .modifier(Show(isVisible: condition))
+    .modifier(ShowReservesSpace(condition))
  ```
  
  - Parameters:
@@ -137,8 +138,12 @@ struct frameModifier: ViewModifier {
  
  - Date: Jul 2023
  */
-struct Show: ViewModifier {
-    let isVisible: Bool
+struct ShowReservesSpace: ViewModifier {
+    private let isVisible: Bool
+    
+    init(_ isVisible: Bool) {
+        self.isVisible = isVisible
+    }
     
     @ViewBuilder
     func body(content: Content) -> some View {

@@ -54,6 +54,7 @@ struct DateIntervalNavigatorView<Content: View>: View {
                 } label: {
                     TextPlain("Today", color: isEditing ? Color.disabledForeground : Color.textPrimaryForeground)
                 }
+                .modifier(ShowReservesSpace(!selectedDate.isSameDate(.now)))
             }
         }
     }

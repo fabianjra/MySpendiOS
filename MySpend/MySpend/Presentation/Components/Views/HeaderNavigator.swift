@@ -52,7 +52,7 @@ struct HeaderNavigator: View {
                     
                     dismiss()
                 }
-                .modifier(Show(isVisible: showLeadingAction))
+                .modifier(ShowReservesSpace(showLeadingAction))
                 .padding(.leading)
                 
                 Spacer()
@@ -68,7 +68,7 @@ struct HeaderNavigator: View {
                         dismiss() // Default value for trailing action: Close the Sheet or Go Back.
                     }
                 }
-                .modifier(Show(isVisible: showTrailingAction))
+                .modifier(ShowReservesSpace(showTrailingAction))
                 .disabled(disabledTrailingAction)
                 .padding(.trailing)
             }

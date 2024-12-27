@@ -26,7 +26,7 @@ struct ButtonPrimaryStyle: ButtonStyle {
     
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .modifier(Show(isVisible: isLoading == false))
+            .modifier(ShowReservesSpace(isLoading == false))
             .font(.montserrat())
             .foregroundColor(
                 //If enabled: Original foreground color.

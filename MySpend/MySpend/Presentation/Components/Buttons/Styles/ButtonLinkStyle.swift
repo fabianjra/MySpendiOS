@@ -29,7 +29,7 @@ struct ButtonLinkStyle: ButtonStyle {
     
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .modifier(Show(isVisible: isLoading == false))
+            .modifier(ShowReservesSpace(isLoading == false))
             .font(.montserrat(fontFamily, size: fontsize))
             .foregroundColor(isEnabled ? color : Color.disabledForeground)
             .frame(maxWidth: ConstantFrames.iPadMaxWidth)
