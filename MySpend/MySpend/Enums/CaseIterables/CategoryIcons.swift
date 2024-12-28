@@ -22,11 +22,10 @@ public enum CategoryIcons: String, CaseIterable, Identifiable {
         switch self {
         case .bills:
             return [
-                "lightbulb.fill", "spigot.fill", "play.tv.fill", "tv.badge.wifi.fill",
+                "lightbulb.fill", "spigot.fill", "washer.fill", "powerplug.portrait.fill",
                 "appletvremote.gen4.fill", "wifi", "wifi.router.fill", "phone.fill", "flame.fill",
-                "umbrella.fill", "chart.bar.fill", "bolt.horizontal.fill", "externaldrive.connected.to.line.below.fill",
-                "icloud.fill", "cross.case.fill", "stethoscope", "cross.vial.fill", "waveform.path.ecg.rectangle.fill",
-                "powerplug.portrait.fill", "washer.fill"
+                "umbrella.fill", "bolt.horizontal.fill", "externaldrive.connected.to.line.below.fill",
+                "icloud.fill", "cross.case.fill", "stethoscope", "cross.vial.fill", "waveform.path.ecg.rectangle.fill"
             ]
         case .foodAndDrink:
             return [
@@ -39,7 +38,7 @@ public enum CategoryIcons: String, CaseIterable, Identifiable {
                 "tag.fill", "house.fill", "wallet.pass.fill",
                 "bag.fill", "gym.bag.fill", "handbag.fill", "person.fill", "figure.arms.open",
                 "figure.2.arms.open", "figure.2.and.child.holdinghands", "figure.and.child.holdinghands",
-                "envelope.fill", "paperclip", "list.clipboard.fill", "party.popper.fill", "key.horizontal.fill",
+                "envelope.fill", "paperclip", "list.clipboard.fill", "key.horizontal.fill",
                 "at", "printer.fill", "shippingbox.fill", "screwdriver.fill", "wrench.and.screwdriver.fill",
                 "paintbrush.fill", "thermometer.variable", "bed.double.fill", "heart.fill", "hammer.fill",
                 "teddybear.fill"
@@ -56,15 +55,15 @@ public enum CategoryIcons: String, CaseIterable, Identifiable {
                     "lightrail.fill", "ferry.fill", "car.ferry.fill", "sailboat.fill", "truck.box.fill", "bicycle", "moped.fill",
                     "motorcycle.fill", "scooter", "fuelpump.fill", "ev.charger.fill", "parkingsign", "car.side.rear.tow.hitch.fill",
                     "case.fill", "briefcase.fill", "suitcase.cart.fill", "suitcase.rolling.fill", "building.fill", "building.2.fill",
-                    "building.columns.fill", "gauge.with.dots.needle.bottom.0percent", "engine.combustion.fill", "oilcan.fill"
+                    "building.columns.fill", "gauge.with.dots.needle.bottom.0percent", "engine.combustion.fill", "oilcan.fill", "backpack.fill"
             ]
         case .sport:
             return [
                 "figure.skateboarding", "figure.water.fitness", "skateboard.fill", "figure.ice.skating", "figure.waterpolo", "figure.boxing",
                 "figure.kickboxing", "dumbbell.fill", "soccerball", "baseball.fill", "basketball.fill", "american.football.fill", "tennis.racket",
                 "tennisball.fill", "surfboard.fill", "rosette", "trophy.fill", "gamecontroller.fill", "gauge.with.needle.fill",
-                "flag.2.crossed.fill", "figure.run", "figure.run.treadmill", "figure.badminton", "figure.baseball", "figure.jumprope", "figure.yoga", "figure.golf",
-                "camera.fill", "tent.fill"
+                "flag.2.crossed.fill", "figure.run", "figure.run.treadmill", "figure.badminton", "figure.baseball", "figure.jumprope", "figure.yoga",
+                "figure.golf", "camera.fill", "tent.fill"
             ]
         case .entertaiment:
             return [
@@ -80,7 +79,7 @@ public enum CategoryIcons: String, CaseIterable, Identifiable {
             ]
         case .animal:
             return [
-                "pawprint.fill", "dog.fill", "cat.fill", "tortoise.fill", "lizard.fill", "bird.fill", "ant.fill", "fish.fill", "fossil.shell.fill",
+                "pawprint.fill", "dog.fill", "cat.fill", "tortoise.fill", "lizard.fill", "bird.fill", "ant.fill", "fossil.shell.fill",
                 "hare.fill"
             ]
         }
