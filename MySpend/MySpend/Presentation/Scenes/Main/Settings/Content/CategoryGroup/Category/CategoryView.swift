@@ -123,6 +123,10 @@ struct CategoryView: View {
                         HStack {
                             if viewModel.isEditing {
                                 Image(systemName: viewModel.selectedCategories.contains(item) ? ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: FrameSize.width.selectIconInsideTextField,
+                                           height: FrameSize.height.selectIconInsideTextField)
                                     .foregroundStyle(Color.alert)
                                     .transition(.scale.combined(with: .move(edge: .leading)))
                             }

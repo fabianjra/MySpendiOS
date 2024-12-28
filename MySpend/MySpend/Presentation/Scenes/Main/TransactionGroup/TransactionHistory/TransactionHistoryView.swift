@@ -112,6 +112,10 @@ struct TransactionHistoryView: View {
                         HStack {
                             if viewModel.isEditing {
                                 Image(systemName: viewModel.selectedTransactions.contains(item) ? ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: FrameSize.height.selectIconInsideTextField,
+                                           height: FrameSize.width.selectIconInsideTextField)
                                     .foregroundStyle(Color.alert)
                                     .transition(.scale.combined(with: .move(edge: .leading)))
                             }
@@ -120,7 +124,7 @@ struct TransactionHistoryView: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: FrameSize.width.iconInsideTextField,
-                                       height: FrameSize.width.iconInsideTextField)
+                                       height: FrameSize.height.iconInsideTextField)
                                 .foregroundStyle(Color.textPrimaryForeground)
                             
                             
