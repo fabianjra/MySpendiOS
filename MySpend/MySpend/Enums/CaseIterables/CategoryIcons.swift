@@ -25,7 +25,8 @@ public enum CategoryIcons: String, CaseIterable, Identifiable {
                 "lightbulb.fill", "spigot.fill", "washer.fill", "powerplug.portrait.fill",
                 "appletvremote.gen4.fill", "wifi", "wifi.router.fill", "phone.fill", "flame.fill",
                 "umbrella.fill", "bolt.horizontal.fill", "externaldrive.connected.to.line.below.fill",
-                "icloud.fill", "cross.case.fill", "stethoscope", "cross.vial.fill", "waveform.path.ecg.rectangle.fill"
+                "icloud.fill", "cross.case.fill", "stethoscope", "cross.vial.fill", "waveform.path.ecg.rectangle.fill",
+                "trash.fill", "opticaldiscdrive.fill", "archivebox.fill", "document.fill", "burn"
             ]
         case .foodAndDrink:
             return [
