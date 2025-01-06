@@ -105,6 +105,7 @@
 		1F7ABD2C2CCC6A760023FBA4 /* TransactionHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7ABD2B2CCC6A760023FBA4 /* TransactionHistoryView.swift */; };
 		1F7B0B662CA7240200FD30D5 /* UserDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7B0B652CA723FF00FD30D5 /* UserDatabase.swift */; };
 		1F7F86AA2CC9DE5500AF854E /* ButtonTextFieldStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7F86A92CC9DE5500AF854E /* ButtonTextFieldStyle.swift */; };
+		1F8179022D2B813C003B3340 /* CurrencyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8179012D2B8137003B3340 /* CurrencyModel.swift */; };
 		1F9462EB2A7B4D8200F5CBFB /* HeaderNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9462EA2A7B4D8200F5CBFB /* HeaderNavigator.swift */; };
 		1F9462EE2A7B54EC00F5CBFB /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9462ED2A7B54EC00F5CBFB /* Loader.swift */; };
 		1F9B0E0C2CE8564B00787245 /* TimeNavigate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9B0E0B2CE8564A00787245 /* TimeNavigate.swift */; };
@@ -280,6 +281,8 @@
 		1F7ABD2B2CCC6A760023FBA4 /* TransactionHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionHistoryView.swift; sourceTree = "<group>"; };
 		1F7B0B652CA723FF00FD30D5 /* UserDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDatabase.swift; sourceTree = "<group>"; };
 		1F7F86A92CC9DE5500AF854E /* ButtonTextFieldStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonTextFieldStyle.swift; sourceTree = "<group>"; };
+		1F8179002D2B7CB6003B3340 /* CurrencyPG.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = CurrencyPG.playground; path = /Users/fabian/Desktop/CurrencyPG.playground; sourceTree = "<absolute>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		1F8179012D2B8137003B3340 /* CurrencyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyModel.swift; sourceTree = "<group>"; };
 		1F9462EA2A7B4D8200F5CBFB /* HeaderNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderNavigator.swift; sourceTree = "<group>"; };
 		1F9462ED2A7B54EC00F5CBFB /* Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
 		1F9B0E0B2CE8564A00787245 /* TimeNavigate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeNavigate.swift; sourceTree = "<group>"; };
@@ -436,7 +439,6 @@
 				1F2750F82C9D02F300AD4E31 /* UtilsCurrency.swift */,
 				1F6812F92CF2938C00822471 /* UtilsDate.swift */,
 				1FC94CC92A5A4588005CA0B6 /* Logs.swift */,
-				1FD66FE62C9E1AAF0056D514 /* CurrencyManager.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -537,6 +539,7 @@
 		1F4C24762A47A6DA00CCAF6D = {
 			isa = PBXGroup;
 			children = (
+				1F8178FF2D2B7C8C003B3340 /* Playgrounds */,
 				1F6343FF2A47A8C400081BCD /* README.md */,
 				1F4C24812A47A6DA00CCAF6D /* MySpend */,
 				1F4C24922A47A6DC00CCAF6D /* MySpendTests */,
@@ -695,6 +698,14 @@
 				1F7ABD252CCC5CE80023FBA4 /* DatePickerModalView.swift */,
 			);
 			path = DatePickerModal;
+			sourceTree = "<group>";
+		};
+		1F8178FF2D2B7C8C003B3340 /* Playgrounds */ = {
+			isa = PBXGroup;
+			children = (
+				1F8179002D2B7CB6003B3340 /* CurrencyPG.playground */,
+			);
+			path = Playgrounds;
 			sourceTree = "<group>";
 		};
 		1F9D79BE2A47C08200F55418 /* Resources */ = {
@@ -942,6 +953,8 @@
 		1FF27C9B2D2B52630092BD23 /* CurrencySymbol */ = {
 			isa = PBXGroup;
 			children = (
+				1F8179012D2B8137003B3340 /* CurrencyModel.swift */,
+				1FD66FE62C9E1AAF0056D514 /* CurrencyManager.swift */,
 				1FF27C9C2D2B52830092BD23 /* CurrencySymbolListView.swift */,
 			);
 			path = CurrencySymbol;
@@ -1173,6 +1186,7 @@
 				1F65D9632C72D10E0023CC5D /* Router.swift in Sources */,
 				1F138DF92CCF62000003FBEB /* DateIntervalNavigatorView.swift in Sources */,
 				1F1E854C2A6F7AFD00CEEBBC /* SettingsView.swift in Sources */,
+				1F8179022D2B813C003B3340 /* CurrencyModel.swift in Sources */,
 				1FAA87D72C697F1A00700CD6 /* CategoryView.swift in Sources */,
 				1FAEE6D02A47A9AB00630367 /* LoginView.swift in Sources */,
 				1FA05B762CD9D652008CF4A4 /* ButtonBorderedStyle.swift in Sources */,

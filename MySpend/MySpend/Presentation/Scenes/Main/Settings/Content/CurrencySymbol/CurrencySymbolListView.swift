@@ -31,11 +31,6 @@ struct CurrencySymbolListView: View {
                 }
             }
         }
-        .onAppear {
-            //CurrencyManager.listCountriesAndCurrencies()
-            CurrencyManager.listCountriesAndCurrencies3()
-            //CurrencyManager.numero3()
-        }
     }
 }
 
