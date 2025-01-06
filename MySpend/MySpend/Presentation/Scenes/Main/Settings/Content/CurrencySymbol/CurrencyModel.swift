@@ -5,9 +5,14 @@
 //  Created by Fabian Rodriguez on 5/1/25.
 //
 
-struct CurrencyModel {
+import Foundation
+
+struct CurrencyModel: Identifiable {
+    public var id: String = UUID().uuidString
+    
     let countryCode: String
     let currencySymbol: String
     let currencyCode: String
     let countryName: String
+    let selected: Bool = false
 }

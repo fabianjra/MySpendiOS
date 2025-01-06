@@ -89,7 +89,7 @@ enum ContentOptions: String, CaseIterable, Identifiable {
         switch self {
         //"for: .navigationBar" is disabling the navigator to navigate the next View.
         case .categories: CategoryView().toolbar(.hidden, for: .navigationBar)
-        case .currencySymbol: CurrencySymbolListView().toolbar(.hidden, for: .navigationBar)
+        case .currencySymbol: CurrencyListView().toolbar(.hidden, for: .navigationBar)
         }
     }
 }
