@@ -53,7 +53,7 @@ struct HeaderNavigator: View {
                     dismiss()
                 }
                 .modifier(ShowReservesSpace(showLeadingAction))
-                .padding(.leading)
+                .padding(.leading) //TODO: REMOVER LOS PADDING.
                 
                 Spacer()
                 
@@ -70,7 +70,7 @@ struct HeaderNavigator: View {
                 }
                 .modifier(ShowReservesSpace(showTrailingAction))
                 .disabled(disabledTrailingAction)
-                .padding(.trailing)
+                .padding(.trailing) //TODO: REMOVER LOS PADDING.
             }
         }
     }

@@ -9,7 +9,28 @@ import SwiftUI
 
 struct CurrencySymbolListView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ContentContainer(addPading: false) {
+            
+            HeaderNavigator(title: "Currency list",
+                            subTitle: "Select the currency to show")
+            .padding(.bottom)
+            
+            TextPlain("Use currency code")
+            
+            ListContainer {
+                SectionContainer("Cuyrrency list") {
+                    ForEach(ContentOptions.allCases) { option in
+                        if option.showOption {
+                            HStack {
+                                option.icon
+                                
+                                NavigationLink(option.rawValue, destination: option.view)
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 

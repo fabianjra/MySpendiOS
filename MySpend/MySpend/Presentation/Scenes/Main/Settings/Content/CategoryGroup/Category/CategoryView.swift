@@ -21,7 +21,6 @@ struct CategoryView: View {
                             titleSize: .bigXL,
                             subTitle: "Select or add categories",
                             subTitleWeight: .regular)
-            .padding(.horizontal)
             .padding(.bottom)
             
             
