@@ -57,7 +57,7 @@ extension String {
             
             NSDecimalRound(&roundedDecimal,
                            &amountDecimal,
-                           ConstantCurrency.fractionLength,
+                           CurrencyManager.fractionLength,
                            .bankers)
             
             return roundedDecimal

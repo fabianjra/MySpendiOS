@@ -8,30 +8,24 @@
 import Foundation
 
 struct CurrencyManager {
-    private static let currencyCodeList: [String] = ["en_US", "es_CR", "en_GB", "EU", "JP", "CN", "AU", "CA"]
     
-    private static let currencyKey = "selectedCurrencyCode"
-
     /// Código de moneda almacenado en `UserDefaults`.
+    /// Si no encuentra nada guardado en UserDefaults, utiliza el código de moneda predeterminado basado en la configuración local.
     static var selectedCurrencyCode: String {
         get {
-            UserDefaults.standard.string(forKey: currencyKey) ?? defaultCurrencyCode
+            UserDefaults.standard.string(forKey: currencyKey) ?? Locale.current.identifier
         }
+        
         set {
             UserDefaults.standard.set(newValue, forKey: currencyKey)
         }
-    }
-    
-    /// Código de moneda predeterminado basado en la configuración local.
-    private static var defaultCurrencyCode: String {
-        return Locale.current.identifier
     }
     
     /// Obtiene el símbolo de moneda basado en un código de región.
     /// Return: Símbolo de moneda basado en el código seleccionado en `UserDefaults`.
     public static var getSelectedSymbol: String {
         let locale = Locale(identifier: selectedCurrencyCode)
-        return locale.currencySymbol ?? selectedCurrencyCode
+        return locale.currencySymbol ?? defaultCurrencySymbol
     }
     
     
@@ -60,4 +54,25 @@ struct CurrencyManager {
             }
         }
     }
+}
+
+// MARK: CONSTANTS
+
+extension CurrencyManager {
+    
+    // MARK: PRIVATE
+    
+    private static let currencyCodeList: [String] = ["en_US", "es_CR", "en_GB", "EU", "JP", "CN", "AU", "CA"]
+    private static let defaultCurrencySymbol: String = "$"
+    private static let currencyKey = "selected_currency_code"
+    
+    // MARK: PUBLIC
+    
+    public static let amoutMaxLength: Int = 50
+    public static let amoutMaxLengthWithDecimal: Int = 53
+    public static let fractionLength: Int = 2
+    public static let zeroAmoutString: String = "0"
+    
+    public static let defaultDecimalSeparator: String = "."
+    public static let defaultGroupingSeparator: String = ","
 }

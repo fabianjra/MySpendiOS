@@ -182,17 +182,17 @@ struct TextFieldIconStyle: TextFieldStyle {
         if tempText.contains(decimalSeparator) {
             
             /// Permitir hasta 15 caracteres si hay un separador decimal:
-            if tempText.count > ConstantCurrency.amoutMaxLengthWithDecimal {
-                tempText = String(tempText.prefix(ConstantCurrency.amoutMaxLengthWithDecimal))
+            if tempText.count > CurrencyManager.amoutMaxLengthWithDecimal {
+                tempText = String(tempText.prefix(CurrencyManager.amoutMaxLengthWithDecimal))
             }
             
         } else {
             /// Si no tiene separador decimal y alcanza 12 caracteres, permitir agregarlo:
-            if tempText.count == ConstantCurrency.amoutMaxLength && text.last == Character(decimalSeparator) {
+            if tempText.count == CurrencyManager.amoutMaxLength && text.last == Character(decimalSeparator) {
                 tempText.append(decimalSeparator)
                 
-            } else if tempText.count > ConstantCurrency.amoutMaxLength {
-                tempText = String(tempText.prefix(ConstantCurrency.amoutMaxLength))
+            } else if tempText.count > CurrencyManager.amoutMaxLength {
+                tempText = String(tempText.prefix(CurrencyManager.amoutMaxLength))
             }
         }
         

@@ -9,9 +9,9 @@ import Foundation
 
 class TotalBalanceViewModel: ObservableObject {
     
-    @Published var totalIncomeFormatted: String = ConstantCurrency.zeroAmoutString.addCurrencySymbol
-    @Published var totalExpensesFormatted: String = ConstantCurrency.zeroAmoutString.addCurrencySymbol
-    @Published var totalBalanceFormatted: String = ConstantCurrency.zeroAmoutString.addCurrencySymbol
+    @Published var totalIncomeFormatted: String = CurrencyManager.zeroAmoutString.addCurrencySymbol
+    @Published var totalExpensesFormatted: String = CurrencyManager.zeroAmoutString.addCurrencySymbol
+    @Published var totalBalanceFormatted: String = CurrencyManager.zeroAmoutString.addCurrencySymbol
     
     /**
      Esta función filtra las transacciones por transactionType, sumando los ingresos (income) y los gastos (expense).

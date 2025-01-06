@@ -45,7 +45,6 @@
 		1F30437F2CBE1EA20079DB90 /* UserValidationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F30437E2CBE1E9B0079DB90 /* UserValidationProtocol.swift */; };
 		1F3043812CC06D050079DB90 /* TransactionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3043802CC06D040079DB90 /* TransactionType.swift */; };
 		1F3043832CC088E40079DB90 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3043822CC088D70079DB90 /* Repository.swift */; };
-		1F312FE22C928E2000D2E866 /* ConstantCurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F312FE12C928E2000D2E866 /* ConstantCurrency.swift */; };
 		1F3A953D2C5D68D4008AAE50 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3A953C2C5D68D4008AAE50 /* LoginViewModel.swift */; };
 		1F3A953F2C5D6F82008AAE50 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3A953E2C5D6F82008AAE50 /* Login.swift */; };
 		1F3A95412C5D74CC008AAE50 /* TransactionsDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3A95402C5D74CC008AAE50 /* TransactionsDatabase.swift */; };
@@ -218,7 +217,6 @@
 		1F30437E2CBE1E9B0079DB90 /* UserValidationProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserValidationProtocol.swift; sourceTree = "<group>"; };
 		1F3043802CC06D040079DB90 /* TransactionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionType.swift; sourceTree = "<group>"; };
 		1F3043822CC088D70079DB90 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
-		1F312FE12C928E2000D2E866 /* ConstantCurrency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantCurrency.swift; sourceTree = "<group>"; };
 		1F3A953C2C5D68D4008AAE50 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		1F3A953E2C5D6F82008AAE50 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		1F3A95402C5D74CC008AAE50 /* TransactionsDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsDatabase.swift; sourceTree = "<group>"; };
@@ -921,7 +919,6 @@
 				1F14081A2A590FC600181500 /* ConstantAnimations.swift */,
 				1FB8BB9C2A5BC728002DED1F /* ConstantColors.swift */,
 				1F46B4112A79885D003A9550 /* ConstantValidations.swift */,
-				1F312FE12C928E2000D2E866 /* ConstantCurrency.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -1150,7 +1147,6 @@
 				1F3043832CC088E40079DB90 /* Repository.swift in Sources */,
 				1F222F432C65A72C0017A1BE /* ChangeName.swift in Sources */,
 				1F46B4122A79885D003A9550 /* ConstantValidations.swift in Sources */,
-				1F312FE22C928E2000D2E866 /* ConstantCurrency.swift in Sources */,
 				1FB8BB992A5BB181002DED1F /* SemiCircleShape.swift in Sources */,
 				1F0641482A72280500C19084 /* ValidateAccountView.swift in Sources */,
 				1FEA0D4D2CD2EE96005EA785 /* Label+Extensions.swift in Sources */,

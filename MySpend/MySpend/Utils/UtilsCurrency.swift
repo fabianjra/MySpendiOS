@@ -10,11 +10,11 @@ import Foundation
 public struct UtilsCurrency {
     
     public static var getLocalDecimalSeparator: String {
-        return Locale.current.decimalSeparator ?? ConstantCurrency.defaultDecimalSeparator
+        return Locale.current.decimalSeparator ?? CurrencyManager.defaultDecimalSeparator
     }
     
     public static var getLocalGroupingSeparator: String {
-        return Locale.current.groupingSeparator ?? ConstantCurrency.defaultGroupingSeparator
+        return Locale.current.groupingSeparator ?? CurrencyManager.defaultGroupingSeparator
     }
     
     /**
@@ -39,9 +39,9 @@ public struct UtilsCurrency {
         let formatter = NumberFormatter()
         
         formatter.locale = Locale.current
-        //formatter.maximumIntegerDigits = ConstantCurrency.amoutMaxLength
-        formatter.minimumFractionDigits = ConstantCurrency.fractionLength
-        formatter.maximumFractionDigits = ConstantCurrency.fractionLength
+        //formatter.maximumIntegerDigits = CurrencyManager.amoutMaxLength
+        formatter.minimumFractionDigits = CurrencyManager.fractionLength
+        formatter.maximumFractionDigits = CurrencyManager.fractionLength
         
         /*
          numberStyle: Define el estilo general del formateo numérico.
