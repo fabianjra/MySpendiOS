@@ -68,16 +68,19 @@ enum AccountOptions: String, CaseIterable, Identifiable {
 enum ContentOptions: String, CaseIterable, Identifiable {
     public var id: Self { self }
     case categories = "Categories"
+    case currencySymbol = "Currency symbol"
     
     var icon: Image {
         switch self {
         case .categories: return Image.listBulletClipboardFill
+        case .currencySymbol: return Image.dollar
         }
     }
     
     var showOption: Bool {
         switch self {
         case .categories: return ConstantValidations.showCategories
+        case .currencySymbol: return ConstantValidations.showCurrencySymbol
         }
     }
     
@@ -86,6 +89,7 @@ enum ContentOptions: String, CaseIterable, Identifiable {
         switch self {
         //"for: .navigationBar" is disabling the navigator to navigate the next View.
         case .categories: CategoryView().toolbar(.hidden, for: .navigationBar)
+        case .currencySymbol: CurrencySymbolListView().toolbar(.hidden, for: .navigationBar)
         }
     }
 }

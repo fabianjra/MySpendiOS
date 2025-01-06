@@ -115,7 +115,7 @@ struct DateIntervalNavigatorView<Content: View>: View {
     }
 }
 
-#Preview("With editor and without") {
+#Preview("With editor and without es_CR") {
     @Previewable @State var dateTimeInterval = DateTimeInterval.month
     @Previewable @State var selectedDate = Date()
     @Previewable @State var isEditing = false
@@ -139,4 +139,5 @@ struct DateIntervalNavigatorView<Content: View>: View {
         
         Spacer()
     }
+    .environment(\.locale, .init(identifier: "es_CR"))
 }

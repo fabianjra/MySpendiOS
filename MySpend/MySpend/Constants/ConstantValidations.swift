@@ -16,4 +16,5 @@ struct ConstantValidations {
     
     // MARK: CONTENT
     static let showCategories: Bool = true
+    static let showCurrencySymbol: Bool = true
 }
