@@ -15,21 +15,26 @@ struct CurrencySymbolListView: View {
                             subTitle: "Select the currency to show")
             .padding(.bottom)
             
-            TextPlain("Use currency code")
+            TextPlain("Prefer currency code")
             
             ListContainer {
                 SectionContainer("Cuyrrency list") {
-                    ForEach(ContentOptions.allCases) { option in
-                        if option.showOption {
-                            HStack {
-                                option.icon
-                                
-                                NavigationLink(option.rawValue, destination: option.view)
-                            }
-                        }
-                    }
+//                    ForEach(ContentOptions.allCases) { option in
+//                        if option.showOption {
+//                            HStack {
+//                                option.icon
+//                                
+//                                NavigationLink(option.rawValue, destination: option.view)
+//                            }
+//                        }
+//                    }
                 }
             }
+        }
+        .onAppear {
+            //CurrencyManager.listCountriesAndCurrencies()
+            CurrencyManager.listCountriesAndCurrencies3()
+            //CurrencyManager.numero3()
         }
     }
 }
