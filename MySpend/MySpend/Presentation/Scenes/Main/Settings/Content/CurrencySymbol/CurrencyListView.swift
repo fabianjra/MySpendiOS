@@ -23,14 +23,27 @@ struct CurrencyListView: View {
             }
             .padding(.horizontal)
             
+            Button("Reset currency symbol selected") {
+                viewModel.resetCurrencySymbol()
+            }
+            .buttonStyle(ButtonLinkStyle(color: Color.alert))
+            .padding(.horizontal)
+            
             ListContainer {
                 ForEach(viewModel.currencies) { currency in
                     HStack {
                         TextPlain(currency.countryName, color: Color.textFieldForeground)
-                        Spacer()
+                        //Spacer()
+                        Button {
+                            viewModel.selectCurrencySymbol(currency.currencySymbol)
+                        } label: {
+                            //
+                        }
+
                         TextPlain(currency.currencySymbol, color: Color.textFieldForeground)
                     }
                 }
+                .listRowBackground(Color.listRowBackground)
             }
         }
         .onAppear {

@@ -15,4 +15,12 @@ class CurrencyListViewModel: BaseViewModel {
     func fetchCurrencyList() {
         currencies = CurrencyManager.currencyList(useCurrencyCode: useCurrencyCode)
     }
+    
+    func selectCurrencySymbol(_ currencySymbol: String) {
+        CurrencyManager.selectedCurrencySymbol = currencySymbol
+    }
+    
+    func resetCurrencySymbol() {
+        CurrencyManager.removeSelectedCurrencySymbol
+    }
 }

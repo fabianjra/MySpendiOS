@@ -13,7 +13,7 @@ public struct CurrencyManager {
     
     // MARK: PRIVATE
     private static let defaultCurrencySymbol: String = "$"
-    private static let currencyKey = "selected_region_code"
+    private static let currencySymbolKey = "selected_currency_symbol_key"
     
     // MARK: PUBLIC
     
@@ -37,14 +37,18 @@ extension CurrencyManager {
     
     /// Código de moneda almacenado en `UserDefaults`.
     /// Si no encuentra nada guardado en UserDefaults, utiliza el código de moneda predeterminado basado en la configuración local.
-    static var getSelectedSymbol: String {
+    static var selectedCurrencySymbol: String {
         get {
-            UserDefaults.standard.string(forKey: currencyKey) ?? defaultLocaleCurrent
+            UserDefaults.standard.string(forKey: currencySymbolKey) ?? defaultLocaleCurrent
         }
         
         set {
-            UserDefaults.standard.set(newValue, forKey: currencyKey)
+            UserDefaults.standard.set(newValue, forKey: currencySymbolKey)
         }
+    }
+    
+    static var removeSelectedCurrencySymbol: Void {
+        UserDefaults.standard.removeObject(forKey: currencySymbolKey)
     }
 
     static func currencyList(useCurrencyCode: Bool = false) -> [CurrencyModel]{
