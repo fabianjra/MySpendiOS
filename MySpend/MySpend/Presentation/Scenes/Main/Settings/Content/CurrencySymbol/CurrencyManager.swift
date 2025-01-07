@@ -12,7 +12,11 @@ import Foundation
 public struct CurrencyManager {
     
     // MARK: PRIVATE
+    private static let defaultCountryCode: String = "US"
     private static let defaultCurrencySymbol: String = "$"
+    private static let defaultCurrencyCode: String = "USD"
+    private static let defaultCountryName: String = "United States"
+    
     private static let currencySymbolKey = "selected_currency_symbol_key"
     
     // MARK: PUBLIC
@@ -30,9 +34,13 @@ public struct CurrencyManager {
 // MARK: FUNCTIONS
 
 extension CurrencyManager {
-    
+        
     private static var defaultLocaleCurrent: String {
-        return Locale(identifier: Locale.current.identifier).currencySymbol ?? defaultCurrencySymbol
+        if let localeCurrency = CurrencyManager().localeCurrency {
+            return localeCurrency.symbol
+        }
+        
+        return defaultCurrencySymbol
     }
     
     /// Código de moneda almacenado en `UserDefaults`.
@@ -51,6 +59,25 @@ extension CurrencyManager {
         UserDefaults.standard.removeObject(forKey: currencySymbolKey)
     }
 
+    var localeCurrency: CurrencyModel? {
+        let locale = Locale(identifier: Locale.current.identifier)
+        
+        if let region = locale.region {
+            
+            if let countryName = locale.localizedString(forRegionCode: region.identifier),
+               let currencySymbol = locale.currencySymbol,
+               let currencyCode = locale.currency?.identifier {
+                
+                return CurrencyModel(countryCode: region.identifier,
+                                      symbol: currencySymbol,
+                                      currencyCode: currencyCode,
+                                      countryName: countryName)
+            }
+        }
+        
+        return nil
+    }
+    
     static func currencyList(useCurrencyCode: Bool = false) -> [CurrencyModel]{
         var currencyList: [CurrencyModel] = []
 
@@ -87,7 +114,7 @@ extension CurrencyManager {
                 }
                 
                 let model = CurrencyModel(countryCode: regionCode,
-                                          currencySymbol: symbol,
+                                          symbol: symbol,
                                           currencyCode: currencyCode,
                                           countryName: countryName)
                 currencyList.append(model)

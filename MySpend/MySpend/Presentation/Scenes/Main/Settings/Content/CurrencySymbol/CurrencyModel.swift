@@ -10,9 +10,9 @@ import Foundation
 struct CurrencyModel: Identifiable {
     public var id: String = UUID().uuidString
     
-    let countryCode: String
-    let currencySymbol: String
-    let currencyCode: String
-    let countryName: String
-    let selected: Bool = false
+    var countryCode: String
+    var symbol: String
+    var currencyCode: String
+    var countryName: String
+    var selected: Bool = false
 }

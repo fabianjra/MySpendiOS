@@ -9,11 +9,13 @@ import Foundation
 
 class CurrencyListViewModel: BaseViewModel {
     
-    @Published var currencies: [CurrencyModel] = []
-    @Published var useCurrencyCode: Bool = false
+    @Published var localeCurrency: CurrencyModel?
+    @Published var currenciesAvailables: [CurrencyModel] = []
+    @Published var useCurrencySymbol: Bool = true
     
     func fetchCurrencyList() {
-        currencies = CurrencyManager.currencyList(useCurrencyCode: useCurrencyCode)
+        localeCurrency = CurrencyManager().localeCurrency
+        currenciesAvailables = CurrencyManager.currencyList()
     }
     
     func selectCurrencySymbol(_ currencySymbol: String) {

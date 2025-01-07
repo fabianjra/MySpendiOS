@@ -18,39 +18,61 @@ struct CurrencyListView: View {
                             subTitle: "Select the currency to show")
             .padding(.bottom)
             
-            Toggle(isOn: $viewModel.useCurrencyCode) {
-                TextPlain("Prefer currency code")
+            
+            Toggle(isOn: $viewModel.useCurrencySymbol) {
+                TextPlain("Prefer currency symbol")
             }
             .padding(.horizontal)
             
-            Button("Reset currency symbol selected") {
-                viewModel.resetCurrencySymbol()
-            }
-            .buttonStyle(ButtonLinkStyle(color: Color.alert))
-            .padding(.horizontal)
             
             ListContainer {
-                ForEach(viewModel.currencies) { currency in
-                    HStack {
-                        TextPlain(currency.countryName, color: Color.textFieldForeground)
-                        //Spacer()
-                        Button {
-                            viewModel.selectCurrencySymbol(currency.currencySymbol)
-                        } label: {
-                            //
+                
+                if var localeCurrency = viewModel.localeCurrency {
+                    SectionContainer("Preferred currencies", isInsideList: true) {
+                        rowView(localeCurrency) {
+                            viewModel.selectCurrencySymbol(viewModel.useCurrencySymbol ? localeCurrency.symbol : localeCurrency.currencyCode)
+                            //localeCurrency.selected = true //TODO: Hacer logica
                         }
-
-                        TextPlain(currency.currencySymbol, color: Color.textFieldForeground)
+                            .listRowBackground(Color.listRowBackground)
                     }
                 }
-                .listRowBackground(Color.listRowBackground)
+                
+                
+                SectionContainer("Available currencies", isInsideList: true) {
+                    ForEach(viewModel.currenciesAvailables) { currency in
+                        rowView(currency) {
+                            viewModel.selectCurrencySymbol(viewModel.useCurrencySymbol ? currency.symbol : currency.currencyCode)
+                            //currency.selected = true //TODO: Hacer logica
+                        }
+                    }
+                    .listRowBackground(Color.listRowBackground)
+                }
             }
         }
         .onAppear {
             viewModel.fetchCurrencyList()
         }
-        .onChange(of: viewModel.useCurrencyCode) {
-            viewModel.fetchCurrencyList()
+    }
+    
+    func rowView(_ currency: CurrencyModel, action: @escaping () -> Void) -> some View {
+        HStack {
+            Image(systemName: currency.selected ? ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: FrameSize.height.selectIconInsideTextField,
+                       height: FrameSize.width.selectIconInsideTextField)
+                .foregroundStyle(currency.selected ? Color.primaryLeading : Color.textFieldPlaceholder)
+                .transition(.scale.combined(with: .move(edge: .leading)))
+            
+            Button {
+                action()
+            } label: {
+                TextPlain(currency.countryName, color: Color.textFieldForeground)
+            }
+            
+            Spacer()
+            
+            TextPlain(viewModel.useCurrencySymbol ? currency.symbol : currency.currencyCode, color: Color.textFieldForeground)
         }
     }
 }
