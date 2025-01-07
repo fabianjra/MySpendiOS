@@ -18,13 +18,14 @@ struct CurrencyListView: View {
                             subTitle: "Select the currency to show")
             .padding(.bottom)
             
-            
-//            PickerSegmented(selection: $viewModel.currencyType,
-//                            segments: CurrencyType.allCases)
-//            .frame(maxWidth: ConstantFrames.iPadMaxWidth)
-//            .padding(.bottom, ConstantViews.mediumSpacing)
-            
-            
+            Picker("Currency", selection: $viewModel.currencyType) {
+                ForEach(CurrencyType.allCases) { type in
+                    TextPlain(type.rawValue)
+                }
+            }
+            .pickerStyle(.segmented)
+            .padding(.horizontal)
+
             ListContainer {
                 
                 if let localeCurrency = viewModel.localeCurrency {
