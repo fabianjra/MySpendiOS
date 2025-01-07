@@ -19,18 +19,18 @@ struct CurrencyListView: View {
             .padding(.bottom)
             
             
-            Toggle(isOn: $viewModel.useCurrencySymbol) {
-                TextPlain("Prefer currency symbol")
-            }
-            .padding(.horizontal)
+//            PickerSegmented(selection: $viewModel.currencyType,
+//                            segments: CurrencyType.allCases)
+//            .frame(maxWidth: ConstantFrames.iPadMaxWidth)
+//            .padding(.bottom, ConstantViews.mediumSpacing)
             
             
             ListContainer {
                 
-                if var localeCurrency = viewModel.localeCurrency {
+                if let localeCurrency = viewModel.localeCurrency {
                     SectionContainer("Preferred currencies", isInsideList: true) {
                         rowView(localeCurrency) {
-                            viewModel.selectCurrencySymbol(viewModel.useCurrencySymbol ? localeCurrency.symbol : localeCurrency.currencyCode)
+                            viewModel.selectCurrencySymbol(viewModel.currencyType == .symbol ? localeCurrency.symbol : localeCurrency.currencyCode)
                             //localeCurrency.selected = true //TODO: Hacer logica
                         }
                             .listRowBackground(Color.listRowBackground)
@@ -41,7 +41,7 @@ struct CurrencyListView: View {
                 SectionContainer("Available currencies", isInsideList: true) {
                     ForEach(viewModel.currenciesAvailables) { currency in
                         rowView(currency) {
-                            viewModel.selectCurrencySymbol(viewModel.useCurrencySymbol ? currency.symbol : currency.currencyCode)
+                            viewModel.selectCurrencySymbol(viewModel.currencyType == .symbol ? currency.symbol : currency.currencyCode)
                             //currency.selected = true //TODO: Hacer logica
                         }
                     }
@@ -72,7 +72,7 @@ struct CurrencyListView: View {
             
             Spacer()
             
-            TextPlain(viewModel.useCurrencySymbol ? currency.symbol : currency.currencyCode, color: Color.textFieldForeground)
+            TextPlain(viewModel.currencyType == .symbol ? currency.symbol : currency.currencyCode, color: Color.textFieldForeground)
         }
     }
 }

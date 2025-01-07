@@ -11,7 +11,8 @@ class CurrencyListViewModel: BaseViewModel {
     
     @Published var localeCurrency: CurrencyModel?
     @Published var currenciesAvailables: [CurrencyModel] = []
-    @Published var useCurrencySymbol: Bool = true
+    @Published var currencyType: CurrencyType = .symbol
+    
     
     func fetchCurrencyList() {
         localeCurrency = CurrencyManager().localeCurrency
