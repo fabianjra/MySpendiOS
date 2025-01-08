@@ -18,32 +18,30 @@ struct CurrencyListView: View {
                             subTitle: "Select the currency to show")
             .padding(.bottom)
             
-            Picker("Currency", selection: $viewModel.currencyType) {
-                ForEach(CurrencyType.allCases) { type in
+            
+            Picker("Currency", selection: $viewModel.currencySymbolType) {
+                ForEach(CurrencySymbolType.allCases) { type in
                     TextPlain(type.rawValue)
                 }
             }
             .pickerStyle(.segmented)
             .padding(.horizontal)
+            
 
             ListContainer {
                 
-                if let localeCurrency = viewModel.localeCurrency {
-                    SectionContainer("Preferred currencies", isInsideList: true) {
-                        rowView(localeCurrency) {
-                            viewModel.selectCurrencySymbol(viewModel.currencyType == .symbol ? localeCurrency.symbol : localeCurrency.currencyCode)
-                            //localeCurrency.selected = true //TODO: Hacer logica
-                        }
-                            .listRowBackground(Color.listRowBackground)
+                SectionContainer("Preferred currencies", isInsideList: true) {
+                    rowView(viewModel.localeCurrency) {
+                        viewModel.selectCurrency(viewModel.localeCurrency)
                     }
+                    .listRowBackground(Color.listRowBackground)
                 }
                 
                 
                 SectionContainer("Available currencies", isInsideList: true) {
                     ForEach(viewModel.currenciesAvailables) { currency in
                         rowView(currency) {
-                            viewModel.selectCurrencySymbol(viewModel.currencyType == .symbol ? currency.symbol : currency.currencyCode)
-                            //currency.selected = true //TODO: Hacer logica
+                            viewModel.selectCurrency(currency)
                         }
                     }
                     .listRowBackground(Color.listRowBackground)
@@ -51,7 +49,11 @@ struct CurrencyListView: View {
             }
         }
         .onAppear {
+            viewModel.loadCurrencySymbolType()
             viewModel.fetchCurrencyList()
+        }
+        .onChange(of: viewModel.currencySymbolType) {
+            viewModel.updateCurrencySymbolType()
         }
     }
     
@@ -73,7 +75,7 @@ struct CurrencyListView: View {
             
             Spacer()
             
-            TextPlain(viewModel.currencyType == .symbol ? currency.symbol : currency.currencyCode, color: Color.textFieldForeground)
+            TextPlain(viewModel.currencySymbolType == .symbol ? currency.symbol : currency.currencyCode, color: Color.textFieldForeground)
         }
     }
 }

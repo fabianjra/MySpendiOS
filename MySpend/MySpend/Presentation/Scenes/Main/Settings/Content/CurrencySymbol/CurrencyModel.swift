@@ -7,12 +7,36 @@
 
 import Foundation
 
-struct CurrencyModel: Identifiable {
-    public var id: String = UUID().uuidString
+struct CurrencyModel: Identifiable, Codable {
+    let id: String
     
-    var countryCode: String
-    var symbol: String
-    var currencyCode: String
-    var countryName: String
-    var selected: Bool = false
+    let countryCode: String
+    let symbol: String
+    let currencyCode: String
+    let countryName: String
+    
+    let selected: Bool
+    
+    init(countryCode: String,
+         symbol: String,
+         currencyCode: String,
+         countryName: String,
+         selected: Bool = false) {
+        
+        self.id = UUID().uuidString
+        self.countryCode = countryCode
+        self.symbol = symbol
+        self.currencyCode = currencyCode
+        self.countryName = countryName
+        self.selected = selected
+    }
+    
+    func updateModelToSelected(withCountryCode matchCountryCode: String) -> CurrencyModel {
+        return CurrencyModel(countryCode: self.countryCode,
+                             symbol: self.symbol,
+                             currencyCode: self.currencyCode,
+                             countryName: self.countryName,
+                             selected: matchCountryCode == self.countryCode
+        )
+    }
 }

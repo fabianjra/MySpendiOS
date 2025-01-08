@@ -1,11 +1,11 @@
 //
-//  CurrencyType.swift
+//  CurrencySymbolType.swift
 //  MySpend
 //
 //  Created by Fabian Rodriguez on 6/1/25.
 //
 
-enum CurrencyType: String, CaseIterable, Identifiable, Hashable {
+enum CurrencySymbolType: String, CaseIterable, Identifiable, Codable {
     public var id: Self { self }
     
     case symbol = "Currency Symbol"

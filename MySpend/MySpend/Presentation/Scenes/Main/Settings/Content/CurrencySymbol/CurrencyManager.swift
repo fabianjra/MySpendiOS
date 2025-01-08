@@ -17,7 +17,9 @@ public struct CurrencyManager {
     private static let defaultCurrencyCode: String = "USD"
     private static let defaultCountryName: String = "United States"
     
-    private static let currencySymbolKey = "selected_currency_symbol_key"
+    // UserDefaults
+    private static let selectedCurrencyKey = "selected_currency_key"
+    private static let selectedCurrencySymbolType = "selected_currency_symbol_type_key"
     
     // MARK: PUBLIC
     
@@ -31,35 +33,73 @@ public struct CurrencyManager {
 }
 
 
+// MARK: USER DEFAULTS
+
+extension CurrencyManager {
+    
+    /**
+     Currency almacenado en `UserDefaults`.
+     Si no encuentra nada guardado en UserDefaults, utiliza el código de moneda predeterminado basado en la configuración local.
+     */
+    static var selectedCurrencyUserDefaults: CurrencyModel {
+        get {
+            guard let data = UserDefaults.standard.data(forKey: selectedCurrencyKey) else { return localeCurrencyOrDefault }
+            
+            do {
+                return try JSONDecoder().decode(CurrencyModel.self, from: data)
+            } catch {
+                return localeCurrencyOrDefault
+            }
+        }
+        
+        set {
+            let encoder = JSONEncoder()
+            if let encoded = try? encoder.encode(newValue) {
+                UserDefaults.standard.set(encoded, forKey: selectedCurrencyKey)
+            }
+        }
+    }
+
+    static var removeSelectedCurrencyUserDefaults: Void {
+        UserDefaults.standard.removeObject(forKey: selectedCurrencyKey)
+    }
+    
+    static var selectedCurrencySymbolTypeUserDefaults: CurrencySymbolType {
+        get {
+            guard let data = UserDefaults.standard.data(forKey: selectedCurrencySymbolType) else { return CurrencySymbolType.symbol }
+            
+            do {
+                return try JSONDecoder().decode(CurrencySymbolType.self, from: data)
+            } catch {
+                return CurrencySymbolType.symbol
+            }
+        }
+
+        set {
+            let encoder = JSONEncoder()
+            if let encoded = try? encoder.encode(newValue) {
+                UserDefaults.standard.set(encoded, forKey: selectedCurrencySymbolType)
+            }
+        }
+    }
+    
+    static var removeSelectedCurrencySymbolTypeUserDefaults: Void {
+        UserDefaults.standard.removeObject(forKey: selectedCurrencySymbolType)
+    }
+}
+
 // MARK: FUNCTIONS
 
 extension CurrencyManager {
         
-    private static var defaultLocaleCurrent: String {
-        if let localeCurrency = CurrencyManager().localeCurrency {
-            return localeCurrency.symbol
-        }
-        
-        return defaultCurrencySymbol
-    }
-    
-    /// Código de moneda almacenado en `UserDefaults`.
-    /// Si no encuentra nada guardado en UserDefaults, utiliza el código de moneda predeterminado basado en la configuración local.
-    static var selectedCurrencySymbol: String {
-        get {
-            UserDefaults.standard.string(forKey: currencySymbolKey) ?? defaultLocaleCurrent
-        }
-        
-        set {
-            UserDefaults.standard.set(newValue, forKey: currencySymbolKey)
-        }
-    }
-    
-    static var removeSelectedCurrencySymbol: Void {
-        UserDefaults.standard.removeObject(forKey: currencySymbolKey)
+    public static var selectedSymbolOrCode: String {
+        return selectedCurrencySymbolTypeUserDefaults == .symbol ? selectedCurrencyUserDefaults.symbol : selectedCurrencyUserDefaults.currencyCode
     }
 
-    var localeCurrency: CurrencyModel? {
+    /**
+     Obtiene el Locale Currency. En caso de ser nulo, obtiene los valores de USA por defecto.
+     */
+    static var localeCurrencyOrDefault: CurrencyModel {
         let locale = Locale(identifier: Locale.current.identifier)
         
         if let region = locale.region {
@@ -69,13 +109,16 @@ extension CurrencyManager {
                let currencyCode = locale.currency?.identifier {
                 
                 return CurrencyModel(countryCode: region.identifier,
-                                      symbol: currencySymbol,
-                                      currencyCode: currencyCode,
-                                      countryName: countryName)
+                                     symbol: currencySymbol,
+                                     currencyCode: currencyCode,
+                                     countryName: countryName)
             }
         }
         
-        return nil
+        return CurrencyModel(countryCode: CurrencyManager.defaultCountryCode,
+                             symbol: CurrencyManager.defaultCurrencySymbol,
+                             currencyCode: CurrencyManager.defaultCurrencyCode,
+                             countryName: CurrencyManager.defaultCountryName)
     }
     
     static func currencyList(useCurrencyCode: Bool = false) -> [CurrencyModel]{
