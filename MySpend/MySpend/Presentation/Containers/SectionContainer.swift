@@ -13,18 +13,21 @@ struct SectionContainer<Content: View>: View {
     private let isInsideList: Bool
     private let textColor: Color
     private let textSize: Font.Sizes
+    private let rowColor: Color
     private let content: () -> Content
     
     init(_ title: String? = nil,
          isInsideList: Bool? = true,
          textColor: Color = Color.textSecondaryForeground,
          textSize: Font.Sizes = .small,
+         rowColor: Color = Color.listRowBackground,
          @ViewBuilder content: @escaping () -> Content) {
         
         self.title = title
         self.isInsideList = isInsideList ?? true
         self.textColor = textColor
         self.textSize = textSize
+        self.rowColor = rowColor
         self.content = content
     }
     
@@ -44,7 +47,7 @@ struct SectionContainer<Content: View>: View {
                 }
             }
         })
-        .listRowBackground(Color.listRowBackground)
+        .listRowBackground(rowColor)
     }
 }
 

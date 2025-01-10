@@ -69,7 +69,7 @@ enum ContentOptions: String, CaseIterable, Identifiable {
     public var id: Self { self }
     case categories = "Categories"
     case currencySymbol = "Currency symbol"
-    case dateTimeInterval = "Date time interval"
+    case dateTimeInterval = "Time interval"
     
     var icon: Image {
         switch self {
@@ -93,7 +93,7 @@ enum ContentOptions: String, CaseIterable, Identifiable {
         //"for: .navigationBar" is disabling the navigator to navigate the next View.
         case .categories: CategoryView().toolbar(.hidden, for: .navigationBar)
         case .currencySymbol: CurrencyListView().toolbar(.hidden, for: .navigationBar)
-        case .dateTimeInterval: EmptyView().toolbar(.hidden, for: .navigationBar) //TODO: ADD VIEW.s
+        case .dateTimeInterval: DateTimeIntervalListView().toolbar(.hidden, for: .navigationBar)
         }
     }
 }

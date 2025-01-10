@@ -21,11 +21,13 @@ class TransactionViewModel: BaseViewModel {
         self.transactions = transactions
     }
     
-    func fetchUserName() {
+    func onAppear() {
         performWithCurrentUser { currentUser in
             guard let displayName = currentUser.displayName else { return }
             self.userName = displayName
         }
+        
+        self.dateTimeInterval = UserDefaultsDate.dateTimeInterval
     }
     
     private var listener: ListenerRegistration?

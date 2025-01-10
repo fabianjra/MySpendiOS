@@ -156,6 +156,8 @@
 		1FE7C6812A47DA1F0070B988 /* Colors+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE7C6802A47DA1F0070B988 /* Colors+Extensions.swift */; };
 		1FE7C6832A47DDF40070B988 /* ConstantRadius.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE7C6822A47DDF40070B988 /* ConstantRadius.swift */; };
 		1FE7C6882A48027C0070B988 /* Images+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE7C6872A48027C0070B988 /* Images+Extensions.swift */; };
+		1FE9B6102D30CECC00CE9DDD /* DateTimeIntervalListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE9B60F2D30CEC400CE9DDD /* DateTimeIntervalListView.swift */; };
+		1FE9B6122D30D16900CE9DDD /* DateTimeIntervalListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE9B6112D30D16600CE9DDD /* DateTimeIntervalListViewModel.swift */; };
 		1FEA08142D2CDE4800EB2B34 /* CurrencySymbolType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEA08132D2CDE4100EB2B34 /* CurrencySymbolType.swift */; };
 		1FEA0D4D2CD2EE96005EA785 /* Label+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEA0D4C2CD2EE90005EA785 /* Label+Extensions.swift */; };
 		1FF27C9D2D2B52830092BD23 /* CurrencyListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF27C9C2D2B52830092BD23 /* CurrencyListView.swift */; };
@@ -331,6 +333,8 @@
 		1FE7C6802A47DA1F0070B988 /* Colors+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Colors+Extensions.swift"; sourceTree = "<group>"; };
 		1FE7C6822A47DDF40070B988 /* ConstantRadius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantRadius.swift; sourceTree = "<group>"; };
 		1FE7C6872A48027C0070B988 /* Images+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Images+Extensions.swift"; sourceTree = "<group>"; };
+		1FE9B60F2D30CEC400CE9DDD /* DateTimeIntervalListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimeIntervalListView.swift; sourceTree = "<group>"; };
+		1FE9B6112D30D16600CE9DDD /* DateTimeIntervalListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimeIntervalListViewModel.swift; sourceTree = "<group>"; };
 		1FEA08132D2CDE4100EB2B34 /* CurrencySymbolType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencySymbolType.swift; sourceTree = "<group>"; };
 		1FEA0D4C2CD2EE90005EA785 /* Label+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Label+Extensions.swift"; sourceTree = "<group>"; };
 		1FF27C9C2D2B52830092BD23 /* CurrencyListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyListView.swift; sourceTree = "<group>"; };
@@ -623,11 +627,13 @@
 			path = Picker;
 			sourceTree = "<group>";
 		};
-		1F5B65842D30CDC80042DA0E /* New Group */ = {
+		1F5B65842D30CDC80042DA0E /* DateTimeInterval */ = {
 			isa = PBXGroup;
 			children = (
+				1FE9B60F2D30CEC400CE9DDD /* DateTimeIntervalListView.swift */,
+				1FE9B6112D30D16600CE9DDD /* DateTimeIntervalListViewModel.swift */,
 			);
-			path = "New Group";
+			path = DateTimeInterval;
 			sourceTree = "<group>";
 		};
 		1F5CC57A2A6648D000C214FE /* Views */ = {
@@ -789,7 +795,7 @@
 		1FAA87D02C697EDF00700CD6 /* Content */ = {
 			isa = PBXGroup;
 			children = (
-				1F5B65842D30CDC80042DA0E /* New Group */,
+				1F5B65842D30CDC80042DA0E /* DateTimeInterval */,
 				1FF27C9B2D2B52630092BD23 /* CurrencySymbol */,
 				1FAA87D12C697EF000700CD6 /* CategoryGroup */,
 			);
@@ -1284,6 +1290,7 @@
 				1F6FAEB92CD1D13C008CD39F /* Date+Extensions.swift in Sources */,
 				1F9462EB2A7B4D8200F5CBFB /* HeaderNavigator.swift in Sources */,
 				1FF6205C2CA4FE730031F416 /* CategoriesDatabase.swift in Sources */,
+				1FE9B6122D30D16900CE9DDD /* DateTimeIntervalListViewModel.swift in Sources */,
 				1F9DD6D42CCCCFA20093F55D /* NoContentView.swift in Sources */,
 				1FAADBE62CCB36FC00D9544D /* AddModifyCategoryViewModel.swift in Sources */,
 				1F06414D2A7232D300C19084 /* RootView.swift in Sources */,
@@ -1306,6 +1313,7 @@
 				1FF27C9D2D2B52830092BD23 /* CurrencyListView.swift in Sources */,
 				1F7486CB2A6F72D20063AC35 /* TabViewButton.swift in Sources */,
 				1F6813062CF2CA8200822471 /* TotalBalanceViewModel.swift in Sources */,
+				1FE9B6102D30CECC00CE9DDD /* DateTimeIntervalListView.swift in Sources */,
 				1F9DD6D02CCCA9EB0093F55D /* SelectCategoryModalView.swift in Sources */,
 				1F9462EE2A7B54EC00F5CBFB /* Loader.swift in Sources */,
 				1F9F16D42AFC926D003CB599 /* UserModel.swift in Sources */,

@@ -1,11 +1,9 @@
 //
-//  Validations.swift
+//  ConstantValidations.swift
 //  MySpend
 //
 //  Created by Fabian Rodriguez on 1/8/23.
 //
-
-import Foundation
 
 struct ConstantValidations {
     

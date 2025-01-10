@@ -96,7 +96,7 @@ struct TransactionView: View {
         }
         .onAppear {
             print("Router count RESUME: \(Router.shared.path.count)")
-            viewModel.fetchUserName()
+            viewModel.onAppear()
         }
         .onFirstAppear {
             viewModel.fetchData()

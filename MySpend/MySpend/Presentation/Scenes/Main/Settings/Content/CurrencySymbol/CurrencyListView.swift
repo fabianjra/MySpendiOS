@@ -34,9 +34,7 @@ struct CurrencyListView: View {
                     rowView(viewModel.localeCurrency) {
                         viewModel.updateCurrencySelected(viewModel.localeCurrency)
                     }
-                    .listRowBackground(Color.listRowBackground)
                 }
-                
                 
                 SectionContainer("Available currencies", isInsideList: true) {
                     ForEach(viewModel.currenciesAvailables) { currency in
@@ -44,7 +42,6 @@ struct CurrencyListView: View {
                             viewModel.updateCurrencySelected(currency)
                         }
                     }
-                    .listRowBackground(Color.listRowBackground)
                 }
             }
         }
