@@ -165,33 +165,33 @@ extension CurrencyManager {
 extension CurrencyManager {
     
     public static var getSelectedSymbolOrCode: String {
-        switch UserDefaultsCurrency.selectedCurrencySymbolTypeUserDefaults {
+        switch UserDefaultsCurrency.currencySymbolType {
             
         case .symbol:
-            return UserDefaultsCurrency.selectedCurrencyUserDefaults.symbol
+            return UserDefaultsCurrency.currency.symbol
             
         case .code:
-            return UserDefaultsCurrency.selectedCurrencyUserDefaults.currencyCode
+            return UserDefaultsCurrency.currency.currencyCode
         }
     }
     
     static var selectedCurrency: CurrencyModel {
         get {
-            return UserDefaultsCurrency.selectedCurrencyUserDefaults
+            return UserDefaultsCurrency.currency
         }
         
         set {
-            UserDefaultsCurrency.selectedCurrencyUserDefaults = newValue
+            UserDefaultsCurrency.currency = newValue
         }
     }
     
     static var selectedCurrencySymbolType: CurrencySymbolType {
         get {
-            return UserDefaultsCurrency.selectedCurrencySymbolTypeUserDefaults
+            return UserDefaultsCurrency.currencySymbolType
         }
         
         set {
-            UserDefaultsCurrency.selectedCurrencySymbolTypeUserDefaults = newValue
+            UserDefaultsCurrency.currencySymbolType = newValue
         }
     }
 }

@@ -7,7 +7,15 @@
 
 import Foundation
 
-enum DateTimeInterval: String, CaseIterable, Identifiable {
+/**
+ Allows user to select a Date Time interval to show transactions.
+ 
+ - String: The picker segmented needs to show the value description.
+ - CaseIterable: The picker segmented needs to iterate each item.
+ - Identifiable: To asign and ID to every item when iterate.
+ - Codable: To Set and Get valures in UserDefaults.
+ */
+enum DateTimeInterval: String, CaseIterable, Identifiable, Codable {
     public var id: Self { self }
     
     case day = "Daily"

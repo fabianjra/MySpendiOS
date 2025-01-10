@@ -16,7 +16,7 @@ struct UserDefaultsCurrency {
      Currency almacenado en `UserDefaults`.
      Si no encuentra nada guardado en UserDefaults, utiliza el código de moneda predeterminado basado en la configuración local.
      */
-    static var selectedCurrencyUserDefaults: CurrencyModel {
+    static var currency: CurrencyModel {
         get {
             guard let data = UserDefaults.standard.data(forKey: selectedCurrencyKey) else { return CurrencyManager.localeCurrencyOrDefault }
             
@@ -35,11 +35,11 @@ struct UserDefaultsCurrency {
         }
     }
 
-    static var removeSelectedCurrencyUserDefaults: Void {
+    static var removeCurrency: Void {
         UserDefaults.standard.removeObject(forKey: selectedCurrencyKey)
     }
     
-    static var selectedCurrencySymbolTypeUserDefaults: CurrencySymbolType {
+    static var currencySymbolType: CurrencySymbolType {
         get {
             guard let data = UserDefaults.standard.data(forKey: selectedCurrencySymbolType) else { return CurrencySymbolType.symbol }
             
@@ -58,7 +58,7 @@ struct UserDefaultsCurrency {
         }
     }
     
-    static var removeSelectedCurrencySymbolTypeUserDefaults: Void {
+    static var removeCurrencySymbolType: Void {
         UserDefaults.standard.removeObject(forKey: selectedCurrencySymbolType)
     }
 }

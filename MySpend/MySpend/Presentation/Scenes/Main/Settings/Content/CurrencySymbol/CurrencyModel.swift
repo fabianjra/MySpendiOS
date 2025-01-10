@@ -36,7 +36,7 @@ struct CurrencyModel: Identifiable, Codable {
                              symbol: self.symbol,
                              currencyCode: self.currencyCode,
                              countryName: self.countryName,
-                             selected: UserDefaultsCurrency.selectedCurrencyUserDefaults.countryCode == self.countryCode
+                             selected: UserDefaultsCurrency.currency.countryCode == self.countryCode
         )
     }
 }
