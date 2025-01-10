@@ -17,6 +17,8 @@ public struct CurrencyManager {
     private static let defaultCurrencyCode: String = "USD"
     private static let defaultCountryName: String = "United States"
 
+    private static let defaultDecimalSeparator: String = "."
+    private static let defaultGroupingSeparator: String = ","
     
     // MARK: PUBLIC
     
@@ -24,9 +26,6 @@ public struct CurrencyManager {
     public static let amoutMaxLengthWithDecimal: Int = 53
     public static let fractionLength: Int = 2
     public static let zeroAmoutString: String = "0"
-    
-    public static let defaultDecimalSeparator: String = "."
-    public static let defaultGroupingSeparator: String = ","
 }
 
 
@@ -35,11 +34,11 @@ public struct CurrencyManager {
 extension CurrencyManager {
     
     public static var getLocalDecimalSeparator: String {
-        return Locale.current.decimalSeparator ?? CurrencyManager.defaultDecimalSeparator
+        return Locale.current.decimalSeparator ?? defaultDecimalSeparator
     }
 
     public static var getLocalGroupingSeparator: String {
-        return Locale.current.groupingSeparator ?? CurrencyManager.defaultGroupingSeparator
+        return Locale.current.groupingSeparator ?? defaultGroupingSeparator
     }
 }
 
@@ -47,17 +46,6 @@ extension CurrencyManager {
 // MARK: FUNCTIONS
 
 extension CurrencyManager {
-        
-    public static var selectedSymbolOrCode: String {
-        switch UserDefaultsCurrency.selectedCurrencySymbolTypeUserDefaults {
-            
-        case .symbol:
-            return UserDefaultsCurrency.selectedCurrencyUserDefaults.symbol
-            
-        case .code:
-            return UserDefaultsCurrency.selectedCurrencyUserDefaults.currencyCode
-        }
-    }
 
     /**
      Obtiene el Locale Currency. En caso de ser nulo, obtiene los valores de USA por defecto.
@@ -143,7 +131,7 @@ extension CurrencyManager {
             candidates.append(symbol)
         }
         
-        let sorted = sortAscByLength(list: candidates)
+        let sorted = candidates.sorted(by: { $0.count < $1.count })
         
         if sorted.count < 1 {
             return ""
@@ -169,8 +157,41 @@ extension CurrencyManager {
         
         return symbol
     }
+}
 
-    private static func sortAscByLength(list: [String]) -> [String] {
-        return list.sorted(by: { $0.count < $1.count })
+
+// MARK: USER DEFAULTS
+
+extension CurrencyManager {
+    
+    public static var getSelectedSymbolOrCode: String {
+        switch UserDefaultsCurrency.selectedCurrencySymbolTypeUserDefaults {
+            
+        case .symbol:
+            return UserDefaultsCurrency.selectedCurrencyUserDefaults.symbol
+            
+        case .code:
+            return UserDefaultsCurrency.selectedCurrencyUserDefaults.currencyCode
+        }
+    }
+    
+    static var selectedCurrency: CurrencyModel {
+        get {
+            return UserDefaultsCurrency.selectedCurrencyUserDefaults
+        }
+        
+        set {
+            UserDefaultsCurrency.selectedCurrencyUserDefaults = newValue
+        }
+    }
+    
+    static var selectedCurrencySymbolType: CurrencySymbolType {
+        get {
+            return UserDefaultsCurrency.selectedCurrencySymbolTypeUserDefaults
+        }
+        
+        set {
+            UserDefaultsCurrency.selectedCurrencySymbolTypeUserDefaults = newValue
+        }
     }
 }

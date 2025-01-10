@@ -9,32 +9,30 @@ import Foundation
 
 class CurrencyListViewModel: BaseViewModel {
     
-    @Published var localeCurrency = CurrencyManager.localeCurrencyOrDefault
+    @Published var localeCurrency = CurrencyManager.localeCurrencyOrDefault.updateModelToUserDefaultsSelected() //Get locale currency and set Selected or not, depending on UserDefaults.
     @Published var currenciesAvailables: [CurrencyModel] = []
-    @Published var currencySymbolType: CurrencySymbolType = UserDefaultsCurrency.selectedCurrencySymbolTypeUserDefaults
+    @Published var currencySymbolType: CurrencySymbolType = CurrencyManager.selectedCurrencySymbolType
     
 
     func fetchCurrencyList() {
-        self.localeCurrency = self.localeCurrency.updateModelToUserDefaultsSelected()
-        
-        // Utilizado para saber cual es el Currency que esta seleccionado y marcarlo con Check en el View.
+        // Loop to know which currency is selected in UserDefaults and check it in the View.
         self.currenciesAvailables = CurrencyManager.currencyList().map { currency in
             return currency.updateModelToUserDefaultsSelected()
         }
     }
     
     func updateCurrencySelected(_ model: CurrencyModel) {
-        UserDefaultsCurrency.selectedCurrencyUserDefaults = model // Update the UserDefaults
+        CurrencyManager.selectedCurrency = model // Update the UserDefaults
         
         self.localeCurrency = self.localeCurrency.updateModelToUserDefaultsSelected()
         
-        // Se debe modificar todo el array porque se debe quitar la seleccion del que haya sido seleccionado anteriormente.
+        // Should modify the whole array because have to Uncheck the old checked currency and check the new one.
         self.currenciesAvailables = self.currenciesAvailables.map { currency in
             return currency.updateModelToUserDefaultsSelected()
         }
     }
 
     func updateCurrencySymbolTypeSelected() {
-        UserDefaultsCurrency.selectedCurrencySymbolTypeUserDefaults = self.currencySymbolType // Update the UserDefaults
+        CurrencyManager.selectedCurrencySymbolType = self.currencySymbolType // Update the UserDefaults
     }
 }

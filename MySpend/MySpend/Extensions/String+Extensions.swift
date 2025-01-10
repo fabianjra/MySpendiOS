@@ -17,7 +17,7 @@ extension String {
      if there is roughly > 30 substrings to attach together, then interpolation is faster
      */
     public var addCurrencySymbol: String {
-        return "\(CurrencyManager.selectedSymbolOrCode) \(self)" //Interpolation.
+        return "\(CurrencyManager.getSelectedSymbolOrCode) \(self)" //Interpolation.
     }
     
     /**
