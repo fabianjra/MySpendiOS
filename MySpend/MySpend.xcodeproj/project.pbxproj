@@ -623,6 +623,13 @@
 			path = Picker;
 			sourceTree = "<group>";
 		};
+		1F5B65842D30CDC80042DA0E /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
+			sourceTree = "<group>";
+		};
 		1F5CC57A2A6648D000C214FE /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -782,6 +789,7 @@
 		1FAA87D02C697EDF00700CD6 /* Content */ = {
 			isa = PBXGroup;
 			children = (
+				1F5B65842D30CDC80042DA0E /* New Group */,
 				1FF27C9B2D2B52630092BD23 /* CurrencySymbol */,
 				1FAA87D12C697EF000700CD6 /* CategoryGroup */,
 			);

@@ -10,7 +10,7 @@ import FirebaseFirestore
 class TransactionViewModel: BaseViewModel {
     
     @Published var userName: String = ""
-    @Published var dateTimeInterval: DateTimeInterval = .month
+    @Published var dateTimeInterval: DateTimeInterval = UserDefaultsDate.dateTimeInterval
     
     // MARK: TRANSACTIONS
     @Published var transactions: [TransactionModel]
