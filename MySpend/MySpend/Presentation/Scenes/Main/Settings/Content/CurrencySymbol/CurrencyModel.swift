@@ -30,13 +30,13 @@ struct CurrencyModel: Identifiable, Codable {
         self.countryName = countryName
         self.selected = selected
     }
-    
-    func updateModelToSelected(withCountryCode matchCountryCode: String) -> CurrencyModel {
+
+    func updateModelToUserDefaultsSelected() -> CurrencyModel {
         return CurrencyModel(countryCode: self.countryCode,
                              symbol: self.symbol,
                              currencyCode: self.currencyCode,
                              countryName: self.countryName,
-                             selected: matchCountryCode == self.countryCode
+                             selected: UserDefaultsCurrency.selectedCurrencyUserDefaults.countryCode == self.countryCode
         )
     }
 }

@@ -11,44 +11,30 @@ class CurrencyListViewModel: BaseViewModel {
     
     @Published var localeCurrency = CurrencyManager.localeCurrencyOrDefault
     @Published var currenciesAvailables: [CurrencyModel] = []
-    @Published var currencySymbolType: CurrencySymbolType = .symbol
+    @Published var currencySymbolType: CurrencySymbolType = UserDefaultsCurrency.selectedCurrencySymbolTypeUserDefaults
     
-    private var selectedCurrency: CurrencyModel {
-        return CurrencyManager.selectedCurrencyUserDefaults
-    }
-    
-    private var getCurrencySymbolType: CurrencySymbolType {
-        return CurrencyManager.selectedCurrencySymbolTypeUserDefaults
-    }
-    
-    func loadCurrencySymbolType() {
-        currencySymbolType = getCurrencySymbolType
-    }
-    
+
     func fetchCurrencyList() {
-        localeCurrency = localeCurrency.updateModelToSelected(withCountryCode: selectedCurrency.countryCode)
+        self.localeCurrency = self.localeCurrency.updateModelToUserDefaultsSelected()
         
-        currenciesAvailables = CurrencyManager.currencyList().map { currency in
-            return currency.updateModelToSelected(withCountryCode: selectedCurrency.countryCode)
+        // Utilizado para saber cual es el Currency que esta seleccionado y marcarlo con Check en el View.
+        self.currenciesAvailables = CurrencyManager.currencyList().map { currency in
+            return currency.updateModelToUserDefaultsSelected()
         }
     }
     
-    func selectCurrency(_ model: CurrencyModel) {
-        CurrencyManager.selectedCurrencyUserDefaults = model // Update the UserDefaults
+    func updateCurrencySelected(_ model: CurrencyModel) {
+        UserDefaultsCurrency.selectedCurrencyUserDefaults = model // Update the UserDefaults
         
-        currenciesAvailables = currenciesAvailables.map { currency in
-            return currency.updateModelToSelected(withCountryCode: selectedCurrency.countryCode)
+        self.localeCurrency = self.localeCurrency.updateModelToUserDefaultsSelected()
+        
+        // Se debe modificar todo el array porque se debe quitar la seleccion del que haya sido seleccionado anteriormente.
+        self.currenciesAvailables = self.currenciesAvailables.map { currency in
+            return currency.updateModelToUserDefaultsSelected()
         }
-        
-        localeCurrency = localeCurrency.updateModelToSelected(withCountryCode: selectedCurrency.countryCode)
     }
 
-    func resetCurrency() {
-        CurrencyManager.removeSelectedCurrencyUserDefaults
-        fetchCurrencyList()
-    }
-    
-    func updateCurrencySymbolType() {
-        CurrencyManager.selectedCurrencySymbolTypeUserDefaults = self.currencySymbolType // Update the UserDefaults
+    func updateCurrencySymbolTypeSelected() {
+        UserDefaultsCurrency.selectedCurrencySymbolTypeUserDefaults = self.currencySymbolType // Update the UserDefaults
     }
 }

@@ -8,15 +8,7 @@
 import Foundation
 
 public struct UtilsCurrency {
-    
-    public static var getLocalDecimalSeparator: String {
-        return Locale.current.decimalSeparator ?? CurrencyManager.defaultDecimalSeparator
-    }
-    
-    public static var getLocalGroupingSeparator: String {
-        return Locale.current.groupingSeparator ?? CurrencyManager.defaultGroupingSeparator
-    }
-    
+
     /**
      Returns a localized `NumberFormatter` configured for decimal numbers based on the current locale.
      

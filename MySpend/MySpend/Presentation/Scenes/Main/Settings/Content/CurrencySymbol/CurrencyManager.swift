@@ -16,10 +16,7 @@ public struct CurrencyManager {
     private static let defaultCurrencySymbol: String = "$"
     private static let defaultCurrencyCode: String = "USD"
     private static let defaultCountryName: String = "United States"
-    
-    // UserDefaults
-    private static let selectedCurrencyKey = "selected_currency_key"
-    private static let selectedCurrencySymbolType = "selected_currency_symbol_type_key"
+
     
     // MARK: PUBLIC
     
@@ -33,67 +30,33 @@ public struct CurrencyManager {
 }
 
 
-// MARK: USER DEFAULTS
+// MARK: UTILS
 
 extension CurrencyManager {
     
-    /**
-     Currency almacenado en `UserDefaults`.
-     Si no encuentra nada guardado en UserDefaults, utiliza el código de moneda predeterminado basado en la configuración local.
-     */
-    static var selectedCurrencyUserDefaults: CurrencyModel {
-        get {
-            guard let data = UserDefaults.standard.data(forKey: selectedCurrencyKey) else { return localeCurrencyOrDefault }
-            
-            do {
-                return try JSONDecoder().decode(CurrencyModel.self, from: data)
-            } catch {
-                return localeCurrencyOrDefault
-            }
-        }
-        
-        set {
-            let encoder = JSONEncoder()
-            if let encoded = try? encoder.encode(newValue) {
-                UserDefaults.standard.set(encoded, forKey: selectedCurrencyKey)
-            }
-        }
+    public static var getLocalDecimalSeparator: String {
+        return Locale.current.decimalSeparator ?? CurrencyManager.defaultDecimalSeparator
     }
 
-    static var removeSelectedCurrencyUserDefaults: Void {
-        UserDefaults.standard.removeObject(forKey: selectedCurrencyKey)
-    }
-    
-    static var selectedCurrencySymbolTypeUserDefaults: CurrencySymbolType {
-        get {
-            guard let data = UserDefaults.standard.data(forKey: selectedCurrencySymbolType) else { return CurrencySymbolType.symbol }
-            
-            do {
-                return try JSONDecoder().decode(CurrencySymbolType.self, from: data)
-            } catch {
-                return CurrencySymbolType.symbol
-            }
-        }
-
-        set {
-            let encoder = JSONEncoder()
-            if let encoded = try? encoder.encode(newValue) {
-                UserDefaults.standard.set(encoded, forKey: selectedCurrencySymbolType)
-            }
-        }
-    }
-    
-    static var removeSelectedCurrencySymbolTypeUserDefaults: Void {
-        UserDefaults.standard.removeObject(forKey: selectedCurrencySymbolType)
+    public static var getLocalGroupingSeparator: String {
+        return Locale.current.groupingSeparator ?? CurrencyManager.defaultGroupingSeparator
     }
 }
+
 
 // MARK: FUNCTIONS
 
 extension CurrencyManager {
         
     public static var selectedSymbolOrCode: String {
-        return selectedCurrencySymbolTypeUserDefaults == .symbol ? selectedCurrencyUserDefaults.symbol : selectedCurrencyUserDefaults.currencyCode
+        switch UserDefaultsCurrency.selectedCurrencySymbolTypeUserDefaults {
+            
+        case .symbol:
+            return UserDefaultsCurrency.selectedCurrencyUserDefaults.symbol
+            
+        case .code:
+            return UserDefaultsCurrency.selectedCurrencyUserDefaults.currencyCode
+        }
     }
 
     /**
@@ -121,7 +84,7 @@ extension CurrencyManager {
                              countryName: CurrencyManager.defaultCountryName)
     }
     
-    static func currencyList(useCurrencyCode: Bool = false) -> [CurrencyModel]{
+    static func currencyList() -> [CurrencyModel] {
         var currencyList: [CurrencyModel] = []
 
         let regionCodes = Locale.Region.isoRegions.filter { $0.subRegions.isEmpty }.map { $0.identifier }
@@ -144,16 +107,10 @@ extension CurrencyManager {
                     continue
                 }
                 
-                var symbol: String = ""
+                var symbol = getSymbolForCurrencyCode(code: currencyCode)
                 
-                if useCurrencyCode {
-                    symbol = currencyCode
-                } else {
-                    symbol = getSymbolForCurrencyCode(code: currencyCode)
-                    
-                    if symbol.isEmptyOrWhitespace {
-                        symbol = currencySymbol
-                    }
+                if symbol.isEmptyOrWhitespace {
+                    symbol = currencySymbol
                 }
                 
                 let model = CurrencyModel(countryCode: regionCode,
@@ -179,6 +136,7 @@ extension CurrencyManager {
             guard let symbol = findMatchingSymbol(localeID: localeID, currencyCode: code) else {
                 continue
             }
+            
             if symbol.count == 1 {
                 return symbol
             }

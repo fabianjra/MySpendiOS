@@ -32,7 +32,7 @@ struct CurrencyListView: View {
                 
                 SectionContainer("Preferred currencies", isInsideList: true) {
                     rowView(viewModel.localeCurrency) {
-                        viewModel.selectCurrency(viewModel.localeCurrency)
+                        viewModel.updateCurrencySelected(viewModel.localeCurrency)
                     }
                     .listRowBackground(Color.listRowBackground)
                 }
@@ -41,7 +41,7 @@ struct CurrencyListView: View {
                 SectionContainer("Available currencies", isInsideList: true) {
                     ForEach(viewModel.currenciesAvailables) { currency in
                         rowView(currency) {
-                            viewModel.selectCurrency(currency)
+                            viewModel.updateCurrencySelected(currency)
                         }
                     }
                     .listRowBackground(Color.listRowBackground)
@@ -49,11 +49,10 @@ struct CurrencyListView: View {
             }
         }
         .onAppear {
-            viewModel.loadCurrencySymbolType()
             viewModel.fetchCurrencyList()
         }
         .onChange(of: viewModel.currencySymbolType) {
-            viewModel.updateCurrencySymbolType()
+            viewModel.updateCurrencySymbolTypeSelected()
         }
     }
     
