@@ -10,9 +10,9 @@ Se creó una lista de tareas TODO, In progress y Done en Trello: https://trello.
 ## Packages:
 
 - [Firebase](#firebase)
-- [Binding example](#Binding example)
-- [Download Firebase Firestore Database](#Download Firebase Firestore Database)
-- [Outputs folder](#Outputs folder)
+- [Binding example](#binding-example)
+- [Download Firebase Firestore Database](#download-firebase-firestore-database)
+- [Outputs folder](#outputs-folder)
 
 <p>&nbsp;</p>
 
