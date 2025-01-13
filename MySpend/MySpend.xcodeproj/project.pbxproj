@@ -560,7 +560,6 @@
 			isa = PBXGroup;
 			children = (
 				1F0F75D82D34CAA9001E35D2 /* Outputs */,
-				1F8178FF2D2B7C8C003B3340 /* Playgrounds */,
 				1F6343FF2A47A8C400081BCD /* README.md */,
 				1F4C24812A47A6DA00CCAF6D /* MySpend */,
 				1F4C24922A47A6DC00CCAF6D /* MySpendTests */,
@@ -728,13 +727,6 @@
 				1F7ABD252CCC5CE80023FBA4 /* DatePickerModalView.swift */,
 			);
 			path = DatePickerModal;
-			sourceTree = "<group>";
-		};
-		1F8178FF2D2B7C8C003B3340 /* Playgrounds */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Playgrounds;
 			sourceTree = "<group>";
 		};
 		1F82C1CB2D30B29D0020F9EC /* UserDefaults */ = {
