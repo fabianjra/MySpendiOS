@@ -219,3 +219,16 @@ playground.xcworkspace
 ####
 # UNKNOWN: recommended by others, but I can't discover what these files are
 #
+
+#################################################################################
+# FIREBASE 2025:
+
+# Ignorar todo dentro de la carpeta Outputs
+Outputs/*
+
+# Excepto la carpeta Outputs
+!Outputs/
+
+# Si deseas conservar archivos específicos (como un .gitkeep):
+!Outputs/.gitkeep
+

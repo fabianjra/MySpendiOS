@@ -385,6 +385,13 @@
 			path = Root;
 			sourceTree = "<group>";
 		};
+		1F0F75D82D34CAA9001E35D2 /* Outputs */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Outputs;
+			sourceTree = "<group>";
+		};
 		1F0FA3C32CCC7B99009DDB4E /* CaseIterables */ = {
 			isa = PBXGroup;
 			children = (
@@ -552,6 +559,7 @@
 		1F4C24762A47A6DA00CCAF6D = {
 			isa = PBXGroup;
 			children = (
+				1F0F75D82D34CAA9001E35D2 /* Outputs */,
 				1F8178FF2D2B7C8C003B3340 /* Playgrounds */,
 				1F6343FF2A47A8C400081BCD /* README.md */,
 				1F4C24812A47A6DA00CCAF6D /* MySpend */,
@@ -1170,10 +1178,11 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"$(SRCROOT)/Outputs/CrashlyticsOutputFile.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n \"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
