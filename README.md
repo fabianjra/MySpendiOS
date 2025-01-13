@@ -10,7 +10,9 @@ Se creó una lista de tareas TODO, In progress y Done en Trello: https://trello.
 ## Packages:
 
 - [Firebase](#firebase)
-
+- [Binding example](#Binding example)
+- [Download Firebase Firestore Database](#Download Firebase Firestore Database)
+- [Outputs folder](#Outputs folder)
 
 <p>&nbsp;</p>
 
@@ -89,3 +91,6 @@ Import data to Firestore using this command:
 npx -p node-firestore-import-export firestore-import -a credentials.json -b backup.json
 ```
 
+## Outputs folder:
+
+Se agrega una carpeta de outputs folder por si Crashlytics necesita guardar archivos generados.
