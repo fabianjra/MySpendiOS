@@ -28,9 +28,9 @@ class AddModifyCategoryViewModel: BaseViewModel {
             do {
                 modelMutated.userId = currentUser.uid
                 
-                try await Repository().addNewDocument(modelMutated, forSubCollection: .categories)
+                let document = try await Repository().addNewDocument(modelMutated, forSubCollection: .categories)
                 
-                response = ResponseModel(.successful)
+                response = ResponseModel(.successful, document: document)
             } catch {
                 Logs.WriteCatchExeption(error: error)
                 response = ResponseModel(.error, error.localizedDescription)

@@ -28,6 +28,10 @@ struct AddModifyCategoryView: View {
     
     @Binding var categoryType: TransactionType
     
+    // Options for: Category added from New Transaction (Should select the new category when added).
+    @Binding var isNewCategoryAdded: Bool //Allows the dismiss in the UpperView when a new category is added.
+    @Binding var newCategoryID: String
+    
     @StateObject var viewModel = AddModifyCategoryViewModel()
     @FocusState private var focusedField: CategoryModel.Field?
     
@@ -47,7 +51,12 @@ struct AddModifyCategoryView: View {
     }
     
     /// Way to initialize a Binding if you want to pass a value (model) or just initialize the model with default valures.
-    init(model: Binding<CategoryModel>? = nil, categoryType: Binding<TransactionType>) {
+    init(model: Binding<CategoryModel>? = nil,
+         categoryType: Binding<TransactionType>,
+         
+         isNewCategoryAdded: Binding<Bool>? = nil,
+         newCategoryID: Binding<String>? = nil) {
+        
         if let model = model {
             self.isNewCategory = false
             self._model = model
@@ -56,7 +65,20 @@ struct AddModifyCategoryView: View {
             self.isNewCategory = true
             self._model = .constant(CategoryModel())
         }
+        
         self._categoryType = categoryType
+        
+        if let isNewCategoryAdded = isNewCategoryAdded {
+            self._isNewCategoryAdded = isNewCategoryAdded
+        } else {
+            self._isNewCategoryAdded = .constant(false)
+        }
+        
+        if let newCategoryID = newCategoryID {
+            self._newCategoryID = newCategoryID
+        } else {
+            self._newCategoryID = .constant("")
+        }
     }
     
     var body: some View {
@@ -144,6 +166,13 @@ struct AddModifyCategoryView: View {
             }
             
             if result.status.isSuccess {
+                guard let documentReference = result.documentReference else {
+                    dismiss()
+                    return
+                }
+                
+                newCategoryID = documentReference.documentID
+                isNewCategoryAdded = true
                 dismiss()
             } else {
                 viewModel.errorMessage = result.message
@@ -156,7 +185,7 @@ struct AddModifyCategoryView: View {
 #Preview("New") {
     @Previewable @State var categoryType = MocksCategories.expense1.categoryType
     VStack {
-        AddModifyCategoryView(categoryType: $categoryType)
+        AddModifyCategoryView(categoryType: $categoryType, isNewCategoryAdded: .constant(false))
     }
 }
 
@@ -164,6 +193,6 @@ struct AddModifyCategoryView: View {
     @Previewable @State var model = MocksCategories.expense1
     @Previewable @State var categoryType = MocksCategories.expense2.categoryType
     VStack {
-        AddModifyCategoryView(model: $model, categoryType: $categoryType)
+        AddModifyCategoryView(model: $model, categoryType: $categoryType, isNewCategoryAdded: .constant(false))
     }
 }

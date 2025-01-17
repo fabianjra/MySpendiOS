@@ -41,14 +41,14 @@ public struct Repository: UserValidationProtocol {
      
      - Date: August 2024
      */
-    func addNewDocument<T: Codable>(_ model: T, forSubCollection collection: CollectionsFB) async throws {
+    func addNewDocument<T: Codable>(_ model: T, forSubCollection collection: CollectionsFB) async throws -> DocumentReference {
         
         let currentUserId = try validateCurrentUser(currentUser).uid
         let subCollectionRef = UtilsFB.userSubCollectionRef(collection, for: currentUserId)
         let newDocumentEncoded = try UtilsFB.encodeModelFB(model)
         
         //En este caso Firebase genera un ID automaticamente para el nuevo documento con addDocument.
-        try await subCollectionRef.addDocument(data: newDocumentEncoded)
+        return try await subCollectionRef.addDocument(data: newDocumentEncoded)
     }
     
     /**

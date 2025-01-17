@@ -16,6 +16,10 @@ struct SelectCategoryModalView: View {
     
     @Binding var categoryType: TransactionType
     
+    // Validate if should dismiss this modal because a new category was added.
+    @State var isNewCategoryAdded: Bool = false
+    @State var newCategoryID: String = ""
+    
     var body: some View {
         ContentContainer(addPading: false) {
             
@@ -81,10 +85,20 @@ struct SelectCategoryModalView: View {
         .onAppear {
             viewModel.fetchData()
         }
+        .onChange(of: isNewCategoryAdded) { _, newValue in
+            if newValue {
+                if let newCategoryAdded = viewModel.categories.first(where: { $0.id == newCategoryID }) {
+                    selectedCategory = newCategoryAdded
+                    dismiss()
+                }
+            }
+        }
         .sheet(isPresented: $viewModel.showNewCategoryModal) {
-            AddModifyCategoryView(categoryType: $categoryType)
-                .presentationDetents([.large])
-                .presentationCornerRadius(ConstantRadius.cornersModal)
+            AddModifyCategoryView(categoryType: $categoryType,
+                                  isNewCategoryAdded: $isNewCategoryAdded,
+                                  newCategoryID: $newCategoryID)
+            .presentationDetents([.large])
+            .presentationCornerRadius(ConstantRadius.cornersModal)
         }
         .presentationDetents([.large])
         .presentationCornerRadius(ConstantRadius.cornersModal)
@@ -93,7 +107,7 @@ struct SelectCategoryModalView: View {
 
 #Preview("Expenses es_CR") {
     @Previewable @State var showModal = true
-    @Previewable @State var selectedCategory = MocksCategories.normal.first!
+    @Previewable @State var selectedCategory = CategoryModel()
     
     ZStack(alignment: .top) {
         Color.backgroundBottom
