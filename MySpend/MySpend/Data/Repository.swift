@@ -21,6 +21,9 @@ public struct Repository: UserValidationProtocol {
      - The given model is encoded into a Firestore-compatible format.
      - Firebase generates a unique document ID automatically when the new document is added to the subcollection using `addDocument`.
 
+     **Changelog:**
+     - 1.0: Initial implementation of the function.
+     - 1.1: Added return value of `DocumentReference` to allow the access to newly created document's ID.
      
      **Example:**
      ```swift
