@@ -31,6 +31,13 @@ struct SelectCategoryModalView: View {
             .padding(.horizontal)
             
             
+            PickerSegmented(selection: $categoryType,
+                            segments: TransactionType.allCases)
+            .frame(maxWidth: ConstantFrames.iPadMaxWidth)
+            .padding(.bottom, ConstantViews.mediumSpacing)
+            .padding(.horizontal)
+            
+            
             ZStack(alignment: .bottomTrailing) {
                 
                 let categoriesFiltered = viewModel.categories.filter { $0.categoryType == categoryType }
