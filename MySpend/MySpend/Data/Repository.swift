@@ -33,11 +33,13 @@ public struct Repository: UserValidationProtocol {
         - model: A generic parameter `T` conforming to `Codable`. This is the model object that will be encoded and stored as a document in Firestore.
         - collection: A value of the enum type `CollectionsFB` that specifies the Firestore subcollection where the new document will be added.
      
+     - Returns: The new document added to the Firestore. You can get any value from it, like DocumentID.
+     
      - Throws: The function throws an error if: 1: The current user validation fails. 2: The model cannot be encoded properly. 3: There are issues when interacting with Firestore (e.g., network issues or permission errors).
      
      - Authors: Fabian Rodriguez
      
-     - Version: 1.0
+     - Version: 1.1
      
      - Date: August 2024
      */
