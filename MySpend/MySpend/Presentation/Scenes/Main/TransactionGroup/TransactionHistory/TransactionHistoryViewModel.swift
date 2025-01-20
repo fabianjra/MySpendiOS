@@ -61,4 +61,11 @@ class TransactionHistoryViewModel: BaseViewModel {
     var updateSelectedSort: Void {
         UserDefaultsSortTransactions.sortTransactions = sortTransactionsBy
     }
+    
+    /**
+     Deletes the sort selection object in UserDefaults.
+     */
+    var resetSelectedSort: Void {
+        UserDefaultsSortTransactions.removeSortTransactions
+    }
 }

@@ -19,4 +19,5 @@ struct ConstantSystemImage {
     // MARK: SORT
     static let arrowUp = "arrow.up"
     static let arrowDown = "arrow.down"
+    static let arrowCounterClockwise = "arrow.counterclockwise"
 }

@@ -14,6 +14,10 @@ extension Label where Title == Text, Icon == Image {
     static let delete = Label("Delete", systemImage: ConstantSystemImage.trash)
     static let edit = Label("Edit", systemImage: ConstantSystemImage.squareAndPencil)
     
+    // MARK: MENU SORT
+    
+    static let restoreSelection = Label("reset selection", systemImage: ConstantSystemImage.arrowCounterClockwise)
+    
     // MARK: MENU SORT TRANSACTIONS
     
     static let dateNewestFirst = Label("Date (Newest first)", systemImage: ConstantSystemImage.arrowUp)

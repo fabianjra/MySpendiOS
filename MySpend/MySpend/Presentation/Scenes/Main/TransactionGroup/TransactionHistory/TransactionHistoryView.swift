@@ -82,6 +82,15 @@ struct TransactionHistoryView: View {
         }
     }
     
+    private var sortButtonResetToDefault: some View {
+        Button {
+            viewModel.sortTransactionsBy = .byDateNewest
+            viewModel.resetSelectedSort // Removes the sort object in UserDefaults.
+        } label: {
+            Label.restoreSelection
+        }
+    }
+
     private var transactionsList: some View {
         VStack {
             DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval,
@@ -100,6 +109,11 @@ struct TransactionHistoryView: View {
                     sortButton(.byDateNewest)
                     sortButton(.byAmountHigher)
                     sortButton(.byCategoryNameAz)
+                }
+                
+                // Reset the sort selection to default
+                Section {
+                    sortButtonResetToDefault
                 }
             }
             
