@@ -9,16 +9,13 @@ import Foundation
 
 struct UserDefaultsCurrency {
     
-    private static let selectedCurrencyKey = "selected_currency_key"
-    private static let selectedCurrencySymbolType = "selected_currency_symbol_type_key"
-    
     /**
      Currency almacenado en `UserDefaults`.
      Si no encuentra nada guardado en UserDefaults, utiliza el código de moneda predeterminado basado en la configuración local.
      */
     static var currency: CurrencyModel {
         get {
-            guard let data = UserDefaults.standard.data(forKey: selectedCurrencyKey) else { return CurrencyManager.localeCurrencyOrDefault }
+            guard let data = UserDefaults.standard.data(forKey: UserDefaultsKey.currency.rawValue) else { return CurrencyManager.localeCurrencyOrDefault }
             
             do {
                 return try JSONDecoder().decode(CurrencyModel.self, from: data)
@@ -30,18 +27,18 @@ struct UserDefaultsCurrency {
         set {
             let encoder = JSONEncoder()
             if let encoded = try? encoder.encode(newValue) {
-                UserDefaults.standard.set(encoded, forKey: selectedCurrencyKey)
+                UserDefaults.standard.set(encoded, forKey: UserDefaultsKey.currency.rawValue)
             }
         }
     }
 
     static var removeCurrency: Void {
-        UserDefaults.standard.removeObject(forKey: selectedCurrencyKey)
+        UserDefaults.standard.removeObject(forKey: UserDefaultsKey.currency.rawValue)
     }
     
     static var currencySymbolType: CurrencySymbolType {
         get {
-            guard let data = UserDefaults.standard.data(forKey: selectedCurrencySymbolType) else { return CurrencySymbolType.symbol }
+            guard let data = UserDefaults.standard.data(forKey: UserDefaultsKey.currencySymbolType.rawValue) else { return CurrencySymbolType.symbol }
             
             do {
                 return try JSONDecoder().decode(CurrencySymbolType.self, from: data)
@@ -53,12 +50,12 @@ struct UserDefaultsCurrency {
         set {
             let encoder = JSONEncoder()
             if let encoded = try? encoder.encode(newValue) {
-                UserDefaults.standard.set(encoded, forKey: selectedCurrencySymbolType)
+                UserDefaults.standard.set(encoded, forKey: UserDefaultsKey.currencySymbolType.rawValue)
             }
         }
     }
     
     static var removeCurrencySymbolType: Void {
-        UserDefaults.standard.removeObject(forKey: selectedCurrencySymbolType)
+        UserDefaults.standard.removeObject(forKey: UserDefaultsKey.currencySymbolType.rawValue)
     }
 }

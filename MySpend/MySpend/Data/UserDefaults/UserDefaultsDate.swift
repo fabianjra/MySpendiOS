@@ -9,15 +9,13 @@ import Foundation
 
 struct UserDefaultsDate {
     
-    private static let selectedDateTimeInterval = "selected_datetime_interval_key"
-    
     /**
      Currency almacenado en `UserDefaults`.
      Si no encuentra nada guardado en UserDefaults, utiliza el valor de "MES" como predeterminado.
      */
     static var dateTimeInterval: DateTimeInterval {
         get {
-            guard let data = UserDefaults.standard.data(forKey: selectedDateTimeInterval) else { return DateTimeInterval.month }
+            guard let data = UserDefaults.standard.data(forKey: UserDefaultsKey.dateTimeInteval.rawValue) else { return DateTimeInterval.month }
             
             do {
                 return try JSONDecoder().decode(DateTimeInterval.self, from: data)
@@ -29,12 +27,12 @@ struct UserDefaultsDate {
         set {
             let encoder = JSONEncoder()
             if let encoded = try? encoder.encode(newValue) {
-                UserDefaults.standard.set(encoded, forKey: selectedDateTimeInterval)
+                UserDefaults.standard.set(encoded, forKey: UserDefaultsKey.dateTimeInteval.rawValue)
             }
         }
     }
 
     static var removeDateTimeInterval: Void {
-        UserDefaults.standard.removeObject(forKey: selectedDateTimeInterval)
+        UserDefaults.standard.removeObject(forKey: UserDefaultsKey.dateTimeInteval.rawValue)
     }
 }

@@ -48,6 +48,7 @@
 		1F3A953D2C5D68D4008AAE50 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3A953C2C5D68D4008AAE50 /* LoginViewModel.swift */; };
 		1F3A953F2C5D6F82008AAE50 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3A953E2C5D6F82008AAE50 /* Login.swift */; };
 		1F3A95412C5D74CC008AAE50 /* TransactionsDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3A95402C5D74CC008AAE50 /* TransactionsDatabase.swift */; };
+		1F3DB3B62D3E050D00EE9FB5 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3DB3B52D3E050300EE9FB5 /* UserDefaultsManager.swift */; };
 		1F46B4122A79885D003A9550 /* ConstantValidations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F46B4112A79885D003A9550 /* ConstantValidations.swift */; };
 		1F46B4142A79976F003A9550 /* LogContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F46B4132A79976F003A9550 /* LogContainer.swift */; };
 		1F46B4172A799CFD003A9550 /* TransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F46B4162A799CFD003A9550 /* TransactionView.swift */; };
@@ -228,6 +229,7 @@
 		1F3A953C2C5D68D4008AAE50 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		1F3A953E2C5D6F82008AAE50 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		1F3A95402C5D74CC008AAE50 /* TransactionsDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsDatabase.swift; sourceTree = "<group>"; };
+		1F3DB3B52D3E050300EE9FB5 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		1F46B4112A79885D003A9550 /* ConstantValidations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantValidations.swift; sourceTree = "<group>"; };
 		1F46B4132A79976F003A9550 /* LogContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogContainer.swift; sourceTree = "<group>"; };
 		1F46B4162A799CFD003A9550 /* TransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionView.swift; sourceTree = "<group>"; };
@@ -734,6 +736,7 @@
 		1F82C1CB2D30B29D0020F9EC /* UserDefaults */ = {
 			isa = PBXGroup;
 			children = (
+				1F3DB3B52D3E050300EE9FB5 /* UserDefaultsManager.swift */,
 				1FF0544A2D3DE4ED0050DC7E /* UserDefaultsSortTransactions.swift */,
 				1F82C1CE2D30C7450020F9EC /* UserDefaultsDate.swift */,
 				1F82C1CC2D30B2AD0020F9EC /* UserDefaultsCurrency.swift */,
@@ -1252,6 +1255,7 @@
 				1F5CC5842A6662A200C214FE /* ButtonNavigation.swift in Sources */,
 				1F753AB92D17B6C300139AF9 /* RowLCTCointainer.swift in Sources */,
 				1FFD5FA32A8B35A300A53050 /* ButtonHorizontalStyle.swift in Sources */,
+				1F3DB3B62D3E050D00EE9FB5 /* UserDefaultsManager.swift in Sources */,
 				1F46B4192A79A267003A9550 /* ContentContainer.swift in Sources */,
 				1FC94CBC2A5A1DB7005CA0B6 /* TextButtonPrimaryStyled.swift in Sources */,
 				1F222F502C65C6B00017A1BE /* ChangePassword.swift in Sources */,
