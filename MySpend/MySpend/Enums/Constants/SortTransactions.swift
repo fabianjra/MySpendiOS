@@ -7,15 +7,15 @@
 
 import SwiftUI
 
-enum SortTransactions {
-    case byDateNewest
-    case byDateOldest
+enum SortTransactions: String, Codable {
+    case byDateNewest = "Date newest"
+    case byDateOldest = "Date oldest"
     
-    case byAmountHigher
-    case byAmountLower
+    case byAmountHigher = "Amount higher"
+    case byAmountLower = "Amount lower"
     
-    case byCategoryNameAz
-    case byCategoryNameZa
+    case byCategoryNameAz = "Name Az"
+    case byCategoryNameZa = "Name Za"
     
     var toggle: SortTransactions {
         switch self {

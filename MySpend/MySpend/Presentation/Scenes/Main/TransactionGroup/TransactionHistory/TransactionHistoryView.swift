@@ -68,13 +68,15 @@ struct TransactionHistoryView: View {
         }
     }
     
-    private func sortButton(for sortingOption: SortTransactions) -> some View {
+    private func sortButton(_ sortingOption: SortTransactions) -> some View {
         Button {
             if viewModel.sortTransactionsBy == sortingOption {
                 viewModel.sortTransactionsBy = sortingOption.toggle
             } else {
                 viewModel.sortTransactionsBy = sortingOption
             }
+            
+            viewModel.updateSelectedSort // Updates the sort selection to store in UserDefaults.
         } label: {
             viewModel.sortTransactionsBy == sortingOption ? sortingOption.label() : sortingOption.label(inverted: false)
         }
@@ -94,10 +96,10 @@ struct TransactionHistoryView: View {
                 viewModel.showAlertDeleteMultiple = true
                 
             } contentLeadingSort: {
-                Section("Sort by") {
-                    sortButton(for: .byDateNewest)
-                    sortButton(for: .byAmountHigher)
-                    sortButton(for: .byCategoryNameAz)
+                Section("Sorted by: \(viewModel.sortTransactionsBy.rawValue)") {
+                    sortButton(.byDateNewest)
+                    sortButton(.byAmountHigher)
+                    sortButton(.byCategoryNameAz)
                 }
             }
             

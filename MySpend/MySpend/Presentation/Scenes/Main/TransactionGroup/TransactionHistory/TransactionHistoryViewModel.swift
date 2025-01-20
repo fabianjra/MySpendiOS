@@ -16,7 +16,7 @@ class TransactionHistoryViewModel: BaseViewModel {
     
     @Published var isEditing = false
     @Published var selectedTransactions = Set<TransactionModel>()
-    @Published var sortTransactionsBy: SortTransactions = .byDateNewest
+    @Published var sortTransactionsBy: SortTransactions = UserDefaultsSortTransactions.sortTransactions
     
     func deleteTransaction(_ model: TransactionModel) async -> ResponseModel {
         var response = ResponseModel()
@@ -53,5 +53,12 @@ class TransactionHistoryViewModel: BaseViewModel {
         }
         
         return response
+    }
+    
+    /**
+     Updates the sort selection to store in UserDefaults.
+     */
+    var updateSelectedSort: Void {
+        UserDefaultsSortTransactions.sortTransactions = sortTransactionsBy
     }
 }
