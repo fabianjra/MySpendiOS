@@ -88,6 +88,7 @@ struct TransactionHistoryView: View {
             viewModel.resetSelectedSort // Removes the sort object in UserDefaults.
         } label: {
             Label.restoreSelection
+                .foregroundStyle(Color.alert, Color.alert)
         }
     }
 
