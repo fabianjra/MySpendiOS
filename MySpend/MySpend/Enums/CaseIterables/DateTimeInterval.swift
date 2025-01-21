@@ -32,3 +32,27 @@ enum DateTimeInterval: String, CaseIterable, Identifiable, Codable {
         }
     }
 }
+
+// MARK: USER DEFAUTLS MANAGER:
+
+extension DateTimeInterval {
+    
+    /**
+     Currency almacenado en `UserDefaults`.
+     Si no encuentra nada guardado en UserDefaults, utiliza el valor predeterminado.
+     */
+    static var userDefaultsValue: DateTimeInterval {
+        get {
+            return UserDefaultsManager<DateTimeInterval>(for: .dateTimeInterval).value ?? .month
+        }
+        
+        set {
+            var manager = UserDefaultsManager<DateTimeInterval>(for: .dateTimeInterval)
+            manager.value = newValue
+        }
+    }
+    
+    static var removeUserDefaultsValue: Void {
+        UserDefaultsManager<DateTimeInterval>(for: .dateTimeInterval).removeValue
+    }
+}

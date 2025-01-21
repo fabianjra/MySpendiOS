@@ -10,7 +10,7 @@ import FirebaseFirestore
 class TransactionViewModel: BaseViewModel {
     
     @Published var userName: String = ""
-    @Published var dateTimeInterval: DateTimeInterval = UserDefaultsDate.dateTimeInterval
+    @Published var dateTimeInterval = DateTimeInterval.userDefaultsValue
     
     // MARK: TRANSACTIONS
     @Published var transactions: [TransactionModel]
@@ -35,10 +35,6 @@ class TransactionViewModel: BaseViewModel {
     }
     
     func fetchData() {
-        
-        //Solo se carga la seleccion la primera vez ya que sino en el onAppear volveria a cambiarse la seleccion,
-        //cada vez que se retorne a esta pantalla principal.
-        self.dateTimeInterval = UserDefaultsDate.dateTimeInterval
         
         //#if DEBUG || TARGET_OS_SIMULATOR
 #if targetEnvironment(simulator)

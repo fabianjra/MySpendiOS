@@ -7,6 +7,7 @@
 
 import Foundation
 
+//TODO: MIGRAR A USER DEFAULTS MANAGER.
 struct UserDefaultsCurrency {
     
     /**

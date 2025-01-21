@@ -48,6 +48,10 @@ enum SortTransactions: String, Codable {
 
 extension SortTransactions {
     
+    /**
+     Currency almacenado en `UserDefaults`.
+     Si no encuentra nada guardado en UserDefaults, utiliza el valor predeterminado.
+     */
     static var userDefaultsValue: SortTransactions {
         get {
             return UserDefaultsManager<SortTransactions>(for: .sortTransactions).value ?? .byDateNewest
