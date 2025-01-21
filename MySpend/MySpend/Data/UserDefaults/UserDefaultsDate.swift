@@ -15,7 +15,7 @@ struct UserDefaultsDate {
      */
     static var dateTimeInterval: DateTimeInterval {
         get {
-            guard let data = UserDefaults.standard.data(forKey: UserDefaultsKey.dateTimeInteval.rawValue) else { return DateTimeInterval.month }
+            guard let data = UserDefaults.standard.data(forKey: UserDefaultsKey.dateTimeInterval.rawValue) else { return DateTimeInterval.month }
             
             do {
                 return try JSONDecoder().decode(DateTimeInterval.self, from: data)
@@ -27,12 +27,12 @@ struct UserDefaultsDate {
         set {
             let encoder = JSONEncoder()
             if let encoded = try? encoder.encode(newValue) {
-                UserDefaults.standard.set(encoded, forKey: UserDefaultsKey.dateTimeInteval.rawValue)
+                UserDefaults.standard.set(encoded, forKey: UserDefaultsKey.dateTimeInterval.rawValue)
             }
         }
     }
 
     static var removeDateTimeInterval: Void {
-        UserDefaults.standard.removeObject(forKey: UserDefaultsKey.dateTimeInteval.rawValue)
+        UserDefaults.standard.removeObject(forKey: UserDefaultsKey.dateTimeInterval.rawValue)
     }
 }

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum SortCategories {
+enum SortCategories: Codable {
     case byCreationNewest
     case byCreationOldest
     
