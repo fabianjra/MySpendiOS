@@ -30,7 +30,7 @@ struct CurrencyModel: Identifiable, Codable {
         self.countryName = countryName
         self.selected = selected
     }
-
+    
     var updateModelToUserDefaultsSelected: CurrencyModel {
         return CurrencyModel(countryCode: self.countryCode,
                              symbol: self.symbol,
@@ -47,8 +47,8 @@ struct CurrencyModel: Identifiable, Codable {
 extension CurrencyModel {
     
     /**
-     Currency almacenado en `UserDefaults`.
-     Si no encuentra nada guardado en UserDefaults, utiliza el valor predeterminado.
+     Gets value stored in `UserDefaults`.
+     If there is not data stored, will get a default value
      */
     static var userDefaultsValue: CurrencyModel {
         get {

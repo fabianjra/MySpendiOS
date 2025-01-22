@@ -18,7 +18,7 @@ enum SortCategories: Codable {
         switch self {
         case .byCreationNewest: return .byCreationOldest
         case .byCreationOldest: return .byCreationNewest
- 
+            
         case .byNameAz: return .byNameZa
         case .byNameZa: return .byNameAz
         }
@@ -32,5 +32,30 @@ enum SortCategories: Codable {
         case .byNameAz: return inverted ? Label.nameZa : Label.nameAz
         case .byNameZa: return inverted ? Label.nameAz : Label.nameZa
         }
+    }
+}
+
+
+// MARK: USER DEFAULTS MANAGER
+
+extension SortCategories {
+    
+    /**
+     Gets value stored in `UserDefaults`.
+     If there is not data stored, will get a default value
+     */
+    static var userDefaultsValue: SortCategories {
+        get {
+            return UserDefaultsManager<SortCategories>(for: .sortCategories).value ?? .byNameAz
+        }
+        
+        set {
+            var manager = UserDefaultsManager<SortCategories>(for: .sortCategories)
+            manager.value = newValue
+        }
+    }
+    
+    static var removeUserDefaultsValue: Void {
+        UserDefaultsManager<SortCategories>(for: .sortCategories).removeValue
     }
 }

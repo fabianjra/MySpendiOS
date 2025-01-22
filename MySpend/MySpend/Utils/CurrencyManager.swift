@@ -161,7 +161,7 @@ extension CurrencyManager {
 }
 
 
-// MARK: USER DEFAULTS
+// MARK: USER DEFAULTS MANAGER
 
 extension CurrencyManager {
     

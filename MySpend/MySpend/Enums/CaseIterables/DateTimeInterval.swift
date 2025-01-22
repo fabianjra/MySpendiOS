@@ -38,8 +38,8 @@ enum DateTimeInterval: String, CaseIterable, Identifiable, Codable {
 extension DateTimeInterval {
     
     /**
-     Currency almacenado en `UserDefaults`.
-     Si no encuentra nada guardado en UserDefaults, utiliza el valor predeterminado.
+     Gets value stored in `UserDefaults`.
+     If there is not data stored, will get a default value
      */
     static var userDefaultsValue: DateTimeInterval {
         get {

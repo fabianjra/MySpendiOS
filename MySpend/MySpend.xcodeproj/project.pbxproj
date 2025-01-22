@@ -456,6 +456,7 @@
 				1F2750F82C9D02F300AD4E31 /* UtilsCurrency.swift */,
 				1F6812F92CF2938C00822471 /* UtilsDate.swift */,
 				1FC94CC92A5A4588005CA0B6 /* Logs.swift */,
+				1FD66FE62C9E1AAF0056D514 /* CurrencyManager.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -984,7 +985,6 @@
 				1FF27C9C2D2B52830092BD23 /* CurrencyListView.swift */,
 				1F8179032D2B83A7003B3340 /* CurrencyListViewModel.swift */,
 				1F8179012D2B8137003B3340 /* CurrencyModel.swift */,
-				1FD66FE62C9E1AAF0056D514 /* CurrencyManager.swift */,
 			);
 			path = CurrencySymbol;
 			sourceTree = "<group>";
