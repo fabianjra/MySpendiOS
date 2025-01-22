@@ -25,7 +25,7 @@ public struct CurrencyManager {
     public static let amoutMaxLength: Int = 50
     public static let amoutMaxLengthWithDecimal: Int = 53
     public static let fractionLength: Int = 2
-    public static let zeroAmoutString: String = "0"
+    public static let zeroAmoutString: String = Int.zero.description
 }
 
 
@@ -48,7 +48,8 @@ extension CurrencyManager {
 extension CurrencyManager {
 
     /**
-     Obtiene el Locale Currency. En caso de ser nulo, obtiene los valores de USA por defecto.
+     Gets the Local Currency.
+     If can't get one of the country or currency settings from local, returns the default USA currency.
      */
     static var localeCurrencyOrDefault: CurrencyModel {
         let locale = Locale(identifier: Locale.current.identifier)
@@ -164,8 +165,14 @@ extension CurrencyManager {
 
 extension CurrencyManager {
     
+    /**
+     Gets the symbol type selected in the settings (from UserDefaults).
+     Depending on the symbol type, it will take the `symbol` or `code` from the currency saved in the UserDefaults.
+     
+     It is used to show the currency symbol selected for the currency selected in any view that shows amouts (Transactions View, History, View, etc.)
+     */
     public static var getSelectedSymbolOrCode: String {
-        switch CurrencySymbolType.userDefaultsValue {
+        switch self.selectedCurrencySymbolType {
             
         case .symbol:
             return CurrencyModel.userDefaultsValue.symbol
@@ -175,6 +182,11 @@ extension CurrencyManager {
         }
     }
     
+    /**
+     Gets or updates the selected Currency in settings.
+     Eg: USD, CRC, EUR, etc.
+     Based on the currency selected, it can know which country, code or symbol is selected.
+     */
     static var selectedCurrency: CurrencyModel {
         get {
             return CurrencyModel.userDefaultsValue
@@ -185,6 +197,9 @@ extension CurrencyManager {
         }
     }
     
+    /**
+     Gets or updates the selected symbol type in settings (from UserDefaults)
+     */
     static var selectedCurrencySymbolType: CurrencySymbolType {
         get {
             return CurrencySymbolType.userDefaultsValue

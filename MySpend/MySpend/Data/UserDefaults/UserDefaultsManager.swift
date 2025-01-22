@@ -37,7 +37,7 @@ struct UserDefaultsManager<T: Codable> {
     }
 
     /**
-     Obtiene el valor almacenado en `UserDefaults` o `nil` si no hay datos.
+     Gets the value stored in `UserDefaults` or `nil` if there is no data.
      */
     var value: T? {
         get {
@@ -64,7 +64,7 @@ struct UserDefaultsManager<T: Codable> {
     }
 
     /**
-     Elimina el valor almacenado en `UserDefaults`.
+     Deletes the stored value in `UserDefaults` for the selected key.
      */
     var removeValue: Void {
         UserDefaults.standard.removeObject(forKey: key.rawValue)
