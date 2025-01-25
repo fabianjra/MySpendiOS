@@ -67,5 +67,6 @@ class TransactionHistoryViewModel: BaseViewModel {
      */
     var resetSelectedSort: Void {
         SortTransactions.removeUserDefaultsValue
+        sortTransactionsBy = SortTransactions.userDefaultsValue
     }
 }

@@ -82,9 +82,14 @@ struct CategoryView: View {
                 
                 RowLCTCointainer(disabled: viewModel.isEditing, leadingContent:  {
                     MenuContainer(addHorizontalPadding: true, disabled: viewModel.isEditing) {
-                        Section("Sort by") {
+                        Section("Sorted by: \(viewModel.sortCategoriesBy.rawValue)") {
                             sortButton(for: .byNameAz)
                             sortButton(for: .byCreationNewest)
+                        }
+                        
+                        // Reset the sort selection to default
+                        Section {
+                            sortButtonResetToDefault
                         }
                     }
                 })
@@ -102,8 +107,19 @@ struct CategoryView: View {
             } else {
                 viewModel.sortCategoriesBy = sortingOption
             }
+            
+            viewModel.updateSelectedSort
         } label: {
             viewModel.sortCategoriesBy == sortingOption ? sortingOption.label() : sortingOption.label(inverted: false)
+        }
+    }
+    
+    private var sortButtonResetToDefault: some View {
+        Button {
+            viewModel.resetSelectedSort
+        } label: {
+            Label.restoreSelection
+                .foregroundStyle(Color.alert, Color.alert)
         }
     }
     

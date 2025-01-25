@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-enum SortCategories: Codable {
-    case byCreationNewest
-    case byCreationOldest
+enum SortCategories: String, Codable {
+    case byCreationNewest = "Creation newest"
+    case byCreationOldest = "Creation oldest"
     
-    case byNameAz
-    case byNameZa
+    case byNameAz = "Name A-Z"
+    case byNameZa = "Name Z-A"
     
     var toggle: SortCategories {
         switch self {

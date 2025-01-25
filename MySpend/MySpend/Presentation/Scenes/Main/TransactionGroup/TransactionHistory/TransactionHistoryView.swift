@@ -84,8 +84,7 @@ struct TransactionHistoryView: View {
     
     private var sortButtonResetToDefault: some View {
         Button {
-            viewModel.sortTransactionsBy = .byDateNewest
-            viewModel.resetSelectedSort // Removes the sort object in UserDefaults.
+            viewModel.resetSelectedSort
         } label: {
             Label.restoreSelection
                 .foregroundStyle(Color.alert, Color.alert)
