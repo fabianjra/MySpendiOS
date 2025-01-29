@@ -11,10 +11,11 @@ struct SelectCategoryModalView: View {
     
     @Environment(\.dismiss) var dismiss
     
+    // Parameters managed by New Transaction (add or modify):
     @Binding var selectedCategory: CategoryModel
-    @StateObject var viewModel = CategoryViewModel()
-    
     @Binding var categoryType: TransactionType
+    
+    @StateObject var viewModel = CategoryViewModel()
     
     // Validate if should dismiss this modal because a new category was added.
     @State var isNewCategoryAdded: Bool = false
@@ -35,23 +36,41 @@ struct SelectCategoryModalView: View {
             .padding(.horizontal)
             
             
-            PickerSegmented(selection: $categoryType,
-                            segments: TransactionType.allCases)
-            .frame(maxWidth: ConstantFrames.iPadMaxWidth)
-            .padding(.bottom, ConstantViews.mediumSpacing)
+            VStack {
+                PickerSegmented(selection: $categoryType,
+                                segments: TransactionType.allCases)
+                .frame(maxWidth: ConstantFrames.iPadMaxWidth)
+                .padding(.bottom, ConstantViews.mediumSpacing)
+                
+                RowLCTCointainer(leadingContent: {
+                    MenuContainer {
+                        Section("Sorted by: \(viewModel.sortCategoriesBy.rawValue)") {
+                            sortButton(for: .byNameAz)
+                            sortButton(for: .byCreationNewest)
+                        }
+                        
+                        // Reset the sort selection to default
+                        Section {
+                            sortButtonResetToDefault
+                        }
+                    }
+                })
+            }
             .padding(.horizontal)
             
             
             ZStack(alignment: .bottomTrailing) {
                 
-                let categoriesFiltered = viewModel.categories.filter { $0.categoryType == categoryType }
+                let categoriesFiltered = UtilsCategories.filteredCategories(viewModel.categories,
+                                                                            by: categoryType,
+                                                                            sortType: viewModel.sortCategoriesBy)
                 
                 if categoriesFiltered.isEmpty {
                     NoContentView(title: "No categories",
                                   rotationDegress: ConstantAnimations.rotationArrowBottomTrailing)
                 } else {
                     ListContainer {
-                        ForEach(categoriesFiltered.sorted(by: { $0.name < $1.name })) { category in
+                        ForEach(categoriesFiltered) { category in
                             HStack {
                                 let icon = category.icon.getIconFromSFSymbol
                                 
@@ -73,6 +92,7 @@ struct SelectCategoryModalView: View {
                         }
                         .listRowBackground(Color.listRowBackground) //Background for each row.
                     }
+                    .animation(.default, value: viewModel.sortCategoriesBy)
                 }
                 
                 ButtonRounded {
@@ -103,11 +123,35 @@ struct SelectCategoryModalView: View {
         .presentationDetents([.large])
         .presentationCornerRadius(ConstantRadius.cornersModal)
     }
+    
+    private func sortButton(for sortingOption: SortCategories) -> some View {
+        Button {
+            if viewModel.sortCategoriesBy == sortingOption {
+                viewModel.sortCategoriesBy = sortingOption.toggle
+            } else {
+                viewModel.sortCategoriesBy = sortingOption
+            }
+            
+            viewModel.updateSelectedSort
+        } label: {
+            viewModel.sortCategoriesBy == sortingOption ? sortingOption.label() : sortingOption.label(inverted: false)
+        }
+    }
+    
+    private var sortButtonResetToDefault: some View {
+        Button {
+            viewModel.resetSelectedSort
+        } label: {
+            Label.restoreSelection
+                .foregroundStyle(Color.alert, Color.alert)
+        }
+    }
 }
 
 #Preview("Expenses es_CR") {
     @Previewable @State var showModal = true
     @Previewable @State var selectedCategory = CategoryModel()
+    @Previewable @State var viewModelMock = CategoryViewModel(categories: MocksCategories.normal)
     
     ZStack(alignment: .top) {
         Color.backgroundBottom
@@ -122,8 +166,8 @@ struct SelectCategoryModalView: View {
         }
     }.sheet(isPresented: $showModal) {
         SelectCategoryModalView(selectedCategory: $selectedCategory,
-                                viewModel: CategoryViewModel(categories: MocksCategories.normal),
-                                categoryType: $selectedCategory.categoryType)
+                                categoryType: $selectedCategory.categoryType,
+                                viewModel: viewModelMock)
             .environment(\.locale, .init(identifier: "es_CR"))
     }
     .onAppear {
@@ -146,8 +190,8 @@ struct SelectCategoryModalView: View {
         }
     }.sheet(isPresented: $showModal) {
         SelectCategoryModalView(selectedCategory: .constant(CategoryModel()),
-                                viewModel: CategoryViewModel(),
-                                categoryType: .constant(.expense))
+                                categoryType: .constant(.expense),
+                                viewModel: CategoryViewModel())
             .environment(\.locale, .init(identifier: "en_US"))
     }
     .onAppear {
