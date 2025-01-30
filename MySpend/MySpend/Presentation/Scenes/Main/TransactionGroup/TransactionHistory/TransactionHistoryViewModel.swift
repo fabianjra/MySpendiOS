@@ -16,7 +16,7 @@ class TransactionHistoryViewModel: BaseViewModel {
     
     @Published var isEditing = false
     @Published var selectedTransactions = Set<TransactionModel>()
-    @Published var sortTransactionsBy = UserDefaultsValue.sortTransactions
+    @Published var sortTransactionsBy: SortTransactions = UserDefaultsKey.sortTransactions.getValue()
     
     func deleteTransaction(_ model: TransactionModel) async -> ResponseModel {
         var response = ResponseModel()
@@ -59,14 +59,14 @@ class TransactionHistoryViewModel: BaseViewModel {
      Updates the sort selection to store in UserDefaults.
      */
     var updateSelectedSort: Void {
-        UserDefaultsValue.sortTransactions = sortTransactionsBy
+        UserDefaultsKey.sortTransactions.setValue(sortTransactionsBy)
     }
     
     /**
      Deletes the sort selection object in UserDefaults.
      */
     var resetSelectedSort: Void {
-        UserDefaultsValue.removeSortTransactions
-        sortTransactionsBy = UserDefaultsValue.sortTransactions
+        UserDefaultsKey.sortTransactions.removeValue()
+        sortTransactionsBy = UserDefaultsKey.sortTransactions.getValue()
     }
 }

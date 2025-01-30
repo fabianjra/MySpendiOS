@@ -9,15 +9,15 @@ import Foundation
 
 class DateTimeIntervalListViewModel: BaseViewModel {
     
-    @Published var DateTimeIntervalSelected = UserDefaultsValue.dateTimeInterval //TODO: hacer un Publisher para detectar el cambio automaticamente.
+    @Published var DateTimeIntervalSelected: DateTimeInterval = UserDefaultsKey.dateTimeInterval.getValue() //TODO: hacer un Publisher para detectar el cambio automaticamente.
     
     func updateDateTimeInterval(_ dateTimeInterval: DateTimeInterval) {
-        UserDefaultsValue.dateTimeInterval = dateTimeInterval
-        DateTimeIntervalSelected = UserDefaultsValue.dateTimeInterval
+        UserDefaultsKey.dateTimeInterval.setValue(dateTimeInterval)
+        DateTimeIntervalSelected = UserDefaultsKey.dateTimeInterval.getValue()
     }
     
     func resetDateTimeInterval() {
-        UserDefaultsValue.removeDateTimeInterval
-        DateTimeIntervalSelected = UserDefaultsValue.dateTimeInterval
+        UserDefaultsKey.dateTimeInterval.removeValue()
+        DateTimeIntervalSelected = UserDefaultsKey.dateTimeInterval.getValue()
     }
 }

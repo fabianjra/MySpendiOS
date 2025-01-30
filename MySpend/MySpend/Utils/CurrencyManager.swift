@@ -172,13 +172,15 @@ extension CurrencyManager {
      It is used to show the currency symbol selected for the currency selected in any view that shows amouts (Transactions View, History, View, etc.)
      */
     public static var getSelectedSymbolOrCode: String {
+        let currency: CurrencyModel = UserDefaultsKey.currency.getValue()
+        
         switch self.selectedCurrencySymbolType {
             
         case .symbol:
-            return UserDefaultsValue.currency.symbol
+            return currency.symbol
             
         case .code:
-            return UserDefaultsValue.currency.currencyCode
+            return currency.currencyCode
         }
     }
     
@@ -189,11 +191,11 @@ extension CurrencyManager {
      */
     static var selectedCurrency: CurrencyModel {
         get {
-            return UserDefaultsValue.currency
+            return UserDefaultsKey.currency.getValue()
         }
         
         set {
-            UserDefaultsValue.currency = newValue
+            UserDefaultsKey.currency.setValue(newValue)
         }
     }
     
@@ -202,11 +204,11 @@ extension CurrencyManager {
      */
     static var selectedCurrencySymbolType: CurrencySymbolType {
         get {
-            return UserDefaultsValue.currencySymbolType
+            return UserDefaultsKey.currencySymbolType.getValue()
         }
         
         set {
-            UserDefaultsValue.currencySymbolType = newValue
+            UserDefaultsKey.currencySymbolType.setValue(newValue)
         }
     }
 }

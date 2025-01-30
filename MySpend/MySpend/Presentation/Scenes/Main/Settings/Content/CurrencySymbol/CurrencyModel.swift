@@ -32,11 +32,13 @@ struct CurrencyModel: Identifiable, Codable {
     }
     
     var updateModelToUserDefaultsSelected: CurrencyModel {
+        let currencyUD: CurrencyModel = UserDefaultsKey.currency.getValue()
+        
         return CurrencyModel(countryCode: self.countryCode,
                              symbol: self.symbol,
                              currencyCode: self.currencyCode,
                              countryName: self.countryName,
-                             selected: UserDefaultsValue.currency.countryCode == self.countryCode
+                             selected: currencyUD.countryCode == self.countryCode
         )
     }
 }
