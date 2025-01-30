@@ -32,7 +32,7 @@ struct CurrencyModel: Identifiable, Codable {
     }
     
     var updateModelToUserDefaultsSelected: CurrencyModel {
-        let currencyUD: CurrencyModel = UserDefaultsKey.currency.getValue()
+        let currencyUD: CurrencyModel = UserDefaultsManager.currency.getValue()
         
         return CurrencyModel(countryCode: self.countryCode,
                              symbol: self.symbol,

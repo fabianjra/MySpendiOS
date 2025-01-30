@@ -17,7 +17,7 @@ class CategoryViewModel: BaseViewModel {
     @Published var selectedCategories = Set<CategoryModel>()
     
     // MARK: SORT
-    @Published var sortCategoriesBy: SortCategories = UserDefaultsKey.sortCategories.getValue()
+    @Published var sortCategoriesBy: SortCategories = UserDefaultsManager.sortCategories.getValue()
     
     // MARK: MODALS AND POPUPS
     @Published var showNewCategoryModal = false
@@ -151,14 +151,14 @@ class CategoryViewModel: BaseViewModel {
      Updates the sort selection to store in UserDefaults.
      */
     var updateSelectedSort: Void {
-        UserDefaultsKey.sortCategories.setValue(sortCategoriesBy)
+        UserDefaultsManager.sortCategories.setValue(sortCategoriesBy)
     }
     
     /**
      Deletes the sort selection object in UserDefaults.
      */
     var resetSelectedSort: Void {
-        UserDefaultsKey.sortCategories.removeValue()
-        sortCategoriesBy = UserDefaultsKey.sortCategories.getValue()
+        UserDefaultsManager.sortCategories.removeValue()
+        sortCategoriesBy = UserDefaultsManager.sortCategories.getValue()
     }
 }
