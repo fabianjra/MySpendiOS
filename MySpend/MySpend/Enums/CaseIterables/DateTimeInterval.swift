@@ -32,27 +32,3 @@ enum DateTimeInterval: String, CaseIterable, Identifiable, Codable {
         }
     }
 }
-
-// MARK: USER DEFAUTLS MANAGER:
-
-extension DateTimeInterval {
-    
-    /**
-     Gets value stored in `UserDefaults`.
-     If there is not data stored, will get a default value
-     */
-    static var userDefaultsValue: DateTimeInterval {
-        get {
-            return UserDefaultsManager<DateTimeInterval>(for: .dateTimeInterval).value ?? .month
-        }
-        
-        set {
-            var manager = UserDefaultsManager<DateTimeInterval>(for: .dateTimeInterval)
-            manager.value = newValue
-        }
-    }
-    
-    static var removeUserDefaultsValue: Void {
-        UserDefaultsManager<DateTimeInterval>(for: .dateTimeInterval).removeValue
-    }
-}

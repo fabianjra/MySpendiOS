@@ -175,10 +175,10 @@ extension CurrencyManager {
         switch self.selectedCurrencySymbolType {
             
         case .symbol:
-            return CurrencyModel.userDefaultsValue.symbol
+            return UserDefaultsValue.currency.symbol
             
         case .code:
-            return CurrencyModel.userDefaultsValue.currencyCode
+            return UserDefaultsValue.currency.currencyCode
         }
     }
     
@@ -189,11 +189,11 @@ extension CurrencyManager {
      */
     static var selectedCurrency: CurrencyModel {
         get {
-            return CurrencyModel.userDefaultsValue
+            return UserDefaultsValue.currency
         }
         
         set {
-            CurrencyModel.userDefaultsValue = newValue
+            UserDefaultsValue.currency = newValue
         }
     }
     
@@ -202,11 +202,11 @@ extension CurrencyManager {
      */
     static var selectedCurrencySymbolType: CurrencySymbolType {
         get {
-            return CurrencySymbolType.userDefaultsValue
+            return UserDefaultsValue.currencySymbolType
         }
         
         set {
-            CurrencySymbolType.userDefaultsValue = newValue
+            UserDefaultsValue.currencySymbolType = newValue
         }
     }
 }

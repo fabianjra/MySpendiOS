@@ -36,32 +36,7 @@ struct CurrencyModel: Identifiable, Codable {
                              symbol: self.symbol,
                              currencyCode: self.currencyCode,
                              countryName: self.countryName,
-                             selected: CurrencyModel.userDefaultsValue.countryCode == self.countryCode
+                             selected: UserDefaultsValue.currency.countryCode == self.countryCode
         )
-    }
-}
-
-
-// MARK: USER DEFAUTLS MANAGER:
-
-extension CurrencyModel {
-    
-    /**
-     Gets value stored in `UserDefaults`.
-     If there is not data stored, will get a default value
-     */
-    static var userDefaultsValue: CurrencyModel {
-        get {
-            return UserDefaultsManager<CurrencyModel>(for: .currency).value ?? CurrencyManager.localeCurrencyOrDefault
-        }
-        
-        set {
-            var manager = UserDefaultsManager<CurrencyModel>(for: .currency)
-            manager.value = newValue
-        }
-    }
-    
-    static var removeUserDefaultsValue: Void {
-        UserDefaultsManager<CurrencyModel>(for: .currency).removeValue
     }
 }

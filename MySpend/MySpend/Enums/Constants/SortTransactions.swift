@@ -43,28 +43,3 @@ enum SortTransactions: String, Codable {
         }
     }
 }
-
-
-// MARK: USER DEFAULTS MANAGER
-
-extension SortTransactions {
-    
-    /**
-     Gets value stored in `UserDefaults`.
-     If there is not data stored, will get a default value
-     */
-    static var userDefaultsValue: SortTransactions {
-        get {
-            return UserDefaultsManager<SortTransactions>(for: .sortTransactions).value ?? .byDateNewest
-        }
-        
-        set {
-            var manager = UserDefaultsManager<SortTransactions>(for: .sortTransactions)
-            manager.value = newValue
-        }
-    }
-    
-    static var removeUserDefaultsValue: Void {
-        UserDefaultsManager<SortTransactions>(for: .sortTransactions).removeValue
-    }
-}

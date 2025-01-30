@@ -34,28 +34,3 @@ enum SortCategories: String, Codable {
         }
     }
 }
-
-
-// MARK: USER DEFAULTS MANAGER
-
-extension SortCategories {
-    
-    /**
-     Gets value stored in `UserDefaults`.
-     If there is not data stored, will get a default value
-     */
-    static var userDefaultsValue: SortCategories {
-        get {
-            return UserDefaultsManager<SortCategories>(for: .sortCategories).value ?? .byNameAz
-        }
-        
-        set {
-            var manager = UserDefaultsManager<SortCategories>(for: .sortCategories)
-            manager.value = newValue
-        }
-    }
-    
-    static var removeUserDefaultsValue: Void {
-        UserDefaultsManager<SortCategories>(for: .sortCategories).removeValue
-    }
-}
