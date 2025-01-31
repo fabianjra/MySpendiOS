@@ -55,7 +55,22 @@ struct SettingsView: View {
                         
                         Button("Log out", role: .destructive) {
                             do {
-                                authViewModel.removeListener()
+                                //TODO: BORRAR. SOLO PRUEBAS.
+                                let sortTransactions: SortTransactions = UserDefaultsManager.sortTransactions.getValue()
+                                Logs.WriteMessage("ANTES: sortTransaction: \(sortTransactions.rawValue)")
+                                
+                                let CurrencySymbolType: CurrencySymbolType = UserDefaultsManager.sortTransactions.getValue()
+                                Logs.WriteMessage("ANTES: CurrencySymbolType: \(CurrencySymbolType.rawValue)")
+                                
+                                authViewModel.cleanSession()
+                                
+                                
+                                let sortTransactions2: SortTransactions = UserDefaultsManager.sortTransactions.getValue()
+                                Logs.WriteMessage("DESPUES: sortTransaction: \(sortTransactions2.rawValue)")
+                                
+                                let CurrencySymbolType2: CurrencySymbolType = UserDefaultsManager.sortTransactions.getValue()
+                                Logs.WriteMessage("DESPUES: CurrencySymbolType: \(CurrencySymbolType2.rawValue)")
+                                
                                 try AuthFB().singOut()
                                 Router.shared.path.removeLast(Router.shared.path.count) //In case when come from register.
                             } catch {

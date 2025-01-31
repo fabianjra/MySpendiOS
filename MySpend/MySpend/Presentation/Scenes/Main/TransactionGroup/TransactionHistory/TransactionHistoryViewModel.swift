@@ -66,7 +66,7 @@ class TransactionHistoryViewModel: BaseViewModel {
      Deletes the sort selection object in UserDefaults.
      */
     var resetSelectedSort: Void {
-        UserDefaultsManager.sortTransactions.removeValue()
+        UserDefaultsManager.sortTransactions.removeValue
         sortTransactionsBy = UserDefaultsManager.sortTransactions.getValue()
     }
 }

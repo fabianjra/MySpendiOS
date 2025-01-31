@@ -17,7 +17,7 @@ class DateTimeIntervalListViewModel: BaseViewModel {
     }
     
     func resetDateTimeInterval() {
-        UserDefaultsManager.dateTimeInterval.removeValue()
+        UserDefaultsManager.dateTimeInterval.removeValue
         DateTimeIntervalSelected = UserDefaultsManager.dateTimeInterval.getValue()
     }
 }

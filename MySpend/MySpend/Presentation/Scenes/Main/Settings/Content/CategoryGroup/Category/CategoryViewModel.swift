@@ -158,7 +158,7 @@ class CategoryViewModel: BaseViewModel {
      Deletes the sort selection object in UserDefaults.
      */
     var resetSelectedSort: Void {
-        UserDefaultsManager.sortCategories.removeValue()
+        UserDefaultsManager.sortCategories.removeValue
         sortCategoriesBy = UserDefaultsManager.sortCategories.getValue()
     }
 }

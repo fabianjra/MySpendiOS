@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum UserDefaultsManager: String, Codable {
+enum UserDefaultsManager: String, Codable, CaseIterable {
     
     // MARK: SORT
     case sortTransactions = "sort_transactions_key"
@@ -73,8 +73,14 @@ enum UserDefaultsManager: String, Codable {
     /**
      Deletes the stored value in `UserDefaults` for the selected key.
      */
-    func removeValue() {
+    var removeValue: Void {
         UserDefaults.standard.removeObject(forKey: self.rawValue)
+    }
+    
+    static var removeAll: Void {
+        for key in UserDefaultsManager.allCases {
+            key.removeValue
+        }
     }
 }
 
