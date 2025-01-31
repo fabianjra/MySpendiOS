@@ -7,7 +7,60 @@
 
 import Foundation
 
-enum UserDefaultsManager: String, Codable, CaseIterable {
+struct UserDefaultsManager {
+    
+    static var sorTransactions: SortTransactions {
+        get { return UserDefaultsDataStore<SortTransactions>(for: .sortTransactions).value ?? .byDateNewest }
+        set {
+            var manager = UserDefaultsDataStore<SortTransactions>(for: .sortTransactions)
+            manager.value = newValue
+        }
+    }
+    
+    static var sorCategories: SortCategories {
+        get { return UserDefaultsDataStore<SortCategories>(for: .sortCategories).value ?? .byNameAz }
+        set {
+            var manager = UserDefaultsDataStore<SortCategories>(for: .sortCategories)
+            manager.value = newValue
+        }
+    }
+    
+    static var dateTimeInterval: DateTimeInterval {
+        get { return UserDefaultsDataStore<DateTimeInterval>(for: .dateTimeInterval).value ?? .month }
+        set {
+            var manager = UserDefaultsDataStore<DateTimeInterval>(for: .dateTimeInterval)
+            manager.value = newValue
+        }
+    }
+    
+    static var currency: CurrencyModel {
+        get { return UserDefaultsDataStore<CurrencyModel>(for: .currency).value ?? CurrencyManager.localeCurrencyOrDefault }
+        set {
+            var manager = UserDefaultsDataStore<CurrencyModel>(for: .currency)
+            manager.value = newValue
+        }
+    }
+    
+    static var currencySymbolType: CurrencySymbolType {
+        get { return UserDefaultsDataStore<CurrencySymbolType>(for: .currencySymbolType).value ?? .symbol }
+        set {
+            var manager = UserDefaultsDataStore<CurrencySymbolType>(for: .currencySymbolType)
+            manager.value = newValue
+        }
+    }
+    
+    static func removeValue(for key: UserDefaultsKeys) {
+        UserDefaults.standard.removeObject(forKey: key.rawValue)
+    }
+    
+    static func removeAll() {
+        for key in UserDefaultsKeys.allCases {
+            removeValue(for: key)
+        }
+    }
+}
+
+enum UserDefaultsKeys: String, Codable, CaseIterable {
     
     // MARK: SORT
     case sortTransactions = "sort_transactions_key"
@@ -27,67 +80,12 @@ enum UserDefaultsManager: String, Codable, CaseIterable {
 //        case .currencySymbolType: return CurrencySymbolType.self
 //        }
 //    }
-    
-    func getValue<T>() -> T {
-        switch self {
-            
-        // MARK: SORT
-        case .sortTransactions: return (UserDefaultsDataStore<SortTransactions>(for: .sortTransactions).value ?? .byDateNewest) as! T
-        case .sortCategories: return (UserDefaultsDataStore<SortCategories>(for: .sortCategories).value ?? .byNameAz) as! T
-            
-        // MARK: PREFERENCE
-        case .dateTimeInterval: return (UserDefaultsDataStore<DateTimeInterval>(for: .dateTimeInterval).value ?? .month) as! T
-        case .currency: return (UserDefaultsDataStore<CurrencyModel>(for: .currency).value ?? CurrencyManager.localeCurrencyOrDefault) as! T
-        case .currencySymbolType: return (UserDefaultsDataStore<CurrencySymbolType>(for: .currencySymbolType).value ?? .symbol) as! T
-        }
-    }
-    
-    func setValue<T>(_ newValue: T) {
-        switch self {
-            
-        // MARK: SORT
-        case .sortTransactions:
-            var manager = UserDefaultsDataStore<SortTransactions>(for: .sortTransactions)
-            manager.value = newValue as? SortTransactions
-            
-        case .sortCategories:
-            var manager = UserDefaultsDataStore<SortCategories>(for: .sortCategories)
-            manager.value = newValue as? SortCategories
-            
-        // MARK: PREFERENCE
-        case .dateTimeInterval:
-            var manager = UserDefaultsDataStore<DateTimeInterval>(for: .dateTimeInterval)
-            manager.value = newValue as? DateTimeInterval
-            
-        case .currency:
-            var manager = UserDefaultsDataStore<CurrencyModel>(for: .currency)
-            manager.value = newValue as? CurrencyModel
-            
-            
-        case .currencySymbolType:
-            var manager = UserDefaultsDataStore<CurrencySymbolType>(for: .currencySymbolType)
-            manager.value = newValue as? CurrencySymbolType
-        }
-    }
-    
-    /**
-     Deletes the stored value in `UserDefaults` for the selected key.
-     */
-    var removeValue: Void {
-        UserDefaults.standard.removeObject(forKey: self.rawValue)
-    }
-    
-    static var removeAll: Void {
-        for key in UserDefaultsManager.allCases {
-            key.removeValue
-        }
-    }
 }
 
 private struct UserDefaultsDataStore<T: Codable> {
-    private let key: UserDefaultsManager
+    private let key: UserDefaultsKeys
     
-    init(for key: UserDefaultsManager) {
+    init(for key: UserDefaultsKeys) {
         self.key = key
     }
     

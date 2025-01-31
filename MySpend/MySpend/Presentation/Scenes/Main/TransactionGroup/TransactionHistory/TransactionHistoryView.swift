@@ -76,7 +76,7 @@ struct TransactionHistoryView: View {
                 viewModel.sortTransactionsBy = sortingOption
             }
             
-            viewModel.updateSelectedSort // Updates the sort selection to store in UserDefaults.
+            viewModel.updateSelectedSort() // Updates the sort selection to store in UserDefaults.
         } label: {
             viewModel.sortTransactionsBy == sortingOption ? sortingOption.label() : sortingOption.label(inverted: false)
         }
@@ -84,7 +84,7 @@ struct TransactionHistoryView: View {
     
     private var sortButtonResetToDefault: some View {
         Button {
-            viewModel.resetSelectedSort
+            viewModel.resetSelectedSort()
         } label: {
             Label.restoreSelection
                 .foregroundStyle(Color.alert, Color.alert)

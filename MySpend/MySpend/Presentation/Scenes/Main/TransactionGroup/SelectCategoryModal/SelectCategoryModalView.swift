@@ -132,7 +132,7 @@ struct SelectCategoryModalView: View {
                 viewModel.sortCategoriesBy = sortingOption
             }
             
-            viewModel.updateSelectedSort
+            viewModel.updateSelectedSort()
         } label: {
             viewModel.sortCategoriesBy == sortingOption ? sortingOption.label() : sortingOption.label(inverted: false)
         }
@@ -140,7 +140,7 @@ struct SelectCategoryModalView: View {
     
     private var sortButtonResetToDefault: some View {
         Button {
-            viewModel.resetSelectedSort
+            viewModel.resetSelectedSort()
         } label: {
             Label.restoreSelection
                 .foregroundStyle(Color.alert, Color.alert)

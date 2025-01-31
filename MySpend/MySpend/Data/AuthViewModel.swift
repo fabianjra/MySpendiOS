@@ -38,7 +38,7 @@ class AuthViewModel : ObservableObject {
     }
     
     func cleanSession() {
-        UserDefaultsManager.removeAll
+        UserDefaultsManager.removeAll()
         
         currentUser = nil
         isLoggedIn = false
