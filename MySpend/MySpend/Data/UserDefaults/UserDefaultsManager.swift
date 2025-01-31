@@ -18,20 +18,24 @@ enum UserDefaultsManager: String, Codable {
     case currency = "currency_key"
     case currencySymbolType = "currency_symbol_type_key"
     
-    //    var valueType: Codable.Type {
-    //        switch self {
-    //        case .sortTransactions: return SortTransactions.self
-    //        case .sortCategories: return SortCategories.self
-    //        case .dateTimeInterval: return DateTimeInterval.self
-    //        case .currency: return CurrencyModel.self
-    //        case .currencySymbolType: return CurrencySymbolType.self
-    //        }
-    //    }
+//    var valueType: Codable.Type {
+//        switch self {
+//        case .sortTransactions: return SortTransactions.self
+//        case .sortCategories: return SortCategories.self
+//        case .dateTimeInterval: return DateTimeInterval.self
+//        case .currency: return CurrencyModel.self
+//        case .currencySymbolType: return CurrencySymbolType.self
+//        }
+//    }
     
     func getValue<T>() -> T {
         switch self {
+            
+        // MARK: SORT
         case .sortTransactions: return (UserDefaultsDataStore<SortTransactions>(for: .sortTransactions).value ?? .byDateNewest) as! T
         case .sortCategories: return (UserDefaultsDataStore<SortCategories>(for: .sortCategories).value ?? .byNameAz) as! T
+            
+        // MARK: PREFERENCE
         case .dateTimeInterval: return (UserDefaultsDataStore<DateTimeInterval>(for: .dateTimeInterval).value ?? .month) as! T
         case .currency: return (UserDefaultsDataStore<CurrencyModel>(for: .currency).value ?? CurrencyManager.localeCurrencyOrDefault) as! T
         case .currencySymbolType: return (UserDefaultsDataStore<CurrencySymbolType>(for: .currencySymbolType).value ?? .symbol) as! T
@@ -40,6 +44,8 @@ enum UserDefaultsManager: String, Codable {
     
     func setValue<T>(_ newValue: T) {
         switch self {
+            
+        // MARK: SORT
         case .sortTransactions:
             var manager = UserDefaultsDataStore<SortTransactions>(for: .sortTransactions)
             manager.value = newValue as? SortTransactions
@@ -48,6 +54,7 @@ enum UserDefaultsManager: String, Codable {
             var manager = UserDefaultsDataStore<SortCategories>(for: .sortCategories)
             manager.value = newValue as? SortCategories
             
+        // MARK: PREFERENCE
         case .dateTimeInterval:
             var manager = UserDefaultsDataStore<DateTimeInterval>(for: .dateTimeInterval)
             manager.value = newValue as? DateTimeInterval
