@@ -21,6 +21,7 @@ struct ListContainer<Content: View>: View {
             .foregroundColor(Color.listRowForeground)
             .listStyle(.insetGrouped)
             .scrollContentBackground(.hidden)
+            .contentMargins(.top, ConstantViews.mediumSpacing)
     }
 }
 
