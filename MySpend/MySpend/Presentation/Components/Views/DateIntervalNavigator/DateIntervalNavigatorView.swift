@@ -85,7 +85,8 @@ struct DateIntervalNavigatorView<Content: View>: View {
             
             
             Button {
-                selectedDate = viewModel.navigateDateTime(selectedDate, to: .today, byAdding: dateTimeInterval)
+                //Pressed many times by mistake. There is now a button to the right called "today".
+                //selectedDate = viewModel.navigateDateTime(selectedDate, to: .today, byAdding: dateTimeInterval)
             } label: {
                 let header = viewModel.getHeader(selectedDate, by: dateTimeInterval)
                 
