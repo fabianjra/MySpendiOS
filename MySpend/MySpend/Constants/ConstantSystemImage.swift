@@ -20,4 +20,5 @@ struct ConstantSystemImage {
     static let arrowUp = "arrow.up"
     static let arrowDown = "arrow.down"
     static let arrowCounterClockwise = "arrow.counterclockwise"
+    static let clockArrowCounterClockwise = "clock.arrow.trianglehead.counterclockwise.rotate.90"
 }

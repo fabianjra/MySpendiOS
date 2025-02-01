@@ -27,6 +27,9 @@ struct UtilsCategories {
                 
             case .byCreationOldest:
                 return filteredList.sorted(by: { $0.dateCreated < $1.dateCreated })
+                
+            case .byMostOftenUsed:
+                return filteredList.sorted(by: { $0.dateLastUsed ?? $0.dateCreated > $1.dateLastUsed ?? $1.dateCreated })
             }
             
         } else {

@@ -47,6 +47,7 @@ struct SelectCategoryModalView: View {
                         Section("Sorted by: \(viewModel.sortCategoriesBy.rawValue)") {
                             sortButton(for: .byNameAz)
                             sortButton(for: .byCreationNewest)
+                            sortButton(for: .byMostOftenUsed)
                         }
                         
                         // Reset the sort selection to default

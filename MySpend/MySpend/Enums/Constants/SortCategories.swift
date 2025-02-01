@@ -14,6 +14,8 @@ enum SortCategories: String, Codable {
     case byNameAz = "Name A-Z"
     case byNameZa = "Name Z-A"
     
+    case byMostOftenUsed = "Most often used"
+    
     var toggle: SortCategories {
         switch self {
         case .byCreationNewest: return .byCreationOldest
@@ -21,6 +23,8 @@ enum SortCategories: String, Codable {
             
         case .byNameAz: return .byNameZa
         case .byNameZa: return .byNameAz
+            
+        case .byMostOftenUsed: return self
         }
     }
     
@@ -31,6 +35,8 @@ enum SortCategories: String, Codable {
             
         case .byNameAz: return inverted ? Label.nameZa : Label.nameAz
         case .byNameZa: return inverted ? Label.nameAz : Label.nameZa
+            
+        case .byMostOftenUsed: return Label.mostOftenUsed
         }
     }
 }
