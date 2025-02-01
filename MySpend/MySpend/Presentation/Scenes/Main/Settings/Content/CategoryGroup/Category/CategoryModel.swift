@@ -15,6 +15,7 @@ struct CategoryModel: Identifiable, Codable, Equatable, Hashable  {
     var dateCreated: Date = .init()
     var datemodified: Date = .init()
     var userId: String = ""
+    var dateLastUsed: Date?
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -24,6 +25,7 @@ struct CategoryModel: Identifiable, Codable, Equatable, Hashable  {
         case dateCreated
         case datemodified
         case userId
+        case dateLastUsed
     }
     
     enum Field: Hashable, CaseIterable {

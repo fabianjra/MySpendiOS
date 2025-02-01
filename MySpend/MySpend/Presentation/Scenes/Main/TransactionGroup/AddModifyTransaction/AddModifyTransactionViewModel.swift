@@ -39,13 +39,19 @@ class AddModifyTransactionViewModel: BaseViewModel {
         modelMutated.dateCreated = .now
         modelMutated.datemodified = .now
         
+        var categoryMutated = model.category
+        categoryMutated.dateLastUsed = .now
+        
         var response = ResponseModel()
         
         await performWithLoader { currentUser in
             do {
                 modelMutated.userId = currentUser.uid
                 
-                let document = try await Repository().addNewDocument(modelMutated, forSubCollection: .transactions)
+                let repository = Repository()
+
+                let document = try await repository.addNewDocument(modelMutated, forSubCollection: .transactions)
+                try await repository.modifyDocument(categoryMutated, documentId: categoryMutated.id, forSubCollection: .categories)
                 
                 response = ResponseModel(.successful, document: document)
             } catch {
@@ -71,11 +77,17 @@ class AddModifyTransactionViewModel: BaseViewModel {
             modelMutated.dateTransaction = selectedDate
         }
         
+        var categoryMutated = model.category
+        categoryMutated.dateLastUsed = .now
+        
         var response = ResponseModel()
         
         await performWithLoader {
             do {
-                try await Repository().modifyDocument(modelMutated, documentId: modelMutated.id, forSubCollection: .transactions)
+                let repository = Repository()
+                
+                try await repository.modifyDocument(modelMutated, documentId: modelMutated.id, forSubCollection: .transactions)
+                try await repository.modifyDocument(categoryMutated, documentId: categoryMutated.id, forSubCollection: .categories)
                 
                 response = ResponseModel(.successful)
             } catch {

@@ -21,6 +21,7 @@ class AddModifyCategoryViewModel: BaseViewModel {
         modelMutated.categoryType = categoryType
         modelMutated.dateCreated = .now
         modelMutated.datemodified = .now
+        modelMutated.dateLastUsed = .now
         
         var response = ResponseModel()
         

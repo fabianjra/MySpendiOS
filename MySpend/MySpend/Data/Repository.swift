@@ -78,6 +78,7 @@ public struct Repository: UserValidationProtocol {
         - model: A generic parameter `T` conforming to `Codable`. This is the model object that will be encoded and stored as a document in Firestore.
         - documentId: The ID of the document that want to update.
         - collection: A value of the enum type `CollectionsFB` that specifies the Firestore subcollection where the new document will be modified.
+        - merge: `true`to add new fields to the actual document existing in Firestore. if `false` just modify existing fields in Firestore.
      
      - Throws: The function throws an error if: 1: The current user validation fails. 2: The model cannot be encoded properly. 3: There are issues when interacting with Firestore (e.g., network issues or permission errors).
      
@@ -87,14 +88,14 @@ public struct Repository: UserValidationProtocol {
      
      - Date: October 2024
      */
-    func modifyDocument<T: Codable>(_ model: T, documentId: String, forSubCollection collection: CollectionsFB) async throws {
+    func modifyDocument<T: Codable>(_ model: T, documentId: String, forSubCollection collection: CollectionsFB, merge: Bool = false) async throws {
         
         let currentUserId = try validateCurrentUser(currentUser).uid
         let subCollectionRef = UtilsFB.userSubCollectionRef(collection, for: currentUserId)
         let document = subCollectionRef.document(documentId)
         let newDocumentEncoded = try UtilsFB.encodeModelFB(model)
         
-        try await document.setData(newDocumentEncoded)
+        try await document.setData(newDocumentEncoded, merge: merge)
     }
     
     /**
