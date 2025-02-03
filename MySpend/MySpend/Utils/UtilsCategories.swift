@@ -29,11 +29,18 @@ struct UtilsCategories {
                 return filteredList.sorted(by: { $0.dateCreated < $1.dateCreated })
                 
             case .byMostOftenUsed:
-                return filteredList.sorted(by: { $0.dateLastUsed ?? $0.dateCreated > $1.dateLastUsed ?? $1.dateCreated })
+                return filteredList.sorted {
+                    if $0.usedCounter != $1.usedCounter {
+                        return $0.usedCounter > $1.usedCounter // Ordering by usage
+                    } else {
+                        return $0.dateCreated > $1.dateCreated // If categories comapring are same coutner, order by creation date.
+                    }
+                }
             }
-            
-        } else {
-            return filteredList
+                
+                
+            } else {
+                return filteredList
+            }
         }
     }
-}

@@ -15,7 +15,7 @@ struct MenuContainer<Content: View>: View {
     
     var content: () -> Content
     
-    init(_ title: String = "Sort",
+    init(_ title: String = "Sort by",
          addHorizontalPadding: Bool = false,
          disabled: Bool = false,
          @ViewBuilder content: @escaping () -> Content) {

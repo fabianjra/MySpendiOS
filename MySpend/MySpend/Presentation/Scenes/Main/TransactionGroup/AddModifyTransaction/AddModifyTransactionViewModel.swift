@@ -39,19 +39,25 @@ class AddModifyTransactionViewModel: BaseViewModel {
         modelMutated.dateCreated = .now
         modelMutated.datemodified = .now
         
-        var categoryMutated = model.category
-        categoryMutated.dateLastUsed = .now
+        //Not neccesary, but updates the usage counter just in case later could be nedded.
+        modelMutated.category.incrementUsedCounter()
         
+        let repository = Repository()
         var response = ResponseModel()
         
         await performWithLoader { currentUser in
             do {
                 modelMutated.userId = currentUser.uid
                 
-                let repository = Repository()
-
+                //TODO: Simplificar llamado. Verificar si queda mejor usando transaccion atomica o haciendo
+                //TODO: un llamado armado por medio de query.
+                // Updates the category usage counter only if the category still exists in the database.
+                if var category = try await CategoriesDatabase().getCategory(forId: modelMutated.category.id) {
+                    category.incrementUsedCounter()
+                    try await repository.modifyDocument(category, documentId: category.id, forSubCollection: .categories)
+                }
+                
                 let document = try await repository.addNewDocument(modelMutated, forSubCollection: .transactions)
-                try await repository.modifyDocument(categoryMutated, documentId: categoryMutated.id, forSubCollection: .categories)
                 
                 response = ResponseModel(.successful, document: document)
             } catch {
@@ -77,17 +83,11 @@ class AddModifyTransactionViewModel: BaseViewModel {
             modelMutated.dateTransaction = selectedDate
         }
         
-        var categoryMutated = model.category
-        categoryMutated.dateLastUsed = .now
-        
         var response = ResponseModel()
         
         await performWithLoader {
             do {
-                let repository = Repository()
-                
-                try await repository.modifyDocument(modelMutated, documentId: modelMutated.id, forSubCollection: .transactions)
-                try await repository.modifyDocument(categoryMutated, documentId: categoryMutated.id, forSubCollection: .categories)
+                try await Repository().modifyDocument(modelMutated, documentId: modelMutated.id, forSubCollection: .transactions)
                 
                 response = ResponseModel(.successful)
             } catch {

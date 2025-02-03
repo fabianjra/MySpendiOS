@@ -7,7 +7,7 @@
 
 import Firebase
 
-struct TransactionsDatabase: UserValidationProtocol {
+private struct TransactionsDatabase: UserValidationProtocol {
     private var currentUser: User? = AuthFB().currentUser
 }
 
@@ -15,7 +15,7 @@ struct TransactionsDatabase: UserValidationProtocol {
 // *******************************
 // EJEMPLO OPERACION ATOMICA:
 // *******************************
-struct TransactionsDatabase_ORIGINAL {
+private struct TransactionsDatabase_ORIGINAL {
     
     var currentUser: User? = Auth.auth().currentUser
     

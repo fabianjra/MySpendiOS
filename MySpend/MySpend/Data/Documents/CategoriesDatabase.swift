@@ -18,7 +18,25 @@ struct CategoriesDatabase: UserValidationProtocol {
      
      - Date: August 2024
      */
-    func getCategories() async throws -> [CategoryModel] {
+    func getCategory(forId documentID: String) async throws -> CategoryModel? {
+        if var category = try await Repository().getDocument(forId: documentID, forModel: CategoryModel.self, forSubCollection: .categories) {
+            category.id = documentID
+            category.id.isEmptyOrWhitespace ? category.id = documentID : ()
+            
+            return category
+        }
+        
+        return nil
+    }
+    
+    /**
+     Only for fetch data once.
+     
+     - Authors: Fabian Rodriguez.
+     
+     - Date: August 2024
+     */
+    private func getCategories() async throws -> [CategoryModel] {
         
         let userId = try validateCurrentUser(currentUser).uid
         let subCollectionRef = UtilsFB.userSubCollectionRef(.categories, for: userId)
@@ -52,7 +70,7 @@ struct CategoriesDatabase: UserValidationProtocol {
 
 
 // ESTO VA PARA EL VIEWMODEL DE CATEGOREIS PORQUE AHI ESTA EL LISTENER:
-struct CategoryCollection_PRUEBAS {
+private struct CategoryCollection_PRUEBAS {
 
     var categories: [CategoryModel]
 
@@ -76,7 +94,7 @@ struct CategoryCollection_PRUEBAS {
 }
 
 
-struct CategoriesDatabase_PRUEBAS {
+private struct CategoriesDatabase_PRUEBAS {
     
     var currentUser: User? = Auth.auth().currentUser
     

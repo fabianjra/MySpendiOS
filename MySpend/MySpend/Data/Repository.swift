@@ -11,6 +11,22 @@ public struct Repository: UserValidationProtocol {
     
     private var currentUser = AuthFB().currentUser
     
+    func getDocument<T: Decodable>(forId documentId: String, forModel model: T.Type, forSubCollection collection: CollectionsFB) async throws -> T? {
+        
+        let currentUserId = try validateCurrentUser(currentUser).uid
+        let subCollectionRef = UtilsFB.userSubCollectionRef(collection, for: currentUserId)
+        
+        let documentSnapshot = try await subCollectionRef.document(documentId).getDocument()
+        
+        guard let documentData = documentSnapshot.data() else {
+            return nil
+        }
+        
+        let decodedDocument = try UtilsFB.decodeModelFB(data: documentData, forModel: T.self)
+        
+        return decodedDocument
+    }
+    
     /**
      This function adds a new document to a Firestore subcollection based on the given model.
      It uses Firebase to generate a new document ID automatically.
