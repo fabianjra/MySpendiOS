@@ -143,9 +143,6 @@ struct AddModifyCategoryView: View {
                 TextError(viewModel.errorMessage)
             }
         }
-        .onAppear {
-            focusedField = .name
-        }
         .sheet(isPresented: $viewModel.showIconsModal) {
             IconListModalView(model: modelBinding, showModal: $viewModel.showIconsModal)
         }
