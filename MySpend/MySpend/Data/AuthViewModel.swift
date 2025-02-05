@@ -26,9 +26,16 @@ class AuthViewModel : ObservableObject {
             
             self.currentUser = user
             
-            if user != nil {
+            if let user = user {
                 self.isLoggedIn = true
-                self.user = UserModel(id: user?.uid ?? "", fullname: user?.displayName ?? "", email: user?.email ?? "")
+
+                self.user = UserModel(id: user.uid,
+                                          fullname: user.displayName ?? "",
+                                          email: user.email ?? "",
+                                          phoneNumber: user.phoneNumber ?? "",
+                                          profilePicture: user.photoURL,
+                                          accounts: [],
+                                          categories: [])
                 
             } else {
                 self.isLoggedIn = false

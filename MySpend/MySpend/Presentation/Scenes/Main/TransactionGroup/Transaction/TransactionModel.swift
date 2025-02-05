@@ -16,6 +16,8 @@ struct TransactionModel: Identifiable, Codable, Equatable, Hashable {
     var transactionType: TransactionType = .expense
     var dateCreated: Date = .init()
     var datemodified: Date = .init()
+    
+    //FKs:
     var userId: String = ""
     
     enum CodingKeys: String, CodingKey {

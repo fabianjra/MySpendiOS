@@ -54,7 +54,13 @@ public struct AuthFB: UserValidationProtocol {
         
         try await updateUser(newUserName: username, forUser: user)
         
-        let userModel = UserModel(id: user.uid, fullname: user.displayName ?? "", email: user.email ?? "")
+        let userModel = UserModel(id: user.uid,
+                                  fullname: user.displayName ?? "",
+                                  email: user.email ?? "",
+                                  phoneNumber: user.phoneNumber ?? "",
+                                  profilePicture: user.photoURL,
+                                  accounts: [],
+                                  categories: [])
         
         try await UserDatabase().storeUserDocument(forUser: userModel)
     }
