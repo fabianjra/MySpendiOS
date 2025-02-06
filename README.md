@@ -94,3 +94,18 @@ npx -p node-firestore-import-export firestore-import -a credentials.json -b back
 ## Outputs folder:
 
 Se agrega una carpeta de outputs folder por si Crashlytics necesita guardar archivos generados.
+
+
+## Arquitectura Feature MVVM + Clean:
+
+- 📦 Modularización por Features:
+Cada feature (Auth, Transactions, Settings, Dashboard) tiene su propio Models, ViewModels y Views. Esto facilita la escalabilidad, ya que puedes trabajar en un módulo sin afectar otros.
+
+- 🗂️ Core para Dependencias Globales:
+Aquí centralizas todo lo relacionado con Firebase, la base de datos (SQLite), UserDefaults y servicios de red. Esto mantiene el código desacoplado.
+
+- ♻️ Shared para Componentes Reutilizables:
+Todo lo que es común a varias partes de la app, como botones, modales, extensiones, utilidades y estilos, vive aquí.
+
+- 📝 Resources para Recursos Estáticos:
+Assets, fuentes personalizadas y archivos de localización organizados en una sola carpeta.

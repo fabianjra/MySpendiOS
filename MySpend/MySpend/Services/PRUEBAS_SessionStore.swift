@@ -9,13 +9,13 @@ import SwiftUI
 import Firebase
 import Combine
 
-struct PRUEBAS_User {
+private struct PRUEBAS_User {
     var uid: String
     var email: String?
     var displayName: String?
 }
 
-class PRUEBAS_SessionStore : ObservableObject {
+private class PRUEBAS_SessionStore : ObservableObject {
     
     var didChange = PassthroughSubject<PRUEBAS_SessionStore, Never>()
     @Published var session: PRUEBAS_User? { didSet { self.didChange.send(self) }}
@@ -61,7 +61,7 @@ class PRUEBAS_SessionStore : ObservableObject {
 }
 
 
-class PRUEBAS_AuthenticationService: ObservableObject {
+private class PRUEBAS_AuthenticationService: ObservableObject {
     
     @Published var user: PRUEBAS_User?
     
