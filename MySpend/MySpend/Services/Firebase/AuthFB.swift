@@ -59,8 +59,7 @@ public struct AuthFB: UserValidationProtocol {
                                   email: user.email ?? "",
                                   phoneNumber: user.phoneNumber ?? "",
                                   profilePicture: user.photoURL,
-                                  accounts: [],
-                                  categories: [])
+                                  accounts: [])
         
         try await UserDatabase().storeUserDocument(forUser: userModel)
     }

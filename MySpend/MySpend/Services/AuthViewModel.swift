@@ -34,8 +34,7 @@ class AuthViewModel : ObservableObject {
                                           email: user.email ?? "",
                                           phoneNumber: user.phoneNumber ?? "",
                                           profilePicture: user.photoURL,
-                                          accounts: [],
-                                          categories: [])
+                                          accounts: [])
                 
             } else {
                 self.isLoggedIn = false
