@@ -6,30 +6,41 @@
 //
 
 import Foundation
+import SwiftData
 
-struct TransactionModel: Identifiable, Codable, Equatable, Hashable {
-    var id = ""
-    var amount: Decimal = .zero
-    var dateTransaction: Date = .init()
-    var category: CategoryModel = CategoryModel()
-    var notes: String = ""
-    var transactionType: TransactionType = .expense
-    var dateCreated: Date = .init()
-    var datemodified: Date = .init()
+@Model
+class TransactionModel: Identifiable, Equatable, Hashable {
+    @Attribute(.unique) var id = UUID()
     
-    //FKs:
-    var userId: String = ""
+    // Visual:
+    var dateTransaction: Date
+    var amount: Decimal
+    var category: CategoryModel
+    var account: AccountModel
+    var notes: String
+    var repeating: Bool
     
-    enum CodingKeys: String, CodingKey {
-        case id
-        case amount
-        case dateTransaction
-        case category
-        case notes
-        case transactionType
-        case dateCreated
-        case datemodified
-        case userId
+    // Management:
+    var dateCreated: Date
+    var datemodified: Date
+    
+    init(dateTransaction: Date,
+         amount: Decimal,
+         category: CategoryModel,
+         account: AccountModel,
+         notes: String,
+         repeating: Bool) {
+        
+        self.dateTransaction = dateTransaction
+        self.amount = amount
+        self.category = category
+        self.account = account
+        self.notes = notes
+        self.repeating = repeating
+        
+        // Default values:
+        self.dateCreated = .now
+        self.datemodified = .now
     }
     
     enum Field: Hashable, CaseIterable {

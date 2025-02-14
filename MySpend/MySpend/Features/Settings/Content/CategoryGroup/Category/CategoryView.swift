@@ -76,7 +76,7 @@ struct CategoryView: View {
             
             VStack {
                 PickerSegmented(selection: $viewModel.categoryType,
-                                segments: TransactionType.allCases)
+                                segments: CategoryType.allCases)
                 .frame(maxWidth: ConstantFrames.iPadMaxWidth)
                 .padding(.bottom, ConstantViews.mediumSpacing)
                 

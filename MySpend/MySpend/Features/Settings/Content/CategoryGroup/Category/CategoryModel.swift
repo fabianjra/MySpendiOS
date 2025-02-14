@@ -6,36 +6,49 @@
 //
 
 import Foundation
+import SwiftData
 
-struct CategoryModel: Identifiable, Codable, Equatable, Hashable  {
-    var id: String = ""
-    var icon: String = CategoryIcons.household.list.first ?? "tag.fill"
-    var name: String = ""
-    var categoryType: TransactionType = .expense
-    var dateCreated: Date = .init()
-    var datemodified: Date = .init()
-    var usedCounter: Int = 0
+@Model
+class CategoryModel: Identifiable, Equatable, Hashable  {
+    @Attribute(.unique) var id = UUID()
     
-    // FKs:
-    var userId: String = ""
-    var categoryId: String = ""
+    // Visual:
+    var icon: String
+    var name: String
+    var categoryType: CategoryType
     
-    enum CodingKeys: String, CodingKey {
-        case id
-        case icon
-        case name
-        case categoryType
-        case dateCreated
-        case datemodified
-        case userId
-        case usedCounter
+    // Management:
+    var dateCreated: Date
+    var datemodified: Date
+    var usedCounter: Int
+    
+    
+    // If a category is deleted, avery transaction related to it also will be deleted.
+    @Relationship(deleteRule: .cascade, inverse: \TransactionModel.category)
+    var transaction: TransactionModel
+    
+    init(icon: String,
+         name: String,
+         categoryType: CategoryType,
+         datemodified: Date,
+         transaction: TransactionModel) {
+        
+        self.icon = icon
+        self.name = name
+        self.categoryType = categoryType
+        self.datemodified = datemodified
+        self.transaction = transaction
+        
+        // Default values
+        self.dateCreated = .now
+        self.usedCounter = 0
     }
     
     enum Field: Hashable, CaseIterable {
         case name
     }
     
-    mutating func incrementUsedCounter() {
+    func incrementUsedCounter() {
         self.usedCounter += 1
     }
 }
