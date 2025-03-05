@@ -60,7 +60,7 @@ struct MySpendApp: App {
         FirebaseApp.configure()
         
         // Debug: Shows the diretory path for the Database
-        print(URL.applicationSupportDirectory.path(percentEncoded: false))
+        Logs.WriteMessage("DataBase directory path: " + URL.applicationSupportDirectory.path(percentEncoded: false))
     }
     
     @StateObject var authViewModel = AuthViewModel()

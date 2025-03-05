@@ -40,13 +40,6 @@ struct TabViewMain: View {
             tabView
         }
         .edgesIgnoringSafeArea(.bottom)
-        .onAppear {
-            /// Disable Swipe to go back when ResumeView is showing.
-            AppState.shared.swipeEnabled = false
-        }
-        .onDisappear {
-            AppState.shared.swipeEnabled = true
-        }
         .sheet(isPresented: $showNewTransactionModal) {
             AddModifyTransactionView(selectedDate: $selectedDate)
         }
@@ -72,5 +65,4 @@ struct TabViewMain: View {
 
 #Preview {
     TabViewMain()
-        .environmentObject(AuthViewModel())
 }

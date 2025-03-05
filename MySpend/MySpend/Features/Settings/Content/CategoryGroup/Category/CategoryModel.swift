@@ -19,29 +19,32 @@ class CategoryModel: Identifiable, Equatable, Hashable  {
     
     // Management:
     var dateCreated: Date
-    var datemodified: Date
+    var datemodified: Date?
     var usedCounter: Int
     
     
     // If a category is deleted, avery transaction related to it also will be deleted.
     @Relationship(deleteRule: .cascade, inverse: \TransactionModel.category)
-    var transaction: TransactionModel
+    var transaction: TransactionModel?
     
     init(icon: String,
          name: String,
          categoryType: CategoryType,
-         datemodified: Date,
-         transaction: TransactionModel) {
+         
+         dateCreated: Date = .now,
+         datemodified: Date? = nil,
+         usedCounter: Int = 0,
+         transaction: TransactionModel? = nil) {
         
         self.icon = icon
         self.name = name
         self.categoryType = categoryType
-        self.datemodified = datemodified
-        self.transaction = transaction
         
-        // Default values
-        self.dateCreated = .now
-        self.usedCounter = 0
+        self.dateCreated = dateCreated
+        self.datemodified = datemodified
+        self.usedCounter = usedCounter
+        
+        self.transaction = transaction
     }
     
     enum Field: Hashable, CaseIterable {

@@ -149,53 +149,53 @@ struct SelectCategoryModalView: View {
     }
 }
 
-#Preview("Expenses es_CR") {
-    @Previewable @State var showModal = true
-    @Previewable @State var selectedCategory = CategoryModel()
-    @Previewable @State var viewModelMock = CategoryViewModel(categories: MocksCategories.normal)
-    
-    ZStack(alignment: .top) {
-        Color.backgroundBottom
-        VStack {
-            Spacer()
-            TextPlain("Selected category: \(selectedCategory.name)")
-            
-            Button("Show modal") {
-                showModal = true
-            }
-            Spacer()
-        }
-    }.sheet(isPresented: $showModal) {
-        SelectCategoryModalView(selectedCategory: $selectedCategory,
-                                categoryType: $selectedCategory.categoryType,
-                                viewModel: viewModelMock)
-            .environment(\.locale, .init(identifier: "es_CR"))
-    }
-    .onAppear {
-        showModal = true
-    }
-}
-
-#Preview("No content en_US") {
-    @Previewable @State var showModal = true
-    
-    ZStack(alignment: .top) {
-        Color.backgroundBottom
-        VStack {
-            Spacer()
-            
-            Button("Show modal") {
-                showModal = true
-            }
-            Spacer()
-        }
-    }.sheet(isPresented: $showModal) {
-        SelectCategoryModalView(selectedCategory: .constant(CategoryModel()),
-                                categoryType: .constant(.expense),
-                                viewModel: CategoryViewModel())
-            .environment(\.locale, .init(identifier: "en_US"))
-    }
-    .onAppear {
-        showModal = true
-    }
-}
+//#Preview("Expenses es_CR") {
+//    @Previewable @State var showModal = true
+//    @Previewable @State var selectedCategory = CategoryModel()
+//    @Previewable @State var viewModelMock = CategoryViewModel(categories: MocksCategories.normal)
+//    
+//    ZStack(alignment: .top) {
+//        Color.backgroundBottom
+//        VStack {
+//            Spacer()
+//            TextPlain("Selected category: \(selectedCategory.name)")
+//            
+//            Button("Show modal") {
+//                showModal = true
+//            }
+//            Spacer()
+//        }
+//    }.sheet(isPresented: $showModal) {
+//        SelectCategoryModalView(selectedCategory: $selectedCategory,
+//                                categoryType: $selectedCategory.categoryType,
+//                                viewModel: viewModelMock)
+//            .environment(\.locale, .init(identifier: "es_CR"))
+//    }
+//    .onAppear {
+//        showModal = true
+//    }
+//}
+//
+//#Preview("No content en_US") {
+//    @Previewable @State var showModal = true
+//    
+//    ZStack(alignment: .top) {
+//        Color.backgroundBottom
+//        VStack {
+//            Spacer()
+//            
+//            Button("Show modal") {
+//                showModal = true
+//            }
+//            Spacer()
+//        }
+//    }.sheet(isPresented: $showModal) {
+//        SelectCategoryModalView(selectedCategory: .constant(CategoryModel()),
+//                                categoryType: .constant(.expense),
+//                                viewModel: CategoryViewModel())
+//            .environment(\.locale, .init(identifier: "en_US"))
+//    }
+//    .onAppear {
+//        showModal = true
+//    }
+//}

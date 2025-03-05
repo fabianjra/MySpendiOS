@@ -6,8 +6,12 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct TransactionView: View {
+    
+    @Environment(\.modelContext) private var context
+    @Query private var transactions: [TransactionModel]
     
     @StateObject var viewModel = TransactionViewModel()
     @Binding var selectedDate: Date
@@ -36,8 +40,7 @@ struct TransactionView: View {
             // MARK: HISTORY BUTTON
             VStack {
                 NavigationLink {
-                    TransactionHistoryView(transactionsLoaded: $viewModel.transactions,
-                                           dateTimeInterval: $viewModel.dateTimeInterval,
+                    TransactionHistoryView(dateTimeInterval: $viewModel.dateTimeInterval,
                                            selectedDate: $selectedDate)
                     .toolbar(.hidden, for: .navigationBar)
                 } label: {
@@ -53,7 +56,7 @@ struct TransactionView: View {
             if viewModel.isLoading {
                 LoaderView()
             } else {
-                if viewModel.transactions.isEmpty {
+                if transactions.isEmpty {
                     NoContentView(title: "No transactions")
                     Spacer()
                 } else {
@@ -63,7 +66,7 @@ struct TransactionView: View {
                                                   isEditing: .constant(false)){}
                         
                         let transactionsFiltered = UtilsTransactions.filteredTransactions(selectedDate,
-                                                                                          transactions: viewModel.transactions,
+                                                                                          transactions: transactions,
                                                                                           for: viewModel.dateTimeInterval)
                         
                         let groupedTransactions = UtilsCurrency.calculateGroupedTransactions(transactionsFiltered)
@@ -96,29 +99,25 @@ struct TransactionView: View {
         }
         .onAppear {
             print("Router count RESUME: \(Router.shared.path.count)")
-            viewModel.onAppear()
-        }
-        .onFirstAppear {
-            viewModel.fetchData()
         }
     }
 }
 
-#Preview("es_CR") {
-    @Previewable @State var selectedDate = Date()
-    VStack {
-        TransactionView(viewModel: TransactionViewModel(transactions: MockTransactions.normal), selectedDate: $selectedDate)
-            .environment(\.locale, .init(identifier: "es_CR"))
-    }
-}
-
-#Preview("Saturated en_US") {
-    @Previewable @State var selectedDate = Date()
-    VStack {
-        TransactionView(viewModel: TransactionViewModel(transactions: MockTransactions.saturated), selectedDate: $selectedDate)
-            .environment(\.locale, .init(identifier: "en_US"))
-    }
-}
+//#Preview("es_CR") {
+//    @Previewable @State var selectedDate = Date()
+//    VStack {
+//        TransactionView(viewModel: TransactionViewModel(transactions: MockTransactions.normal), selectedDate: $selectedDate)
+//            .environment(\.locale, .init(identifier: "es_CR"))
+//    }
+//}
+//
+//#Preview("Saturated en_US") {
+//    @Previewable @State var selectedDate = Date()
+//    VStack {
+//        TransactionView(viewModel: TransactionViewModel(transactions: MockTransactions.saturated), selectedDate: $selectedDate)
+//            .environment(\.locale, .init(identifier: "en_US"))
+//    }
+//}
 
 #Preview("No content es_ES") {
     @Previewable @State var selectedDate = Date()

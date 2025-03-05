@@ -61,7 +61,7 @@ public struct AuthFB: UserValidationProtocol {
                                   profilePicture: user.photoURL,
                                   accounts: [])
         
-        try await UserDatabase().storeUserDocument(forUser: userModel)
+        //try await UserDatabase().storeUserDocument(forUser: userModel)
     }
 
     func updateUser(newUserName: String, forUser user: User) async throws {

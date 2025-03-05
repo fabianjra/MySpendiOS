@@ -81,24 +81,24 @@ struct IconListModalView: View {
     }
 }
 
-#Preview {
-    @Previewable @State var showModal: Bool = true
-    @Previewable @State var model = CategoryModel()
-    
-    ZStack(alignment: .top) {
-        Color.backgroundBottom
-        VStack {
-            Spacer()
-            TextPlain("Icono: \(model.icon)")
-            
-            Image(systemName: model.icon)
-            
-            Button("Show modal") {
-                showModal = true
-            }
-            Spacer()
-        }
-    }.sheet(isPresented: $showModal) {
-        IconListModalView(model: $model, showModal: $showModal)
-    }
-}
+//#Preview {
+//    @Previewable @State var showModal: Bool = true
+//    @Previewable @State var model = CategoryModel()
+//    
+//    ZStack(alignment: .top) {
+//        Color.backgroundBottom
+//        VStack {
+//            Spacer()
+//            TextPlain("Icono: \(model.icon)")
+//            
+//            Image(systemName: model.icon)
+//            
+//            Button("Show modal") {
+//                showModal = true
+//            }
+//            Spacer()
+//        }
+//    }.sheet(isPresented: $showModal) {
+//        IconListModalView(model: $model, showModal: $showModal)
+//    }
+//}

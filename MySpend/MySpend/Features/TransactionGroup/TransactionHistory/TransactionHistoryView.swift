@@ -6,16 +6,20 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct TransactionHistoryView: View {
     
+    @Environment(\.modelContext) private var context
+    @Query private var transactions: [TransactionModel]
+    
     @StateObject var viewModel = TransactionHistoryViewModel()
     
-    @Binding var transactionsLoaded: [TransactionModel]
+    //@Binding var transactionsLoaded: [TransactionModel]
     @Binding var dateTimeInterval: DateTimeInterval
     @Binding var selectedDate: Date
     
-    @State private var selectedModel = TransactionModel()
+    @State private var selectedModel: TransactionModel
     
     var body: some View {
         ContentContainer {
@@ -32,7 +36,7 @@ struct TransactionHistoryView: View {
             .padding(.bottom)
             
             ZStack {
-                if transactionsLoaded.isEmpty {
+                if transactions.isEmpty {
                     emptyView
                 } else {
                     transactionsList
@@ -118,7 +122,7 @@ struct TransactionHistoryView: View {
             }
             
             let transactionsFiltered = UtilsTransactions.filteredTransactions(selectedDate,
-                                                                              transactions: transactionsLoaded,
+                                                                              transactions: transactions,
                                                                               for: dateTimeInterval,
                                                                               sortTransactions: viewModel.sortTransactionsBy)
             
@@ -271,32 +275,32 @@ struct TransactionHistoryView: View {
     }
 }
 
-#Preview("Normal es_CR") {
-    @Previewable @State var dateTimeInterval = DateTimeInterval.month
-    @Previewable @State var selectedDate = Date()
-    
-    VStack {
-        TransactionHistoryView(transactionsLoaded: .constant(MockTransactions.normal), dateTimeInterval: $dateTimeInterval, selectedDate: $selectedDate)
-            .environment(\.locale, .init(identifier: "es_CR"))
-    }
-}
-
-#Preview("Random saturated en_US") {
-    @Previewable @State var dateTimeInterval = DateTimeInterval.month
-    @Previewable @State var selectedDate = Date()
-    
-    VStack {
-        TransactionHistoryView(transactionsLoaded: .constant(MockTransactions.random_generated), dateTimeInterval: $dateTimeInterval, selectedDate: $selectedDate)
-            .environment(\.locale, .init(identifier: "en_US"))
-    }
-}
-
-#Preview("No content en_US_POSIX") {
-    @Previewable @State var dateTimeInterval = DateTimeInterval.month
-    @Previewable @State var selectedDate = Date()
-    
-    VStack {
-        TransactionHistoryView(transactionsLoaded: .constant([]), dateTimeInterval: $dateTimeInterval, selectedDate: $selectedDate)
-            .environment(\.locale, .init(identifier: "en_US_POSIX"))
-    }
-}
+//#Preview("Normal es_CR") {
+//    @Previewable @State var dateTimeInterval = DateTimeInterval.month
+//    @Previewable @State var selectedDate = Date()
+//    
+//    VStack {
+//        TransactionHistoryView(transactionsLoaded: .constant(MockTransactions.normal), dateTimeInterval: $dateTimeInterval, selectedDate: $selectedDate)
+//            .environment(\.locale, .init(identifier: "es_CR"))
+//    }
+//}
+//
+//#Preview("Random saturated en_US") {
+//    @Previewable @State var dateTimeInterval = DateTimeInterval.month
+//    @Previewable @State var selectedDate = Date()
+//    
+//    VStack {
+//        TransactionHistoryView(transactionsLoaded: .constant(MockTransactions.random_generated), dateTimeInterval: $dateTimeInterval, selectedDate: $selectedDate)
+//            .environment(\.locale, .init(identifier: "en_US"))
+//    }
+//}
+//
+//#Preview("No content en_US_POSIX") {
+//    @Previewable @State var dateTimeInterval = DateTimeInterval.month
+//    @Previewable @State var selectedDate = Date()
+//    
+//    VStack {
+//        TransactionHistoryView(transactionsLoaded: .constant([]), dateTimeInterval: $dateTimeInterval, selectedDate: $selectedDate)
+//            .environment(\.locale, .init(identifier: "en_US_POSIX"))
+//    }
+//}
