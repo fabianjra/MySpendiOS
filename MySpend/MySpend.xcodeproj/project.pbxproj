@@ -1484,7 +1484,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"MySpend/Preview Content\"";
-				DEVELOPMENT_TEAM = RJNWKKQ88P;
+				DEVELOPMENT_TEAM = K2Q2XHS4FN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MySpend/Info.plist;
@@ -1503,7 +1503,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.fabian.MySpend;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fabian.MySpendFB;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -1520,7 +1520,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MySpend/Preview Content\"";
-				DEVELOPMENT_TEAM = RJNWKKQ88P;
+				DEVELOPMENT_TEAM = K2Q2XHS4FN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MySpend/Info.plist;
@@ -1539,7 +1539,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.fabian.MySpend;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fabian.MySpendFB;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
