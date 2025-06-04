@@ -1,0 +1,29 @@
+LICENCIA DE USO RESTRINGIDO DE SOFTWARE – MySpend
+
+Copyright © 2025 Fabián Josué Rodríguez Álvarez. Todos los derechos reservados.
+
+Este software, incluyendo su código fuente, interfaz, diseño y estructura interna (denominado colectivamente como "MySpend"), es propiedad exclusiva de su autor y está protegido por las leyes de derechos de autor nacionales (Costa Rica) e internacionales (Convenio de Berna y otros tratados aplicables).
+
+SE PERMITE:
+- Visualizar el código fuente con fines informativos o evaluativos, siempre y cuando no se copie, modifique, utilice o distribuya de forma parcial o total.
+- Revisar el funcionamiento del software con fines de aprendizaje o para evaluar la calidad del desarrollo por parte de potenciales empleadores, empresas o colaboradores.
+
+QUEDA ESTRICTAMENTE PROHIBIDO:
+- Copiar, reproducir, distribuir o transmitir este software en su totalidad o en parte sin autorización escrita del autor.
+- Modificar, adaptar, traducir, descompilar, realizar ingeniería inversa o crear trabajos derivados del código fuente.
+- Utilizar este software, en todo o en parte, con fines comerciales, educativos, institucionales o personales sin consentimiento explícito.
+
+SANCIONES POR INCUMPLIMIENTO:
+Cualquier uso no autorizado del código fuente, ya sea total o parcial, conllevará:
+- La pérdida inmediata de cualquier derecho de uso o revisión previamente concedido.
+- Posibles acciones legales civiles y/o penales por infracción a los derechos de autor, conforme a la legislación vigente en Costa Rica y tratados internacionales.
+
+LIMITACIÓN DE RESPONSABILIDAD:
+El software se proporciona "tal cual", sin garantías de ningún tipo, ya sean expresas o implícitas. El autor no será responsable por ningún daño directo, indirecto, incidental, especial o consecuente derivado del uso o imposibilidad de uso del software, incluso si ha sido advertido de la posibilidad de tales daños.
+
+PARA CONSULTAS, PERMISOS O USO AUTORIZADO:
+Por favor, contactar a fabianjra25@gmail.com para solicitar autorizaciones formales de uso o colaboración.
+
+—
+
+Documento redactado el día 03 de junio del 2025 por el autor original de MySpend.
