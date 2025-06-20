@@ -95,3 +95,16 @@ npx -p node-firestore-import-export firestore-import -a credentials.json -b back
 ## Outputs folder:
 
 Se agrega una carpeta de outputs folder por si Crashlytics necesita guardar archivos generados.
+
+
+## Errors FAQ:
+
+1. Could not get GOOGLE_APP_ID in Google Services file from build environment
+
+- Respuesta para error 1:
+If you use Xcode 15 (beta as of 2023), you might have updated your project with ENABLE_USER_SCRIPT_SANDBOXING.
+The default is YES, and this will cause the issue with Crashlytics during archive.
+Go to Build Settings > User Script Sandboxing > Set to No.
+
+Esto es un parche, aunque se deberian crear variables de entorno y por ambiente separados.
+More info: https://stackoverflow.com/questions/57006663/could-not-get-google-app-id-in-google-services-file-from-build-environment
