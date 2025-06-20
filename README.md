@@ -95,4 +95,3 @@ npx -p node-firestore-import-export firestore-import -a credentials.json -b back
 ## Outputs folder:
 
 Se agrega una carpeta de outputs folder por si Crashlytics necesita guardar archivos generados.
-
