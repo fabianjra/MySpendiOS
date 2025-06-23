@@ -7,7 +7,14 @@
 
 import CoreData
 
+// Persintence:
+// Este es el que enlaza el Modelo de Core Data con el codigo.
+// Aqui se inicializa todo lo que tiene que ver con Core Data.
+// Desde este struct Persintence, es que se accede a Core Data.
+
 struct PersistenceController {
+    
+    // Solo debe existir una sola instancia del contenedor.
     static let shared = PersistenceController()
 
     @MainActor
@@ -29,13 +36,20 @@ struct PersistenceController {
         return result
     }()
 
+    // Contenedor de Core Data.
     let container: NSPersistentContainer
 
+    // inMemory: false (default): Guarda datos reales en disco (uso normal).
+    // inMemory: true: Solo usa memoria temporal (ideal para tests o previews).
     init(inMemory: Bool = false) {
-        container = NSPersistentContainer(name: "MySpend")
+        
+        container = NSPersistentContainer(name: CDConstants.containerName)
+        
         if inMemory {
             container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
         }
+        
+        // Inicializa el contenedor y carga el contenido de Core Data
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
                 // Replace this implementation with code to handle the error appropriately.
@@ -49,9 +63,18 @@ struct PersistenceController {
                  * The store could not be migrated to the current model version.
                  Check the error message to determine what the actual problem was.
                  */
-                fatalError("Unresolved error \(error), \(error.userInfo)")
+                fatalError("Unable to load persistent stores: \(error.localizedDescription). UserInfo: \(error.userInfo)")
             }
         })
+        
+        // Cuando se crea un Core Data Model y se crea un Persistence Container enlazado al modelo,
+        // Se va a crear una propiedad llamada viewContext.
+        // Este viewContext es la propiedad con la que se va a interactuar en toda la aplicacion para usar para manejar datos.
         container.viewContext.automaticallyMergesChangesFromParent = true
+        
+        // NOTA:
+        // automaticallyMergesChangesFromParent:
+        // Cada vez que el viewContext cambia desde el "parent context", cada "Child Context" va a cambiar tambien.
+        // Esto indica que no importa sobre que "context" se realicen cambios, siempre se realizaran por el merge.
     }
 }

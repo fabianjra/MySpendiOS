@@ -44,6 +44,8 @@ struct MySpendApp: App {
     
     // *****************************************************
     // CORE DATA CONFIGURATION:
+    
+    // Instancia unica del contenedor
     let persistenceController = PersistenceController.shared
 
     var body: some Scene {
@@ -51,12 +53,15 @@ struct MySpendApp: App {
             
             /// CORE DATA:
             ContentView()
+            
+            // Permite que el viewContext este disponible dentro de toda la aplicacion mediante una unica instancia.
+            // El ViewContext es lo unico a lo que se necesita acceder dentro de las pantallas de la aplicacion, para hacer uso de los datos con Core Data.
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 
             
             /// FIREBASE:
             //RootView()
-            //    .environmentObject(authViewModel)
+                //.environmentObject(authViewModel)
                 //.environmentObject(dataManager) //Class for get, add and delete from Firestore.
         }
     }
