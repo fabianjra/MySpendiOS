@@ -216,9 +216,8 @@ playground.xcworkspace
 #
 #tm_build_errors
 
-####
-# UNKNOWN: recommended by others, but I can't discover what these files are
-#
+#Ignore firebase API Key string connection:
+GoogleService-Info.plist
 
 #################################################################################
 # FIREBASE 2025:
