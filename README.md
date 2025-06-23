@@ -8,10 +8,9 @@ Se creó una lista de tareas TODO, In progress y Done en Trello: https://trello.
 <p>&nbsp;</p>
 
 
-## Packages:
+## Main:
 
 - [Firebase](#firebase)
-- [Binding example](#binding-example)
 - [Download Firebase Firestore Database](#download-firebase-firestore-database)
 - [Outputs folder](#outputs-folder)
 
@@ -37,40 +36,6 @@ Firebase is in charge of manage the Auth in app and the database using Firestore
 
 <p>&nbsp;</p>
 
-
-## Binding example:
-
-```
-struct TextFieldIconStyle: TextFieldStyle {
-    
-    @Binding private var text: String
-    private let size: CGFloat
-    
-    public init(_ text: Binding<String>, size: CGFloat = FontSizes.body) {
-        self._text = text
-        self.size = size
-    }
-    
-    public func _body(configuration: TextField<Self._Label>) -> some View {
-        HStack {
-            configuration
-                .frame(height: Frames.textFieldHeight)
-                .paddig()
-        }
-    }
-}
-
-struct TextFieldIconStyle_Previews: PreviewProvider {
-    static var previews: some View {
-        
-        @State var text = ""
-
-        TextField("", text: $text)
-            .textFieldStyle(TextFieldIconStyle($text))
-    }
-}
-
-```
 
 ## Download Firebase Firestore Database:
 
