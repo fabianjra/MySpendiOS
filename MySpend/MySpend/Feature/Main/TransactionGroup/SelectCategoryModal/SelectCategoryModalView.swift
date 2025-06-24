@@ -12,7 +12,7 @@ struct SelectCategoryModalView: View {
     @Environment(\.dismiss) var dismiss
     
     // Parameters managed by New Transaction (add or modify):
-    @Binding var selectedCategory: CategoryModel
+    @Binding var selectedCategory: CategoryModelFB
     @Binding var categoryType: TransactionType
     
     @StateObject var viewModel = CategoryViewModel()
@@ -151,7 +151,7 @@ struct SelectCategoryModalView: View {
 
 #Preview("Expenses es_CR") {
     @Previewable @State var showModal = true
-    @Previewable @State var selectedCategory = CategoryModel()
+    @Previewable @State var selectedCategory = CategoryModelFB()
     @Previewable @State var viewModelMock = CategoryViewModel(categories: MocksCategories.normal)
     
     ZStack(alignment: .top) {
@@ -190,7 +190,7 @@ struct SelectCategoryModalView: View {
             Spacer()
         }
     }.sheet(isPresented: $showModal) {
-        SelectCategoryModalView(selectedCategory: .constant(CategoryModel()),
+        SelectCategoryModalView(selectedCategory: .constant(CategoryModelFB()),
                                 categoryType: .constant(.expense),
                                 viewModel: CategoryViewModel())
             .environment(\.locale, .init(identifier: "en_US"))

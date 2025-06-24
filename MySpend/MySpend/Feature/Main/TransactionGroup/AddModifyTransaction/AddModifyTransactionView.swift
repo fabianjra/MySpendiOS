@@ -22,16 +22,16 @@ struct AddModifyTransactionView: View {
     
     @Environment(\.dismiss) var dismiss
     
-    @Binding var model: TransactionModel
-    @State private var defaultModel = TransactionModel()
+    @Binding var model: TransactionModelFB
+    @State private var defaultModel = TransactionModelFB()
     
     @StateObject var viewModel = AddModifyTransactionViewModel()
     @Binding private var selectedDate: Date
     
-    @FocusState private var focusedField: TransactionModel.Field?
+    @FocusState private var focusedField: TransactionModelFB.Field?
     private let isNewTransaction: Bool
     
-    var modelBinding: Binding<TransactionModel> {
+    var modelBinding: Binding<TransactionModelFB> {
         Binding(
             get: { isNewTransaction ? defaultModel : model }, /// Use defaultModel when is a New Transaction
             set: { newValue in
@@ -45,14 +45,14 @@ struct AddModifyTransactionView: View {
     }
     
     /// Way to initialize a Binding if you want to pass a value (model) or just initialize the model with default valures.
-    init(model: Binding<TransactionModel>? = nil, selectedDate: Binding<Date>) {
+    init(model: Binding<TransactionModelFB>? = nil, selectedDate: Binding<Date>) {
         if let model = model {
             self.isNewTransaction = false
             self._model = model
         } else {
             /// In case a model is no passed by parameter, wont be use model. Will use defaultModel instead.
             self.isNewTransaction = true
-            self._model = .constant(TransactionModel())
+            self._model = .constant(TransactionModelFB())
         }
         self._selectedDate = selectedDate
     }
@@ -167,7 +167,7 @@ struct AddModifyTransactionView: View {
                 }
                 .onChange(of: modelBinding.wrappedValue.transactionType) {
                     viewModel.errorMessage = ""
-                    modelBinding.wrappedValue.category = CategoryModel() /// Clean category beacause won't be the same TransactionType (Exponse, income).
+                    modelBinding.wrappedValue.category = CategoryModelFB() /// Clean category beacause won't be the same TransactionType (Exponse, income).
                 }
                 .sheet(isPresented: $viewModel.showDatePicker) {
                     DatePickerModalView(selectedDate: $selectedDate,

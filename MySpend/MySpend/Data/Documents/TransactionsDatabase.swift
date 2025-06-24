@@ -37,7 +37,7 @@ private struct TransactionsDatabase_ORIGINAL {
      
      - Date: August 2024
      */
-    func addNewTransaction(transactionModel: TransactionModel) async throws {
+    func addNewTransaction(transactionModel: TransactionModelFB) async throws {
         
         guard let userId = currentUser?.uid else {
             throw Errors.userNotLoggedIn
@@ -105,7 +105,7 @@ private struct TransactionsDatabase_ORIGINAL {
      
      - Date: August 2024
      */
-    private func getTransactions() async throws -> [TransactionModel] {
+    private func getTransactions() async throws -> [TransactionModelFB] {
         guard let userId = currentUser?.uid else {
             throw Errors.userNotLoggedIn
         }

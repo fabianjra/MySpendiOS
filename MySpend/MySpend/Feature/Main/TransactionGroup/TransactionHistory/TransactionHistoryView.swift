@@ -11,11 +11,11 @@ struct TransactionHistoryView: View {
     
     @StateObject var viewModel = TransactionHistoryViewModel()
     
-    @Binding var transactionsLoaded: [TransactionModel]
+    @Binding var transactionsLoaded: [TransactionModelFB]
     @Binding var dateTimeInterval: DateTimeInterval
     @Binding var selectedDate: Date
     
-    @State private var selectedModel = TransactionModel()
+    @State private var selectedModel = TransactionModelFB()
     
     var body: some View {
         ContentContainer {
@@ -253,7 +253,7 @@ struct TransactionHistoryView: View {
             let result = await viewModel.deleteTransaction(selectedModel)
             
             if result.status.isSuccess {
-                selectedModel = TransactionModel() //Clean the selected transaction after deleting it.
+                selectedModel = TransactionModelFB() //Clean the selected transaction after deleting it.
             } else {
                 viewModel.errorMessage = result.message
             }

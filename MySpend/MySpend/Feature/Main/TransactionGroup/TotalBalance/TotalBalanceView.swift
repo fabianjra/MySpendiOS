@@ -10,7 +10,7 @@ import SwiftUI
 struct TotalBalanceView: View {
     
     @StateObject var viewModel = TotalBalanceViewModel()
-    let transactions: [TransactionModel]
+    let transactions: [TransactionModelFB]
     
     var showDivider: Bool = true
     var showTotalBalance: Bool = true

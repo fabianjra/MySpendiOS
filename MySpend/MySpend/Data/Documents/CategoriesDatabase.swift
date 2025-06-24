@@ -19,8 +19,8 @@ struct CategoriesDatabase: UserValidationProtocol {
      
      - Date: August 2024
      */
-    func getCategory(forId documentID: String) async throws -> CategoryModel? {
-        if var category = try await Repository().getDocument(forId: documentID, forModel: CategoryModel.self, forSubCollection: .categories) {
+    func getCategory(forId documentID: String) async throws -> CategoryModelFB? {
+        if var category = try await Repository().getDocument(forId: documentID, forModel: CategoryModelFB.self, forSubCollection: .categories) {
             category.id = documentID
             category.id.isEmptyOrWhitespace ? category.id = documentID : ()
             
@@ -37,7 +37,7 @@ struct CategoriesDatabase: UserValidationProtocol {
      
      - Date: August 2024
      */
-    private func getCategories() async throws -> [CategoryModel] {
+    private func getCategories() async throws -> [CategoryModelFB] {
         
         let userId = try validateCurrentUser(currentUser).uid
         let subCollectionRef = UtilsFB.userSubCollectionRef(.categories, for: userId)
@@ -47,12 +47,12 @@ struct CategoriesDatabase: UserValidationProtocol {
             return []
         }
         
-        var categoryArray: [CategoryModel] = []
+        var categoryArray: [CategoryModelFB] = []
         
         for document in subCollectionQuery.documents {
             let data = document.data()
             
-            var decodedDocument = try UtilsFB.decodeModelFB(data: data, forModel: CategoryModel.self)
+            var decodedDocument = try UtilsFB.decodeModelFB(data: data, forModel: CategoryModelFB.self)
             decodedDocument.id = document.documentID
             
             categoryArray.append(decodedDocument)
@@ -73,14 +73,14 @@ struct CategoriesDatabase: UserValidationProtocol {
 // ESTO VA PARA EL VIEWMODEL DE CATEGOREIS PORQUE AHI ESTA EL LISTENER:
 private struct CategoryCollection_PRUEBAS {
 
-    var categories: [CategoryModel]
+    var categories: [CategoryModelFB]
 
     // Inicializador que recibe un `QuerySnapshot` y mapea los documentos a modelos de categoría
     init(snapshot: QuerySnapshot) throws {
         self.categories = snapshot.documents.compactMap { document in
 
             // Intentar hacer el decoding de cada documento a CategoryModel
-            let category = try? document.data(as: CategoryModel.self)
+            let category = try? document.data(as: CategoryModelFB.self)
 
             // Si el decoding fue exitoso, le asignamos el ID del documento
             if var category = category {
@@ -105,8 +105,8 @@ private struct CategoriesDatabase_PRUEBAS {
         print("//////////////")
         print("")
         
-        print(CategoryModel.CodingKeys.categoryType.rawValue) //obtiene el valor de string de codingKey
-        print(CategoryModel.CodingKeys.categoryType.stringValue) //obtiene el valor de string de codingKe
+        print(CategoryModelFB.CodingKeys.categoryType.rawValue) //obtiene el valor de string de codingKey
+        print(CategoryModelFB.CodingKeys.categoryType.stringValue) //obtiene el valor de string de codingKe
         
         print("")
         print("//////////////")
@@ -169,7 +169,7 @@ private struct CategoriesDatabase_PRUEBAS {
         
         
         
-        let newCategoryModel = CategoryModel(id: UUID().uuidString, icon: "new", name: "new", categoryType: .expense)
+        let newCategoryModel = CategoryModelFB(id: UUID().uuidString, icon: "new", name: "new", categoryType: .expense)
         let newCategoryModelData = try UtilsFB.encodeModelFB(newCategoryModel)
         
         
@@ -188,7 +188,7 @@ private struct CategoriesDatabase_PRUEBAS {
         // ******************************************************************
         // NEW DATA WITH MERGE:
         
-        let newCategoryModel2 = CategoryModel(id: UUID().uuidString, icon: "new 2", name: "new 2", categoryType: .expense)
+        let newCategoryModel2 = CategoryModelFB(id: UUID().uuidString, icon: "new 2", name: "new 2", categoryType: .expense)
         let newCategoryModel2Data = try UtilsFB.encodeModelFB(newCategoryModel2)
         
         // Update one field, creating the document if it does not exist.
@@ -201,7 +201,7 @@ private struct CategoriesDatabase_PRUEBAS {
         // UPADATE:
         
         //Para actualizar algunos campos de un documento sin reemplazarlo por completo, usa los métodos update() específicos para cada lenguaje:
-        try await documento.updateData([CategoryModel.CodingKeys.name.stringValue: "Updated name"])
+        try await documento.updateData([CategoryModelFB.CodingKeys.name.stringValue: "Updated name"])
         
         
         

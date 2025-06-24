@@ -15,10 +15,10 @@ class TransactionHistoryViewModel: BaseViewModel {
     @Published var showModifyTransactionModal = false
     
     @Published var isEditing = false
-    @Published var selectedTransactions = Set<TransactionModel>()
+    @Published var selectedTransactions = Set<TransactionModelFB>()
     @Published var sortTransactionsBy = UserDefaultsManager.sorTransactions
     
-    func deleteTransaction(_ model: TransactionModel) async -> ResponseModel {
+    func deleteTransaction(_ model: TransactionModelFB) async -> ResponseModel {
         var response = ResponseModel()
         
         await performWithLoaderSecondary {

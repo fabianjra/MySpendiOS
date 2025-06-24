@@ -17,7 +17,7 @@ class TotalBalanceViewModel: ObservableObject {
      Esta función filtra las transacciones por transactionType, sumando los ingresos (income) y los gastos (expense).
      Luego, calcula el balance final restando los gastos a los ingresos y formatea el balance.
      */
-    func calculateTotalBalance(_ transactions: [TransactionModel]) {
+    func calculateTotalBalance(_ transactions: [TransactionModelFB]) {
         
         let totalIncome = transactions
             .filter { $0.transactionType == .income }

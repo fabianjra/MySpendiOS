@@ -23,8 +23,8 @@ struct AddModifyCategoryView: View {
     
     @Environment(\.dismiss) var dismiss
     
-    @Binding var model: CategoryModel
-    @State private var defaultModel = CategoryModel()
+    @Binding var model: CategoryModelFB
+    @State private var defaultModel = CategoryModelFB()
     
     @Binding var categoryType: TransactionType
     
@@ -33,11 +33,11 @@ struct AddModifyCategoryView: View {
     @Binding var newCategoryID: String
     
     @StateObject var viewModel = AddModifyCategoryViewModel()
-    @FocusState private var focusedField: CategoryModel.Field?
+    @FocusState private var focusedField: CategoryModelFB.Field?
     
     private let isNewCategory: Bool
     
-    var modelBinding: Binding<CategoryModel> {
+    var modelBinding: Binding<CategoryModelFB> {
         Binding(
             get: { isNewCategory ? defaultModel : model }, /// Use defaultModel when is a New Category
             set: { newValue in
@@ -51,7 +51,7 @@ struct AddModifyCategoryView: View {
     }
     
     /// Way to initialize a Binding if you want to pass a value (model) or just initialize the model with default valures.
-    init(model: Binding<CategoryModel>? = nil,
+    init(model: Binding<CategoryModelFB>? = nil,
          categoryType: Binding<TransactionType>,
          
          isNewCategoryAdded: Binding<Bool>? = nil,
@@ -63,7 +63,7 @@ struct AddModifyCategoryView: View {
         } else {
             /// In case a model is no passed by parameter, wont be use model. Will use defaultModel instead.
             self.isNewCategory = true
-            self._model = .constant(CategoryModel())
+            self._model = .constant(CategoryModelFB())
         }
         
         self._categoryType = categoryType

@@ -9,12 +9,12 @@ import FirebaseFirestore
 
 class CategoryViewModel: BaseViewModel {
     
-    @Published var categories: [CategoryModel]
+    @Published var categories: [CategoryModelFB]
     @Published var categoryType: TransactionType = .expense
     
     // MARK: EDIT
     @Published var isEditing: Bool = false
-    @Published var selectedCategories = Set<CategoryModel>()
+    @Published var selectedCategories = Set<CategoryModelFB>()
     
     // MARK: SORT
     @Published var sortCategoriesBy = UserDefaultsManager.sorCategories
@@ -27,7 +27,7 @@ class CategoryViewModel: BaseViewModel {
     @Published var showAlertDeleteMultiple = false
     
     //init for Canvas Previews.
-    init(categories: [CategoryModel] = []) {
+    init(categories: [CategoryModelFB] = []) {
         self.categories = categories
     }
     
@@ -74,7 +74,7 @@ class CategoryViewModel: BaseViewModel {
                             let data = change.document.data()
                             
                             do {
-                                var decodedDocument = try UtilsFB.decodeModelFB(data: data, forModel: CategoryModel.self)
+                                var decodedDocument = try UtilsFB.decodeModelFB(data: data, forModel: CategoryModelFB.self)
                                 
                                 // If the new category is already with same ID in the categories array, don't add it again.
                                 if categories.contains(where: { $0.id == change.document.documentID }) {
@@ -92,7 +92,7 @@ class CategoryViewModel: BaseViewModel {
                             if let index = categories.firstIndex(where: { $0.id == change.document.documentID }) {
                                 let data = change.document.data()
                                 
-                                if var decodedDocument = try? UtilsFB.decodeModelFB(data: data, forModel: CategoryModel.self) {
+                                if var decodedDocument = try? UtilsFB.decodeModelFB(data: data, forModel: CategoryModelFB.self) {
                                     decodedDocument.id = change.document.documentID
                                     categories[index] = decodedDocument
                                 }
@@ -110,7 +110,7 @@ class CategoryViewModel: BaseViewModel {
         }
     }
     
-    func deleteCategory(_ model: CategoryModel) async -> ResponseModel {
+    func deleteCategory(_ model: CategoryModelFB) async -> ResponseModel {
         var response = ResponseModel()
         
         await performWithLoaderSecondary {

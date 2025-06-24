@@ -2,36 +2,55 @@
 //  TransactionModel.swift
 //  MySpend
 //
-//  Created by Fabian Rodriguez on 25/7/24.
+//  Created by Fabian Rodriguez on 23/6/25.
 //
 
 import Foundation
 
-struct TransactionModel: Identifiable, Codable, Equatable, Hashable {
-    var id = ""
-    var amount: Decimal = .zero
-    var dateTransaction: Date = .init()
-    var category: CategoryModel = CategoryModel()
-    var notes: String = ""
-    var transactionType: TransactionType = .expense
-    var dateCreated: Date = .init()
-    var datemodified: Date = .init()
-    var userId: String = ""
+struct TransactionModel {
+    let id: UUID
     
-    enum CodingKeys: String, CodingKey {
-        case id
-        case amount
-        case dateTransaction
-        case category
-        case notes
-        case transactionType
-        case dateCreated
-        case datemodified
-        case userId
+    // MARK: Attributes
+    let amount: Decimal
+    let dateCreated: Date
+    let dateModified: Date
+    let dateTransaction: Date
+    let isActive: Bool
+    let notes: String
+    let userId: String
+    
+    // MARK: Relationships
+    let category: CategoryModel
+    
+    init() {
+        id = UUID()
+        amount = .zero
+        dateCreated = .init()
+        dateModified = .init()
+        dateTransaction = .init()
+        isActive = false
+        notes = ""
+        userId = ""
+        category = CategoryModel()
     }
     
-    enum Field: Hashable, CaseIterable {
-        case amount
-        case notes
+    init(transaction: Transaction) {
+        id = transaction.id ?? UUID()
+        amount = transaction.amount?.decimalValue ?? .zero
+        dateCreated = transaction.dateCreated ?? .init()
+        dateModified = transaction.dateModified ?? .init()
+        dateTransaction = transaction.dateTransaction ?? .init()
+        isActive = transaction.isActive
+        notes = transaction.notes ?? ""
+        userId = transaction.userId ?? ""
+        category = TransactionModel.convertCategoryToCategoryModel(categoryCoreData: transaction.category)
+    }
+    
+    private static func convertCategoryToCategoryModel(categoryCoreData: Category?) -> CategoryModel {
+        if let categoryCoreData = categoryCoreData {
+            return CategoryModel(category: categoryCoreData)
+        } else {
+            return CategoryModel()
+        }
     }
 }

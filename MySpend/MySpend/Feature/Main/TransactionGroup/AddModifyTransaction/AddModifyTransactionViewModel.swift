@@ -18,7 +18,7 @@ class AddModifyTransactionViewModel: BaseViewModel {
     
     let notesId = "notes"
     
-    func onAppear(_ model: TransactionModel, selectedDate: Date, isNewTransaction: Bool) {
+    func onAppear(_ model: TransactionModelFB, selectedDate: Date, isNewTransaction: Bool) {
         if isNewTransaction {
             dateString = selectedDate.toStringShortLocale
         } else {
@@ -27,7 +27,7 @@ class AddModifyTransactionViewModel: BaseViewModel {
         }
     }
     
-    func addNewTransaction(_ model: TransactionModel, selectedDate: Date) async -> ResponseModel {
+    func addNewTransaction(_ model: TransactionModelFB, selectedDate: Date) async -> ResponseModel {
         if model.category.name.isEmptyOrWhitespace {
             return ResponseModel(.error, Errors.emptySpaces.localizedDescription)
         }
@@ -69,7 +69,7 @@ class AddModifyTransactionViewModel: BaseViewModel {
         return response
     }
     
-    func modifyTransaction(_ model: TransactionModel, selectedDate: Date) async -> ResponseModel {
+    func modifyTransaction(_ model: TransactionModelFB, selectedDate: Date) async -> ResponseModel {
         if model.category.name.isEmptyOrWhitespace {
             return ResponseModel(.error, Errors.emptySpaces.localizedDescription)
         }
@@ -99,7 +99,7 @@ class AddModifyTransactionViewModel: BaseViewModel {
         return response
     }
     
-    func deleteTransaction(_ model: TransactionModel) async -> ResponseModel {
+    func deleteTransaction(_ model: TransactionModelFB) async -> ResponseModel {
         var response = ResponseModel()
         
         await performWithLoaderSecondary {

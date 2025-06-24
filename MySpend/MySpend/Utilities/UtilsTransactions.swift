@@ -13,11 +13,11 @@ struct UtilsTransactions {
      Filtra las transacciones por intervalos de tiempo seleccionados y las ordena en forma descendente en base a la fecha de la transaccion
      */
     static func filteredTransactions(_ selectedDate: Date,
-                                     transactions: [TransactionModel],
+                                     transactions: [TransactionModelFB],
                                      for interval: DateTimeInterval,
-                                     sortTransactions: SortTransactions? = nil) -> [TransactionModel] {
+                                     sortTransactions: SortTransactions? = nil) -> [TransactionModelFB] {
         
-        var sortedTransactions: [TransactionModel] = transactions
+        var sortedTransactions: [TransactionModelFB] = transactions
         
         if let sortTransactions = sortTransactions {
             switch sortTransactions {

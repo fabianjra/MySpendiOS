@@ -10,7 +10,7 @@ import SwiftUI
 struct CategoryView: View {
     
     @StateObject var viewModel = CategoryViewModel()
-    @State private var selectedModel = CategoryModel()
+    @State private var selectedModel = CategoryModelFB()
     
     //TODO: MOVER A VISTAS POR SEPARADO PARA PODER AGREGAR EL LOADER
     var body: some View {

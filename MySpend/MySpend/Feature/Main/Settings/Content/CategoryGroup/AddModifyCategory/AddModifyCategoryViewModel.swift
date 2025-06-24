@@ -12,7 +12,7 @@ class AddModifyCategoryViewModel: BaseViewModel {
     @Published var showIconsModal = false
     @Published var showAlert = false
     
-    func addNewCategory(_ model: CategoryModel, categoryType: TransactionType) async -> ResponseModel {
+    func addNewCategory(_ model: CategoryModelFB, categoryType: TransactionType) async -> ResponseModel {
         if model.name.isEmptyOrWhitespace {
             return ResponseModel(.error, Errors.emptySpaces.localizedDescription)
         }
@@ -40,7 +40,7 @@ class AddModifyCategoryViewModel: BaseViewModel {
         return response
     }
     
-    func modifyCategory(_ model: CategoryModel, categoryType: TransactionType) async -> ResponseModel {
+    func modifyCategory(_ model: CategoryModelFB, categoryType: TransactionType) async -> ResponseModel {
         if model.name.isEmptyOrWhitespace {
             return ResponseModel(.error, Errors.emptySpaces.localizedDescription)
         }
@@ -65,7 +65,7 @@ class AddModifyCategoryViewModel: BaseViewModel {
         return response
     }
     
-    func deleteCategory(_ model: CategoryModel) async -> ResponseModel {
+    func deleteCategory(_ model: CategoryModelFB) async -> ResponseModel {
         var response = ResponseModel()
         
         await performWithLoaderSecondary {

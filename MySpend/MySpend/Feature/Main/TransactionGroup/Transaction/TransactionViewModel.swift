@@ -13,11 +13,11 @@ class TransactionViewModel: BaseViewModel {
     @Published var dateTimeInterval = UserDefaultsManager.dateTimeInterval
     
     // MARK: TRANSACTIONS
-    @Published var transactions: [TransactionModel]
+    @Published var transactions: [TransactionModelFB]
     @Published var groupedTransactions: UtilsCurrency.groupedTransactions = []
     
     //init for Canvas Previews.
-    init(transactions: [TransactionModel] = []) {
+    init(transactions: [TransactionModelFB] = []) {
         self.transactions = transactions
     }
     
@@ -82,7 +82,7 @@ class TransactionViewModel: BaseViewModel {
                             let data = change.document.data()
                             
                             do {
-                                var decodedDocument = try UtilsFB.decodeModelFB(data: data, forModel: TransactionModel.self)
+                                var decodedDocument = try UtilsFB.decodeModelFB(data: data, forModel: TransactionModelFB.self)
                                 
                                 // If the new transaction is already with same ID in the transaction array, don't add it again.
                                 if transactions.contains(where: { $0.id == change.document.documentID }) {
@@ -100,7 +100,7 @@ class TransactionViewModel: BaseViewModel {
                             if let index = transactions.firstIndex(where: { $0.id == change.document.documentID }) {
                                 let data = change.document.data()
                                 
-                                if var decodedDocument = try? UtilsFB.decodeModelFB(data: data, forModel: TransactionModel.self) {
+                                if var decodedDocument = try? UtilsFB.decodeModelFB(data: data, forModel: TransactionModelFB.self) {
                                     decodedDocument.id = change.document.documentID
                                     transactions[index] = decodedDocument
                                 } else {
