@@ -22,8 +22,18 @@ struct PersistenceController {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
         for _ in 0..<10 {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
+            let newItem = Transaction(context: viewContext)
+            
+            // PRUEBA: Asignacion general de valores:
+            newItem.dateCreated = Date()
+            newItem.amount = 200.12
+            newItem.id = UUID()
+            newItem.isActive = false
+            newItem.notes = "Prueba"
+            newItem.userId = UUID().uuidString
+            //newItem.account = Account.init(context: viewContext)
+            newItem.dateModified = Date()
+            newItem.dateTransaction = Date()
         }
         do {
             try viewContext.save()
