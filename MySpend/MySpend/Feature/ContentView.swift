@@ -12,11 +12,19 @@ struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
 
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Transaction.dateCreated, ascending: true)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \Category.dateCreated, ascending: true)],
         animation: .default)
-    private var items: FetchedResults<Transaction>
+    private var items: FetchedResults<Category>
 
     var body: some View {
+        
+        Button("Test catch error") {
+            Task {
+                let modelo = CategoryModel()
+                await CategoryManager().saveNewCategory(modelo)
+            }
+        }
+        
         NavigationView {
             List {
                 ForEach(items) { item in
@@ -44,7 +52,7 @@ struct ContentView: View {
 
     private func addItem() {
         withAnimation {
-            let newItem = Transaction(context: viewContext)
+            let newItem = Category(context: viewContext)
             newItem.dateCreated = Date()
 
             do {

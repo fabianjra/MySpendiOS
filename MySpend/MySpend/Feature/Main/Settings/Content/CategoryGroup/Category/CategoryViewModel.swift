@@ -59,7 +59,7 @@ class CategoryViewModel: BaseViewModel {
                 
                 if let error = error {
                     errorMessage = error.localizedDescription
-                    Logs.WriteCatchExeption(error: error)
+                    Logs.CatchException(error)
                     return
                 }
                 
@@ -79,13 +79,13 @@ class CategoryViewModel: BaseViewModel {
                                 // If the new category is already with same ID in the categories array, don't add it again.
                                 if categories.contains(where: { $0.id == change.document.documentID }) {
                                     let error = Logs.createError(domain: .listenerCategories, error: .addDuplicatedDocument(change.document.documentID))
-                                    Logs.WriteCatchExeption(Errors.addDuplicatedDocument(change.document.documentID).errorDescription, error: error)
+                                    Logs.CatchException(error)
                                 } else {
                                     decodedDocument.id = change.document.documentID
                                     categories.append(decodedDocument)
                                 }
                             } catch {
-                                Logs.WriteCatchExeption(Errors.decodeDocument(change.document.documentID).errorDescription, error: error)
+                                Logs.CatchException(error)
                             }
                             
                         case .modified:
@@ -119,7 +119,7 @@ class CategoryViewModel: BaseViewModel {
                 
                 response = ResponseModel(.successful)
             } catch {
-                Logs.WriteCatchExeption(error: error)
+                Logs.CatchException(error)
                 response = ResponseModel(.error, error.localizedDescription)
             }
         }
@@ -139,7 +139,7 @@ class CategoryViewModel: BaseViewModel {
                 self.selectedCategories.removeAll()
                 response = ResponseModel(.successful)
             } catch {
-                Logs.WriteCatchExeption(error: error)
+                Logs.CatchException(error)
                 response = ResponseModel(.error, error.localizedDescription)
             }
         }

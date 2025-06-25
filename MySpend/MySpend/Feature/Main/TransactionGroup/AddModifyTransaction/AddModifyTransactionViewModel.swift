@@ -61,7 +61,7 @@ class AddModifyTransactionViewModel: BaseViewModel {
                 
                 response = ResponseModel(.successful, document: document)
             } catch {
-                Logs.WriteCatchExeption(error: error)
+                Logs.CatchException(error)
                 response = ResponseModel(.error, error.localizedDescription)
             }
         }
@@ -91,7 +91,7 @@ class AddModifyTransactionViewModel: BaseViewModel {
                 
                 response = ResponseModel(.successful)
             } catch {
-                Logs.WriteCatchExeption(error: error)
+                Logs.CatchException(error)
                 response = ResponseModel(.error, error.localizedDescription)
             }
         }
@@ -108,7 +108,7 @@ class AddModifyTransactionViewModel: BaseViewModel {
                 
                 response = ResponseModel(.successful)
             } catch {
-                Logs.WriteCatchExeption(error: error)
+                Logs.CatchException(error)
                 response = ResponseModel(.error, error.localizedDescription)
             }
         }

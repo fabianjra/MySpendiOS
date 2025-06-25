@@ -21,7 +21,7 @@ class LoginViewModel: BaseViewModel {
             do {
                 try await AuthFB().singIn(self.login.email, password: self.login.password)
             } catch {
-                Logs.WriteCatchExeption(error: error)
+                Logs.CatchException(error)
                 self.errorMessage = error.localizedDescription
             }
         }

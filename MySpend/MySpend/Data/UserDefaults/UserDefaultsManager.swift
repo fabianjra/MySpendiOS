@@ -99,7 +99,7 @@ private struct UserDefaultsDataStore<T: Codable> {
             do {
                 return try JSONDecoder().decode(T.self, from: data)
             } catch {
-                Logs.WriteCatchExeption("Error decoding (get) data for key: \(key.rawValue)", error: error)
+                Logs.CatchException(error)
                 return nil
             }
         }
@@ -111,7 +111,7 @@ private struct UserDefaultsDataStore<T: Codable> {
                 let data = try JSONEncoder().encode(newValue)
                 UserDefaults.standard.set(data, forKey: key.rawValue)
             } catch {
-                Logs.WriteCatchExeption("Error encoding (set) data for key: \(key.rawValue)", error: error)
+                Logs.CatchException(error)
             }
         }
     }

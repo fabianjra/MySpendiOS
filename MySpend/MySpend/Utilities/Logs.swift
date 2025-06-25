@@ -7,12 +7,16 @@
 
 import Foundation
 
+enum ErrorType {
+    case none
+    case CoreData
+}
+
 enum Logs {
     
     /**
-     Shows a Catch error message on console, and an optional string message.
+     Shows a Catch error message on console.
      
-     **Notes:**
      - This function takes the file name where the error is presented, the function name who call it and the line number where the error is presented.
      - By default **file**, **function** and **line** are setted internally, so you can ignore these parameters.
      
@@ -25,29 +29,79 @@ enum Logs {
             completion(article)
         }
         }catch{
-            Logs.WriteCatchExeption(err: error)
+            Logs.CatchException(error)
      }
      ```
      
      - Parameters:
-        - message:Optional string message to add to the print.
         - error: The catch error message from the try.
+        - type: Error type. if null, only write single line.
      
      - Returns: Void
-     
      - Warning: N/A
-     
      - Throws: N/A
-     
      - Authors: Fabian Rodriguez
-     
-     - Version: 1.0
-     
-     - Date: February 2023
+     - Version: 1.1
+     - Date: June 2025
      */
-    static func WriteCatchExeption(_ message: String? = nil, file: String = #file, function: String = #function, line: Int = #line, error: Error) {
-        print("MYSPEND Handled catch error: \(message ?? ""), called by: \(file.components(separatedBy: "/").last ?? file) - \(function), at line: \(line). Description: ", error)
+    static func CatchException(_ error: Error,
+                               type: ErrorType = .none,
+                               file: String = #file,
+                               function: String = #function,
+                               line: Int = #line) {
+        
+        let logId = UUID().uuidString
+        print("START LOG: \(logId) **************************************** START LOG")
+        print("Handled catch in: \(file.components(separatedBy: "/").last ?? file), function: \(function), line: \(line), description: \(error.localizedDescription)")
+        
+        switch type {
+        case .none:
+            break
+            
+        case .CoreData:
+            CoreDataCatchException(error)
+        }
+        
+        print("END LOG: \(logId) **************************************** END LOG")
     }
+    
+    private static func CoreDataCatchException(_ error: Error) {
+        
+        if let nsError = error as NSError? {
+            
+            // NSDetailedErrors
+            if let coreDataInfo = nsError.userInfo["NSDetailedErrors"] as? NSArray {
+                for detail in coreDataInfo {
+                    if let error = detail as? NSError {
+                        print(" • \(error.localizedDescription)")
+                    }
+                }
+            } else {
+                for (key, value) in nsError.userInfo {
+                    print("\(key): \(value)")
+                }
+            }
+            
+            // Otros:
+            /*
+             NSLocalizedDescriptionKey
+             Descripción corta del error (siempre deberías intentar mostrar esta al usuario).
+             
+             NSLocalizedFailureReasonErrorKey
+             Motivo específico del error, si existe.
+             
+             NSLocalizedRecoverySuggestionErrorKey
+             Sugerencia para recuperar del error.
+             
+             NSDetailedErrors
+             Solo la usa Core Data para validaciones múltiples.
+             
+             NSValidationErrorKey, NSValidationErrorObject
+             Solo para validación en Core Data.
+             */
+        }
+    }
+
     
     /**
      Shows a message on console.
@@ -105,7 +159,6 @@ enum Logs {
      */
     static func createError(domain: ErrorDomain, error: Errors, userInfo: [String: Any]? = nil) -> NSError {
         var fullUserInfo = userInfo ?? [:]
-        
         fullUserInfo[NSLocalizedDescriptionKey] = error.errorDescription
         
         return NSError(domain: domain.rawValue, code: error.code, userInfo: fullUserInfo)

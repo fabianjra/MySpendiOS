@@ -21,19 +21,19 @@ struct PersistenceController {
     static let preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
-        for _ in 0..<10 {
-            let newItem = Transaction(context: viewContext)
-            
-            // PRUEBA: Asignacion general de valores:
-            newItem.dateCreated = Date()
-            newItem.amount = 200.12
+        for _ in 0..<2 {
+            let newItem = Category(context: viewContext)
             newItem.id = UUID()
+            
+            newItem.dateCreated = .now
+            newItem.dateLastUsed = .now
+            newItem.dateModified = .now
+            newItem.icon = "star"
             newItem.isActive = false
-            newItem.notes = "Prueba"
+            newItem.name = "Prueba"
+            newItem.type = "expense"
+            newItem.usageCount = 0
             newItem.userId = UUID().uuidString
-            //newItem.account = Account.init(context: viewContext)
-            newItem.dateModified = Date()
-            newItem.dateTransaction = Date()
         }
         do {
             try viewContext.save()
@@ -53,7 +53,7 @@ struct PersistenceController {
     // inMemory: true: Solo usa memoria temporal (ideal para tests o previews).
     init(inMemory: Bool = false) {
         
-        container = NSPersistentContainer(name: CDConstants.containerName)
+        container = NSPersistentContainer(name: CoreDataConstants.containerName)
         
         if inMemory {
             container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")

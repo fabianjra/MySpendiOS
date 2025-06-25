@@ -60,7 +60,7 @@ struct SettingsView: View {
                                 try AuthFB().singOut()
                                 Router.shared.path.removeLast(Router.shared.path.count) //In case when come from register.
                             } catch {
-                                Logs.WriteCatchExeption("Error signing out", error: error)
+                                Logs.CatchException(error)
                             }
                         }
                         

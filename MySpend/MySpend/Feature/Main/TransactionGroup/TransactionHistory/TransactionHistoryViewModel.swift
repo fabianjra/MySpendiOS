@@ -27,7 +27,7 @@ class TransactionHistoryViewModel: BaseViewModel {
                 
                 response = ResponseModel(.successful)
             } catch {
-                Logs.WriteCatchExeption(error: error)
+                Logs.CatchException(error)
                 response = ResponseModel(.error, error.localizedDescription)
             }
         }
@@ -47,7 +47,7 @@ class TransactionHistoryViewModel: BaseViewModel {
                 self.selectedTransactions.removeAll()
                 response = ResponseModel(.successful)
             } catch {
-                Logs.WriteCatchExeption(error: error)
+                Logs.CatchException(error)
                 response = ResponseModel(.error, error.localizedDescription)
             }
         }

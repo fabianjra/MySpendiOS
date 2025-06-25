@@ -8,6 +8,8 @@
 import Foundation
 
 public enum Errors: Error {
+    
+    // MARK: UI
     case successful
     case empty
     case generic
@@ -17,6 +19,12 @@ public enum Errors: Error {
     case newPasswordIsDifferent
     case passwordIsShort
     
+    // MARK: CORE DATE
+    case notSavedAccount(String)
+    case notSavedTransaction(String)
+    case notSavedCategory(String)
+        
+    // MARK: FIREBASE
     case userNotLoggedIn
     case userNotExists
     case userIsValidated
@@ -35,6 +43,8 @@ public enum Errors: Error {
 extension Errors: LocalizedError {
     public var errorDescription: String? {
         switch self {
+            
+        // MARK: UI
         case .successful: return NSLocalizedString("Successful", comment: "")
         case .empty: return NSLocalizedString("", comment: "")
         case .generic: return NSLocalizedString("Something wrong happened, try again.", comment: "")
@@ -44,6 +54,14 @@ extension Errors: LocalizedError {
         case .newPasswordIsDifferent: return NSLocalizedString("New password and confirm password are different.", comment: "")
         case .passwordIsShort: return NSLocalizedString("The password should be larger than \(ConstantViews.passwordMinimumLength) characters.", 
                                                         comment: "")
+            
+        // MARK: CORE DATE
+        case .notSavedAccount(let itemId): return NSLocalizedString("Error while saving account for ID: \(itemId)", comment: "")
+        case .notSavedTransaction(let itemId): return NSLocalizedString("Error while saving transaction for ID: \(itemId)", comment: "")
+        case .notSavedCategory(let itemId): return NSLocalizedString("Error while saving category for ID: \(itemId)", comment: "")
+
+                
+        // MARK: FIREBASE
         case .userNotLoggedIn: return NSLocalizedString("User is not logged in.", comment: "")
         case .userNotExists: return NSLocalizedString("User is not exists.", comment: "")
         case .userIsValidated: return NSLocalizedString("User is already validated.", comment: "")
@@ -65,6 +83,8 @@ extension Errors: LocalizedError {
 extension Errors {
     public var code: Int {
         switch self {
+            
+        // MARK: UI
         case .successful : return 0
         case .empty : return 1
         case .generic: return 2
@@ -74,19 +94,25 @@ extension Errors {
         case .newPasswordIsDifferent: return 6
         case .passwordIsShort: return 7
             
-        case .userNotLoggedIn: return 8
-        case .userNotExists: return 9
-        case .userIsValidated: return 10
-        case .userCreatedNoName: return 11
-        case .userCreatedNoSendEmail: return 12
-        case .emailSent: return 13
+        // MARK: CORE DATE
+        case .notSavedAccount: return 100
+        case .notSavedTransaction: return 101
+        case .notSavedCategory: return 102
             
-        case .notGetDataFromDocument: return 14
-        case .notGetDataFromCollection: return 15
-        case .notGetDataFromCollectionChanges: return 16
+        // MARK: FIREBASE
+        case .userNotLoggedIn: return 200
+        case .userNotExists: return 201
+        case .userIsValidated: return 202
+        case .userCreatedNoName: return 203
+        case .userCreatedNoSendEmail: return 204
+        case .emailSent: return 205
             
-        case .decodeDocument: return 17
-        case .addDuplicatedDocument: return 18
+        case .notGetDataFromDocument: return 206
+        case .notGetDataFromCollection: return 207
+        case .notGetDataFromCollectionChanges: return 208
+            
+        case .decodeDocument: return 209
+        case .addDuplicatedDocument: return 210
         }
     }
 }

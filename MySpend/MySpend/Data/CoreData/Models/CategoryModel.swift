@@ -14,12 +14,12 @@ struct CategoryModel: Identifiable {
     let dateCreated: Date
     let dateLastUsed: Date
     let dateModified: Date
-    let icon: String // Emoji
+    var icon: String // Emoji
     let isActive: Bool
-    let name: String
-    let type: TransactionType
+    var name: String
+    var type: TransactionType
     let usageCount: Int
-    let userId: String
+    var userId: String
     
     init() {
         id = UUID()
@@ -34,6 +34,16 @@ struct CategoryModel: Identifiable {
         userId = ""
     }
     
+    // When a new category is created
+    init(icon: String, name: String, type: TransactionType, userId: String = "") {
+        self.init()
+        self.icon = icon
+        self.name = name
+        self.type = type
+        self.userId = userId
+    }
+    
+    // When a category is going to load from Core Data and need to map to Category Model
     init(category: Category) {
         id = category.id ?? UUID()
         dateCreated = category.dateCreated ?? .init()

@@ -55,7 +55,7 @@ class TransactionViewModel: BaseViewModel {
                 
                 if let error = error {
                     errorMessage = error.localizedDescription
-                    Logs.WriteCatchExeption(error: error)
+                    Logs.CatchException(error)
                     return
                 }
                 
@@ -87,13 +87,13 @@ class TransactionViewModel: BaseViewModel {
                                 // If the new transaction is already with same ID in the transaction array, don't add it again.
                                 if transactions.contains(where: { $0.id == change.document.documentID }) {
                                     let error = Logs.createError(domain: .listenerTransactions, error: .addDuplicatedDocument(change.document.documentID))
-                                    Logs.WriteCatchExeption(Errors.addDuplicatedDocument(change.document.documentID).errorDescription, error: error)
+                                    Logs.CatchException(error)
                                 } else {
                                     decodedDocument.id = change.document.documentID
                                     transactions.append(decodedDocument)
                                 }
                             } catch {
-                                Logs.WriteCatchExeption(Errors.decodeDocument(change.document.documentID).errorDescription, error: error)
+                                Logs.CatchException(error)
                             }
                             
                         case .modified:

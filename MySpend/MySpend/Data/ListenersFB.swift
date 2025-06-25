@@ -62,7 +62,7 @@ public struct ListenersFB {
         let firestoreListener = document.addSnapshotListener { documentSnapshot, error in
             
             if let error = error {
-                Logs.WriteCatchExeption(error: error)
+                Logs.CatchException(error)
                 throwableError = error
                 listener(nil)
                 return
@@ -70,7 +70,7 @@ public struct ListenersFB {
             
             guard let documentSnapshot = documentSnapshot, let data = documentSnapshot.data() else {
                 let error = Logs.createError(domain: .listenerDocumentFB, error: .notGetDataFromDocument)
-                Logs.WriteCatchExeption(error: error)
+                Logs.CatchException(error)
                 throwableError = error
                 listener(nil)
                 return
@@ -81,7 +81,7 @@ public struct ListenersFB {
                 
                 listener(decodedDocument)
             } catch {
-                Logs.WriteCatchExeption(error: error)
+                Logs.CatchException(error)
                 throwableError = error
                 listener(nil)
             }
@@ -152,14 +152,14 @@ public struct ListenersFB {
         let firestoreListener = collection.addSnapshotListener { querySnapshot, error in
             
             if let error = error {
-                Logs.WriteCatchExeption(error: error)
+                Logs.CatchException(error)
                 listener([], error)
                 return
             }
             
             guard let querySnapshot = querySnapshot else {
                 let error = Logs.createError(domain: .listenerCollectionFB, error: .notGetDataFromCollection)
-                Logs.WriteCatchExeption(error: error)
+                Logs.CatchException(error)
                 listener([], error)
                 return
             }
@@ -220,14 +220,14 @@ public struct ListenersFB {
         let firestoreListener = collection.addSnapshotListener { querySnapshot, error in
             
             if let error = error {
-                Logs.WriteCatchExeption(error: error)
+                Logs.CatchException(error)
                 listener([], error)
                 return
             }
             
             guard let querySnapshot = querySnapshot else {
                 let error = Logs.createError(domain: .listenerCollectionChangesFB, error: .notGetDataFromCollectionChanges)
-                Logs.WriteCatchExeption(error: error)
+                Logs.CatchException(error)
                 listener([], error)
                 return
             }
