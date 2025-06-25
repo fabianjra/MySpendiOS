@@ -66,10 +66,31 @@ Se agrega una carpeta de outputs folder por si Crashlytics necesita guardar arch
 
 1. Could not get GOOGLE_APP_ID in Google Services file from build environment
 
-- Respuesta para error 1:
+- R:
 If you use Xcode 15 (beta as of 2023), you might have updated your project with ENABLE_USER_SCRIPT_SANDBOXING.
 The default is YES, and this will cause the issue with Crashlytics during archive.
 Go to Build Settings > User Script Sandboxing > Set to No.
 
 Esto es un parche, aunque se deberian crear variables de entorno y por ambiente separados.
 More info: https://stackoverflow.com/questions/57006663/could-not-get-google-app-id-in-google-services-file-from-build-environment
+
+2. DEBUG_INFORMATION_FORMAT should be set to dwarf-with-dsym for all configurations
+
+- R: Los settings de compilación deberían estar configurados para generar archivos dSYM usando el formato dwarf-with-dsym.
+
+2.1 Unable to process MySpend.app.dSYM
+
+- R: Crashlytics no encontró el archivo .dSYM donde lo esperaba, entonces no puede subir los símbolos necesarios.
+
+- Solución para 2 y 2.1:
+
+```
+Ve a tu target principal → Build Settings.
+Busca: Debug Information Format
+Asegúrate que en Debug y Release esté en DWARF with dSYM File.
+
+Ubicación de la fase del script:
+
+En Build Phases, asegúrate que el script de Crashlytics esté al final de todos los scripts de build.
+Si tienes otros scripts que muevan archivos .dSYM, pon el de Firebase al final.
+```
