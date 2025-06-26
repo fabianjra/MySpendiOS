@@ -21,7 +21,7 @@ struct PersistenceController {
     static let preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
-        for _ in 0..<2 {
+        for _ in 0..<5 {
             let newItem = Category(context: viewContext)
             newItem.id = UUID()
             

@@ -30,7 +30,7 @@ class CategoryManager {
         // Se debe utilizar el contexto que ya está instanciado.
         let entity = Category(context: viewContext)
         
-        // Shared attributes:
+        // Shared attributes (Abstract class):
         entity.dateCreated = category.dateCreated
         entity.dateModified = category.dateModified
         entity.id = category.id
