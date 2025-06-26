@@ -16,13 +16,15 @@ struct ContentView: View {
         animation: .default)
     private var items: FetchedResults<Category>
 
+    private var categoryManager: CategoryManager {
+        CategoryManager(viewContext: viewContext)
+    }
+    
     var body: some View {
         
         Button("Test catch error") {
-            Task {
-                let modelo = CategoryModel()
-                await CategoryManager().saveNewCategory(modelo)
-            }
+            let modelo = CategoryModel()
+            CategoryManager(viewContext: viewContext).saveNewCategory(modelo)
         }
         
         NavigationView {
@@ -52,17 +54,7 @@ struct ContentView: View {
 
     private func addItem() {
         withAnimation {
-            let newItem = Category(context: viewContext)
-            newItem.dateCreated = Date()
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
+            categoryManager.saveNewCategory(CategoryModel())
         }
     }
 
@@ -90,5 +82,6 @@ private let itemFormatter: DateFormatter = {
 }()
 
 #Preview {
-    ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+    ContentView()
+        .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
 }

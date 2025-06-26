@@ -14,17 +14,17 @@ import CoreData
  - Authors: Fabian Rodriguez
  - Version: 1.0
  */
-class CategoryManager {
+struct CategoryManager {
     
     // El ViewContext es lo que se va a modificar.
     // Cuando se agreguen nuevos datos a Core Data, se debe obtener el ViewContext para hacerlo.
     private let viewContext: NSManagedObjectContext
     
-    init(viewContext: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+    init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
     }
     
-    func saveNewCategory(_ category: CategoryModel) async {
+    func saveNewCategory(_ category: CategoryModel) {
         // Se crea un nuevo objeto "Entity" para mapear los campos que se van a guardar en la Entidad de Note.
         // Se debe utilizar el contexto que ya está instanciado.
         let entity = Category(context: viewContext)
