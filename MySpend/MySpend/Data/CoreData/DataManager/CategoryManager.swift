@@ -6,6 +6,7 @@
 //
 
 import CoreData
+import SwiftUI
 
 /**
  `CategoryManager` is responsible for managing Core Data storage and handling all data-related operations throughout the app.
@@ -44,6 +45,43 @@ struct CategoryManager {
         
         do {
             try viewContext.save()
+        } catch {
+            Logs.CatchException(error, type: .CoreData)
+        }
+    }
+    
+    func deleteCategory(withItem item: Category) {
+        viewContext.delete(item)
+        
+        do {
+            try viewContext.save()
+        } catch {
+            Logs.CatchException(error, type: .CoreData)
+        }
+    }
+    
+    func deleteCategory(at offsets: IndexSet, from items: FetchedResults<Category>) {
+        offsets.map { items[$0] }.forEach(viewContext.delete)
+        
+        do {
+            try viewContext.save()
+        } catch {
+            Logs.CatchException(error, type: .CoreData)
+        }
+    }
+    
+    func deleteCategory(withId id: UUID) {
+        let fetchRequest: NSFetchRequest<Category> = Category.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: CoreDataConstants.Predicates.findItemById, id.uuidString)
+        fetchRequest.fetchLimit = 1
+        
+        do {
+            if let item = try viewContext.fetch(fetchRequest).first {
+                viewContext.delete(item)
+                try viewContext.save()
+            } else {
+                Logs.WriteMessage("No se pudo eliminar la categoria") //TODO: Retornar mensaje de error.
+            }
         } catch {
             Logs.CatchException(error, type: .CoreData)
         }
