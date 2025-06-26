@@ -17,7 +17,6 @@ struct TransactionModel {
     let dateTransaction: Date
     let isActive: Bool
     let notes: String
-    let userId: String
     
     // MARK: Relationships
     let category: CategoryModel
@@ -30,7 +29,6 @@ struct TransactionModel {
         dateTransaction = .init()
         isActive = false
         notes = ""
-        userId = ""
         category = CategoryModel()
     }
     
@@ -42,7 +40,6 @@ struct TransactionModel {
         dateTransaction = transaction.dateTransaction ?? .init()
         isActive = transaction.isActive
         notes = transaction.notes ?? ""
-        userId = transaction.userId ?? ""
         category = TransactionModel.convertCategoryToCategoryModel(categoryCoreData: transaction.category)
     }
     

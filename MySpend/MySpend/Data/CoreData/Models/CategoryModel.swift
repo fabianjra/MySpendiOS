@@ -19,7 +19,6 @@ struct CategoryModel: Identifiable {
     var name: String
     var type: TransactionType
     let usageCount: Int
-    var userId: String
     
     init() {
         id = UUID()
@@ -31,7 +30,6 @@ struct CategoryModel: Identifiable {
         name = ""
         type = .expense
         usageCount = .zero
-        userId = ""
     }
     
     // When a new category is created
@@ -40,7 +38,6 @@ struct CategoryModel: Identifiable {
         self.icon = icon
         self.name = name
         self.type = type
-        self.userId = userId
     }
     
     // When a category is going to load from Core Data and need to map to Category Model
@@ -54,6 +51,5 @@ struct CategoryModel: Identifiable {
         name = category.name ?? ""
         type = TransactionType(rawValue: category.type ?? "expense") ?? .expense
         usageCount = Int(category.usageCount)
-        userId = category.userId ?? ""
     }
 }

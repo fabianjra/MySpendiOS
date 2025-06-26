@@ -25,7 +25,6 @@ class CategoryManager {
     }
     
     func saveNewCategory(_ category: CategoryModel) async {
-        
         // Se crea un nuevo objeto "Entity" para mapear los campos que se van a guardar en la Entidad de Note.
         // Se debe utilizar el contexto que ya está instanciado.
         let entity = Category(context: viewContext)
@@ -35,7 +34,6 @@ class CategoryManager {
         entity.dateModified = category.dateModified
         entity.id = category.id
         entity.isActive = category.isActive
-        entity.userId = category.userId
         
         // Attributes
         entity.dateLastUsed = category.dateLastUsed

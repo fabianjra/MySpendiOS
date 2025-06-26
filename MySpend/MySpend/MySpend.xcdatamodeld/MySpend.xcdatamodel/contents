@@ -5,6 +5,7 @@
         <attribute name="name" attributeType="String"/>
         <attribute name="notes" optional="YES" attributeType="String"/>
         <attribute name="type" attributeType="String"/>
+        <attribute name="userId" optional="YES" attributeType="String"/>
         <relationship name="transaction" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Transaction" inverseName="account" inverseEntity="Transaction"/>
     </entity>
     <entity name="BaseEntity" representedClassName="BaseEntity" isAbstract="YES" syncable="YES" codeGenerationType="class">
@@ -12,7 +13,6 @@
         <attribute name="dateModified" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" attributeType="UUID" usesScalarValueType="YES"/>
         <attribute name="isActive" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
-        <attribute name="userId" optional="YES" attributeType="String"/>
     </entity>
     <entity name="Category" representedClassName="Category" parentEntity="BaseEntity" syncable="YES" codeGenerationType="class">
         <attribute name="dateLastUsed" optional="YES" attributeType="Date" usesScalarValueType="NO"/>

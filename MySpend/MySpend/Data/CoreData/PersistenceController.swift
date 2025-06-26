@@ -33,7 +33,6 @@ struct PersistenceController {
             newItem.name = "Prueba"
             newItem.type = "expense"
             newItem.usageCount = 0
-            newItem.userId = UUID().uuidString
         }
         do {
             try viewContext.save()

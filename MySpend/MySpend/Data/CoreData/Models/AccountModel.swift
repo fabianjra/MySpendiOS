@@ -19,7 +19,7 @@ struct AccountModel: Identifiable {
     let name: String
     let notes: String
     let type: String // Maybe to be only expenses or incomes. Use ENUM.
-    let userId: String
+    let userId: String // For Firebase
     
     // MARK: Relationships
     let transactions: [TransactionModel]
