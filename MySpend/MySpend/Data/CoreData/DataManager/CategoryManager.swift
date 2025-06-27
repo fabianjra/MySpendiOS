@@ -25,7 +25,35 @@ struct CategoryManager {
         self.viewContext = viewContext
     }
     
-    func saveNewCategory(_ category: CategoryModel) {
+    
+    // MARK: READ
+    
+    func fetchAllCategories(predicateFormat: String = CoreDataConstants.Predicates.isActive,
+                            predicateArgs: [Any] = [true],
+                            sortedBy sortDescriptors: [NSSortDescriptor] = [NSSortDescriptor(keyPath: \Category.name, ascending: true)]) throws -> [CategoryModel] {
+        /* // EJEMPLO DE ORDNAR POR VARIOS CAMPOS:
+        let sortByNameThenDate = [
+            NSSortDescriptor(keyPath: \Category.name, ascending: true),
+            NSSortDescriptor(keyPath: \Category.dateCreated, ascending: false) // o true
+        ] */
+        
+        let request: NSFetchRequest<Category> = Category.fetchRequest()
+        request.sortDescriptors = sortDescriptors
+        request.predicate = NSPredicate(format: predicateFormat, argumentArray: predicateArgs)
+        
+        let coreDataEntities = try viewContext.fetch(request)
+        
+        let models = coreDataEntities.map { entity in
+            CategoryModel(entity)
+        }
+        
+        return models
+    }
+
+    
+    // MARK: CREATE / UPDATE
+    
+    func CraateNewCategory(_ category: CategoryModel) throws {
         // Se crea un nuevo objeto "Entity" para mapear los campos que se van a guardar en la Entidad de Note.
         // Se debe utilizar el contexto que ya está instanciado.
         let entity = Category(context: viewContext)
@@ -43,47 +71,43 @@ struct CategoryManager {
         entity.type = category.type.rawValue
         entity.usageCount = Int64(category.usageCount)
         
-        do {
-            try viewContext.save()
-        } catch {
-            Logs.CatchException(error, type: .CoreData)
-        }
+        try viewContext.save()
     }
     
-    func deleteCategory(withItem item: Category) {
-        viewContext.delete(item)
+    
+    // MARK: DELETE
+    
+    func deleteCategory(withModel model: CategoryModel) throws {
+        let fetchRequest: NSFetchRequest<Category> = Category.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: CoreDataConstants.Predicates.findItemById, model.id.uuidString)
+        fetchRequest.fetchLimit = 1
         
-        do {
+        if let item = try viewContext.fetch(fetchRequest).first {
+            
+            viewContext.delete(item)
             try viewContext.save()
-        } catch {
-            Logs.CatchException(error, type: .CoreData)
+        } else {
+            Logs.WriteMessage("No se pudo eliminar la categoría con id \(model.id)")
         }
     }
     
-    func deleteCategory(at offsets: IndexSet, from items: FetchedResults<Category>) {
-        offsets.map { items[$0] }.forEach(viewContext.delete)
-        
-        do {
-            try viewContext.save()
-        } catch {
-            Logs.CatchException(error, type: .CoreData)
+    func deleteCategory(at offsets: IndexSet, from items: [CategoryModel]) throws {
+        for offset in offsets {
+            let model = items[offset]
+            try deleteCategory(withModel: model)
         }
     }
     
-    func deleteCategory(withId id: UUID) {
+    func deleteCategory(withId id: UUID) throws {
         let fetchRequest: NSFetchRequest<Category> = Category.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: CoreDataConstants.Predicates.findItemById, id.uuidString)
         fetchRequest.fetchLimit = 1
-        
-        do {
-            if let item = try viewContext.fetch(fetchRequest).first {
-                viewContext.delete(item)
-                try viewContext.save()
-            } else {
-                Logs.WriteMessage("No se pudo eliminar la categoria") //TODO: Retornar mensaje de error.
-            }
-        } catch {
-            Logs.CatchException(error, type: .CoreData)
+
+        if let item = try viewContext.fetch(fetchRequest).first {
+            viewContext.delete(item)
+            try viewContext.save()
+        } else {
+            Logs.WriteMessage("No se pudo eliminar la categoría con id \(id)") //TODO: Retornar mensaje de error.
         }
     }
 }

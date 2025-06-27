@@ -29,7 +29,7 @@ struct PersistenceController {
             newItem.dateLastUsed = .now
             newItem.dateModified = .now
             newItem.icon = "star"
-            newItem.isActive = false
+            newItem.isActive = true
             newItem.name = "Prueba"
             newItem.type = "expense"
             newItem.usageCount = 0

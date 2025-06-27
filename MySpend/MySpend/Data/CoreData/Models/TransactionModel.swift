@@ -45,7 +45,7 @@ struct TransactionModel {
     
     private static func convertCategoryToCategoryModel(categoryCoreData: Category?) -> CategoryModel {
         if let categoryCoreData = categoryCoreData {
-            return CategoryModel(category: categoryCoreData)
+            return CategoryModel(categoryCoreData)
         } else {
             return CategoryModel()
         }

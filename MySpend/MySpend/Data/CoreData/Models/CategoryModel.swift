@@ -41,7 +41,7 @@ struct CategoryModel: Identifiable {
     }
     
     // When a category is going to load from Core Data and need to map to Category Model
-    init(category: Category) {
+    init(_ category: Category) {
         id = category.id ?? UUID()
         dateCreated = category.dateCreated ?? .init()
         dateLastUsed = category.dateLastUsed ?? .init()

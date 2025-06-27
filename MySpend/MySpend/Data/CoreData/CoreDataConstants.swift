@@ -13,6 +13,6 @@ struct CoreDataConstants {
     // MARK: PREDICATES
     struct Predicates {
         static let findItemById: String = "id == %@"
-        static let isActive: String = "isActive == true"
+        static let isActive: String = "isActive == %@"
     }
 }
