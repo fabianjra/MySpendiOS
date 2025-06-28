@@ -214,8 +214,8 @@ struct AddModifyTransactionView: View {
 }
 
 #Preview("Modify") {
-    @Previewable @State var model = MockTransactions.normal.first!
-    @Previewable @State var selectedDate = MockTransactions.normal.first!.dateTransaction
+    @Previewable @State var model = MockTransactionsFB.normal.first!
+    @Previewable @State var selectedDate = MockTransactionsFB.normal.first!.dateTransaction
     
     AddModifyTransactionView(model: $model, selectedDate: $selectedDate)
 }

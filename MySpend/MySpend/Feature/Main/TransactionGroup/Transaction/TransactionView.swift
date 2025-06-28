@@ -107,7 +107,7 @@ struct TransactionView: View {
 #Preview("es_CR") {
     @Previewable @State var selectedDate = Date()
     VStack {
-        TransactionView(viewModel: TransactionViewModel(transactions: MockTransactions.normal), selectedDate: $selectedDate)
+        TransactionView(viewModel: TransactionViewModel(transactions: MockTransactionsFB.normal), selectedDate: $selectedDate)
             .environment(\.locale, .init(identifier: "es_CR"))
     }
 }
@@ -115,7 +115,7 @@ struct TransactionView: View {
 #Preview("Saturated en_US") {
     @Previewable @State var selectedDate = Date()
     VStack {
-        TransactionView(viewModel: TransactionViewModel(transactions: MockTransactions.saturated), selectedDate: $selectedDate)
+        TransactionView(viewModel: TransactionViewModel(transactions: MockTransactionsFB.saturated), selectedDate: $selectedDate)
             .environment(\.locale, .init(identifier: "en_US"))
     }
 }

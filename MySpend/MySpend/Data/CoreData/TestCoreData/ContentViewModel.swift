@@ -44,6 +44,14 @@ class ContentViewModel: ObservableObject {
         }
     }
     
+    func updateCategory(_ item: CategoryModel) {
+        do {
+            try CategoryManager(viewContext: viewContext).updateCategory(item)
+        } catch {
+            Logs.CatchException(error, type: .CoreData)
+        }
+    }
+    
     func deleteCategory(_ item: CategoryModel) {
         do {
             try CategoryManager(viewContext: viewContext).deleteCategory(item)

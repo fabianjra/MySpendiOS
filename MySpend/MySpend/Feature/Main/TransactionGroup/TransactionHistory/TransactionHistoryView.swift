@@ -276,7 +276,7 @@ struct TransactionHistoryView: View {
     @Previewable @State var selectedDate = Date()
     
     VStack {
-        TransactionHistoryView(transactionsLoaded: .constant(MockTransactions.normal), dateTimeInterval: $dateTimeInterval, selectedDate: $selectedDate)
+        TransactionHistoryView(transactionsLoaded: .constant(MockTransactionsFB.normal), dateTimeInterval: $dateTimeInterval, selectedDate: $selectedDate)
             .environment(\.locale, .init(identifier: "es_CR"))
     }
 }
@@ -286,7 +286,7 @@ struct TransactionHistoryView: View {
     @Previewable @State var selectedDate = Date()
     
     VStack {
-        TransactionHistoryView(transactionsLoaded: .constant(MockTransactions.random_generated), dateTimeInterval: $dateTimeInterval, selectedDate: $selectedDate)
+        TransactionHistoryView(transactionsLoaded: .constant(MockTransactionsFB.random_generated), dateTimeInterval: $dateTimeInterval, selectedDate: $selectedDate)
             .environment(\.locale, .init(identifier: "en_US"))
     }
 }

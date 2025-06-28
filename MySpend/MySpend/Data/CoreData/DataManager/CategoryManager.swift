@@ -74,7 +74,7 @@ struct CategoryManager {
         try viewContext.save()
     }
     
-    mutating func updateCategory(_ category: CategoryModel) throws {
+    func updateCategory(_ category: CategoryModel) throws {
         
         // Primero se necesita hacer el Fetch Request para saber cual nota se va a modificar.
         let fetchRequest: NSFetchRequest<Category> = Category.fetchRequest()

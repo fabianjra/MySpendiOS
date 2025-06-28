@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MocksCategories {
+struct MocksCategoriesFB {
     
     static let expense1 = CategoryModelFB(id: UUID().uuidString,
                                         icon: CategoryIcons.household.list[0],

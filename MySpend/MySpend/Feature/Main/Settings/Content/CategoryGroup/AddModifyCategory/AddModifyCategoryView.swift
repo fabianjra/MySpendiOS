@@ -180,15 +180,15 @@ struct AddModifyCategoryView: View {
 
 
 #Preview("New") {
-    @Previewable @State var categoryType = MocksCategories.expense1.categoryType
+    @Previewable @State var categoryType = MocksCategoriesFB.expense1.categoryType
     VStack {
         AddModifyCategoryView(categoryType: $categoryType, isNewCategoryAdded: .constant(false))
     }
 }
 
 #Preview("Modify") {
-    @Previewable @State var model = MocksCategories.expense1
-    @Previewable @State var categoryType = MocksCategories.expense2.categoryType
+    @Previewable @State var model = MocksCategoriesFB.expense1
+    @Previewable @State var categoryType = MocksCategoriesFB.expense2.categoryType
     VStack {
         AddModifyCategoryView(model: $model, categoryType: $categoryType, isNewCategoryAdded: .constant(false))
     }

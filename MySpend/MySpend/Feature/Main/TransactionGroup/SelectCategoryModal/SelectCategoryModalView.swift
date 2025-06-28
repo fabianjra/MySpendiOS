@@ -152,7 +152,7 @@ struct SelectCategoryModalView: View {
 #Preview("Expenses es_CR") {
     @Previewable @State var showModal = true
     @Previewable @State var selectedCategory = CategoryModelFB()
-    @Previewable @State var viewModelMock = CategoryViewModel(categories: MocksCategories.normal)
+    @Previewable @State var viewModelMock = CategoryViewModel(categories: MocksCategoriesFB.normal)
     
     ZStack(alignment: .top) {
         Color.backgroundBottom

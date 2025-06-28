@@ -242,22 +242,22 @@ struct CategoryView: View {
 }
 
 #Preview("es_CR") {
-    CategoryView(viewModel: CategoryViewModel(categories: MocksCategories.normal))
+    CategoryView(viewModel: CategoryViewModel(categories: MocksCategoriesFB.normal))
         .environment(\.locale, .init(identifier: "es_CR"))
 }
 
 #Preview("Only expenses es_CR") {
-    CategoryView(viewModel: CategoryViewModel(categories: MocksCategories.onlyExpenses))
+    CategoryView(viewModel: CategoryViewModel(categories: MocksCategoriesFB.onlyExpenses))
         .environment(\.locale, .init(identifier: "es_CR"))
 }
 
 #Preview("Only incomes en_US") {
-    CategoryView(viewModel: CategoryViewModel(categories: MocksCategories.onlyIncomes))
+    CategoryView(viewModel: CategoryViewModel(categories: MocksCategoriesFB.onlyIncomes))
         .environment(\.locale, .init(identifier: "en_US"))
 }
 
 #Preview("Saturated en_US") {
-    CategoryView(viewModel: CategoryViewModel(categories: MocksCategories.random_generated))
+    CategoryView(viewModel: CategoryViewModel(categories: MocksCategoriesFB.random_generated))
         .environment(\.locale, .init(identifier: "en_US"))
 }
 
