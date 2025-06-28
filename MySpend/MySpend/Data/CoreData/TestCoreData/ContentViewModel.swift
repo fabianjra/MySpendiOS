@@ -29,7 +29,10 @@ class ContentViewModel: ObservableObject {
     
     func fectchCategories() {
         do {
-            categories = try CategoryManager(viewContext: viewContext).fetchAllCategories()
+            let sort: [NSSortDescriptor] = [NSSortDescriptor(keyPath: \Category.name, ascending: true),
+                                              NSSortDescriptor(keyPath: \Category.dateCreated, ascending: true)]
+            
+            categories = try CategoryManager(viewContext: viewContext).fetchAllCategories(sortedBy: sort)
         } catch {
             Logs.CatchException(error, type: .CoreData)
             //categories = [] //TODO: Validar si es necesario en caso de que ya se hayan cargado categories.
