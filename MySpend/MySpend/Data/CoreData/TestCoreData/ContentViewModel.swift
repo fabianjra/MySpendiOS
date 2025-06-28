@@ -36,7 +36,7 @@ class ContentViewModel: ObservableObject {
         }
     }
     
-    func addNewCategory(item: CategoryModel) {
+    func addNewCategory(_ item: CategoryModel) {
         do {
             try CategoryManager(viewContext: viewContext).CraateNewCategory(item)
         } catch {
@@ -44,9 +44,9 @@ class ContentViewModel: ObservableObject {
         }
     }
     
-    func deleteCategory(item: CategoryModel) {
+    func deleteCategory(_ item: CategoryModel) {
         do {
-            try CategoryManager(viewContext: viewContext).deleteCategory(withModel: item)
+            try CategoryManager(viewContext: viewContext).deleteCategory(item)
         } catch {
             Logs.CatchException(error, type: .CoreData)
         }

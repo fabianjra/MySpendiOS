@@ -57,7 +57,7 @@ struct ContentView: View {
 
     private func addItem() {
         withAnimation {
-            viewModel.addNewCategory(item: CategoryModel())
+            viewModel.addNewCategory(CategoryModel())
         }
     }
 

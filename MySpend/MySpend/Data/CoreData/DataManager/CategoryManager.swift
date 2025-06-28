@@ -74,10 +74,39 @@ struct CategoryManager {
         try viewContext.save()
     }
     
+    mutating func updateCategory(_ category: CategoryModel) throws {
+        
+        // Primero se necesita hacer el Fetch Request para saber cual nota se va a modificar.
+        let fetchRequest: NSFetchRequest<Category> = Category.fetchRequest()
+        
+        // NSPredicate permite buscar un valore de una entidad filtrando.
+        // NSPredicate solamente establece una configuracion de busqueda. Aun no se busca nada aqui.
+        // Format: formato de filtro (en este caso, busqueda por ID).
+        // argument: Reemplazo del %@ para igualarlo al valor a buscar.
+        fetchRequest.predicate = NSPredicate(format: CoreDataConstants.Predicates.findItemById, category.id.uuidString)
+        fetchRequest.fetchLimit = 1 //Solamente obtiene 1 resultado.
+        
+        // Se realiza la busqueda en base a la configuracion establecida con fetchRequest
+        let itemCoreData = try viewContext.fetch(fetchRequest)
+        
+        guard let item = itemCoreData.first else {
+            Logs.WriteMessage("No se pudo actualiza la categoría porquem no se encontró ninguna entidad con id \(category.id.uuidString)")
+            return //TODO: Hacer return de item vacio
+        }
+        
+        item.icon = category.icon
+        item.name = category.name
+        item.type = category.type.rawValue
+        item.isActive = category.isActive
+        item.dateModified = .now
+        
+        try viewContext.save()
+    }
+    
     
     // MARK: DELETE
     
-    func deleteCategory(withModel model: CategoryModel) throws {
+    func deleteCategory(_ model: CategoryModel) throws {
         let fetchRequest: NSFetchRequest<Category> = Category.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: CoreDataConstants.Predicates.findItemById, model.id.uuidString)
         fetchRequest.fetchLimit = 1
@@ -87,14 +116,14 @@ struct CategoryManager {
             viewContext.delete(item)
             try viewContext.save()
         } else {
-            Logs.WriteMessage("No se pudo eliminar la categoría con id \(model.id)")
+            Logs.WriteMessage("No se pudo eliminar la categoría con id \(model.id.uuidString)")
         }
     }
     
     func deleteCategory(at offsets: IndexSet, from items: [CategoryModel]) throws {
         for offset in offsets {
             let model = items[offset]
-            try deleteCategory(withModel: model)
+            try deleteCategory(model)
         }
     }
     
