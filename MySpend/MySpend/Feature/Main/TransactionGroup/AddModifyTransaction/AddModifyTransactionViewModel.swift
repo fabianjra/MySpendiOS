@@ -27,9 +27,9 @@ class AddModifyTransactionViewModel: BaseViewModel {
         }
     }
     
-    func addNewTransaction(_ model: TransactionModelFB, selectedDate: Date) async -> ResponseModel {
+    func addNewTransaction(_ model: TransactionModelFB, selectedDate: Date) async -> ResponseModelFB {
         if model.category.name.isEmptyOrWhitespace {
-            return ResponseModel(.error, Errors.emptySpaces.localizedDescription)
+            return ResponseModelFB(.error, Errors.emptySpaces.localizedDescription)
         }
         
         //Firebase necesita guardar el valor como decimal, pero los formatos del monto en pantalla se trabajan en string:
@@ -43,7 +43,7 @@ class AddModifyTransactionViewModel: BaseViewModel {
         modelMutated.category.incrementUsedCounter()
         
         let repository = Repository()
-        var response = ResponseModel()
+        var response = ResponseModelFB()
         
         await performWithLoader { currentUser in
             do {
@@ -59,19 +59,19 @@ class AddModifyTransactionViewModel: BaseViewModel {
                 
                 let document = try await repository.addNewDocument(modelMutated, forSubCollection: .transactions)
                 
-                response = ResponseModel(.successful, document: document)
+                response = ResponseModelFB(.successful, document: document)
             } catch {
                 Logs.CatchException(error)
-                response = ResponseModel(.error, error.localizedDescription)
+                response = ResponseModelFB(.error, error.localizedDescription)
             }
         }
         
         return response
     }
     
-    func modifyTransaction(_ model: TransactionModelFB, selectedDate: Date) async -> ResponseModel {
+    func modifyTransaction(_ model: TransactionModelFB, selectedDate: Date) async -> ResponseModelFB {
         if model.category.name.isEmptyOrWhitespace {
-            return ResponseModel(.error, Errors.emptySpaces.localizedDescription)
+            return ResponseModelFB(.error, Errors.emptySpaces.localizedDescription)
         }
         
         var modelMutated = model
@@ -83,33 +83,33 @@ class AddModifyTransactionViewModel: BaseViewModel {
             modelMutated.dateTransaction = selectedDate
         }
         
-        var response = ResponseModel()
+        var response = ResponseModelFB()
         
         await performWithLoader {
             do {
                 try await Repository().modifyDocument(modelMutated, documentId: modelMutated.id, forSubCollection: .transactions)
                 
-                response = ResponseModel(.successful)
+                response = ResponseModelFB(.successful)
             } catch {
                 Logs.CatchException(error)
-                response = ResponseModel(.error, error.localizedDescription)
+                response = ResponseModelFB(.error, error.localizedDescription)
             }
         }
         
         return response
     }
     
-    func deleteTransaction(_ model: TransactionModelFB) async -> ResponseModel {
-        var response = ResponseModel()
+    func deleteTransaction(_ model: TransactionModelFB) async -> ResponseModelFB {
+        var response = ResponseModelFB()
         
         await performWithLoaderSecondary {
             do {
                 try await Repository().deleteDocument(model.id, forSubCollection: .transactions)
                 
-                response = ResponseModel(.successful)
+                response = ResponseModelFB(.successful)
             } catch {
                 Logs.CatchException(error)
-                response = ResponseModel(.error, error.localizedDescription)
+                response = ResponseModelFB(.error, error.localizedDescription)
             }
         }
         

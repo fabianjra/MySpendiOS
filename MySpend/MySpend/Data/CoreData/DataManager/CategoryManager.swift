@@ -28,10 +28,10 @@ struct CategoryManager {
     
     // MARK: READ
     
-    func fetchAllCategories(predicateFormat: String = CoreDataConstants.Predicates.isActive,
+    func fetchAllCategories(predicateFormat: String = CDConstants.Predicates.isActive,
                             predicateArgs: [Any] = [true],
                             sortedBy sortDescriptors: [NSSortDescriptor] = [NSSortDescriptor(keyPath: \Category.name, ascending: true)]) throws -> [CategoryModel] {
-        /* // EJEMPLO DE ORDNAR POR VARIOS CAMPOS:
+        /* Example:
         let sortByNameThenDate = [
             NSSortDescriptor(keyPath: \Category.name, ascending: true),
             NSSortDescriptor(keyPath: \Category.dateCreated, ascending: false) // o true
@@ -74,30 +74,13 @@ struct CategoryManager {
         try viewContext.save()
     }
     
-    func updateCategory(_ category: CategoryModel) throws {
+    func updateCategory(_ model: CategoryModel) throws {
+        let item = try fetchedCategory(model)
         
-        // Primero se necesita hacer el Fetch Request para saber cual nota se va a modificar.
-        let fetchRequest: NSFetchRequest<Category> = Category.fetchRequest()
-        
-        // NSPredicate permite buscar un valore de una entidad filtrando.
-        // NSPredicate solamente establece una configuracion de busqueda. Aun no se busca nada aqui.
-        // Format: formato de filtro (en este caso, busqueda por ID).
-        // argument: Reemplazo del %@ para igualarlo al valor a buscar.
-        fetchRequest.predicate = NSPredicate(format: CoreDataConstants.Predicates.findItemById, category.id.uuidString)
-        fetchRequest.fetchLimit = 1 //Solamente obtiene 1 resultado.
-        
-        // Se realiza la busqueda en base a la configuracion establecida con fetchRequest
-        let itemCoreData = try viewContext.fetch(fetchRequest)
-        
-        guard let item = itemCoreData.first else {
-            Logs.WriteMessage("No se pudo actualiza la categoría porquem no se encontró ninguna entidad con id \(category.id.uuidString)")
-            return //TODO: Hacer return de item vacio
-        }
-        
-        item.icon = category.icon
-        item.name = category.name
-        item.type = category.type.rawValue
-        item.isActive = category.isActive
+        item.icon = model.icon
+        item.name = model.name
+        item.type = model.type.rawValue
+        item.isActive = model.isActive
         item.dateModified = .now
         
         try viewContext.save()
@@ -107,17 +90,10 @@ struct CategoryManager {
     // MARK: DELETE
     
     func deleteCategory(_ model: CategoryModel) throws {
-        let fetchRequest: NSFetchRequest<Category> = Category.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: CoreDataConstants.Predicates.findItemById, model.id.uuidString)
-        fetchRequest.fetchLimit = 1
+        let item = try fetchedCategory(model)
         
-        if let item = try viewContext.fetch(fetchRequest).first {
-            
-            viewContext.delete(item)
-            try viewContext.save()
-        } else {
-            Logs.WriteMessage("No se pudo eliminar la categoría con id \(model.id.uuidString)")
-        }
+        viewContext.delete(item)
+        try viewContext.save()
     }
     
     func deleteCategory(at offsets: IndexSet, from items: [CategoryModel]) throws {
@@ -127,16 +103,32 @@ struct CategoryManager {
         }
     }
     
-    func deleteCategory(withId id: UUID) throws {
+    
+    // MARK: SHARED
+    
+    private func createFetchRequest(_ model: CategoryModel) -> NSFetchRequest<Category> {
+        
+        // Primero se necesita hacer el Fetch Request para saber cual nota se va a modificar.
         let fetchRequest: NSFetchRequest<Category> = Category.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: CoreDataConstants.Predicates.findItemById, id.uuidString)
-        fetchRequest.fetchLimit = 1
-
-        if let item = try viewContext.fetch(fetchRequest).first {
-            viewContext.delete(item)
-            try viewContext.save()
-        } else {
-            Logs.WriteMessage("No se pudo eliminar la categoría con id \(id)") //TODO: Retornar mensaje de error.
+        
+        // NSPredicate permite buscar un valore de una entidad filtrando.
+        // NSPredicate solamente establece una configuracion de busqueda. Aun no se busca nada aqui.
+        // Format: formato de filtro (en este caso, busqueda por ID).
+        // argument: Reemplazo del %@ para igualarlo al valor a buscar.
+        fetchRequest.predicate = NSPredicate(format: CDConstants.Predicates.findItemById, model.id.uuidString)
+        fetchRequest.fetchLimit = 1 //Solamente obtiene 1 resultado.
+        
+        return fetchRequest
+    }
+    
+    private func fetchedCategory(_ model: CategoryModel) throws -> Category {
+        let fetchRequest = createFetchRequest(model)
+        let itemCoreData = try viewContext.fetch(fetchRequest)
+        
+        guard let item = itemCoreData.first else {
+            throw CDError.notFound(id: model.id, entity: Category.description())
         }
+        
+        return item
     }
 }

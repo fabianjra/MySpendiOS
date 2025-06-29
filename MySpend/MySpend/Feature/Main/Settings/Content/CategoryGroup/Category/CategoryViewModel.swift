@@ -110,25 +110,25 @@ class CategoryViewModel: BaseViewModel {
         }
     }
     
-    func deleteCategory(_ model: CategoryModelFB) async -> ResponseModel {
-        var response = ResponseModel()
+    func deleteCategory(_ model: CategoryModelFB) async -> ResponseModelFB {
+        var response = ResponseModelFB()
         
         await performWithLoaderSecondary {
             do {
                 try await Repository().deleteDocument(model.id, forSubCollection: .categories)
                 
-                response = ResponseModel(.successful)
+                response = ResponseModelFB(.successful)
             } catch {
                 Logs.CatchException(error)
-                response = ResponseModel(.error, error.localizedDescription)
+                response = ResponseModelFB(.error, error.localizedDescription)
             }
         }
         
         return response
     }
     
-    func deleteMltipleCategories() async -> ResponseModel {
-        var response = ResponseModel()
+    func deleteMltipleCategories() async -> ResponseModelFB {
+        var response = ResponseModelFB()
         
         await performWithLoaderSecondary {
             do {
@@ -137,10 +137,10 @@ class CategoryViewModel: BaseViewModel {
                 try await Repository().deleteDocuments(selectedDocumentIds, forSubCollection: .categories)
                 
                 self.selectedCategories.removeAll()
-                response = ResponseModel(.successful)
+                response = ResponseModelFB(.successful)
             } catch {
                 Logs.CatchException(error)
-                response = ResponseModel(.error, error.localizedDescription)
+                response = ResponseModelFB(.error, error.localizedDescription)
             }
         }
         

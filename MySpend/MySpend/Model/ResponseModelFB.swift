@@ -7,7 +7,7 @@
 
 import Firebase
 
-struct ResponseModel {
+struct ResponseModelFB {
     let status: Status
     let message: String
     let documentReference: DocumentReference?
@@ -18,19 +18,5 @@ struct ResponseModel {
         self.status = status
         self.message = message
         self.documentReference = documentReference
-    }
-}
-
-
-enum Status {
-    case successful
-    case error
-    
-    var isSuccess: Bool {
-        self == .successful
-    }
-    
-    var isError: Bool {
-        self == .error
     }
 }

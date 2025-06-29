@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CoreDataConstants {
+struct CDConstants {
     static let containerName: String = "MySpend" // Debe ser el mismo nombre del archivo del modelo.
     
     // MARK: PREDICATES

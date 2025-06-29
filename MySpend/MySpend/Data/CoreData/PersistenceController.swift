@@ -24,7 +24,7 @@ struct PersistenceController {
     // inMemory: true: Solo usa memoria temporal (ideal para tests o previews).
     init(inMemory: Bool = false) {
         
-        container = NSPersistentContainer(name: CoreDataConstants.containerName)
+        container = NSPersistentContainer(name: CDConstants.containerName)
         
         if inMemory {
             container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")

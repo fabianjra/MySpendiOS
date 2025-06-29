@@ -18,25 +18,25 @@ class TransactionHistoryViewModel: BaseViewModel {
     @Published var selectedTransactions = Set<TransactionModelFB>()
     @Published var sortTransactionsBy = UserDefaultsManager.sorTransactions
     
-    func deleteTransaction(_ model: TransactionModelFB) async -> ResponseModel {
-        var response = ResponseModel()
+    func deleteTransaction(_ model: TransactionModelFB) async -> ResponseModelFB {
+        var response = ResponseModelFB()
         
         await performWithLoaderSecondary {
             do {
                 try await Repository().deleteDocument(model.id, forSubCollection: .transactions)
                 
-                response = ResponseModel(.successful)
+                response = ResponseModelFB(.successful)
             } catch {
                 Logs.CatchException(error)
-                response = ResponseModel(.error, error.localizedDescription)
+                response = ResponseModelFB(.error, error.localizedDescription)
             }
         }
         
         return response
     }
     
-    func deleteMltipleTransactions() async -> ResponseModel {
-        var response = ResponseModel()
+    func deleteMltipleTransactions() async -> ResponseModelFB {
+        var response = ResponseModelFB()
         
         await performWithLoaderSecondary {
             do {
@@ -45,10 +45,10 @@ class TransactionHistoryViewModel: BaseViewModel {
                 try await Repository().deleteDocuments(selectedDocumentIds, forSubCollection: .transactions)
                 
                 self.selectedTransactions.removeAll()
-                response = ResponseModel(.successful)
+                response = ResponseModelFB(.successful)
             } catch {
                 Logs.CatchException(error)
-                response = ResponseModel(.error, error.localizedDescription)
+                response = ResponseModelFB(.error, error.localizedDescription)
             }
         }
         

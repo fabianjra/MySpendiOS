@@ -151,7 +151,7 @@ struct AddModifyCategoryView: View {
     
     private func process(_ processType: ProcessType) {
         Task {
-            let result: ResponseModel
+            let result: ResponseModelFB
             
             switch processType {
             case .add:

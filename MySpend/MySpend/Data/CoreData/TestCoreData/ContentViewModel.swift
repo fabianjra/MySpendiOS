@@ -29,10 +29,7 @@ class ContentViewModel: ObservableObject {
     
     func fectchCategories() {
         do {
-            let sort: [NSSortDescriptor] = [NSSortDescriptor(keyPath: \Category.name, ascending: true),
-                                              NSSortDescriptor(keyPath: \Category.dateCreated, ascending: true)]
-            
-            categories = try CategoryManager(viewContext: viewContext).fetchAllCategories(sortedBy: sort)
+            categories = try CategoryManager(viewContext: viewContext).fetchAllCategories(sortedBy: CDSort.CategoryEntity.byName_dateCreated)
         } catch {
             Logs.CatchException(error, type: .CoreData)
             //categories = [] //TODO: Validar si es necesario en caso de que ya se hayan cargado categories.
@@ -50,6 +47,14 @@ class ContentViewModel: ObservableObject {
     func updateCategory(_ item: CategoryModel) {
         do {
             try CategoryManager(viewContext: viewContext).updateCategory(item)
+        } catch CDError.notFound {
+            
+            //TODO: Mejorar implementacion:
+            // Se crea este de not found para el tipo de error personalizado a mostrar en pantalla.
+            // Por ejemplo, ID no encontrado para ser actualizado
+            
+            let error = Logs.createError(domain: .categoriesDatabase, error: Errors.notSavedCategory(""))
+            Logs.CatchException(error, type: .CoreData)
         } catch {
             Logs.CatchException(error, type: .CoreData)
         }

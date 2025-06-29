@@ -12,9 +12,9 @@ class AddModifyCategoryViewModel: BaseViewModel {
     @Published var showIconsModal = false
     @Published var showAlert = false
     
-    func addNewCategory(_ model: CategoryModelFB, categoryType: TransactionType) async -> ResponseModel {
+    func addNewCategory(_ model: CategoryModelFB, categoryType: TransactionType) async -> ResponseModelFB {
         if model.name.isEmptyOrWhitespace {
-            return ResponseModel(.error, Errors.emptySpaces.localizedDescription)
+            return ResponseModelFB(.error, Errors.emptySpaces.localizedDescription)
         }
         
         var modelMutated = model
@@ -22,7 +22,7 @@ class AddModifyCategoryViewModel: BaseViewModel {
         modelMutated.dateCreated = .now
         modelMutated.datemodified = .now
         
-        var response = ResponseModel()
+        var response = ResponseModelFB()
         
         await performWithLoader { currentUser in
             do {
@@ -30,52 +30,52 @@ class AddModifyCategoryViewModel: BaseViewModel {
                 
                 let document = try await Repository().addNewDocument(modelMutated, forSubCollection: .categories)
                 
-                response = ResponseModel(.successful, document: document)
+                response = ResponseModelFB(.successful, document: document)
             } catch {
                 Logs.CatchException(error)
-                response = ResponseModel(.error, error.localizedDescription)
+                response = ResponseModelFB(.error, error.localizedDescription)
             }
         }
         
         return response
     }
     
-    func modifyCategory(_ model: CategoryModelFB, categoryType: TransactionType) async -> ResponseModel {
+    func modifyCategory(_ model: CategoryModelFB, categoryType: TransactionType) async -> ResponseModelFB {
         if model.name.isEmptyOrWhitespace {
-            return ResponseModel(.error, Errors.emptySpaces.localizedDescription)
+            return ResponseModelFB(.error, Errors.emptySpaces.localizedDescription)
         }
         
         var mutableModel = model
         mutableModel.categoryType = categoryType
         mutableModel.datemodified = .now
         
-        var response = ResponseModel()
+        var response = ResponseModelFB()
         
         await performWithLoader {
             do {
                 try await Repository().modifyDocument(mutableModel, documentId: model.id, forSubCollection: .categories)
                 
-                response = ResponseModel(.successful)
+                response = ResponseModelFB(.successful)
             } catch {
                 Logs.CatchException(error)
-                response = ResponseModel(.error, error.localizedDescription)
+                response = ResponseModelFB(.error, error.localizedDescription)
             }
         }
         
         return response
     }
     
-    func deleteCategory(_ model: CategoryModelFB) async -> ResponseModel {
-        var response = ResponseModel()
+    func deleteCategory(_ model: CategoryModelFB) async -> ResponseModelFB {
+        var response = ResponseModelFB()
         
         await performWithLoaderSecondary {
             do {
                 try await Repository().deleteDocument(model.id, forSubCollection: .categories)
                 
-                response = ResponseModel(.successful)
+                response = ResponseModelFB(.successful)
             } catch {
                 Logs.CatchException(error)
-                response = ResponseModel(.error, error.localizedDescription)
+                response = ResponseModelFB(.error, error.localizedDescription)
             }
         }
         

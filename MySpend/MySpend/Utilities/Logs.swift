@@ -51,7 +51,7 @@ enum Logs {
                                line: Int = #line) {
         
         let logId = UUID().uuidString
-        print("START LOG: \(logId) **************************************** START LOG")
+        print("********** START EXCEPTION LOG: \(logId) **********")
         print("Handled catch in: \(file.components(separatedBy: "/").last ?? file), function: \(function), line: \(line), description: \(error.localizedDescription)")
         
         switch type {
@@ -62,7 +62,7 @@ enum Logs {
             CoreDataCatchException(error)
         }
         
-        print("END LOG: \(logId) **************************************** END LOG")
+        print("********** END EXCEPTION LOG: \(logId) **********")
     }
     
     private static func CoreDataCatchException(_ error: Error) {
