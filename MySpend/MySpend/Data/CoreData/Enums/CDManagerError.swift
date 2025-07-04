@@ -5,8 +5,6 @@
 //  Created by Fabian Rodriguez on 28/6/25.
 //
 
-import Foundation
-
 struct CDManagerError {
     let status: Status
     let message: String

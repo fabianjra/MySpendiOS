@@ -8,44 +8,48 @@
 import Foundation
 
 struct TransactionModel {
-    let id: UUID
     
-    // MARK: Attributes
-    let amount: Decimal
+    // Shared attributes (Abstract class):
     let dateCreated: Date
     let dateModified: Date
-    let dateTransaction: Date
+    let id: UUID
     let isActive: Bool
+    
+    // Entity-specific Attributes
+    let amount: Decimal
+    let dateTransaction: Date
     let notes: String
     
-    // MARK: Relationships
+    // Relationships
     let category: CategoryModel
     
     init() {
-        id = UUID()
-        amount = .zero
         dateCreated = .init()
         dateModified = .init()
-        dateTransaction = .init()
+        id = UUID()
         isActive = false
+        
+        amount = .zero
+        dateTransaction = .init()
         notes = ""
         category = CategoryModel()
     }
     
-    init(transaction: Transaction) {
-        id = transaction.id ?? UUID()
-        amount = transaction.amount?.decimalValue ?? .zero
+    init(_ transaction: Transaction) {
         dateCreated = transaction.dateCreated ?? .init()
         dateModified = transaction.dateModified ?? .init()
-        dateTransaction = transaction.dateTransaction ?? .init()
+        id = transaction.id ?? UUID()
         isActive = transaction.isActive
+        
+        amount = transaction.amount?.decimalValue ?? .zero
+        dateTransaction = transaction.dateTransaction ?? .init()
         notes = transaction.notes ?? ""
-        category = TransactionModel.convertCategoryToCategoryModel(categoryCoreData: transaction.category)
+        category = TransactionModel.convertToCategoryModel(fromCoreData: transaction.category)
     }
     
-    private static func convertCategoryToCategoryModel(categoryCoreData: Category?) -> CategoryModel {
-        if let categoryCoreData = categoryCoreData {
-            return CategoryModel(categoryCoreData)
+    private static func convertToCategoryModel(fromCoreData categoryCoreData: Category?) -> CategoryModel {
+        if let category = categoryCoreData {
+            return CategoryModel(category)
         } else {
             return CategoryModel()
         }

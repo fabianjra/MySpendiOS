@@ -123,10 +123,15 @@ enum Logs {
      
      - Date: February 2023
      */
-    static func WriteMessage(_ obj: Any) {
-        print("///************************** CUSTOM MESSSAGE **************************///")
+    static func WriteMessage(_ obj: Any,
+                             file: String = #file,
+                             function: String = #function,
+                             line: Int = #line) {
+        let logId = UUID().uuidString
+        print("********** START CUSTOM MESSSAG LOG: \(logId) **********")
+        print("Message from: \(file.components(separatedBy: "/").last ?? file), function: \(function), line: \(line)")
         print(obj)
-        print("///************************ END CUSTOM MESSSAGE ************************///")
+        print("********** END CUSTOM MESSSAG LOG: \(logId) **********")
     }
     
     /**

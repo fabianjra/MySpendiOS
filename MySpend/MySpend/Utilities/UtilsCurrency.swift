@@ -85,6 +85,27 @@ public struct UtilsCurrency {
         
         return formatter
     }
+    
+    static func makeDecimal(_ value: Decimal) throws -> NSDecimalNumber {
+        let number = NSDecimalNumber(decimal: value)
+
+        // Ejemplo de validación de NaN y rango
+        guard number != .notANumber else {
+            throw Errors.invalidAmount
+        }
+
+        // Fuerza dos decimales con redondeo bancario
+        let handler = NSDecimalNumberHandler (
+            roundingMode: .bankers,
+            scale: 2,
+            raiseOnExactness: false,
+            raiseOnOverflow: true,
+            raiseOnUnderflow: true,
+            raiseOnDivideByZero: true
+        )
+        
+        return number.rounding(accordingToBehavior: handler)
+    }
 }
 
 // MARK: TOTAL BALANCE CALCULATIONS

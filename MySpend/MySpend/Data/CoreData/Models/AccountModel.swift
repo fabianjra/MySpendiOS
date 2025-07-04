@@ -9,27 +9,30 @@ import Foundation
 
 // Se agrega el sufijo "Model" para diferenciarlo de la entidad de CoreDate (sin el sufijo model).
 struct AccountModel: Identifiable {
-    let id: UUID
     
-    // MARK: Attributes
+    // Shared attributes (Abstract class):
     let dateCreated: Date
     let dateModified: Date
-    let icon: String // Emoji
+    let id: UUID
     let isActive: Bool
+    
+    // Entity-specific Attributes
+    let icon: String // Emoji
     let name: String
     let notes: String
-    let type: String // Maybe to be only expenses or incomes. Use ENUM.
+    let type: String // Maybe to be used only for expenses or incomes. Use ENUM.
     let userId: String // For Firebase
     
-    // MARK: Relationships
+    // Relationships
     let transactions: [TransactionModel]
     
     init() {
-        id = UUID()
         dateCreated = .init()
         dateModified = .init()
-        icon = ""
+        id = UUID()
         isActive = false
+        
+        icon = ""
         name = ""
         notes = ""
         type = ""
@@ -38,11 +41,12 @@ struct AccountModel: Identifiable {
     }
     
     init(account: Account) {
-        id = account.id ?? UUID()
         dateCreated = account.dateCreated ?? .init()
         dateModified = account.dateModified ?? .init()
-        icon = account.icon ?? ""
+        id = account.id ?? UUID()
         isActive = account.isActive
+        
+        icon = account.icon ?? ""
         name = account.name ?? ""
         notes = account.notes ?? ""
         type = account.type ?? ""
@@ -51,6 +55,6 @@ struct AccountModel: Identifiable {
     }
     
     private static func convertTransactions(accountCoreData: Account) -> [TransactionModel] {
-        (accountCoreData.transaction as? Set<Transaction>)?.map { TransactionModel(transaction: $0) } ?? []
+        (accountCoreData.transaction as? Set<Transaction>)?.map { TransactionModel($0) } ?? []
     }
 }

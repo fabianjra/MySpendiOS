@@ -27,7 +27,7 @@ struct PersistenceController {
         container = NSPersistentContainer(name: CDConstants.containerName)
         
         if inMemory {
-            container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
+            container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null") // solo guardar en RAM
         }
         
         // Inicializa el contenedor y carga el contenido de Core Data

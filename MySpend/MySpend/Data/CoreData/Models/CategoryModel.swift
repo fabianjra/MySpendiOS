@@ -8,25 +8,29 @@
 import Foundation
 
 struct CategoryModel: Identifiable {
-    let id: UUID
     
-    // MARK: Attributes
+    
+    // Shared attributes (Abstract class):
     let dateCreated: Date
-    let dateLastUsed: Date
     let dateModified: Date
-    var icon: String // Emoji
+    let id: UUID
     let isActive: Bool
+    
+    // Entity-specific Attributes
+    let dateLastUsed: Date
+    var icon: String // Emoji
     var name: String
     var type: TransactionType
     let usageCount: Int
     
     init() {
-        id = UUID()
         dateCreated = .init()
-        dateLastUsed = .init()
         dateModified = .init()
-        icon = ""
+        id = UUID()
         isActive = true
+        
+        dateLastUsed = .init()
+        icon = ""
         name = ""
         type = .expense
         usageCount = .zero
@@ -42,14 +46,19 @@ struct CategoryModel: Identifiable {
     
     // When a category is going to load from Core Data and need to map to Category Model
     init(_ category: Category) {
-        id = category.id ?? UUID()
         dateCreated = category.dateCreated ?? .init()
-        dateLastUsed = category.dateLastUsed ?? .init()
         dateModified = category.dateModified ?? .init()
-        icon = category.icon ?? ""
+        id = category.id ?? UUID()
         isActive = category.isActive
+        
+        dateLastUsed = category.dateLastUsed ?? .init()
+        icon = category.icon ?? ""
         name = category.name ?? ""
-        type = TransactionType(rawValue: category.type ?? "expense") ?? .expense
+        type = CategoryModel.getTransactionType(from: category.type)
         usageCount = Int(category.usageCount)
+    }
+    
+    static private func getTransactionType(from rawType: String?) -> TransactionType {
+        return TransactionType(rawValue: rawType ?? TransactionType.expense.rawValue) ?? .expense
     }
 }

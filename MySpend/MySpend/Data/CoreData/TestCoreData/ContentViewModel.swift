@@ -29,7 +29,7 @@ class ContentViewModel: ObservableObject {
     
     func fectchCategories() {
         do {
-            categories = try CategoryManager(viewContext: viewContext).fetchAllCategories(sortedBy: CDSort.CategoryEntity.byName_dateCreated)
+            categories = try CategoryManager(viewContext: viewContext).fetchAll(sortedBy: CDSort.CategoryEntity.byName_dateCreated)
         } catch {
             Logs.CatchException(error, type: .CoreData)
             //categories = [] //TODO: Validar si es necesario en caso de que ya se hayan cargado categories.
@@ -38,7 +38,7 @@ class ContentViewModel: ObservableObject {
     
     func addNewCategory(_ item: CategoryModel) {
         do {
-            try CategoryManager(viewContext: viewContext).CraateNewCategory(item)
+            try CategoryManager(viewContext: viewContext).create(item)
         } catch {
             Logs.CatchException(error, type: .CoreData)
         }
@@ -46,7 +46,7 @@ class ContentViewModel: ObservableObject {
     
     func updateCategory(_ item: CategoryModel) {
         do {
-            try CategoryManager(viewContext: viewContext).updateCategory(item)
+            try CategoryManager(viewContext: viewContext).update(item)
         } catch CDError.notFound {
             
             //TODO: Mejorar implementacion:
@@ -62,7 +62,7 @@ class ContentViewModel: ObservableObject {
     
     func deleteCategory(_ item: CategoryModel) {
         do {
-            try CategoryManager(viewContext: viewContext).deleteCategory(item)
+            try CategoryManager(viewContext: viewContext).delete(item)
         } catch {
             Logs.CatchException(error, type: .CoreData)
         }
@@ -70,7 +70,7 @@ class ContentViewModel: ObservableObject {
     
     func deleteCategory(at indexSet: IndexSet, from categories: [CategoryModel]) {
         do {
-            try CategoryManager(viewContext: viewContext).deleteCategory(at: indexSet, from: categories)
+            try CategoryManager(viewContext: viewContext).delete(at: indexSet, from: categories)
         } catch {
             Logs.CatchException(error, type: .CoreData)
         }
