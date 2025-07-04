@@ -28,15 +28,41 @@ struct CategoryManager {
     
     // MARK: READ
     
+    /**
+     Fetch `Category` objects matching a predicate, sort them, and return the results as `[CategoryModel]`.
+     
+      ### Example
+      ```swift
+      // 1. Uso por defecto (solo categorías activas ordenadas por nombre)
+      let categories = try manager.fetchAllCategories()
+     
+      // 2. Filtro combinado y orden personalizado
+      let predicate = "isActive == %@ AND type == %@"
+      let args: [Any] = [true, TransactionType.expense.rawValue]
+      let order = [
+          NSSortDescriptor(keyPath: \Category.name, ascending: true),
+          NSSortDescriptor(keyPath: \Category.dateCreated, ascending: false)
+      ]
+     
+      let expenseCategories = try manager.fetchAllCategories(
+          predicateFormat: predicate,
+          predicateArgs: args,
+          sortedBy: order
+      )
+      ```
+     
+     - Parameters:
+       - predicateFormat: NSPredicate format string (default `"isActive == %@"`).
+       - predicateArgs: Arguments for the predicate (default `[true]`).
+       - sortDescriptors: Sorting criteria (default by `name` ascending).
+     
+     - Returns: An array of `CategoryModel`.
+     - Throws: Propagates any Core Data fetch errors.
+     */
     func fetchAllCategories(predicateFormat: String = CDConstants.Predicates.isActive,
                             predicateArgs: [Any] = [true],
                             sortedBy sortDescriptors: [NSSortDescriptor] = [NSSortDescriptor(keyPath: \Category.name, ascending: true)]) throws -> [CategoryModel] {
-        /* Example:
-        let sortByNameThenDate = [
-            NSSortDescriptor(keyPath: \Category.name, ascending: true),
-            NSSortDescriptor(keyPath: \Category.dateCreated, ascending: false) // o true
-        ] */
-        
+
         let request: NSFetchRequest<Category> = Category.fetchRequest()
         request.sortDescriptors = sortDescriptors
         request.predicate = NSPredicate(format: predicateFormat, argumentArray: predicateArgs)
@@ -53,6 +79,14 @@ struct CategoryManager {
     
     // MARK: CREATE / UPDATE
     
+    /**
+     Create and persist a new Core Data `Category` from a `CategoryModel`.
+    
+     - Parameters:
+        - category: Source model with the data to store.
+     
+     - Throws: Any error thrown by `viewContext.save()`.
+     */
     func CraateNewCategory(_ category: CategoryModel) throws {
         // Se crea un nuevo objeto "Entity" para mapear los campos que se van a guardar en la Entidad de Note.
         // Se debe utilizar el contexto que ya está instanciado.
@@ -74,6 +108,14 @@ struct CategoryManager {
         try viewContext.save()
     }
     
+    /**
+     Update an existing `Category` with values from a `CategoryModel`.
+    
+     - Parameters;
+        - model: Model containing the new values.
+     
+     - Throws: `.notFound` (from `fetchedCategory`) or any Core Data save error.
+     */
     func updateCategory(_ model: CategoryModel) throws {
         let item = try fetchedCategory(model)
         
