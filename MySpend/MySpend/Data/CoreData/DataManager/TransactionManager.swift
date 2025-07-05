@@ -57,7 +57,7 @@ struct TransactionManager {
             entity.isActive = model.isActive
             
             // Entity-specific Attributes
-            entity.amount = try UtilsCurrency.makeDecimal(model.amount)
+            entity.amount = UtilsCurrency.makeDecimal(model.amount)
             entity.dateTransaction = model.dateTransaction
             entity.notes = model.notes
             entity.category = try resolveCategory(from: model.category)
@@ -75,7 +75,7 @@ struct TransactionManager {
             item.isActive = model.isActive
             
             // Entity-specific Attributes
-            item.amount = try UtilsCurrency.makeDecimal(model.amount)
+            item.amount = UtilsCurrency.makeDecimal(model.amount)
             item.notes = model.notes
             item.category = try resolveCategory(from: model.category)
 
