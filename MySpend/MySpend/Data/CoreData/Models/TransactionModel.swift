@@ -44,10 +44,10 @@ struct TransactionModel {
         amount = transaction.amount?.decimalValue ?? .zero
         dateTransaction = transaction.dateTransaction ?? .init()
         notes = transaction.notes ?? ""
-        category = TransactionModel.convertToCategoryModel(fromCoreData: transaction.category)
+        category = TransactionModel.convertToCategoryModel(transaction.category)
     }
     
-    private static func convertToCategoryModel(fromCoreData categoryCoreData: Category?) -> CategoryModel {
+    private static func convertToCategoryModel(_ categoryCoreData: Category?) -> CategoryModel {
         if let category = categoryCoreData {
             return CategoryModel(category)
         } else {

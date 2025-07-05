@@ -40,7 +40,7 @@ struct AccountModel: Identifiable {
         transactions = []
     }
     
-    init(account: Account) {
+    init(_ account: Account) {
         dateCreated = account.dateCreated ?? .init()
         dateModified = account.dateModified ?? .init()
         id = account.id ?? UUID()
@@ -51,10 +51,10 @@ struct AccountModel: Identifiable {
         notes = account.notes ?? ""
         type = account.type ?? ""
         userId = account.userId ?? ""
-        transactions = AccountModel.convertTransactions(accountCoreData: account)
+        transactions = AccountModel.convertTransactionsToModel(account.transactions)
     }
     
-    private static func convertTransactions(accountCoreData: Account) -> [TransactionModel] {
-        (accountCoreData.transaction as? Set<Transaction>)?.map { TransactionModel($0) } ?? []
+    private static func convertTransactionsToModel(_ transactionsCoreData: NSSet?) -> [TransactionModel] {
+        (transactionsCoreData as? Set<Transaction>)?.map { TransactionModel($0) } ?? []
     }
 }
