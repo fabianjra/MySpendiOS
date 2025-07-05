@@ -105,15 +105,8 @@ struct TransactionManager {
     
     // MARK: SHARED
     
-    static func createFetchRequest(_ model: TransactionModel) -> NSFetchRequest<Transaction> {
-        let fetchRequest: NSFetchRequest<Transaction> = Transaction.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: CDConstants.Predicates.findItemById, model.id.uuidString)
-        fetchRequest.fetchLimit = 1
-        return fetchRequest
-    }
-    
     private func fetch(_ model: TransactionModel) throws -> Transaction {
-        let fetchRequest = TransactionManager.createFetchRequest(model)
+        let fetchRequest = CoreDataUtilities.createFetchRequest(ByID: model.id.uuidString, entity: Transaction.self)
         let itemCoreData = try viewContext.fetch(fetchRequest)
         
         guard let item = itemCoreData.first else {
@@ -127,7 +120,7 @@ struct TransactionManager {
         if let existing = try CategoryManager.fetch(model, viewContextArg: viewContext) {
             existing.dateLastUsed = .now
             existing.usageCount += 1
-            return existing // encontrada
+            return existing // Category Entity encontrada
         }
         
         // Si no existe, se crea a partir del modelo

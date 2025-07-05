@@ -158,24 +158,9 @@ struct CategoryManager {
     
     
     // MARK: SHARED
-    
-    static func createFetchRequest(_ model: CategoryModel) -> NSFetchRequest<Category> {
-        
-        // Primero se necesita hacer el Fetch Request para saber cual nota se va a modificar.
-        let fetchRequest: NSFetchRequest<Category> = Category.fetchRequest()
-        
-        // NSPredicate permite buscar un valore de una entidad filtrando.
-        // NSPredicate solamente establece una configuracion de busqueda. Aun no se busca nada aqui.
-        // Format: formato de filtro (en este caso, busqueda por ID).
-        // argument: Reemplazo del %@ para igualarlo al valor a buscar.
-        fetchRequest.predicate = NSPredicate(format: CDConstants.Predicates.findItemById, model.id.uuidString)
-        fetchRequest.fetchLimit = 1 //Solamente obtiene 1 resultado.
-        
-        return fetchRequest
-    }
-    
+
     private func fetch(_ model: CategoryModel) throws -> Category {
-        let fetchRequest = CategoryManager.createFetchRequest(model)
+        let fetchRequest = CoreDataUtilities.createFetchRequest(ByID: model.id.uuidString, entity: Category.self)
         let itemCoreData = try viewContext.fetch(fetchRequest)
         
         guard let item = itemCoreData.first else {
@@ -186,7 +171,7 @@ struct CategoryManager {
     }
     
     static func fetch(_ model: CategoryModel, viewContextArg: NSManagedObjectContext) throws -> Category? {
-        let fetchRequest = CategoryManager.createFetchRequest(model)
+        let fetchRequest = CoreDataUtilities.createFetchRequest(ByID: model.id.uuidString, entity: Category.self)
         let itemCoreData = try viewContextArg.fetch(fetchRequest)
         
         guard let item = itemCoreData.first else {
