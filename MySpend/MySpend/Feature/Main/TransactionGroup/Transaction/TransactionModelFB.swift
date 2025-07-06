@@ -13,7 +13,7 @@ struct TransactionModelFB: Identifiable, Codable, Equatable, Hashable {
     var dateTransaction: Date = .init()
     var category: CategoryModelFB = CategoryModelFB()
     var notes: String = ""
-    var transactionType: CategoryType = .expense
+    var categoryType: CategoryType = .expense
     var dateCreated: Date = .init()
     var datemodified: Date = .init()
     var userId: String = ""
@@ -24,7 +24,7 @@ struct TransactionModelFB: Identifiable, Codable, Equatable, Hashable {
         case dateTransaction
         case category
         case notes
-        case transactionType
+        case categoryType
         case dateCreated
         case datemodified
         case userId

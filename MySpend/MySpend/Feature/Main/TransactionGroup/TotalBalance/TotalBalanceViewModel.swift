@@ -14,17 +14,17 @@ class TotalBalanceViewModel: ObservableObject {
     @Published var totalBalanceFormatted: String = Decimal.zero.convertAmountDecimalToString.addCurrencySymbol
     
     /**
-     Esta función filtra las transacciones por transactionType, sumando los ingresos (income) y los gastos (expense).
+     Esta función filtra las transacciones por CategoryType, sumando los ingresos (income) y los gastos (expense).
      Luego, calcula el balance final restando los gastos a los ingresos y formatea el balance.
      */
     func calculateTotalBalance(_ transactions: [TransactionModelFB]) {
         
         let totalIncome = transactions
-            .filter { $0.transactionType == .income }
+            .filter { $0.categoryType == .income }
             .reduce(Decimal.zero) { $0 + $1.amount }
 
         let totalExpenses = transactions
-            .filter { $0.transactionType == .expense }
+            .filter { $0.categoryType == .expense }
             .reduce(Decimal.zero) { $0 + $1.amount }
 
         let totalBalance = totalIncome - totalExpenses

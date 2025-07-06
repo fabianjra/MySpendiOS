@@ -73,7 +73,7 @@ struct AddModifyTransactionView: View {
                     
                     // MARK: SEGMENT
                     VStack {
-                        PickerSegmented(selection: modelBinding.transactionType,
+                        PickerSegmented(selection: modelBinding.categoryType,
                                         segments: CategoryType.allCases)
                         .padding(.bottom)
                     }
@@ -165,9 +165,9 @@ struct AddModifyTransactionView: View {
                         }
                     }
                 }
-                .onChange(of: modelBinding.wrappedValue.transactionType) {
+                .onChange(of: modelBinding.wrappedValue.categoryType) {
                     viewModel.errorMessage = ""
-                    modelBinding.wrappedValue.category = CategoryModelFB() /// Clean category beacause won't be the same TransactionType (Exponse, income).
+                    modelBinding.wrappedValue.category = CategoryModelFB() /// Clean category beacause won't be the same CategoryType (Exponse, income).
                 }
                 .sheet(isPresented: $viewModel.showDatePicker) {
                     DatePickerModalView(selectedDate: $selectedDate,
@@ -176,7 +176,7 @@ struct AddModifyTransactionView: View {
                 }
                 .sheet(isPresented: $viewModel.showCategoryList) {
                     SelectCategoryModalView(selectedCategory: modelBinding.category,
-                                            categoryType: modelBinding.transactionType)
+                                            categoryType: modelBinding.categoryType)
                 }
             }
         }

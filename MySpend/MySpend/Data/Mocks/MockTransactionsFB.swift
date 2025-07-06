@@ -14,98 +14,98 @@ struct MockTransactionsFB {
                                           dateTransaction: Calendar.current.date(byAdding: .month, value: 15, to: .now)!,
                                           category: MocksCategoriesFB.expense1,
                                           notes: "",
-                                          transactionType: MocksCategoriesFB.income1.categoryType),
+                                          categoryType: MocksCategoriesFB.income1.categoryType),
                          
                          TransactionModelFB(id: UUID().uuidString,
                                           amount: 200,
                                           dateTransaction: .now,
                                           category: MocksCategoriesFB.expense2,
                                           notes: "Fue un almuerzo de trabajo",
-                                          transactionType: MocksCategoriesFB.expense2.categoryType),
+                                          categoryType: MocksCategoriesFB.expense2.categoryType),
                          
                          TransactionModelFB(id: UUID().uuidString,
                                           amount: 50,
                                           dateTransaction: Calendar.current.date(byAdding: .day, value: 56, to: .now)!,
                                           category: MocksCategoriesFB.expense2,
                                           notes: "",
-                                          transactionType: MocksCategoriesFB.expense2.categoryType),
+                                          categoryType: MocksCategoriesFB.expense2.categoryType),
                          
                          TransactionModelFB(id: UUID().uuidString,
                                           amount: 500,
                                           dateTransaction: Calendar.current.date(byAdding: .month, value: -2, to: .now)!,
                                           category: MocksCategoriesFB.expense3,
                                           notes: "",
-                                          transactionType: MocksCategoriesFB.expense3.categoryType),
+                                          categoryType: MocksCategoriesFB.expense3.categoryType),
                          
                          TransactionModelFB(id: UUID().uuidString,
                                           amount: 7000,
                                           dateTransaction: Calendar.current.date(byAdding: .year, value: 1, to: .now)!,
                                           category: MocksCategoriesFB.expense3,
                                           notes: "",
-                                          transactionType: MocksCategoriesFB.expense3.categoryType),
+                                          categoryType: MocksCategoriesFB.expense3.categoryType),
                          
                          TransactionModelFB(id: UUID().uuidString,
                                           amount: 3455,
                                           dateTransaction: Calendar.current.date(byAdding: .day, value: 4, to: .now)!,
                                           category: MocksCategoriesFB.expense1,
                                           notes: "",
-                                          transactionType: MocksCategoriesFB.expense1.categoryType),
+                                          categoryType: MocksCategoriesFB.expense1.categoryType),
                          
                          TransactionModelFB(id: UUID().uuidString,
                                           amount: 560,
                                           dateTransaction: .now,
                                           category: MocksCategoriesFB.expense1,
                                           notes: "",
-                                          transactionType: MocksCategoriesFB.expense1.categoryType),
+                                          categoryType: MocksCategoriesFB.expense1.categoryType),
                          
                          TransactionModelFB(id: UUID().uuidString,
                                           amount: 300,
                                           dateTransaction: Calendar.current.date(byAdding: .day, value: 1, to: .now)!,
                                           category: MocksCategoriesFB.income2,
                                           notes: "devolucion de un prestamo",
-                                          transactionType: MocksCategoriesFB.income2.categoryType),
+                                          categoryType: MocksCategoriesFB.income2.categoryType),
                          
                          TransactionModelFB(id: UUID().uuidString,
                                           amount: 250000,
                                           dateTransaction: .now,
                                           category: MocksCategoriesFB.income1,
                                           notes: "",
-                                          transactionType: MocksCategoriesFB.income1.categoryType)]
+                                          categoryType: MocksCategoriesFB.income1.categoryType)]
     
     static let saturated = [TransactionModelFB(id: UUID().uuidString,
                                              amount: 142342342354234,
                                              dateTransaction: Calendar.current.date(byAdding: .month, value: 1, to: .now)!,
                                              category: MocksCategoriesFB.expense1,
                                              notes: "Comidaasf safasdf saf sa asdffasdfasryewrrts fsadf s",
-                                             transactionType: MocksCategoriesFB.income1.categoryType),
+                                             categoryType: MocksCategoriesFB.income1.categoryType),
                             
                             TransactionModelFB(id: UUID().uuidString,
                                              amount: 52354234532523,
                                              dateTransaction: .now,
                                              category: MocksCategoriesFB.expenseSaturated1,
                                              notes: "Gasolina asdfsaf asdfasd fsadf as fas",
-                                             transactionType: MocksCategoriesFB.expenseSaturated1.categoryType),
+                                             categoryType: MocksCategoriesFB.expenseSaturated1.categoryType),
                             
                             TransactionModelFB(id: UUID().uuidString,
                                              amount: 500523532535325320,
                                              dateTransaction: Calendar.current.date(byAdding: .day, value: 2, to: .now)!,
                                              category: MocksCategoriesFB.expenseSaturated2,
                                              notes: "",
-                                             transactionType: MocksCategoriesFB.expenseSaturated2.categoryType),
+                                             categoryType: MocksCategoriesFB.expenseSaturated2.categoryType),
                             
                             TransactionModelFB(id: UUID().uuidString,
                                              amount: 50,
                                              dateTransaction: Calendar.current.date(byAdding: .day, value: 1, to: .now)!,
                                              category: MocksCategoriesFB.income1,
                                              notes: "devolucion de un prestamo",
-                                             transactionType: MocksCategoriesFB.income1.categoryType),
+                                             categoryType: MocksCategoriesFB.income1.categoryType),
                             
                             TransactionModelFB(id: UUID().uuidString,
                                              amount: 500,
                                              dateTransaction: .now,
                                              category: MocksCategoriesFB.income1,
                                              notes: "",
-                                             transactionType: MocksCategoriesFB.income1.categoryType)]
+                                             categoryType: MocksCategoriesFB.income1.categoryType)]
     
     static let random_generated = (1...Int.random(in:10...40)).map { item in
         
@@ -117,6 +117,6 @@ struct MockTransactionsFB {
                                                  name: "nombre categoria",
                                                  categoryType: .expense),
                          notes: "",
-                         transactionType: .expense)
+                         categoryType: .expense)
     }
 }

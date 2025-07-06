@@ -170,7 +170,7 @@ struct TransactionHistoryView: View {
                             Spacer()
                             
                             TextPlain(item.amount.convertAmountDecimalToString.addCurrencySymbol,
-                                      color: item.transactionType == .income ? Color.primaryLeading : Color.alert)
+                                      color: item.categoryType == .income ? Color.primaryLeading : Color.alert)
                             
                             Image.chevronRight
                                 .foregroundStyle(Color.textPrimaryForeground)
