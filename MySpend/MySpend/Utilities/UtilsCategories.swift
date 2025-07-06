@@ -9,7 +9,7 @@ import Foundation
 
 struct UtilsCategories {
     
-    static func filteredCategories(_ categories: [CategoryModelFB], by categoryType: TransactionType, sortType: SortCategories? = nil) -> [CategoryModelFB] {
+    static func filteredCategories(_ categories: [CategoryModelFB], by categoryType: CategoryType, sortType: SortCategories? = nil) -> [CategoryModelFB] {
         
         let filteredList: [CategoryModelFB] = categories.filter { $0.categoryType == categoryType }
         

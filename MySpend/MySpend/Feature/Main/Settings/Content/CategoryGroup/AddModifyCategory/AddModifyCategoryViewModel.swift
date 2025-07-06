@@ -12,7 +12,7 @@ class AddModifyCategoryViewModel: BaseViewModel {
     @Published var showIconsModal = false
     @Published var showAlert = false
     
-    func addNewCategory(_ model: CategoryModelFB, categoryType: TransactionType) async -> ResponseModelFB {
+    func addNewCategory(_ model: CategoryModelFB, categoryType: CategoryType) async -> ResponseModelFB {
         if model.name.isEmptyOrWhitespace {
             return ResponseModelFB(.error, Errors.emptySpaces.localizedDescription)
         }
@@ -40,7 +40,7 @@ class AddModifyCategoryViewModel: BaseViewModel {
         return response
     }
     
-    func modifyCategory(_ model: CategoryModelFB, categoryType: TransactionType) async -> ResponseModelFB {
+    func modifyCategory(_ model: CategoryModelFB, categoryType: CategoryType) async -> ResponseModelFB {
         if model.name.isEmptyOrWhitespace {
             return ResponseModelFB(.error, Errors.emptySpaces.localizedDescription)
         }

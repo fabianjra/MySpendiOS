@@ -10,7 +10,7 @@ import FirebaseFirestore
 class CategoryViewModel: BaseViewModel {
     
     @Published var categories: [CategoryModelFB]
-    @Published var categoryType: TransactionType = .expense
+    @Published var categoryType: CategoryType = .expense
     
     // MARK: EDIT
     @Published var isEditing: Bool = false

@@ -26,7 +26,7 @@ struct AddModifyCategoryView: View {
     @Binding var model: CategoryModelFB
     @State private var defaultModel = CategoryModelFB()
     
-    @Binding var categoryType: TransactionType
+    @Binding var categoryType: CategoryType
     
     // Options for: Category added from New Transaction (Should select the new category when added).
     @Binding var isNewCategoryAdded: Bool //Allows the dismiss in the UpperView when a new category is added.
@@ -52,7 +52,7 @@ struct AddModifyCategoryView: View {
     
     /// Way to initialize a Binding if you want to pass a value (model) or just initialize the model with default valures.
     init(model: Binding<CategoryModelFB>? = nil,
-         categoryType: Binding<TransactionType>,
+         categoryType: Binding<CategoryType>,
          
          isNewCategoryAdded: Binding<Bool>? = nil,
          newCategoryID: Binding<String>? = nil) {
@@ -96,7 +96,7 @@ struct AddModifyCategoryView: View {
             // MARK: SEGMENT
             VStack {
                 PickerSegmented(selection: $categoryType,
-                                segments: TransactionType.allCases)
+                                segments: CategoryType.allCases)
                 .frame(maxWidth: ConstantFrames.iPadMaxWidth)
                 .padding(.bottom)
             }

@@ -9,8 +9,8 @@ import SwiftUI
 
 struct PickerSegmented: UIViewRepresentable {
     
-    @Binding var selection: TransactionType
-    let segments: [TransactionType]
+    @Binding var selection: CategoryType
+    let segments: [CategoryType]
     
     func makeUIView(context: Context) -> UISegmentedControl {
         
@@ -67,8 +67,8 @@ extension Collection {
 
 #Preview {
     VStack {
-        PickerSegmented(selection: .constant(.expense), segments: TransactionType.allCases)
+        PickerSegmented(selection: .constant(.expense), segments: CategoryType.allCases)
         
-        PickerSegmented(selection: .constant(.income), segments: TransactionType.allCases)
+        PickerSegmented(selection: .constant(.income), segments: CategoryType.allCases)
     }
 }

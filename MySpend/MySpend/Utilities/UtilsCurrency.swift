@@ -114,7 +114,7 @@ extension UtilsCurrency {
     typealias groupedTransactions = [(category: CategoryModelFB, totalAmount: Decimal)]
     
     /**
-     Esta función filtra las transacciones por transactionType, sumando los ingresos (income) y los gastos (expense).
+     Esta función filtra las transacciones por CategoryType, sumando los ingresos (income) y los gastos (expense).
      Luego, calcula el balance final restando los gastos a los ingresos y formatea el balance.
      */
     static func calculateGroupedTransactions(_ transactions: [TransactionModelFB]) -> groupedTransactions {

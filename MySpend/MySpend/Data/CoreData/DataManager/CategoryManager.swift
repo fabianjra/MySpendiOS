@@ -37,7 +37,7 @@ struct CategoryManager {
      
       // 2. Filtro combinado y orden personalizado
       let predicate = "isActive == %@ AND type == %@"
-      let args: [Any] = [true, TransactionType.expense.rawValue]
+      let args: [Any] = [true, CategoryType.expense.rawValue]
       let order = [
           NSSortDescriptor(keyPath: \Category.name, ascending: true),
           NSSortDescriptor(keyPath: \Category.dateCreated, ascending: false)

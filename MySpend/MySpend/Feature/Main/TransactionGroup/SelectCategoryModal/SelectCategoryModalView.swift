@@ -13,7 +13,7 @@ struct SelectCategoryModalView: View {
     
     // Parameters managed by New Transaction (add or modify):
     @Binding var selectedCategory: CategoryModelFB
-    @Binding var categoryType: TransactionType
+    @Binding var categoryType: CategoryType
     
     @StateObject var viewModel = CategoryViewModel()
     
@@ -38,7 +38,7 @@ struct SelectCategoryModalView: View {
             
             VStack {
                 PickerSegmented(selection: $categoryType,
-                                segments: TransactionType.allCases)
+                                segments: CategoryType.allCases)
                 .frame(maxWidth: ConstantFrames.iPadMaxWidth)
                 .padding(.bottom, ConstantViews.mediumSpacing)
                 

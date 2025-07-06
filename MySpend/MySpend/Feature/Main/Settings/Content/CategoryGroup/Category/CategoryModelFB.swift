@@ -11,7 +11,7 @@ struct CategoryModelFB: Identifiable, Codable, Equatable, Hashable  {
     var id: String = ""
     var icon: String = CategoryIcons.household.list.first ?? "tag.fill"
     var name: String = ""
-    var categoryType: TransactionType = .expense
+    var categoryType: CategoryType = .expense
     var dateCreated: Date = .init()
     var datemodified: Date = .init()
     var userId: String = ""
@@ -45,7 +45,7 @@ struct CategoryModelFB: Identifiable, Codable, Equatable, Hashable  {
         self.id = try container.decode(String.self, forKey: .id)
         self.icon = try container.decode(String.self, forKey: .icon)
         self.name = try container.decode(String.self, forKey: .name)
-        self.categoryType = try container.decode(TransactionType.self, forKey: .categoryType)
+        self.categoryType = try container.decode(CategoryType.self, forKey: .categoryType)
         self.dateCreated = try container.decode(Date.self, forKey: .dateCreated)
         self.datemodified = try container.decode(Date.self, forKey: .datemodified)
         self.userId = try container.decode(String.self, forKey: .userId)
@@ -59,7 +59,7 @@ struct CategoryModelFB: Identifiable, Codable, Equatable, Hashable  {
     init(id: String = "",
          icon: String = CategoryIcons.household.list.first ?? "tag.fill",
          name: String = "",
-         categoryType: TransactionType = .expense,
+         categoryType: CategoryType = .expense,
          dateCreated: Date = .init(),
          datemodified: Date = .init(),
          userId: String = "",
