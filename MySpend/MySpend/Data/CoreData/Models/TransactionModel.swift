@@ -16,13 +16,13 @@ struct TransactionModel {
     let isActive: Bool
     
     // Entity-specific Attributes
-    let amount: Decimal
-    let dateTransaction: Date
-    let notes: String
+    var amount: Decimal
+    var dateTransaction: Date
+    var notes: String
     
     // Relationships
-    let category: CategoryModel
-    let account: AccountModel
+    var category: CategoryModel
+    var account: AccountModel
     
     init() {
         dateCreated = .init()
@@ -37,17 +37,28 @@ struct TransactionModel {
         account = AccountModel()
     }
     
-    init(_ transaction: Transaction) {
-        dateCreated = transaction.dateCreated ?? .init()
-        dateModified = transaction.dateModified ?? .init()
-        id = transaction.id ?? UUID()
-        isActive = transaction.isActive
+    // When a new Transaction is created
+    init(amount: Decimal, dateTransaction: Date, notes: String, category: CategoryModel, account: AccountModel) {
+        self.init()
+        self.amount = amount
+        self.dateTransaction = dateTransaction
+        self.notes = notes
+        self.category = category
+        self.account = account
+    }
+    
+    // Init the model from Entity
+    init(_ entity: Transaction) {
+        dateCreated = entity.dateCreated ?? .init()
+        dateModified = entity.dateModified ?? .init()
+        id = entity.id ?? UUID()
+        isActive = entity.isActive
         
-        amount = transaction.amount?.decimalValue ?? .zero
-        dateTransaction = transaction.dateTransaction ?? .init()
-        notes = transaction.notes ?? ""
-        category = TransactionModel.convertToCategoryModel(transaction.category)
-        account = TransactionModel.convertToAccountModel(transaction.account)
+        amount = entity.amount?.decimalValue ?? .zero
+        dateTransaction = entity.dateTransaction ?? .init()
+        notes = entity.notes ?? ""
+        category = TransactionModel.convertToCategoryModel(entity.category)
+        account = TransactionModel.convertToAccountModel(entity.account)
     }
     
     private static func convertToCategoryModel(_ categoryCoreData: Category?) -> CategoryModel {

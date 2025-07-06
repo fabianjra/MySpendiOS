@@ -60,7 +60,7 @@ struct AccountManager {
             entity.icon = model.icon
             entity.name = model.name
             entity.notes = model.notes
-            entity.type = model.type
+            entity.type = model.type.rawValue
             entity.userId = model.userId
             entity.transactions = [] // Se crea sin transacciones
             
@@ -80,7 +80,7 @@ struct AccountManager {
             item.icon = model.icon
             item.name = model.name
             item.notes = model.notes
-            item.type = model.type
+            item.type = model.type.rawValue
             item.userId = model.userId
             
             try viewContext.save()

@@ -37,7 +37,7 @@ struct CategoryModel: Identifiable {
     }
     
     // When a new category is created
-    init(icon: String, name: String, type: CategoryType, userId: String = "") {
+    init(icon: String, name: String, type: CategoryType) {
         self.init()
         self.icon = icon
         self.name = name
@@ -45,17 +45,17 @@ struct CategoryModel: Identifiable {
     }
     
     // When a category is going to load from Core Data and need to map to Category Model
-    init(_ category: Category) {
-        dateCreated = category.dateCreated ?? .init()
-        dateModified = category.dateModified ?? .init()
-        id = category.id ?? UUID()
-        isActive = category.isActive
+    init(_ entity: Category) {
+        dateCreated = entity.dateCreated ?? .init()
+        dateModified = entity.dateModified ?? .init()
+        id = entity.id ?? UUID()
+        isActive = entity.isActive
         
-        dateLastUsed = category.dateLastUsed ?? .init()
-        icon = category.icon ?? ""
-        name = category.name ?? ""
-        type = CategoryModel.getCategoryType(from: category.type)
-        usageCount = Int(category.usageCount)
+        dateLastUsed = entity.dateLastUsed ?? .init()
+        icon = entity.icon ?? ""
+        name = entity.name ?? ""
+        type = CategoryModel.getCategoryType(from: entity.type)
+        usageCount = Int(entity.usageCount)
     }
     
     static private func getCategoryType(from rawType: String?) -> CategoryType {

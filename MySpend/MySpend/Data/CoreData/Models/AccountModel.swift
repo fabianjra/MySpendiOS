@@ -17,11 +17,11 @@ struct AccountModel: Identifiable {
     let isActive: Bool
     
     // Entity-specific Attributes
-    let icon: String // Emoji
-    let name: String
-    let notes: String
-    let type: String // Maybe to be used only for expenses or incomes. Use ENUM.
-    let userId: String // For Firebase
+    var icon: String // Emoji
+    var name: String
+    var notes: String
+    var type: AccountType
+    var userId: String // For Firebase
     
     init() {
         dateCreated = .init()
@@ -32,20 +32,35 @@ struct AccountModel: Identifiable {
         icon = ""
         name = ""
         notes = ""
-        type = ""
+        type = .general
         userId = ""
     }
     
-    init(_ account: Account) {
-        dateCreated = account.dateCreated ?? .init()
-        dateModified = account.dateModified ?? .init()
-        id = account.id ?? UUID()
-        isActive = account.isActive
+    // When a new Transaction is created
+    init(icon: String, name: String, notes: String, type: AccountType) {
+        self.init()
+        self.icon = icon
+        self.name = name
+        self.notes = notes
+        self.type = type
+    }
+    
+    // Init the model from Entity
+    init(_ entity: Account) {
+        dateCreated = entity.dateCreated ?? .init()
+        dateModified = entity.dateModified ?? .init()
+        id = entity.id ?? UUID()
+        isActive = entity.isActive
         
-        icon = account.icon ?? ""
-        name = account.name ?? ""
-        notes = account.notes ?? ""
-        type = account.type ?? ""
-        userId = account.userId ?? ""
+        icon = entity.icon ?? ""
+        name = entity.name ?? ""
+        notes = entity.notes ?? ""
+        type = AccountModel.getAccountType(from: entity.type)
+        userId = entity.userId ?? ""
+    }
+    
+    
+    static private func getAccountType(from rawType: String?) -> AccountType {
+        return AccountType(rawValue: rawType ?? AccountType.general.rawValue) ?? .general
     }
 }
