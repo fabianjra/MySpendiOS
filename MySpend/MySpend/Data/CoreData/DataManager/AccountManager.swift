@@ -41,4 +41,97 @@ struct AccountManager {
         
         return models
     }
+    
+    
+    // MARK: CREATE / UPDATE
+    
+    func create(_ model: AccountModel) throws {
+        try viewContext.performAndWait {
+            
+            let entity = Account(context: viewContext)
+            
+            // Shared attributes (Abstract class):
+            entity.dateCreated = model.dateCreated
+            entity.dateModified = model.dateModified
+            entity.id = model.id
+            entity.isActive = model.isActive
+            
+            // Entity-specific Attributes
+            entity.icon = model.icon
+            entity.name = model.name
+            entity.notes = model.notes
+            entity.type = model.type
+            entity.userId = model.userId
+            entity.transactions = [] // Se crea sin transacciones
+            
+            try viewContext.save()
+        }
+    }
+    
+    func update(_ model: AccountModel) throws {
+        try viewContext.performAndWait {
+            let item = try fetch(model)
+            
+            // Shared attributes (Abstract class):
+            item.dateModified = .now
+            item.isActive = model.isActive
+            
+            // Entity-specific Attributes
+            item.icon = model.icon
+            item.name = model.name
+            item.notes = model.notes
+            item.type = model.type
+            item.userId = model.userId
+            
+            try viewContext.save()
+        }
+    }
+    
+    
+    // MARK: DELETE
+    
+    func delete(_ model: AccountModel) throws {
+        try viewContext.performAndWait {
+            let item = try fetch(model)
+            
+            viewContext.delete(item)
+            try viewContext.save()
+        }
+    }
+    
+    func delete(at offsets: IndexSet, from items: [AccountModel]) throws {
+        for offset in offsets {
+            let model = items[offset]
+            try delete(model)
+        }
+    }
+    
+    
+    // MARK: SHARED
+    
+    private func fetch(_ model: AccountModel) throws -> Account {
+        let fetchRequest = CoreDataUtilities.createFetchRequest(ByID: model.id.uuidString, entity: Account.self)
+        let itemCoreData = try viewContext.fetch(fetchRequest)
+        
+        guard let item = itemCoreData.first else {
+            throw CDError.notFound(id: model.id, entity: Account.description())
+        }
+        
+        return item
+    }
+    
+    /**
+     Public static version to be used by TransactionManager, so TransactionManager can find an Account by ID.
+     */
+    static func fetch(_ model: AccountModel, viewContextArg: NSManagedObjectContext) throws -> Account? {
+        let fetchRequest = CoreDataUtilities.createFetchRequest(ByID: model.id.uuidString, entity: Account.self)
+        let itemCoreData = try viewContextArg.fetch(fetchRequest)
+        
+        guard let item = itemCoreData.first else {
+            Logs.WriteMessage(CDError.notFound(id: model.id, entity: Account.description()).localizedDescription)
+            return nil
+        }
+        
+        return item
+    }
 }

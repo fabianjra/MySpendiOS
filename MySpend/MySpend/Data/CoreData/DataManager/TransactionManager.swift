@@ -60,7 +60,13 @@ struct TransactionManager {
             entity.amount = UtilsCurrency.makeDecimal(model.amount)
             entity.dateTransaction = model.dateTransaction
             entity.notes = model.notes
+            
+            // NOTA:
+            // Con asignar uno de los lados basta; el otro se actualiza al guardar el contexto.
+            // Es decir, no hay que ir a buscar la entidad Category para hacer la funcion de categoryEntity.addToTransaccions(entity).
+            // Eso seria redundante (hace la misma operación dos veces) y solo gasta CPU.
             entity.category = try resolveCategory(from: model.category)
+            entity.account = try resolveAccount(from: model.account)
             
             try viewContext.save()
         }
@@ -123,17 +129,39 @@ struct TransactionManager {
             return existing // Category Entity encontrada
         }
         
-        // Si no existe, se crea a partir del modelo
+        // Si no existe, se crea a partir del modelo recibido
         let entity = Category(context: viewContext)
-        entity.id            = model.id
         entity.dateCreated   = model.dateCreated
         entity.dateModified  = model.dateModified
+        entity.id            = model.id
+        entity.isActive      = model.isActive
+       
         entity.dateLastUsed  = model.dateLastUsed
         entity.icon          = model.icon
-        entity.isActive      = model.isActive
         entity.name          = model.name
         entity.type          = model.type.rawValue
         entity.usageCount    = Int64(model.usageCount + 1)
+        
+        return entity
+    }
+    
+    private func resolveAccount(from model: AccountModel) throws -> Account {
+        if let existing = try AccountManager.fetch(model, viewContextArg: viewContext) {
+            return existing // Account Entity encontrada
+        }
+        
+        // Si no existe, se crea a partir del modelo recibido
+        let entity = Account(context: viewContext)
+        entity.dateCreated   = model.dateCreated
+        entity.dateModified  = model.dateModified
+        entity.id            = model.id
+        entity.isActive      = model.isActive
+        
+        entity.icon          = model.icon
+        entity.name          = model.name
+        entity.notes         = model.notes
+        entity.type          = model.type
+        entity.userId        = model.userId
         
         return entity
     }

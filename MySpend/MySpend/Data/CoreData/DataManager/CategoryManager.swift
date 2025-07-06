@@ -170,6 +170,9 @@ struct CategoryManager {
         return item
     }
     
+    /**
+     Public static version to be used by TransactionManager, so TransactionManager can find a Category by ID.
+    */
     static func fetch(_ model: CategoryModel, viewContextArg: NSManagedObjectContext) throws -> Category? {
         let fetchRequest = CoreDataUtilities.createFetchRequest(ByID: model.id.uuidString, entity: Category.self)
         let itemCoreData = try viewContextArg.fetch(fetchRequest)

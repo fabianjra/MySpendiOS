@@ -22,6 +22,7 @@ struct TransactionModel {
     
     // Relationships
     let category: CategoryModel
+    let account: AccountModel
     
     init() {
         dateCreated = .init()
@@ -33,6 +34,7 @@ struct TransactionModel {
         dateTransaction = .init()
         notes = ""
         category = CategoryModel()
+        account = AccountModel()
     }
     
     init(_ transaction: Transaction) {
@@ -45,6 +47,7 @@ struct TransactionModel {
         dateTransaction = transaction.dateTransaction ?? .init()
         notes = transaction.notes ?? ""
         category = TransactionModel.convertToCategoryModel(transaction.category)
+        account = TransactionModel.convertToAccountModel(transaction.account)
     }
     
     private static func convertToCategoryModel(_ categoryCoreData: Category?) -> CategoryModel {
@@ -52,6 +55,14 @@ struct TransactionModel {
             return CategoryModel(category)
         } else {
             return CategoryModel()
+        }
+    }
+    
+    private static func convertToAccountModel(_ accountCoreData: Account?) -> AccountModel {
+        if let account = accountCoreData {
+            return AccountModel(account)
+        } else {
+            return AccountModel()
         }
     }
 }

@@ -23,9 +23,6 @@ struct AccountModel: Identifiable {
     let type: String // Maybe to be used only for expenses or incomes. Use ENUM.
     let userId: String // For Firebase
     
-    // Relationships
-    let transactions: [TransactionModel]
-    
     init() {
         dateCreated = .init()
         dateModified = .init()
@@ -37,7 +34,6 @@ struct AccountModel: Identifiable {
         notes = ""
         type = ""
         userId = ""
-        transactions = []
     }
     
     init(_ account: Account) {
@@ -51,10 +47,5 @@ struct AccountModel: Identifiable {
         notes = account.notes ?? ""
         type = account.type ?? ""
         userId = account.userId ?? ""
-        transactions = AccountModel.convertTransactionsToModel(account.transactions)
-    }
-    
-    private static func convertTransactionsToModel(_ transactionsCoreData: NSSet?) -> [TransactionModel] {
-        (transactionsCoreData as? Set<Transaction>)?.map { TransactionModel($0) } ?? []
     }
 }
