@@ -12,7 +12,7 @@ struct TabViewMain: View {
     @State private var showNewTransactionModal = false
     @State private var selectedTab: TabViewIcons = .transaction
     @State private var navigateToHistory: Bool = false
-    @State private var selectedDate: Date = Date()
+    @State private var selectedDate: Date = .now
     
     init() {
         UITabBar.appearance().isHidden = true
@@ -72,5 +72,5 @@ struct TabViewMain: View {
 
 #Preview {
     TabViewMain()
-        .environmentObject(AuthViewModel())
+        //.environmentObject(AuthViewModel())
 }

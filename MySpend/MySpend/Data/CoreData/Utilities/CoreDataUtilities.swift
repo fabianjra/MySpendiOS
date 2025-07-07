@@ -20,13 +20,13 @@ struct CoreDataUtilities {
      Example:
      ```swift
      let request = CoreDataUtils.createFetchRequest(ByID: uuidString,
-                                                    entity: Transaction.self)
+     entity: Transaction.self)
      let transaction = try context.fetch(request).first
      ```
      
      - Parameters:
-       - id: The UUID string to match against the entity’s `id` attribute.
-       - entity: The Core Data class to be fetched (e.g., `Category.self`).
+     - id: The UUID string to match against the entity’s `id` attribute.
+     - entity: The Core Data class to be fetched (e.g., `Category.self`).
      
      - Returns: A fully-configured `NSFetchRequest<T>` ready for execution.
      */
@@ -35,5 +35,43 @@ struct CoreDataUtilities {
         request.predicate  = NSPredicate(format: CDConstants.Predicates.findItemById, id)
         request.fetchLimit = 1
         return request
+    }
+    
+    
+    // MARK: CATEGORY
+    
+    static func createCategoryEntity(from model: CategoryModel, viewContext: NSManagedObjectContext) -> Category {
+        let entity = Category(context: viewContext)
+        entity.dateCreated   = model.dateCreated
+        entity.dateModified  = model.dateModified
+        entity.id            = model.id
+        entity.isActive      = model.isActive
+        
+        entity.dateLastUsed  = model.dateLastUsed
+        entity.icon          = model.icon
+        entity.name          = model.name
+        entity.type          = model.type.rawValue
+        entity.usageCount    = Int64(model.usageCount)
+        
+        return entity
+    }
+    
+    
+    // MARK: ACCOUNT
+    
+    static func createAccountEntity(from model: AccountModel, viewContext: NSManagedObjectContext) -> Account {
+        let entity = Account(context: viewContext)
+        entity.dateCreated   = model.dateCreated
+        entity.dateModified  = model.dateModified
+        entity.id            = model.id
+        entity.isActive      = model.isActive
+        
+        entity.icon          = model.icon
+        entity.name          = model.name
+        entity.notes         = model.notes
+        entity.type          = model.type.rawValue
+        entity.userId        = model.userId
+        
+        return entity
     }
 }

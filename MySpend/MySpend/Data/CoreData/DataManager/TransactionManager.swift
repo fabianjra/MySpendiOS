@@ -130,17 +130,8 @@ struct TransactionManager {
         }
         
         // Si no existe, se crea a partir del modelo recibido
-        let entity = Category(context: viewContext)
-        entity.dateCreated   = model.dateCreated
-        entity.dateModified  = model.dateModified
-        entity.id            = model.id
-        entity.isActive      = model.isActive
-       
-        entity.dateLastUsed  = model.dateLastUsed
-        entity.icon          = model.icon
-        entity.name          = model.name
-        entity.type          = model.type.rawValue
-        entity.usageCount    = Int64(model.usageCount + 1)
+        let entity = CoreDataUtilities.createCategoryEntity(from: model, viewContext: viewContext)
+        entity.usageCount = Int64(model.usageCount + 1)
         
         return entity
     }
@@ -151,18 +142,7 @@ struct TransactionManager {
         }
         
         // Si no existe, se crea a partir del modelo recibido
-        let entity = Account(context: viewContext)
-        entity.dateCreated   = model.dateCreated
-        entity.dateModified  = model.dateModified
-        entity.id            = model.id
-        entity.isActive      = model.isActive
-        
-        entity.icon          = model.icon
-        entity.name          = model.name
-        entity.notes         = model.notes
-        entity.type          = model.type.rawValue
-        entity.userId        = model.userId
-        
+        let entity = CoreDataUtilities.createAccountEntity(from: model, viewContext: viewContext)
         return entity
     }
 }
