@@ -6,29 +6,16 @@
 //
 
 import SwiftUI
-import CoreData
 
 struct TransactionHistoryView: View {
     
-    @StateObject var viewModel: TransactionHistoryViewModel
+    @StateObject var viewModel = TransactionHistoryViewModel()
     
     @Binding var transactionsLoaded: [TransactionModel]
     @Binding var dateTimeInterval: DateTimeInterval
     @Binding var selectedDate: Date
     
     @State private var selectedModel = TransactionModel()
-    
-    init(transactionsLoaded: Binding<[TransactionModel]>,
-         dateTimeInterval: Binding<DateTimeInterval>,
-         selectedDate: Binding<Date>,
-         viewContext: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
-
-        _transactionsLoaded = transactionsLoaded
-        _dateTimeInterval = dateTimeInterval
-        _selectedDate = selectedDate
-        
-        _viewModel = StateObject(wrappedValue: TransactionHistoryViewModel(viewContext: viewContext))
-    }
     
     var body: some View {
         ContentContainer {
@@ -308,8 +295,7 @@ struct TransactionHistoryView: View {
     VStack {
         TransactionHistoryView(transactionsLoaded: .constant([]),
                                dateTimeInterval: $dateTimeInterval,
-                               selectedDate: $selectedDate,
-                               viewContext: MocksEntities.preview.container.viewContext)
+                               selectedDate: $selectedDate)
             .environment(\.locale, .init(identifier: "en_US_POSIX"))
     }
 }

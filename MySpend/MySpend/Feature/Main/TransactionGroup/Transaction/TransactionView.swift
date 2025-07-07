@@ -10,14 +10,8 @@ import CoreData
 
 struct TransactionView: View {
     
-    @StateObject var viewModel: TransactionViewModel
+    @StateObject var viewModel = TransactionViewModel()
     @Binding var selectedDate: Date
-    
-    init(selectedDate: Binding<Date>,
-         viewContext: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
-        _selectedDate = selectedDate
-        _viewModel = StateObject(wrappedValue: TransactionViewModel(viewContext: viewContext))
-    }
     
     var body: some View {
         ContentContainer {
@@ -103,10 +97,10 @@ struct TransactionView: View {
         }
         .onAppear {
             print("Router count RESUME: \(Router.shared.path.count)")
-            viewModel.fetchAll()
+            viewModel.activateObservers()
         }
-        .onFirstAppear {
-            //viewModel.fetchData() //TODO: CARGAR
+        .onDisappear {
+            viewModel.deactivateObservers()
         }
     }
 }
@@ -114,7 +108,7 @@ struct TransactionView: View {
 #Preview("es_CR") {
     @Previewable @State var selectedDate = Date()
     VStack {
-        TransactionView(selectedDate: $selectedDate, viewContext: MocksEntities.preview.container.viewContext)
+        TransactionView(selectedDate: $selectedDate)
             .environment(\.locale, .init(identifier: "es_CR"))
     }
 }
@@ -122,13 +116,13 @@ struct TransactionView: View {
 #Preview("Saturated en_US") {
     @Previewable @State var selectedDate = Date()
     VStack {
-        TransactionView(selectedDate: $selectedDate, viewContext: MocksEntities.preview.container.viewContext)
+        TransactionView(selectedDate: $selectedDate)
             .environment(\.locale, .init(identifier: "en_US"))
     }
 }
 
 #Preview("No content es_ES") {
     @Previewable @State var selectedDate = Date()
-    TransactionView(selectedDate: $selectedDate, viewContext: MocksEntities.preview.container.viewContext)
+    TransactionView(selectedDate: $selectedDate)
         .environment(\.locale, .init(identifier: "es_ES"))
 }

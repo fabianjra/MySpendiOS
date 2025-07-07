@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import CoreData
 
 /**
  This view can be instantiated with a model or without a model.
@@ -33,7 +32,7 @@ struct AddModifyCategoryView: View {
     @Binding var isNewCategoryAdded: Bool //Allows the dismiss in the UpperView when a new category is added.
     @Binding var newCategoryID: String
     
-    @StateObject var viewModel: AddModifyCategoryViewModel
+    @StateObject var viewModel = AddModifyCategoryViewModel()
     @FocusState private var focusedField: CategoryModel.Field?
     
     private let isNewCategory: Bool
@@ -56,9 +55,7 @@ struct AddModifyCategoryView: View {
          categoryType: Binding<CategoryType>,
          
          isNewCategoryAdded: Binding<Bool>? = nil,
-         newCategoryID: Binding<String>? = nil,
-    
-         viewContext: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+         newCategoryID: Binding<String>? = nil) {
         
         if let model = model {
             self.isNewCategory = false
@@ -82,8 +79,6 @@ struct AddModifyCategoryView: View {
         } else {
             self._newCategoryID = .constant("")
         }
-        
-        _viewModel = StateObject(wrappedValue: AddModifyCategoryViewModel(viewContext: viewContext))
     }
     
     var body: some View {
@@ -186,8 +181,7 @@ struct AddModifyCategoryView: View {
     @Previewable @State var categoryType = MocksCategoriesFB.expense1.categoryType
     VStack {
         AddModifyCategoryView(categoryType: $categoryType,
-                              isNewCategoryAdded: .constant(false),
-                              viewContext: MocksEntities.preview.container.viewContext)
+                              isNewCategoryAdded: .constant(false))
     }
 }
 

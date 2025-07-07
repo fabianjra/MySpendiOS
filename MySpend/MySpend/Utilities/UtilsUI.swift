@@ -93,7 +93,7 @@ struct UtilsUI {
      
      **Example:**
      ```swift
-     if Utils.isRunningOnCanvasPreview() {
+     if Utils.isRunningOnCanvasPreview {
      //Do somenthing only when the canvas preview crashes.
      }
      ```

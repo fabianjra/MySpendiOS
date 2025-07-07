@@ -8,6 +8,7 @@
 import CoreData
 import Combine
 
+@MainActor
 class TEST_AccountViewModel: ObservableObject {
     
     @Published var accounts: [AccountModel] = []
@@ -15,8 +16,16 @@ class TEST_AccountViewModel: ObservableObject {
     private let viewContext: NSManagedObjectContext
     private var cancellables = Set<AnyCancellable>()
     
-    init(viewContext: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
-        self.viewContext = viewContext
+    /// Este es un inicializador secundario (un atajo) que delega la construcción en otro inicializador designado, facilitando distintas formas de crear la misma clase sin repetir código.
+    /// No recibe parámetros.
+    /// Llama a self.init(viewContext: …) para delegar la construcción.
+    /// Usa CoreDataUtilities.getViewContext() para decidir —en tiempo de ejecución— si devuelve el contexto real o el de mock para los previews.
+    convenience init() {
+        self.init(viewContext: CoreDataUtilities.getViewContext())
+    }
+
+    init(viewContext: NSManagedObjectContext) {
+            self.viewContext = viewContext
         
         //Subscribirse a cambios en el Context:
         NotificationCenter.default.publisher(for: .NSManagedObjectContextObjectsDidChange, object: viewContext)

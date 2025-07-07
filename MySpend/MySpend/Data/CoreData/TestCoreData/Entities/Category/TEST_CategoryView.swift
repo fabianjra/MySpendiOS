@@ -5,7 +5,6 @@
 //
 
 import SwiftUI
-import CoreData
 
 struct TEST_CategoryView: View {
     //@Environment(\.managedObjectContext) private var viewContext
@@ -15,11 +14,7 @@ struct TEST_CategoryView: View {
 //        animation: .default)
 //    private var items: FetchedResults<Category>
     
-    @StateObject private var viewModel: TEST_CategoryViewModel
-    
-    init(viewContext: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
-        _viewModel = StateObject(wrappedValue: TEST_CategoryViewModel(viewContext: viewContext))
-    }
+    @StateObject private var viewModel = TEST_CategoryViewModel()
 
 //    private var categoryManager: CategoryManager {
 //        CategoryManager(viewContext: PersistenceController.shared.container.viewContext)
@@ -91,6 +86,6 @@ private let itemFormatter: DateFormatter = {
 }()
 
 #Preview {
-    TEST_CategoryView(viewContext: MocksEntities.preview.container.viewContext)
+    TEST_CategoryView()
         //.environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
 }

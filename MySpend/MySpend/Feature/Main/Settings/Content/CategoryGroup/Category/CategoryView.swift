@@ -6,16 +6,11 @@
 //
 
 import SwiftUI
-import CoreData
 
 struct CategoryView: View {
     
-    @StateObject var viewModel: CategoryViewModel
+    @StateObject var viewModel = CategoryViewModel()
     @State private var selectedModel = CategoryModel()
-    
-    init(viewContext: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
-        _viewModel = StateObject(wrappedValue: CategoryViewModel(viewContext: viewContext))
-    }
     
     //TODO: MOVER A VISTAS POR SEPARADO PARA PODER AGREGAR EL LOADER
     var body: some View {
@@ -49,7 +44,10 @@ struct CategoryView: View {
             TextError(viewModel.errorMessage)
         }
         .onAppear {
-            viewModel.fetchAll()
+            viewModel.activateObservers()
+        }
+        .onDisappear {
+            viewModel.deactivateObservers()
         }
         .sheet(isPresented: $viewModel.showNewCategoryModal) {
             AddModifyCategoryView(categoryType: $viewModel.categoryType)
@@ -243,7 +241,7 @@ struct CategoryView: View {
 }
 
 #Preview("es_CR") {
-    CategoryView(viewContext: MocksEntities.preview.container.viewContext)
+    CategoryView()
         .environment(\.locale, .init(identifier: "es_CR"))
 }
 

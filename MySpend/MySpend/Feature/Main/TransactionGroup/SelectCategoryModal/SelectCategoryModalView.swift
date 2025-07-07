@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import CoreData
 
 struct SelectCategoryModalView: View {
     
@@ -16,19 +15,17 @@ struct SelectCategoryModalView: View {
     @Binding var selectedCategory: CategoryModel
     @Binding var categoryType: CategoryType
     
-    @StateObject var viewModel: CategoryViewModel
+    @StateObject var viewModel = CategoryViewModel()
     
     // Validate if should dismiss this modal because a new category was added.
     @State var isNewCategoryAdded: Bool = false
     @State var newCategoryID: String = ""
     
     init(selectedCategory: Binding<CategoryModel>,
-         categoryType: Binding<CategoryType>,
-         viewContext: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+         categoryType: Binding<CategoryType>) {
         
         _selectedCategory = selectedCategory
         _categoryType = categoryType
-        _viewModel = StateObject(wrappedValue: CategoryViewModel(viewContext: viewContext))
     }
     
     var body: some View {
@@ -114,7 +111,10 @@ struct SelectCategoryModalView: View {
             }
         }
         .onAppear {
-            viewModel.fetchAll()
+            viewModel.activateObservers()
+        }
+        .onDisappear {
+            viewModel.deactivateObservers()
         }
         .onChange(of: isNewCategoryAdded) { _, newValue in
             if newValue {
@@ -203,8 +203,7 @@ struct SelectCategoryModalView: View {
         }
     }.sheet(isPresented: $showModal) {
         SelectCategoryModalView(selectedCategory: .constant(CategoryModel()),
-                                categoryType: .constant(.expense),
-                                viewContext: MocksEntities.preview.container.viewContext)
+                                categoryType: .constant(.expense))
             .environment(\.locale, .init(identifier: "en_US"))
     }
     .onAppear {

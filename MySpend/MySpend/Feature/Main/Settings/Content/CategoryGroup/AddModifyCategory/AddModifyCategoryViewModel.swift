@@ -6,18 +6,11 @@
 //
 
 import Foundation
-import CoreData
 
-class AddModifyCategoryViewModel: BaseViewModel {
-    
-    private let viewContext: NSManagedObjectContext
+final class AddModifyCategoryViewModel: BaseViewModel {
     
     @Published var showIconsModal = false
     @Published var showAlert = false
-    
-    init(viewContext: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
-        self.viewContext = viewContext
-    }
     
     func addNewCategory(_ model: CategoryModel, categoryType: CategoryType) -> ResponseModelFB {
         if model.name.isEmptyOrWhitespace {

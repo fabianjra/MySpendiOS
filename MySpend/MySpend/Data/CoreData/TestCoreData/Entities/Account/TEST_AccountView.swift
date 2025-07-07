@@ -9,12 +9,8 @@ import SwiftUI
 import CoreData
 
 struct TEST_AccountView: View {
-    @StateObject private var viewModel: TEST_AccountViewModel
+    @StateObject private var viewModel = TEST_AccountViewModel()
     
-    init(viewContext: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
-        _viewModel = StateObject(wrappedValue: TEST_AccountViewModel(viewContext: viewContext))
-    }
-
     var body: some View {
         NavigationView {
             List {
@@ -80,5 +76,5 @@ private let itemFormatter: DateFormatter = {
 }()
 
 #Preview {
-    TEST_AccountView(viewContext: MocksEntities.preview.container.viewContext)
+    TEST_AccountView()
 }

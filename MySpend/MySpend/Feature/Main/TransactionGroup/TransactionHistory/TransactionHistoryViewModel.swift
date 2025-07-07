@@ -6,11 +6,8 @@
 //
 
 import Foundation
-import CoreData
 
 class TransactionHistoryViewModel: BaseViewModel {
-    
-    private let viewContext: NSManagedObjectContext
     
     @Published var showAlertDelete = false
     @Published var showAlertDeleteMultiple = false
@@ -20,11 +17,7 @@ class TransactionHistoryViewModel: BaseViewModel {
     @Published var isEditing = false
     @Published var selectedTransactions = Set<TransactionModel>()
     @Published var sortTransactionsBy = UserDefaultsManager.sorTransactions
-    
-    init(viewContext: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
-        self.viewContext = viewContext
-    }
-    
+
     func deleteTransaction(_ model: TransactionModel) -> ResponseModelFB {
         do {
             try TransactionManager(viewContext: viewContext).delete(model)

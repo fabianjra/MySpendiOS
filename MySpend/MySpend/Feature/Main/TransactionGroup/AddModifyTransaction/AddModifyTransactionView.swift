@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import CoreData
 
 /**
  This view can be instantiated with a model or without a model.
@@ -26,7 +25,7 @@ struct AddModifyTransactionView: View {
     @Binding var model: TransactionModel
     @Binding private var selectedDate: Date
     
-    @StateObject var viewModel: AddModifyTransactionViewModel
+    @StateObject var viewModel = AddModifyTransactionViewModel()
     @State private var defaultModel = TransactionModel()
 
     @FocusState private var focusedField: TransactionModel.Field?
@@ -47,8 +46,7 @@ struct AddModifyTransactionView: View {
     
     /// Way to initialize a Binding if you want to pass a value (model) or just initialize the model with default valures.
     init(model: Binding<TransactionModel>? = nil,
-         selectedDate: Binding<Date>,
-         viewContext: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+         selectedDate: Binding<Date>) {
         
         if let model = model {
             self.isNewTransaction = false
@@ -59,8 +57,6 @@ struct AddModifyTransactionView: View {
             self._model = .constant(TransactionModel())
         }
         self._selectedDate = selectedDate
-        
-        _viewModel = StateObject(wrappedValue: AddModifyTransactionViewModel(viewContext: viewContext))
     }
     
     var body: some View {
@@ -214,7 +210,7 @@ struct AddModifyTransactionView: View {
 
 #Preview("New") {
     @Previewable @State var selectedDate = Date()
-    AddModifyTransactionView(selectedDate: $selectedDate, viewContext: MocksEntities.preview.container.viewContext)
+    AddModifyTransactionView(selectedDate: $selectedDate)
 }
 
 //TOD: REPARAR

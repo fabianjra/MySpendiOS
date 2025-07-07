@@ -9,6 +9,15 @@ import CoreData
 
 struct CoreDataUtilities {
     
+    @MainActor
+    static func getViewContext() -> NSManagedObjectContext {
+        if UtilsUI.isRunningOnCanvasPreview {
+            return MocksEntities.preview.container.viewContext
+        } else {
+            return PersistenceController.shared.container.viewContext
+        }
+    }
+    
     /**
      Builds a typed `NSFetchRequest` that retrieves **at most one** Core Data object whose `id` matches the supplied string.
      
@@ -25,8 +34,8 @@ struct CoreDataUtilities {
      ```
      
      - Parameters:
-     - id: The UUID string to match against the entity’s `id` attribute.
-     - entity: The Core Data class to be fetched (e.g., `Category.self`).
+        - id: The UUID string to match against the entity’s `id` attribute.
+        - entity: The Core Data class to be fetched (e.g., `Category.self`).
      
      - Returns: A fully-configured `NSFetchRequest<T>` ready for execution.
      */

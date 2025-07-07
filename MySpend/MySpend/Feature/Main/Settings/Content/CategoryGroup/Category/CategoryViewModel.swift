@@ -5,13 +5,9 @@
 //  Created by Fabian Rodriguez on 11/8/24.
 //
 
-import CoreData
 import Combine
 
 class CategoryViewModel: BaseViewModel {
-    
-    private let viewContext: NSManagedObjectContext
-    private var cancellables = Set<AnyCancellable>()
     
     @Published var categories: [CategoryModel] = []
     @Published var categoryType: CategoryType = .expense
@@ -30,21 +26,21 @@ class CategoryViewModel: BaseViewModel {
     @Published var showAlertDelete = false
     @Published var showAlertDeleteMultiple = false
     
-    init(viewContext: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
-        self.viewContext = viewContext
-        super.init()
-        subscribeToViewContextChanges()
+    /// Llamar en `onAppear`
+    func activateObservers() {
+        startObservingContextChanges { [weak self] in
+            self?.fetchAll()
+        }
+        
+        fetchAll() // primera carga
     }
     
-    private func subscribeToViewContextChanges() {
-        NotificationCenter.default.publisher(for: .NSManagedObjectContextObjectsDidChange, object: viewContext)
-            .sink { [weak self] _ in
-                self?.fetchAll()
-            }
-            .store(in: &cancellables)
+    /// Llamar en `onDisappear`
+    func deactivateObservers() {
+        stopObservingContextChanges()
     }
     
-    func fetchAll() {
+    private func fetchAll() {
         do {
             categories = try CategoryManager(viewContext: viewContext).fetchAll()
         } catch {

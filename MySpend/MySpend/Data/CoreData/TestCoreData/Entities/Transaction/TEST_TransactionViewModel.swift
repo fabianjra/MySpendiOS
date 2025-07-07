@@ -8,14 +8,19 @@
 import CoreData
 import Combine
 
-class TEST_TransactionViewModel: ObservableObject {
+@MainActor
+final class TEST_TransactionViewModel: ObservableObject {
     
     @Published var transactions: [TransactionModel] = []
     
     private let viewContext: NSManagedObjectContext
     private var cancellables = Set<AnyCancellable>()
     
-    init(viewContext: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+    convenience init() {
+        self.init(viewContext: CoreDataUtilities.getViewContext())
+    }
+    
+    init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
         
         //Subscribirse a cambios en el Context:

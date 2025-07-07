@@ -6,15 +6,11 @@
 //
     
 import SwiftUI
-import CoreData
 
 struct TEST_TransactionView: View {
-    @StateObject private var viewModel: TEST_TransactionViewModel
     
-    init(viewContext: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
-        _viewModel = StateObject(wrappedValue: TEST_TransactionViewModel(viewContext: viewContext))
-    }
-
+    @StateObject private var viewModel = TEST_TransactionViewModel()
+    
     var body: some View {
         NavigationView {
             List {
@@ -86,5 +82,5 @@ private let itemFormatter: DateFormatter = {
 }()
 
 #Preview {
-    TEST_TransactionView(viewContext: MocksEntities.preview.container.viewContext)
+    TEST_TransactionView()
 }

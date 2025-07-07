@@ -8,14 +8,19 @@
 import CoreData
 import Combine
 
-class TEST_CategoryViewModel: ObservableObject {
+@MainActor
+final class TEST_CategoryViewModel: ObservableObject {
     
     @Published var categories: [CategoryModel] = []
     
     private let viewContext: NSManagedObjectContext
     private var cancellables = Set<AnyCancellable>()
     
-    init(viewContext: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+    convenience init() {
+        self.init(viewContext: CoreDataUtilities.getViewContext())
+    }
+    
+    init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
         
         //Subscribirse a cambios en el Context:
@@ -31,7 +36,6 @@ class TEST_CategoryViewModel: ObservableObject {
             categories = try CategoryManager(viewContext: viewContext).fetchAll(sortedBy: CDSort.CategoryEntity.byName_DateCreated)
         } catch {
             Logs.CatchException(error, type: .CoreData)
-            //categories = [] //TODO: Validar si es necesario en caso de que ya se hayan cargado categories.
         }
     }
     

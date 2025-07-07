@@ -6,11 +6,8 @@
 //
 
 import Foundation
-import CoreData
 
 class AddModifyTransactionViewModel: BaseViewModel {
-    
-    private let viewContext: NSManagedObjectContext
     
     @Published var dateString: String = Date.now.toStringShortLocale
     @Published var amountString: String = ""
@@ -18,10 +15,6 @@ class AddModifyTransactionViewModel: BaseViewModel {
     @Published var showDatePicker = false
     @Published var showCategoryList = false
     @Published var showAlert = false
-    
-    init(viewContext: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
-        self.viewContext = viewContext
-    }
     
     let notesId = "notes"
     
