@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct TransactionModel {
+struct TransactionModel: Identifiable {
     
     // Shared attributes (Abstract class):
     let dateCreated: Date

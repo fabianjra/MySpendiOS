@@ -14,16 +14,16 @@ struct MockTransaction {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
         
-        for _ in 0..<5 {
+        for item in 0..<5 {
             let newItem = Transaction(context: viewContext)
-            newItem.dateCreated = .now
+            newItem.dateCreated = Calendar.current.date(byAdding: .day, value: item, to: .now)!
             newItem.dateModified = .now
             newItem.id = UUID()
             newItem.isActive = true
             
             newItem.amount = 2000.54
             newItem.dateTransaction = .now
-            newItem.notes = "notes_transaction..."
+            newItem.notes = "trans number: \(item)"
             newItem.category =  CoreDataUtilities.createCategoryEntity(from: CategoryModel(), viewContext: viewContext)
             newItem.account = CoreDataUtilities.createAccountEntity(from: AccountModel(), viewContext: viewContext)
         }
