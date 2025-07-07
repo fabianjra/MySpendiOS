@@ -53,6 +53,7 @@ struct CoreDataUtilities {
         entity.type          = model.type.rawValue
         entity.usageCount    = Int64(model.usageCount)
         
+        viewContext.processPendingChanges()
         return entity
     }
     
@@ -72,6 +73,7 @@ struct CoreDataUtilities {
         entity.type          = model.type.rawValue
         entity.userId        = model.userId
         
+        viewContext.processPendingChanges()
         return entity
     }
 }

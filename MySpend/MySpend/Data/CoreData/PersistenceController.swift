@@ -44,7 +44,7 @@ struct PersistenceController {
                  * The store could not be migrated to the current model version.
                  Check the error message to determine what the actual problem was.
                  */
-                fatalError("Unable to load persistent stores: \(error.localizedDescription). UserInfo: \(error.userInfo)")
+                fatalError("*** FATAL CONTROLADO: Unable to load persistent stores: \(error.localizedDescription). UserInfo: \(error.userInfo)")
             }
         })
         

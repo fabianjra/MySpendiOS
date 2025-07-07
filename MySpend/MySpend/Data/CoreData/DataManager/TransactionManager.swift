@@ -25,8 +25,8 @@ struct TransactionManager {
     // MARK: READ
     
     func fetchAll(predicateFormat: String = CDConstants.Predicates.isActive,
-                              predicateArgs: [Any] = [true],
-                              sortedBy sortDescriptors: [NSSortDescriptor] = [NSSortDescriptor(keyPath: \Transaction.dateTransaction, ascending: true)])
+                  predicateArgs: [Any] = [true],
+                  sortedBy sortDescriptors: [NSSortDescriptor] = [NSSortDescriptor(keyPath: \Transaction.dateTransaction, ascending: true)])
     throws -> [TransactionModel] {
         
         let request: NSFetchRequest<Transaction> = Transaction.fetchRequest()

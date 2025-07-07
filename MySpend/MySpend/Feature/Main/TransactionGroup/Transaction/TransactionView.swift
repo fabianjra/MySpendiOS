@@ -13,10 +13,10 @@ struct TransactionView: View {
     @StateObject var viewModel: TransactionViewModel
     @Binding var selectedDate: Date
     
-    init(viewContext: NSManagedObjectContext = PersistenceController.shared.container.viewContext,
-         selectedDate: Binding<Date>) {
-        _viewModel = StateObject(wrappedValue: TransactionViewModel(viewContext: viewContext))
+    init(selectedDate: Binding<Date>,
+         viewContext: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
         _selectedDate = selectedDate
+        _viewModel = StateObject(wrappedValue: TransactionViewModel(viewContext: viewContext))
     }
     
     var body: some View {
@@ -103,7 +103,7 @@ struct TransactionView: View {
         }
         .onAppear {
             print("Router count RESUME: \(Router.shared.path.count)")
-            //viewModel.onAppear() //TODO: CARGAR
+            viewModel.fetchAll()
         }
         .onFirstAppear {
             //viewModel.fetchData() //TODO: CARGAR
@@ -114,7 +114,7 @@ struct TransactionView: View {
 #Preview("es_CR") {
     @Previewable @State var selectedDate = Date()
     VStack {
-        TransactionView(viewContext: MocksEntities.preview.container.viewContext, selectedDate: $selectedDate)
+        TransactionView(selectedDate: $selectedDate, viewContext: MocksEntities.preview.container.viewContext)
             .environment(\.locale, .init(identifier: "es_CR"))
     }
 }
@@ -122,13 +122,13 @@ struct TransactionView: View {
 #Preview("Saturated en_US") {
     @Previewable @State var selectedDate = Date()
     VStack {
-        TransactionView(viewContext: MocksEntities.preview.container.viewContext, selectedDate: $selectedDate)
+        TransactionView(selectedDate: $selectedDate, viewContext: MocksEntities.preview.container.viewContext)
             .environment(\.locale, .init(identifier: "en_US"))
     }
 }
 
 #Preview("No content es_ES") {
     @Previewable @State var selectedDate = Date()
-    TransactionView(viewContext: MocksEntities.preview.container.viewContext, selectedDate: $selectedDate)
+    TransactionView(selectedDate: $selectedDate, viewContext: MocksEntities.preview.container.viewContext)
         .environment(\.locale, .init(identifier: "es_ES"))
 }

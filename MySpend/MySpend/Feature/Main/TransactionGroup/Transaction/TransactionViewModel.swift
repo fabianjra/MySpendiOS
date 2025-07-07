@@ -13,7 +13,7 @@ class TransactionViewModel: BaseViewModel {
     private let viewContext: NSManagedObjectContext
     private var cancellables = Set<AnyCancellable>()
     
-    @Published var userName: String = "User: \(UUID().uuidString)"
+    @Published var userName: String = "Generic user"
     @Published var dateTimeInterval = UserDefaultsManager.dateTimeInterval
     
     @Published var transactions: [TransactionModel] = []
