@@ -309,7 +309,7 @@ struct TransactionHistoryView: View {
         TransactionHistoryView(transactionsLoaded: .constant([]),
                                dateTimeInterval: $dateTimeInterval,
                                selectedDate: $selectedDate,
-                               viewContext: MockTransaction.preview.container.viewContext)
+                               viewContext: MocksEntities.preview.container.viewContext)
             .environment(\.locale, .init(identifier: "en_US_POSIX"))
     }
 }

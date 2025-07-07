@@ -91,6 +91,6 @@ private let itemFormatter: DateFormatter = {
 }()
 
 #Preview {
-    TEST_CategoryView(viewContext: MockCategory.preview.container.viewContext)
+    TEST_CategoryView(viewContext: MocksEntities.preview.container.viewContext)
         //.environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
 }

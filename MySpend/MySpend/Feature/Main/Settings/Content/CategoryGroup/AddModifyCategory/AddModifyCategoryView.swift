@@ -187,7 +187,7 @@ struct AddModifyCategoryView: View {
     VStack {
         AddModifyCategoryView(categoryType: $categoryType,
                               isNewCategoryAdded: .constant(false),
-                              viewContext: MockTransaction.preview.container.viewContext)
+                              viewContext: MocksEntities.preview.container.viewContext)
     }
 }
 

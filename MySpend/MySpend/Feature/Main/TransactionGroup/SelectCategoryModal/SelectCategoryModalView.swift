@@ -204,7 +204,7 @@ struct SelectCategoryModalView: View {
     }.sheet(isPresented: $showModal) {
         SelectCategoryModalView(selectedCategory: .constant(CategoryModel()),
                                 categoryType: .constant(.expense),
-                                viewContext: MockCategory.preview.container.viewContext)
+                                viewContext: MocksEntities.preview.container.viewContext)
             .environment(\.locale, .init(identifier: "en_US"))
     }
     .onAppear {

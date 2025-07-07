@@ -20,10 +20,16 @@ struct TEST_TransactionView: View {
             List {
                 ForEach(viewModel.transactions) { item in
                     NavigationLink {
-                        VStack {
+                        VStack(alignment: .leading) {
                             Text("Date created: \(item.dateCreated, formatter: itemFormatter)")
-                            //Text("Type: \(item.type.rawValue)")
+                            Text("Amount: \(item.amount)")
                             Text("Notes: \(item.notes)")
+                            
+                            Text("Category name: \(item.category.name)")
+                            Text("Category type: \(item.category.type.rawValue)")
+                            
+                            Text("Account name: \(item.account.name)")
+                            Text("Account type: \(item.account.type.rawValue)")
                         }
                     } label: {
                         VStack {
@@ -80,5 +86,5 @@ private let itemFormatter: DateFormatter = {
 }()
 
 #Preview {
-    TEST_TransactionView(viewContext: MockTransaction.preview.container.viewContext)
+    TEST_TransactionView(viewContext: MocksEntities.preview.container.viewContext)
 }

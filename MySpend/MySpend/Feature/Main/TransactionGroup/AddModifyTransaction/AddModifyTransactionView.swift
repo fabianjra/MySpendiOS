@@ -214,7 +214,7 @@ struct AddModifyTransactionView: View {
 
 #Preview("New") {
     @Previewable @State var selectedDate = Date()
-    AddModifyTransactionView(selectedDate: $selectedDate, viewContext: MockTransaction.preview.container.viewContext)
+    AddModifyTransactionView(selectedDate: $selectedDate, viewContext: MocksEntities.preview.container.viewContext)
 }
 
 //TOD: REPARAR

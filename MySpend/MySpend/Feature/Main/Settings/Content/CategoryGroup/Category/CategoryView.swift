@@ -243,7 +243,7 @@ struct CategoryView: View {
 }
 
 #Preview("es_CR") {
-    CategoryView(viewContext: MockCategory.preview.container.viewContext)
+    CategoryView(viewContext: MocksEntities.preview.container.viewContext)
         .environment(\.locale, .init(identifier: "es_CR"))
 }
 
