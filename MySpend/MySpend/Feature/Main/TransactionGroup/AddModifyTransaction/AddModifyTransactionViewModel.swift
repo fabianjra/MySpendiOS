@@ -7,7 +7,7 @@
 
 import Foundation
 
-class AddModifyTransactionViewModel: BaseViewModel {
+class AddModifyTransactionViewModel: BaseViewModelFB {
     
     @Published var dateString: String = Date.now.toStringShortLocale
     @Published var amountString: String = ""

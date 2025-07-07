@@ -7,7 +7,7 @@
 
 import Firebase
 
-class ChangeNameViewModel: BaseViewModel {
+class ChangeNameViewModel: BaseViewModelFB {
     
     @Published var model = ChangeName()
     

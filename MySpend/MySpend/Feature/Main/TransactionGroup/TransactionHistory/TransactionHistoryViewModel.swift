@@ -7,7 +7,7 @@
 
 import Foundation
 
-class TransactionHistoryViewModel: BaseViewModel {
+class TransactionHistoryViewModel: BaseViewModelFB {
     
     @Published var showAlertDelete = false
     @Published var showAlertDeleteMultiple = false

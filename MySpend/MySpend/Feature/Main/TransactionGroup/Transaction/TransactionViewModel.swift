@@ -7,7 +7,7 @@
 
 import FirebaseFirestore
 
-class TransactionViewModel: BaseViewModel {
+class TransactionViewModel: BaseViewModelFB {
     
     @Published var userName: String = ""
     @Published var dateTimeInterval = UserDefaultsManager.dateTimeInterval

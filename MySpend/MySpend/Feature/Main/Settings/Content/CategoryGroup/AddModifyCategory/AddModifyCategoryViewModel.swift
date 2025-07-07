@@ -7,7 +7,7 @@
 
 import Foundation
 
-class AddModifyCategoryViewModel: BaseViewModel {
+class AddModifyCategoryViewModel: BaseViewModelFB {
     
     @Published var showIconsModal = false
     @Published var showAlert = false

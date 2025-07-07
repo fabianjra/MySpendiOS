@@ -7,7 +7,7 @@
 
 import Foundation
 
-class DateTimeIntervalListViewModel: BaseViewModel {
+class DateTimeIntervalListViewModel: BaseViewModelFB {
     
     @Published var DateTimeIntervalSelected = UserDefaultsManager.dateTimeInterval //TODO: hacer un Publisher para detectar el cambio automaticamente.
     

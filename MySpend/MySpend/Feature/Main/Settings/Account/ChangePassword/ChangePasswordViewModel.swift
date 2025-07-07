@@ -7,7 +7,7 @@
 
 import Foundation
 
-class ChangePasswordViewModel: BaseViewModel {
+class ChangePasswordViewModel: BaseViewModelFB {
     
     @Published var model = ChangePassword()
     

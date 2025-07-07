@@ -9,7 +9,7 @@ import SwiftUI
 import FirebaseAuth
 
 @MainActor
-public class BaseViewModel: ObservableObject {
+public class BaseViewModelFB: ObservableObject {
     
     @Published var isLoading: Bool = false
     @Published var isLoadingSecondary: Bool = false

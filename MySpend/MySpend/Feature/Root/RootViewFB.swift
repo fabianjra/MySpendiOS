@@ -22,7 +22,7 @@ import SwiftUI
 //    }
 //}
 
-struct RootView: View {
+struct RootViewFB: View {
     
     @StateObject var router = Router.shared
     
@@ -55,6 +55,6 @@ struct RootView: View {
 }
 
 #Preview {
-    RootView()
+    RootViewFB()
         .environmentObject(AuthViewModel())
 }

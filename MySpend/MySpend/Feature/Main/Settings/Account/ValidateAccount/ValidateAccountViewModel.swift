@@ -7,7 +7,7 @@
 
 import Firebase
 
-class ValidateAccountViewModel: BaseViewModel {
+class ValidateAccountViewModel: BaseViewModelFB {
     
     @Published var userIsValidated: Bool = false
     

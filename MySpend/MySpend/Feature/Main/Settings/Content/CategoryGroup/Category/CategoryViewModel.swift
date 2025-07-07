@@ -7,7 +7,7 @@
 
 import FirebaseFirestore
 
-class CategoryViewModel: BaseViewModel {
+class CategoryViewModel: BaseViewModelFB {
     
     @Published var categories: [CategoryModelFB]
     @Published var categoryType: CategoryType = .expense
