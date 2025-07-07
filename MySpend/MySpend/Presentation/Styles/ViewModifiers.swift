@@ -318,7 +318,7 @@ struct SizeCalculator: ViewModifier {
 
  **Example:**
  ```swift
- struct ContentView: View {
+ struct ContenidoView: View {
      @FocusState private var focusedField: Login.Field?
      
      var body: some View {

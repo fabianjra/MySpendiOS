@@ -1,5 +1,5 @@
 //
-//  ContentViewModel.swift
+//  TEST_CategoryViewModel.swift
 //  MySpend
 //
 //  Created by Fabian Rodriguez on 26/6/25.
@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import Combine
 
-class ContentViewModel: ObservableObject {
+class TEST_CategoryViewModel: ObservableObject {
     
     @Published var categories: [CategoryModel] = []
     

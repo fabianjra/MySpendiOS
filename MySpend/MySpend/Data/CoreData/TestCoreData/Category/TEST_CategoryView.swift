@@ -1,5 +1,4 @@
 //
-//  ContentView.swift
 //  MySpend
 //
 //  Created by Fabian Rodriguez on 3/6/25.
@@ -8,7 +7,7 @@
 import SwiftUI
 import CoreData
 
-struct ContentView: View {
+struct TEST_CategoryView: View {
     //@Environment(\.managedObjectContext) private var viewContext
 //
 //    @FetchRequest(
@@ -16,10 +15,10 @@ struct ContentView: View {
 //        animation: .default)
 //    private var items: FetchedResults<Category>
     
-    @StateObject private var viewModel: ContentViewModel
+    @StateObject private var viewModel: TEST_CategoryViewModel
     
     init(viewContext: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
-        _viewModel = StateObject(wrappedValue: ContentViewModel(viewContext: viewContext))
+        _viewModel = StateObject(wrappedValue: TEST_CategoryViewModel(viewContext: viewContext))
     }
 
 //    private var categoryManager: CategoryManager {
@@ -84,6 +83,6 @@ private let itemFormatter: DateFormatter = {
 }()
 
 #Preview {
-    ContentView(viewContext: MockCategory.preview.container.viewContext)
+    TEST_CategoryView(viewContext: MockCategory.preview.container.viewContext)
         //.environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
 }

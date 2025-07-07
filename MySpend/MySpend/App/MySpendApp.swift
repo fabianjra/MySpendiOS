@@ -45,7 +45,6 @@ struct MySpendApp: App {
         WindowGroup {
             
             /// CORE DATA:
-            //ContentView()
             
             // Permite que el viewContext este disponible dentro de toda la aplicacion mediante una unica instancia.
             // El ViewContext es lo unico a lo que se necesita acceder dentro de las pantallas de la aplicacion, para hacer uso de los datos con Core Data.

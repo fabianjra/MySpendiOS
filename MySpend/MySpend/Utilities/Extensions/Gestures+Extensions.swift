@@ -47,7 +47,7 @@ extension UIApplication: UIGestureRecognizerDelegate {
      struct TestApp: App {
          var body: some Scene {
              WindowGroup {
-                 ContentView()
+                 MainContenidoView()
                      .onAppear(perform: UIApplication.shared.addTapGestureRecognizer)
              }
          }
