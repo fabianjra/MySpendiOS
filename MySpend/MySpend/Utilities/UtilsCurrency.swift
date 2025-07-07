@@ -111,16 +111,16 @@ public struct UtilsCurrency {
 // MARK: TOTAL BALANCE CALCULATIONS
 
 extension UtilsCurrency {
-    typealias groupedTransactions = [(category: CategoryModelFB, totalAmount: Decimal)]
+    typealias groupedTransactions = [(category: CategoryModel, totalAmount: Decimal)]
     
     /**
      Esta función filtra las transacciones por CategoryType, sumando los ingresos (income) y los gastos (expense).
      Luego, calcula el balance final restando los gastos a los ingresos y formatea el balance.
      */
-    static func calculateGroupedTransactions(_ transactions: [TransactionModelFB]) -> groupedTransactions {
+    static func calculateGroupedTransactions(_ transactions: [TransactionModel]) -> groupedTransactions {
         let grouped = Dictionary(grouping: transactions) { $0.category.id }
         
-        let groupedTransactions = grouped.compactMap { (categoryId, transactions) -> (CategoryModelFB, Decimal)? in
+        let groupedTransactions = grouped.compactMap { (categoryId, transactions) -> (CategoryModel, Decimal)? in
             guard let firstTransaction = transactions.first else
             {
                 return nil

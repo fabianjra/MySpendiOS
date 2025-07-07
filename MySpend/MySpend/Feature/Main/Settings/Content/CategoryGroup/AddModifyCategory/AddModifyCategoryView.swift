@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 /**
  This view can be instantiated with a model or without a model.
@@ -23,8 +24,8 @@ struct AddModifyCategoryView: View {
     
     @Environment(\.dismiss) var dismiss
     
-    @Binding var model: CategoryModelFB
-    @State private var defaultModel = CategoryModelFB()
+    @Binding var model: CategoryModel
+    @State private var defaultModel = CategoryModel()
     
     @Binding var categoryType: CategoryType
     
@@ -32,12 +33,12 @@ struct AddModifyCategoryView: View {
     @Binding var isNewCategoryAdded: Bool //Allows the dismiss in the UpperView when a new category is added.
     @Binding var newCategoryID: String
     
-    @StateObject var viewModel = AddModifyCategoryViewModel()
-    @FocusState private var focusedField: CategoryModelFB.Field?
+    @StateObject var viewModel: AddModifyCategoryViewModel
+    @FocusState private var focusedField: CategoryModel.Field?
     
     private let isNewCategory: Bool
     
-    var modelBinding: Binding<CategoryModelFB> {
+    var modelBinding: Binding<CategoryModel> {
         Binding(
             get: { isNewCategory ? defaultModel : model }, /// Use defaultModel when is a New Category
             set: { newValue in
@@ -51,11 +52,13 @@ struct AddModifyCategoryView: View {
     }
     
     /// Way to initialize a Binding if you want to pass a value (model) or just initialize the model with default valures.
-    init(model: Binding<CategoryModelFB>? = nil,
+    init(model: Binding<CategoryModel>? = nil,
          categoryType: Binding<CategoryType>,
          
          isNewCategoryAdded: Binding<Bool>? = nil,
-         newCategoryID: Binding<String>? = nil) {
+         newCategoryID: Binding<String>? = nil,
+    
+         viewContext: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
         
         if let model = model {
             self.isNewCategory = false
@@ -63,7 +66,7 @@ struct AddModifyCategoryView: View {
         } else {
             /// In case a model is no passed by parameter, wont be use model. Will use defaultModel instead.
             self.isNewCategory = true
-            self._model = .constant(CategoryModelFB())
+            self._model = .constant(CategoryModel())
         }
         
         self._categoryType = categoryType
@@ -79,6 +82,8 @@ struct AddModifyCategoryView: View {
         } else {
             self._newCategoryID = .constant("")
         }
+        
+        _viewModel = StateObject(wrappedValue: AddModifyCategoryViewModel(viewContext: viewContext))
     }
     
     var body: some View {
@@ -150,16 +155,15 @@ struct AddModifyCategoryView: View {
     }
     
     private func process(_ processType: ProcessType) {
-        Task {
             let result: ResponseModelFB
             
             switch processType {
             case .add:
-                result = await viewModel.addNewCategory(modelBinding.wrappedValue, categoryType: categoryType)
+                result = viewModel.addNewCategory(modelBinding.wrappedValue, categoryType: categoryType)
             case .modify:
-                result = await viewModel.modifyCategory(modelBinding.wrappedValue, categoryType: categoryType)
+                result = viewModel.modifyCategory(modelBinding.wrappedValue, categoryType: categoryType)
             case .delete:
-                result = await viewModel.deleteCategory(modelBinding.wrappedValue)
+                result = viewModel.deleteCategory(modelBinding.wrappedValue)
             }
             
             if result.status.isSuccess {
@@ -174,7 +178,6 @@ struct AddModifyCategoryView: View {
             } else {
                 viewModel.errorMessage = result.message
             }
-        }
     }
 }
 
@@ -182,14 +185,17 @@ struct AddModifyCategoryView: View {
 #Preview("New") {
     @Previewable @State var categoryType = MocksCategoriesFB.expense1.categoryType
     VStack {
-        AddModifyCategoryView(categoryType: $categoryType, isNewCategoryAdded: .constant(false))
+        AddModifyCategoryView(categoryType: $categoryType,
+                              isNewCategoryAdded: .constant(false),
+                              viewContext: MockTransaction.preview.container.viewContext)
     }
 }
 
-#Preview("Modify") {
-    @Previewable @State var model = MocksCategoriesFB.expense1
-    @Previewable @State var categoryType = MocksCategoriesFB.expense2.categoryType
-    VStack {
-        AddModifyCategoryView(model: $model, categoryType: $categoryType, isNewCategoryAdded: .constant(false))
-    }
-}
+// TOD: REPARAR
+//#Preview("Modify") {
+//    @Previewable @State var model = MocksCategoriesFB.expense1
+//    @Previewable @State var categoryType = MocksCategoriesFB.expense2.categoryType
+//    VStack {
+//        AddModifyCategoryView(model: $model, categoryType: $categoryType, isNewCategoryAdded: .constant(false))
+//    }
+//}

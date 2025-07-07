@@ -6,16 +6,29 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct TransactionHistoryView: View {
     
-    @StateObject var viewModel = TransactionHistoryViewModel()
+    @StateObject var viewModel: TransactionHistoryViewModel
     
-    @Binding var transactionsLoaded: [TransactionModelFB]
+    @Binding var transactionsLoaded: [TransactionModel]
     @Binding var dateTimeInterval: DateTimeInterval
     @Binding var selectedDate: Date
     
-    @State private var selectedModel = TransactionModelFB()
+    @State private var selectedModel = TransactionModel()
+    
+    init(transactionsLoaded: Binding<[TransactionModel]>,
+         dateTimeInterval: Binding<DateTimeInterval>,
+         selectedDate: Binding<Date>,
+         viewContext: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+
+        _transactionsLoaded = transactionsLoaded
+        _dateTimeInterval = dateTimeInterval
+        _selectedDate = selectedDate
+        
+        _viewModel = StateObject(wrappedValue: TransactionHistoryViewModel(viewContext: viewContext))
+    }
     
     var body: some View {
         ContentContainer {
@@ -121,7 +134,7 @@ struct TransactionHistoryView: View {
                                                                               transactions: transactionsLoaded,
                                                                               for: dateTimeInterval,
                                                                               sortTransactions: viewModel.sortTransactionsBy)
-            
+ 
             List {
                 ForEach(transactionsFiltered, id: \.self) { item in
                     VStack {
@@ -170,7 +183,7 @@ struct TransactionHistoryView: View {
                             Spacer()
                             
                             TextPlain(item.amount.convertAmountDecimalToString.addCurrencySymbol,
-                                      color: item.categoryType == .income ? Color.primaryLeading : Color.alert)
+                                      color: item.category.type == .income ? Color.primaryLeading : Color.alert)
                             
                             Image.chevronRight
                                 .foregroundStyle(Color.textPrimaryForeground)
@@ -249,54 +262,54 @@ struct TransactionHistoryView: View {
     // MARK: FUNCTIONS
     
     private func delete() {
-        Task {
-            let result = await viewModel.deleteTransaction(selectedModel)
-            
-            if result.status.isSuccess {
-                selectedModel = TransactionModelFB() //Clean the selected transaction after deleting it.
-            } else {
-                viewModel.errorMessage = result.message
-            }
+        let result = viewModel.deleteTransaction(selectedModel)
+        
+        if result.status.isSuccess {
+            selectedModel = TransactionModel() //Clean the selected transaction after deleting it.
+        } else {
+            viewModel.errorMessage = result.message
         }
     }
     
     private func deleteMltipleTransactions() {
-        Task {
-            let result = await viewModel.deleteMltipleTransactions()
-            
-            if result.status.isError {
-                viewModel.errorMessage = result.message
-            }
+        let result = viewModel.deleteMltipleTransactions()
+        
+        if result.status.isError {
+            viewModel.errorMessage = result.message
         }
     }
 }
 
-#Preview("Normal es_CR") {
-    @Previewable @State var dateTimeInterval = DateTimeInterval.month
-    @Previewable @State var selectedDate = Date()
-    
-    VStack {
-        TransactionHistoryView(transactionsLoaded: .constant(MockTransactionsFB.normal), dateTimeInterval: $dateTimeInterval, selectedDate: $selectedDate)
-            .environment(\.locale, .init(identifier: "es_CR"))
-    }
-}
-
-#Preview("Random saturated en_US") {
-    @Previewable @State var dateTimeInterval = DateTimeInterval.month
-    @Previewable @State var selectedDate = Date()
-    
-    VStack {
-        TransactionHistoryView(transactionsLoaded: .constant(MockTransactionsFB.random_generated), dateTimeInterval: $dateTimeInterval, selectedDate: $selectedDate)
-            .environment(\.locale, .init(identifier: "en_US"))
-    }
-}
+//TOD: REPARAR
+//#Preview("Normal es_CR") {
+//    @Previewable @State var dateTimeInterval = DateTimeInterval.month
+//    @Previewable @State var selectedDate = Date()
+//    
+//    VStack {
+//        TransactionHistoryView(transactionsLoaded: .constant(MockTransactionsFB.normal), dateTimeInterval: $dateTimeInterval, selectedDate: $selectedDate)
+//            .environment(\.locale, .init(identifier: "es_CR"))
+//    }
+//}
+//
+//#Preview("Random saturated en_US") {
+//    @Previewable @State var dateTimeInterval = DateTimeInterval.month
+//    @Previewable @State var selectedDate = Date()
+//    
+//    VStack {
+//        TransactionHistoryView(transactionsLoaded: .constant(MockTransactionsFB.random_generated), dateTimeInterval: $dateTimeInterval, selectedDate: $selectedDate)
+//            .environment(\.locale, .init(identifier: "en_US"))
+//    }
+//}
 
 #Preview("No content en_US_POSIX") {
     @Previewable @State var dateTimeInterval = DateTimeInterval.month
     @Previewable @State var selectedDate = Date()
     
     VStack {
-        TransactionHistoryView(transactionsLoaded: .constant([]), dateTimeInterval: $dateTimeInterval, selectedDate: $selectedDate)
+        TransactionHistoryView(transactionsLoaded: .constant([]),
+                               dateTimeInterval: $dateTimeInterval,
+                               selectedDate: $selectedDate,
+                               viewContext: MockTransaction.preview.container.viewContext)
             .environment(\.locale, .init(identifier: "en_US_POSIX"))
     }
 }

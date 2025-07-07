@@ -7,11 +7,14 @@
 
 import Foundation
 
-struct TransactionModel: Identifiable {
+// Equatable: Permite comparar el tipo de transaccion para agruparlas en la sumatoria total de expeses/incomes
+// Hashable: Permite seleccionar varios items a la hora de eliminarlos.
+
+struct TransactionModel: Identifiable, Equatable, Hashable {
     
     // Shared attributes (Abstract class):
     let dateCreated: Date
-    let dateModified: Date
+    var dateModified: Date
     let id: UUID
     let isActive: Bool
     
@@ -75,5 +78,10 @@ struct TransactionModel: Identifiable {
         } else {
             return AccountModel()
         }
+    }
+    
+    enum Field: Hashable, CaseIterable {
+        case amount
+        case notes
     }
 }

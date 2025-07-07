@@ -7,12 +7,11 @@
 
 import Foundation
 
-struct CategoryModel: Identifiable {
-    
+struct CategoryModel: Identifiable, Equatable, Hashable {
     
     // Shared attributes (Abstract class):
     let dateCreated: Date
-    let dateModified: Date
+    var dateModified: Date
     let id: UUID
     let isActive: Bool
     
@@ -60,5 +59,9 @@ struct CategoryModel: Identifiable {
     
     static private func getCategoryType(from rawType: String?) -> CategoryType {
         return CategoryType(rawValue: rawType ?? CategoryType.expense.rawValue) ?? .expense
+    }
+    
+    enum Field: Hashable, CaseIterable {
+        case name
     }
 }

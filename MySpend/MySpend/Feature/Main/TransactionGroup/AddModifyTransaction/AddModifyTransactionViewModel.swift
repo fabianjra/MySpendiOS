@@ -6,8 +6,11 @@
 //
 
 import Foundation
+import CoreData
 
-class AddModifyTransactionViewModel: BaseViewModelFB {
+class AddModifyTransactionViewModel: BaseViewModel {
+    
+    private let viewContext: NSManagedObjectContext
     
     @Published var dateString: String = Date.now.toStringShortLocale
     @Published var amountString: String = ""
@@ -16,9 +19,13 @@ class AddModifyTransactionViewModel: BaseViewModelFB {
     @Published var showCategoryList = false
     @Published var showAlert = false
     
+    init(viewContext: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+        self.viewContext = viewContext
+    }
+    
     let notesId = "notes"
     
-    func onAppear(_ model: TransactionModelFB, selectedDate: Date, isNewTransaction: Bool) {
+    func onAppear(_ model: TransactionModel, selectedDate: Date, isNewTransaction: Bool) {
         if isNewTransaction {
             dateString = selectedDate.toStringShortLocale
         } else {
@@ -27,92 +34,52 @@ class AddModifyTransactionViewModel: BaseViewModelFB {
         }
     }
     
-    func addNewTransaction(_ model: TransactionModelFB, selectedDate: Date) async -> ResponseModelFB {
+    func addNewTransaction(_ model: TransactionModel, selectedDate: Date) -> ResponseModelFB {
         if model.category.name.isEmptyOrWhitespace {
             return ResponseModelFB(.error, Errors.emptySpaces.localizedDescription)
         }
         
-        //Firebase necesita guardar el valor como decimal, pero los formatos del monto en pantalla se trabajan en string:
+        //TODO: Cambiar para que mas bien se use el selectedDate con la de Model:
         var modelMutated = model
         modelMutated.amount = amountString.convertAmountToDecimal
         modelMutated.dateTransaction = selectedDate
-        modelMutated.dateCreated = .now
-        modelMutated.datemodified = .now
         
-        //Not neccesary, but updates the usage counter just in case later could be nedded.
-        modelMutated.category.incrementUsedCounter()
-        
-        let repository = Repository()
-        var response = ResponseModelFB()
-        
-        await performWithLoader { currentUser in
-            do {
-                modelMutated.userId = currentUser.uid
-                
-                //TODO: Simplificar llamado. Verificar si queda mejor usando transaccion atomica o haciendo
-                //TODO: un llamado armado por medio de query.
-                // Updates the category usage counter only if the category still exists in the database.
-                if var category = try await CategoriesDatabase().getCategory(forId: modelMutated.category.id) {
-                    category.incrementUsedCounter()
-                    try await repository.modifyDocument(category, documentId: category.id, forSubCollection: .categories)
-                }
-                
-                let document = try await repository.addNewDocument(modelMutated, forSubCollection: .transactions)
-                
-                response = ResponseModelFB(.successful, document: document)
-            } catch {
-                Logs.CatchException(error)
-                response = ResponseModelFB(.error, error.localizedDescription)
-            }
+        do {
+            try TransactionManager(viewContext: viewContext).create(modelMutated)
+            return ResponseModelFB(.successful)
+        } catch {
+            Logs.CatchException(error, type: .CoreData)
+            return ResponseModelFB(.error, error.localizedDescription)
         }
-        
-        return response
     }
     
-    func modifyTransaction(_ model: TransactionModelFB, selectedDate: Date) async -> ResponseModelFB {
+    func modifyTransaction(_ model: TransactionModel, selectedDate: Date) -> ResponseModelFB {
         if model.category.name.isEmptyOrWhitespace {
             return ResponseModelFB(.error, Errors.emptySpaces.localizedDescription)
         }
         
+        //TODO: Cambiar para que mas bien se use el selectedDate con la de Model:
         var modelMutated = model
-        modelMutated.dateTransaction = selectedDate
         modelMutated.amount = amountString.convertAmountToDecimal
-        modelMutated.datemodified = .now
+        modelMutated.dateTransaction = selectedDate
+        modelMutated.dateModified = .now
         
-        if modelMutated.dateTransaction.isSameDate(selectedDate) == false {
-            modelMutated.dateTransaction = selectedDate
+        do {
+            try TransactionManager(viewContext: viewContext).update(modelMutated)
+            return ResponseModelFB(.successful)
+        } catch {
+            Logs.CatchException(error, type: .CoreData)
+            return ResponseModelFB(.error, error.localizedDescription)
         }
-        
-        var response = ResponseModelFB()
-        
-        await performWithLoader {
-            do {
-                try await Repository().modifyDocument(modelMutated, documentId: modelMutated.id, forSubCollection: .transactions)
-                
-                response = ResponseModelFB(.successful)
-            } catch {
-                Logs.CatchException(error)
-                response = ResponseModelFB(.error, error.localizedDescription)
-            }
-        }
-        
-        return response
     }
     
-    func deleteTransaction(_ model: TransactionModelFB) async -> ResponseModelFB {
-        var response = ResponseModelFB()
-        
-        await performWithLoaderSecondary {
-            do {
-                try await Repository().deleteDocument(model.id, forSubCollection: .transactions)
-                
-                response = ResponseModelFB(.successful)
-            } catch {
-                Logs.CatchException(error)
-                response = ResponseModelFB(.error, error.localizedDescription)
-            }
+    func deleteTransaction(_ model: TransactionModel) -> ResponseModelFB {
+        do {
+            try TransactionManager(viewContext: viewContext).delete(model)
+            return ResponseModelFB(.successful)
+        } catch {
+            Logs.CatchException(error)
+            return ResponseModelFB(.error, error.localizedDescription)
         }
-        
-        return response
     }
 }

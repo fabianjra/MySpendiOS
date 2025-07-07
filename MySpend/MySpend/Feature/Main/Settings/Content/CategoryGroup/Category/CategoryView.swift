@@ -6,11 +6,16 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct CategoryView: View {
     
-    @StateObject var viewModel = CategoryViewModel()
-    @State private var selectedModel = CategoryModelFB()
+    @StateObject var viewModel: CategoryViewModel
+    @State private var selectedModel = CategoryModel()
+    
+    init(viewContext: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+        _viewModel = StateObject(wrappedValue: CategoryViewModel(viewContext: viewContext))
+    }
     
     //TODO: MOVER A VISTAS POR SEPARADO PARA PODER AGREGAR EL LOADER
     var body: some View {
@@ -44,7 +49,7 @@ struct CategoryView: View {
             TextError(viewModel.errorMessage)
         }
         .onAppear {
-            viewModel.fetchData()
+            viewModel.fetchAll()
         }
         .sheet(isPresented: $viewModel.showNewCategoryModal) {
             AddModifyCategoryView(categoryType: $viewModel.categoryType)
@@ -221,47 +226,43 @@ struct CategoryView: View {
     // MARK: FUNCTIONS
     
     private func delete() {
-        Task {
-            let result = await viewModel.deleteCategory(selectedModel)
-            
-            if result.status.isError {
-                viewModel.errorMessage = result.message
-            }
+        let result = viewModel.deleteCategory(selectedModel)
+        
+        if result.status.isError {
+            viewModel.errorMessage = result.message
         }
     }
     
     private func deleteMltipleCategories() {
-        Task {
-            let result = await viewModel.deleteMltipleCategories()
-            
-            if result.status.isError {
-                viewModel.errorMessage = result.message
-            }
+        let result = viewModel.deleteMltipleCategories()
+        
+        if result.status.isError {
+            viewModel.errorMessage = result.message
         }
     }
 }
 
 #Preview("es_CR") {
-    CategoryView(viewModel: CategoryViewModel(categories: MocksCategoriesFB.normal))
+    CategoryView(viewContext: MockCategory.preview.container.viewContext)
         .environment(\.locale, .init(identifier: "es_CR"))
 }
 
-#Preview("Only expenses es_CR") {
-    CategoryView(viewModel: CategoryViewModel(categories: MocksCategoriesFB.onlyExpenses))
-        .environment(\.locale, .init(identifier: "es_CR"))
-}
-
-#Preview("Only incomes en_US") {
-    CategoryView(viewModel: CategoryViewModel(categories: MocksCategoriesFB.onlyIncomes))
-        .environment(\.locale, .init(identifier: "en_US"))
-}
-
-#Preview("Saturated en_US") {
-    CategoryView(viewModel: CategoryViewModel(categories: MocksCategoriesFB.random_generated))
-        .environment(\.locale, .init(identifier: "en_US"))
-}
-
-#Preview("No content es_ES") {
-    CategoryView()
-        .environment(\.locale, .init(identifier: "en_ES"))
-}
+//#Preview("Only expenses es_CR") {
+//    CategoryView(viewModel: CategoryViewModel(categories: MocksCategoriesFB.onlyExpenses))
+//        .environment(\.locale, .init(identifier: "es_CR"))
+//}
+//
+//#Preview("Only incomes en_US") {
+//    CategoryView(viewModel: CategoryViewModel(categories: MocksCategoriesFB.onlyIncomes))
+//        .environment(\.locale, .init(identifier: "en_US"))
+//}
+//
+//#Preview("Saturated en_US") {
+//    CategoryView(viewModel: CategoryViewModel(categories: MocksCategoriesFB.random_generated))
+//        .environment(\.locale, .init(identifier: "en_US"))
+//}
+//
+//#Preview("No content es_ES") {
+//    CategoryView()
+//        .environment(\.locale, .init(identifier: "en_ES"))
+//}

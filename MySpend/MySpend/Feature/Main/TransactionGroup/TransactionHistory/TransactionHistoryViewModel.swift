@@ -6,8 +6,11 @@
 //
 
 import Foundation
+import CoreData
 
-class TransactionHistoryViewModel: BaseViewModelFB {
+class TransactionHistoryViewModel: BaseViewModel {
+    
+    private let viewContext: NSManagedObjectContext
     
     @Published var showAlertDelete = false
     @Published var showAlertDeleteMultiple = false
@@ -15,44 +18,35 @@ class TransactionHistoryViewModel: BaseViewModelFB {
     @Published var showModifyTransactionModal = false
     
     @Published var isEditing = false
-    @Published var selectedTransactions = Set<TransactionModelFB>()
+    @Published var selectedTransactions = Set<TransactionModel>()
     @Published var sortTransactionsBy = UserDefaultsManager.sorTransactions
     
-    func deleteTransaction(_ model: TransactionModelFB) async -> ResponseModelFB {
-        var response = ResponseModelFB()
-        
-        await performWithLoaderSecondary {
-            do {
-                try await Repository().deleteDocument(model.id, forSubCollection: .transactions)
-                
-                response = ResponseModelFB(.successful)
-            } catch {
-                Logs.CatchException(error)
-                response = ResponseModelFB(.error, error.localizedDescription)
-            }
-        }
-        
-        return response
+    init(viewContext: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+        self.viewContext = viewContext
     }
     
-    func deleteMltipleTransactions() async -> ResponseModelFB {
-        var response = ResponseModelFB()
-        
-        await performWithLoaderSecondary {
-            do {
-                let selectedDocumentIds = self.selectedTransactions.map { $0.id }
-
-                try await Repository().deleteDocuments(selectedDocumentIds, forSubCollection: .transactions)
-                
-                self.selectedTransactions.removeAll()
-                response = ResponseModelFB(.successful)
-            } catch {
-                Logs.CatchException(error)
-                response = ResponseModelFB(.error, error.localizedDescription)
-            }
+    func deleteTransaction(_ model: TransactionModel) -> ResponseModelFB {
+        do {
+            try TransactionManager(viewContext: viewContext).delete(model)
+            return ResponseModelFB(.successful)
+        } catch {
+            Logs.CatchException(error)
+            return ResponseModelFB(.error, error.localizedDescription)
         }
-        
-        return response
+    }
+    
+    func deleteMltipleTransactions() -> ResponseModelFB {
+        do {
+            for item in selectedTransactions {
+                try TransactionManager(viewContext: viewContext).delete(item)
+            }
+            
+            selectedTransactions.removeAll()
+            return ResponseModelFB(.successful)
+        } catch {
+            Logs.CatchException(error)
+            return ResponseModelFB(.error, error.localizedDescription)
+        }
     }
     
     /**

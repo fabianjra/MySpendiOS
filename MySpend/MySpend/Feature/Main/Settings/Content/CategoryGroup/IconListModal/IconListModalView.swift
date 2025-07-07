@@ -9,7 +9,7 @@ import SwiftUI
 
 struct IconListModalView: View {
     
-    @Binding var model: CategoryModelFB
+    @Binding var model: CategoryModel
     @Binding var showModal: Bool
     
     var body: some View {
@@ -83,7 +83,7 @@ struct IconListModalView: View {
 
 #Preview {
     @Previewable @State var showModal: Bool = true
-    @Previewable @State var model = CategoryModelFB()
+    @Previewable @State var model = CategoryModel()
     
     ZStack(alignment: .top) {
         Color.backgroundBottom

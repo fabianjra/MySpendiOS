@@ -6,20 +6,30 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct SelectCategoryModalView: View {
     
     @Environment(\.dismiss) var dismiss
     
     // Parameters managed by New Transaction (add or modify):
-    @Binding var selectedCategory: CategoryModelFB
+    @Binding var selectedCategory: CategoryModel
     @Binding var categoryType: CategoryType
     
-    @StateObject var viewModel = CategoryViewModel()
+    @StateObject var viewModel: CategoryViewModel
     
     // Validate if should dismiss this modal because a new category was added.
     @State var isNewCategoryAdded: Bool = false
     @State var newCategoryID: String = ""
+    
+    init(selectedCategory: Binding<CategoryModel>,
+         categoryType: Binding<CategoryType>,
+         viewContext: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+        
+        _selectedCategory = selectedCategory
+        _categoryType = categoryType
+        _viewModel = StateObject(wrappedValue: CategoryViewModel(viewContext: viewContext))
+    }
     
     var body: some View {
         ContentContainer(addPading: false) {
@@ -104,11 +114,11 @@ struct SelectCategoryModalView: View {
             }
         }
         .onAppear {
-            viewModel.fetchData()
+            viewModel.fetchAll()
         }
         .onChange(of: isNewCategoryAdded) { _, newValue in
             if newValue {
-                if let newCategoryAdded = viewModel.categories.first(where: { $0.id == newCategoryID }) {
+                if let newCategoryAdded = viewModel.categories.first(where: { $0.id.uuidString == newCategoryID }) {
                     selectedCategory = newCategoryAdded
                     dismiss()
                 }
@@ -149,32 +159,34 @@ struct SelectCategoryModalView: View {
     }
 }
 
-#Preview("Expenses es_CR") {
-    @Previewable @State var showModal = true
-    @Previewable @State var selectedCategory = CategoryModelFB()
-    @Previewable @State var viewModelMock = CategoryViewModel(categories: MocksCategoriesFB.normal)
-    
-    ZStack(alignment: .top) {
-        Color.backgroundBottom
-        VStack {
-            Spacer()
-            TextPlain("Selected category: \(selectedCategory.name)")
-            
-            Button("Show modal") {
-                showModal = true
-            }
-            Spacer()
-        }
-    }.sheet(isPresented: $showModal) {
-        SelectCategoryModalView(selectedCategory: $selectedCategory,
-                                categoryType: $selectedCategory.categoryType,
-                                viewModel: viewModelMock)
-            .environment(\.locale, .init(identifier: "es_CR"))
-    }
-    .onAppear {
-        showModal = true
-    }
-}
+//TOD: REPARAR
+//#Preview("Expenses es_CR") {
+//    @Previewable @State var showModal = true
+//    @Previewable @State var selectedCategory = CategoryModel()
+//    //@Previewable @State var viewModelMock = CategoryManager(viewContext: MockTransaction.preview.container.viewContext)
+//    @Previewable @State var viewModelMock = CoreDataUtilities.
+//    
+//    ZStack(alignment: .top) {
+//        Color.backgroundBottom
+//        VStack {
+//            Spacer()
+//            TextPlain("Selected category: \(selectedCategory.name)")
+//            
+//            Button("Show modal") {
+//                showModal = true
+//            }
+//            Spacer()
+//        }
+//    }.sheet(isPresented: $showModal) {
+//        SelectCategoryModalView(selectedCategory: $selectedCategory,
+//                                categoryType: $selectedCategory.categoryType,
+//                                viewModel: viewModelMock)
+//            .environment(\.locale, .init(identifier: "es_CR"))
+//    }
+//    .onAppear {
+//        showModal = true
+//    }
+//}
 
 #Preview("No content en_US") {
     @Previewable @State var showModal = true
@@ -190,9 +202,9 @@ struct SelectCategoryModalView: View {
             Spacer()
         }
     }.sheet(isPresented: $showModal) {
-        SelectCategoryModalView(selectedCategory: .constant(CategoryModelFB()),
+        SelectCategoryModalView(selectedCategory: .constant(CategoryModel()),
                                 categoryType: .constant(.expense),
-                                viewModel: CategoryViewModel())
+                                viewContext: MockCategory.preview.container.viewContext)
             .environment(\.locale, .init(identifier: "en_US"))
     }
     .onAppear {

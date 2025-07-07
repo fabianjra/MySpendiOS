@@ -9,9 +9,9 @@ import Foundation
 
 struct UtilsCategories {
     
-    static func filteredCategories(_ categories: [CategoryModelFB], by categoryType: CategoryType, sortType: SortCategories? = nil) -> [CategoryModelFB] {
+    static func filteredCategories(_ categories: [CategoryModel], by categoryType: CategoryType, sortType: SortCategories? = nil) -> [CategoryModel] {
         
-        let filteredList: [CategoryModelFB] = categories.filter { $0.categoryType == categoryType }
+        let filteredList = categories.filter { $0.type == categoryType }
         
         if let sortType = sortType {
             
@@ -30,17 +30,16 @@ struct UtilsCategories {
                 
             case .byMostOftenUsed:
                 return filteredList.sorted {
-                    if $0.usedCounter != $1.usedCounter {
-                        return $0.usedCounter > $1.usedCounter // Ordering by usage
+                    if $0.usageCount != $1.usageCount {
+                        return $0.usageCount > $1.usageCount // Ordering by usage
                     } else {
-                        return $0.dateCreated > $1.dateCreated // If categories comapring are same coutner, order by creation date.
+                        return $0.dateCreated > $1.dateCreated // If categories comparison have same counter, then order by creation date.
                     }
                 }
             }
-                
-                
-            } else {
-                return filteredList
-            }
+            
+        } else {
+            return filteredList
         }
     }
+}

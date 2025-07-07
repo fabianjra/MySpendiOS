@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 /**
  This view can be instantiated with a model or without a model.
@@ -22,16 +23,16 @@ struct AddModifyTransactionView: View {
     
     @Environment(\.dismiss) var dismiss
     
-    @Binding var model: TransactionModelFB
-    @State private var defaultModel = TransactionModelFB()
-    
-    @StateObject var viewModel = AddModifyTransactionViewModel()
+    @Binding var model: TransactionModel
     @Binding private var selectedDate: Date
     
-    @FocusState private var focusedField: TransactionModelFB.Field?
+    @StateObject var viewModel: AddModifyTransactionViewModel
+    @State private var defaultModel = TransactionModel()
+
+    @FocusState private var focusedField: TransactionModel.Field?
     private let isNewTransaction: Bool
     
-    var modelBinding: Binding<TransactionModelFB> {
+    var modelBinding: Binding<TransactionModel> {
         Binding(
             get: { isNewTransaction ? defaultModel : model }, /// Use defaultModel when is a New Transaction
             set: { newValue in
@@ -45,16 +46,21 @@ struct AddModifyTransactionView: View {
     }
     
     /// Way to initialize a Binding if you want to pass a value (model) or just initialize the model with default valures.
-    init(model: Binding<TransactionModelFB>? = nil, selectedDate: Binding<Date>) {
+    init(model: Binding<TransactionModel>? = nil,
+         selectedDate: Binding<Date>,
+         viewContext: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
+        
         if let model = model {
             self.isNewTransaction = false
             self._model = model
         } else {
             /// In case a model is no passed by parameter, wont be use model. Will use defaultModel instead.
             self.isNewTransaction = true
-            self._model = .constant(TransactionModelFB())
+            self._model = .constant(TransactionModel())
         }
         self._selectedDate = selectedDate
+        
+        _viewModel = StateObject(wrappedValue: AddModifyTransactionViewModel(viewContext: viewContext))
     }
     
     var body: some View {
@@ -73,7 +79,7 @@ struct AddModifyTransactionView: View {
                     
                     // MARK: SEGMENT
                     VStack {
-                        PickerSegmented(selection: modelBinding.categoryType,
+                        PickerSegmented(selection: modelBinding.category.type,
                                         segments: CategoryType.allCases)
                         .padding(.bottom)
                     }
@@ -165,9 +171,9 @@ struct AddModifyTransactionView: View {
                         }
                     }
                 }
-                .onChange(of: modelBinding.wrappedValue.categoryType) {
+                .onChange(of: modelBinding.wrappedValue.category.type) {
                     viewModel.errorMessage = ""
-                    modelBinding.wrappedValue.category = CategoryModelFB() /// Clean category beacause won't be the same CategoryType (Exponse, income).
+                    modelBinding.wrappedValue.category = CategoryModel() /// Clean category beacause won't be the same CategoryType (Exponse, income).
                 }
                 .sheet(isPresented: $viewModel.showDatePicker) {
                     DatePickerModalView(selectedDate: $selectedDate,
@@ -176,7 +182,7 @@ struct AddModifyTransactionView: View {
                 }
                 .sheet(isPresented: $viewModel.showCategoryList) {
                     SelectCategoryModalView(selectedCategory: modelBinding.category,
-                                            categoryType: modelBinding.categoryType)
+                                            categoryType: modelBinding.category.type)
                 }
             }
         }
@@ -187,35 +193,36 @@ struct AddModifyTransactionView: View {
     }
     
     private func process(_ processType: ProcessType) {
-        Task {
-            let result: ResponseModelFB
-            
-            switch processType {
-            case .add:
-                result = await viewModel.addNewTransaction(modelBinding.wrappedValue, selectedDate: selectedDate)
-            case .modify:
-                result = await viewModel.modifyTransaction(modelBinding.wrappedValue, selectedDate: selectedDate)
-            case .delete:
-                result = await viewModel.deleteTransaction(modelBinding.wrappedValue)
-            }
-            
-            if result.status.isSuccess {
-                dismiss()
-            } else {
-                viewModel.errorMessage = result.message
-            }
+        let result: ResponseModelFB
+        
+        switch processType {
+        case .add:
+            result = viewModel.addNewTransaction(modelBinding.wrappedValue, selectedDate: selectedDate)
+        case .modify:
+            result = viewModel.modifyTransaction(modelBinding.wrappedValue, selectedDate: selectedDate)
+        case .delete:
+            result = viewModel.deleteTransaction(modelBinding.wrappedValue)
+        }
+        
+        if result.status.isSuccess {
+            dismiss()
+        } else {
+            viewModel.errorMessage = result.message
         }
     }
 }
 
 #Preview("New") {
     @Previewable @State var selectedDate = Date()
-    AddModifyTransactionView(selectedDate: $selectedDate)
+    AddModifyTransactionView(selectedDate: $selectedDate, viewContext: MockTransaction.preview.container.viewContext)
 }
 
-#Preview("Modify") {
-    @Previewable @State var model = MockTransactionsFB.normal.first!
-    @Previewable @State var selectedDate = MockTransactionsFB.normal.first!.dateTransaction
-    
-    AddModifyTransactionView(model: $model, selectedDate: $selectedDate)
-}
+//TOD: REPARAR
+//#Preview("Modify") {
+//    @Previewable @State var model = MockTransaction.preview.container.viewContext.fe
+//    @Previewable @State var selectedDate = MockTransactionsFB.normal.first!.dateTransaction
+//    
+//    AddModifyTransactionView(model: $model,
+//                             selectedDate: $selectedDate,
+//                             viewContext: MockTransaction.preview.container.viewContext)
+//}

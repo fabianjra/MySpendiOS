@@ -6,11 +6,18 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct TransactionView: View {
     
-    @StateObject var viewModel = TransactionViewModel()
+    @StateObject var viewModel: TransactionViewModel
     @Binding var selectedDate: Date
+    
+    init(viewContext: NSManagedObjectContext = PersistenceController.shared.container.viewContext,
+         selectedDate: Binding<Date>) {
+        _viewModel = StateObject(wrappedValue: TransactionViewModel(viewContext: viewContext))
+        _selectedDate = selectedDate
+    }
     
     var body: some View {
         ContentContainer {
@@ -96,10 +103,10 @@ struct TransactionView: View {
         }
         .onAppear {
             print("Router count RESUME: \(Router.shared.path.count)")
-            viewModel.onAppear()
+            //viewModel.onAppear() //TODO: CARGAR
         }
         .onFirstAppear {
-            viewModel.fetchData()
+            //viewModel.fetchData() //TODO: CARGAR
         }
     }
 }
@@ -107,7 +114,7 @@ struct TransactionView: View {
 #Preview("es_CR") {
     @Previewable @State var selectedDate = Date()
     VStack {
-        TransactionView(viewModel: TransactionViewModel(transactions: MockTransactionsFB.normal), selectedDate: $selectedDate)
+        TransactionView(viewContext: MockTransaction.preview.container.viewContext, selectedDate: $selectedDate)
             .environment(\.locale, .init(identifier: "es_CR"))
     }
 }
@@ -115,13 +122,13 @@ struct TransactionView: View {
 #Preview("Saturated en_US") {
     @Previewable @State var selectedDate = Date()
     VStack {
-        TransactionView(viewModel: TransactionViewModel(transactions: MockTransactionsFB.saturated), selectedDate: $selectedDate)
+        TransactionView(viewContext: MockTransaction.preview.container.viewContext, selectedDate: $selectedDate)
             .environment(\.locale, .init(identifier: "en_US"))
     }
 }
 
 #Preview("No content es_ES") {
     @Previewable @State var selectedDate = Date()
-    TransactionView(viewModel: TransactionViewModel(), selectedDate: $selectedDate)
+    TransactionView(viewContext: MockTransaction.preview.container.viewContext, selectedDate: $selectedDate)
         .environment(\.locale, .init(identifier: "es_ES"))
 }

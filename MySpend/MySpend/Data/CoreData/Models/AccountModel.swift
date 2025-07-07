@@ -8,7 +8,7 @@
 import Foundation
 
 // Se agrega el sufijo "Model" para diferenciarlo de la entidad de CoreDate (sin el sufijo model).
-struct AccountModel: Identifiable {
+struct AccountModel: Identifiable, Equatable, Hashable {
     
     // Shared attributes (Abstract class):
     let dateCreated: Date
