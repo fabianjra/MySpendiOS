@@ -21,13 +21,6 @@ struct SelectCategoryModalView: View {
     @State var isNewCategoryAdded: Bool = false
     @State var newCategoryID: String = ""
     
-    init(selectedCategory: Binding<CategoryModel>,
-         categoryType: Binding<CategoryType>) {
-        
-        _selectedCategory = selectedCategory
-        _categoryType = categoryType
-    }
-    
     var body: some View {
         ContentContainer(addPading: false) {
             

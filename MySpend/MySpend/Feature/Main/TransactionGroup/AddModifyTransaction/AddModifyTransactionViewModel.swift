@@ -27,7 +27,7 @@ class AddModifyTransactionViewModel: BaseViewModel {
         }
     }
     
-    func addNewTransaction(_ model: TransactionModel, selectedDate: Date) -> ResponseModelFB {
+    func addNewTransaction(_ model: TransactionModel, selectedDate: Date, categoryType: CategoryType) -> ResponseModelFB {
         if model.category.name.isEmptyOrWhitespace {
             return ResponseModelFB(.error, Errors.emptySpaces.localizedDescription)
         }
@@ -36,6 +36,7 @@ class AddModifyTransactionViewModel: BaseViewModel {
         var modelMutated = model
         modelMutated.amount = amountString.convertAmountToDecimal
         modelMutated.dateTransaction = selectedDate
+        modelMutated.category.type = categoryType
         
         do {
             try TransactionManager(viewContext: viewContext).create(modelMutated)
@@ -46,7 +47,7 @@ class AddModifyTransactionViewModel: BaseViewModel {
         }
     }
     
-    func modifyTransaction(_ model: TransactionModel, selectedDate: Date) -> ResponseModelFB {
+    func modifyTransaction(_ model: TransactionModel, selectedDate: Date, categoryType: CategoryType) -> ResponseModelFB {
         if model.category.name.isEmptyOrWhitespace {
             return ResponseModelFB(.error, Errors.emptySpaces.localizedDescription)
         }
@@ -56,6 +57,7 @@ class AddModifyTransactionViewModel: BaseViewModel {
         modelMutated.amount = amountString.convertAmountToDecimal
         modelMutated.dateTransaction = selectedDate
         modelMutated.dateModified = .now
+        modelMutated.category.type = categoryType
         
         do {
             try TransactionManager(viewContext: viewContext).update(modelMutated)
