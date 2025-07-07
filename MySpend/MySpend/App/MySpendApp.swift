@@ -38,23 +38,10 @@ struct MySpendApp: App {
         //FirebaseConfiguration.shared.setLoggerLevel(.min) //Evitar mensajes de firebase innecesarios.
         FirebaseApp.configure()
     }
-    
-    @StateObject var authViewModel = AuthViewModel()
 
     var body: some Scene {
         WindowGroup {
-            
-            /// CORE DATA:
-            
-            // Permite que el viewContext este disponible dentro de toda la aplicacion mediante una unica instancia.
-            // El ViewContext es lo unico a lo que se necesita acceder dentro de las pantallas de la aplicacion, para hacer uso de los datos con Core Data.
-                //.environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
-                
-            
-            /// FIREBASE:
-            //RootView()
-            TabViewMain()
-                //.environmentObject(authViewModel)
+            RootView()
                 //.environmentObject(dataManager) //Class for get, add and delete from Firestore.
         }
     }

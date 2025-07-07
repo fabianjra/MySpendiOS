@@ -72,5 +72,4 @@ struct TabViewMain: View {
 
 #Preview {
     TabViewMain()
-        //.environmentObject(AuthViewModel())
 }
