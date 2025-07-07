@@ -27,7 +27,7 @@ struct AccountModel: Identifiable {
         dateCreated = .init()
         dateModified = .init()
         id = UUID()
-        isActive = false
+        isActive = true
         
         icon = ""
         name = ""

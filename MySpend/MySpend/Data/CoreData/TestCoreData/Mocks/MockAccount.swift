@@ -13,16 +13,16 @@ struct MockAccount {
     static let preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
-        for _ in 0..<5 {
+        for item in 0..<5 {
             
             let newItem = Account(context: viewContext)
-            newItem.dateCreated = .now
+            newItem.dateCreated = Calendar.current.date(byAdding: .day, value: item, to: .now)!
             newItem.dateModified = .now
             newItem.id = UUID()
             newItem.isActive = true
             
             newItem.icon = "💳"
-            newItem.name = "General_account"
+            newItem.name = "General_account number: \(item)"
             newItem.notes = "notes..."
             newItem.type = AccountType.general.rawValue
             newItem.userId = "Firebase_User_UUID"

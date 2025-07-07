@@ -171,6 +171,7 @@ enum Logs {
     
     enum ErrorDomain: String {
         case databaseStore = "com.mySpend.DatabaseStore"
+        case accountDatabase = "com.mySpend.AccountDatabase"
         case transactionsDatabase = "com.mySpend.TransactionsDatabase"
         case categoriesDatabase = "com.mySpend.CategoriesDatabase"
         

@@ -30,9 +30,17 @@ struct TEST_CategoryView: View {
             List {
                 ForEach(viewModel.categories) { item in
                     NavigationLink {
-                        Text("Item at \(item.dateCreated, formatter: itemFormatter)")
+                        VStack {
+                            Text("Item date created: \(item.dateCreated, formatter: itemFormatter)")
+                            Text("Name: \(item.name)")
+                            Text("Type: \(item.type.rawValue)")
+                        }
+                        
                     } label: {
-                        Text(item.dateCreated, formatter: itemFormatter)
+                        VStack {
+                            Text(item.dateCreated, formatter: itemFormatter)
+                            Text("Name: \(item.name)")
+                        }
                     }
                 }
                 .onDelete(perform: deleteItems)

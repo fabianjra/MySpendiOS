@@ -28,7 +28,7 @@ struct TransactionModel {
         dateCreated = .init()
         dateModified = .init()
         id = UUID()
-        isActive = false
+        isActive = true
         
         amount = .zero
         dateTransaction = .init()

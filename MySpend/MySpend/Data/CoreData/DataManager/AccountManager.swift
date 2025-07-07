@@ -25,7 +25,7 @@ struct AccountManager {
     // MARK: READ
 
     func fetchAll(predicateFormat: String = CDConstants.Predicates.isActive,
-                              predicateArgs: [Any] = [true],
+                  predicateArgs: [Any] = [true],
                   sortedBy sortDescriptors: [NSSortDescriptor] = [NSSortDescriptor(keyPath: \Account.dateCreated, ascending: true)])
     throws -> [AccountModel] {
         
@@ -62,7 +62,7 @@ struct AccountManager {
             entity.notes = model.notes
             entity.type = model.type.rawValue
             entity.userId = model.userId
-            entity.transactions = [] // Se crea sin transacciones
+            //entity.transactions = [] // Se crea sin transacciones
             
             try viewContext.save()
         }
