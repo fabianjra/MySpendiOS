@@ -11,7 +11,7 @@ struct TextFieldName: View {
     
     var placeHolder: String = "Name"
     @Binding var text: String
-    var iconLeading: Image = Image.personFill
+    var iconLeading: Image? = Image.personFill
     
     @Binding var errorMessage: String
     

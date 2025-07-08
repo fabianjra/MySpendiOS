@@ -9,11 +9,15 @@ import Combine
 
 class TransactionViewModel: BaseViewModel {
 
-    @Published var userName: String = "Generic user"
+    @Published var userName = UserDefaultsManager.userName
     @Published var dateTimeInterval = UserDefaultsManager.dateTimeInterval
     
     @Published var transactions: [TransactionModel] = []
     @Published var groupedTransactions: UtilsCurrency.groupedTransactions = []
+    
+    func refreshUserName() {
+        userName = UserDefaultsManager.userName
+    }
     
     /// Llamar en `onAppear`
     func activateObservers() {
@@ -26,7 +30,7 @@ class TransactionViewModel: BaseViewModel {
     
     /// Llamar en `onDisappear`
     func deactivateObservers() {
-        stopObservingContextChanges()
+        //stopObservingContextChanges() //No permite actualizar cambios vista child (Subview)
     }
     
     private func fetchAll() {
@@ -36,5 +40,9 @@ class TransactionViewModel: BaseViewModel {
         } catch {
             Logs.CatchException(error, type: .CoreData)
         }
+    }
+    
+    deinit {
+        //stopObservingContextChanges() //TODO: Debe llamarse para remover el osberver
     }
 }

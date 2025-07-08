@@ -41,14 +41,14 @@ struct RootViewFB: View {
                 UIApplication.shared.addTapGestureRecognizer()
             }
             .navigationDestination(for: Router.Destination.self) { destination in
-                switch destination {
-                case .main:
-                    TabViewMain() //For: When go from register.
-                        .toolbar(.hidden, for: .navigationBar)
-                case .register:
-                    RegisterView()
-                        .toolbar(.hidden, for: .navigationBar)
-                }
+//                switch destination {
+//                case .main:
+//                    TabViewMain() //For: When go from register.
+//                        .toolbar(.hidden, for: .navigationBar)
+//                case .register:
+//                    RegisterView()
+//                        .toolbar(.hidden, for: .navigationBar)
+//                }
             }
         }
     }

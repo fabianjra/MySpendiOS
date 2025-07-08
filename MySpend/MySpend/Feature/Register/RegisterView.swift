@@ -70,7 +70,7 @@ struct RegisterView: View {
             let response = await viewModel.validateRegister()
             
             if response.status.isSuccess {
-                Router.shared.path.append(Router.Destination.main)
+                //Router.shared.path.append(Router.Destination.main)
             } else {
                 viewModel.errorMessage = response.message
             }

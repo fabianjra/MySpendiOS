@@ -8,10 +8,10 @@
 import Foundation
 
 struct ChangeName {
-    var userName: String = ""
-    var newUserName: String = ""
+    var username: String = ""
+    var newUsername: String = ""
     
     enum Field: Hashable, CaseIterable {
-        case newUserName
+        case newUsername
     }
 }

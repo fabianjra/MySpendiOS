@@ -7,7 +7,25 @@
 
 import Foundation
 
+// MARK: GENERAL
+
 struct UserDefaultsManager {
+    
+    static func removeValue(for key: UserDefaultsKeys) {
+        UserDefaults.standard.removeObject(forKey: key.rawValue)
+    }
+    
+    static func removeAll() {
+        for key in UserDefaultsKeys.allCases {
+            removeValue(for: key)
+        }
+    }
+}
+
+
+// MARK: SORT
+
+extension UserDefaultsManager {
     
     static var sorTransactions: SortTransactions {
         get { return UserDefaultsDataStore<SortTransactions>(for: .sortTransactions).value ?? .byDateNewest }
@@ -24,6 +42,12 @@ struct UserDefaultsManager {
             manager.value = newValue
         }
     }
+}
+
+
+// MARK: PREFERENCE
+
+extension UserDefaultsManager {
     
     static var dateTimeInterval: DateTimeInterval {
         get { return UserDefaultsDataStore<DateTimeInterval>(for: .dateTimeInterval).value ?? .month }
@@ -48,14 +72,34 @@ struct UserDefaultsManager {
             manager.value = newValue
         }
     }
+}
+
+
+// MARK: USER DATA
+
+extension UserDefaultsManager {
     
-    static func removeValue(for key: UserDefaultsKeys) {
-        UserDefaults.standard.removeObject(forKey: key.rawValue)
+    static var isOnBoarding: Bool {
+        get { return UserDefaultsDataStore<Bool>(for: .isOnBoarding).value ?? true }
+        set {
+            var manager = UserDefaultsDataStore<Bool>(for: .isOnBoarding)
+            manager.value = newValue
+        }
     }
     
-    static func removeAll() {
-        for key in UserDefaultsKeys.allCases {
-            removeValue(for: key)
+    static var userName: String {
+        get { return UserDefaultsDataStore<String>(for: .username).value ?? "" }
+        set {
+            var manager = UserDefaultsDataStore<String>(for: .username)
+            manager.value = newValue
+        }
+    }
+    
+    static var userEmail: String {
+        get { return UserDefaultsDataStore<String>(for: .userEmail).value ?? "" }
+        set {
+            var manager = UserDefaultsDataStore<String>(for: .userEmail)
+            manager.value = newValue
         }
     }
 }
@@ -70,6 +114,11 @@ enum UserDefaultsKeys: String, Codable, CaseIterable {
     case dateTimeInterval = "datetime_interval_key"
     case currency = "currency_key"
     case currencySymbolType = "currency_symbol_type_key"
+    
+    // MARK: USER DATA
+    case isOnBoarding = "is_on_boarding_key"
+    case username = "user_name_key"
+    case userEmail = "user_email_key"
     
 //    var valueType: Codable.Type {
 //        switch self {

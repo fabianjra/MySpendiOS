@@ -8,9 +8,8 @@
 import SwiftUI
 
 struct ChangeNameView: View {
-    
+
     @StateObject private var viewModel = ChangeNameViewModel()
-    
     @FocusState private var focusedField: ChangeName.Field?
     
     var body: some View {
@@ -28,26 +27,22 @@ struct ChangeNameView: View {
             // MARK: FIELDS
             VStack(spacing: ConstantViews.formSpacing) {
                 
-                TextFieldReadOnly(text: $viewModel.model.userName, iconLeading: Image.personFill)
+                TextFieldReadOnly(text: $viewModel.model.username, iconLeading: Image.personFill)
                 
                 
                 TextFieldName(placeHolder: "New name",
-                              text: $viewModel.model.newUserName,
+                              text: $viewModel.model.newUsername,
                               iconLeading: Image.checkmark,
                               errorMessage: $viewModel.errorMessage)
                 .padding(.bottom)
-                .focused($focusedField, equals: .newUserName)
+                .focused($focusedField, equals: .newUsername)
                 .onSubmit {
-                    Task {
-                        await viewModel.changeUserName()
-                    }
+                        viewModel.changeUserName()
                 }
                 
                 
                 Button("Change name") {
-                    Task {
-                        await viewModel.changeUserName()
-                    }
+                        viewModel.changeUserName()
                 }
                 .buttonStyle(ButtonPrimaryStyle(isLoading: $viewModel.isLoading))
                 .disabled(viewModel.disabled)
@@ -57,10 +52,9 @@ struct ChangeNameView: View {
             }
         }
         .onAppear {
-            focusedField = .newUserName
+            focusedField = .newUsername
             viewModel.onAppear()
         }
-        .disabled(viewModel.isLoading)
     }
 }
 

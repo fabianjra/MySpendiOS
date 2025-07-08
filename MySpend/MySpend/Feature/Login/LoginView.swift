@@ -111,7 +111,7 @@ struct LoginView: View {
                 TextPlain("New user?")
                 
                 Button("Create a new free account") {
-                    Router.shared.path.append(Router.Destination.register)
+                    //Router.shared.path.append(Router.Destination.register)
                 }
                 .buttonStyle(ButtonLinkStyle())
             }

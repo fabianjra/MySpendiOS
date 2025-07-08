@@ -7,30 +7,22 @@
 
 import Firebase
 
-class ChangeNameViewModel: BaseViewModelFB {
+final class ChangeNameViewModel: BaseViewModel {
     
     @Published var model = ChangeName()
     
-    func changeUserName() async {
-        if model.newUserName.isEmptyOrWhitespace {
+    func changeUserName() {
+        if model.newUsername.isEmptyOrWhitespace {
             errorMessage = Errors.emptySpace.localizedDescription
             return
         }
         
-        await performWithLoader {
-            do {
-                try await AuthFB().updateUser(newUserName: self.model.newUserName)
-                
-                self.errorMessage = "Name updated"
-            } catch {
-                self.errorMessage = error.localizedDescription
-            }
-        }
+        UserDefaultsManager.userName = model.newUsername
+        model.username = model.newUsername
+        model.newUsername = ""
     }
     
     func onAppear() {
-        performWithCurrentUser { currentUser in
-            self.model.userName = currentUser.displayName ?? ""
-        }
+        model.username = UserDefaultsManager.userName
     }
 }
