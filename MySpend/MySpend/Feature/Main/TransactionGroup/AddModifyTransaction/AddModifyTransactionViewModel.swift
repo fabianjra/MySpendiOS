@@ -16,6 +16,8 @@ class AddModifyTransactionViewModel: BaseViewModel {
     @Published var showCategoryList = false
     @Published var showAlert = false
     
+    @Published var categoryType = CategoryType.expense
+    
     let notesId = "notes"
     
     func onAppear(_ model: TransactionModel, selectedDate: Date, isNewTransaction: Bool) {
@@ -27,7 +29,7 @@ class AddModifyTransactionViewModel: BaseViewModel {
         }
     }
     
-    func addNewTransaction(_ model: TransactionModel, selectedDate: Date, categoryType: CategoryType) -> ResponseModelFB {
+    func addNewTransaction(_ model: TransactionModel, selectedDate: Date) -> ResponseModelFB {
         if model.category.name.isEmptyOrWhitespace {
             return ResponseModelFB(.error, Errors.emptySpaces.localizedDescription)
         }
@@ -47,7 +49,7 @@ class AddModifyTransactionViewModel: BaseViewModel {
         }
     }
     
-    func modifyTransaction(_ model: TransactionModel, selectedDate: Date, categoryType: CategoryType) -> ResponseModelFB {
+    func modifyTransaction(_ model: TransactionModel, selectedDate: Date) -> ResponseModelFB {
         if model.category.name.isEmptyOrWhitespace {
             return ResponseModelFB(.error, Errors.emptySpaces.localizedDescription)
         }

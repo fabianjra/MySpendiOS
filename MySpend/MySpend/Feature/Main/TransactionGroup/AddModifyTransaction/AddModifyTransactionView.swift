@@ -31,8 +31,6 @@ struct AddModifyTransactionView: View {
     @FocusState private var focusedField: TransactionModel.Field?
     private let isNewTransaction: Bool
     
-    @State private var categoryType = CategoryType.expense
-    
     var modelBinding: Binding<TransactionModel> {
         Binding(
             get: { isNewTransaction ? defaultModel : model }, /// Use defaultModel when is a New Transaction
@@ -75,7 +73,7 @@ struct AddModifyTransactionView: View {
                     
                     // MARK: SEGMENT
                     VStack {
-                        PickerSegmented(selection: $categoryType,
+                        PickerSegmented(selection: $viewModel.categoryType,
                                         segments: CategoryType.allCases)
                         .padding(.bottom)
                     }
@@ -167,7 +165,7 @@ struct AddModifyTransactionView: View {
                         }
                     }
                 }
-                .onChange(of: modelBinding.wrappedValue.category.type) {
+                .onChange(of: viewModel.categoryType) {
                     viewModel.errorMessage = ""
                     modelBinding.wrappedValue.category = CategoryModel() /// Clean category beacause won't be the same CategoryType (Exponse, income).
                 }
@@ -178,7 +176,7 @@ struct AddModifyTransactionView: View {
                 }
                 .sheet(isPresented: $viewModel.showCategoryList) {
                     SelectCategoryModalView(selectedCategory: modelBinding.category,
-                                            categoryType: $categoryType)
+                                            categoryType: $viewModel.categoryType)
                 }
             }
         }
@@ -193,9 +191,9 @@ struct AddModifyTransactionView: View {
         
         switch processType {
         case .add:
-            result = viewModel.addNewTransaction(modelBinding.wrappedValue, selectedDate: selectedDate, categoryType: categoryType)
+            result = viewModel.addNewTransaction(modelBinding.wrappedValue, selectedDate: selectedDate)
         case .modify:
-            result = viewModel.modifyTransaction(modelBinding.wrappedValue, selectedDate: selectedDate, categoryType: categoryType)
+            result = viewModel.modifyTransaction(modelBinding.wrappedValue, selectedDate: selectedDate)
         case .delete:
             result = viewModel.deleteTransaction(modelBinding.wrappedValue)
         }
