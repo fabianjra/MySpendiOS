@@ -9,37 +9,37 @@ import Foundation
 
 class AddModifyTransactionViewModel: BaseViewModel {
     
-    @Published var dateString: String = Date.now.toStringShortLocale
     @Published var amountString: String = ""
-    
+
     @Published var showDatePicker = false
     @Published var showCategoryList = false
     @Published var showAlert = false
-    
-    @Published var categoryType = CategoryType.expense
-    
+
+    @Published var model: TransactionModel
+    var isNewTransaction: Bool = true
     let notesId = "notes"
     
-    func loadDataUI(_ model: TransactionModel, selectedDate: Date, isNewTransaction: Bool) {
-        if isNewTransaction {
-            dateString = selectedDate.toStringShortLocale
+    init(_ model: TransactionModel? = nil, selectedDate: Date? = nil) {
+        
+        // If model exists, then is a Modify action.
+        if let modelLoaded = model {
+            self.model = modelLoaded
+            self.isNewTransaction = false
+            self.amountString = modelLoaded.amount.convertAmountDecimalToString
         } else {
-            dateString = model.dateTransaction.toStringShortLocale
-            amountString = model.amount.convertAmountDecimalToString
-            categoryType = model.category.type
+            self.model = TransactionModel(dateTransaction: selectedDate ?? .now)
         }
+        
+        super.init(viewContext: CoreDataUtilities.getViewContext())
     }
     
-    func addNewTransaction(_ model: TransactionModel, selectedDate: Date) -> ResponseModelFB {
+    func addNewTransaction() -> ResponseModelFB {
         if model.category.name.isEmptyOrWhitespace {
             return ResponseModelFB(.error, Errors.emptySpaces.localizedDescription)
         }
         
-        //TODO: Cambiar para que mas bien se use el selectedDate con la de Model:
         var modelMutated = model
         modelMutated.amount = amountString.convertAmountToDecimal
-        modelMutated.dateTransaction = selectedDate
-        modelMutated.category.type = categoryType
         
         do {
             try TransactionManager(viewContext: viewContext).create(modelMutated)
@@ -50,17 +50,13 @@ class AddModifyTransactionViewModel: BaseViewModel {
         }
     }
     
-    func modifyTransaction(_ model: TransactionModel, selectedDate: Date) -> ResponseModelFB {
+    func modifyTransaction() -> ResponseModelFB {
         if model.category.name.isEmptyOrWhitespace {
             return ResponseModelFB(.error, Errors.emptySpaces.localizedDescription)
         }
         
-        //TODO: Cambiar para que mas bien se use el selectedDate con la de Model:
         var modelMutated = model
         modelMutated.amount = amountString.convertAmountToDecimal
-        modelMutated.dateTransaction = selectedDate
-        modelMutated.dateModified = .now
-        modelMutated.category.type = categoryType
         
         do {
             try TransactionManager(viewContext: viewContext).update(modelMutated)
@@ -71,7 +67,7 @@ class AddModifyTransactionViewModel: BaseViewModel {
         }
     }
     
-    func deleteTransaction(_ model: TransactionModel) -> ResponseModelFB {
+    func deleteTransaction() -> ResponseModelFB {
         do {
             try TransactionManager(viewContext: viewContext).delete(model)
             return ResponseModelFB(.successful)

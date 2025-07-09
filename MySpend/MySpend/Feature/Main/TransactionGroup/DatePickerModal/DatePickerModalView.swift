@@ -10,7 +10,6 @@ import SwiftUI
 struct DatePickerModalView: View {
     
     @Binding var selectedDate: Date
-    @Binding var dateString: String
     @Binding var showModal: Bool
     
     var body: some View {
@@ -19,9 +18,6 @@ struct DatePickerModalView: View {
                 .datePickerStyle(.graphical)
                 .frame(width: FrameSize.width.calendar, height: FrameSize.width.calendar)
                 .scaleEffect(ConstantViews.calendarScale)
-                .onChange(of: selectedDate) { _, newValue in
-                    dateString = newValue.toStringShortLocale
-                }
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction) {
                         Button("Today") {
@@ -54,7 +50,7 @@ struct DatePickerModalView: View {
     ZStack(alignment: .top) {
         Color.backgroundBottom
         VStack {
-            TextPlain("Selected date: \(dateString)")
+            TextPlain("Selected date: \(selectedDate.toStringShortLocale)")
             
             Button("Show modal") {
                 showModal = true
@@ -62,7 +58,7 @@ struct DatePickerModalView: View {
             Spacer()
         }
     }.sheet(isPresented: $showModal) {
-        DatePickerModalView(selectedDate: $selectedDate, dateString: $dateString, showModal: $showModal)
+        DatePickerModalView(selectedDate: $selectedDate, showModal: $showModal)
     }
     .onAppear {
         dateString = selectedDate.toStringShortLocale

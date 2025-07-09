@@ -82,8 +82,10 @@ struct TransactionManager {
             
             // Entity-specific Attributes
             item.amount = UtilsCurrency.makeDecimal(model.amount)
+            item.dateTransaction = model.dateTransaction
             item.notes = model.notes
             item.category = try resolveCategory(from: model.category)
+            item.account = try resolveAccount(from: model.account)
 
             try viewContext.save()
         }

@@ -47,10 +47,10 @@ struct TransactionHistoryView: View {
             print("Router count HISTORY: \(Router.shared.path.count)")
         }
         .sheet(isPresented: $viewModel.showNewTransactionModal) {
-            AddModifyTransactionView(selectedDate: $selectedDate)
+            AddModifyTransactionView(selectedDate: selectedDate)
         }
         .sheet(isPresented: $viewModel.showModifyTransactionModal) {
-            AddModifyTransactionView(model: $selectedModel, selectedDate: $selectedModel.dateTransaction)
+            AddModifyTransactionView(selectedModel)
         }
     }
     

@@ -36,7 +36,7 @@ struct CategoryModel: Identifiable, Equatable, Hashable {
     }
     
     // When a new category is created
-    init(icon: String, name: String, type: CategoryType) {
+    init(icon: String = "", name: String = "", type: CategoryType = .expense) {
         self.init()
         self.icon = icon
         self.name = name

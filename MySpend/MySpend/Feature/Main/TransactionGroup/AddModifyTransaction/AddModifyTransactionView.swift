@@ -22,52 +22,23 @@ struct AddModifyTransactionView: View {
     
     @Environment(\.dismiss) var dismiss
     
-    @Binding var model: TransactionModel
-    @Binding private var selectedDate: Date
+    @StateObject private var viewModel: AddModifyTransactionViewModel
     
-    @StateObject var viewModel = AddModifyTransactionViewModel()
-    @State private var defaultModel = TransactionModel()
+    init(_ model: TransactionModel? = nil, selectedDate: Date? = nil) {
+        _viewModel = StateObject(wrappedValue: AddModifyTransactionViewModel(model, selectedDate: selectedDate))
+    }
 
     @FocusState private var focusedField: TransactionModel.Field?
-    private let isNewTransaction: Bool
-    
-    var modelBinding: Binding<TransactionModel> {
-        Binding(
-            get: { isNewTransaction ? defaultModel : model }, /// Use defaultModel when is a New Transaction
-            set: { newValue in
-                if isNewTransaction {
-                    defaultModel = newValue /// Get the default model when is a new transaction.
-                } else {
-                    model = newValue /// Use the model passed by parameter when is a Modify Transaction.
-                }
-            }
-        )
-    }
-    
-    /// Way to initialize a Binding if you want to pass a value (model) or just initialize the model with default valures.
-    init(model: Binding<TransactionModel>? = nil, selectedDate: Binding<Date>) {
-        if let model = model {
-            self.isNewTransaction = false
-            self._model = model
-            
-            Logs.WriteMessage(model)
-        } else {
-            /// In case a model is no passed by parameter, wont be use model. Will use defaultModel instead.
-            self.isNewTransaction = true
-            self._model = .constant(TransactionModel())
-        }
-        self._selectedDate = selectedDate
-    }
     
     var body: some View {
         NavigationStack { // This is needed for showing toolBar Keyboard.
             ScrollViewReader { scrollViewProxy in
                 FormContainer {
                     
-                    HeaderNavigator(title: isNewTransaction ? "New transaction" : "Modify transaction",
+                    HeaderNavigator(title: viewModel.isNewTransaction ? "New transaction" : "Modify transaction",
                                     titleWeight: .regular,
-                                    titleSize: isNewTransaction ? .bigXL : .bigL,
-                                    subTitle: isNewTransaction ? "Enter transation details" : "Modify transaction details",
+                                    titleSize: viewModel.isNewTransaction ? .bigXL : .bigL,
+                                    subTitle: viewModel.isNewTransaction ? "Enter transation details" : "Modify transaction details",
                                     showLeadingAction: false,
                                     showTrailingAction: true)
                     .padding(.vertical)
@@ -75,14 +46,14 @@ struct AddModifyTransactionView: View {
                     
                     // MARK: SEGMENT
                     VStack {
-                        PickerSegmented(selection: $viewModel.categoryType,
+                        PickerSegmented(selection: $viewModel.model.category.type,
                                         segments: CategoryType.allCases)
                         .padding(.bottom)
                     }
                     
                     // MARK: DATE
                     VStack {
-                        TextFieldReadOnly(text: $viewModel.dateString,
+                        TextFieldReadOnly(text: .constant(viewModel.model.dateTransaction.toStringShortLocale),
                                           iconLeading: Image.calendar,
                                           colorDisabled: false)
                         .onTapGesture {
@@ -110,7 +81,7 @@ struct AddModifyTransactionView: View {
                         
                         
                         TextFieldReadOnlySelectable(placeHolder: "Category",
-                                                    text: modelBinding.category.name,
+                                                    text: $viewModel.model.category.name,
                                                     iconLeading: Image.stackFill,
                                                     colorDisabled: false,
                                                     errorMessage: $viewModel.errorMessage)
@@ -119,7 +90,7 @@ struct AddModifyTransactionView: View {
                             viewModel.showCategoryList = true
                         }
                         
-                        TextFieldNotes(text: modelBinding.notes)
+                        TextFieldNotes(text: $viewModel.model.notes)
                             .id(viewModel.notesId)
                             .focused($focusedField, equals: .notes)
                             .padding(.bottom)
@@ -128,13 +99,13 @@ struct AddModifyTransactionView: View {
                     
                     // MARK: BUTTONS
                     VStack {
-                        Button(isNewTransaction ? "Add" : "Modify") {
-                            process(isNewTransaction ? .add : .modify)
+                        Button(viewModel.isNewTransaction ? "Add" : "Modify") {
+                            process(viewModel.isNewTransaction ? .add : .modify)
                         }
                         .buttonStyle(ButtonPrimaryStyle(isLoading: $viewModel.isLoading))
                         .padding(.vertical)
                         
-                        if isNewTransaction == false {
+                        if viewModel.isNewTransaction == false {
                             Button("Delete") {
                                 viewModel.showAlert = true
                             }
@@ -152,11 +123,6 @@ struct AddModifyTransactionView: View {
                     
                     Spacer()
                 }
-                .onAppear {
-                    viewModel.loadDataUI(modelBinding.wrappedValue,
-                                       selectedDate: selectedDate,
-                                       isNewTransaction: isNewTransaction)
-                }
                 .onChange(of: focusedField) { _, newFocusedField in
                     if focusedField == .notes {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
@@ -167,18 +133,17 @@ struct AddModifyTransactionView: View {
                         }
                     }
                 }
-                .onChange(of: viewModel.categoryType) {
+                .onChange(of: viewModel.model.category.type) { _, newValue in
                     viewModel.errorMessage = ""
-                    modelBinding.wrappedValue.category = CategoryModel() /// Clean category beacause won't be the same CategoryType (Exponse, income).
+                    viewModel.model.category = CategoryModel(type: newValue) /// Clean category beacause won't be the same CategoryType (Exponse, income).
                 }
                 .sheet(isPresented: $viewModel.showDatePicker) {
-                    DatePickerModalView(selectedDate: $selectedDate,
-                                        dateString: $viewModel.dateString,
+                    DatePickerModalView(selectedDate: $viewModel.model.dateTransaction,
                                         showModal: $viewModel.showDatePicker)
                 }
                 .sheet(isPresented: $viewModel.showCategoryList) {
-                    SelectCategoryModalView(selectedCategory: modelBinding.category,
-                                            categoryType: $viewModel.categoryType)
+                    SelectCategoryModalView(selectedCategory: $viewModel.model.category,
+                                            categoryType: $viewModel.model.category.type)
                 }
             }
         }
@@ -193,11 +158,11 @@ struct AddModifyTransactionView: View {
         
         switch processType {
         case .add:
-            result = viewModel.addNewTransaction(modelBinding.wrappedValue, selectedDate: selectedDate)
+            result = viewModel.addNewTransaction()
         case .modify:
-            result = viewModel.modifyTransaction(modelBinding.wrappedValue, selectedDate: selectedDate)
+            result = viewModel.modifyTransaction()
         case .delete:
-            result = viewModel.deleteTransaction(modelBinding.wrappedValue)
+            result = viewModel.deleteTransaction()
         }
         
         if result.status.isSuccess {
@@ -209,8 +174,11 @@ struct AddModifyTransactionView: View {
 }
 
 #Preview("New") {
-    @Previewable @State var selectedDate = Date()
-    AddModifyTransactionView(selectedDate: $selectedDate)
+    //@Previewable @State var selectedDate = Date()
+    //@Previewable @State var model = TransactionModel()
+    
+    //@Previewable @State var selectedDate = Date()
+    AddModifyTransactionView()
 }
 
 //TOD: REPARAR

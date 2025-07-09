@@ -41,7 +41,7 @@ struct TransactionModel: Identifiable, Equatable, Hashable {
     }
     
     // When a new Transaction is created
-    init(amount: Decimal, dateTransaction: Date, notes: String, category: CategoryModel, account: AccountModel) {
+    init(amount: Decimal = .zero, dateTransaction: Date = .now, notes: String = "", category: CategoryModel = CategoryModel(), account: AccountModel = AccountModel()) {
         self.init()
         self.amount = amount
         self.dateTransaction = dateTransaction

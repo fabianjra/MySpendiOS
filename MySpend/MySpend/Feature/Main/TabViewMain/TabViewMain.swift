@@ -48,7 +48,7 @@ struct TabViewMain: View {
             AppState.shared.swipeEnabled = true
         }
         .sheet(isPresented: $showNewTransactionModal) {
-            AddModifyTransactionView(selectedDate: $selectedDate)
+            AddModifyTransactionView(selectedDate: selectedDate)
         }
     }
     

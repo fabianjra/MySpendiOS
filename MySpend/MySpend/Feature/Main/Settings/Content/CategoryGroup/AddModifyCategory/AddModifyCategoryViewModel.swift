@@ -38,7 +38,6 @@ final class AddModifyCategoryViewModel: BaseViewModel {
         //TODO: Cambiar para que mas bien se use el selectedDate con la de Model:
         var modelMutated = model
         modelMutated.type = categoryType
-        modelMutated.dateModified = .now
         
         do {
             try CategoryManager(viewContext: viewContext).update(modelMutated)
