@@ -49,6 +49,8 @@ struct AddModifyTransactionView: View {
         if let model = model {
             self.isNewTransaction = false
             self._model = model
+            
+            Logs.WriteMessage(model)
         } else {
             /// In case a model is no passed by parameter, wont be use model. Will use defaultModel instead.
             self.isNewTransaction = true
@@ -151,7 +153,7 @@ struct AddModifyTransactionView: View {
                     Spacer()
                 }
                 .onAppear {
-                    viewModel.onAppear(modelBinding.wrappedValue,
+                    viewModel.loadDataUI(modelBinding.wrappedValue,
                                        selectedDate: selectedDate,
                                        isNewTransaction: isNewTransaction)
                 }

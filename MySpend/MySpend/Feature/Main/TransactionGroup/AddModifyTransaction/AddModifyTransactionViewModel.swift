@@ -20,12 +20,13 @@ class AddModifyTransactionViewModel: BaseViewModel {
     
     let notesId = "notes"
     
-    func onAppear(_ model: TransactionModel, selectedDate: Date, isNewTransaction: Bool) {
+    func loadDataUI(_ model: TransactionModel, selectedDate: Date, isNewTransaction: Bool) {
         if isNewTransaction {
             dateString = selectedDate.toStringShortLocale
         } else {
             dateString = model.dateTransaction.toStringShortLocale
             amountString = model.amount.convertAmountDecimalToString
+            categoryType = model.category.type
         }
     }
     
