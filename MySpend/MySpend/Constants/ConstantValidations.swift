@@ -13,6 +13,7 @@ struct ConstantValidations {
     static let showValidateAccount: Bool = true
     
     // MARK: CONTENT
+    static let showAccounts: Bool = true
     static let showCategories: Bool = true
     static let showCurrencySymbol: Bool = true
     static let showDateTimeInterval: Bool = true

@@ -67,12 +67,14 @@ enum AccountOptions: String, CaseIterable, Identifiable {
 
 enum ContentOptions: String, CaseIterable, Identifiable {
     public var id: Self { self }
+    case accounts = "Accounts"
     case categories = "Categories"
     case currencySymbol = "Currency symbol"
     case dateTimeInterval = "Time interval"
     
     var icon: Image {
         switch self {
+        case .accounts: return Image.walletFill
         case .categories: return Image.listBulletClipboardFill
         case .currencySymbol: return Image.dollar
         case .dateTimeInterval: return Image.calendar
@@ -81,6 +83,7 @@ enum ContentOptions: String, CaseIterable, Identifiable {
     
     var showOption: Bool {
         switch self {
+        case .accounts: return ConstantValidations.showAccounts
         case .categories: return ConstantValidations.showCategories
         case .currencySymbol: return ConstantValidations.showCurrencySymbol
         case .dateTimeInterval: return ConstantValidations.showDateTimeInterval
@@ -91,6 +94,7 @@ enum ContentOptions: String, CaseIterable, Identifiable {
     var view: some View {
         switch self {
         //"for: .navigationBar" is disabling the navigator to navigate the next View.
+        case .accounts: AccountView().toolbar(.hidden, for: .navigationBar)
         case .categories: CategoryView().toolbar(.hidden, for: .navigationBar)
         case .currencySymbol: CurrencyListView().toolbar(.hidden, for: .navigationBar)
         case .dateTimeInterval: DateTimeIntervalListView().toolbar(.hidden, for: .navigationBar)

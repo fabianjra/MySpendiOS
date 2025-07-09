@@ -17,6 +17,7 @@ extension Label where Title == Text, Icon == Image {
     // MARK: MENU SORT
     
     static let restoreSelection = Label("Reset selection", systemImage: ConstantSystemImage.arrowCounterClockwise)
+    static let type = Label("Type", systemImage: ConstantSystemImage.walletPassFill)
     
     // MARK: MENU SORT TRANSACTIONS
     

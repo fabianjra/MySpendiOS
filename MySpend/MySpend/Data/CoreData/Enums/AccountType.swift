@@ -8,8 +8,7 @@
 import Foundation
 
 enum AccountType: String, CaseIterable, Hashable {
-    case main = "main"
+    case general = "general"
     case expenses = "expenses"
     case incomes = "incomes"
-    case general = "general"
 }

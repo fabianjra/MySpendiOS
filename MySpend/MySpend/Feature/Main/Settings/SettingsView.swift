@@ -10,7 +10,7 @@ import SwiftUI
 struct SettingsView: View {
     
     @State private var showAlert = false
-    @EnvironmentObject var authViewModel: AuthViewModel
+    //@EnvironmentObject var authViewModel: AuthViewModel
     
     var body: some View {
         ContentContainer(addPading: false) {
@@ -42,23 +42,21 @@ struct SettingsView: View {
                     }
                 }
                 
-                // MARK: LOG OUT
-                SectionContainer("Login") {
+                // MARK: ERASE ALL DATA
+                SectionContainer("DATA") {
                     
-                    Button("Log out") {
+                    Button("Delete data") {
                         showAlert = true
                     }
                     .foregroundColor(Color.alert)
                     .font(.montserrat(.semibold))
                     
-                    .alert("Want to log out?", isPresented: $showAlert) {
+                    .alert("Want to delete all data?", isPresented: $showAlert) {
                         
-                        Button("Log out", role: .destructive) {
+                        Button("Delete", role: .destructive) {
                             do {
-                                authViewModel.cleanSession()
-                                
-                                try AuthFB().singOut()
-                                Router.shared.path.removeLast(Router.shared.path.count) //In case when come from register.
+                                //TODO: AGREGAR BORRADO DE DATOS
+                                //Router.shared.path.removeLast(Router.shared.path.count) //In case when come from register.
                             } catch {
                                 Logs.CatchException(error)
                             }
@@ -66,7 +64,7 @@ struct SettingsView: View {
                         
                         Button("Cancel", role: .cancel) { }
                     } message: {
-                        //Text("Are you sure you want to log out?")
+                        Text("This action cannot be undone.")
                     }
                 }
             }

@@ -32,6 +32,7 @@ extension Image {
     static let personFill = Image(systemName: "person.fill") // Name
     static let calendar = Image(systemName: "calendar") // Date
     static let checkmark = Image(systemName: "checkmark") // Password confirmation
+    static let walletFill = Image(systemName: "wallet.bifold.fill") 
     
     
     // MARK: TABVIEW

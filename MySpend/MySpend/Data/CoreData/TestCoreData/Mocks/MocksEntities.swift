@@ -22,7 +22,7 @@ struct MocksEntities {
         createCategories(viewContext)
         
         // Asegura que los fetch vean las inserciones:
-        viewContext.processPendingChanges()
+        //viewContext.processPendingChanges()
         
         // Transactions:
         createTransactions(viewContext)
@@ -43,10 +43,10 @@ struct MocksEntities {
         newItem.id = UUID()
         newItem.isActive = true
         
-        newItem.icon = "💳"
+        newItem.icon = "person.fill"
         newItem.name = "Main account"
         newItem.notes = "No notes"
-        newItem.type = AccountType.main.rawValue
+        newItem.type = AccountType.general.rawValue
         newItem.userId = "Firebase_User_UUID"
         
         let newItem2 = Account(context: context)
@@ -58,7 +58,7 @@ struct MocksEntities {
         newItem2.icon = ""
         newItem2.name = "Secondary account"
         newItem2.notes = ""
-        newItem2.type = AccountType.general.rawValue
+        newItem2.type = AccountType.expenses.rawValue
         newItem2.userId = ""
     }
     
@@ -72,7 +72,7 @@ struct MocksEntities {
             
             newItem.dateLastUsed = .now
             newItem.icon = "✅"
-            newItem.name = "Expense number: \(item)"
+            newItem.name = "Gasto: \(item)"
             newItem.type = CategoryType.expense.rawValue
             newItem.usageCount = 0
         }
@@ -86,7 +86,7 @@ struct MocksEntities {
             
             newItem.dateLastUsed = Calendar.current.date(byAdding: .day, value: item + 2, to: .now)!
             newItem.icon = "✅"
-            newItem.name = "Expense number: \(item)"
+            newItem.name = "Ingreso: \(item)"
             newItem.type = CategoryType.income.rawValue
             newItem.usageCount = 1
         }
@@ -131,7 +131,7 @@ struct MocksEntities {
         }
     }
     
-    private static func fetchAccount(_ context: NSManagedObjectContext, type: AccountType = .main) -> AccountModel {
+    private static func fetchAccount(_ context: NSManagedObjectContext, type: AccountType = .general) -> AccountModel {
         do {
             let accounts = try AccountManager(viewContext: context).fetchAll()
             let expense = accounts.first(where: { $0.type == type })

@@ -42,6 +42,14 @@ extension UserDefaultsManager {
             manager.value = newValue
         }
     }
+    
+    static var sortAccounts: SortAccounts {
+        get { return UserDefaultsDataStore<SortAccounts>(for: .sortAccounts).value ?? .byNameAz }
+        set {
+            var manager = UserDefaultsDataStore<SortAccounts>(for: .sortAccounts)
+            manager.value = newValue
+        }
+    }
 }
 
 
@@ -109,6 +117,7 @@ enum UserDefaultsKeys: String, Codable, CaseIterable {
     // MARK: SORT
     case sortTransactions = "sort_transactions_key"
     case sortCategories = "sort_categories_key"
+    case sortAccounts = "sort_accounts_key"
     
     // MARK: PREFERENCE
     case dateTimeInterval = "datetime_interval_key"
