@@ -1,5 +1,5 @@
 //
-//  PickerSegmented.swift
+//  PickerCategoryType.swift
 //  MySpend
 //
 //  Created by Fabian Rodriguez on 1/8/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PickerSegmented: UIViewRepresentable {
+struct PickerCategoryType: UIViewRepresentable {
     
     @Binding var selection: CategoryType
     let segments: [CategoryType]
@@ -39,9 +39,9 @@ struct PickerSegmented: UIViewRepresentable {
     }
     
     class Coordinator: NSObject {
-        var parent: PickerSegmented
+        var parent: PickerCategoryType
         
-        init(parent: PickerSegmented) {
+        init(parent: PickerCategoryType) {
             self.parent = parent
         }
         
@@ -67,8 +67,8 @@ extension Collection {
 
 #Preview {
     VStack {
-        PickerSegmented(selection: .constant(.expense), segments: CategoryType.allCases)
+        PickerCategoryType(selection: .constant(.expense), segments: CategoryType.allCases)
         
-        PickerSegmented(selection: .constant(.income), segments: CategoryType.allCases)
+        PickerCategoryType(selection: .constant(.income), segments: CategoryType.allCases)
     }
 }

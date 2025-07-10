@@ -59,7 +59,7 @@ struct AddModifyCategoryView: View {
             
             // MARK: SEGMENT
             VStack {
-                PickerSegmented(selection: $categoryType,
+                PickerCategoryType(selection: $categoryType,
                                 segments: CategoryType.allCases)
                 .frame(maxWidth: ConstantFrames.iPadMaxWidth)
                 .padding(.bottom)
