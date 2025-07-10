@@ -77,10 +77,9 @@ struct AccountView: View {
             
             
             VStack {
-//                PickerSegmented(selection: $viewModel.accountType,
-//                                segments: AccountType.allCases)
-//                .frame(maxWidth: ConstantFrames.iPadMaxWidth)
-//                .padding(.bottom, ConstantViews.mediumSpacing)
+                PickerGeneral(selection: $viewModel.modelType)
+                    .frame(maxWidth: ConstantFrames.iPadMaxWidth)
+                    .padding(.bottom, ConstantViews.mediumSpacing)
                 
                 RowLCTCointainer(disabled: viewModel.isEditing, leadingContent:  {
                     MenuContainer(addHorizontalPadding: true, disabled: viewModel.isEditing) {

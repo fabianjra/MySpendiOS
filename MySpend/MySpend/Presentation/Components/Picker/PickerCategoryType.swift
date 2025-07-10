@@ -14,7 +14,7 @@ struct PickerCategoryType: UIViewRepresentable {
     
     func makeUIView(context: Context) -> UISegmentedControl {
         
-        let segmentedControl = UISegmentedControl(items: segments.map { $0.rawValue })
+        let segmentedControl = UISegmentedControl(items: segments.map { $0.rawValue.capitalized })
         segmentedControl.addTarget(context.coordinator,
                                    action: #selector(Coordinator.valueChanged),
                                    for: .valueChanged)
@@ -27,7 +27,7 @@ struct PickerCategoryType: UIViewRepresentable {
         
         uiView.selectedSegmentTintColor = UIColor(selection == .expense ? Color.alert : Color.primaryTrailing)
         
-        uiView.setTitleTextAttributes([.font: Font.montserratToUIFont(.light),
+        uiView.setTitleTextAttributes([.font: Font.montserratToUIFont(.regular),
                                        .foregroundColor: UIColor(Color.textPrimaryForeground)],
                                       for: .selected)
         
