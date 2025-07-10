@@ -48,27 +48,27 @@ class AccountViewModel: BaseViewModel {
         }
     }
     
-    func delete(_ model: AccountModel) -> ResponseModelFB {
+    func delete(_ model: AccountModel) -> ResponseModel {
         do {
             try AccountManager(viewContext: viewContext).delete(model)
-            return ResponseModelFB(.successful)
+            return ResponseModel(.successful)
         } catch {
             Logs.CatchException(error, type: .CoreData)
-            return ResponseModelFB(.error, error.localizedDescription)
+            return ResponseModel(.error, error.localizedDescription)
         }
     }
     
-    func deleteMltipleItems() -> ResponseModelFB {
+    func deleteMltipleItems() -> ResponseModel {
         do {
             for item in selectedModels {
                 try AccountManager(viewContext: viewContext).delete(item)
             }
             
             selectedModels.removeAll()
-            return ResponseModelFB(.successful)
+            return ResponseModel(.successful)
         } catch {
             Logs.CatchException(error)
-            return ResponseModelFB(.error, error.localizedDescription)
+            return ResponseModel(.error, error.localizedDescription)
         }
     }
     

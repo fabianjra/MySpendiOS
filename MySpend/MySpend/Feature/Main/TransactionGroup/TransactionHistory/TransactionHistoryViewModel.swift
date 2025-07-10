@@ -18,27 +18,27 @@ class TransactionHistoryViewModel: BaseViewModel {
     @Published var selectedTransactions = Set<TransactionModel>()
     @Published var sortTransactionsBy = UserDefaultsManager.sorTransactions
 
-    func deleteTransaction(_ model: TransactionModel) -> ResponseModelFB {
+    func deleteTransaction(_ model: TransactionModel) -> ResponseModel {
         do {
             try TransactionManager(viewContext: viewContext).delete(model)
-            return ResponseModelFB(.successful)
+            return ResponseModel(.successful)
         } catch {
             Logs.CatchException(error)
-            return ResponseModelFB(.error, error.localizedDescription)
+            return ResponseModel(.error, error.localizedDescription)
         }
     }
     
-    func deleteMltipleTransactions() -> ResponseModelFB {
+    func deleteMltipleTransactions() -> ResponseModel {
         do {
             for item in selectedTransactions {
                 try TransactionManager(viewContext: viewContext).delete(item)
             }
             
             selectedTransactions.removeAll()
-            return ResponseModelFB(.successful)
+            return ResponseModel(.successful)
         } catch {
             Logs.CatchException(error)
-            return ResponseModelFB(.error, error.localizedDescription)
+            return ResponseModel(.error, error.localizedDescription)
         }
     }
     

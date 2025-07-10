@@ -48,27 +48,27 @@ class CategoryViewModel: BaseViewModel {
         }
     }
     
-    func deleteCategory(_ model: CategoryModel) -> ResponseModelFB {
+    func deleteCategory(_ model: CategoryModel) -> ResponseModel {
         do {
             try CategoryManager(viewContext: viewContext).delete(model)
-            return ResponseModelFB(.successful)
+            return ResponseModel(.successful)
         } catch {
             Logs.CatchException(error, type: .CoreData)
-            return ResponseModelFB(.error, error.localizedDescription)
+            return ResponseModel(.error, error.localizedDescription)
         }
     }
     
-    func deleteMltipleCategories() -> ResponseModelFB {
+    func deleteMltipleCategories() -> ResponseModel {
         do {
             for item in selectedCategories {
                 try CategoryManager(viewContext: viewContext).delete(item)
             }
             
             selectedCategories.removeAll()
-            return ResponseModelFB(.successful)
+            return ResponseModel(.successful)
         } catch {
             Logs.CatchException(error)
-            return ResponseModelFB(.error, error.localizedDescription)
+            return ResponseModel(.error, error.localizedDescription)
         }
     }
     

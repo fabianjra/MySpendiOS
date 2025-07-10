@@ -154,7 +154,7 @@ struct AddModifyTransactionView: View {
     }
     
     private func process(_ processType: ProcessType) {
-        let result: ResponseModelFB
+        let result: ResponseModel
         
         switch processType {
         case .add:

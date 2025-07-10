@@ -12,49 +12,49 @@ final class AddModifyCategoryViewModel: BaseViewModel {
     @Published var showIconsModal = false
     @Published var showAlert = false
     
-    func addNewCategory(_ model: CategoryModel, categoryType: CategoryType) -> ResponseModelFB {
+    func addNew(_ model: CategoryModel, type: CategoryType) -> ResponseModel {
         if model.name.isEmptyOrWhitespace {
-            return ResponseModelFB(.error, Errors.emptySpaces.localizedDescription)
+            return ResponseModel(.error, Errors.emptySpaces.localizedDescription)
         }
         
         //TODO: Cambiar para que mas bien se use el selectedDate con la de Model:
         var modelMutated = model
-        modelMutated.type = categoryType
+        modelMutated.type = type
         
         do {
             try CategoryManager(viewContext: viewContext).create(modelMutated)
-            return ResponseModelFB(.successful)
+            return ResponseModel(.successful)
         } catch {
             Logs.CatchException(error)
-            return ResponseModelFB(.error, error.localizedDescription)
+            return ResponseModel(.error, error.localizedDescription)
         }
     }
     
-    func modifyCategory(_ model: CategoryModel, categoryType: CategoryType) -> ResponseModelFB {
+    func modify(_ model: CategoryModel, type: CategoryType) -> ResponseModel {
         if model.name.isEmptyOrWhitespace {
-            return ResponseModelFB(.error, Errors.emptySpaces.localizedDescription)
+            return ResponseModel(.error, Errors.emptySpaces.localizedDescription)
         }
         
         //TODO: Cambiar para que mas bien se use el selectedDate con la de Model:
         var modelMutated = model
-        modelMutated.type = categoryType
+        modelMutated.type = type
         
         do {
             try CategoryManager(viewContext: viewContext).update(modelMutated)
-            return ResponseModelFB(.successful)
+            return ResponseModel(.successful)
         } catch {
             Logs.CatchException(error)
-            return ResponseModelFB(.error, error.localizedDescription)
+            return ResponseModel(.error, error.localizedDescription)
         }
     }
     
-    func deleteCategory(_ model: CategoryModel) -> ResponseModelFB {
+    func delete(_ model: CategoryModel) -> ResponseModel {
         do {
             try CategoryManager(viewContext: viewContext).delete(model)
-            return ResponseModelFB(.successful)
+            return ResponseModel(.successful)
         } catch {
             Logs.CatchException(error, type: .CoreData)
-            return ResponseModelFB(.error, error.localizedDescription)
+            return ResponseModel(.error, error.localizedDescription)
         }
     }
 }

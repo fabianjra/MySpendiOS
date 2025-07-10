@@ -26,22 +26,22 @@ struct AddModifyCategoryView: View {
     @Binding var model: CategoryModel
     @State private var defaultModel = CategoryModel()
     
-    @Binding var categoryType: CategoryType
+    @Binding var modelType: CategoryType
     
     // Options for: Category added from New Transaction (Should select the new category when added).
-    @Binding var isNewCategoryAdded: Bool //Allows the dismiss in the UpperView when a new category is added.
-    @Binding var newCategoryID: String
+    @Binding var isNewModelAdded: Bool //Allows the dismiss in the UpperView when a new category is added.
+    @Binding var newModelID: String
     
     @StateObject var viewModel = AddModifyCategoryViewModel()
     @FocusState private var focusedField: CategoryModel.Field?
     
-    private let isNewCategory: Bool
+    private let isNewModel: Bool
     
     var modelBinding: Binding<CategoryModel> {
         Binding(
-            get: { isNewCategory ? defaultModel : model }, /// Use defaultModel when is a New Category
+            get: { isNewModel ? defaultModel : model }, /// Use defaultModel when is a New Category
             set: { newValue in
-                if isNewCategory {
+                if isNewModel {
                     defaultModel = newValue /// Get the default model when is a New Category.
                 } else {
                     model = newValue /// Use the model passed by parameter when is a Modify Category.
@@ -58,36 +58,36 @@ struct AddModifyCategoryView: View {
          newCategoryID: Binding<String>? = nil) {
         
         if let model = model {
-            self.isNewCategory = false
+            self.isNewModel = false
             self._model = model
         } else {
             /// In case a model is no passed by parameter, wont be use model. Will use defaultModel instead.
-            self.isNewCategory = true
+            self.isNewModel = true
             self._model = .constant(CategoryModel())
         }
         
-        self._categoryType = categoryType
+        self._modelType = categoryType
         
         if let isNewCategoryAdded = isNewCategoryAdded {
-            self._isNewCategoryAdded = isNewCategoryAdded
+            self._isNewModelAdded = isNewCategoryAdded
         } else {
-            self._isNewCategoryAdded = .constant(false)
+            self._isNewModelAdded = .constant(false)
         }
         
         if let newCategoryID = newCategoryID {
-            self._newCategoryID = newCategoryID
+            self._newModelID = newCategoryID
         } else {
-            self._newCategoryID = .constant("")
+            self._newModelID = .constant("")
         }
     }
     
     var body: some View {
         FormContainer {
             
-            HeaderNavigator(title: isNewCategory ? "New category" : "Modify category",
+            HeaderNavigator(title: isNewModel ? "New category" : "Modify category",
                             titleWeight: .regular,
                             titleSize: .bigXL,
-                            subTitle: isNewCategory ? "Enter the category details" : "Modify the category details",
+                            subTitle: isNewModel ? "Enter the category details" : "Modify the category details",
                             showLeadingAction: false,
                             showTrailingAction: true)
                 .padding(.vertical)
@@ -95,7 +95,7 @@ struct AddModifyCategoryView: View {
             
             // MARK: SEGMENT
             VStack {
-                PickerSegmented(selection: $categoryType,
+                PickerSegmented(selection: $modelType,
                                 segments: CategoryType.allCases)
                 .frame(maxWidth: ConstantFrames.iPadMaxWidth)
                 .padding(.bottom)
@@ -107,7 +107,7 @@ struct AddModifyCategoryView: View {
                 TextFieldCategoryName(text: modelBinding.name,
                                       errorMessage: $viewModel.errorMessage)
                 .focused($focusedField, equals: .name)
-                .onSubmit { process(isNewCategory ? .add : .modify) }
+                .onSubmit { process(isNewModel ? .add : .modify) }
                 
                 Button("") {
                     viewModel.showIconsModal = true
@@ -120,13 +120,13 @@ struct AddModifyCategoryView: View {
             
             // MARK: BUTTONS
             VStack {
-                Button(isNewCategory ? "Add" : "Modify") {
-                    process(isNewCategory ? .add : .modify)
+                Button(isNewModel ? "Add" : "Modify") {
+                    process(isNewModel ? .add : .modify)
                 }
                 .buttonStyle(ButtonPrimaryStyle(isLoading: $viewModel.isLoading))
                 .padding(.vertical)
                 
-                if isNewCategory == false {
+                if isNewModel == false {
                     Button("Delete") {
                         viewModel.showAlert = true
                     }
@@ -150,29 +150,27 @@ struct AddModifyCategoryView: View {
     }
     
     private func process(_ processType: ProcessType) {
-            let result: ResponseModelFB
-            
-            switch processType {
-            case .add:
-                result = viewModel.addNewCategory(modelBinding.wrappedValue, categoryType: categoryType)
-            case .modify:
-                result = viewModel.modifyCategory(modelBinding.wrappedValue, categoryType: categoryType)
-            case .delete:
-                result = viewModel.deleteCategory(modelBinding.wrappedValue)
+        let result: ResponseModel
+        
+        switch processType {
+        case .add:
+            result = viewModel.addNew(modelBinding.wrappedValue, type: modelType)
+        case .modify:
+            result = viewModel.modify(modelBinding.wrappedValue, type: modelType)
+        case .delete:
+            result = viewModel.delete(modelBinding.wrappedValue)
+        }
+        
+        if result.status.isSuccess {
+            if processType == .add {
+                newModelID = modelBinding.id.uuidString
+                isNewModelAdded = true
             }
             
-            if result.status.isSuccess {
-                guard let documentReference = result.documentReference else {
-                    dismiss()
-                    return
-                }
-                
-                newCategoryID = documentReference.documentID
-                isNewCategoryAdded = true
-                dismiss()
-            } else {
-                viewModel.errorMessage = result.message
-            }
+            dismiss()
+        } else {
+            viewModel.errorMessage = result.message
+        }
     }
 }
 

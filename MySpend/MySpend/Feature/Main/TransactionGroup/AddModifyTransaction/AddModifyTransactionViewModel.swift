@@ -33,9 +33,9 @@ class AddModifyTransactionViewModel: BaseViewModel {
         super.init(viewContext: CoreDataUtilities.getViewContext())
     }
     
-    func addNewTransaction() -> ResponseModelFB {
+    func addNewTransaction() -> ResponseModel {
         if model.category.name.isEmptyOrWhitespace {
-            return ResponseModelFB(.error, Errors.emptySpaces.localizedDescription)
+            return ResponseModel(.error, Errors.emptySpaces.localizedDescription)
         }
         
         var modelMutated = model
@@ -43,16 +43,16 @@ class AddModifyTransactionViewModel: BaseViewModel {
         
         do {
             try TransactionManager(viewContext: viewContext).create(modelMutated)
-            return ResponseModelFB(.successful)
+            return ResponseModel(.successful)
         } catch {
             Logs.CatchException(error, type: .CoreData)
-            return ResponseModelFB(.error, error.localizedDescription)
+            return ResponseModel(.error, error.localizedDescription)
         }
     }
     
-    func modifyTransaction() -> ResponseModelFB {
+    func modifyTransaction() -> ResponseModel {
         if model.category.name.isEmptyOrWhitespace {
-            return ResponseModelFB(.error, Errors.emptySpaces.localizedDescription)
+            return ResponseModel(.error, Errors.emptySpaces.localizedDescription)
         }
         
         var modelMutated = model
@@ -60,20 +60,20 @@ class AddModifyTransactionViewModel: BaseViewModel {
         
         do {
             try TransactionManager(viewContext: viewContext).update(modelMutated)
-            return ResponseModelFB(.successful)
+            return ResponseModel(.successful)
         } catch {
             Logs.CatchException(error, type: .CoreData)
-            return ResponseModelFB(.error, error.localizedDescription)
+            return ResponseModel(.error, error.localizedDescription)
         }
     }
     
-    func deleteTransaction() -> ResponseModelFB {
+    func deleteTransaction() -> ResponseModel {
         do {
             try TransactionManager(viewContext: viewContext).delete(model)
-            return ResponseModelFB(.successful)
+            return ResponseModel(.successful)
         } catch {
             Logs.CatchException(error)
-            return ResponseModelFB(.error, error.localizedDescription)
+            return ResponseModel(.error, error.localizedDescription)
         }
     }
 }

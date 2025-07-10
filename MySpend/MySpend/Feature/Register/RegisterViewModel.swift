@@ -11,32 +11,32 @@ class RegisterViewModel: BaseViewModelFB {
     
     @Published var register = Register()
     
-    func validateRegister() async -> ResponseModelFB {
+    func validateRegister() async -> ResponseModel {
         if register.name.isEmptyOrWhitespace || register.email.isEmptyOrWhitespace ||
             register.password.isEmptyOrWhitespace || register.passwordConfirm.isEmptyOrWhitespace {
             
-            return ResponseModelFB(.error, Errors.emptySpaces.localizedDescription)
+            return ResponseModel(.error, Errors.emptySpaces.localizedDescription)
         }
         
         if register.password.count < ConstantViews.passwordMinimumLength || register.passwordConfirm.count < ConstantViews.passwordMinimumLength {
-            return ResponseModelFB(.error, Errors.passwordIsShort.localizedDescription)
+            return ResponseModel(.error, Errors.passwordIsShort.localizedDescription)
         }
         
         if register.password != register.passwordConfirm {
-            return ResponseModelFB(.error, Errors.creationPasswordIsDifferent.localizedDescription)
+            return ResponseModel(.error, Errors.creationPasswordIsDifferent.localizedDescription)
         }
         
-        var response = ResponseModelFB()
+        var response = ResponseModel()
         
         await performWithLoader {
             do {
                 try await AuthFB().registerUser(withEmail: self.register.email,
                                                 password: self.register.password,
                                                 username: self.register.name)
-                response = ResponseModelFB(.successful)
+                response = ResponseModel(.successful)
             } catch {
                 Logs.CatchException(error)
-                response = ResponseModelFB(.error, error.localizedDescription)
+                response = ResponseModel(.error, error.localizedDescription)
             }
         }
         
