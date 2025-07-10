@@ -23,7 +23,7 @@ class TransactionHistoryViewModel: BaseViewModel {
             try TransactionManager(viewContext: viewContext).delete(model)
             return ResponseModel(.successful)
         } catch {
-            Logs.CatchException(error)
+            Logs.CatchException(error, type: .CoreData)
             return ResponseModel(.error, error.localizedDescription)
         }
     }
@@ -41,7 +41,7 @@ class TransactionHistoryViewModel: BaseViewModel {
             selectedTransactions.removeAll()
             return ResponseModel(.successful)
         } catch {
-            Logs.CatchException(error)
+            Logs.CatchException(error, type: .CoreData)
             return ResponseModel(.error, error.localizedDescription)
         }
     }

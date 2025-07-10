@@ -41,7 +41,7 @@ final class AddModifyCategoryViewModel: BaseViewModel {
             try CategoryManager(viewContext: viewContext).create(modelMutated)
             return ResponseModel(.successful)
         } catch {
-            Logs.CatchException(error)
+            Logs.CatchException(error, type: .CoreData)
             return ResponseModel(.error, error.localizedDescription)
         }
     }
@@ -59,7 +59,7 @@ final class AddModifyCategoryViewModel: BaseViewModel {
             try CategoryManager(viewContext: viewContext).update(modelMutated)
             return ResponseModel(.successful)
         } catch {
-            Logs.CatchException(error)
+            Logs.CatchException(error, type: .CoreData)
             return ResponseModel(.error, error.localizedDescription)
         }
     }
