@@ -39,9 +39,9 @@ struct PickerGeneral<E>: UIViewRepresentable where E: CaseIterable & RawRepresen
 
         
         control.setTitleTextAttributes(attributeNormal, for: .normal)
-        
         control.setTitleTextAttributes(attributeSelected, for: .selected)
         
+        control.selectedSegmentTintColor = UIColor(Color.textFieldBackground)
         control.backgroundColor = UIColor(Color.textFieldIconBackground)
         
         return control
