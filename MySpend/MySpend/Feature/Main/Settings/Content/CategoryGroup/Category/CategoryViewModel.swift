@@ -59,6 +59,10 @@ class CategoryViewModel: BaseViewModel {
     }
     
     func deleteMltipleCategories() -> ResponseModel {
+        defer {
+            isEditing = false
+        }
+        
         do {
             for item in selectedCategories {
                 try CategoryManager(viewContext: viewContext).delete(item)

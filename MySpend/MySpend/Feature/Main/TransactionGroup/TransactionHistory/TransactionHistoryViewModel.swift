@@ -29,6 +29,10 @@ class TransactionHistoryViewModel: BaseViewModel {
     }
     
     func deleteMltipleTransactions() -> ResponseModel {
+        defer {
+            isEditing = false
+        }
+        
         do {
             for item in selectedTransactions {
                 try TransactionManager(viewContext: viewContext).delete(item)
