@@ -122,18 +122,20 @@ struct CategoryManager {
      */
     func update(_ model: CategoryModel) throws {
         try viewContext.performAndWait {
-            let item = try fetch(model)
-            
-            // Shared attributes (Abstract class):
-            item.dateModified = .now
-            item.isActive = model.isActive
-            
-            // Entity-specific Attributes
-            item.icon = model.icon
-            item.name = model.name
-            item.type = model.type.rawValue
-            
-            try viewContext.save()
+            if let item = try CategoryManager.fetch(model, viewContextArg: viewContext) {
+                // Shared attributes (Abstract class):
+                item.dateModified = .now
+                item.isActive = model.isActive
+                
+                // Entity-specific Attributes
+                item.icon = model.icon
+                item.name = model.name
+                item.type = model.type.rawValue
+                
+                try viewContext.save()
+            } else {
+                throw CDError.notFound(id: model.id, entity: Category.description())
+            }
         }
     }
     
@@ -142,10 +144,12 @@ struct CategoryManager {
     
     func delete(_ model: CategoryModel) throws {
         try viewContext.performAndWait {
-            let item = try fetch(model)
-            
-            viewContext.delete(item)
-            try viewContext.save()
+            if let item = try CategoryManager.fetch(model, viewContextArg: viewContext) {
+                viewContext.delete(item)
+                try viewContext.save()
+            } else {
+                throw CDError.notFound(id: model.id, entity: Category.description())
+            }
         }
     }
     
@@ -159,20 +163,22 @@ struct CategoryManager {
     
     // MARK: SHARED
 
-    private func fetch(_ model: CategoryModel) throws -> Category {
-        let fetchRequest = CoreDataUtilities.createFetchRequest(ByID: model.id.uuidString, entity: Category.self)
-        let itemCoreData = try viewContext.fetch(fetchRequest)
-        
-        guard let item = itemCoreData.first else {
-            throw CDError.notFound(id: model.id, entity: Category.description())
-        }
-        
-        return item
-    }
-    
     /**
-     Public static version to be used by TransactionManager, so TransactionManager can find a Category by ID.
-    */
+     Fetches the `Category` entity whose primary key matches `model.id`.
+     
+     Internally:
+     1. Builds an `NSFetchRequest<Category>` via `CoreDataUtilities.createFetchRequest(ByID:entity:)`, using the model’s UUID string.
+     2. Executes the request in `viewContextArg`.
+     3. Logs a `.notFound` message and returns `nil` when no matching object is found; otherwise returns the first (and only) result.
+     
+     - Parameters:
+        - model: `CategoryModel` whose `id` is used as the lookup key.
+        - viewContextArg: The managed-object context that executes the fetch.
+     
+     - Returns: The matching `Category` entity, or `nil` if none exists.
+     - Throws: Any error thrown by `viewContextArg.fetch(_:)`.
+     - Date: Jul 2025
+     */
     static func fetch(_ model: CategoryModel, viewContextArg: NSManagedObjectContext) throws -> Category? {
         let fetchRequest = CoreDataUtilities.createFetchRequest(ByID: model.id.uuidString, entity: Category.self)
         let itemCoreData = try viewContextArg.fetch(fetchRequest)
@@ -183,5 +189,32 @@ struct CategoryManager {
         }
         
         return item
+    }
+    
+    /**
+     Returns the `Category` Core Data entity matching the given `CategoryModel`,
+     Creating and inserting a new one when none is found.
+     
+     Workflow:
+     1. Calls `CategoryManager.fetch(_:viewContextArg:)` to look up an existing `Category` whose **id** matches `model.id`.
+     2. If the entity exists, it is returned as-is.
+     3. If no match is found, a brand-new `Category` is created via
+     `CoreDataUtilities.createCategoryEntity(from:viewContext:)` and returned.
+     
+     - Parameters:
+        - model: The `CategoryModel` containing the identifier and field values to search for—or to seed a new entity with.
+        - viewContextArg: The `NSManagedObjectContext` in which the lookup/insertion is performed.
+     
+     - Returns: A managed `Category` object residing in `viewContextArg`.
+     - Throws: Rethrows any error raised by `CategoryManager.fetch`.
+     - Date: Jul 2025
+     */
+    static func resolveCategory(from model: CategoryModel, viewContextArg: NSManagedObjectContext) throws -> Category {
+        if let existing = try CategoryManager.fetch(model, viewContextArg: viewContextArg) {
+            return existing
+        }
+        
+        let entity = CoreDataUtilities.createCategoryEntity(from: model, viewContext: viewContextArg)
+        return entity
     }
 }

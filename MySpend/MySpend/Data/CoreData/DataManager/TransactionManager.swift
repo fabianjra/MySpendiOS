@@ -65,8 +65,8 @@ struct TransactionManager {
             // Con asignar uno de los lados basta; el otro se actualiza al guardar el contexto.
             // Es decir, no hay que ir a buscar la entidad Category para hacer la funcion de categoryEntity.addToTransaccions(entity).
             // Eso seria redundante (hace la misma operación dos veces) y solo gasta CPU.
-            entity.category = try resolveCategory(from: model.category)
-            entity.account = try resolveAccount(from: model.account)
+            entity.category = try CategoryManager.resolveCategory(from: model.category, viewContextArg: viewContext)
+            entity.account = try AccountManager.resolveAccount(from: model.account, viewContextArg: viewContext)
             
             try viewContext.save()
         }
@@ -84,8 +84,8 @@ struct TransactionManager {
             item.amount = UtilsCurrency.makeDecimal(model.amount)
             item.dateTransaction = model.dateTransaction
             item.notes = model.notes
-            item.category = try resolveCategory(from: model.category)
-            item.account = try resolveAccount(from: model.account)
+            item.category = try CategoryManager.resolveCategory(from: model.category, viewContextArg: viewContext)
+            item.account = try AccountManager.resolveAccount(from: model.account, viewContextArg: viewContext)
 
             try viewContext.save()
         }
@@ -122,29 +122,5 @@ struct TransactionManager {
         }
         
         return item
-    }
-    
-    private func resolveCategory(from model: CategoryModel) throws -> Category {
-        if let existing = try CategoryManager.fetch(model, viewContextArg: viewContext) {
-            existing.dateLastUsed = .now
-            existing.usageCount += 1
-            return existing // Category Entity encontrada
-        }
-        
-        // Si no existe, se crea a partir del modelo recibido
-        let entity = CoreDataUtilities.createCategoryEntity(from: model, viewContext: viewContext)
-        entity.usageCount = Int64(model.usageCount + 1)
-        
-        return entity
-    }
-    
-    private func resolveAccount(from model: AccountModel) throws -> Account {
-        if let existing = try AccountManager.fetch(model, viewContextArg: viewContext) {
-            return existing // Account Entity encontrada
-        }
-        
-        // Si no existe, se crea a partir del modelo recibido
-        let entity = CoreDataUtilities.createAccountEntity(from: model, viewContext: viewContext)
-        return entity
     }
 }
