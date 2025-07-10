@@ -33,12 +33,13 @@ class AddModifyTransactionViewModel: BaseViewModel {
         super.init(viewContext: CoreDataUtilities.getViewContext())
     }
     
-    func addNewTransaction() -> ResponseModel {
+    func addNewTransaction(_ categoryType: CategoryType) -> ResponseModel {
         if model.category.name.isEmptyOrWhitespace {
             return ResponseModel(.error, Errors.emptySpaces.localizedDescription)
         }
         
         var modelMutated = model
+        modelMutated.category.type = categoryType
         modelMutated.amount = amountString.convertAmountToDecimal
         
         do {
@@ -50,12 +51,13 @@ class AddModifyTransactionViewModel: BaseViewModel {
         }
     }
     
-    func modifyTransaction() -> ResponseModel {
+    func modifyTransaction(_ categoryType: CategoryType) -> ResponseModel {
         if model.category.name.isEmptyOrWhitespace {
             return ResponseModel(.error, Errors.emptySpaces.localizedDescription)
         }
         
         var modelMutated = model
+        modelMutated.category.type = categoryType
         modelMutated.amount = amountString.convertAmountToDecimal
         
         do {

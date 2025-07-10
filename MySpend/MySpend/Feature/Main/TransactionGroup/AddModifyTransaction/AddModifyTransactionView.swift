@@ -23,13 +23,14 @@ struct AddModifyTransactionView: View {
     @Environment(\.dismiss) var dismiss
     
     @StateObject private var viewModel: AddModifyTransactionViewModel
+    @FocusState private var focusedField: TransactionModel.Field?
+    
+    @State private var categoryType: CategoryType = .expense
     
     init(_ model: TransactionModel? = nil, selectedDate: Date? = nil) {
         _viewModel = StateObject(wrappedValue: AddModifyTransactionViewModel(model, selectedDate: selectedDate))
     }
 
-    @FocusState private var focusedField: TransactionModel.Field?
-    
     var body: some View {
         NavigationStack { // This is needed for showing toolBar Keyboard.
             ScrollViewReader { scrollViewProxy in
@@ -46,7 +47,7 @@ struct AddModifyTransactionView: View {
                     
                     // MARK: SEGMENT
                     VStack {
-                        PickerSegmented(selection: $viewModel.model.category.type,
+                        PickerSegmented(selection: $categoryType,
                                         segments: CategoryType.allCases)
                         .padding(.bottom)
                     }
@@ -133,9 +134,9 @@ struct AddModifyTransactionView: View {
                         }
                     }
                 }
-                .onChange(of: viewModel.model.category.type) { _, newValue in
+                .onChange(of: categoryType) {
                     viewModel.errorMessage = ""
-                    viewModel.model.category = CategoryModel(type: newValue) /// Clean category beacause won't be the same CategoryType (Exponse, income).
+                    viewModel.model.category = CategoryModel(type: categoryType) /// Clean category beacause won't be the same CategoryType (Exponse, income).
                 }
                 .sheet(isPresented: $viewModel.showDatePicker) {
                     DatePickerModalView(selectedDate: $viewModel.model.dateTransaction,
@@ -143,7 +144,7 @@ struct AddModifyTransactionView: View {
                 }
                 .sheet(isPresented: $viewModel.showCategoryList) {
                     SelectCategoryModalView(selectedCategory: $viewModel.model.category,
-                                            categoryType: $viewModel.model.category.type)
+                                            categoryType: $categoryType)
                 }
             }
         }
@@ -158,9 +159,9 @@ struct AddModifyTransactionView: View {
         
         switch processType {
         case .add:
-            result = viewModel.addNewTransaction()
+            result = viewModel.addNewTransaction(categoryType)
         case .modify:
-            result = viewModel.modifyTransaction()
+            result = viewModel.modifyTransaction(categoryType)
         case .delete:
             result = viewModel.deleteTransaction()
         }

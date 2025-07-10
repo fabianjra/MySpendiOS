@@ -23,71 +23,35 @@ struct AddModifyCategoryView: View {
     
     @Environment(\.dismiss) var dismiss
     
-    @Binding var model: CategoryModel
-    @State private var defaultModel = CategoryModel()
+    @Binding var categoryType: CategoryType
+    @Binding var newCategoryID: UUID
+    var isSelectionMode: Bool
+    @Binding var isNewModelAdded: Bool
     
-    @Binding var modelType: CategoryType
-    
-    // Options for: Category added from New Transaction (Should select the new category when added).
-    @Binding var isNewModelAdded: Bool //Allows the dismiss in the UpperView when a new category is added.
-    @Binding var newModelID: String
-    
-    @StateObject var viewModel = AddModifyCategoryViewModel()
+    @StateObject var viewModel: AddModifyCategoryViewModel
     @FocusState private var focusedField: CategoryModel.Field?
     
-    private let isNewModel: Bool
-    
-    var modelBinding: Binding<CategoryModel> {
-        Binding(
-            get: { isNewModel ? defaultModel : model }, /// Use defaultModel when is a New Category
-            set: { newValue in
-                if isNewModel {
-                    defaultModel = newValue /// Get the default model when is a New Category.
-                } else {
-                    model = newValue /// Use the model passed by parameter when is a Modify Category.
-                }
-            }
-        )
-    }
-    
-    /// Way to initialize a Binding if you want to pass a value (model) or just initialize the model with default valures.
-    init(model: Binding<CategoryModel>? = nil,
+    init(_ model: CategoryModel? = nil,
          categoryType: Binding<CategoryType>,
-         
-         isNewCategoryAdded: Binding<Bool>? = nil,
-         newCategoryID: Binding<String>? = nil) {
+         newCategoryID: Binding<UUID> = .constant(UUID()),
+         isSelectionMode: Bool = false,
+         isNewModelAdded: Binding<Bool> = .constant(false)) {
         
-        if let model = model {
-            self.isNewModel = false
-            self._model = model
-        } else {
-            /// In case a model is no passed by parameter, wont be use model. Will use defaultModel instead.
-            self.isNewModel = true
-            self._model = .constant(CategoryModel())
-        }
+        _viewModel = StateObject(wrappedValue: AddModifyCategoryViewModel(model))
         
-        self._modelType = categoryType
-        
-        if let isNewCategoryAdded = isNewCategoryAdded {
-            self._isNewModelAdded = isNewCategoryAdded
-        } else {
-            self._isNewModelAdded = .constant(false)
-        }
-        
-        if let newCategoryID = newCategoryID {
-            self._newModelID = newCategoryID
-        } else {
-            self._newModelID = .constant("")
-        }
+        self._categoryType = categoryType
+        self._newCategoryID = newCategoryID
+        self.isSelectionMode = isSelectionMode
+        self._isNewModelAdded = isNewModelAdded
     }
     
     var body: some View {
         FormContainer {
             
-            HeaderNavigator(title: isNewModel ? "New category" : "Modify category",
+            HeaderNavigator(title: viewModel.isAddModel ? "New category" : "Modify category",
                             titleWeight: .regular,
                             titleSize: .bigXL,
-                            subTitle: isNewModel ? "Enter the category details" : "Modify the category details",
+                            subTitle: viewModel.isAddModel ? "Enter the category details" : "Modify the category details",
                             showLeadingAction: false,
                             showTrailingAction: true)
                 .padding(.vertical)
@@ -95,7 +59,7 @@ struct AddModifyCategoryView: View {
             
             // MARK: SEGMENT
             VStack {
-                PickerSegmented(selection: $modelType,
+                PickerSegmented(selection: $categoryType,
                                 segments: CategoryType.allCases)
                 .frame(maxWidth: ConstantFrames.iPadMaxWidth)
                 .padding(.bottom)
@@ -104,29 +68,29 @@ struct AddModifyCategoryView: View {
             
             // MARK: TEXTFIELDS
             VStack {
-                TextFieldCategoryName(text: modelBinding.name,
+                TextFieldCategoryName(text: $viewModel.model.name,
                                       errorMessage: $viewModel.errorMessage)
                 .focused($focusedField, equals: .name)
-                .onSubmit { process(isNewModel ? .add : .modify) }
+                .onSubmit { process(viewModel.isAddModel ? .add : .modify) }
                 
                 Button("") {
                     viewModel.showIconsModal = true
                 }
-                .buttonStyle(ButtonTextFieldStyle(icon: modelBinding.wrappedValue.icon, actionClear: {
-                    modelBinding.wrappedValue.icon = ""
+                .buttonStyle(ButtonTextFieldStyle(icon: viewModel.model.icon, actionClear: {
+                    viewModel.model.icon = ""
                 }))
             }
             
             
             // MARK: BUTTONS
             VStack {
-                Button(isNewModel ? "Add" : "Modify") {
-                    process(isNewModel ? .add : .modify)
+                Button(viewModel.isAddModel ? "Add" : "Modify") {
+                    process(viewModel.isAddModel ? .add : .modify)
                 }
                 .buttonStyle(ButtonPrimaryStyle(isLoading: $viewModel.isLoading))
                 .padding(.vertical)
                 
-                if isNewModel == false {
+                if viewModel.isAddModel == false {
                     Button("Delete") {
                         viewModel.showAlert = true
                     }
@@ -144,7 +108,7 @@ struct AddModifyCategoryView: View {
             }
         }
         .sheet(isPresented: $viewModel.showIconsModal) {
-            IconListModalView(model: modelBinding, showModal: $viewModel.showIconsModal)
+            IconListModalView(model: $viewModel.model, showModal: $viewModel.showIconsModal)
         }
         .disabled(viewModel.isLoading || viewModel.isLoadingSecondary)
     }
@@ -154,17 +118,19 @@ struct AddModifyCategoryView: View {
         
         switch processType {
         case .add:
-            result = viewModel.addNew(modelBinding.wrappedValue, type: modelType)
+            result = viewModel.addNew(type: categoryType)
         case .modify:
-            result = viewModel.modify(modelBinding.wrappedValue, type: modelType)
+            result = viewModel.modify(type: categoryType)
         case .delete:
-            result = viewModel.delete(modelBinding.wrappedValue)
+            result = viewModel.delete()
         }
         
         if result.status.isSuccess {
             if processType == .add {
-                newModelID = modelBinding.id.uuidString
-                isNewModelAdded = true
+                if isSelectionMode {
+                    newCategoryID = viewModel.model.id
+                    isNewModelAdded = true
+                }
             }
             
             dismiss()
@@ -176,10 +142,10 @@ struct AddModifyCategoryView: View {
 
 
 #Preview("New") {
-    @Previewable @State var categoryType = MocksCategoriesFB.expense1.categoryType
+    @Previewable @State var categoryType: CategoryType = .expense
+    
     VStack {
-        AddModifyCategoryView(categoryType: $categoryType,
-                              isNewCategoryAdded: .constant(false))
+        AddModifyCategoryView(categoryType: $categoryType)
     }
 }
 

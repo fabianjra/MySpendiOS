@@ -18,8 +18,8 @@ struct SelectCategoryModalView: View {
     @StateObject var viewModel = CategoryViewModel()
     
     // Validate if should dismiss this modal because a new category was added.
-    @State var isNewCategoryAdded: Bool = false
-    @State var newCategoryID: String = ""
+    @State var isNewModelAdded: Bool = false
+    @State var newCategoryID: UUID = UUID()
     
     var body: some View {
         ContentContainer(addPading: false) {
@@ -109,9 +109,9 @@ struct SelectCategoryModalView: View {
         .onDisappear {
             viewModel.deactivateObservers()
         }
-        .onChange(of: isNewCategoryAdded) { _, newValue in
-            if newValue {
-                if let newCategoryAdded = viewModel.categories.first(where: { $0.id.uuidString == newCategoryID }) {
+        .onChange(of: viewModel.categories) {
+            if isNewModelAdded {
+                if let newCategoryAdded = viewModel.categories.first(where: { $0.id == newCategoryID }) {
                     selectedCategory = newCategoryAdded
                     dismiss()
                 }
@@ -119,8 +119,9 @@ struct SelectCategoryModalView: View {
         }
         .sheet(isPresented: $viewModel.showNewCategoryModal) {
             AddModifyCategoryView(categoryType: $categoryType,
-                                  isNewCategoryAdded: $isNewCategoryAdded,
-                                  newCategoryID: $newCategoryID)
+                                  newCategoryID: $newCategoryID,
+                                  isSelectionMode: true,
+                                  isNewModelAdded: $isNewModelAdded)
             .presentationDetents([.large])
             .presentationCornerRadius(ConstantRadius.cornersModal)
         }
@@ -183,6 +184,7 @@ struct SelectCategoryModalView: View {
 
 #Preview("No content en_US") {
     @Previewable @State var showModal = true
+    @Previewable @State var categoryType: CategoryType = .expense
     
     ZStack(alignment: .top) {
         Color.backgroundBottom
@@ -195,8 +197,7 @@ struct SelectCategoryModalView: View {
             Spacer()
         }
     }.sheet(isPresented: $showModal) {
-        SelectCategoryModalView(selectedCategory: .constant(CategoryModel()),
-                                categoryType: .constant(.expense))
+        SelectCategoryModalView(selectedCategory: .constant(CategoryModel()), categoryType: $categoryType)
             .environment(\.locale, .init(identifier: "en_US"))
     }
     .onAppear {

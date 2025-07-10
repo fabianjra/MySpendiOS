@@ -9,10 +9,26 @@ import Foundation
 
 final class AddModifyCategoryViewModel: BaseViewModel {
     
+    @Published var model: CategoryModel
+    
     @Published var showIconsModal = false
     @Published var showAlert = false
+    var isAddModel: Bool = true
     
-    func addNew(_ model: CategoryModel, type: CategoryType) -> ResponseModel {
+    init(_ model: CategoryModel? = nil) {
+        
+        // If model exists, then is a Modify action.
+        if let modelLoaded = model {
+            self.model = modelLoaded
+            self.isAddModel = false
+        } else {
+            self.model = CategoryModel()
+        }
+        
+        super.init(viewContext: CoreDataUtilities.getViewContext())
+    }
+    
+    func addNew(type: CategoryType) -> ResponseModel {
         if model.name.isEmptyOrWhitespace {
             return ResponseModel(.error, Errors.emptySpaces.localizedDescription)
         }
@@ -30,7 +46,7 @@ final class AddModifyCategoryViewModel: BaseViewModel {
         }
     }
     
-    func modify(_ model: CategoryModel, type: CategoryType) -> ResponseModel {
+    func modify(type: CategoryType) -> ResponseModel {
         if model.name.isEmptyOrWhitespace {
             return ResponseModel(.error, Errors.emptySpaces.localizedDescription)
         }
@@ -48,7 +64,7 @@ final class AddModifyCategoryViewModel: BaseViewModel {
         }
     }
     
-    func delete(_ model: CategoryModel) -> ResponseModel {
+    func delete() -> ResponseModel {
         do {
             try CategoryManager(viewContext: viewContext).delete(model)
             return ResponseModel(.successful)
