@@ -209,7 +209,7 @@ struct CategoryManager {
      - Throws: Rethrows any error raised by `CategoryManager.fetch`.
      - Date: Jul 2025
      */
-    static func resolveCategory(from model: CategoryModel, viewContextArg: NSManagedObjectContext) throws -> Category {
+    static func resolve(from model: CategoryModel, viewContextArg: NSManagedObjectContext) throws -> Category {
         if let existing = try CategoryManager.fetch(model, viewContextArg: viewContextArg) {
             return existing
         }

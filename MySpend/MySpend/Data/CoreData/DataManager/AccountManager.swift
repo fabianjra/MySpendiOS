@@ -159,7 +159,7 @@ struct AccountManager {
      - Throws: Rethrows any error raised by `AccountManager.fetch`.
      - Date: Jul 2025
      */
-    static func resolveAccount(from model: AccountModel, viewContextArg: NSManagedObjectContext) throws -> Account {
+    static func resolve(from model: AccountModel, viewContextArg: NSManagedObjectContext) throws -> Account {
         if let existing = try AccountManager.fetch(model, viewContextArg: viewContextArg) {
             return existing
         }
