@@ -57,6 +57,7 @@ struct AccountManager {
             entity.isActive = model.isActive
             
             // Entity-specific Attributes
+            entity.currencyCode = model.currencyCode
             entity.icon = model.icon
             entity.name = model.name
             entity.notes = model.notes
@@ -76,6 +77,7 @@ struct AccountManager {
                 item.isActive = model.isActive
                 
                 // Entity-specific Attributes
+                item.currencyCode = model.currencyCode
                 item.icon = model.icon
                 item.name = model.name
                 item.notes = model.notes

@@ -17,6 +17,7 @@ struct AccountModel: Identifiable, Equatable, Hashable {
     let isActive: Bool
     
     // Entity-specific Attributes
+    var currencyCode: String
     var icon: String // Emoji
     var name: String
     var notes: String
@@ -29,6 +30,7 @@ struct AccountModel: Identifiable, Equatable, Hashable {
         id = UUID()
         isActive = true
         
+        currencyCode = ""
         icon = ""
         name = ""
         notes = ""
@@ -37,8 +39,9 @@ struct AccountModel: Identifiable, Equatable, Hashable {
     }
     
     // When a new Transaction is created
-    init(icon: String, name: String, notes: String, type: AccountType) {
+    init(currencyCode: String = "", icon: String = "", name: String, notes: String = "", type: AccountType = .general) {
         self.init()
+        self.currencyCode = currencyCode
         self.icon = icon
         self.name = name
         self.notes = notes
@@ -52,6 +55,7 @@ struct AccountModel: Identifiable, Equatable, Hashable {
         id = entity.id ?? UUID()
         isActive = entity.isActive
         
+        currencyCode = entity.currencyCode ?? ""
         icon = entity.icon ?? ""
         name = entity.name ?? ""
         notes = entity.notes ?? ""

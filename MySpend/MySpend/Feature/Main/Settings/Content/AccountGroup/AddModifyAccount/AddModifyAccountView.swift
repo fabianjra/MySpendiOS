@@ -83,6 +83,7 @@ struct AddModifyAccountView: View {
                 TextError(viewModel.errorMessage)
             }
         }
+        //TODO: Arreglar. Convertir el parametro a string para poder reautilizar en category y account
         //.sheet(isPresented: $viewModel.showIconsModal) {
             //IconListModalView(model: $viewModel.model, showModal: $viewModel.showIconsModal)
         //}
