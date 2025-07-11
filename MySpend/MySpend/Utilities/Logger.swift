@@ -1,18 +1,54 @@
 //
-//  Logs.swift
+//  Logger.swift
 //  MySpend
 //
 //  Created by Fabian Rodriguez on 8/7/23.
 //
 
 import Foundation
+import FirebaseCrashlytics
+import FirebaseAnalytics
 
 enum ErrorType {
     case none
     case CoreData
 }
 
-enum Logs {
+struct Logger {
+
+    /**
+     Sends the caught `Error` to Firebase Crashlytics and attaches the source-code context as custom keys.
+     
+     El helper usa @inline(__always) para que el compilador inserte los literales #file, #function, #line del sitio donde llames CatchException,
+     no de donde se define recordToCrashlytics.
+     
+     - Parameters:
+        -  error:     The `Error` object that you just caught.
+        - file:      Compiler literal that captures the file name (`#file`).
+        - function:  Compiler literal that captures the function name (`#function`).
+        - line:      Compiler literal that captures the line number (`#line`).
+     */
+    @inline(__always)
+    static func recordToCrashlytics(_ error: Error,
+                                    file: String = #file,
+                                    function: String = #function,
+                                    line: Int = #line) {
+
+        let crashlytics = Crashlytics.crashlytics()
+
+        // Log a breadcrumb for quick filtering in the Crashlytics console
+        let fileName = file.components(separatedBy: "/").last ?? file
+        crashlytics.log("CatchException – \(fileName):\(line) – \(function)")
+
+        // Attach source context as custom keys (visible in the stack-trace panel)
+        crashlytics.setCustomValue((file as NSString).lastPathComponent, forKey: "file")
+        crashlytics.setCustomValue(function, forKey: "function")
+        crashlytics.setCustomValue(line, forKey: "line")
+
+        // Record the error; Crashlytics will group identical exceptions
+        crashlytics.record(error: error)
+    }
+
     
     /**
      Shows a Catch error message on console.
@@ -29,7 +65,7 @@ enum Logs {
             completion(article)
         }
         }catch{
-            Logs.CatchException(error)
+            Logger.exception(error)
      }
      ```
      
@@ -44,7 +80,7 @@ enum Logs {
      - Version: 1.1
      - Date: June 2025
      */
-    static func CatchException(_ error: Error,
+    static func exception(_ error: Error,
                                type: ErrorType = .none,
                                file: String = #file,
                                function: String = #function,
@@ -53,6 +89,8 @@ enum Logs {
         let logId = UUID().uuidString
         print("********** START EXCEPTION LOG: \(logId) **********")
         print("Handled catch in: \(file.components(separatedBy: "/").last ?? file), function: \(function), line: \(line), description: \(error.localizedDescription)")
+        
+        recordToCrashlytics(error, file: file, function: function, line: line)
         
         switch type {
         case .none:
@@ -111,7 +149,7 @@ enum Logs {
      
      **Example:**
      ```swift
-        Logs.WriteMessage("This is a string message.")
+        Logger.WriteMessage("This is a string message.")
      ```
      
      - Parameters:
@@ -123,15 +161,30 @@ enum Logs {
      
      - Date: February 2023
      */
-    static func WriteMessage(_ obj: Any,
+    static func custom(_ obj: Any,
                              file: String = #file,
                              function: String = #function,
                              line: Int = #line) {
+        
+        let fileName = file.components(separatedBy: "/").last ?? file
+        
+        //#if DEBUG
         let logId = UUID().uuidString
         print("********** START CUSTOM MESSSAG LOG: \(logId) **********")
-        print("Message from: \(file.components(separatedBy: "/").last ?? file), function: \(function), line: \(line)")
-        print(obj)
+        let message = "Message from: \(fileName), function: \(function), line: \(line) \n \(obj)"
+        print(message)
         print("********** END CUSTOM MESSSAG LOG: \(logId) **********")
+        
+        //#else
+        
+        // Para el titulo: Máximo 40 caracteres, minúsculas, sin espacios.
+        Analytics.logEvent("ios_custom_log", parameters: [
+            "file": fileName,
+            "function": function,
+            "line": line,
+            "message": String(describing: obj)
+        ])
+        //#endif
     }
     
     /**

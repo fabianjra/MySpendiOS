@@ -38,7 +38,7 @@ class TransactionViewModel: BaseViewModel {
             transactions = try TransactionManager(viewContext: viewContext).fetchAll()
             groupedTransactions = UtilsCurrency.calculateGroupedTransactions(transactions)
         } catch {
-            Logs.CatchException(error, type: .CoreData)
+            Logger.exception(error, type: .CoreData)
         }
     }
     

@@ -35,7 +35,7 @@ class RegisterViewModel: BaseViewModelFB {
                                                 username: self.register.name)
                 response = ResponseModel(.successful)
             } catch {
-                Logs.CatchException(error)
+                Logger.exception(error)
                 response = ResponseModel(.error, error.localizedDescription)
             }
         }

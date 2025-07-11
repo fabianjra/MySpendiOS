@@ -84,7 +84,7 @@ struct AccountManager {
                 
                 try viewContext.save()
             } else {
-                throw CDError.notFound(id: model.id, entity: Account.description())
+                throw CDError.notFoundFetch(entity: Account.description())
             }
         }
     }
@@ -98,7 +98,7 @@ struct AccountManager {
                 viewContext.delete(item)
                 try viewContext.save()
             } else {
-                throw CDError.notFound(id: model.id, entity: Account.description())
+                throw CDError.notFoundFetch(entity: Account.description())
             }
         }
     }
@@ -134,7 +134,7 @@ struct AccountManager {
         let itemCoreData = try viewContextArg.fetch(fetchRequest)
         
         guard let item = itemCoreData.first else {
-            Logs.WriteMessage(CDError.notFound(id: model.id, entity: Account.description()).localizedDescription)
+            Logger.custom(CDError.notFoundFetch(entity: Account.description()).localizedDescription)
             return nil
         }
         

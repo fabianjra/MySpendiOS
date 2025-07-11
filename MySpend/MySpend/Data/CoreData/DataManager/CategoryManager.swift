@@ -134,7 +134,7 @@ struct CategoryManager {
                 
                 try viewContext.save()
             } else {
-                throw CDError.notFound(id: model.id, entity: Category.description())
+                throw CDError.notFoundFetch(entity: Category.description())
             }
         }
     }
@@ -148,7 +148,7 @@ struct CategoryManager {
                 viewContext.delete(item)
                 try viewContext.save()
             } else {
-                throw CDError.notFound(id: model.id, entity: Category.description())
+                throw CDError.notFoundFetch(entity: Category.description())
             }
         }
     }
@@ -184,7 +184,7 @@ struct CategoryManager {
         let itemCoreData = try viewContextArg.fetch(fetchRequest)
         
         guard let item = itemCoreData.first else {
-            Logs.WriteMessage(CDError.notFound(id: model.id, entity: Category.description()).localizedDescription)
+            Logger.custom(CDError.notFoundFetch(entity: Category.description()).localizedDescription)
             return nil
         }
         

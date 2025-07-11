@@ -157,7 +157,7 @@ private struct UserDefaultsDataStore<T: Codable> {
             do {
                 return try JSONDecoder().decode(T.self, from: data)
             } catch {
-                Logs.CatchException(error)
+                Logger.exception(error)
                 return nil
             }
         }
@@ -169,7 +169,7 @@ private struct UserDefaultsDataStore<T: Codable> {
                 let data = try JSONEncoder().encode(newValue)
                 UserDefaults.standard.set(data, forKey: key.rawValue)
             } catch {
-                Logs.CatchException(error)
+                Logger.exception(error)
             }
         }
     }

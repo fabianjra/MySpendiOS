@@ -44,7 +44,7 @@ class CategoryViewModel: BaseViewModel {
         do {
             categories = try CategoryManager(viewContext: viewContext).fetchAll()
         } catch {
-            Logs.CatchException(error, type: .CoreData)
+            Logger.exception(error, type: .CoreData)
         }
     }
     
@@ -53,7 +53,7 @@ class CategoryViewModel: BaseViewModel {
             try CategoryManager(viewContext: viewContext).delete(model)
             return ResponseModel(.successful)
         } catch {
-            Logs.CatchException(error, type: .CoreData)
+            Logger.exception(error, type: .CoreData)
             return ResponseModel(.error, error.localizedDescription)
         }
     }
@@ -71,7 +71,7 @@ class CategoryViewModel: BaseViewModel {
             selectedCategories.removeAll()
             return ResponseModel(.successful)
         } catch {
-            Logs.CatchException(error)
+            Logger.exception(error)
             return ResponseModel(.error, error.localizedDescription)
         }
     }

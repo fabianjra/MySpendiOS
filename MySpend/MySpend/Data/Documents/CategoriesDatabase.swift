@@ -87,7 +87,7 @@ private struct CategoryCollection_PRUEBAS {
                 category.id = document.documentID
                 return category
             } else {
-                //Logs.WriteCatchExeption(error: Logs.createError(domain: .categoriesDatabase, code: 99, description: "Error al decodificar el documento a CategoryModel"))
+                //Logger.WriteCatchExeption(error: Logger.createError(domain: .categoriesDatabase, code: 99, description: "Error al decodificar el documento a CategoryModel"))
                 return nil
             }
         }

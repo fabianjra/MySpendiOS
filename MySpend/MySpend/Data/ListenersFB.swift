@@ -62,15 +62,15 @@ public struct ListenersFB {
         let firestoreListener = document.addSnapshotListener { documentSnapshot, error in
             
             if let error = error {
-                Logs.CatchException(error)
+                Logger.exception(error)
                 throwableError = error
                 listener(nil)
                 return
             }
             
             guard let documentSnapshot = documentSnapshot, let data = documentSnapshot.data() else {
-                let error = Logs.createError(domain: .listenerDocumentFB, error: .notGetDataFromDocument)
-                Logs.CatchException(error)
+                let error = Logger.createError(domain: .listenerDocumentFB, error: .notGetDataFromDocument)
+                Logger.exception(error)
                 throwableError = error
                 listener(nil)
                 return
@@ -81,7 +81,7 @@ public struct ListenersFB {
                 
                 listener(decodedDocument)
             } catch {
-                Logs.CatchException(error)
+                Logger.exception(error)
                 throwableError = error
                 listener(nil)
             }
@@ -123,7 +123,7 @@ public struct ListenersFB {
                     }
                 }
                 
-                Logs.WriteMessage("Error al decodificar el documento y pasarlo al Modelo")
+                Logger.WriteMessage("Error al decodificar el documento y pasarlo al Modelo")
                 return nil
             }
         } catch {
@@ -152,14 +152,14 @@ public struct ListenersFB {
         let firestoreListener = collection.addSnapshotListener { querySnapshot, error in
             
             if let error = error {
-                Logs.CatchException(error)
+                Logger.exception(error)
                 listener([], error)
                 return
             }
             
             guard let querySnapshot = querySnapshot else {
-                let error = Logs.createError(domain: .listenerCollectionFB, error: .notGetDataFromCollection)
-                Logs.CatchException(error)
+                let error = Logger.createError(domain: .listenerCollectionFB, error: .notGetDataFromCollection)
+                Logger.exception(error)
                 listener([], error)
                 return
             }
@@ -220,14 +220,14 @@ public struct ListenersFB {
         let firestoreListener = collection.addSnapshotListener { querySnapshot, error in
             
             if let error = error {
-                Logs.CatchException(error)
+                Logger.exception(error)
                 listener([], error)
                 return
             }
             
             guard let querySnapshot = querySnapshot else {
-                let error = Logs.createError(domain: .listenerCollectionChangesFB, error: .notGetDataFromCollectionChanges)
-                Logs.CatchException(error)
+                let error = Logger.createError(domain: .listenerCollectionChangesFB, error: .notGetDataFromCollectionChanges)
+                Logger.exception(error)
                 listener([], error)
                 return
             }

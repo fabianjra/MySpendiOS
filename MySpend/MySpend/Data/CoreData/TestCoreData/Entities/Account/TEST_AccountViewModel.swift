@@ -39,7 +39,7 @@ class TEST_AccountViewModel: ObservableObject {
         do {
             accounts = try AccountManager(viewContext: viewContext).fetchAll()
         } catch {
-            Logs.CatchException(error, type: .CoreData)
+            Logger.exception(error, type: .CoreData)
             //categories = [] //TODO: Validar si es necesario en caso de que ya se hayan cargado categories.
         }
     }
@@ -48,23 +48,23 @@ class TEST_AccountViewModel: ObservableObject {
         do {
             try AccountManager(viewContext: viewContext).create(item)
         } catch {
-            Logs.CatchException(error, type: .CoreData)
+            Logger.exception(error, type: .CoreData)
         }
     }
     
     func updateItem(_ item: AccountModel) {
         do {
             try AccountManager(viewContext: viewContext).update(item)
-        } catch CDError.notFound {
+        } catch CDError.notFoundFetch {
             
             //TODO: Mejorar implementacion:
             // Se crea este de not found para el tipo de error personalizado a mostrar en pantalla.
             // Por ejemplo, ID no encontrado para ser actualizado
             
-            let error = Logs.createError(domain: .accountDatabase, error: Errors.notSavedAccount(item.id.uuidString))
-            Logs.CatchException(error, type: .CoreData)
+            let error = Logger.createError(domain: .accountDatabase, error: Errors.notSavedAccount(item.id.uuidString))
+            Logger.exception(error, type: .CoreData)
         } catch {
-            Logs.CatchException(error, type: .CoreData)
+            Logger.exception(error, type: .CoreData)
         }
     }
     
@@ -72,7 +72,7 @@ class TEST_AccountViewModel: ObservableObject {
         do {
             try AccountManager(viewContext: viewContext).delete(item)
         } catch {
-            Logs.CatchException(error, type: .CoreData)
+            Logger.exception(error, type: .CoreData)
         }
     }
     
@@ -80,7 +80,7 @@ class TEST_AccountViewModel: ObservableObject {
         do {
             try AccountManager(viewContext: viewContext).delete(at: indexSet, from: items)
         } catch {
-            Logs.CatchException(error, type: .CoreData)
+            Logger.exception(error, type: .CoreData)
         }
     }
 }

@@ -20,7 +20,7 @@ class AuthViewModel : ObservableObject {
 
         handle = Auth.auth().addStateDidChangeListener { [weak self]  auth, user in
             guard let self = self else {
-                Logs.WriteMessage("GUARD evito crear el addStateDidChangeListener ya que no se logro obtener self.")
+                Logger.custom("GUARD evito crear el addStateDidChangeListener ya que no se logro obtener self.")
                 return
             }
             

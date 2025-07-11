@@ -46,7 +46,7 @@ class AddModifyTransactionViewModel: BaseViewModel {
             try TransactionManager(viewContext: viewContext).create(modelMutated)
             return ResponseModel(.successful)
         } catch {
-            Logs.CatchException(error, type: .CoreData)
+            Logger.exception(error, type: .CoreData)
             return ResponseModel(.error, error.localizedDescription)
         }
     }
@@ -64,7 +64,7 @@ class AddModifyTransactionViewModel: BaseViewModel {
             try TransactionManager(viewContext: viewContext).update(modelMutated)
             return ResponseModel(.successful)
         } catch {
-            Logs.CatchException(error, type: .CoreData)
+            Logger.exception(error, type: .CoreData)
             return ResponseModel(.error, error.localizedDescription)
         }
     }
@@ -74,7 +74,7 @@ class AddModifyTransactionViewModel: BaseViewModel {
             try TransactionManager(viewContext: viewContext).delete(model)
             return ResponseModel(.successful)
         } catch {
-            Logs.CatchException(error, type: .CoreData)
+            Logger.exception(error, type: .CoreData)
             return ResponseModel(.error, error.localizedDescription)
         }
     }

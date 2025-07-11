@@ -35,7 +35,7 @@ final class TEST_TransactionViewModel: ObservableObject {
         do {
             transactions = try TransactionManager(viewContext: viewContext).fetchAll()
         } catch {
-            Logs.CatchException(error, type: .CoreData)
+            Logger.exception(error, type: .CoreData)
             //categories = [] //TODO: Validar si es necesario en caso de que ya se hayan cargado categories.
         }
     }
@@ -44,23 +44,23 @@ final class TEST_TransactionViewModel: ObservableObject {
         do {
             try TransactionManager(viewContext: viewContext).create(item)
         } catch {
-            Logs.CatchException(error, type: .CoreData)
+            Logger.exception(error, type: .CoreData)
         }
     }
     
     func updateItem(_ item: TransactionModel) {
         do {
             try TransactionManager(viewContext: viewContext).update(item)
-        } catch CDError.notFound {
+        } catch CDError.notFoundFetch {
             
             //TODO: Mejorar implementacion:
             // Se crea este de not found para el tipo de error personalizado a mostrar en pantalla.
             // Por ejemplo, ID no encontrado para ser actualizado
             
-            let error = Logs.createError(domain: .accountDatabase, error: Errors.notSavedTransaction(item.id.uuidString))
-            Logs.CatchException(error, type: .CoreData)
+            let error = Logger.createError(domain: .accountDatabase, error: Errors.notSavedTransaction(item.id.uuidString))
+            Logger.exception(error, type: .CoreData)
         } catch {
-            Logs.CatchException(error, type: .CoreData)
+            Logger.exception(error, type: .CoreData)
         }
     }
     
@@ -68,7 +68,7 @@ final class TEST_TransactionViewModel: ObservableObject {
         do {
             try TransactionManager(viewContext: viewContext).delete(item)
         } catch {
-            Logs.CatchException(error, type: .CoreData)
+            Logger.exception(error, type: .CoreData)
         }
     }
     
@@ -76,7 +76,7 @@ final class TEST_TransactionViewModel: ObservableObject {
         do {
             try TransactionManager(viewContext: viewContext).delete(at: indexSet, from: items)
         } catch {
-            Logs.CatchException(error, type: .CoreData)
+            Logger.exception(error, type: .CoreData)
         }
     }
 }

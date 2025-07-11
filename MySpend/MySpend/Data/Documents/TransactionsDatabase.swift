@@ -55,7 +55,7 @@ private struct TransactionsDatabase_ORIGINAL {
                 } catch let error as NSError {
                     /// Al usar return nil, estás indicando a Firestore que la transacción no debe completarse en ese intento, y Firestore manejará los reintentos automaticamente por debejo.
                     errorPointer?.pointee = error
-                    Logs.CatchException(error)
+                    Logger.exception(error)
                     return nil
                 }
                 
@@ -65,7 +65,7 @@ private struct TransactionsDatabase_ORIGINAL {
                     user = try userDocument.data(as: UserModel.self)
                 } catch let error as NSError {
                     errorPointer?.pointee = error
-                    Logs.CatchException(error)
+                    Logger.exception(error)
                     return nil
                 }
                 
@@ -79,7 +79,7 @@ private struct TransactionsDatabase_ORIGINAL {
                     try transaction.setData(from: user, forDocument: userRefDocument)
                 } catch let error {
                     errorPointer?.pointee = error as NSError
-                    Logs.CatchException(error)
+                    Logger.exception(error)
                     return nil
                 }
                 
@@ -93,7 +93,7 @@ private struct TransactionsDatabase_ORIGINAL {
              Si no se vuelve a lanzar el error (throw error), el error se consume y no se propaga más allá de la función,
              lo que puede hacer que el error no sea manejado adecuadamente por la parte de tu código que llama a addNewTransaction.
              */
-            Logs.CatchException(error)
+            Logger.exception(error)
             throw error
         }
     }

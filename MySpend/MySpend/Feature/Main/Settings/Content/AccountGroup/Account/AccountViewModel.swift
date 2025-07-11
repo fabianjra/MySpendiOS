@@ -44,7 +44,7 @@ class AccountViewModel: BaseViewModel {
         do {
             models = try AccountManager(viewContext: viewContext).fetchAll()
         } catch {
-            Logs.CatchException(error, type: .CoreData)
+            Logger.exception(error, type: .CoreData)
         }
     }
     
@@ -53,7 +53,7 @@ class AccountViewModel: BaseViewModel {
             try AccountManager(viewContext: viewContext).delete(model)
             return ResponseModel(.successful)
         } catch {
-            Logs.CatchException(error, type: .CoreData)
+            Logger.exception(error, type: .CoreData)
             return ResponseModel(.error, error.localizedDescription)
         }
     }
@@ -67,7 +67,7 @@ class AccountViewModel: BaseViewModel {
             selectedModels.removeAll()
             return ResponseModel(.successful)
         } catch {
-            Logs.CatchException(error)
+            Logger.exception(error)
             return ResponseModel(.error, error.localizedDescription)
         }
     }

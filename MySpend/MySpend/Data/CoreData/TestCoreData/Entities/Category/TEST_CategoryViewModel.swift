@@ -35,7 +35,7 @@ final class TEST_CategoryViewModel: ObservableObject {
         do {
             categories = try CategoryManager(viewContext: viewContext).fetchAll(sortedBy: CDSort.CategoryEntity.byName_DateCreated)
         } catch {
-            Logs.CatchException(error, type: .CoreData)
+            Logger.exception(error, type: .CoreData)
         }
     }
     
@@ -43,23 +43,23 @@ final class TEST_CategoryViewModel: ObservableObject {
         do {
             try CategoryManager(viewContext: viewContext).create(item)
         } catch {
-            Logs.CatchException(error, type: .CoreData)
+            Logger.exception(error, type: .CoreData)
         }
     }
     
     func updateCategory(_ item: CategoryModel) {
         do {
             try CategoryManager(viewContext: viewContext).update(item)
-        } catch CDError.notFound {
+        } catch CDError.notFoundFetch {
             
             //TODO: Mejorar implementacion:
             // Se crea este de not found para el tipo de error personalizado a mostrar en pantalla.
             // Por ejemplo, ID no encontrado para ser actualizado
             
-            let error = Logs.createError(domain: .categoriesDatabase, error: Errors.notSavedCategory(""))
-            Logs.CatchException(error, type: .CoreData)
+            let error = Logger.createError(domain: .categoriesDatabase, error: Errors.notSavedCategory(""))
+            Logger.exception(error, type: .CoreData)
         } catch {
-            Logs.CatchException(error, type: .CoreData)
+            Logger.exception(error, type: .CoreData)
         }
     }
     
@@ -67,7 +67,7 @@ final class TEST_CategoryViewModel: ObservableObject {
         do {
             try CategoryManager(viewContext: viewContext).delete(item)
         } catch {
-            Logs.CatchException(error, type: .CoreData)
+            Logger.exception(error, type: .CoreData)
         }
     }
     
@@ -75,7 +75,7 @@ final class TEST_CategoryViewModel: ObservableObject {
         do {
             try CategoryManager(viewContext: viewContext).delete(at: indexSet, from: categories)
         } catch {
-            Logs.CatchException(error, type: .CoreData)
+            Logger.exception(error, type: .CoreData)
         }
     }
 }

@@ -58,7 +58,7 @@ struct SettingsView: View {
                                 //TODO: AGREGAR BORRADO DE DATOS
                                 //Router.shared.path.removeLast(Router.shared.path.count) //In case when come from register.
                             } catch {
-                                Logs.CatchException(error)
+                                Logger.exception(error)
                             }
                         }
                         

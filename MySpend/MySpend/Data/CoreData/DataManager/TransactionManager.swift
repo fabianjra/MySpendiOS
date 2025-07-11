@@ -118,7 +118,7 @@ struct TransactionManager {
         let itemCoreData = try viewContext.fetch(fetchRequest)
         
         guard let item = itemCoreData.first else {
-            throw CDError.notFound(id: model.id, entity: Transaction.description())
+            throw CDError.notFoundFetch(entity: Transaction.description())
         }
         
         return item
