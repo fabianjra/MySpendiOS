@@ -155,7 +155,7 @@ struct AddModifyTransactionView: View {
                 }
                 .onChange(of: categoryType) {
                     viewModel.errorMessage = ""
-                    viewModel.model.category = CategoryModel(type: categoryType) /// Clean category beacause won't be the same CategoryType (Exponse, income).
+                    viewModel.model.category = CategoryModel(type: categoryType) // Clean category beacause won't be the same CategoryType (Exponse, income).
                 }
                 .sheet(isPresented: $viewModel.showDatePicker) {
                     DatePickerModalView(selectedDate: $viewModel.model.dateTransaction,
@@ -166,7 +166,7 @@ struct AddModifyTransactionView: View {
                                             categoryType: $categoryType)
                 }
                 .sheet(isPresented: $viewModel.showAccoountList) {
-                    //TODO: AGREGAR LISTA DE ACCOUNTS
+                    SelectAccountModalView(selectedModel: $viewModel.model.account)
                 }
             }
         }

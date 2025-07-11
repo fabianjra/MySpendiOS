@@ -55,7 +55,7 @@ struct TransactionView: View {
                 LoaderView()
             } else {
                 if viewModel.transactions.isEmpty {
-                    NoContentView(title: "No transactions")
+                    NoContentToAddView(title: "No transactions")
                     Spacer()
                 } else {
                     VStack {

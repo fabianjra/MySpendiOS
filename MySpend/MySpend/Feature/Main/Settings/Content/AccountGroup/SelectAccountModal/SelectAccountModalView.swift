@@ -1,33 +1,27 @@
 //
-//  SelectCategoryModalView.swift
+//  SelectAccountModalView.swift
 //  MySpend
 //
-//  Created by Fabian Rodriguez on 25/10/24.
+//  Created by Fabian Rodriguez on 10/7/25.
 //
 
 import SwiftUI
 
-struct SelectCategoryModalView: View {
+struct SelectAccountModalView: View {
     
     @Environment(\.dismiss) var dismiss
     
-    // Parameters managed by New Transaction (add or modify):
-    @Binding var selectedCategory: CategoryModel
-    @Binding var categoryType: CategoryType
+    @Binding var selectedModel: AccountModel
     
-    @StateObject var viewModel = CategoryViewModel()
-    
-    // Validate if should dismiss this modal because a new category was added.
-    @State var isNewModelAdded: Bool = false
-    @State var newCategoryID: UUID = UUID()
+    @StateObject var viewModel = AccountViewModel()
     
     var body: some View {
         ContentContainer(addPading: false) {
             
-            HeaderNavigator(title: "Categories",
+            HeaderNavigator(title: "Accounts",
                             titleWeight: .regular,
                             titleSize: .bigXL,
-                            subTitle: "Select the category",
+                            subTitle: "Select the account",
                             subTitleWeight: .regular,
                             showLeadingAction: false,
                             showTrailingAction: true)
@@ -37,20 +31,18 @@ struct SelectCategoryModalView: View {
             
             
             VStack {
-                PickerCategoryType(selection: $categoryType,
-                                segments: CategoryType.allCases)
-                .frame(maxWidth: ConstantFrames.iPadMaxWidth)
-                .padding(.bottom, ConstantViews.mediumSpacing)
+                PickerGeneral(selection: $viewModel.modelType)
+                    .frame(maxWidth: ConstantFrames.iPadMaxWidth)
+                    .padding(.bottom, ConstantViews.mediumSpacing)
+                
                 
                 RowLCTCointainer(leadingContent: {
                     MenuContainer {
-                        Section("Sorted by: \(viewModel.sortCategoriesBy.rawValue)") {
+                        Section("Sorted by: \(viewModel.sortModelsBy.rawValue)") {
                             sortButton(for: .byNameAz)
                             sortButton(for: .byCreationNewest)
-                            sortButton(for: .byMostOftenUsed)
                         }
                         
-                        // Reset the sort selection to default
                         Section {
                             sortButtonResetToDefault
                         }
@@ -61,19 +53,17 @@ struct SelectCategoryModalView: View {
             
             
             ZStack(alignment: .bottomTrailing) {
+                let modelsFiltered = UtilsAccounts.filteredAccounts(viewModel.models,
+                                                                    by: viewModel.modelType,
+                                                                    sortType: viewModel.sortModelsBy)
                 
-                let categoriesFiltered = UtilsCategories.filteredCategories(viewModel.categories,
-                                                                            by: categoryType,
-                                                                            sortType: viewModel.sortCategoriesBy)
-                
-                if categoriesFiltered.isEmpty {
-                    NoContentToAddView(title: "No categories",
-                                  rotationDegress: ConstantAnimations.rotationArrowBottomTrailing)
+                if modelsFiltered.isEmpty {
+                    NoContentView(title: "Empty", entity: "Account")
                 } else {
                     ListContainer {
-                        ForEach(categoriesFiltered) { category in
+                        ForEach(modelsFiltered) { item in
                             HStack {
-                                let icon = category.icon.getIconFromSFSymbol
+                                let icon = item.icon.getIconFromSFSymbol
                                 
                                 if let image = icon {
                                     image
@@ -81,8 +71,8 @@ struct SelectCategoryModalView: View {
                                                height: FrameSize.height.iconCategoryList)
                                 }
                                 
-                                Button(category.name) {
-                                    selectedCategory = category
+                                Button(item.name) {
+                                    selectedModel = item
                                     dismiss()
                                 }
                                 
@@ -93,53 +83,32 @@ struct SelectCategoryModalView: View {
                         }
                         .listRowBackground(Color.listRowBackground) //Background for each row.
                     }
-                    .animation(.default, value: viewModel.sortCategoriesBy)
+                    .animation(.default, value: viewModel.sortModelsBy)
                 }
-                
-                ButtonRounded {
-                    viewModel.showNewCategoryModal = true
-                }
-                .padding(.trailing, ConstantViews.paddingButtonAddCategory)
-                .padding(.bottom, ConstantViews.paddingButtonAddCategory)
             }
         }
         .onAppear {
             viewModel.activateObservers()
+            viewModel.modelType = selectedModel.type
         }
         .onDisappear {
             viewModel.deactivateObservers()
-        }
-        .onChange(of: viewModel.categories) {
-            if isNewModelAdded {
-                if let newCategoryAdded = viewModel.categories.first(where: { $0.id == newCategoryID }) {
-                    selectedCategory = newCategoryAdded
-                    dismiss()
-                }
-            }
-        }
-        .sheet(isPresented: $viewModel.showNewCategoryModal) {
-            AddModifyCategoryView(categoryType: $categoryType,
-                                  newCategoryID: $newCategoryID,
-                                  isSelectionMode: true,
-                                  isNewModelAdded: $isNewModelAdded)
-            .presentationDetents([.large])
-            .presentationCornerRadius(ConstantRadius.cornersModal)
         }
         .presentationDetents([.large])
         .presentationCornerRadius(ConstantRadius.cornersModal)
     }
     
-    private func sortButton(for sortingOption: SortCategories) -> some View {
+    private func sortButton(for sortingOption: SortAccounts) -> some View {
         Button {
-            if viewModel.sortCategoriesBy == sortingOption {
-                viewModel.sortCategoriesBy = sortingOption.toggle
+            if viewModel.sortModelsBy == sortingOption {
+                viewModel.sortModelsBy = sortingOption.toggle
             } else {
-                viewModel.sortCategoriesBy = sortingOption
+                viewModel.sortModelsBy = sortingOption
             }
             
             viewModel.updateSelectedSort()
         } label: {
-            viewModel.sortCategoriesBy == sortingOption ? sortingOption.label() : sortingOption.label(inverted: false)
+            viewModel.sortModelsBy == sortingOption ? sortingOption.label() : sortingOption.label(inverted: false)
         }
     }
     
@@ -159,13 +128,13 @@ struct SelectCategoryModalView: View {
 //    @Previewable @State var selectedCategory = CategoryModel()
 //    //@Previewable @State var viewModelMock = CategoryManager(viewContext: MockTransaction.preview.container.viewContext)
 //    @Previewable @State var viewModelMock = CoreDataUtilities.
-//    
+//
 //    ZStack(alignment: .top) {
 //        Color.backgroundBottom
 //        VStack {
 //            Spacer()
 //            TextPlain("Selected category: \(selectedCategory.name)")
-//            
+//
 //            Button("Show modal") {
 //                showModal = true
 //            }
@@ -184,20 +153,20 @@ struct SelectCategoryModalView: View {
 
 #Preview("No content en_US") {
     @Previewable @State var showModal = true
-    @Previewable @State var categoryType: CategoryType = .expense
+    @Previewable @State var model = AccountModel()
     
     ZStack(alignment: .top) {
         Color.backgroundBottom
         VStack {
             Spacer()
-            
+            TextPlain("Model selected: \(model.name)")
             Button("Show modal") {
                 showModal = true
             }
             Spacer()
         }
     }.sheet(isPresented: $showModal) {
-        SelectCategoryModalView(selectedCategory: .constant(CategoryModel()), categoryType: $categoryType)
+        SelectAccountModalView(selectedModel: $model)
             .environment(\.locale, .init(identifier: "en_US"))
     }
     .onAppear {
