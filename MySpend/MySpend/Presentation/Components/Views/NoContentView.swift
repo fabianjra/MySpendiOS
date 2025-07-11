@@ -15,11 +15,15 @@ struct NoContentView: View {
     
     var body: some View {
         VStack {
-            TextPlain(title,
-                      family: .semibold,
-                      size: .bigXL,
-                      aligment: .center)
-            .padding(.vertical)
+            HStack {
+                Spacer()
+                TextPlain(title,
+                          family: .semibold,
+                          size: .bigXL,
+                          aligment: .center)
+                .padding(.vertical)
+                Spacer()
+            }
             
             TextPlain(message,
                       size: .big,

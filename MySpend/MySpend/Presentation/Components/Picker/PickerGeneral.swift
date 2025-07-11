@@ -35,13 +35,13 @@ struct PickerGeneral<E>: UIViewRepresentable where E: CaseIterable & RawRepresen
                                                                .foregroundColor: UIColor(Color.disabledForeground)]
         
         let attributeSelected: [NSAttributedString.Key : Any] = [.font: Font.montserratToUIFont(.regular),
-                                                                 .foregroundColor: UIColor(Color.textFieldForeground)]
+                                                                 .foregroundColor: UIColor(Color.textPrimaryForeground)]
 
         
         control.setTitleTextAttributes(attributeNormal, for: .normal)
         control.setTitleTextAttributes(attributeSelected, for: .selected)
         
-        control.selectedSegmentTintColor = UIColor(Color.textFieldBackground)
+        control.selectedSegmentTintColor = UIColor(Color.primaryTrailing)
         control.backgroundColor = UIColor(Color.textFieldBackground)
         
         return control

@@ -49,15 +49,15 @@ struct AccountView: View {
             viewModel.deactivateObservers()
         }
         .sheet(isPresented: $viewModel.showNewItemModal) {
-//            AddModifyCategoryView(categoryType: $viewModel.categoryType)
-//                .presentationDetents([.large])
-//                .presentationCornerRadius(ConstantRadius.cornersModal)
+            AddModifyAccountView(accountType: $viewModel.modelType)
+                .presentationDetents([.large])
+                .presentationCornerRadius(ConstantRadius.cornersModal)
         }
         .sheet(isPresented: $viewModel.showModifyItemModal) {
-//            AddModifyCategoryView(model: $selectedModel,
-//                                  categoryType: $viewModel.categoryType)
-//            .presentationDetents([.large])
-//            .presentationCornerRadius(ConstantRadius.cornersModal)
+            AddModifyAccountView(selectedModel,
+                                 accountType: $viewModel.modelType)
+            .presentationDetents([.large])
+            .presentationCornerRadius(ConstantRadius.cornersModal)
         }
         .disabled(viewModel.isLoadingSecondary)
     }

@@ -68,7 +68,7 @@ struct AddModifyCategoryView: View {
             
             // MARK: TEXTFIELDS
             VStack {
-                TextFieldCategoryName(text: $viewModel.model.name,
+                TextFieldModelName(text: $viewModel.model.name,
                                       errorMessage: $viewModel.errorMessage)
                 .focused($focusedField, equals: .name)
                 .onSubmit { process(viewModel.isAddModel ? .add : .modify) }

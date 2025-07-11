@@ -63,4 +63,8 @@ struct AccountModel: Identifiable, Equatable, Hashable {
     static private func getAccountType(from rawType: String?) -> AccountType {
         return AccountType(rawValue: rawType ?? AccountType.general.rawValue) ?? .general
     }
+    
+    enum Field: Hashable, CaseIterable {
+        case name
+    }
 }

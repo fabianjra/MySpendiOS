@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TextFieldCategoryName: View {
+struct TextFieldModelName: View {
     
     var placeHolder: String = "Name"
     @Binding var text: String
@@ -29,7 +29,7 @@ struct TextFieldCategoryName: View {
 
 #Preview {
     VStack {
-        TextFieldCategoryName(text: .constant(""),
+        TextFieldModelName(text: .constant(""),
                       errorMessage: .constant(""))
     }
     .padding()
