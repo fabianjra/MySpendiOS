@@ -131,8 +131,7 @@ struct AccountView: View {
                                                                 sortType: viewModel.sortModelsBy)
             
             if modelsFiltered.isEmpty {
-                NoContentToAddView(title: "No accounts",
-                              rotationDegress: ConstantAnimations.rotationArrowBottomTrailing)
+                NoContentToAddView(rotationDegress: ConstantAnimations.rotationArrowBottomTrailing)
             } else {
                 ListContainer {
                     ForEach(modelsFiltered) { item in

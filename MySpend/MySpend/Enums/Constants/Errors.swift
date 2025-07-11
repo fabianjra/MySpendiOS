@@ -20,6 +20,7 @@ public enum Errors: Error {
     case passwordIsShort
     case invalidAmount
     case notFoundAccount
+    case accountTypeNotMatchCategoryType(String, String)
     
     // MARK: CORE DATE
     case notSavedAccount(String)
@@ -57,7 +58,9 @@ extension Errors: LocalizedError {
         case .passwordIsShort: return NSLocalizedString("The password should be larger than \(ConstantViews.passwordMinimumLength) characters.", 
                                                         comment: "")
         case .invalidAmount: return NSLocalizedString("Amount is invalid.", comment: "")
-        case .notFoundAccount: return NSLocalizedString( "Account not found. Try adding a new one.", comment: "")
+        case .notFoundAccount: return NSLocalizedString( "Accounts not found. Try adding a new one in settings.", comment: "")
+        case .accountTypeNotMatchCategoryType(let accountName, let accountType): return NSLocalizedString("The account \"\(accountName)\" accepts only \(accountType) transactions.",
+                                                                                         comment: "Shown when the user tries to assign a category whose type doesn’t match the account’s configured type (expense / income).")
             
         // MARK: CORE DATE
         case .notSavedAccount(let itemId): return NSLocalizedString("Error while saving account for ID: \(itemId)", comment: "")
@@ -99,6 +102,7 @@ extension Errors {
         case .passwordIsShort: return 7
         case .invalidAmount: return 8
         case .notFoundAccount: return 9
+        case .accountTypeNotMatchCategoryType: return 10
             
         // MARK: CORE DATE
         case .notSavedAccount: return 100

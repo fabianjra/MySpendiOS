@@ -142,7 +142,13 @@ struct AddModifyTransactionView: View {
                     
                     Spacer()
                 }
-                .onAppear { viewModel.fetchAccounts() }
+                .onAppear {
+                    viewModel.fetchAccounts()
+                    
+                    if viewModel.isNewModel == false {
+                        categoryType = viewModel.model.category.type
+                    }
+                }
                 .onChange(of: focusedField) { _, newFocusedField in
                     if focusedField == .notes {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {

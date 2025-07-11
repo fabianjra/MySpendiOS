@@ -9,7 +9,7 @@ import SwiftUI
 
 struct NoContentToAddView: View {
     
-    var title: String = "No Content"
+    var title: String = "Empty"
     var message: String = "Try adding a new one in the plus (+) button"
     var rotationDegress: CGFloat = ConstantAnimations.rotationArrowBottomCenter
     

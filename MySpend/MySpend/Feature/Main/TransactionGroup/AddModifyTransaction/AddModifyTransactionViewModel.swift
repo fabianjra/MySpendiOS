@@ -51,17 +51,19 @@ class AddModifyTransactionViewModel: BaseViewModel {
             }
             
             // Select default account or the first account existing
-            if let defaultAccount = accounts.first(where: { $0.id.uuidString == defaultID }) {
-                showAccountTextField = false
-                model.account = defaultAccount
-            } else {
-                guard let firstAccount = accounts.first else {
-                    disabled = true
-                    errorMessage = Errors.notFoundAccount.localizedDescription
-                    return
+            if isNewModel {
+                if let defaultAccount = accounts.first(where: { $0.id.uuidString == defaultID }) {
+                    showAccountTextField = accounts.count == 1 ? false : true
+                    model.account = defaultAccount
+                } else {
+                    guard let firstAccount = accounts.first else {
+                        disabled = true
+                        errorMessage = Errors.notFoundAccount.localizedDescription
+                        return
+                    }
+                    
+                    model.account = firstAccount
                 }
-                
-                model.account = firstAccount
             }
         } catch {
             Logger.exception(error, type: .CoreData)
@@ -72,6 +74,11 @@ class AddModifyTransactionViewModel: BaseViewModel {
     func addNew(_ categoryType: CategoryType) -> ResponseModel {
         if model.category.name.isEmptyOrWhitespace {
             return ResponseModel(.error, Errors.emptySpaces.localizedDescription)
+        }
+        
+        let response = validateAccountType(forType: categoryType)
+        if response.status.isError {
+            return response
         }
         
         var modelMutated = model
@@ -90,6 +97,11 @@ class AddModifyTransactionViewModel: BaseViewModel {
     func modify(_ categoryType: CategoryType) -> ResponseModel {
         if model.category.name.isEmptyOrWhitespace {
             return ResponseModel(.error, Errors.emptySpaces.localizedDescription)
+        }
+        
+        let response = validateAccountType(forType: categoryType)
+        if response.status.isError {
+            return response
         }
         
         var modelMutated = model
@@ -113,5 +125,19 @@ class AddModifyTransactionViewModel: BaseViewModel {
             Logger.exception(error, type: .CoreData)
             return ResponseModel(.error, error.localizedDescription)
         }
+    }
+    
+    private func validateAccountType(forType categoryType: CategoryType) -> ResponseModel {
+        let accountType = model.account.type
+        
+        if accountType != .general {
+            if accountType == .expenses && categoryType == .income {
+                return ResponseModel(.error, Errors.accountTypeNotMatchCategoryType(model.account.name, accountType.rawValue).localizedDescription)
+            } else if accountType == .incomes && categoryType == .expense {
+                return ResponseModel(.error, Errors.accountTypeNotMatchCategoryType(model.account.name, accountType.rawValue).localizedDescription)
+            }
+        }
+        
+        return ResponseModel(.successful)
     }
 }
