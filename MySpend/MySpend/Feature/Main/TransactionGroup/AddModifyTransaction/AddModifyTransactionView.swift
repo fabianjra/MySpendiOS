@@ -25,8 +25,6 @@ struct AddModifyTransactionView: View {
     @StateObject private var viewModel: AddModifyTransactionViewModel
     @FocusState private var focusedField: TransactionModel.Field?
     
-    @State private var categoryType: CategoryType = .expense
-    
     init(_ model: TransactionModel? = nil, selectedDate: Date? = nil) {
         _viewModel = StateObject(wrappedValue: AddModifyTransactionViewModel(model, selectedDate: selectedDate))
     }
@@ -48,7 +46,7 @@ struct AddModifyTransactionView: View {
                         // MARK: SEGMENT
                         
                         VStack {
-                            PickerCategoryType(selection: $categoryType,
+                            PickerCategoryType(selection: $viewModel.model.category.type,
                                             segments: CategoryType.allCases)
                             .padding(.bottom)
                         }
@@ -142,26 +140,19 @@ struct AddModifyTransactionView: View {
                     
                     Spacer()
                 }
-                .onAppear {
-                    viewModel.fetchAccounts()
-                    
-                    if viewModel.isNewModel == false {
-                        //categoryType = viewModel.model.category.type //TODO: CORREGIR. NO SE CARGA EL TIPO CUANDO ES MODIFICAR.
-                    }
-                }
-                .onChange(of: focusedField) { _, newFocusedField in
+                .onAppear { viewModel.fetchAccounts() }
+                .onChange(of: focusedField) {
                     if focusedField == .notes {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
                             withAnimation {
                                 scrollViewProxy.scrollTo(viewModel.notesId, anchor: .bottom)
                             }
-                            
                         }
                     }
                 }
-                .onChange(of: categoryType) {
+                .onChange(of: viewModel.model.category.type) {_, newValue in
                     viewModel.errorMessage = ""
-                    viewModel.model.category = CategoryModel(type: categoryType) // Clean category beacause won't be the same CategoryType (Exponse, income).
+                    viewModel.model.category = CategoryModel(type: newValue) // Clean category beacause won't be the same CategoryType (Exponse, income).
                 }
                 .sheet(isPresented: $viewModel.showDatePicker) {
                     DatePickerModalView(selectedDate: $viewModel.model.dateTransaction,
@@ -169,7 +160,7 @@ struct AddModifyTransactionView: View {
                 }
                 .sheet(isPresented: $viewModel.showCategoryList) {
                     SelectCategoryModalView(selectedCategory: $viewModel.model.category,
-                                            categoryType: $categoryType)
+                                            categoryType: $viewModel.model.category.type) //TOD: Refatorizar porque se envia el mismo objeto
                 }
                 .sheet(isPresented: $viewModel.showAccoountList) {
                     SelectAccountModalView(selectedModel: $viewModel.model.account)
@@ -187,9 +178,9 @@ struct AddModifyTransactionView: View {
         
         switch processType {
         case .add:
-            result = viewModel.addNew(categoryType)
+            result = viewModel.addNew()
         case .modify:
-            result = viewModel.modify(categoryType)
+            result = viewModel.modify()
         case .delete:
             result = viewModel.delete()
         }

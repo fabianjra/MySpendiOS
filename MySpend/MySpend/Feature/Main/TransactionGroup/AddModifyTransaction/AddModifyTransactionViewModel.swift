@@ -71,18 +71,17 @@ class AddModifyTransactionViewModel: BaseViewModel {
         }
     }
     
-    func addNew(_ categoryType: CategoryType) -> ResponseModel {
+    func addNew() -> ResponseModel {
         if model.category.name.isEmptyOrWhitespace {
             return ResponseModel(.error, Errors.emptySpaces.localizedDescription)
         }
         
-        let response = validateAccountType(forType: categoryType)
+        let response = validateAccountType()
         if response.status.isError {
             return response
         }
         
         var modelMutated = model
-        modelMutated.category.type = categoryType
         modelMutated.amount = amountString.convertAmountToDecimal
         
         do {
@@ -94,18 +93,17 @@ class AddModifyTransactionViewModel: BaseViewModel {
         }
     }
     
-    func modify(_ categoryType: CategoryType) -> ResponseModel {
+    func modify() -> ResponseModel {
         if model.category.name.isEmptyOrWhitespace {
             return ResponseModel(.error, Errors.emptySpaces.localizedDescription)
         }
         
-        let response = validateAccountType(forType: categoryType)
+        let response = validateAccountType()
         if response.status.isError {
             return response
         }
         
         var modelMutated = model
-        modelMutated.category.type = categoryType
         modelMutated.amount = amountString.convertAmountToDecimal
         
         do {
@@ -127,8 +125,9 @@ class AddModifyTransactionViewModel: BaseViewModel {
         }
     }
     
-    private func validateAccountType(forType categoryType: CategoryType) -> ResponseModel {
+    private func validateAccountType() -> ResponseModel {
         let accountType = model.account.type
+        let categoryType = model.category.type
         
         if accountType != .general {
             if accountType == .expenses && categoryType == .income {
