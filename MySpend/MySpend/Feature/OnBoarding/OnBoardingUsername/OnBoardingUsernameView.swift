@@ -49,6 +49,9 @@ struct OnBoardingUsernameView: View {
             }
             .modifier(AddKeyboardToolbar(focusedField: $focusedField))
         }
+        .onAppear {
+            focusedField = .userName
+        }
     }
 }
 

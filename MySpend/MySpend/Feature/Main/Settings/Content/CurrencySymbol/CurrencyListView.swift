@@ -18,15 +18,9 @@ struct CurrencyListView: View {
                             subTitle: "Select the currency to show")
             .padding(.bottom)
             
-            
-            Picker("Currency", selection: $viewModel.currencySymbolType) {
-                ForEach(CurrencySymbolType.allCases) { type in
-                    TextPlain(type.rawValue)
-                }
-            }
-            .pickerStyle(.segmented)
-            .padding(.horizontal)
-            
+
+            PickerGeneral(selection: $viewModel.currencySymbolType)
+                .padding(.horizontal)
 
             ListContainer {
                 
@@ -60,7 +54,7 @@ struct CurrencyListView: View {
                 .aspectRatio(contentMode: .fit)
                 .frame(width: FrameSize.height.selectIconInsideTextField,
                        height: FrameSize.width.selectIconInsideTextField)
-                .foregroundStyle(currency.selected ? Color.primaryLeading : Color.textFieldPlaceholder)
+                .foregroundStyle(currency.selected ? Color.primaryTrailing : Color.textFieldPlaceholder)
                 .transition(.scale.combined(with: .move(edge: .leading)))
             
             Button {
