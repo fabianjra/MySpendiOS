@@ -36,94 +36,113 @@ struct AddModifyTransactionView: View {
             ScrollViewReader { scrollViewProxy in
                 FormContainer {
                     
-                    HeaderNavigator(title: viewModel.isNewTransaction ? "New transaction" : "Modify transaction",
+                    HeaderNavigator(title: viewModel.isNewModel ? "New transaction" : "Modify transaction",
                                     titleWeight: .regular,
-                                    titleSize: viewModel.isNewTransaction ? .bigXL : .bigL,
-                                    subTitle: viewModel.isNewTransaction ? "Enter transation details" : "Modify transaction details",
+                                    titleSize: viewModel.isNewModel ? .bigXL : .bigL,
+                                    subTitle: viewModel.isNewModel ? "Enter transation details" : "Modify transaction details",
                                     showLeadingAction: false,
                                     showTrailingAction: true)
-                    .padding(.vertical)
+                    .padding(.bottom)
                     
-                    
-                    // MARK: SEGMENT
                     VStack {
-                        PickerCategoryType(selection: $categoryType,
-                                        segments: CategoryType.allCases)
-                        .padding(.bottom)
-                    }
-                    
-                    // MARK: DATE
-                    VStack {
-                        TextFieldReadOnly(text: .constant(viewModel.model.dateTransaction.toStringShortLocale),
-                                          iconLeading: Image.calendar,
-                                          colorDisabled: false)
-                        .onTapGesture {
-                            focusedField = .none
-                            viewModel.showDatePicker = true
+                        // MARK: SEGMENT
+                        
+                        VStack {
+                            PickerCategoryType(selection: $categoryType,
+                                            segments: CategoryType.allCases)
+                            .padding(.bottom)
                         }
-                    }
-                    
-                    
-                    // MARK: TEXTFIELDS
-                    VStack {
-                        TextFieldAmount(text: $viewModel.amountString)
-                            .focused($focusedField, equals: .amount)
-                            .toolbar {
-                                if focusedField == .amount {
-                                    ToolbarItemGroup(placement: .keyboard) {
-                                        Spacer()
-                                        
-                                        Button("Done") {
-                                            focusedField = .none
+                        
+                        // MARK: DATE
+                        
+                        VStack {
+                            TextFieldReadOnly(text: .constant(viewModel.model.dateTransaction.toStringShortLocale),
+                                              iconLeading: Image.calendar,
+                                              colorDisabled: false)
+                            .onTapGesture {
+                                focusedField = .none
+                                viewModel.showDatePicker = true
+                            }
+                        }
+                        
+                        
+                        // MARK: TEXTFIELDS
+                        
+                        VStack {
+                            TextFieldAmount(text: $viewModel.amountString)
+                                .focused($focusedField, equals: .amount)
+                                .toolbar {
+                                    if focusedField == .amount {
+                                        ToolbarItemGroup(placement: .keyboard) {
+                                            Spacer()
+                                            
+                                            Button("Done") {
+                                                focusedField = .none
+                                            }
                                         }
                                     }
                                 }
+                            
+                            
+                            TextFieldReadOnlySelectable(placeHolder: "Category",
+                                                        text: $viewModel.model.category.name,
+                                                        iconLeading: Image.stackFill,
+                                                        colorDisabled: false,
+                                                        errorMessage: $viewModel.errorMessage)
+                            .onTapGesture {
+                                focusedField = .none
+                                viewModel.showCategoryList = true
                             }
-                        
-                        
-                        TextFieldReadOnlySelectable(placeHolder: "Category",
-                                                    text: $viewModel.model.category.name,
-                                                    iconLeading: Image.stackFill,
-                                                    colorDisabled: false,
-                                                    errorMessage: $viewModel.errorMessage)
-                        .onTapGesture {
-                            focusedField = .none
-                            viewModel.showCategoryList = true
+                            
+                            
+                            if viewModel.showAccountTextField {
+                                TextFieldReadOnlySelectable(placeHolder: "Account",
+                                                            text: $viewModel.model.account.name,
+                                                            iconLeading: Image.walletFill,
+                                                            colorDisabled: false,
+                                                            errorMessage: $viewModel.errorMessage)
+                                .onTapGesture {
+                                    focusedField = .none
+                                    viewModel.showAccoountList = true
+                                }
+                            }
+                            
+                            
+                            TextFieldNotes(text: $viewModel.model.notes)
+                                .id(viewModel.notesId)
+                                .focused($focusedField, equals: .notes)
+                                .padding(.bottom, ConstantViews.mediumSpacing)
                         }
                         
-                        TextFieldNotes(text: $viewModel.model.notes)
-                            .id(viewModel.notesId)
-                            .focused($focusedField, equals: .notes)
-                            .padding(.bottom)
+                        
+                        // MARK: BUTTONS
+                        VStack {
+                            Button(viewModel.isNewModel ? "Add" : "Modify") {
+                                process(viewModel.isNewModel ? .add : .modify)
+                            }
+                            .buttonStyle(ButtonPrimaryStyle(isLoading: $viewModel.isLoading))
+                            
+                            if viewModel.isNewModel == false {
+                                Button("Delete") {
+                                    viewModel.showAlert = true
+                                }
+                                .buttonStyle(ButtonLinkStyle(color: Color.alert, fontfamily: .semibold, isLoading: $viewModel.isLoadingSecondary))
+                                .alert("Delete transaction", isPresented: $viewModel.showAlert) {
+                                    Button("Delete", role: .destructive) { process(.delete) }
+                                    Button("Cancel", role: .cancel) { }
+                                } message: {
+                                    Text("Want to delete this transaction? \n This action cannot be undone.")
+                                }
+                            }
+                            
+                            TextError(viewModel.errorMessage)
+                        }
                     }
-                    
-                    
-                    // MARK: BUTTONS
-                    VStack {
-                        Button(viewModel.isNewTransaction ? "Add" : "Modify") {
-                            process(viewModel.isNewTransaction ? .add : .modify)
-                        }
-                        .buttonStyle(ButtonPrimaryStyle(isLoading: $viewModel.isLoading))
-                        .padding(.vertical)
-                        
-                        if viewModel.isNewTransaction == false {
-                            Button("Delete") {
-                                viewModel.showAlert = true
-                            }
-                            .buttonStyle(ButtonLinkStyle(color: Color.alert, fontfamily: .semibold, isLoading: $viewModel.isLoadingSecondary))
-                            .alert("Delete transaction", isPresented: $viewModel.showAlert) {
-                                Button("Delete", role: .destructive) { process(.delete) }
-                                Button("Cancel", role: .cancel) { }
-                            } message: {
-                                Text("Want to delete this transaction? \n This action cannot be undone.")
-                            }
-                        }
-                        
-                        TextError(viewModel.errorMessage)
-                    }
+                    .disabled(viewModel.disabled)
                     
                     Spacer()
                 }
+                .onAppear { viewModel.fetchAccounts() }
                 .onChange(of: focusedField) { _, newFocusedField in
                     if focusedField == .notes {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
@@ -146,6 +165,9 @@ struct AddModifyTransactionView: View {
                     SelectCategoryModalView(selectedCategory: $viewModel.model.category,
                                             categoryType: $categoryType)
                 }
+                .sheet(isPresented: $viewModel.showAccoountList) {
+                    //TODO: AGREGAR LISTA DE ACCOUNTS
+                }
             }
         }
         // This modal sometimes dont apply the corner radius. It looks like is a SwiftUI Bug..
@@ -159,11 +181,11 @@ struct AddModifyTransactionView: View {
         
         switch processType {
         case .add:
-            result = viewModel.addNewTransaction(categoryType)
+            result = viewModel.addNew(categoryType)
         case .modify:
-            result = viewModel.modifyTransaction(categoryType)
+            result = viewModel.modify(categoryType)
         case .delete:
-            result = viewModel.deleteTransaction()
+            result = viewModel.delete()
         }
         
         if result.status.isSuccess {

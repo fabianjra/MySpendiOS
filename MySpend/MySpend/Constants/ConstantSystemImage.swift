@@ -22,4 +22,7 @@ struct ConstantSystemImage {
     static let arrowCounterClockwise = "arrow.counterclockwise"
     static let clockArrowCounterClockwise = "clock.arrow.trianglehead.counterclockwise.rotate.90"
     static let walletPassFill = "wallet.pass.fill"
+    
+    // MARK: CURRENCY
+    static let bankDollarFill = "dollarsign.bank.building.fill" 
 }

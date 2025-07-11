@@ -19,6 +19,7 @@ public enum Errors: Error {
     case newPasswordIsDifferent
     case passwordIsShort
     case invalidAmount
+    case notFoundAccount
     
     // MARK: CORE DATE
     case notSavedAccount(String)
@@ -56,6 +57,7 @@ extension Errors: LocalizedError {
         case .passwordIsShort: return NSLocalizedString("The password should be larger than \(ConstantViews.passwordMinimumLength) characters.", 
                                                         comment: "")
         case .invalidAmount: return NSLocalizedString("Amount is invalid.", comment: "")
+        case .notFoundAccount: return NSLocalizedString( "Account not found. Try adding a new one.", comment: "")
             
         // MARK: CORE DATE
         case .notSavedAccount(let itemId): return NSLocalizedString("Error while saving account for ID: \(itemId)", comment: "")
@@ -96,6 +98,7 @@ extension Errors {
         case .newPasswordIsDifferent: return 6
         case .passwordIsShort: return 7
         case .invalidAmount: return 8
+        case .notFoundAccount: return 9
             
         // MARK: CORE DATE
         case .notSavedAccount: return 100

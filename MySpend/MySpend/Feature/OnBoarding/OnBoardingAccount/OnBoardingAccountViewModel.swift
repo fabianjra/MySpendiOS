@@ -22,7 +22,7 @@ class OnBoardingAccountViewModel: BaseViewModel {
             name = CDConstants.mainAccountName
         }
         
-        let account = AccountModel(name: name)
+        let account = AccountModel(icon: ConstantSystemImage.bankDollarFill, name: name, type: .general)
         
         do {
             try AccountManager(viewContext: viewContext).create(account)
