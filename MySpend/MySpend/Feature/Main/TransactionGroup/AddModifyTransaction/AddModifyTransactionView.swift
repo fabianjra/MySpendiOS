@@ -146,7 +146,7 @@ struct AddModifyTransactionView: View {
                     viewModel.fetchAccounts()
                     
                     if viewModel.isNewModel == false {
-                        categoryType = viewModel.model.category.type
+                        //categoryType = viewModel.model.category.type //TODO: CORREGIR. NO SE CARGA EL TIPO CUANDO ES MODIFICAR.
                     }
                 }
                 .onChange(of: focusedField) { _, newFocusedField in
