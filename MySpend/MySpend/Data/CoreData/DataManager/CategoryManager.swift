@@ -134,7 +134,7 @@ struct CategoryManager {
                 
                 try viewContext.save()
             } else {
-                throw CDError.notFoundFetch(entity: Category.description())
+                throw CDError.notFoundUpdate(entity: Category.description())
             }
         }
     }
@@ -148,7 +148,7 @@ struct CategoryManager {
                 viewContext.delete(item)
                 try viewContext.save()
             } else {
-                throw CDError.notFoundFetch(entity: Category.description())
+                throw CDError.notFoundDelete(entity: Category.description())
             }
         }
     }

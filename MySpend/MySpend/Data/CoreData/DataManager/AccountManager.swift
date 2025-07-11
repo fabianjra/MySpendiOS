@@ -84,7 +84,7 @@ struct AccountManager {
                 
                 try viewContext.save()
             } else {
-                throw CDError.notFoundFetch(entity: Account.description())
+                throw CDError.notFoundUpdate(entity: Account.description())
             }
         }
     }
@@ -98,7 +98,7 @@ struct AccountManager {
                 viewContext.delete(item)
                 try viewContext.save()
             } else {
-                throw CDError.notFoundFetch(entity: Account.description())
+                throw CDError.notFoundDelete(entity: Account.description())
             }
         }
     }
