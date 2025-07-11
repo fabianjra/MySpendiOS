@@ -69,8 +69,8 @@ struct ButtonPrimaryStyle: ButtonStyle {
     
     private func backgroundButton(_ color: [Color]) -> some View {
         LinearGradient(colors: color,
-                       startPoint: .leading,
-                       endPoint: .trailing)
+                       startPoint: .top,
+                       endPoint: .bottom)
     }
 }
 

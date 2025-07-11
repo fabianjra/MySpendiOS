@@ -21,6 +21,7 @@ import SwiftUI
 struct PickerGeneral<E>: UIViewRepresentable where E: CaseIterable & RawRepresentable & Hashable, E.RawValue == String {
     
     @Binding var selection: E
+    var fontSize = Font.Sizes.medium
 
     // UIViewRepresentable
     func makeUIView(context: Context) -> UISegmentedControl {
@@ -31,18 +32,18 @@ struct PickerGeneral<E>: UIViewRepresentable where E: CaseIterable & RawRepresen
                           for: .valueChanged)
 
         // Fuente aplicada a todos los estados
-        let attributeNormal: [NSAttributedString.Key : Any] = [.font: Font.montserratToUIFont(.light),
-                                                               .foregroundColor: UIColor(Color.disabledForeground)]
+        let attributeNormal: [NSAttributedString.Key : Any] = [.font: Font.montserratToUIFont(.light, size: fontSize),
+                                                               .foregroundColor: UIColor(Color.textPrimaryForeground)]
         
-        let attributeSelected: [NSAttributedString.Key : Any] = [.font: Font.montserratToUIFont(.regular),
+        let attributeSelected: [NSAttributedString.Key : Any] = [.font: Font.montserratToUIFont(.regular, size: fontSize),
                                                                  .foregroundColor: UIColor(Color.textPrimaryForeground)]
 
         
         control.setTitleTextAttributes(attributeNormal, for: .normal)
         control.setTitleTextAttributes(attributeSelected, for: .selected)
         
-        control.selectedSegmentTintColor = UIColor(Color.primaryTrailing)
-        control.backgroundColor = UIColor(Color.textFieldBackground)
+        control.selectedSegmentTintColor = UIColor(Color.textSecondaryForeground.opacity(ConstantColors.opacityHalf))
+        control.backgroundColor = UIColor(Color.secondaryLeading.opacity(0.2))
         
         return control
     }

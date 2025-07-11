@@ -33,8 +33,8 @@ struct LogContainer<Content: View>: View {
         }
         .scrollDisabled(!scrollable)
         .background(LinearGradient(colors: Color.backgroundFormGradiant,
-                                   startPoint: .leading,
-                                   endPoint: .trailing))
+                                   startPoint: .top,
+                                   endPoint: .bottom))
     }
 }
 

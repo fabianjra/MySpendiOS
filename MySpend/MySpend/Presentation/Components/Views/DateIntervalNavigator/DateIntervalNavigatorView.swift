@@ -34,7 +34,7 @@ struct DateIntervalNavigatorView<Content: View>: View {
                 }
             }
             
-            timeInterval
+            PickerGeneral(selection: $dateTimeInterval)
                 .disabled(isEditing)
                 .animation(.default,value: isEditing)
             
@@ -57,15 +57,6 @@ struct DateIntervalNavigatorView<Content: View>: View {
                 .modifier(ShowReservesSpace(!selectedDate.isSameDate(.now))) //Uses modifier because need to keep space.
             }
         }
-    }
-    
-    var timeInterval: some View {
-        Picker("Time interval", selection: $dateTimeInterval) {
-            ForEach(DateTimeInterval.allCases) { type in
-                Text(type.rawValue)
-            }
-        }
-        .pickerStyle(.segmented)
     }
     
     var navigator: some View {

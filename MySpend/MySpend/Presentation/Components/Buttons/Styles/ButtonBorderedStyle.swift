@@ -70,8 +70,8 @@ struct ButtonBorderedStyle: ButtonStyle {
     private func backgroundBorderedButton(_ color: [Color]) -> some View {
         RoundedRectangle(cornerRadius: .infinity)
             .stroke(LinearGradient(colors: color,
-                                   startPoint: .leading,
-                                   endPoint: .trailing),
+                                   startPoint: .top,
+                                   endPoint: .bottom),
                     lineWidth: ConstantShapes.textFieldLineWidth)
     }
 }
