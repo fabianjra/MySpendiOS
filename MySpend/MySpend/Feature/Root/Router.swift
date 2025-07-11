@@ -13,6 +13,8 @@ class Router: ObservableObject {
     static let shared: Router = Router()
     
     enum Destination {
-        case onBoardingAccount
+        case mainView
+        case onBoardingName
+        case onBoardinAccount
     }
 }

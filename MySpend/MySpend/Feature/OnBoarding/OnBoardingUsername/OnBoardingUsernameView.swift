@@ -16,7 +16,7 @@ struct OnBoardingUsernameView: View {
         LogContainer {
             
             // MARK: HEADER
-            HeaderNavigator(subTitle: "Welcome", onlyTitle: true)
+            HeaderNavigator(subTitle: "Let's start", onlyTitle: true)
                 .padding(.bottom)
             
             
@@ -29,17 +29,17 @@ struct OnBoardingUsernameView: View {
                               iconLeading: nil,
                               errorMessage: $viewModel.errorMessage)
                 .focused($focusedField, equals: .userName)
-                .onSubmit { viewModel.continueWithUserName() }
+                .onSubmit { viewModel.continueToNextStep(withName: true)}
                 
                 
                 Button("Continue") {
-                    viewModel.continueWithUserName()
+                    viewModel.continueToNextStep(withName: true)
                 }
                 .buttonStyle(ButtonPrimaryStyle())
                 
                 
                 Button("Do it later") {
-                    viewModel.continueWithoutUserName()
+                    viewModel.continueToNextStep(withName: false)
                 }
                 .buttonStyle(ButtonLinkStyle())
                 .padding(.bottom)

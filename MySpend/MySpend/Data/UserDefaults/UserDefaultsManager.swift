@@ -110,6 +110,14 @@ extension UserDefaultsManager {
             manager.value = newValue
         }
     }
+    
+    static var defaultAccountID: String {
+        get { return UserDefaultsDataStore<String>(for: .defaultAccountID).value ?? "" }
+        set {
+            var manager = UserDefaultsDataStore<String>(for: .defaultAccountID)
+            manager.value = newValue
+        }
+    }
 }
 
 enum UserDefaultsKeys: String, Codable, CaseIterable {
@@ -128,6 +136,7 @@ enum UserDefaultsKeys: String, Codable, CaseIterable {
     case isOnBoarding = "is_on_boarding_key"
     case username = "user_name_key"
     case userEmail = "user_email_key"
+    case defaultAccountID = "default_account_id_key"
     
 //    var valueType: Codable.Type {
 //        switch self {

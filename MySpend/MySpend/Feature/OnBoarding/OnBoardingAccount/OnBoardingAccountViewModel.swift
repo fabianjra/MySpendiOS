@@ -6,3 +6,37 @@
 //
 
 import Foundation
+
+class OnBoardingAccountViewModel: BaseViewModel {
+    
+    @Published var name = ""
+    
+    func finishOnBoarding(withName: Bool) {
+        
+        if withName {
+            if name.isEmptyOrWhitespace {
+                errorMessage = Errors.emptySpace.localizedDescription
+                return
+            }
+        } else {
+            name = CDConstants.mainAccountName
+        }
+        
+        let account = AccountModel(name: name)
+        
+        do {
+            try AccountManager(viewContext: viewContext).create(account)
+        } catch {
+            Logger.exception(error, type: .CoreData)
+        }
+        
+        UserDefaultsManager.defaultAccountID = account.id.uuidString
+        UserDefaultsManager.isOnBoarding = false
+        
+        Router.shared.path.append(Router.Destination.mainView)
+    }
+    
+    enum Field: Hashable, CaseIterable {
+        case name
+    }
+}

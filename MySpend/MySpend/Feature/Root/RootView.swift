@@ -14,14 +14,12 @@ struct RootView: View {
     private var isOnboarding: Bool = true
     
     var body: some View {
-        NavigationStack(path: $router.path) { //TODO: REMOVER. No es necesario. Usar navigationLink
+        NavigationStack(path: $router.path) {
             VStack {
                 if isOnboarding {
                     OnBoardingUsernameView()
                 } else {
-                    withAnimation { //TODO: Comprobar si funciona para que el TabView se vea de forma suave despues del OnBoarding
-                        TabViewMain()
-                    }
+                    TabViewMain()
                 }
             }
             .onAppear {
@@ -29,9 +27,15 @@ struct RootView: View {
             }
             .navigationDestination(for: Router.Destination.self) { destination in
                 switch destination {
-                case .onBoardingAccount:
-                    OnBoardingAccountView()
-                        .toolbar(.hidden, for: .navigationBar)
+                    
+                case .mainView:
+                    TabViewMain().toolbar(.hidden, for: .navigationBar)
+                    
+                case .onBoardingName:
+                    OnBoardingAccountView().toolbar(.hidden, for: .navigationBar)
+                    
+                case .onBoardinAccount:
+                    OnBoardingAccountView().toolbar(.hidden, for: .navigationBar)
                 }
             }
         }

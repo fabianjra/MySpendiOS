@@ -11,18 +11,17 @@ class OnBoardingUsernameViewModel: BaseViewModel {
     
     @Published var userName = ""
     
-    func continueWithUserName() {
-        if userName.isEmptyOrWhitespace {
-            errorMessage = Errors.emptySpace.localizedDescription
-            return
+    func continueToNextStep(withName: Bool) {
+        if withName {
+            if userName.isEmptyOrWhitespace {
+                errorMessage = Errors.emptySpace.localizedDescription
+                return
+            }
         }
         
         UserDefaultsManager.userName = userName
-        UserDefaultsManager.isOnBoarding = false
-    }
-    
-    func continueWithoutUserName() {
-        UserDefaultsManager.isOnBoarding = false
+        
+        Router.shared.path.append(Router.Destination.onBoardinAccount)
     }
     
     enum Field: Hashable, CaseIterable {
