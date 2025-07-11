@@ -38,9 +38,6 @@ class AddModifyTransactionViewModel: BaseViewModel {
     }
     
     func fetchAccounts() {
-        
-        let defaultID: String = UserDefaultsManager.defaultAccountID
-        
         do {
             accounts = try AccountManager(viewContext: viewContext).fetchAll()
             
@@ -50,10 +47,13 @@ class AddModifyTransactionViewModel: BaseViewModel {
                 return
             }
             
-            // Select default account or the first account existing
+            if accounts.count == 1 {
+                showAccountTextField = false
+            }
+            
             if isNewModel {
+                let defaultID: String = UserDefaultsManager.defaultAccountID
                 if let defaultAccount = accounts.first(where: { $0.id.uuidString == defaultID }) {
-                    showAccountTextField = accounts.count == 1 ? false : true
                     model.account = defaultAccount
                 } else {
                     guard let firstAccount = accounts.first else {
