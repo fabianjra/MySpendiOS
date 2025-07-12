@@ -110,9 +110,6 @@ struct TransactionManager {
         }
     }
     
-    
-    // MARK: SHARED
-    
     private func fetch(_ model: TransactionModel) throws -> Transaction {
         let fetchRequest = CoreDataUtilities.createFetchRequest(ByID: model.id.uuidString, entity: Transaction.self)
         let itemCoreData = try viewContext.fetch(fetchRequest)
@@ -122,5 +119,16 @@ struct TransactionManager {
         }
         
         return item
+    }
+    
+    
+    // MARK: SHARED
+    
+    func fetchAllCount(byAccountID id: String) throws -> Int {
+        let request: NSFetchRequest<Transaction> = Transaction.fetchRequest()
+        request.predicate = NSPredicate(format: CDConstants.Predicates.findItemByAccountId, id)
+        
+        let count = try viewContext.fetch(request).count
+        return count
     }
 }

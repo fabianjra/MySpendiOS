@@ -14,6 +14,7 @@ struct CDConstants {
     // MARK: PREDICATES
     struct Predicates {
         static let findItemById: String = "id == %@"
+        static let findItemByAccountId: String = "account.id == %@"
         static let isActive: String = "isActive == %@"
     }
 }
