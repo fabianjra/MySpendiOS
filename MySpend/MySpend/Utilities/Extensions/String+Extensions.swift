@@ -219,18 +219,16 @@ extension String {
 
      - Returns: SwiftUI Image
 
-     - Authors: Fabian Rodriguez
-
-     - Date: December 2024
+     - Date: Jul 2025
      */
     public var getIconFromSFSymbol: Image? {
-        if let systemName = Optional(self) {
-            if systemName.isEmptyOrWhitespace {
-                return nil
-            } else {
-                return Image(systemName: systemName)
-            }
-        }
-        return nil
+        // 1. Vacía o solo espacios → nil
+        guard !self.isEmptyOrWhitespace else { return nil }
+        
+        // 2. Valida que exista en la librería SF Symbols
+        guard UIImage(systemName: self) != nil else { return nil }
+        
+        // 3. Sí es válido → se crea el `Image`
+        return Image(systemName: self)
     }
 }
