@@ -34,7 +34,7 @@ struct DateIntervalNavigatorView<Content: View>: View {
                 }
             }
             
-            PickerGeneral(selection: $dateTimeInterval)
+            PickerView(selection: $dateTimeInterval)
                 .disabled(isEditing)
                 .animation(.default,value: isEditing)
             

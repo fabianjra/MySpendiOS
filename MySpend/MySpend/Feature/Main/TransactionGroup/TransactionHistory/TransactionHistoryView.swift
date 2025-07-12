@@ -170,7 +170,7 @@ struct TransactionHistoryView: View {
                             Spacer()
                             
                             TextPlain(item.amount.convertAmountDecimalToString.addCurrencySymbol,
-                                      color: item.category.type == .income ? Color.primaryLeading : Color.alert)
+                                      color: item.category.type == .income ? Color.primaryTop : Color.alert)
                             
                             Image.chevronRight
                                 .foregroundStyle(Color.textPrimaryForeground)
@@ -187,7 +187,7 @@ struct TransactionHistoryView: View {
                         .overlay {
                             if viewModel.isLoadingSecondary && selectedModel.id == item.id { //TODO: Agregar loader para cuando son varias transacciones. Aqui solo aplica para una.
                                 Loader()
-                                    .foregroundColor(Color.primaryLeading)
+                                    .foregroundColor(Color.primaryTop)
                             }
                         }
                     }

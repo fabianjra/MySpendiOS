@@ -19,7 +19,7 @@ struct CurrencyListView: View {
             .padding(.bottom)
             
 
-            PickerGeneral(selection: $viewModel.currencySymbolType)
+            PickerView(selection: $viewModel.currencySymbolType)
                 .padding(.horizontal)
 
             ListContainer {
@@ -54,7 +54,7 @@ struct CurrencyListView: View {
                 .aspectRatio(contentMode: .fit)
                 .frame(width: FrameSize.height.selectIconInsideTextField,
                        height: FrameSize.width.selectIconInsideTextField)
-                .foregroundStyle(currency.selected ? Color.primaryTrailing : Color.textFieldPlaceholder)
+                .foregroundStyle(currency.selected ? Color.primaryBottom : Color.textFieldPlaceholder)
                 .transition(.scale.combined(with: .move(edge: .leading)))
             
             Button {

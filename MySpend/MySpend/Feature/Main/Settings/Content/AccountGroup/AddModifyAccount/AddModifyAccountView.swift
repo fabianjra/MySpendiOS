@@ -36,7 +36,7 @@ struct AddModifyAccountView: View {
             
             // MARK: SEGMENT
             VStack {
-                PickerGeneral(selection: $accountType)
+                PickerView(selection: $accountType)
                     .frame(maxWidth: ConstantFrames.iPadMaxWidth)
                     .padding(.bottom)
             }

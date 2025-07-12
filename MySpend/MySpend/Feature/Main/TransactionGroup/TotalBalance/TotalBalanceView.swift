@@ -26,7 +26,7 @@ struct TotalBalanceView: View {
                 TextPlain("Incomes")
                 Spacer()
                 TextPlain(viewModel.totalIncomeFormatted,
-                          color: Color.primaryLeading,
+                          color: Color.primaryTop,
                           family: .semibold)
             }
             .padding(.bottom, ConstantViews.minimumSpacing)

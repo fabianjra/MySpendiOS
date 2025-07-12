@@ -37,10 +37,9 @@ struct SelectCategoryModalView: View {
             
             
             VStack {
-                PickerCategoryType(selection: $categoryType,
-                                segments: CategoryType.allCases)
-                .frame(maxWidth: ConstantFrames.iPadMaxWidth)
-                .padding(.bottom, ConstantViews.mediumSpacing)
+                PickerView(selection: $categoryType)
+                    .frame(maxWidth: ConstantFrames.iPadMaxWidth)
+                    .padding(.bottom, ConstantViews.mediumSpacing)
                 
                 RowLCTCointainer(leadingContent: {
                     MenuContainer {

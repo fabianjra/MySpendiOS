@@ -78,10 +78,9 @@ struct CategoryView: View {
             
             
             VStack {
-                PickerCategoryType(selection: $viewModel.categoryType,
-                                segments: CategoryType.allCases)
-                .frame(maxWidth: ConstantFrames.iPadMaxWidth)
-                .padding(.bottom, ConstantViews.mediumSpacing)
+                PickerView(selection: $viewModel.categoryType)
+                    .frame(maxWidth: ConstantFrames.iPadMaxWidth)
+                    .padding(.bottom, ConstantViews.mediumSpacing)
                 
                 RowLCTCointainer(disabled: viewModel.isEditing, leadingContent:  {
                     MenuContainer(addHorizontalPadding: true, disabled: viewModel.isEditing) {

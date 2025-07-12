@@ -12,7 +12,7 @@ struct ButtonRounded: View {
     @Environment(\.isEnabled) private var isEnabled: Bool
     
     let icon: Image = Image.plus
-    let color: Color = Color.primaryTrailing
+    let color: Color = Color.primaryBottom
     let action: () -> Void
     
     var body: some View {

@@ -31,7 +31,7 @@ struct SelectAccountModalView: View {
             
             
             VStack {
-                PickerGeneral(selection: $viewModel.modelType)
+                PickerView(selection: $viewModel.modelType)
                     .frame(maxWidth: ConstantFrames.iPadMaxWidth)
                     .padding(.bottom, ConstantViews.mediumSpacing)
                 
