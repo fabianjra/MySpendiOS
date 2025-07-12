@@ -50,12 +50,22 @@ final class AddModifyCategoryViewModel: BaseViewModel {
         if model.name.isEmptyOrWhitespace {
             return ResponseModel(.error, Errors.emptySpaces.localizedDescription)
         }
-        
-        //TODO: Cambiar para que mas bien se use el selectedDate con la de Model:
+                
         var modelMutated = model
-        modelMutated.type = type
-        
+       
         do {
+            // Si el nuevo tipo de categoria es difente al actual, debe validar que no tega transacciones asociadas
+            // a una cuenta asociada a un tipo incompatible del nuevo tipo de categoria seleccioanda.
+            if modelMutated.type != type {
+                
+                let incompatibleTransactionsCount = try TransactionManager(viewContext: viewContext).fetchIncompatibleTypeCount(currentCategoryID: modelMutated.id.uuidString, newCategoryType: type)
+                
+                if incompatibleTransactionsCount > 0 {
+                    return ResponseModel(.error, Errors.cannotUpdateCategoryDueToAccountType(incompatibleTransactionsCount.description).localizedDescription)
+                }
+            }
+            
+            modelMutated.type = type
             try CategoryManager(viewContext: viewContext).update(modelMutated)
             return ResponseModel(.successful)
         } catch {
