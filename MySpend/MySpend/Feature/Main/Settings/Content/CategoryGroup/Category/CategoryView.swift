@@ -148,9 +148,7 @@ struct CategoryView: View {
                                     .transition(.scale.combined(with: .move(edge: .leading)))
                             }
                             
-                            let icon = item.icon.getIconFromSFSymbol
-                            
-                            if let image = icon {
+                            if let image = item.icon.getIconFromSFSymbol {
                                 image
                                     .frame(width: FrameSize.width.iconCategoryList,
                                            height: FrameSize.height.iconCategoryList)

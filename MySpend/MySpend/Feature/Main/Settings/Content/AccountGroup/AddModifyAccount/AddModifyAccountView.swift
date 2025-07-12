@@ -35,6 +35,7 @@ struct AddModifyAccountView: View {
             
             
             // MARK: SEGMENT
+            
             VStack {
                 PickerView(selection: $accountType)
                     .frame(maxWidth: ConstantFrames.iPadMaxWidth)
@@ -43,6 +44,7 @@ struct AddModifyAccountView: View {
             
             
             // MARK: TEXTFIELDS
+            
             VStack {
                 TextFieldModelName(text: $viewModel.model.name,
                                    errorMessage: $viewModel.errorMessage)
@@ -56,9 +58,21 @@ struct AddModifyAccountView: View {
                     viewModel.model.icon = ""
                 }))
             }
+            .padding(.bottom)
+            
+            //MARK: TOOGLE
+            
+            VStack {
+                Toggle(isOn: $viewModel.isDefaultSelected) {
+                    TextPlain("Default account:")
+                }
+                .tint(Color.primaryBottom)
+                .padding(.horizontal)
+            }
             
             
             // MARK: BUTTONS
+            
             VStack {
                 Button(viewModel.isAddModel ? "Add" : "Modify") {
                     process(viewModel.isAddModel ? .add : .modify)

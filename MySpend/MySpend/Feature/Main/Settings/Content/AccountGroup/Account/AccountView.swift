@@ -44,6 +44,7 @@ struct AccountView: View {
         }
         .onAppear {
             viewModel.activateObservers()
+            viewModel.fetchDefaultModelSelected()
         }
         .onDisappear {
             viewModel.deactivateObservers()
@@ -134,78 +135,84 @@ struct AccountView: View {
                 NoContentToAddView(rotationDegress: ConstantAnimations.rotationArrowBottomTrailing)
             } else {
                 ListContainer {
-                    ForEach(modelsFiltered) { item in
-                        HStack {
-                            if viewModel.isEditing {
-                                Image(systemName: viewModel.selectedModels.contains(item) ? ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: FrameSize.width.selectIconInsideTextField,
-                                           height: FrameSize.height.selectIconInsideTextField)
-                                    .foregroundStyle(Color.alert)
-                                    .transition(.scale.combined(with: .move(edge: .leading)))
-                            }
-                            
-                            let icon = item.icon.getIconFromSFSymbol
-                            
-                            if let image = icon {
-                                image
-                                    .frame(width: FrameSize.width.iconCategoryList,
-                                           height: FrameSize.height.iconCategoryList)
-                            }
-                            
-                            Button(item.name) {
+                    SectionContainer("Default account", isInsideList: true) {
+                        rowView(viewModel.defaultModelSelected)
+                    }
+                    
+                    SectionContainer("Available accounts", isInsideList: true) {
+                        ForEach(modelsFiltered) { item in
+                            HStack {
                                 if viewModel.isEditing {
-                                    if viewModel.selectedModels.contains(item) {
-                                        viewModel.selectedModels.remove(item)
+                                    Image(systemName: viewModel.selectedModels.contains(item) ? ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: FrameSize.width.selectIconInsideTextField,
+                                               height: FrameSize.height.selectIconInsideTextField)
+                                        .foregroundStyle(Color.alert)
+                                        .transition(.scale.combined(with: .move(edge: .leading)))
+                                }
+                                
+                                let icon = item.icon.getIconFromSFSymbol
+                                
+                                if let image = icon {
+                                    image
+                                        .frame(width: FrameSize.width.iconCategoryList,
+                                               height: FrameSize.height.iconCategoryList)
+                                }
+                                
+                                Button(item.name) {
+                                    if viewModel.isEditing {
+                                        if viewModel.selectedModels.contains(item) {
+                                            viewModel.selectedModels.remove(item)
+                                        } else {
+                                            viewModel.selectedModels.insert(item)
+                                        }
                                     } else {
-                                        viewModel.selectedModels.insert(item)
+                                        selectedModel = item
+                                        viewModel.showModifyItemModal = true
                                     }
-                                } else {
+                                }
+                                
+                                Spacer()
+                                
+                                Image.chevronRight
+                            }
+                            .listRowBackground(Color.listRowBackground) //Background for each row.
+                            .swipeActions(edge: .trailing) {
+                                Button {
+                                    selectedModel = item
+                                    viewModel.showAlertDelete = true
+                                } label: {
+                                    Label.delete
+                                }
+                                .tint(Color.alert)
+                                
+                                Button {
                                     selectedModel = item
                                     viewModel.showModifyItemModal = true
+                                } label: {
+                                    Label.edit
                                 }
+                                .tint(Color.warning)
                             }
                             
-                            Spacer()
+                            // MARK: DELETE ITEMS SINGLE
                             
-                            Image.chevronRight
-                        }
-                        .listRowBackground(Color.listRowBackground) //Background for each row.
-                        .swipeActions(edge: .trailing) {
-                            Button {
-                                selectedModel = item
-                                viewModel.showAlertDelete = true
-                            } label: {
-                                Label.delete
+                            .alert("Delete account", isPresented: $viewModel.showAlertDelete) {
+                                Button("Delete", role: .destructive) { delete() }
+                                Button("Cancel", role: .cancel) { }
+                            } message: {
+                                Text("Want to delete this account? \n This action cannot be undone.")
                             }
-                            .tint(Color.alert)
                             
-                            Button {
-                                selectedModel = item
-                                viewModel.showModifyItemModal = true
-                            } label: {
-                                Label.edit
+                            // MARK: DELETE ITEMS MULTIPLE
+                            
+                            .alert("Delete accounts", isPresented: $viewModel.showAlertDeleteMultiple) {
+                                Button("Delete", role: .destructive) { deleteMltipleItems() }
+                                Button("Cancel", role: .cancel) { }
+                            } message: {
+                                Text("Want to delete these accounts? \n This action cannot be undone.")
                             }
-                            .tint(Color.warning)
-                        }
-                        
-                        // MARK: DELETE ITEMS SINGLE
-                        
-                        .alert("Delete account", isPresented: $viewModel.showAlertDelete) {
-                            Button("Delete", role: .destructive) { delete() }
-                            Button("Cancel", role: .cancel) { }
-                        } message: {
-                            Text("Want to delete this account? \n This action cannot be undone.")
-                        }
-                        
-                        // MARK: DELETE ITEMS MULTIPLE
-                        
-                        .alert("Delete accounts", isPresented: $viewModel.showAlertDeleteMultiple) {
-                            Button("Delete", role: .destructive) { deleteMltipleItems() }
-                            Button("Cancel", role: .cancel) { }
-                        } message: {
-                            Text("Want to delete these accounts? \n This action cannot be undone.")
                         }
                     }
                 }
@@ -213,6 +220,22 @@ struct AccountView: View {
                 .animation(.default, value: viewModel.isEditing)
                 .animation(.default, value: viewModel.sortModelsBy)
             }
+        }
+    }
+    
+    func rowView(_ model: AccountModel?) -> some View {
+        HStack {
+            if let image = model?.icon.getIconFromSFSymbol {
+                image
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: FrameSize.height.selectIconInsideTextField,
+                           height: FrameSize.width.selectIconInsideTextField)
+            }
+            
+            TextPlain(model?.name ?? "No default account selected", color: Color.disabledForeground)
+            
+            Spacer()
         }
     }
     

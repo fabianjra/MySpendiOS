@@ -10,6 +10,7 @@ import Foundation
 final class AddModifyAccountViewModel: BaseViewModel {
     
     @Published var model: AccountModel
+    @Published var isDefaultSelected = false
     
     @Published var showIconsModal = false
     @Published var showAlert = false
@@ -21,6 +22,10 @@ final class AddModifyAccountViewModel: BaseViewModel {
         if let modelLoaded = model {
             self.model = modelLoaded
             self.isAddModel = false
+            
+            if UserDefaultsManager.defaultAccountID == modelLoaded.id.uuidString {
+                self.isDefaultSelected = true
+            }
         } else {
             self.model = AccountModel()
         }
@@ -38,6 +43,11 @@ final class AddModifyAccountViewModel: BaseViewModel {
         
         do {
             try AccountManager(viewContext: viewContext).create(modelMutated)
+            
+            if isDefaultSelected {
+                UserDefaultsManager.defaultAccountID = modelMutated.id.uuidString
+            }
+            
             return ResponseModel(.successful)
         } catch {
             Logger.exception(error, type: .CoreData)
@@ -66,6 +76,15 @@ final class AddModifyAccountViewModel: BaseViewModel {
             
             modelMutated.type = type
             try AccountManager(viewContext: viewContext).update(modelMutated)
+            
+            if isDefaultSelected {
+                UserDefaultsManager.defaultAccountID = modelMutated.id.uuidString
+            } else {
+                if UserDefaultsManager.defaultAccountID == modelMutated.id.uuidString {
+                    UserDefaultsManager.defaultAccountID = ""
+                }
+            }
+            
             return ResponseModel(.successful)
         } catch {
             Logger.exception(error, type: .CoreData)

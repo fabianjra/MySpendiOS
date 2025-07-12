@@ -26,6 +26,9 @@ class AccountViewModel: BaseViewModel {
     @Published var showAlertDelete = false
     @Published var showAlertDeleteMultiple = false
     
+    // MARK: DATA ON SCREEN
+    @Published var defaultModelSelected: AccountModel?
+    
     /// Llamar en `onAppear`
     func activateObservers() {
         startObservingContextChanges { [weak self] in
@@ -45,6 +48,14 @@ class AccountViewModel: BaseViewModel {
             models = try AccountManager(viewContext: viewContext).fetchAll()
         } catch {
             Logger.exception(error, type: .CoreData)
+        }
+    }
+    
+    func fetchDefaultModelSelected() {
+        let defaultID = UserDefaultsManager.defaultAccountID
+        
+        if defaultID.isEmptyOrWhitespace == false {
+            defaultModelSelected = models.first { $0.id.uuidString == defaultID }
         }
     }
     

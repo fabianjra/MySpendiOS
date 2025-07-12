@@ -136,14 +136,15 @@ struct TransactionHistoryView: View {
                                     .transition(.scale.combined(with: .move(edge: .leading)))
                             }
                             
-                            Image(systemName: item.category.icon)
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: FrameSize.width.iconInsideTextField,
-                                       height: FrameSize.height.iconInsideTextField)
-                                .foregroundStyle(Color.textPrimaryForeground)
-                            
-                            
+                            if let image = item.category.icon.getIconFromSFSymbol {
+                                image
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: FrameSize.width.iconInsideTextField,
+                                           height: FrameSize.height.iconInsideTextField)
+                                    .foregroundStyle(Color.textPrimaryForeground)
+                            }
+
                             Button("") {
                                 if viewModel.isEditing {
                                     if viewModel.selectedTransactions.contains(item) {
