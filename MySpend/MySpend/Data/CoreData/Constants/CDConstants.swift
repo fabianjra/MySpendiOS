@@ -12,10 +12,18 @@ struct CDConstants {
     static let mainAccountName: String = "Main account"
     
     // MARK: PREDICATES
-    struct Predicates {
-        static let findItemById: String = "id == %@"
-        static let findItemByAccountId: String = "account.id == %@"
-        static let findItemByCategoryId: String = "category.id == %@"
-        static let isActive: String = "isActive == %@"
+    struct Predicate {
+        
+        // General:
+        static let byID: String = "id == %@"
+        static let byIsActive: String = "isActive == %@"
+        
+        // Account:
+        static let byAccountId: String = "account.id == %@"
+        static let byAccountType: String = "account.type == %@"
+        
+        // Category:
+        static let byCategoryId: String = "category.id == %@"
+        static let byCategoryType: String = "category.type == %@"
     }
 }

@@ -54,13 +54,13 @@ final class AddModifyCategoryViewModel: BaseViewModel {
         var modelMutated = model
        
         do {
-            // Si el nuevo tipo de categoria es difente al actual, debe validar que no tega transacciones asociadas
-            // a una cuenta asociada a un tipo incompatible del nuevo tipo de categoria seleccioanda.
+            // Si el nuevo tipo de categoria es diferente al actual, debe validar que no tega transacciones asociadas
+            // a una cuenta de un tipo incompatible con el nuevo tipo de categoria seleccioando.
+            // Ver mas en la documentacion del metodo "fetchIncompatibleTypeCount"
             if modelMutated.type != type {
-                
                 let incompatibleTransactionsCount = try TransactionManager(viewContext: viewContext).fetchIncompatibleTypeCount(currentCategoryID: modelMutated.id.uuidString, newCategoryType: type)
                 
-                if incompatibleTransactionsCount > 0 {
+                if incompatibleTransactionsCount > .zero {
                     return ResponseModel(.error, Errors.cannotUpdateCategoryDueToAccountType(incompatibleTransactionsCount.description).localizedDescription)
                 }
             }

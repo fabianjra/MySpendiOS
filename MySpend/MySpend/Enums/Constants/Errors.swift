@@ -67,7 +67,7 @@ extension Errors: LocalizedError {
         case .notFoundAccount: return NSLocalizedString( "Accounts not found. Try adding a new one in settings.", comment: "")
         case .accountTypeNotMatchCategoryType(let accountName, let accountType): return NSLocalizedString("The account \"\(accountName)\" accepts only \(accountType) transactions.",
                                                                                          comment: "Shown when the user tries to assign a category whose type doesn’t match the account’s configured type (expense / income).")
-        case .cannotUpdateAccountWithTransactions(let count): return NSLocalizedString("Cannot update this account, it has \(count) transactions.",
+        case .cannotUpdateAccountWithTransactions(let count): return NSLocalizedString("Cannot update this account, because it has \(count) transactions associated to an incompatible category type.",
                                                                                        comment: "Shown when the user tries to update an account with transactions associated to it.")
         case .cannotUpdateCategoryDueToAccountType(let count): return NSLocalizedString("Cannot update this category, because it has \(count) transactions associated to an incompatible account type.", comment: "")
             

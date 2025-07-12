@@ -24,7 +24,7 @@ struct AccountManager {
     
     // MARK: READ
 
-    func fetchAll(predicateFormat: String = CDConstants.Predicates.isActive,
+    func fetchAll(predicateFormat: String = CDConstants.Predicate.byIsActive,
                   predicateArgs: [Any] = [true],
                   sortedBy sortDescriptors: [NSSortDescriptor] = [NSSortDescriptor(keyPath: \Account.dateCreated, ascending: true)])
     throws -> [AccountModel] {

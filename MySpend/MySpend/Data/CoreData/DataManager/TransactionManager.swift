@@ -24,7 +24,7 @@ struct TransactionManager {
     
     // MARK: READ
     
-    func fetchAll(predicateFormat: String = CDConstants.Predicates.isActive,
+    func fetchAll(predicateFormat: String = CDConstants.Predicate.byIsActive,
                   predicateArgs: [Any] = [true],
                   sortedBy sortDescriptors: [NSSortDescriptor] = [NSSortDescriptor(keyPath: \Transaction.dateTransaction, ascending: true)])
     throws -> [TransactionModel] {
@@ -124,13 +124,50 @@ struct TransactionManager {
     
     // MARK: SHARED
     
-    func fetchAllCount(byAccountID id: String) throws -> Int {
-        let request: NSFetchRequest<Transaction> = Transaction.fetchRequest()
-        request.predicate = NSPredicate(format: CDConstants.Predicates.findItemByAccountId, id)
-        request.resultType = .countResultType // Faster call to CoreData
+    /**
+     Counts the transactions that would become **invalid** after changing an account to `newAccountType`.
+    
+     A transaction is “invalid” when:
+       1. It belongs to the account whose primary-key is `accountID`, **and**
+       2. Its category type is *not* accepted by the `newAccountType`.
+    
+     Rules:
+     * `.general` accepts both category types → always returns 0.
+     * `.expenses` rejects categories of type `.income`.
+     * `.incomes`  rejects categories of type `.expense`.
+    
+     - Parameters:
+       - accountID: UUID string of the account being edited.
+       - newAccountType: The prospective `AccountType`.
+     
+     - Returns: Number of incompatible transactions.
+     - Throws: Any error thrown by `viewContext.count(for:)`.
+     */
+    func fetchIncompatibleTypeCount(currentAccountID id: String, newAccountType: AccountType) throws -> Int {
         
-        let count = try viewContext.count(for: request)
-        return count
+        // 1.  General accepts everything -> nothing to validate
+        guard newAccountType != .general else { return .zero }
+        
+        // 2.  Predicate for the account
+        let accountPredicate = NSPredicate(format: CDConstants.Predicate.byAccountId, id)
+        
+        // 3.  Predicate for the *disallowed* category type
+        let disallowedPredicate: NSPredicate
+        
+        switch newAccountType {
+        case .expenses: disallowedPredicate = NSPredicate(format: CDConstants.Predicate.byCategoryType, CategoryType.income.rawValue)
+            
+        case .incomes: disallowedPredicate = NSPredicate(format: CDConstants.Predicate.byCategoryType, CategoryType.expense.rawValue)
+            
+        case .general: return .zero
+        }
+        
+        // 4.  Combined query (COUNT only)
+        let request: NSFetchRequest<Transaction> = Transaction.fetchRequest()
+        request.predicate   = NSCompoundPredicate(andPredicateWithSubpredicates: [accountPredicate, disallowedPredicate])
+        request.resultType  = .countResultType // fastest
+        
+        return try viewContext.count(for: request)
     }
     
     /**
@@ -147,37 +184,39 @@ struct TransactionManager {
      4. Executes a **count-only** fetch (`resultType = .countResultType`) for maximum performance.
     
      Use this method when the user attempts to change a category from *expense → income* (or the reverse) and you need to block the operation if any existing transactions would violate the account-type rules.
-     Category type *expense* is only compatible with account type *expenses* or *general*.
-     Category type *income* is only compatible with account type *incomes* or *general*.
+     * Category type *expense* is only compatible with account type *expenses* or *general*.
+     * Category type *income* is only compatible with account type *incomes* or *general*.
     
      - Parameters:
        - currentCategoryID: The UUID string of the category being modified.
        - newCategoryType:   The target `CategoryType` selected by the user.
     
      - Returns: The number of incompatible transactions found.
+     - Throws: Any error thrown by `viewContext.count(for:)`.
      */
     func fetchIncompatibleTypeCount(currentCategoryID id: String, newCategoryType: CategoryType) throws -> Int {
-        let request: NSFetchRequest<Transaction> = Transaction.fetchRequest()
         
         // Condicion 1: Obtendra las transacciones que usen la categoria actual
-        let categoryPredicate = NSPredicate(format: "category.id == %@", id)
+        let categoryPredicate = NSPredicate(format: CDConstants.Predicate.byCategoryId, id)
 
         // Condicion 2: Verifica si el Account al que pertenece la Transaction NO es compatible con el nuevo tipo de Category
         
         // Condicion 2: Obtendra las transacciones que no sean compatibles con el nuevo tipo de categoria seleccionado,
         // asi se puede saber si existen transacciones que no deberian poder actualizarse por perteneceer a una categoria incompatible con el tipo de cuenta.
         let incompatiblePredicate: NSPredicate
+        
         switch newCategoryType {
         case .expense:
             // No se permiten cuentas tipo incomes
-            incompatiblePredicate = NSPredicate(format: "account.type == %@", AccountType.incomes.rawValue)
+            incompatiblePredicate = NSPredicate(format: CDConstants.Predicate.byAccountType, AccountType.incomes.rawValue)
             
         case .income:
             // No se permiten cuentas tipo expenses
-            incompatiblePredicate = NSPredicate(format: "account.type == %@", AccountType.expenses.rawValue)
+            incompatiblePredicate = NSPredicate(format: CDConstants.Predicate.byAccountType, AccountType.expenses.rawValue)
         }
 
         // Combinar ambos predicados
+        let request: NSFetchRequest<Transaction> = Transaction.fetchRequest()
         request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, incompatiblePredicate])
         request.resultType = .countResultType // Faster call to CoreData
         

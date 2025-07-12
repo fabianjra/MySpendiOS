@@ -58,7 +58,7 @@ struct CategoryManager {
      - Returns: An array of `CategoryModel`.
      - Throws: Propagates any Core Data fetch errors.
      */
-    func fetchAll(predicateFormat: String = CDConstants.Predicates.isActive,
+    func fetchAll(predicateFormat: String = CDConstants.Predicate.byIsActive,
                             predicateArgs: [Any] = [true],
                             sortedBy sortDescriptors: [NSSortDescriptor] = [NSSortDescriptor(keyPath: \Category.name, ascending: true)]) throws -> [CategoryModel] {
 

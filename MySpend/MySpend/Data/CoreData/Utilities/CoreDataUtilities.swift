@@ -41,7 +41,7 @@ struct CoreDataUtilities {
      */
     static func createFetchRequest<T: NSManagedObject>(ByID id: String, entity: T.Type) -> NSFetchRequest<T> {
         let request = NSFetchRequest<T>(entityName: String(describing: entity))
-        request.predicate  = NSPredicate(format: CDConstants.Predicates.findItemById, id)
+        request.predicate  = NSPredicate(format: CDConstants.Predicate.byID, id)
         request.fetchLimit = 1
         return request
     }

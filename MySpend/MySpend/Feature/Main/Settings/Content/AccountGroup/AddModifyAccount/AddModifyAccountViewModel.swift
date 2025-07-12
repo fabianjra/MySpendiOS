@@ -53,15 +53,14 @@ final class AddModifyAccountViewModel: BaseViewModel {
         var modelMutated = model
         
         do {
-            // Si el nuevo tipo de transaccion es difente al actual, debe validar que no tega transacciones asociada,
-            // a menos de que la nueva sea general, ya que esa permite expenses/incomes.
-            if modelMutated.type != type && type != .general {
-
-                //TOD: Podria validarse si las transacciones son todas del mismo tipo al que se quiere modificar la cuenta para que se permita.
-                let transactionsForAccountCount = try TransactionManager(viewContext: viewContext).fetchAllCount(byAccountID: modelMutated.id.uuidString)
+            // Si el nuevo tipo de account es difente al actual, debe validar que no tega transacciones asociadas
+            // a una categoria de un tipo incompatible del nuevo tipo de categoria seleccioanda.
+            // Ver mas en la documentacion del metodo "fetchIncompatibleTypeCount"
+            if modelMutated.type != type {
+                let incompatibleTransactionsCount = try TransactionManager(viewContext: viewContext).fetchIncompatibleTypeCount(currentAccountID: modelMutated.id.uuidString, newAccountType: type)
                 
-                if transactionsForAccountCount > 0 {
-                    return ResponseModel(.error, Errors.cannotUpdateAccountWithTransactions(transactionsForAccountCount.description).localizedDescription)
+                if incompatibleTransactionsCount > .zero {
+                    return ResponseModel(.error, Errors.cannotUpdateAccountWithTransactions(incompatibleTransactionsCount.description).localizedDescription)
                 }
             }
             
