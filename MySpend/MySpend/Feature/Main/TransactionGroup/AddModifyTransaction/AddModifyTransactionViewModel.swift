@@ -76,7 +76,7 @@ class AddModifyTransactionViewModel: BaseViewModel {
             return ResponseModel(.error, Errors.emptySpaces.localizedDescription)
         }
         
-        let response = validateAccountType()
+        let response = validateAccountCategoryMatch()
         if response.status.isError {
             return response
         }
@@ -98,7 +98,7 @@ class AddModifyTransactionViewModel: BaseViewModel {
             return ResponseModel(.error, Errors.emptySpaces.localizedDescription)
         }
         
-        let response = validateAccountType()
+        let response = validateAccountCategoryMatch()
         if response.status.isError {
             return response
         }
@@ -125,16 +125,19 @@ class AddModifyTransactionViewModel: BaseViewModel {
         }
     }
     
-    private func validateAccountType() -> ResponseModel {
-        let accountType = model.account.type
+    private func validateAccountCategoryMatch() -> ResponseModel {
+        let account = model.account
         let categoryType = model.category.type
         
-        if accountType != .general {
-            if accountType == .expenses && categoryType == .income {
-                return ResponseModel(.error, Errors.accountTypeNotMatchCategoryType(model.account.name, accountType.rawValue).localizedDescription)
-            } else if accountType == .incomes && categoryType == .expense {
-                return ResponseModel(.error, Errors.accountTypeNotMatchCategoryType(model.account.name, accountType.rawValue).localizedDescription)
-            }
+        // Verifica que se este intentando guardar un tipo de cuenta sin restricciones por tipo de categoria
+        guard let allowed = account.type.allowedCategory else {
+            return ResponseModel(.successful)
+        }
+        
+        // Si el tipo de categoria es el permitido para el tipo de cuenta seleccionado, continua sin error.
+        // Si no son el mismo, es porque no es un tipo de categoria permitido para el tipo de cuenta seleccionado.
+        guard categoryType == allowed else {
+            return ResponseModel(.error, Errors.accountTypeNotMatchCategoryType(account.name, account.type.rawValue).localizedDescription)
         }
         
         return ResponseModel(.successful)
