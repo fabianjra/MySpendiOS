@@ -58,24 +58,33 @@ extension UIApplication: UIGestureRecognizerDelegate {
      
      - Version: 1.0
      
-     - Date: Aug 2023
+     - Date: Jul 2025
      */
     func addTapGestureRecognizer() {
         guard let window = UtilsUI.getFirstWindow else { return }
         
-        let tapGesture = UITapGestureRecognizer(target: window, action: #selector(UIView.endEditing))
-        tapGesture.requiresExclusiveTouchType = false
-        tapGesture.cancelsTouchesInView = false
-        tapGesture.delegate = self
-        
-        window.addGestureRecognizer(tapGesture)
+        let tap = UITapGestureRecognizer(target: window,
+                                         action: #selector(UIView.endEditing))
+        tap.requiresExclusiveTouchType = false
+        tap.cancelsTouchesInView       = false
+        tap.delegate                   = self // delegate
+        window.addGestureRecognizer(tap)
     }
     
-    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    // Sólo dimite el teclado cuando se toca "fuera" de un control interactivo
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         
-        // set to `false` if you don't want to detect tap during other gestures
-        return false
-        
-        //NOTE: Turned to false, becasue the keyboard show and hide, when change from a textfield to other textfield.
+        switch touch.view {
+            
+        // Lista de controles que no deben cerrar el teclado al presionarse:
+        case is UISegmentedControl,
+            is UISwitch,
+            //is UIButton, // Si debe cerrarse porque al presionar el Modificar, agregar, etc. Se va a mostra abajo un mensaje de error en caso de que exista
+            is UIControl:
+            return false // ❌ no cerrar teclado
+            
+        default:
+            return true // ✅ dimitir teclado
+        }
     }
 }

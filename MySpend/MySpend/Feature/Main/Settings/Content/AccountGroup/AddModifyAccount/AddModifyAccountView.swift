@@ -101,6 +101,9 @@ struct AddModifyAccountView: View {
         //.sheet(isPresented: $viewModel.showIconsModal) {
             //IconListModalView(model: $viewModel.model, showModal: $viewModel.showIconsModal)
         //}
+        .onAppear {
+            focusedField = .name
+        }
         .disabled(viewModel.isLoading || viewModel.isLoadingSecondary)
     }
     

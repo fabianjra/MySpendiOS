@@ -139,7 +139,13 @@ struct AddModifyTransactionView: View {
                     
                     Spacer()
                 }
-                .onAppear { viewModel.fetchAccounts() }
+                .onAppear {
+                    viewModel.fetchAccounts()
+                    
+                    if viewModel.isNewModel {
+                        focusedField = .amount
+                    }
+                }
                 .onChange(of: focusedField) {
                     if focusedField == .notes {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
