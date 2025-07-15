@@ -54,7 +54,7 @@ struct CategoryModel: Identifiable, Equatable, Hashable {
         icon = entity.icon ?? ""
         name = entity.name ?? ""
         type = CategoryModel.getCategoryType(from: entity.type)
-        usageCount = Int(entity.usageCount)
+        usageCount = entity.usageCount.toInt
     }
     
     static private func getCategoryType(from rawType: String?) -> CategoryType {

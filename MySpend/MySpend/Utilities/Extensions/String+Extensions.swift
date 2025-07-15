@@ -231,4 +231,19 @@ extension String {
         // 3. Sí es válido → se crea el `Image`
         return Image(systemName: self)
     }
+    
+    /**
+     Converts the receiver to `Int`, returning **0** when the string is empty, contains whitespace only, or cannot be parsed.
+     
+     Example:
+     ```swift
+     "42".asInt        // → 42
+     "abc".asInt       // → 0
+     "".asInt          // → 0
+     "   7  ".asInt    // → 7
+     ```
+     */
+    var toInt: Int {
+        Int(self.trimmingCharacters(in: .whitespacesAndNewlines)) ?? 0
+    }
 }

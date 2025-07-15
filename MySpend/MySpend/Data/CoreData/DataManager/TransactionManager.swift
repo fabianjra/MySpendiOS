@@ -30,7 +30,7 @@ struct TransactionManager {
     throws -> [TransactionModel] {
         
         let request: NSFetchRequest<Transaction> = Transaction.fetchRequest()
-        request.sortDescriptors = sortDescriptors
+        //request.sortDescriptors = sortDescriptors // El ordenamiento se hace a la hora de mostrar los datos
         request.predicate = NSPredicate(format: predicateFormat, argumentArray: predicateArgs)
         
         let coreDataEntities = try viewContext.fetch(request)
@@ -51,14 +51,14 @@ struct TransactionManager {
             let entity = Transaction(context: viewContext)
             
             // Shared attributes (Abstract class):
-            entity.dateCreated = model.dateCreated
-            entity.dateModified = model.dateModified
+            entity.dateCreated = .now
+            entity.dateModified = .now
             entity.id = model.id
             entity.isActive = model.isActive
             
             // Entity-specific Attributes
             entity.amount = UtilsCurrency.makeDecimal(model.amount)
-            entity.dateTransaction = model.dateTransaction
+            entity.dateTransaction = .now
             entity.notes = model.notes
             
             // NOTA:
@@ -68,25 +68,32 @@ struct TransactionManager {
             entity.category = try CategoryManager.resolve(from: model.category, viewContextArg: viewContext)
             entity.account = try AccountManager.resolve(from: model.account, viewContextArg: viewContext)
             
+            // Aumenta el valor de la cantidad de usos para la categoria:
+            entity.category?.dateLastUsed = .now
+            entity.category?.usageCount = (entity.category?.usageCount ?? .zero) + 1
+            
             try viewContext.save()
         }
     }
     
     func update(_ model: TransactionModel) throws {
         try viewContext.performAndWait {
-            let item = try fetch(model)
+            let entity = try fetch(model)
             
             // Shared attributes (Abstract class):
-            item.dateModified = .now
-            item.isActive = model.isActive
+            entity.dateModified = .now
+            entity.isActive = model.isActive
             
             // Entity-specific Attributes
-            item.amount = UtilsCurrency.makeDecimal(model.amount)
-            item.dateTransaction = model.dateTransaction
-            item.notes = model.notes
-            item.category = try CategoryManager.resolve(from: model.category, viewContextArg: viewContext)
-            item.account = try AccountManager.resolve(from: model.account, viewContextArg: viewContext)
+            entity.amount = UtilsCurrency.makeDecimal(model.amount)
+            entity.dateTransaction = model.dateTransaction
+            entity.notes = model.notes
+            entity.category = try CategoryManager.resolve(from: model.category, viewContextArg: viewContext)
+            entity.account = try AccountManager.resolve(from: model.account, viewContextArg: viewContext)
 
+            entity.category?.dateLastUsed = .now
+            entity.category?.usageCount = (entity.category?.usageCount ?? .zero) + 1
+            
             try viewContext.save()
         }
     }
@@ -96,9 +103,9 @@ struct TransactionManager {
     
     func delete(_ model: TransactionModel) throws {
         try viewContext.performAndWait {
-            let item = try fetch(model)
+            let entity = try fetch(model)
             
-            viewContext.delete(item)
+            viewContext.delete(entity)
             try viewContext.save()
         }
     }
@@ -112,9 +119,9 @@ struct TransactionManager {
     
     private func fetch(_ model: TransactionModel) throws -> Transaction {
         let fetchRequest = CoreDataUtilities.createFetchRequest(ByID: model.id.uuidString, entity: Transaction.self)
-        let itemCoreData = try viewContext.fetch(fetchRequest)
+        let entity = try viewContext.fetch(fetchRequest)
         
-        guard let item = itemCoreData.first else {
+        guard let item = entity.first else {
             throw CDError.notFoundFetch(entity: Transaction.description())
         }
         

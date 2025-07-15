@@ -51,8 +51,8 @@ struct AccountManager {
             let entity = Account(context: viewContext)
             
             // Shared attributes (Abstract class):
-            entity.dateCreated = model.dateCreated
-            entity.dateModified = model.dateModified
+            entity.dateCreated = .now
+            entity.dateModified = .now
             entity.id = model.id
             entity.isActive = model.isActive
             
@@ -63,7 +63,6 @@ struct AccountManager {
             entity.notes = model.notes
             entity.type = model.type.rawValue
             entity.userId = model.userId
-            //entity.transactions = [] // Se crea sin transacciones
             
             try viewContext.save()
         }

@@ -96,17 +96,17 @@ struct CategoryManager {
             let entity = Category(context: viewContext)
             
             // Shared attributes (Abstract class):
-            entity.dateCreated = model.dateCreated
-            entity.dateModified = model.dateModified
+            entity.dateCreated = .now
+            entity.dateModified = .now
             entity.id = model.id
             entity.isActive = model.isActive
             
             // Entity-specific Attributes
-            entity.dateLastUsed = model.dateLastUsed
+            entity.dateLastUsed = .now
             entity.icon = model.icon
             entity.name = model.name
             entity.type = model.type.rawValue
-            entity.usageCount = Int64(model.usageCount)
+            entity.usageCount = .zero
             
             try viewContext.save()
         }
@@ -122,15 +122,15 @@ struct CategoryManager {
      */
     func update(_ model: CategoryModel) throws {
         try viewContext.performAndWait {
-            if let item = try CategoryManager.fetch(model, viewContextArg: viewContext) {
+            if let entity = try CategoryManager.fetch(model, viewContextArg: viewContext) {
                 // Shared attributes (Abstract class):
-                item.dateModified = .now
-                item.isActive = model.isActive
+                entity.dateModified = .now
+                entity.isActive = model.isActive
                 
                 // Entity-specific Attributes
-                item.icon = model.icon
-                item.name = model.name
-                item.type = model.type.rawValue
+                entity.icon = model.icon
+                entity.name = model.name
+                entity.type = model.type.rawValue
                 
                 try viewContext.save()
             } else {
@@ -144,8 +144,8 @@ struct CategoryManager {
     
     func delete(_ model: CategoryModel) throws {
         try viewContext.performAndWait {
-            if let item = try CategoryManager.fetch(model, viewContextArg: viewContext) {
-                viewContext.delete(item)
+            if let entity = try CategoryManager.fetch(model, viewContextArg: viewContext) {
+                viewContext.delete(entity)
                 try viewContext.save()
             } else {
                 throw CDError.notFoundDelete(entity: Category.description())
@@ -181,9 +181,9 @@ struct CategoryManager {
      */
     static func fetch(_ model: CategoryModel, viewContextArg: NSManagedObjectContext) throws -> Category? {
         let fetchRequest = CoreDataUtilities.createFetchRequest(ByID: model.id.uuidString, entity: Category.self)
-        let itemCoreData = try viewContextArg.fetch(fetchRequest)
+        let entity = try viewContextArg.fetch(fetchRequest)
         
-        guard let item = itemCoreData.first else {
+        guard let item = entity.first else {
             Logger.custom(CDError.notFoundFetch(entity: Category.description()).localizedDescription)
             return nil
         }
