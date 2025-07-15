@@ -30,7 +30,7 @@ struct TransactionManager {
     throws -> [TransactionModel] {
         
         let request: NSFetchRequest<Transaction> = Transaction.fetchRequest()
-        //request.sortDescriptors = sortDescriptors // El ordenamiento se hace a la hora de mostrar los datos
+        request.sortDescriptors = sortDescriptors // El ordenamiento se hace a la hora de mostrar los datos
         request.predicate = NSPredicate(format: predicateFormat, argumentArray: predicateArgs)
         
         let coreDataEntities = try viewContext.fetch(request)
@@ -58,7 +58,7 @@ struct TransactionManager {
             
             // Entity-specific Attributes
             entity.amount = UtilsCurrency.makeDecimal(model.amount)
-            entity.dateTransaction = .now
+            entity.dateTransaction = model.dateTransaction.dateWithCurrentTime
             entity.notes = model.notes
             
             // NOTA:
@@ -86,7 +86,7 @@ struct TransactionManager {
             
             // Entity-specific Attributes
             entity.amount = UtilsCurrency.makeDecimal(model.amount)
-            entity.dateTransaction = model.dateTransaction
+            entity.dateTransaction = model.dateTransaction.dateWithCurrentTime
             entity.notes = model.notes
             entity.category = try CategoryManager.resolve(from: model.category, viewContextArg: viewContext)
             entity.account = try AccountManager.resolve(from: model.account, viewContextArg: viewContext)

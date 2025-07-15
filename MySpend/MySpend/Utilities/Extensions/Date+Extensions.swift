@@ -43,4 +43,37 @@ extension Date {
 
         return dateComponents1 == dateComponents2
     }
+    
+    /**
+     Returns `baseDate` keeping its Y-M-D but replacing the time with the current hour/minute/second.
+     If the resulting value would roll over to the next day (e.g. current time is already past 23:59:59 of that day),
+     it is clamped to 23:59:59 of `baseDate`.
+     */
+    public var dateWithCurrentTime: Date {
+        let calendar = Calendar.current
+        
+        // Preserve day/month/year.
+        let ymd = calendar.dateComponents([.year, .month, .day], from: self)
+        
+        // Use the live clock for time.
+        let hms = calendar.dateComponents([.hour, .minute, .second, .nanosecond], from: .now)
+        
+        var comps = DateComponents()
+        comps.year        = ymd.year
+        comps.month       = ymd.month
+        comps.day         = ymd.day
+        comps.hour        = hms.hour
+        comps.minute      = hms.minute
+        comps.second      = hms.second
+        comps.nanosecond  = hms.nanosecond
+        
+        // Candidate value.
+        let candidate = calendar.date(from: comps) ?? self
+        
+        // 23 : 59 : 59 of the same day.
+        let endOfDay = calendar.date(bySettingHour: 23, minute: 59, second: 59, of: self) ?? self
+        
+        // Si ya se pasó al siguiente dia porque es mayor a media noche, entonces devuelve los ultimos minutos y segundos del dia actual.
+        return candidate > endOfDay ? endOfDay : candidate
+    }
 }
