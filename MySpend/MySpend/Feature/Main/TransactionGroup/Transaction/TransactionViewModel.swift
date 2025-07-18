@@ -31,7 +31,7 @@ class TransactionViewModel: BaseViewModel {
     }
     
     private func fetchAccountCount() throws {
-        let count = try AccountManager(viewContext: viewContext).fetchAllCount(viewContext)
+        let count = try AccountManager(viewContext: viewContext).fetchAllCount()
         
         if count > 1 {
             isMutipleAccounts = true

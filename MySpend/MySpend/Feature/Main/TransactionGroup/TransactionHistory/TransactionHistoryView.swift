@@ -166,7 +166,13 @@ struct TransactionHistoryView: View {
                                     TextPlain(item.notes)
                                 }
                                 
-                                TextPlain(item.dateTransaction.toStringShortLocale, size: .small)
+                                HStack {
+                                    if isMutipleAccounts {
+                                        TextPlain("\(item.account.name):", size: .small)
+                                    }
+                                    
+                                    TextPlain(item.dateTransaction.toStringShortLocale, size: .small)
+                                }
                             }
                             
                             Spacer()
@@ -271,15 +277,16 @@ struct TransactionHistoryView: View {
 
 #Preview("Normal es_CR") {
     
-    @Previewable @State var transactionLoaded: [TransactionModel] = MockTransactionModel.fetchAll()
+    @Previewable @State var transactionLoaded: [TransactionModel] = MockTransactionModel.fetchAll(type: .normal)
     @Previewable @State var dateTimeInterval = DateTimeInterval.month
     @Previewable @State var selectedDate = Date()
+    @Previewable @State var isMultipleAccounts: Bool = MockAccountModel.fetchAllCount(type: .normal) > 1 ? true : false
     
     VStack {
         TransactionHistoryView(transactionsLoaded: $transactionLoaded,
                                dateTimeInterval: $dateTimeInterval,
                                selectedDate: $selectedDate,
-                               isMutipleAccounts: .constant(true))
+                               isMutipleAccounts: $isMultipleAccounts)
             .environment(\.locale, .init(identifier: "es_CR"))
     }
 }

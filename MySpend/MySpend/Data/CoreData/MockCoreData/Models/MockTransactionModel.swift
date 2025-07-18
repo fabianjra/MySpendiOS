@@ -5,14 +5,24 @@
 //  Created by Fabian Rodriguez on 18/7/25.
 //
 
-import Foundation
-
 @MainActor
 struct MockTransactionModel {
     
-     static func fetchAll() -> [TransactionModel] {
+    static func fetchAll(type: MockDataType) -> [TransactionModel] {
         do {
-            let mockTransactions = try TransactionManager(viewContext: MockCoreDataNormal.preview.container.viewContext).fetchAll()
+            var mockTransactions: [TransactionModel] = []
+            
+            switch type {
+            case .empty:
+                mockTransactions = try TransactionManager(viewContext: MockCoreDataNormal.preview.container.viewContext).fetchAll()
+                
+            case .normal:
+                mockTransactions = try TransactionManager(viewContext: MockCoreDataNormal.preview.container.viewContext).fetchAll()
+                
+            case .saturated:
+                mockTransactions = try TransactionManager(viewContext: MockCoreDataNormal.preview.container.viewContext).fetchAll()
+            }
+            
             return mockTransactions
         } catch {
             return []

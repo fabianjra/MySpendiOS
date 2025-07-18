@@ -126,15 +126,14 @@ struct AccountManager {
      - Throws: Any error thrown by `viewContextArg.fetch(_:)`.
      - Date: Jul 2025
      */
-    func fetchAllCount(_ viewContextArg: NSManagedObjectContext,
-                              predicateFormat: String = CDConstants.Predicate.byIsActive,
-                              predicateArgs: [Any] = [true],) throws -> Int {
-
+    func fetchAllCount(predicateFormat: String = CDConstants.Predicate.byIsActive,
+                       predicateArgs: [Any] = [true],) throws -> Int {
+        
         let request: NSFetchRequest<Account> = Account.fetchRequest()
         request.predicate = NSPredicate(format: predicateFormat, argumentArray: predicateArgs)
         request.resultType  = .countResultType
         
-        return try viewContextArg.count(for: request)
+        return try viewContext.count(for: request)
     }
     
     /**
