@@ -115,6 +115,29 @@ struct AccountManager {
     // MARK: SHARED
     
     /**
+     Fetches the total count of `Account` entities that are stored in CoreData.
+     
+     - Parameters:
+        - viewContextArg: ViewContext used (For preview or default to use in real stored DataBase.
+        - predicateFormat: Predicates usted. isActive -> True by default.
+        - predicateArgs: Value for the predicates.
+     
+     - Returns: Int count of all accounts entities stored.
+     - Throws: Any error thrown by `viewContextArg.fetch(_:)`.
+     - Date: Jul 2025
+     */
+    func fetchAllCount(_ viewContextArg: NSManagedObjectContext,
+                              predicateFormat: String = CDConstants.Predicate.byIsActive,
+                              predicateArgs: [Any] = [true],) throws -> Int {
+
+        let request: NSFetchRequest<Account> = Account.fetchRequest()
+        request.predicate = NSPredicate(format: predicateFormat, argumentArray: predicateArgs)
+        request.resultType  = .countResultType
+        
+        return try viewContextArg.count(for: request)
+    }
+    
+    /**
      Fetches the `Account` entity whose primary key matches `model.id`.
      
      Internally:

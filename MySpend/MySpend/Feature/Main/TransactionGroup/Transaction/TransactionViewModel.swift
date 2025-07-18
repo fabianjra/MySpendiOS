@@ -15,6 +15,8 @@ class TransactionViewModel: BaseViewModel {
     @Published var transactions: [TransactionModel] = []
     @Published var groupedTransactions: UtilsCurrency.groupedTransactions = []
     
+    @Published var isMutipleAccounts: Bool = false
+    
     func refreshUserName() {
         userName = UserDefaultsManager.userName
     }
@@ -28,6 +30,14 @@ class TransactionViewModel: BaseViewModel {
         fetchAll()
     }
     
+    private func fetchAccountCount() throws {
+        let count = try AccountManager(viewContext: viewContext).fetchAllCount(viewContext)
+        
+        if count > 1 {
+            isMutipleAccounts = true
+        }
+    }
+    
     /// Llamar en `onDisappear`
     func deactivateObservers() {
         //stopObservingContextChanges() //No permite actualizar cambios vista child (Subview)
@@ -37,8 +47,11 @@ class TransactionViewModel: BaseViewModel {
         do {
             transactions = try TransactionManager(viewContext: viewContext).fetchAll()
             groupedTransactions = UtilsCurrency.calculateGroupedTransactions(transactions)
+            
+            try fetchAccountCount()
         } catch {
             Logger.exception(error, type: .CoreData)
+            errorMessage = error.localizedDescription
         }
     }
     

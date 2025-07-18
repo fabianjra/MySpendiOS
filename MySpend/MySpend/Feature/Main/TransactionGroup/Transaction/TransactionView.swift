@@ -39,7 +39,8 @@ struct TransactionView: View {
                 NavigationLink {
                     TransactionHistoryView(transactionsLoaded: $viewModel.transactions,
                                            dateTimeInterval: $viewModel.dateTimeInterval,
-                                           selectedDate: $selectedDate)
+                                           selectedDate: $selectedDate,
+                                           isMutipleAccounts: $viewModel.isMutipleAccounts)
                     .toolbar(.hidden, for: .navigationBar)
                 } label: {
                     TextButtonHorizontalStyled("History",

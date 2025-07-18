@@ -14,6 +14,7 @@ struct TransactionHistoryView: View {
     @Binding var transactionsLoaded: [TransactionModel]
     @Binding var dateTimeInterval: DateTimeInterval
     @Binding var selectedDate: Date
+    @Binding var isMutipleAccounts: Bool
     
     @State private var selectedModel = TransactionModel()
     
@@ -268,17 +269,22 @@ struct TransactionHistoryView: View {
     }
 }
 
+#Preview("Normal es_CR") {
+    
+    @Previewable @State var transactionLoaded: [TransactionModel] = MockTransactionModel.fetchAll()
+    @Previewable @State var dateTimeInterval = DateTimeInterval.month
+    @Previewable @State var selectedDate = Date()
+    
+    VStack {
+        TransactionHistoryView(transactionsLoaded: $transactionLoaded,
+                               dateTimeInterval: $dateTimeInterval,
+                               selectedDate: $selectedDate,
+                               isMutipleAccounts: .constant(true))
+            .environment(\.locale, .init(identifier: "es_CR"))
+    }
+}
+
 //TOD: REPARAR
-//#Preview("Normal es_CR") {
-//    @Previewable @State var dateTimeInterval = DateTimeInterval.month
-//    @Previewable @State var selectedDate = Date()
-//    
-//    VStack {
-//        TransactionHistoryView(transactionsLoaded: .constant(MockTransactionsFB.normal), dateTimeInterval: $dateTimeInterval, selectedDate: $selectedDate)
-//            .environment(\.locale, .init(identifier: "es_CR"))
-//    }
-//}
-//
 //#Preview("Random saturated en_US") {
 //    @Previewable @State var dateTimeInterval = DateTimeInterval.month
 //    @Previewable @State var selectedDate = Date()
@@ -292,11 +298,13 @@ struct TransactionHistoryView: View {
 #Preview("No content en_US_POSIX") {
     @Previewable @State var dateTimeInterval = DateTimeInterval.month
     @Previewable @State var selectedDate = Date()
+    @Previewable @State var isMultipleAccount: Bool = true
     
     VStack {
         TransactionHistoryView(transactionsLoaded: .constant([]),
                                dateTimeInterval: $dateTimeInterval,
-                               selectedDate: $selectedDate)
+                               selectedDate: $selectedDate,
+                               isMutipleAccounts: $isMultipleAccount)
             .environment(\.locale, .init(identifier: "en_US_POSIX"))
     }
 }

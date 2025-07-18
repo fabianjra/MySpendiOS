@@ -1,5 +1,5 @@
 //
-//  MockAccount.swift
+//  MocksEntitiesNormal.swift
 //  MySpend
 //
 //  Created by Fabian Rodriguez on 6/7/25.
@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-struct MocksEntities {
+struct MockCoreDataNormal {
     
     @MainActor
     static let preview: PersistenceController = {
@@ -19,16 +19,16 @@ struct MocksEntities {
         //viewContext.processPendingChanges()
         
         // Accounts:
-        let accountMain = MocksEntities.accountMain(viewContext)
-        let accountGeneral = MocksEntities.accountGeneral(viewContext)
+        let accountMain = MockCoreDataNormal.accountMain(viewContext)
+        let accountGeneral = MockCoreDataNormal.accountGeneral(viewContext)
         
         // Categories:
-        let categoryExpense = MocksEntities.categoryExpense(viewContext)
-        let categoryIncome = MocksEntities.categoryIncome(viewContext)
+        let categoryExpense = MockCoreDataNormal.categoryExpense(viewContext)
+        let categoryIncome = MockCoreDataNormal.categoryIncome(viewContext)
         
         // Transactions:
-        MocksEntities.transactionExpense(viewContext, category: categoryExpense, account: accountMain)
-        MocksEntities.transactionExpense(viewContext, category: categoryIncome, account: accountMain)
+        MockCoreDataNormal.transactionExpense(viewContext, category: categoryExpense, account: accountMain)
+        MockCoreDataNormal.transactionExpense(viewContext, category: categoryIncome, account: accountMain)
         
         do {
             try viewContext.save()

@@ -12,7 +12,7 @@ struct CoreDataUtilities {
     @MainActor
     static func getViewContext() -> NSManagedObjectContext {
         if UtilsUI.isRunningOnCanvasPreview {
-            return MocksEntities.preview.container.viewContext
+            return MockCoreDataNormal.preview.container.viewContext
         } else {
             return PersistenceController.shared.container.viewContext
         }
