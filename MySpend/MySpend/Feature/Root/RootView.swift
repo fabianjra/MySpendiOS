@@ -10,7 +10,8 @@ struct RootView: View {
     
     @StateObject var router = Router.shared
     
-    @AppStorage(UserDefaultsKeys.isOnBoarding.rawValue)
+    @AppStorage(UserDefaultsKeys.isOnBoarding.rawValue,
+                store: UserDefaultsManager.userDefaults)
     private var isOnboarding: Bool = true
     
     var body: some View {
@@ -46,7 +47,8 @@ struct RootView: View {
 private struct previewWrapper: View {
     init() {
         UserDefaultsManager.userDefaults = .preview
-        //UserDefaultsManager.isOnBoarding = true //Configurar para @AppStorage
+        // Configuracion correcta para @AppStorage:
+        UserDefaultsManager.userDefaults.set(false, forKey: UserDefaultsKeys.isOnBoarding.rawValue)
     }
     var body: some View { RootView() }
 }
