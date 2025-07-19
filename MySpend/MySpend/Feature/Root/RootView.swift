@@ -44,18 +44,14 @@ struct RootView: View {
 
 
 private struct previewWrapper: View {
-    let locale: String
-    init(locale: String) {
-        self.locale = locale
-        UserDefaultsManager.shared.userDefaults = .preview
+    init() {
+        UserDefaultsManager.userDefaults = .preview
         //UserDefaultsManager.isOnBoarding = true //Configurar para @AppStorage
     }
-    
-    var body: some View {
-        RootView().environment(\.locale, .init(identifier: locale))
-    }
+    var body: some View { RootView() }
 }
 
 #Preview("es_CR") {
-    previewWrapper(locale: "es_CR")
+    previewWrapper()
+        .environment(\.locale, .init(identifier: "es_CR"))
 }

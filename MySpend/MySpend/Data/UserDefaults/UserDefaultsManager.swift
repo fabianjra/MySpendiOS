@@ -11,12 +11,12 @@ import Foundation
 
 struct UserDefaultsManager {
     
-    static var shared: UserDefaultsManager = UserDefaultsManager()
+    //static var shared: UserDefaultsManager = UserDefaultsManager()
     
-    var userDefaults: UserDefaults = .standard
+    static var userDefaults: UserDefaults = .standard
     
     static func removeValue(for key: UserDefaultsKeys) {
-        UserDefaultsManager.shared.userDefaults.removeObject(forKey: key.rawValue)
+        UserDefaultsManager.userDefaults.removeObject(forKey: key.rawValue)
     }
     
     static func removeAll() {
@@ -165,7 +165,7 @@ private struct UserDefaultsDataStore<T: Codable> {
      */
     var value: T? {
         get {
-            guard let data = UserDefaultsManager.shared.userDefaults.data(forKey: key.rawValue) else { return nil }
+            guard let data = UserDefaultsManager.userDefaults.data(forKey: key.rawValue) else { return nil }
             
             do {
                 return try JSONDecoder().decode(T.self, from: data)
@@ -180,7 +180,7 @@ private struct UserDefaultsDataStore<T: Codable> {
             
             do {
                 let data = try JSONEncoder().encode(newValue)
-                UserDefaultsManager.shared.userDefaults.set(data, forKey: key.rawValue)
+                UserDefaultsManager.userDefaults.set(data, forKey: key.rawValue)
             } catch {
                 Logger.exception(error)
             }
