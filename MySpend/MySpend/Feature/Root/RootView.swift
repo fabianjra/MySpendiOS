@@ -42,6 +42,20 @@ struct RootView: View {
     }
 }
 
-#Preview {
-    RootView()
+
+private struct previewWrapper: View {
+    let locale: String
+    init(locale: String) {
+        self.locale = locale
+        UserDefaultsManager.shared.userDefaults = .preview
+        //UserDefaultsManager.isOnBoarding = true //Configurar para @AppStorage
+    }
+    
+    var body: some View {
+        RootView().environment(\.locale, .init(identifier: locale))
+    }
+}
+
+#Preview("es_CR") {
+    previewWrapper(locale: "es_CR")
 }

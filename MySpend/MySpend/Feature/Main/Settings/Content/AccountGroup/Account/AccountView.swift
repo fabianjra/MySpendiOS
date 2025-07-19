@@ -263,17 +263,19 @@ struct AccountView: View {
 }
 
 
-private struct AccountViewPreviewWrapper: View {
-    init() {
-        UserDefaultsManager.userDefaults = .preview
+private struct previewWrapper: View {
+    let locale: String
+    init(locale: String) {
+        self.locale = locale
+        UserDefaultsManager.shared.userDefaults = .preview
+        UserDefaultsManager.defaultAccountID = MockCDConstants.mainAccountID
     }
     
     var body: some View {
-        AccountView()
-            .environment(\.locale, .init(identifier: "es_CR"))
+        AccountView().environment(\.locale, .init(identifier: locale))
     }
 }
 
 #Preview("es_CR") {
-    AccountViewPreviewWrapper()
+    previewWrapper(locale: "es_CR")
 }

@@ -6,5 +6,5 @@
 //
 
 struct MockCDConstants {
-    static let mainAccountID: String = "33041937-05b2-464a-98ad-3910cbe0d09e"
+    static let mainAccountID: String = "33041937-05B2-464A-98AD-3910CBE0D09E"
 }

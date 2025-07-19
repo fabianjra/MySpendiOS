@@ -44,11 +44,10 @@ struct MockCoreDataNormal {
         item.dateCreated = Calendar.current.date(byAdding: .day, value: 1, to: .now)!
         item.dateModified = .now
         item.id = UUID(uuidString: MockCDConstants.mainAccountID)
-        //item.id = UUID()
         item.isActive = true
         
         item.icon = "person.fill"
-        item.name = "Main account"
+        item.name = "Main account 1"
         item.notes = "No notes"
         item.type = AccountType.general.rawValue
         item.userId = "Firebase_User_UUID"
