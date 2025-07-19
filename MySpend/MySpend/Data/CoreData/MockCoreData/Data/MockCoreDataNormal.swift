@@ -43,8 +43,8 @@ struct MockCoreDataNormal {
         let item = Account(context: context)
         item.dateCreated = Calendar.current.date(byAdding: .day, value: 1, to: .now)!
         item.dateModified = .now
-        //item.id = UUID(uuidString: MockCDConstants.mainAccountID)
-        item.id = UUID()
+        item.id = UUID(uuidString: MockCDConstants.mainAccountID)
+        //item.id = UUID()
         item.isActive = true
         
         item.icon = "person.fill"

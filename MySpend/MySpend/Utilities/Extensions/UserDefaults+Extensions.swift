@@ -18,7 +18,7 @@ extension UserDefaults {
             suite.removePersistentDomain(forName: MockUDConstants.suiteNamePreview)
             
             // Insert default values:
-            suite.set(MockCDConstants.mainAccountID, forKey: "default_account_id_key")
+            suite.set(MockCDConstants.mainAccountID, forKey: UserDefaultsKeys.defaultAccountID.rawValue)
             
             return suite
         }
