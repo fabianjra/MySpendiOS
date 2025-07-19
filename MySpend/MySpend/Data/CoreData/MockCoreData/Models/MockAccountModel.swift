@@ -14,7 +14,7 @@ struct MockAccountModel {
             
             switch type {
             case .empty:
-                accountCount = try AccountManager(viewContext: MockCoreDataNormal.preview.container.viewContext).fetchAllCount()
+                accountCount = Int.zero
                 
             case .normal:
                 accountCount = try AccountManager(viewContext: MockCoreDataNormal.preview.container.viewContext).fetchAllCount()

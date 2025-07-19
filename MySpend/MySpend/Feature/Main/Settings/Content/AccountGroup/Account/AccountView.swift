@@ -135,10 +135,6 @@ struct AccountView: View {
                 NoContentToAddView(rotationDegress: ConstantAnimations.rotationArrowBottomTrailing)
             } else {
                 ListContainer {
-                    SectionContainer("Default account", isInsideList: true) {
-                        rowView(viewModel.defaultModelSelected)
-                    }
-                    
                     SectionContainer("Available accounts", isInsideList: true) {
                         ForEach(modelsFiltered) { item in
                             HStack {
@@ -174,6 +170,13 @@ struct AccountView: View {
                                 }
                                 
                                 Spacer()
+                                
+                                if item.id == viewModel.defaultModelSelected?.id {
+                                    TextPlain("Default",
+                                              color: Color.textFieldForeground,
+                                              family: .light,
+                                              size: .medium)
+                                }
                                 
                                 Image.chevronRight
                             }

@@ -14,7 +14,7 @@ struct MockTransactionModel {
             
             switch type {
             case .empty:
-                mockTransactions = try TransactionManager(viewContext: MockCoreDataNormal.preview.container.viewContext).fetchAll()
+                mockTransactions = []
                 
             case .normal:
                 mockTransactions = try TransactionManager(viewContext: MockCoreDataNormal.preview.container.viewContext).fetchAll()

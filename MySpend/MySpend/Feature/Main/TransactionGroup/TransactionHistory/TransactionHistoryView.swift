@@ -303,15 +303,16 @@ struct TransactionHistoryView: View {
 //}
 
 #Preview("No content en_US_POSIX") {
+    @Previewable @State var transactionLoaded: [TransactionModel] = MockTransactionModel.fetchAll(type: .empty)
     @Previewable @State var dateTimeInterval = DateTimeInterval.month
     @Previewable @State var selectedDate = Date()
-    @Previewable @State var isMultipleAccount: Bool = true
+    @Previewable @State var isMultipleAccounts: Bool = MockAccountModel.fetchAllCount(type: .empty) > 1 ? true : false
     
     VStack {
-        TransactionHistoryView(transactionsLoaded: .constant([]),
+        TransactionHistoryView(transactionsLoaded: $transactionLoaded,
                                dateTimeInterval: $dateTimeInterval,
                                selectedDate: $selectedDate,
-                               isMutipleAccounts: $isMultipleAccount)
+                               isMutipleAccounts: $isMultipleAccounts)
             .environment(\.locale, .init(identifier: "en_US_POSIX"))
     }
 }
