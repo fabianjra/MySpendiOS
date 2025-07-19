@@ -20,7 +20,7 @@ struct MockCoreDataNormal {
         
         // Accounts:
         let accountMain = MockCoreDataNormal.accountMain(viewContext)
-        let accountGeneral = MockCoreDataNormal.accountGeneral(viewContext)
+        let accountGeneral = MockCoreDataNormal.accountExpenses(viewContext)
         
         // Categories:
         let categoryExpense = MockCoreDataNormal.categoryExpense(viewContext)
@@ -43,6 +43,7 @@ struct MockCoreDataNormal {
         let item = Account(context: context)
         item.dateCreated = Calendar.current.date(byAdding: .day, value: 1, to: .now)!
         item.dateModified = .now
+        //item.id = UUID(uuidString: MockCDConstants.mainAccountID)
         item.id = UUID()
         item.isActive = true
         
@@ -55,7 +56,7 @@ struct MockCoreDataNormal {
         return item
     }
     
-    private static func accountGeneral(_ context: NSManagedObjectContext) -> Account {
+    private static func accountExpenses(_ context: NSManagedObjectContext) -> Account {
         let item = Account(context: context)
         item.dateCreated = Calendar.current.date(byAdding: .day, value: 2, to: .now)!
         item.dateModified = .now
@@ -63,7 +64,7 @@ struct MockCoreDataNormal {
         item.isActive = true
         
         item.icon = ""
-        item.name = "Secondary account"
+        item.name = "Only expenses"
         item.notes = ""
         item.type = AccountType.expenses.rawValue
         item.userId = ""

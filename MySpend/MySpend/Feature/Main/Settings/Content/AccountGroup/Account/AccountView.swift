@@ -262,7 +262,18 @@ struct AccountView: View {
     }
 }
 
+
+private struct AccountViewPreviewWrapper: View {
+    init() {
+        UserDefaultsManager.userDefaults = .preview
+    }
+    
+    var body: some View {
+        AccountView()
+            .environment(\.locale, .init(identifier: "es_CR"))
+    }
+}
+
 #Preview("es_CR") {
-    AccountView()
-        .environment(\.locale, .init(identifier: "es_CR"))
+    AccountViewPreviewWrapper()
 }
