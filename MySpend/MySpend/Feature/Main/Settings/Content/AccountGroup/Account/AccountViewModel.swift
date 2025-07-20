@@ -20,10 +20,6 @@ class AccountViewModel: BaseViewModel {
     // MARK: SORT
     @Published var sortModelsBy = UserDefaultsManager.sortAccounts
     
-    // MARK: MODALS AND POPUPS
-    @Published var showNewItemModal = false
-    @Published var showModifyItemModal = false
-    
     @Published var showAlertDelete = false
     @Published var showAlertDeleteMultiple = false
     
@@ -103,5 +99,9 @@ class AccountViewModel: BaseViewModel {
     func resetSelectedSort() {
         UserDefaultsManager.removeValue(for: .sortAccounts)
         sortModelsBy = UserDefaultsManager.sortAccounts
+    }
+    
+    deinit {
+        Logger.custom("Finalizo AccountViewModel")
     }
 }

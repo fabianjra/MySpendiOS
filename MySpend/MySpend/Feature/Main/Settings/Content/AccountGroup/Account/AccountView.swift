@@ -9,6 +9,11 @@ import SwiftUI
 
 struct AccountView: View {
     
+    // MARK: - Variables propia de la vista para evitar MemoryLeaks:
+    @State var showNewItemModal = false
+    @State var showModifyItemModal = false
+    
+    
     @StateObject var viewModel = AccountViewModel()
     @State private var selectedModel = AccountModel()
     
@@ -33,7 +38,7 @@ struct AccountView: View {
                 itemList
                 
                 ButtonRounded {
-                    viewModel.showNewItemModal = true
+                    showNewItemModal = true
                 }
                 .disabled(viewModel.isEditing)
                 .padding(.trailing, ConstantViews.paddingButtonAddCategory)
@@ -48,12 +53,12 @@ struct AccountView: View {
         .onDisappear {
             viewModel.deactivateObservers()
         }
-        .sheet(isPresented: $viewModel.showNewItemModal) {
+        .sheet(isPresented: $showNewItemModal) {
             AddModifyAccountView(accountType: $viewModel.modelType)
                 .presentationDetents([.large])
                 .presentationCornerRadius(ConstantRadius.cornersModal)
         }
-        .sheet(isPresented: $viewModel.showModifyItemModal) {
+        .sheet(isPresented: $showModifyItemModal) {
             AddModifyAccountView(selectedModel,
                                  accountType: $viewModel.modelType)
             .presentationDetents([.large])
@@ -164,7 +169,7 @@ struct AccountView: View {
                                         }
                                     } else {
                                         selectedModel = item
-                                        viewModel.showModifyItemModal = true
+                                        showModifyItemModal = true
                                     }
                                 }
                                 
@@ -191,7 +196,7 @@ struct AccountView: View {
                                 
                                 Button {
                                     selectedModel = item
-                                    viewModel.showModifyItemModal = true
+                                    showModifyItemModal = true
                                 } label: {
                                     Label.edit
                                 }
