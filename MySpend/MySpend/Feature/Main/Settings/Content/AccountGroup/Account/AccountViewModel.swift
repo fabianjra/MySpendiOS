@@ -34,9 +34,6 @@ class AccountViewModel: BaseViewModel {
         return models.first { $0.id.uuidString == defaultID }
     }
     
-    // MARK: OBSERVABLES
-    private var defaultsCancellable: AnyCancellable?
-    
     /// Llamar en `onAppear`
     func activateObservers() {
         // CoreData:
@@ -45,14 +42,11 @@ class AccountViewModel: BaseViewModel {
         }
         
         // UserDefaults:
-        defaultsCancellable = NotificationCenter.default
-            .publisher(for: UserDefaults.didChangeNotification,
-                       object: UserDefaultsManager.userDefaults)
-            .receive(on: RunLoop.main) // Asegura hilo principal
-            .sink { [weak self] _ in
-                // Provoca un nuevo render; la vista leera de nuevo `defaultModelSelected`
-                self?.objectWillChange.send()
-            }
+        startObserveUserDefaultsChanges { [weak self] in
+            // Se actualiza el objeto que se pasa por parametro,
+            // en este caso, es por defecto el userDefaults que ya se envia por defecto en esta funcion en BaseViewModel.
+            self?.objectWillChange.send()
+        }
         
         // Primera carga:
         fetchAll()
@@ -61,8 +55,7 @@ class AccountViewModel: BaseViewModel {
     /// Llamar en `onDisappear`
     func deactivateObservers() {
         stopObservingContextChanges()
-        defaultsCancellable?.cancel()
-        defaultsCancellable = nil
+        stopObserveUserDefaultsChanges()
     }
     
     private func fetchAll() {

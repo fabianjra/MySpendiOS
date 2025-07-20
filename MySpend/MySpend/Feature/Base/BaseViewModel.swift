@@ -23,6 +23,7 @@ public class BaseViewModel: ObservableObject {
     
     // MARK: - Suscripción
     private var viewContextObserver: AnyCancellable?
+    private var userDefaultsObserver: AnyCancellable?
     
     // MARK: - Inits
     convenience init() {
@@ -40,7 +41,7 @@ public class BaseViewModel: ObservableObject {
      - Parameters:
         - onChange: Se ejecuta en MainActor cada vez que Core Data emite una notificación.
      */
-    public func startObserveViewContextChanges(onChange: @escaping () -> Void) {
+    func startObserveViewContextChanges(onChange: @escaping () -> Void) {
         guard viewContextObserver == nil else { return } // Evita suscribirse dos veces
         
         viewContextObserver = NotificationCenter.default
@@ -53,10 +54,33 @@ public class BaseViewModel: ObservableObject {
             }
     }
     
+    func startObserveUserDefaultsChanges(object: UserDefaults = UserDefaultsManager.userDefaults, onChange: @escaping () -> Void) {
+        guard userDefaultsObserver == nil else { return } // Evita suscribirse dos veces
+        
+        userDefaultsObserver = NotificationCenter.default
+            .publisher(for: UserDefaults.didChangeNotification, object: object)
+            .receive(on: RunLoop.main)
+        
+        /**
+         ¿Por qué no hay ciclo en la versión simple?
+         1- BaseViewModel guarda un AnyCancellable (referencia fuerte al cierre).
+         2- El cierre no captura self, así que no hay closure → self.
+         3- Resultado: self → cancellable → closure queda en una sola dirección; se rompe al llamar a stopObservingUserDefaultsChanges().
+         
+         Si en el futuro quisieras acceder a propiedades o métodos de la instancia dentro del sink, entonces sí agrega [weak self] para evitar ciclos:
+         */
+            .sink { _ in onChange() }
+    }
+    
     /// Detiene la observación (por ejemplo, en `onDisappear`).
     public func stopObservingContextChanges() {
         viewContextObserver?.cancel()
         viewContextObserver = nil
+    }
+    
+    public func stopObserveUserDefaultsChanges() {
+        userDefaultsObserver?.cancel()
+        userDefaultsObserver = nil
     }
 
     public func performWithLoader(_ action: @escaping () async -> Void) async {

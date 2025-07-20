@@ -10,9 +10,6 @@ import Foundation
 // MARK: GENERAL
 
 struct UserDefaultsManager {
-    
-    //static var shared: UserDefaultsManager = UserDefaultsManager()
-    
     static var userDefaults: UserDefaults = .standard
     
     static func removeValue(for key: UserDefaultsKeys) {
