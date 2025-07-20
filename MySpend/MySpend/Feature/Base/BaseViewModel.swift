@@ -60,16 +60,10 @@ public class BaseViewModel: ObservableObject {
         userDefaultsObserver = NotificationCenter.default
             .publisher(for: UserDefaults.didChangeNotification, object: object)
             .receive(on: RunLoop.main)
-        
-        /**
-         ¿Por qué no hay ciclo en la versión simple?
-         1- BaseViewModel guarda un AnyCancellable (referencia fuerte al cierre).
-         2- El cierre no captura self, así que no hay closure → self.
-         3- Resultado: self → cancellable → closure queda en una sola dirección; se rompe al llamar a stopObservingUserDefaultsChanges().
-         
-         Si en el futuro quisieras acceder a propiedades o métodos de la instancia dentro del sink, entonces sí agrega [weak self] para evitar ciclos:
-         */
-            .sink { _ in onChange() }
+            .sink { [weak self] _ in
+                guard self != nil else { return }
+                onChange()
+            }
     }
     
     /// Detiene la observación (por ejemplo, en `onDisappear`).

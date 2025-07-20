@@ -27,9 +27,14 @@ class TransactionViewModel: BaseViewModel {
             self?.fetchAll()
         }
         
+        startObserveUserDefaultsChanges { [weak self] in
+            self?.dateTimeInterval = UserDefaultsManager.dateTimeInterval
+        }
+        
         fetchAll()
     }
     
+    //TODO: Agregar esta funcion a un Observer de la cantidad de accounts para mostrarlo correctamente en HIstory, despues de agregar o quitar Accounts.
     private func fetchAccountCount() throws {
         let count = try AccountManager(viewContext: viewContext).fetchAllCount()
         
