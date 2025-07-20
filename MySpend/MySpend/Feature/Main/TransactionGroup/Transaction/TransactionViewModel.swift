@@ -34,13 +34,9 @@ class TransactionViewModel: BaseViewModel {
         fetchAll()
     }
     
-    //TODO: Agregar esta funcion a un Observer de la cantidad de accounts para mostrarlo correctamente en HIstory, despues de agregar o quitar Accounts.
     private func fetchAccountCount() throws {
         let count = try AccountManager(viewContext: viewContext).fetchAllCount()
-        
-        if count > 1 {
-            isMutipleAccounts = true
-        }
+        isMutipleAccounts = count > 1 ? true : false
     }
     
     /// Llamar en `onDisappear`
