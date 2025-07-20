@@ -23,7 +23,7 @@ class TransactionViewModel: BaseViewModel {
     
     /// Llamar en `onAppear`
     func activateObservers() {
-        startObservingContextChanges { [weak self] in
+        startObserveViewContextChanges { [weak self] in
             self?.fetchAll()
         }
         

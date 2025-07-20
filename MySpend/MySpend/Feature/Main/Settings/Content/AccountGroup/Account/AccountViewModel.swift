@@ -40,7 +40,7 @@ class AccountViewModel: BaseViewModel {
     /// Llamar en `onAppear`
     func activateObservers() {
         // CoreData:
-        startObservingContextChanges { [weak self] in
+        startObserveViewContextChanges { [weak self] in
             self?.fetchAll()
         }
         

@@ -22,8 +22,9 @@ public class BaseViewModel: ObservableObject {
     let viewContext: NSManagedObjectContext
     
     // MARK: - Suscripción
-    private var contextObserver: AnyCancellable?
+    private var viewContextObserver: AnyCancellable?
     
+    // MARK: - Inits
     convenience init() {
         self.init(viewContext: CoreDataUtilities.getViewContext())
     }
@@ -32,16 +33,17 @@ public class BaseViewModel: ObservableObject {
         self.viewContext = viewContext
     }
 
+    // MARK: - Funciones
     /**
      Comienza a escuchar los cambios del `viewContext`.
      
      - Parameters:
         - onChange: Se ejecuta en MainActor cada vez que Core Data emite una notificación.
      */
-    public func startObservingContextChanges(onChange: @escaping () -> Void) {
-        guard contextObserver == nil else { return } // Evita suscribirse dos veces
+    public func startObserveViewContextChanges(onChange: @escaping () -> Void) {
+        guard viewContextObserver == nil else { return } // Evita suscribirse dos veces
         
-        contextObserver = NotificationCenter.default
+        viewContextObserver = NotificationCenter.default
             .publisher(for: .NSManagedObjectContextObjectsDidChange,
                        object: viewContext)
             .debounce(for: .milliseconds(50), scheduler: RunLoop.main) // opcional, para evitar multiples llamados
@@ -53,8 +55,8 @@ public class BaseViewModel: ObservableObject {
     
     /// Detiene la observación (por ejemplo, en `onDisappear`).
     public func stopObservingContextChanges() {
-        contextObserver?.cancel()
-        contextObserver = nil
+        viewContextObserver?.cancel()
+        viewContextObserver = nil
     }
 
     public func performWithLoader(_ action: @escaping () async -> Void) async {
