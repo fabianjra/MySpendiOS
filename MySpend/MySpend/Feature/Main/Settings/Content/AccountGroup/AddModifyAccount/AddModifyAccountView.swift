@@ -9,11 +9,11 @@ import SwiftUI
 
 struct AddModifyAccountView: View {
     
-    @Environment(\.dismiss) var dismiss
+    @Environment(\.dismiss) private var dismiss
     
     @Binding var accountType: AccountType
     
-    @StateObject var viewModel: AddModifyAccountViewModel
+    @StateObject private var viewModel: AddModifyAccountViewModel
     @FocusState private var focusedField: AccountModel.Field?
     
     init(_ model: AccountModel? = nil, accountType: Binding<AccountType>) {

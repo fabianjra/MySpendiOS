@@ -9,13 +9,10 @@ import SwiftUI
 
 struct AccountView: View {
     
-    // MARK: - Variables propia de la vista para evitar MemoryLeaks:
-    @State var showNewItemModal = false
-    @State var showModifyItemModal = false
-    
+    @State private var showNewItemModal = false
     
     @StateObject var viewModel = AccountViewModel()
-    @State private var selectedModel = AccountModel()
+    @State private var selectedModel: AccountModel?
     
     var body: some View {
         ContentContainer(addPading: false) {
@@ -58,16 +55,18 @@ struct AccountView: View {
                 .presentationDetents([.large])
                 .presentationCornerRadius(ConstantRadius.cornersModal)
         }
-        .sheet(isPresented: $showModifyItemModal) {
-            AddModifyAccountView(selectedModel,
-                                 accountType: $viewModel.modelType)
+        .sheet(item: $selectedModel) { model in
+            AddModifyAccountView(model, accountType: $viewModel.modelType)
+            .onDisappear {
+                selectedModel = nil
+            }
             .presentationDetents([.large])
             .presentationCornerRadius(ConstantRadius.cornersModal)
         }
         .disabled(viewModel.isLoadingSecondary)
     }
     
-    // MARK: VIEWS
+    // MARK: - VIEWS
     
     private var topMenu: some View {
         VStack {
@@ -169,7 +168,6 @@ struct AccountView: View {
                                         }
                                     } else {
                                         selectedModel = item
-                                        showModifyItemModal = true
                                     }
                                 }
                                 
@@ -196,7 +194,6 @@ struct AccountView: View {
                                 
                                 Button {
                                     selectedModel = item
-                                    showModifyItemModal = true
                                 } label: {
                                     Label.edit
                                 }
@@ -247,10 +244,10 @@ struct AccountView: View {
     }
     
     
-    // MARK: FUNCTIONS
+    // MARK: - FUNCTIONS
     
     private func delete() {
-        let result = viewModel.delete(selectedModel)
+        let result = viewModel.delete(selectedModel!)
         
         if result.status.isError {
             viewModel.errorMessage = result.message

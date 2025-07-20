@@ -102,6 +102,6 @@ class AccountViewModel: BaseViewModel {
     }
     
     deinit {
-        Logger.custom("Finalizo AccountViewModel")
+        Logger.custom("Prueba Memory Leak: Finalizo AccountViewModel")
     }
 }
