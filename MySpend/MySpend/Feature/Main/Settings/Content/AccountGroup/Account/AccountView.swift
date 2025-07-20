@@ -44,7 +44,6 @@ struct AccountView: View {
         }
         .onAppear {
             viewModel.activateObservers()
-            viewModel.fetchDefaultModelSelected()
         }
         .onDisappear {
             viewModel.deactivateObservers()

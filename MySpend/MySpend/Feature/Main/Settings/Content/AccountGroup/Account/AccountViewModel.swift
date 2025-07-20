@@ -5,6 +5,7 @@
 //  Created by Fabian Rodriguez on 9/7/25.
 //
 
+import Combine
 import Foundation
 
 class AccountViewModel: BaseViewModel {
@@ -27,20 +28,41 @@ class AccountViewModel: BaseViewModel {
     @Published var showAlertDeleteMultiple = false
     
     // MARK: DATA ON SCREEN
-    @Published var defaultModelSelected: AccountModel?
+    var defaultModelSelected: AccountModel? {
+        let defaultID = UserDefaultsManager.defaultAccountID
+        guard defaultID.isEmptyOrWhitespace == false else { return nil }
+        return models.first { $0.id.uuidString == defaultID }
+    }
+    
+    // MARK: OBSERVABLES
+    private var defaultsCancellable: AnyCancellable?
     
     /// Llamar en `onAppear`
     func activateObservers() {
+        // CoreData:
         startObservingContextChanges { [weak self] in
             self?.fetchAll()
         }
         
-        fetchAll() // primera carga
+        // UserDefaults:
+        defaultsCancellable = NotificationCenter.default
+            .publisher(for: UserDefaults.didChangeNotification,
+                       object: UserDefaultsManager.userDefaults)
+            .receive(on: RunLoop.main) // Asegura hilo principal
+            .sink { [weak self] _ in
+                // Provoca un nuevo render; la vista leera de nuevo `defaultModelSelected`
+                self?.objectWillChange.send()
+            }
+        
+        // Primera carga:
+        fetchAll()
     }
     
     /// Llamar en `onDisappear`
     func deactivateObservers() {
         stopObservingContextChanges()
+        defaultsCancellable?.cancel()
+        defaultsCancellable = nil
     }
     
     private func fetchAll() {
@@ -50,15 +72,7 @@ class AccountViewModel: BaseViewModel {
             Logger.exception(error, type: .CoreData)
         }
     }
-    
-    func fetchDefaultModelSelected() {
-        let defaultID = UserDefaultsManager.defaultAccountID
-        
-        if defaultID.isEmptyOrWhitespace == false {
-            defaultModelSelected = models.first { $0.id.uuidString == defaultID }
-        }
-    }
-    
+
     func delete(_ model: AccountModel) -> ResponseModel {
         do {
             try AccountManager(viewContext: viewContext).delete(model)
