@@ -12,7 +12,9 @@ struct AccountView: View {
     @State private var showNewItemModal = false
     
     @StateObject var viewModel = AccountViewModel()
-    @State private var selectedModel: AccountModel?
+    
+    @State private var modelToModify: AccountModel?
+    @State private var modelToDelete: AccountModel?
     
     var body: some View {
         ContentContainer(addPading: false) {
@@ -55,10 +57,10 @@ struct AccountView: View {
                 .presentationDetents([.large])
                 .presentationCornerRadius(ConstantRadius.cornersModal)
         }
-        .sheet(item: $selectedModel) { model in
+        .sheet(item: $modelToModify) { model in
             AddModifyAccountView(model, accountType: $viewModel.modelType)
             .onDisappear {
-                selectedModel = nil
+                modelToModify = nil
             }
             .presentationDetents([.large])
             .presentationCornerRadius(ConstantRadius.cornersModal)
@@ -167,7 +169,7 @@ struct AccountView: View {
                                             viewModel.selectedModels.insert(item)
                                         }
                                     } else {
-                                        selectedModel = item
+                                        modelToModify = item
                                     }
                                 }
                                 
@@ -185,7 +187,7 @@ struct AccountView: View {
                             .listRowBackground(Color.listRowBackground) //Background for each row.
                             .swipeActions(edge: .trailing) {
                                 Button {
-                                    selectedModel = item
+                                    modelToDelete = item
                                     viewModel.showAlertDelete = true
                                 } label: {
                                     Label.delete
@@ -193,7 +195,7 @@ struct AccountView: View {
                                 .tint(Color.alert)
                                 
                                 Button {
-                                    selectedModel = item
+                                    modelToModify = item
                                 } label: {
                                     Label.edit
                                 }
@@ -247,7 +249,7 @@ struct AccountView: View {
     // MARK: - FUNCTIONS
     
     private func delete() {
-        let result = viewModel.delete(selectedModel!)
+        let result = viewModel.delete(modelToDelete)
         
         if result.status.isError {
             viewModel.errorMessage = result.message

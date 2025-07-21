@@ -62,7 +62,9 @@ class AccountViewModel: BaseViewModel {
         }
     }
 
-    func delete(_ model: AccountModel) -> ResponseModel {
+    func delete(_ model: AccountModel?) -> ResponseModel {
+        guard let model = model else { return ResponseModel(.successful) }
+        
         do {
             try AccountManager(viewContext: viewContext).delete(model)
             return ResponseModel(.successful)
@@ -73,6 +75,10 @@ class AccountViewModel: BaseViewModel {
     }
     
     func deleteMltipleItems() -> ResponseModel {
+        defer {
+            isEditing = false
+        }
+        
         do {
             for item in selectedModels {
                 try AccountManager(viewContext: viewContext).delete(item)
