@@ -149,4 +149,8 @@ struct UtilsUI {
         
         return true
     }
+    
+    public static func actionDelayed(after delay: TimeInterval = 0.5, _ action: @escaping () -> Void) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: action)
+    }
 }

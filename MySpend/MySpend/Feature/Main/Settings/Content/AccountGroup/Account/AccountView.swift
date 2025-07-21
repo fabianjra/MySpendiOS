@@ -53,6 +53,8 @@ struct AccountView: View {
         .onDisappear {
             viewModel.deactivateObservers()
         }
+        // Siempre con bordes pero hace mas lento la activacion del sheet:
+        //.sheet(isPresented: $showNewItemModal, onDismiss:{ UtilsUI.actionDelayed{ isSheetOpen = false }}) {
         .sheet(isPresented: $showNewItemModal) {
             AddModifyAccountView(accountType: $modelType)
                 .presentationDetents([.large])
@@ -66,7 +68,6 @@ struct AccountView: View {
             .presentationDetents([.large])
             .presentationCornerRadius(ConstantRadius.cornersModal)
         }
-        .disabled(viewModel.isLoadingSecondary)
     }
     
     // MARK: - VIEWS
@@ -250,6 +251,10 @@ struct AccountView: View {
     // MARK: - FUNCTIONS
     
     private func delete() {
+        defer {
+            modelToDelete = nil
+        }
+        
         let result = viewModel.delete(modelToDelete)
         
         if result.status.isError {
