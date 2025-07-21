@@ -173,7 +173,7 @@ struct Logger {
         //#if DEBUG
         let logId = UUID().uuidString
         print("********** START CUSTOM MESSSAG LOG: \(logId) **********")
-        let message = "Message from: \(fileName), function: \(function), line: \(line) \n \(obj)"
+        let message = "-Print from: \(fileName), function: \(function), line: \(line) \n-Description: \(obj)"
         print(message)
         print("********** END CUSTOM MESSSAG LOG: \(logId) **********")
         
