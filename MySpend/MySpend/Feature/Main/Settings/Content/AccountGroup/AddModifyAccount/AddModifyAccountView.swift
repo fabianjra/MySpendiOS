@@ -103,6 +103,10 @@ struct AddModifyAccountView: View {
         //}
         .onAppear {
             focusedField = .name
+            
+            if viewModel.isAddModel == false {
+                accountType = viewModel.model.type
+            }
         }
         .disabled(viewModel.isLoading || viewModel.isLoadingSecondary)
     }

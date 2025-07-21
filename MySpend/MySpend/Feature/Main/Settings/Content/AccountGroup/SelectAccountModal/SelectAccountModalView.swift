@@ -11,6 +11,7 @@ struct SelectAccountModalView: View {
     
     @Environment(\.dismiss) var dismiss
     
+    @State private var modelType: AccountType = .general
     @Binding var selectedModel: AccountModel
     
     @StateObject var viewModel = AccountViewModel()
@@ -31,7 +32,7 @@ struct SelectAccountModalView: View {
             
             
             VStack {
-                PickerView(selection: $viewModel.modelType)
+                PickerView(selection: $modelType)
                     .frame(maxWidth: ConstantFrames.iPadMaxWidth)
                     .padding(.bottom, ConstantViews.mediumSpacing)
                 
@@ -54,7 +55,7 @@ struct SelectAccountModalView: View {
             
             ZStack(alignment: .bottomTrailing) {
                 let modelsFiltered = UtilsAccounts.filteredAccounts(viewModel.models,
-                                                                    by: viewModel.modelType,
+                                                                    by: modelType,
                                                                     sortType: viewModel.sortModelsBy)
                 
                 if modelsFiltered.isEmpty {
@@ -89,7 +90,7 @@ struct SelectAccountModalView: View {
         }
         .onAppear {
             viewModel.activateObservers()
-            viewModel.modelType = selectedModel.type
+            modelType = selectedModel.type
         }
         .onDisappear {
             viewModel.deactivateObservers()

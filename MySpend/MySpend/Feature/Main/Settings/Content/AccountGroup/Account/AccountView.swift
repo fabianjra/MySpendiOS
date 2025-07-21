@@ -13,6 +13,7 @@ struct AccountView: View {
     
     @StateObject var viewModel = AccountViewModel()
     
+    @State private var modelType: AccountType = .general
     @State private var modelToModify: AccountModel?
     @State private var modelToDelete: AccountModel?
     
@@ -53,12 +54,12 @@ struct AccountView: View {
             viewModel.deactivateObservers()
         }
         .sheet(isPresented: $showNewItemModal) {
-            AddModifyAccountView(accountType: $viewModel.modelType)
+            AddModifyAccountView(accountType: $modelType)
                 .presentationDetents([.large])
                 .presentationCornerRadius(ConstantRadius.cornersModal)
         }
         .sheet(item: $modelToModify) { model in
-            AddModifyAccountView(model, accountType: $viewModel.modelType)
+            AddModifyAccountView(model, accountType: $modelType)
             .onDisappear {
                 modelToModify = nil
             }
@@ -83,7 +84,7 @@ struct AccountView: View {
             
             
             VStack {
-                PickerView(selection: $viewModel.modelType)
+                PickerView(selection: $modelType)
                     .frame(maxWidth: ConstantFrames.iPadMaxWidth)
                     .padding(.bottom, ConstantViews.mediumSpacing)
                 
@@ -133,7 +134,7 @@ struct AccountView: View {
     private var itemList: some View {
         VStack {
             let modelsFiltered = UtilsAccounts.filteredAccounts(viewModel.models,
-                                                                by: viewModel.modelType,
+                                                                by: modelType,
                                                                 sortType: viewModel.sortModelsBy)
             
             if modelsFiltered.isEmpty {

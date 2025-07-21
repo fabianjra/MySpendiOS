@@ -11,7 +11,6 @@ import Foundation
 class AccountViewModel: BaseViewModel {
     
     @Published var models: [AccountModel] = []
-    @Published var modelType: AccountType = .general
     
     // MARK: EDIT
     @Published var isEditing: Bool = false
@@ -105,9 +104,5 @@ class AccountViewModel: BaseViewModel {
     func resetSelectedSort() {
         UserDefaultsManager.removeValue(for: .sortAccounts)
         sortModelsBy = UserDefaultsManager.sortAccounts
-    }
-    
-    deinit {
-        Logger.custom("Prueba Memory Leak: Finalizo AccountViewModel")
     }
 }
