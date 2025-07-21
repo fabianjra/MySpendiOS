@@ -90,7 +90,9 @@ struct Logger {
         print("********** START EXCEPTION LOG: \(logId) **********")
         print("Handled catch in: \(file.components(separatedBy: "/").last ?? file), function: \(function), line: \(line), description: \(error.localizedDescription)")
         
-        recordToCrashlytics(error, file: file, function: function, line: line)
+        if UtilsUI.useAnalytics {
+            recordToCrashlytics(error, file: file, function: function, line: line)
+        }
         
         switch type {
         case .none:
@@ -177,13 +179,15 @@ struct Logger {
         
         //#else
         
-        // Para el titulo: Máximo 40 caracteres, minúsculas, sin espacios.
-        Analytics.logEvent("ios_custom_log", parameters: [
-            "file": fileName,
-            "function": function,
-            "line": line,
-            "message": String(describing: obj)
-        ])
+        if UtilsUI.useAnalytics {
+            // Para el titulo: Máximo 40 caracteres, minúsculas, sin espacios.
+            Analytics.logEvent("ios_custom_log", parameters: [
+                "file": fileName,
+                "function": function,
+                "line": line,
+                "message": String(describing: obj)
+            ])
+        }
         //#endif
     }
     
