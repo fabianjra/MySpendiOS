@@ -9,17 +9,19 @@ import SwiftUI
 
 struct SelectCategoryModalView: View {
     
-    @Environment(\.dismiss) var dismiss
+    @Environment(\.dismiss) private var dismiss
     
     // Parameters managed by New Transaction (add or modify):
     @Binding var selectedCategory: CategoryModel
     @Binding var categoryType: CategoryType
     
-    @StateObject var viewModel = CategoryViewModel()
+    @StateObject private var viewModel = CategoryViewModel()
     
     // Validate if should dismiss this modal because a new category was added.
-    @State var isNewModelAdded: Bool = false
-    @State var newCategoryID: UUID = UUID()
+    @State private var isNewModelAdded: Bool = false
+    @State private var newCategoryID: UUID = UUID()
+    
+    @State private var showNewItemModal = false
     
     var body: some View {
         ContentContainer(addPading: false) {
@@ -96,7 +98,7 @@ struct SelectCategoryModalView: View {
                 }
                 
                 ButtonRounded {
-                    viewModel.showNewCategoryModal = true
+                    showNewItemModal = true
                 }
                 .padding(.trailing, ConstantViews.paddingButtonAddCategory)
                 .padding(.bottom, ConstantViews.paddingButtonAddCategory)
@@ -116,7 +118,7 @@ struct SelectCategoryModalView: View {
                 }
             }
         }
-        .sheet(isPresented: $viewModel.showNewCategoryModal) {
+        .sheet(isPresented: $showNewItemModal) {
             AddModifyCategoryView(categoryType: $categoryType,
                                   newCategoryID: $newCategoryID,
                                   isSelectionMode: true,

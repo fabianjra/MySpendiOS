@@ -19,10 +19,7 @@ class CategoryViewModel: BaseViewModel {
     // MARK: SORT
     @Published var sortCategoriesBy = UserDefaultsManager.sorCategories
     
-    // MARK: MODALS AND POPUPS
-    @Published var showNewCategoryModal = false
-    @Published var showModifyCategoryModal = false
-    
+    // MARK: POPUPS
     @Published var showAlertDelete = false
     @Published var showAlertDeleteMultiple = false
     
@@ -48,7 +45,9 @@ class CategoryViewModel: BaseViewModel {
         }
     }
     
-    func deleteCategory(_ model: CategoryModel) -> ResponseModel {
+    func delete(_ model: CategoryModel?) -> ResponseModel {
+        guard let model = model else { return ResponseModel(.successful) }
+        
         do {
             try CategoryManager(viewContext: viewContext).delete(model)
             return ResponseModel(.successful)
@@ -58,7 +57,7 @@ class CategoryViewModel: BaseViewModel {
         }
     }
     
-    func deleteMltipleCategories() -> ResponseModel {
+    func deleteMltiple() -> ResponseModel {
         defer {
             isEditing = false
         }

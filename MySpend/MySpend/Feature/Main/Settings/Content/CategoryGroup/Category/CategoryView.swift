@@ -9,10 +9,13 @@ import SwiftUI
 
 struct CategoryView: View {
     
-    @StateObject var viewModel = CategoryViewModel()
-    @State private var selectedModel = CategoryModel()
+    @StateObject private var viewModel = CategoryViewModel()
     
-    //TODO: MOVER A VISTAS POR SEPARADO PARA PODER AGREGAR EL LOADER
+    @State private var showNewItemModal = false
+    @State private var modelToModify: CategoryModel?
+    @State private var modelToDelete: CategoryModel?
+    
+    //TOD: MOVER A VISTAS POR SEPARADO PARA PODER AGREGAR EL LOADER
     var body: some View {
         ContentContainer(addPading: false) {
             
@@ -34,7 +37,7 @@ struct CategoryView: View {
                 categoryList
                 
                 ButtonRounded {
-                    viewModel.showNewCategoryModal = true
+                    showNewItemModal = true
                 }
                 .disabled(viewModel.isEditing)
                 .padding(.trailing, ConstantViews.paddingButtonAddCategory)
@@ -49,20 +52,22 @@ struct CategoryView: View {
         .onDisappear {
             viewModel.deactivateObservers()
         }
-        .sheet(isPresented: $viewModel.showNewCategoryModal) {
+        .sheet(isPresented: $showNewItemModal) {
             AddModifyCategoryView(categoryType: $viewModel.categoryType)
                 .presentationDetents([.large])
                 .presentationCornerRadius(ConstantRadius.cornersModal)
         }
-        .sheet(isPresented: $viewModel.showModifyCategoryModal) {
-            AddModifyCategoryView(selectedModel,
-                                  categoryType: $viewModel.categoryType)
-            .presentationDetents([.large])
-            .presentationCornerRadius(ConstantRadius.cornersModal)
+        .sheet(item: $modelToModify) { model in
+            AddModifyCategoryView(model, categoryType: $viewModel.categoryType)
+                .presentationDetents([.large])
+                .presentationCornerRadius(ConstantRadius.cornersModal)
+                .onDisappear {
+                    modelToModify = nil
+                }
         }
     }
     
-    // MARK: VIEWS
+    // MARK: - VIEWS
     
     private var topMenu: some View {
         VStack {
@@ -161,8 +166,7 @@ struct CategoryView: View {
                                         viewModel.selectedCategories.insert(item)
                                     }
                                 } else {
-                                    selectedModel = item
-                                    viewModel.showModifyCategoryModal = true
+                                    modelToModify = item
                                 }
                             }
                             
@@ -173,7 +177,7 @@ struct CategoryView: View {
                         .listRowBackground(Color.listRowBackground) //Background for each row.
                         .swipeActions(edge: .trailing) {
                             Button {
-                                selectedModel = item
+                                modelToDelete = item
                                 viewModel.showAlertDelete = true
                             } label: {
                                 Label.delete
@@ -181,8 +185,7 @@ struct CategoryView: View {
                             .tint(Color.alert)
                             
                             Button {
-                                selectedModel = item
-                                viewModel.showModifyCategoryModal = true
+                                modelToModify = item
                             } label: {
                                 Label.edit
                             }
@@ -216,10 +219,10 @@ struct CategoryView: View {
     }
     
     
-    // MARK: FUNCTIONS
+    // MARK: - FUNCTIONS
     
     private func delete() {
-        let result = viewModel.deleteCategory(selectedModel)
+        let result = viewModel.delete(modelToDelete)
         
         if result.status.isError {
             viewModel.errorMessage = result.message
@@ -227,7 +230,7 @@ struct CategoryView: View {
     }
     
     private func deleteMltipleCategories() {
-        let result = viewModel.deleteMltipleCategories()
+        let result = viewModel.deleteMltiple()
         
         if result.status.isError {
             viewModel.errorMessage = result.message

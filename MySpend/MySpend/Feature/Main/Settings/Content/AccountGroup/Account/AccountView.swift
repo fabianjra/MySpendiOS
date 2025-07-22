@@ -9,9 +9,9 @@ import SwiftUI
 
 struct AccountView: View {
     
-    @State private var showNewItemModal = false
+    @StateObject private var viewModel = AccountViewModel()
     
-    @StateObject var viewModel = AccountViewModel()
+    @State private var showNewItemModal = false
     
     @State private var modelType: AccountType = .general
     @State private var modelToModify: AccountModel?
@@ -62,11 +62,11 @@ struct AccountView: View {
         }
         .sheet(item: $modelToModify) { model in
             AddModifyAccountView(model, accountType: $modelType)
-            .onDisappear {
-                modelToModify = nil
-            }
-            .presentationDetents([.large])
-            .presentationCornerRadius(ConstantRadius.cornersModal)
+                .presentationDetents([.large])
+                .presentationCornerRadius(ConstantRadius.cornersModal)
+                .onDisappear {
+                    modelToModify = nil
+                }
         }
     }
     
