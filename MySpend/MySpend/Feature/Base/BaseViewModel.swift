@@ -13,7 +13,6 @@ import SwiftUI
 public class BaseViewModel: ObservableObject {
     
     // MARK: - Estado común
-    @Published var isLoading: Bool = false
     @Published var errorMessage = ""
     @Published var disabled: Bool = false
     
@@ -32,13 +31,13 @@ public class BaseViewModel: ObservableObject {
     init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
     }
-
+    
     // MARK: - Funciones
     /**
      Comienza a escuchar los cambios del `viewContext`.
      
      - Parameters:
-        - onChange: Se ejecuta en MainActor cada vez que Core Data emite una notificación.
+     - onChange: Se ejecuta en MainActor cada vez que Core Data emite una notificación.
      */
     func startObserveViewContextChanges(onChange: @escaping () -> Void) {
         guard viewContextObserver == nil else { return } // Evita suscribirse dos veces
@@ -74,21 +73,5 @@ public class BaseViewModel: ObservableObject {
     public func stopObserveUserDefaultsChanges() {
         userDefaultsObserver?.cancel()
         userDefaultsObserver = nil
-    }
-
-    public func performWithLoader(_ action: @escaping () async -> Void) async {
-        errorMessage = ""
-        
-        withAnimation {
-            isLoading = true
-        }
-        
-        defer {
-            withAnimation {
-                isLoading = false
-            }
-        }
-        
-        await action()
     }
 }

@@ -55,9 +55,6 @@ struct TransactionView: View {
             
             // MARK: - TRANSACTIONS
             
-            if viewModel.isLoading {
-                LoaderView()
-            } else {
                 if viewModel.transactions.isEmpty {
                     NoContentToAddView(title: "No transactions")
                     Spacer()
@@ -97,7 +94,6 @@ struct TransactionView: View {
                     //TODO: Revisar si con listener se comporta diferente.
                     //.redacted(reason: viewModel.isLoading ? .placeholder : [])
                 }
-            }
         }
         .onFirstAppear {
             viewModel.activateObservers()

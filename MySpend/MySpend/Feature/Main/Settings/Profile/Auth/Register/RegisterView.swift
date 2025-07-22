@@ -55,14 +55,14 @@ struct RegisterView: View {
                 Button("Register") {
                     registerNewUser()
                 }
-                .buttonStyle(ButtonPrimaryStyle(isLoading: $viewModel.isLoading))
+                //.buttonStyle(ButtonPrimaryStyle(isLoading: $viewModel.isLoading))
                 
                 
                 TextError(viewModel.errorMessage)
             }
             .modifier(AddKeyboardToolbar(focusedField: $focusedField))
         }
-        .disabled(viewModel.isLoading)
+        //.disabled(viewModel.isLoading)
     }
     
     private func registerNewUser() {

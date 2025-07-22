@@ -40,7 +40,7 @@ struct LoginView: View {
                 Button("Login") {
                     login()
                 }
-                .buttonStyle(ButtonPrimaryStyle(isLoading: $viewModel.isLoading))
+                //.buttonStyle(ButtonPrimaryStyle(isLoading: $viewModel.isLoading))
                 
                 TextError(viewModel.errorMessage)
                 
@@ -117,7 +117,7 @@ struct LoginView: View {
             }
             .padding(.top)
         }
-        .disabled(viewModel.isLoading)
+        //.disabled(viewModel.isLoading)
         .onAppear {
             authViewModel.listenAuthentificationState()
         }

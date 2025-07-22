@@ -44,7 +44,7 @@ struct ChangeNameView: View {
                 Button("Change name") {
                         viewModel.changeUserName()
                 }
-                .buttonStyle(ButtonPrimaryStyle(isLoading: $viewModel.isLoading))
+                .buttonStyle(ButtonPrimaryStyle())
                 .disabled(viewModel.disabled)
                 
                 

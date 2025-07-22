@@ -77,7 +77,7 @@ struct AddModifyAccountView: View {
                 Button(viewModel.isAddModel ? "Add" : "Modify") {
                     process(viewModel.isAddModel ? .add : .modify)
                 }
-                .buttonStyle(ButtonPrimaryStyle(isLoading: $viewModel.isLoading))
+                .buttonStyle(ButtonPrimaryStyle())
                 .padding(.vertical)
                 
                 if viewModel.isAddModel == false {
@@ -108,7 +108,6 @@ struct AddModifyAccountView: View {
                 accountType = viewModel.model.type
             }
         }
-        .disabled(viewModel.isLoading)
     }
     
     private func process(_ processType: ProcessType) {

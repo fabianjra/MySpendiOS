@@ -17,13 +17,13 @@ class LoginViewModel: BaseViewModel {
             return
         }
         
-        await performWithLoader {
-            do {
-                try await AuthFB().singIn(self.login.email, password: self.login.password)
-            } catch {
-                Logger.exception(error)
-                self.errorMessage = error.localizedDescription
-            }
-        }
+//        await performWithLoader {
+//            do {
+//                try await AuthFB().singIn(self.login.email, password: self.login.password)
+//            } catch {
+//                Logger.exception(error)
+//                self.errorMessage = error.localizedDescription
+//            }
+//        }
     }
 }

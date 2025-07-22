@@ -117,7 +117,7 @@ struct AddModifyTransactionView: View {
                             Button(viewModel.isNewModel ? "Add" : "Modify") {
                                 process(viewModel.isNewModel ? .add : .modify)
                             }
-                            .buttonStyle(ButtonPrimaryStyle(isLoading: $viewModel.isLoading))
+                            .buttonStyle(ButtonPrimaryStyle())
                             
                             if viewModel.isNewModel == false {
                                 Button("Delete") {
@@ -175,7 +175,6 @@ struct AddModifyTransactionView: View {
         // This modal sometimes dont apply the corner radius. It looks like is a SwiftUI Bug..
         .presentationDetents([.large])
         .presentationCornerRadius(ConstantRadius.cornersModal)
-        .disabled(viewModel.isLoading)
     }
     
     private func process(_ processType: ProcessType) {

@@ -89,7 +89,7 @@ struct AddModifyCategoryView: View {
                 Button(viewModel.isAddModel ? "Add" : "Modify") {
                     process(viewModel.isAddModel ? .add : .modify)
                 }
-                .buttonStyle(ButtonPrimaryStyle(isLoading: $viewModel.isLoading))
+                .buttonStyle(ButtonPrimaryStyle())
                 .padding(.vertical)
                 
                 if viewModel.isAddModel == false {
@@ -119,7 +119,6 @@ struct AddModifyCategoryView: View {
         .sheet(isPresented: $viewModel.showIconsModal) {
             IconListModalView(model: $viewModel.model, showModal: $viewModel.showIconsModal)
         }
-        .disabled(viewModel.isLoading)
     }
     
     private func process(_ processType: ProcessType) {

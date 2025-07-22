@@ -28,17 +28,17 @@ class RegisterViewModel: BaseViewModel {
         
         var response = ResponseModel()
         
-        await performWithLoader {
-            do {
-                try await AuthFB().registerUser(withEmail: self.register.email,
-                                                password: self.register.password,
-                                                username: self.register.name)
-                response = ResponseModel(.successful)
-            } catch {
-                Logger.exception(error)
-                response = ResponseModel(.error, error.localizedDescription)
-            }
-        }
+//        await performWithLoader {
+//            do {
+//                try await AuthFB().registerUser(withEmail: self.register.email,
+//                                                password: self.register.password,
+//                                                username: self.register.name)
+//                response = ResponseModel(.successful)
+//            } catch {
+//                Logger.exception(error)
+//                response = ResponseModel(.error, error.localizedDescription)
+//            }
+//        }
         
         return response
     }

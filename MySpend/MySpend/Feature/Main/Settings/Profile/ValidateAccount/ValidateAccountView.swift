@@ -32,7 +32,7 @@ struct ValidateAccountView: View {
                 sendEmailBody
             }
         }
-        .disabled(viewModel.isLoading)
+        //.disabled(viewModel.isLoading)
         .onAppear {
             Task {
                 await viewModel.onAppear()
@@ -72,7 +72,7 @@ struct ValidateAccountView: View {
             Button("Go back") {
                 dismiss()
             }
-            .buttonStyle(ButtonPrimaryStyle(isLoading: $viewModel.isLoading))
+            //.buttonStyle(ButtonPrimaryStyle(isLoading: $viewModel.isLoading))
             .padding(.top)
         }
         .padding(.top)
@@ -91,7 +91,7 @@ struct ValidateAccountView: View {
                     await viewModel.sendEmail()
                 }
             }
-            .buttonStyle(ButtonPrimaryStyle(isLoading: $viewModel.isLoading))
+            //.buttonStyle(ButtonPrimaryStyle(isLoading: $viewModel.isLoading))
             .disabled(viewModel.disabled)
             
             
