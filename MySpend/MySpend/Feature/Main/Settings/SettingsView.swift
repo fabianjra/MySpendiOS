@@ -10,6 +10,7 @@ import SwiftUI
 struct SettingsView: View {
     
     @State private var showAlert = false
+    @State private var showAlertConfirmation = false
     
     var body: some View {
         ContentContainer(addPading: false) {
@@ -17,7 +18,7 @@ struct SettingsView: View {
                 
                 // MARK: - ACCOUNT
                 
-                SectionContainer("Account") {
+                SectionContainer("Profile") {
                     ForEach(AccountOptions.allCases) { option in
                         if option.showOption {
                             HStack {
@@ -45,7 +46,7 @@ struct SettingsView: View {
                 
                 // MARK: - ERASE ALL DATA
                 
-                SectionContainer("DATA") {
+                SectionContainer("Data") {
                     
                     Button("Delete data") {
                         showAlert = true
@@ -56,12 +57,23 @@ struct SettingsView: View {
                     .alert("Want to delete all data?", isPresented: $showAlert) {
                         
                         Button("Delete", role: .destructive) {
+                            showAlertConfirmation = true
+                        }
+                        
+                        Button("Cancel", role: .cancel) { }
+                    } message: {
+                        TextPlain("This action cannot be undone.")
+                    }
+                    
+                    .alert("Are you completely sure you want to delete all data?", isPresented: $showAlertConfirmation) {
+                        
+                        Button("Delete", role: .destructive) {
                             //TODO: AGREGAR BORRADO DE DATOS
                         }
                         
                         Button("Cancel", role: .cancel) { }
                     } message: {
-                        Text("This action cannot be undone.")
+                        TextPlain("All accounts, categories and transactions will be permanently deleted.")
                     }
                 }
             }
