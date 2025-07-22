@@ -28,7 +28,7 @@ final class AddModifyCategoryViewModel: BaseViewModel {
         super.init(viewContext: CoreDataUtilities.getViewContext())
     }
     
-    func addNew(type: CategoryType) -> ResponseModel {
+    func addNew(type: CategoryType) async -> ResponseModel {
         if model.name.isEmptyOrWhitespace {
             return ResponseModel(.error, Errors.emptySpaces.localizedDescription)
         }
@@ -37,7 +37,7 @@ final class AddModifyCategoryViewModel: BaseViewModel {
         modelMutated.type = type
         
         do {
-            try CategoryManager(viewContext: viewContext).create(modelMutated)
+            try await CategoryManager(viewContext: viewContext).create(modelMutated)
             return ResponseModel(.successful)
         } catch {
             Logger.exception(error, type: .CoreData)
@@ -45,7 +45,7 @@ final class AddModifyCategoryViewModel: BaseViewModel {
         }
     }
     
-    func modify(type: CategoryType) -> ResponseModel {
+    func modify(type: CategoryType) async -> ResponseModel {
         if model.name.isEmptyOrWhitespace {
             return ResponseModel(.error, Errors.emptySpaces.localizedDescription)
         }
@@ -57,7 +57,8 @@ final class AddModifyCategoryViewModel: BaseViewModel {
             // a una cuenta de un tipo incompatible con el nuevo tipo de categoria seleccionado.
             // Ver mas en la documentacion del metodo "fetchIncompatibleTypeCount"
             if modelMutated.type != type {
-                let incompatibleTransactionsCount = try TransactionManager(viewContext: viewContext).fetchIncompatibleTypeCount(currentCategoryID: modelMutated.id.uuidString, newCategoryType: type)
+                let incompatibleTransactionsCount = try await TransactionManager(viewContext: viewContext).fetchIncompatibleTypeCount(currentCategoryID: modelMutated.id.uuidString,
+                                                                                                                                      newCategoryType: type)
                 
                 if incompatibleTransactionsCount > .zero {
                     return ResponseModel(.error, Errors.cannotUpdateCategoryDueToAccountType(incompatibleTransactionsCount.description).localizedDescription)
@@ -65,7 +66,7 @@ final class AddModifyCategoryViewModel: BaseViewModel {
             }
             
             modelMutated.type = type
-            try CategoryManager(viewContext: viewContext).update(modelMutated)
+            try await CategoryManager(viewContext: viewContext).update(modelMutated)
             return ResponseModel(.successful)
         } catch {
             Logger.exception(error, type: .CoreData)
@@ -73,9 +74,9 @@ final class AddModifyCategoryViewModel: BaseViewModel {
         }
     }
     
-    func delete() -> ResponseModel {
+    func delete() async -> ResponseModel {
         do {
-            try CategoryManager(viewContext: viewContext).delete(model)
+            try await CategoryManager(viewContext: viewContext).delete(model)
             return ResponseModel(.successful)
         } catch {
             Logger.exception(error, type: .CoreData)

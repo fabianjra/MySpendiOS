@@ -39,16 +39,22 @@ public class BaseViewModel: ObservableObject {
      - Parameters:
      - onChange: Se ejecuta en MainActor cada vez que Core Data emite una notificación.
      */
-    func startObserveViewContextChanges(onChange: @escaping () -> Void) {
+    func startObserveViewContextChanges(onChange: @escaping @Sendable () async -> Void) {
         guard viewContextObserver == nil else { return } // Evita suscribirse dos veces
         
         viewContextObserver = NotificationCenter.default
             .publisher(for: .NSManagedObjectContextObjectsDidChange,
                        object: viewContext)
             .debounce(for: .milliseconds(50), scheduler: RunLoop.main) // opcional, para evitar multiples llamados
+            //.receive(on: DispatchQueue.main) // Redundante: Puedes omitir .receive(on: DispatchQueue.main); con el debounce sobre RunLoop.main ya garantizas que el sink se ejecute en el hilo principal.
             .sink { [weak self] _ in
                 guard self != nil else { return }
-                onChange()
+                
+                // Al parecer @MainActor in... pero es redudante, ya la clase usa MainActor, pero se agrega para asegurar que el cuerpo corra sobre el hilo principal.
+                // El MainActor podria anotarse despues de @escaping en el parametro, para no dejarlo dentro de Task. Es una alternativa.
+                Task { @MainActor in
+                    await onChange()
+                }
             }
     }
     

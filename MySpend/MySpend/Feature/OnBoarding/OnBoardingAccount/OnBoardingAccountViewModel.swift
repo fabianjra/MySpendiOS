@@ -11,7 +11,7 @@ class OnBoardingAccountViewModel: BaseViewModel {
     
     @Published var name = ""
     
-    func finishOnBoarding(withName: Bool) {
+    func finishOnBoarding(withName: Bool) async {
         
         if withName {
             if name.isEmptyOrWhitespace {
@@ -25,7 +25,7 @@ class OnBoardingAccountViewModel: BaseViewModel {
         let account = AccountModel(icon: ConstantSystemImage.bankDollarFill, name: name, type: .general)
         
         do {
-            try AccountManager(viewContext: viewContext).create(account)
+            try await AccountManager(viewContext: viewContext).create(account)
         } catch {
             Logger.exception(error, type: .CoreData)
         }

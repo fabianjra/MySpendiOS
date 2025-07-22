@@ -8,7 +8,7 @@
 @MainActor
 struct MockTransactionModel {
     
-    static func fetchAll(type: MockDataType) -> [TransactionModel] {
+    static func fetchAll(type: MockDataType) async -> [TransactionModel] {
         do {
             var mockTransactions: [TransactionModel] = []
             
@@ -17,10 +17,10 @@ struct MockTransactionModel {
                 mockTransactions = []
                 
             case .normal:
-                mockTransactions = try TransactionManager(viewContext: MockCoreDataNormal.preview.container.viewContext).fetchAll()
+                mockTransactions = try await TransactionManager(viewContext: MockCoreDataNormal.preview.container.viewContext).fetchAll()
                 
             case .saturated:
-                mockTransactions = try TransactionManager(viewContext: MockCoreDataNormal.preview.container.viewContext).fetchAll()
+                mockTransactions = try await TransactionManager(viewContext: MockCoreDataNormal.preview.container.viewContext).fetchAll()
             }
             
             return mockTransactions

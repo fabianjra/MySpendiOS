@@ -47,8 +47,8 @@ struct AccountView: View {
             
             TextError(viewModel.errorMessage)
         }
-        .onAppear {
-            viewModel.activateObservers()
+        .task {
+            await viewModel.activateObservers()
         }
         .onDisappear {
             viewModel.deactivateObservers()
@@ -251,22 +251,26 @@ struct AccountView: View {
     // MARK: - FUNCTIONS
     
     private func delete() {
-        defer {
-            modelToDelete = nil
-        }
-        
-        let result = viewModel.delete(modelToDelete)
-        
-        if result.status.isError {
-            viewModel.errorMessage = result.message
+        Task {
+            defer {
+                modelToDelete = nil
+            }
+            
+            let result = await viewModel.delete(modelToDelete)
+            
+            if result.status.isError {
+                viewModel.errorMessage = result.message
+            }
         }
     }
     
     private func deleteMltipleItems() {
-        let result = viewModel.deleteMltipleItems()
-        
-        if result.status.isError {
-            viewModel.errorMessage = result.message
+        Task {
+            let result = await viewModel.deleteMltipleItems()
+            
+            if result.status.isError {
+                viewModel.errorMessage = result.message
+            }
         }
     }
 }

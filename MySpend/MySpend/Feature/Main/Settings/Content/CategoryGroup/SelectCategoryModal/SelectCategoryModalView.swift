@@ -105,7 +105,9 @@ struct SelectCategoryModalView: View {
             }
         }
         .onAppear {
-            viewModel.activateObservers()
+            Task {
+                await viewModel.activateObservers()
+            }
         }
         .onDisappear {
             viewModel.deactivateObservers()

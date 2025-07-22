@@ -96,7 +96,9 @@ struct TransactionView: View {
                 }
         }
         .onFirstAppear {
-            viewModel.activateObservers()
+            Task {
+                await viewModel.activateObservers()
+            }
         }
     }
 }

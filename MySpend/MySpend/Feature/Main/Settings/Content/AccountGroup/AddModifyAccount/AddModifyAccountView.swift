@@ -111,21 +111,23 @@ struct AddModifyAccountView: View {
     }
     
     private func process(_ processType: ProcessType) {
-        let result: ResponseModel
-        
-        switch processType {
-        case .add:
-            result = viewModel.addNew(type: accountType)
-        case .modify:
-            result = viewModel.modify(type: accountType)
-        case .delete:
-            result = viewModel.delete()
-        }
-        
-        if result.status.isSuccess {
-            dismiss()
-        } else {
-            viewModel.errorMessage = result.message
+        Task {
+            let result: ResponseModel
+            
+            switch processType {
+            case .add:
+                result = await viewModel.addNew(type: accountType)
+            case .modify:
+                result = await viewModel.modify(type: accountType)
+            case .delete:
+                result = await viewModel.delete()
+            }
+            
+            if result.status.isSuccess {
+                dismiss()
+            } else {
+                viewModel.errorMessage = result.message
+            }
         }
     }
 }

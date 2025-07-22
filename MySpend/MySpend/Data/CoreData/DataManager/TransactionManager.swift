@@ -26,27 +26,33 @@ struct TransactionManager {
     
     func fetchAll(predicateFormat: String = CDConstants.Predicate.byIsActive,
                   predicateArgs: [Any] = [true],
-                  sortedBy sortDescriptors: [NSSortDescriptor] = [NSSortDescriptor(keyPath: \Transaction.dateTransaction, ascending: true)])
-    throws -> [TransactionModel] {
+                  sortedBy sortDescriptors: [NSSortDescriptor] = [NSSortDescriptor(keyPath: \Transaction.dateTransaction, ascending: true)]) async throws -> [TransactionModel] {
         
-        let request: NSFetchRequest<Transaction> = Transaction.fetchRequest()
-        request.sortDescriptors = sortDescriptors // El ordenamiento se hace a la hora de mostrar los datos
-        request.predicate = NSPredicate(format: predicateFormat, argumentArray: predicateArgs)
-        
-        let coreDataEntities = try viewContext.fetch(request)
-        
-        let models = coreDataEntities.map { entity in
-            TransactionModel(entity)
+        try await viewContext.perform {
+            
+            let request: NSFetchRequest<Transaction> = Transaction.fetchRequest()
+            request.sortDescriptors = sortDescriptors // El ordenamiento se hace a la hora de mostrar los datos
+            request.predicate = NSPredicate(format: predicateFormat, argumentArray: predicateArgs)
+            
+            let coreDataEntities = try viewContext.fetch(request)
+            
+            let models = coreDataEntities.map { entity in
+                TransactionModel(entity)
+            }
+            
+            return models
         }
-        
-        return models
     }
     
     
     // MARK: CREATE / UPDATE
     
-    func create(_ model: TransactionModel) throws {
-        try viewContext.performAndWait {
+    func create(_ model: TransactionModel) async throws {
+        
+        let categoryResolved = try await CategoryManager.resolve(from: model.category, viewContextArg: viewContext)
+        let accountResolved = try await AccountManager.resolve(from: model.account, viewContextArg: viewContext)
+        
+        try await viewContext.perform {
             
             let entity = Transaction(context: viewContext)
             
@@ -65,8 +71,8 @@ struct TransactionManager {
             // Con asignar uno de los lados basta; el otro se actualiza al guardar el contexto.
             // Es decir, no hay que ir a buscar la entidad Category para hacer la funcion de categoryEntity.addToTransaccions(entity).
             // Eso seria redundante (hace la misma operación dos veces) y solo gasta CPU.
-            entity.category = try CategoryManager.resolve(from: model.category, viewContextArg: viewContext)
-            entity.account = try AccountManager.resolve(from: model.account, viewContextArg: viewContext)
+            entity.category = categoryResolved
+            entity.account = accountResolved
             
             // Aumenta el valor de la cantidad de usos para la categoria:
             entity.category?.dateLastUsed = .now
@@ -76,10 +82,14 @@ struct TransactionManager {
         }
     }
     
-    func update(_ model: TransactionModel) throws {
-        try viewContext.performAndWait {
-            let entity = try fetch(model)
-            
+    func update(_ model: TransactionModel) async throws {
+        
+        let categoryResolved = try await CategoryManager.resolve(from: model.category, viewContextArg: viewContext)
+        let accountResolved = try await AccountManager.resolve(from: model.account, viewContextArg: viewContext)
+        
+        let entity = try await fetch(model)
+        
+        try await viewContext.perform {
             // Shared attributes (Abstract class):
             entity.dateModified = .now
             entity.isActive = model.isActive
@@ -88,8 +98,8 @@ struct TransactionManager {
             entity.amount = UtilsCurrency.makeDecimal(model.amount)
             entity.dateTransaction = model.dateTransaction.dateWithCurrentTime
             entity.notes = model.notes
-            entity.category = try CategoryManager.resolve(from: model.category, viewContextArg: viewContext)
-            entity.account = try AccountManager.resolve(from: model.account, viewContextArg: viewContext)
+            entity.category = categoryResolved
+            entity.account = accountResolved
 
             entity.category?.dateLastUsed = .now
             entity.category?.usageCount = (entity.category?.usageCount ?? .zero) + 1
@@ -101,31 +111,33 @@ struct TransactionManager {
     
     // MARK: DELETE
     
-    func delete(_ model: TransactionModel) throws {
-        try viewContext.performAndWait {
-            let entity = try fetch(model)
-            
+    func delete(_ model: TransactionModel) async throws {
+        let entity = try await fetch(model)
+        
+        try await viewContext.perform {
             viewContext.delete(entity)
             try viewContext.save()
         }
     }
     
-    func delete(at offsets: IndexSet, from items: [TransactionModel]) throws {
+    func delete(at offsets: IndexSet, from items: [TransactionModel]) async throws {
         for offset in offsets {
             let model = items[offset]
-            try delete(model)
+            try await delete(model)
         }
     }
     
-    private func fetch(_ model: TransactionModel) throws -> Transaction {
-        let fetchRequest = CoreDataUtilities.createFetchRequest(ByID: model.id.uuidString, entity: Transaction.self)
-        let entity = try viewContext.fetch(fetchRequest)
-        
-        guard let item = entity.first else {
-            throw CDError.notFoundFetch(entity: Transaction.description())
+    private func fetch(_ model: TransactionModel) async throws -> Transaction {
+        try await viewContext.perform {
+            let fetchRequest = CoreDataUtilities.createFetchRequest(ByID: model.id.uuidString, entity: Transaction.self)
+            let entity = try viewContext.fetch(fetchRequest)
+            
+            guard let item = entity.first else {
+                throw CDError.notFoundFetch(entity: Transaction.description())
+            }
+            
+            return item
         }
-        
-        return item
     }
     
     
@@ -150,31 +162,33 @@ struct TransactionManager {
      - Returns: Number of incompatible transactions.
      - Throws: Any error thrown by `viewContext.count(for:)`.
      */
-    func fetchIncompatibleTypeCount(currentAccountID id: String, newAccountType: AccountType) throws -> Int {
-        
-        // 1.  General accepts everything -> nothing to validate
-        guard newAccountType != .general else { return .zero }
-        
-        // 2.  Predicate for the account
-        let accountPredicate = NSPredicate(format: CDConstants.Predicate.byAccountId, id)
-        
-        // 3.  Predicate for the *disallowed* category type
-        let disallowedPredicate: NSPredicate
-        
-        switch newAccountType {
-        case .expenses: disallowedPredicate = NSPredicate(format: CDConstants.Predicate.byCategoryType, CategoryType.income.rawValue)
+    func fetchIncompatibleTypeCount(currentAccountID id: String, newAccountType: AccountType) async throws -> Int {
+        try await viewContext.perform {
             
-        case .incomes: disallowedPredicate = NSPredicate(format: CDConstants.Predicate.byCategoryType, CategoryType.expense.rawValue)
+            // 1.  General accepts everything -> nothing to validate
+            guard newAccountType != .general else { return .zero }
             
-        case .general: return .zero
+            // 2.  Predicate for the account
+            let accountPredicate = NSPredicate(format: CDConstants.Predicate.byAccountId, id)
+            
+            // 3.  Predicate for the *disallowed* category type
+            let disallowedPredicate: NSPredicate
+            
+            switch newAccountType {
+            case .expenses: disallowedPredicate = NSPredicate(format: CDConstants.Predicate.byCategoryType, CategoryType.income.rawValue)
+                
+            case .incomes: disallowedPredicate = NSPredicate(format: CDConstants.Predicate.byCategoryType, CategoryType.expense.rawValue)
+                
+            case .general: return .zero
+            }
+            
+            // 4.  Combined query (COUNT only)
+            let request: NSFetchRequest<Transaction> = Transaction.fetchRequest()
+            request.predicate   = NSCompoundPredicate(andPredicateWithSubpredicates: [accountPredicate, disallowedPredicate])
+            request.resultType  = .countResultType // fastest
+            
+            return try viewContext.count(for: request)
         }
-        
-        // 4.  Combined query (COUNT only)
-        let request: NSFetchRequest<Transaction> = Transaction.fetchRequest()
-        request.predicate   = NSCompoundPredicate(andPredicateWithSubpredicates: [accountPredicate, disallowedPredicate])
-        request.resultType  = .countResultType // fastest
-        
-        return try viewContext.count(for: request)
     }
     
     /**
@@ -201,32 +215,34 @@ struct TransactionManager {
      - Returns: The number of incompatible transactions found.
      - Throws: Any error thrown by `viewContext.count(for:)`.
      */
-    func fetchIncompatibleTypeCount(currentCategoryID id: String, newCategoryType: CategoryType) throws -> Int {
-        
-        // Condicion 1: Obtendra las transacciones que usen la categoria actual
-        let categoryPredicate = NSPredicate(format: CDConstants.Predicate.byCategoryId, id)
-
-        // Condicion 2: Verifica si el Account al que pertenece la Transaction NO es compatible con el nuevo tipo de Category
-        
-        // Condicion 2: Obtendra las transacciones que no sean compatibles con el nuevo tipo de categoria seleccionado,
-        // asi se puede saber si existen transacciones que no deberian poder actualizarse por perteneceer a una categoria incompatible con el tipo de cuenta.
-        let incompatiblePredicate: NSPredicate
-        
-        switch newCategoryType {
-        case .expense:
-            // No se permiten cuentas tipo incomes
-            incompatiblePredicate = NSPredicate(format: CDConstants.Predicate.byAccountType, AccountType.incomes.rawValue)
+    func fetchIncompatibleTypeCount(currentCategoryID id: String, newCategoryType: CategoryType) async throws -> Int {
+        try await viewContext.perform {
             
-        case .income:
-            // No se permiten cuentas tipo expenses
-            incompatiblePredicate = NSPredicate(format: CDConstants.Predicate.byAccountType, AccountType.expenses.rawValue)
+            // Condicion 1: Obtendra las transacciones que usen la categoria actual
+            let categoryPredicate = NSPredicate(format: CDConstants.Predicate.byCategoryId, id)
+            
+            // Condicion 2: Verifica si el Account al que pertenece la Transaction NO es compatible con el nuevo tipo de Category
+            
+            // Condicion 2: Obtendra las transacciones que no sean compatibles con el nuevo tipo de categoria seleccionado,
+            // asi se puede saber si existen transacciones que no deberian poder actualizarse por perteneceer a una categoria incompatible con el tipo de cuenta.
+            let incompatiblePredicate: NSPredicate
+            
+            switch newCategoryType {
+            case .expense:
+                // No se permiten cuentas tipo incomes
+                incompatiblePredicate = NSPredicate(format: CDConstants.Predicate.byAccountType, AccountType.incomes.rawValue)
+                
+            case .income:
+                // No se permiten cuentas tipo expenses
+                incompatiblePredicate = NSPredicate(format: CDConstants.Predicate.byAccountType, AccountType.expenses.rawValue)
+            }
+            
+            // Combinar ambos predicados
+            let request: NSFetchRequest<Transaction> = Transaction.fetchRequest()
+            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, incompatiblePredicate])
+            request.resultType = .countResultType // Faster call to CoreData
+            
+            return try viewContext.count(for: request)
         }
-
-        // Combinar ambos predicados
-        let request: NSFetchRequest<Transaction> = Transaction.fetchRequest()
-        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, incompatiblePredicate])
-        request.resultType = .countResultType // Faster call to CoreData
-        
-        return try viewContext.count(for: request)
     }
 }

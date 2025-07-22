@@ -23,9 +23,9 @@ class TransactionViewModel: BaseViewModel {
      
      Dont call stopObservingChanges becaise this viewModel will be alive all alonge the app, listening for changes and show them in this home view.
      */
-    func activateObservers() {
+    func activateObservers() async {
         startObserveViewContextChanges { [weak self] in
-            self?.fetchAll()
+            await self?.fetchAll()
         }
         
         startObserveUserDefaultsChanges { [weak self] in
@@ -33,23 +33,23 @@ class TransactionViewModel: BaseViewModel {
             self?.userName = UserDefaultsManager.userName
         }
         
-        fetchAll()
+        await fetchAll()
     }
     
-    private func fetchAll() {
+    private func fetchAll() async {
         do {
-            transactions = try TransactionManager(viewContext: viewContext).fetchAll()
+            transactions = try await TransactionManager(viewContext: viewContext).fetchAll()
             groupedTransactions = UtilsCurrency.calculateGroupedTransactions(transactions)
             
-            try fetchAccountCount()
+            try await fetchAccountCount()
         } catch {
-            Logger.exception(error, type: .CoreData)
             errorMessage = error.localizedDescription
+            Logger.exception(error, type: .CoreData)
         }
     }
     
-    private func fetchAccountCount() throws {
-        let count = try AccountManager(viewContext: viewContext).fetchAllCount()
+    private func fetchAccountCount() async throws {
+        let count = try await AccountManager(viewContext: viewContext).fetchAllCount()
         isMutipleAccounts = count > 1 ? true : false
     }
 }

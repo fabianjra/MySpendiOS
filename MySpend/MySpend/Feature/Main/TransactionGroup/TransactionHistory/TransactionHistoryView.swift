@@ -249,41 +249,59 @@ struct TransactionHistoryView: View {
     // MARK: FUNCTIONS
     
     private func delete() {
-        defer {
-            modelToDelete = nil
-        }
-        
-        let result = viewModel.delete(modelToDelete)
-        
-        if result.status.isError {
-            viewModel.errorMessage = result.message
+        Task {
+            defer {
+                modelToDelete = nil
+            }
+            
+            let result = await viewModel.delete(modelToDelete)
+            
+            if result.status.isError {
+                viewModel.errorMessage = result.message
+            }
         }
     }
     
     private func deleteMltipleTransactions() {
-        let result = viewModel.deleteMltiple()
-        
-        if result.status.isError {
-            viewModel.errorMessage = result.message
+        Task {
+            let result = await viewModel.deleteMltiple()
+            
+            if result.status.isError {
+                viewModel.errorMessage = result.message
+            }
+        }
+    }
+}
+
+
+private struct TransactionPreviewWrapper: View {
+    
+    @State private var transactionsLoaded: [TransactionModel] = []
+    @State private var dateTimeInterval: DateTimeInterval = .month
+    @State private var selectedDate: Date = .now
+    @State private var isMultipleAccounts: Bool = false
+    
+    var body: some View {
+        TransactionHistoryView(transactionsLoaded: $transactionsLoaded,
+                               dateTimeInterval: $dateTimeInterval,
+                               selectedDate: $selectedDate,
+                               isMutipleAccounts: $isMultipleAccounts)
+        .onAppear {
+            Task {
+                transactionsLoaded = await MockTransactionModel.fetchAll(type: .normal)
+                
+                let count = await MockAccountModel.fetchAllCount(type: .normal)
+                isMultipleAccounts = count > 1
+            }
         }
     }
 }
 
 #Preview("Normal es_CR") {
-    
-    @Previewable @State var transactionLoaded: [TransactionModel] = MockTransactionModel.fetchAll(type: .normal)
-    @Previewable @State var dateTimeInterval = DateTimeInterval.month
-    @Previewable @State var selectedDate = Date()
-    @Previewable @State var isMultipleAccounts: Bool = MockAccountModel.fetchAllCount(type: .normal) > 1 ? true : false
-    
-    VStack {
-        TransactionHistoryView(transactionsLoaded: $transactionLoaded,
-                               dateTimeInterval: $dateTimeInterval,
-                               selectedDate: $selectedDate,
-                               isMutipleAccounts: $isMultipleAccounts)
-            .environment(\.locale, .init(identifier: "es_CR"))
-    }
+    TransactionPreviewWrapper()
+        .environment(\.locale, .init(identifier: "es_CR"))
 }
+
 
 //TOD: REPARAR
 //#Preview("Random saturated en_US") {
@@ -296,17 +314,17 @@ struct TransactionHistoryView: View {
 //    }
 //}
 
-#Preview("No content en_US_POSIX") {
-    @Previewable @State var transactionLoaded: [TransactionModel] = MockTransactionModel.fetchAll(type: .empty)
-    @Previewable @State var dateTimeInterval = DateTimeInterval.month
-    @Previewable @State var selectedDate = Date()
-    @Previewable @State var isMultipleAccounts: Bool = MockAccountModel.fetchAllCount(type: .empty) > 1 ? true : false
-    
-    VStack {
-        TransactionHistoryView(transactionsLoaded: $transactionLoaded,
-                               dateTimeInterval: $dateTimeInterval,
-                               selectedDate: $selectedDate,
-                               isMutipleAccounts: $isMultipleAccounts)
-            .environment(\.locale, .init(identifier: "en_US_POSIX"))
-    }
-}
+//#Preview("No content en_US_POSIX") {
+//    @Previewable @State var transactionLoaded: [TransactionModel] = MockTransactionModel.fetchAll(type: .empty)
+//    @Previewable @State var dateTimeInterval = DateTimeInterval.month
+//    @Previewable @State var selectedDate = Date()
+//    @Previewable @State var isMultipleAccounts: Bool = MockAccountModel.fetchAllCount(type: .empty) > 1 ? true : false
+//
+//    VStack {
+//        TransactionHistoryView(transactionsLoaded: $transactionLoaded,
+//                               dateTimeInterval: $dateTimeInterval,
+//                               selectedDate: $selectedDate,
+//                               isMutipleAccounts: $isMultipleAccounts)
+//            .environment(\.locale, .init(identifier: "en_US_POSIX"))
+//    }
+//}

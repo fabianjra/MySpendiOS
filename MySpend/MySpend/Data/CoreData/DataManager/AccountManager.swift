@@ -27,26 +27,30 @@ struct AccountManager {
     func fetchAll(predicateFormat: String = CDConstants.Predicate.byIsActive,
                   predicateArgs: [Any] = [true],
                   sortedBy sortDescriptors: [NSSortDescriptor] = [NSSortDescriptor(keyPath: \Account.dateCreated, ascending: true)])
-    throws -> [AccountModel] {
+    async throws -> [AccountModel] {
         
-        let request: NSFetchRequest<Account> = Account.fetchRequest()
-        request.sortDescriptors = sortDescriptors
-        request.predicate = NSPredicate(format: predicateFormat, argumentArray: predicateArgs)
-        
-        let coreDataEntities = try viewContext.fetch(request)
-        
-        let models = coreDataEntities.map { entity in
-            AccountModel(entity)
+        // Perfom: It's async so dont block de UI
+        try await viewContext.perform {
+            
+            let request: NSFetchRequest<Account> = Account.fetchRequest()
+            request.sortDescriptors = sortDescriptors
+            request.predicate = NSPredicate(format: predicateFormat, argumentArray: predicateArgs)
+            
+            let entities = try viewContext.fetch(request)
+            
+            let models = entities.map { entity in
+                AccountModel(entity)
+            }
+            
+            return models
         }
-        
-        return models
     }
     
     
     // MARK: CREATE / UPDATE
     
-    func create(_ model: AccountModel) throws {
-        try viewContext.performAndWait {
+    func create(_ model: AccountModel) async throws {
+        try await viewContext.perform {
             
             let entity = Account(context: viewContext)
             
@@ -68,46 +72,48 @@ struct AccountManager {
         }
     }
     
-    func update(_ model: AccountModel) throws {
-        try viewContext.performAndWait {
-            if let item = try AccountManager.fetch(model, viewContextArg: viewContext) {
-                // Shared attributes (Abstract class):
-                item.dateModified = .now
-                item.isActive = model.isActive
-                
-                // Entity-specific Attributes
-                item.currencyCode = model.currencyCode
-                item.icon = model.icon
-                item.name = model.name
-                item.notes = model.notes
-                item.type = model.type.rawValue
-                item.userId = model.userId
-                
-                try viewContext.save()
-            } else {
-                throw CDError.notFoundUpdate(entity: Account.description())
-            }
+    func update(_ model: AccountModel) async throws {
+        
+        guard let item = try await AccountManager.fetch(model, viewContextArg: viewContext) else {
+            throw CDError.notFoundUpdate(entity: Account.description())
+        }
+        
+        try await viewContext.perform {
+            // Shared attributes (Abstract class):
+            item.dateModified = .now
+            item.isActive = model.isActive
+            
+            // Entity-specific Attributes
+            item.currencyCode = model.currencyCode
+            item.icon = model.icon
+            item.name = model.name
+            item.notes = model.notes
+            item.type = model.type.rawValue
+            item.userId = model.userId
+            
+            try viewContext.save()
         }
     }
-    
+
     
     // MARK: DELETE
     
-    func delete(_ model: AccountModel) throws {
-        try viewContext.performAndWait {
-            if let item = try AccountManager.fetch(model, viewContextArg: viewContext) {
-                viewContext.delete(item)
-                try viewContext.save()
-            } else {
-                throw CDError.notFoundDelete(entity: Account.description())
-            }
+    func delete(_ model: AccountModel) async throws {
+        
+        guard let item = try await AccountManager.fetch(model, viewContextArg: viewContext) else {
+            throw CDError.notFoundDelete(entity: Account.description())
+        }
+        
+        try await viewContext.perform {
+            viewContext.delete(item)
+            try viewContext.save()
         }
     }
     
-    func delete(at offsets: IndexSet, from items: [AccountModel]) throws {
+    func delete(at offsets: IndexSet, from items: [AccountModel]) async throws {
         for offset in offsets {
             let model = items[offset]
-            try delete(model)
+            try await delete(model)
         }
     }
     
@@ -127,13 +133,14 @@ struct AccountManager {
      - Date: Jul 2025
      */
     func fetchAllCount(predicateFormat: String = CDConstants.Predicate.byIsActive,
-                       predicateArgs: [Any] = [true],) throws -> Int {
-        
-        let request: NSFetchRequest<Account> = Account.fetchRequest()
-        request.predicate = NSPredicate(format: predicateFormat, argumentArray: predicateArgs)
-        request.resultType  = .countResultType
-        
-        return try viewContext.count(for: request)
+                       predicateArgs: [Any] = [true],) async throws -> Int {
+        try await viewContext.perform {
+            let request: NSFetchRequest<Account> = Account.fetchRequest()
+            request.predicate = NSPredicate(format: predicateFormat, argumentArray: predicateArgs)
+            request.resultType  = .countResultType
+            
+            return try viewContext.count(for: request)
+        }
     }
     
     /**
@@ -152,16 +159,20 @@ struct AccountManager {
      - Throws: Any error thrown by `viewContextArg.fetch(_:)`.
      - Date: Jul 2025
      */
-    static func fetch(_ model: AccountModel, viewContextArg: NSManagedObjectContext) throws -> Account? {
-        let fetchRequest = CoreDataUtilities.createFetchRequest(ByID: model.id.uuidString, entity: Account.self)
-        let itemCoreData = try viewContextArg.fetch(fetchRequest)
-        
-        guard let item = itemCoreData.first else {
-            Logger.custom(CDError.notFoundFetch(entity: Account.description()).localizedDescription)
-            return nil
+    static func fetch(_ model: AccountModel,
+                      viewContextArg: NSManagedObjectContext) async throws -> Account? {
+
+        try await viewContextArg.perform {
+            let fetchRequest = CoreDataUtilities.createFetchRequest(ByID: model.id.uuidString, entity: Account.self)
+            let itemCoreData = try viewContextArg.fetch(fetchRequest)
+            
+            guard let item = itemCoreData.first else {
+                Logger.custom(CDError.notFoundFetch(entity: Account.description()).localizedDescription)
+                return nil
+            }
+            
+            return item
         }
-        
-        return item
     }
     
     /**
@@ -182,8 +193,8 @@ struct AccountManager {
      - Throws: Rethrows any error raised by `AccountManager.fetch`.
      - Date: Jul 2025
      */
-    static func resolve(from model: AccountModel, viewContextArg: NSManagedObjectContext) throws -> Account {
-        if let existing = try AccountManager.fetch(model, viewContextArg: viewContextArg) {
+    static func resolve(from model: AccountModel, viewContextArg: NSManagedObjectContext) async throws -> Account {
+        if let existing = try await AccountManager.fetch(model, viewContextArg: viewContextArg) {
             return existing
         }
         

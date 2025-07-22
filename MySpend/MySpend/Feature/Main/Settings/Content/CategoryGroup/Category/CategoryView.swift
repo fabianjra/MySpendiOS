@@ -48,8 +48,8 @@ struct CategoryView: View {
             
             TextError(viewModel.errorMessage)
         }
-        .onAppear {
-            viewModel.activateObservers()
+        .task {
+            await viewModel.activateObservers()
         }
         .onDisappear {
             viewModel.deactivateObservers()
@@ -224,22 +224,26 @@ struct CategoryView: View {
     // MARK: - FUNCTIONS
     
     private func delete() {
-        defer {
-            modelToDelete = nil
-        }
-        
-        let result = viewModel.delete(modelToDelete)
-        
-        if result.status.isError {
-            viewModel.errorMessage = result.message
+        Task {
+            defer {
+                modelToDelete = nil
+            }
+            
+            let result = await viewModel.delete(modelToDelete)
+            
+            if result.status.isError {
+                viewModel.errorMessage = result.message
+            }
         }
     }
     
     private func deleteMltipleCategories() {
-        let result = viewModel.deleteMltiple()
-        
-        if result.status.isError {
-            viewModel.errorMessage = result.message
+        Task {
+            let result = await viewModel.deleteMltiple()
+            
+            if result.status.isError {
+                viewModel.errorMessage = result.message
+            }
         }
     }
 }

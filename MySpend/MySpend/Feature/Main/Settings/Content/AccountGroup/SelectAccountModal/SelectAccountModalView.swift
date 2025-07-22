@@ -89,7 +89,10 @@ struct SelectAccountModalView: View {
             }
         }
         .onAppear {
-            viewModel.activateObservers()
+            Task {
+                await viewModel.activateObservers()
+            }
+            
             modelType = selectedModel.type
         }
         .onDisappear {

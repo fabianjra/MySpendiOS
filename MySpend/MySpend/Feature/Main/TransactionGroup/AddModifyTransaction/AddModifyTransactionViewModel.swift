@@ -34,9 +34,9 @@ class AddModifyTransactionViewModel: BaseViewModel {
         super.init(viewContext: CoreDataUtilities.getViewContext())
     }
     
-    func fetchAccounts() {
+    func fetchAccounts() async {
         do {
-            accounts = try AccountManager(viewContext: viewContext).fetchAll()
+            accounts = try await AccountManager(viewContext: viewContext).fetchAll()
             
             if accounts.isEmpty {
                 disabled = true
@@ -68,7 +68,7 @@ class AddModifyTransactionViewModel: BaseViewModel {
         }
     }
     
-    func addNew() -> ResponseModel {
+    func addNew() async -> ResponseModel {
         if model.category.name.isEmptyOrWhitespace {
             return ResponseModel(.error, Errors.emptySpaces.localizedDescription)
         }
@@ -82,7 +82,7 @@ class AddModifyTransactionViewModel: BaseViewModel {
         modelMutated.amount = amountString.convertAmountToDecimal
         
         do {
-            try TransactionManager(viewContext: viewContext).create(modelMutated)
+            try await TransactionManager(viewContext: viewContext).create(modelMutated)
             return ResponseModel(.successful)
         } catch {
             Logger.exception(error, type: .CoreData)
@@ -90,7 +90,7 @@ class AddModifyTransactionViewModel: BaseViewModel {
         }
     }
     
-    func modify() -> ResponseModel {
+    func modify() async -> ResponseModel {
         if model.category.name.isEmptyOrWhitespace {
             return ResponseModel(.error, Errors.emptySpaces.localizedDescription)
         }
@@ -104,7 +104,7 @@ class AddModifyTransactionViewModel: BaseViewModel {
         modelMutated.amount = amountString.convertAmountToDecimal
         
         do {
-            try TransactionManager(viewContext: viewContext).update(modelMutated)
+            try await TransactionManager(viewContext: viewContext).update(modelMutated)
             return ResponseModel(.successful)
         } catch {
             Logger.exception(error, type: .CoreData)
@@ -112,9 +112,9 @@ class AddModifyTransactionViewModel: BaseViewModel {
         }
     }
     
-    func delete() -> ResponseModel {
+    func delete() async -> ResponseModel {
         do {
-            try TransactionManager(viewContext: viewContext).delete(model)
+            try await TransactionManager(viewContext: viewContext).delete(model)
             return ResponseModel(.successful)
         } catch {
             Logger.exception(error, type: .CoreData)

@@ -26,17 +26,25 @@ struct OnBoardingAccountView: View {
                               iconLeading: nil,
                               errorMessage: $viewModel.errorMessage)
                 .focused($focusedField, equals: .name)
-                .onSubmit { viewModel.finishOnBoarding(withName: true) }
+                .onSubmit {
+                    Task {
+                        await viewModel.finishOnBoarding(withName: true)
+                    }
+                }
                 
                 
                 Button("Continue") {
-                    viewModel.finishOnBoarding(withName: true)
+                    Task {
+                        await viewModel.finishOnBoarding(withName: true)
+                    }
                 }
                 .buttonStyle(ButtonPrimaryStyle())
                 
                 
                 Button("Do it later") {
-                    viewModel.finishOnBoarding(withName: false)
+                    Task {
+                        await viewModel.finishOnBoarding(withName: false)
+                    }
                 }
                 .buttonStyle(ButtonLinkStyle())
                 .padding(.bottom)

@@ -8,7 +8,7 @@
 @MainActor
 struct MockAccountModel {
     
-    static func fetchAllCount(type: MockDataType) -> Int {
+    static func fetchAllCount(type: MockDataType) async -> Int {
         do {
             var accountCount = Int.zero
             
@@ -17,10 +17,10 @@ struct MockAccountModel {
                 accountCount = Int.zero
                 
             case .normal:
-                accountCount = try AccountManager(viewContext: MockCoreDataNormal.preview.container.viewContext).fetchAllCount()
+                accountCount = try await AccountManager(viewContext: MockCoreDataNormal.preview.container.viewContext).fetchAllCount()
                 
             case .saturated:
-                accountCount = try AccountManager(viewContext: MockCoreDataNormal.preview.container.viewContext).fetchAllCount()
+                accountCount = try await AccountManager(viewContext: MockCoreDataNormal.preview.container.viewContext).fetchAllCount()
             }
             
             return accountCount

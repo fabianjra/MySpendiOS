@@ -30,10 +30,10 @@ class AccountViewModel: BaseViewModel {
     }
     
     /// Llamar en `onAppear`
-    func activateObservers() {
+    func activateObservers() async {
         // CoreData:
         startObserveViewContextChanges { [weak self] in
-            self?.fetchAll()
+            await self?.fetchAll()
         }
         
         // UserDefaults:
@@ -44,7 +44,7 @@ class AccountViewModel: BaseViewModel {
         }
         
         // Primera carga:
-        fetchAll()
+        await fetchAll()
     }
     
     /// Llamar en `onDisappear`
@@ -53,19 +53,20 @@ class AccountViewModel: BaseViewModel {
         stopObserveUserDefaultsChanges()
     }
     
-    private func fetchAll() {
+    private func fetchAll() async {
         do {
-            models = try AccountManager(viewContext: viewContext).fetchAll()
+            models = try await AccountManager(viewContext: viewContext).fetchAll()
         } catch {
+            errorMessage = error.localizedDescription
             Logger.exception(error, type: .CoreData)
         }
     }
 
-    func delete(_ model: AccountModel?) -> ResponseModel {
+    func delete(_ model: AccountModel?) async -> ResponseModel {
         guard let model = model else { return ResponseModel(.successful) }
         
         do {
-            try AccountManager(viewContext: viewContext).delete(model)
+            try await AccountManager(viewContext: viewContext).delete(model)
             return ResponseModel(.successful)
         } catch {
             Logger.exception(error, type: .CoreData)
@@ -73,14 +74,14 @@ class AccountViewModel: BaseViewModel {
         }
     }
     
-    func deleteMltipleItems() -> ResponseModel {
+    func deleteMltipleItems() async -> ResponseModel {
         defer {
             isEditing = false
         }
         
         do {
             for item in selectedModels {
-                try AccountManager(viewContext: viewContext).delete(item)
+                try await AccountManager(viewContext: viewContext).delete(item)
             }
             
             selectedModels.removeAll()

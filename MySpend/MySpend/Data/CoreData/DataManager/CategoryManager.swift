@@ -60,19 +60,21 @@ struct CategoryManager {
      */
     func fetchAll(predicateFormat: String = CDConstants.Predicate.byIsActive,
                             predicateArgs: [Any] = [true],
-                            sortedBy sortDescriptors: [NSSortDescriptor] = [NSSortDescriptor(keyPath: \Category.name, ascending: true)]) throws -> [CategoryModel] {
+                            sortedBy sortDescriptors: [NSSortDescriptor] = [NSSortDescriptor(keyPath: \Category.name, ascending: true)]) async throws -> [CategoryModel] {
 
-        let request: NSFetchRequest<Category> = Category.fetchRequest()
-        request.sortDescriptors = sortDescriptors
-        request.predicate = NSPredicate(format: predicateFormat, argumentArray: predicateArgs)
-        
-        let coreDataEntities = try viewContext.fetch(request)
-        
-        let models = coreDataEntities.map { entity in
-            CategoryModel(entity)
+        try await viewContext.perform {
+            let request: NSFetchRequest<Category> = Category.fetchRequest()
+            request.sortDescriptors = sortDescriptors
+            request.predicate = NSPredicate(format: predicateFormat, argumentArray: predicateArgs)
+            
+            let coreDataEntities = try viewContext.fetch(request)
+            
+            let models = coreDataEntities.map { entity in
+                CategoryModel(entity)
+            }
+            
+            return models
         }
-        
-        return models
     }
 
     
@@ -86,10 +88,10 @@ struct CategoryManager {
      
      - Throws: Any error thrown by `viewContext.save()`.
      */
-    func create(_ model: CategoryModel) throws {
+    func create(_ model: CategoryModel) async throws {
         
         // garantía de thread-safety
-        try viewContext.performAndWait {
+        try await viewContext.perform {
             
             // Se crea un nuevo objeto "Entity" para mapear los campos que se van a guardar en la Entidad de Note.
             // Se debe utilizar el contexto que ya está instanciado.
@@ -120,43 +122,45 @@ struct CategoryManager {
      
      - Throws: `.notFound` (from `fetchedCategory`) or any Core Data save error.
      */
-    func update(_ model: CategoryModel) throws {
-        try viewContext.performAndWait {
-            if let entity = try CategoryManager.fetch(model, viewContextArg: viewContext) {
-                // Shared attributes (Abstract class):
-                entity.dateModified = .now
-                entity.isActive = model.isActive
-                
-                // Entity-specific Attributes
-                entity.icon = model.icon
-                entity.name = model.name
-                entity.type = model.type.rawValue
-                
-                try viewContext.save()
-            } else {
-                throw CDError.notFoundUpdate(entity: Category.description())
-            }
+    func update(_ model: CategoryModel) async throws {
+        
+        guard let entity = try await CategoryManager.fetch(model, viewContextArg: viewContext) else {
+            throw CDError.notFoundUpdate(entity: Category.description())
+        }
+        
+        try await viewContext.perform {
+            // Shared attributes (Abstract class):
+            entity.dateModified = .now
+            entity.isActive = model.isActive
+            
+            // Entity-specific Attributes
+            entity.icon = model.icon
+            entity.name = model.name
+            entity.type = model.type.rawValue
+            
+            try viewContext.save()
         }
     }
     
     
     // MARK: DELETE
     
-    func delete(_ model: CategoryModel) throws {
-        try viewContext.performAndWait {
-            if let entity = try CategoryManager.fetch(model, viewContextArg: viewContext) {
-                viewContext.delete(entity)
-                try viewContext.save()
-            } else {
-                throw CDError.notFoundDelete(entity: Category.description())
-            }
+    func delete(_ model: CategoryModel) async throws {
+        
+        guard let entity = try await CategoryManager.fetch(model, viewContextArg: viewContext) else {
+            throw CDError.notFoundUpdate(entity: Category.description())
+        }
+        
+        try await viewContext.perform {
+            viewContext.delete(entity)
+            try viewContext.save()
         }
     }
     
-    func delete(at offsets: IndexSet, from items: [CategoryModel]) throws {
+    func delete(at offsets: IndexSet, from items: [CategoryModel]) async throws {
         for offset in offsets {
             let model = items[offset]
-            try delete(model)
+            try await delete(model)
         }
     }
     
@@ -179,16 +183,20 @@ struct CategoryManager {
      - Throws: Any error thrown by `viewContextArg.fetch(_:)`.
      - Date: Jul 2025
      */
-    static func fetch(_ model: CategoryModel, viewContextArg: NSManagedObjectContext) throws -> Category? {
-        let fetchRequest = CoreDataUtilities.createFetchRequest(ByID: model.id.uuidString, entity: Category.self)
-        let entity = try viewContextArg.fetch(fetchRequest)
+    static func fetch(_ model: CategoryModel, viewContextArg: NSManagedObjectContext) async throws -> Category? {
         
-        guard let item = entity.first else {
-            Logger.custom(CDError.notFoundFetch(entity: Category.description()).localizedDescription)
-            return nil
+        try await viewContextArg.perform {
+            
+            let fetchRequest = CoreDataUtilities.createFetchRequest(ByID: model.id.uuidString, entity: Category.self)
+            let entity = try viewContextArg.fetch(fetchRequest)
+            
+            guard let item = entity.first else {
+                Logger.custom(CDError.notFoundFetch(entity: Category.description()).localizedDescription)
+                return nil
+            }
+            
+            return item
         }
-        
-        return item
     }
     
     /**
@@ -209,8 +217,8 @@ struct CategoryManager {
      - Throws: Rethrows any error raised by `CategoryManager.fetch`.
      - Date: Jul 2025
      */
-    static func resolve(from model: CategoryModel, viewContextArg: NSManagedObjectContext) throws -> Category {
-        if let existing = try CategoryManager.fetch(model, viewContextArg: viewContextArg) {
+    static func resolve(from model: CategoryModel, viewContextArg: NSManagedObjectContext) async throws -> Category {
+        if let existing = try await CategoryManager.fetch(model, viewContextArg: viewContextArg) {
             return existing
         }
         

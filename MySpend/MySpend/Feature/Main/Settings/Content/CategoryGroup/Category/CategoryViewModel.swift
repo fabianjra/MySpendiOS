@@ -10,7 +10,6 @@ import Combine
 class CategoryViewModel: BaseViewModel {
     
     @Published var categories: [CategoryModel] = []
-    //@Published var categoryType: CategoryType = .expense
     
     // MARK: EDIT
     @Published var isEditing: Bool = false
@@ -24,12 +23,12 @@ class CategoryViewModel: BaseViewModel {
     @Published var showAlertDeleteMultiple = false
     
     /// Llamar en `onAppear`
-    func activateObservers() {
+    func activateObservers() async {
         startObserveViewContextChanges { [weak self] in
-            self?.fetchAll()
+            await self?.fetchAll()
         }
         
-        fetchAll() // primera carga
+        await fetchAll() // primera carga
     }
     
     /// Llamar en `onDisappear`
@@ -37,19 +36,20 @@ class CategoryViewModel: BaseViewModel {
         stopObservingContextChanges()
     }
     
-    private func fetchAll() {
+    private func fetchAll() async {
         do {
-            categories = try CategoryManager(viewContext: viewContext).fetchAll()
+            categories = try await CategoryManager(viewContext: viewContext).fetchAll()
         } catch {
+            errorMessage = error.localizedDescription
             Logger.exception(error, type: .CoreData)
         }
     }
     
-    func delete(_ model: CategoryModel?) -> ResponseModel {
+    func delete(_ model: CategoryModel?) async -> ResponseModel {
         guard let model = model else { return ResponseModel(.successful) }
         
         do {
-            try CategoryManager(viewContext: viewContext).delete(model)
+            try await CategoryManager(viewContext: viewContext).delete(model)
             return ResponseModel(.successful)
         } catch {
             Logger.exception(error, type: .CoreData)
@@ -57,14 +57,14 @@ class CategoryViewModel: BaseViewModel {
         }
     }
     
-    func deleteMltiple() -> ResponseModel {
+    func deleteMltiple() async -> ResponseModel {
         defer {
             isEditing = false
         }
         
         do {
             for item in selectedCategories {
-                try CategoryManager(viewContext: viewContext).delete(item)
+                try await CategoryManager(viewContext: viewContext).delete(item)
             }
             
             selectedCategories.removeAll()

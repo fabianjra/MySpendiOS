@@ -26,7 +26,7 @@ class RegisterViewModel: BaseViewModel {
             return ResponseModel(.error, Errors.creationPasswordIsDifferent.localizedDescription)
         }
         
-        var response = ResponseModel()
+        //var response = ResponseModel()
         
 //        await performWithLoader {
 //            do {
@@ -40,6 +40,6 @@ class RegisterViewModel: BaseViewModel {
 //            }
 //        }
         
-        return response
+        return ResponseModel()
     }
 }

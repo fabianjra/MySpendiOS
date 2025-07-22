@@ -122,28 +122,30 @@ struct AddModifyCategoryView: View {
     }
     
     private func process(_ processType: ProcessType) {
-        let result: ResponseModel
-        
-        switch processType {
-        case .add:
-            result = viewModel.addNew(type: categoryType)
-        case .modify:
-            result = viewModel.modify(type: categoryType)
-        case .delete:
-            result = viewModel.delete()
-        }
-        
-        if result.status.isSuccess {
-            if processType == .add {
-                if isSelectionMode {
-                    newCategoryID = viewModel.model.id
-                    isNewModelAdded = true
-                }
+        Task {
+            let result: ResponseModel
+            
+            switch processType {
+            case .add:
+                result = await viewModel.addNew(type: categoryType)
+            case .modify:
+                result = await viewModel.modify(type: categoryType)
+            case .delete:
+                result = await viewModel.delete()
             }
             
-            dismiss()
-        } else {
-            viewModel.errorMessage = result.message
+            if result.status.isSuccess {
+                if processType == .add {
+                    if isSelectionMode {
+                        newCategoryID = viewModel.model.id
+                        isNewModelAdded = true
+                    }
+                }
+                
+                dismiss()
+            } else {
+                viewModel.errorMessage = result.message
+            }
         }
     }
 }

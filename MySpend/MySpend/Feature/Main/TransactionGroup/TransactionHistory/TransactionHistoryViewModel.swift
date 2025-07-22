@@ -16,11 +16,11 @@ class TransactionHistoryViewModel: BaseViewModel {
     @Published var selectedTransactions = Set<TransactionModel>()
     @Published var sortTransactionsBy = UserDefaultsManager.sorTransactions
 
-    func delete(_ model: TransactionModel?) -> ResponseModel {
+    func delete(_ model: TransactionModel?) async -> ResponseModel {
         guard let model = model else { return ResponseModel(.successful) }
         
         do {
-            try TransactionManager(viewContext: viewContext).delete(model)
+            try await TransactionManager(viewContext: viewContext).delete(model)
             return ResponseModel(.successful)
         } catch {
             Logger.exception(error, type: .CoreData)
@@ -28,14 +28,15 @@ class TransactionHistoryViewModel: BaseViewModel {
         }
     }
     
-    func deleteMltiple() -> ResponseModel {
+    func deleteMltiple() async -> ResponseModel {
         defer {
             isEditing = false
         }
         
         do {
+            //TODO: Pasar a un metodo que borre items masivamente. Crearlo en el TransactionManager
             for item in selectedTransactions {
-                try TransactionManager(viewContext: viewContext).delete(item)
+                try await TransactionManager(viewContext: viewContext).delete(item)
             }
             
             selectedTransactions.removeAll()
