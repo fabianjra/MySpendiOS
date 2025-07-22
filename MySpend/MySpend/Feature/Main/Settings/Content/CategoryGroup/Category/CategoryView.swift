@@ -224,6 +224,10 @@ struct CategoryView: View {
     // MARK: - FUNCTIONS
     
     private func delete() {
+        defer {
+            modelToDelete = nil
+        }
+        
         let result = viewModel.delete(modelToDelete)
         
         if result.status.isError {

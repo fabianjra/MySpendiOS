@@ -11,14 +11,14 @@ class TransactionHistoryViewModel: BaseViewModel {
     
     @Published var showAlertDelete = false
     @Published var showAlertDeleteMultiple = false
-    @Published var showNewTransactionModal = false
-    @Published var showModifyTransactionModal = false
     
     @Published var isEditing = false
     @Published var selectedTransactions = Set<TransactionModel>()
     @Published var sortTransactionsBy = UserDefaultsManager.sorTransactions
 
-    func deleteTransaction(_ model: TransactionModel) -> ResponseModel {
+    func delete(_ model: TransactionModel?) -> ResponseModel {
+        guard let model = model else { return ResponseModel(.successful) }
+        
         do {
             try TransactionManager(viewContext: viewContext).delete(model)
             return ResponseModel(.successful)
@@ -28,7 +28,7 @@ class TransactionHistoryViewModel: BaseViewModel {
         }
     }
     
-    func deleteMltipleTransactions() -> ResponseModel {
+    func deleteMltiple() -> ResponseModel {
         defer {
             isEditing = false
         }
@@ -59,9 +59,5 @@ class TransactionHistoryViewModel: BaseViewModel {
     func resetSelectedSort() {
         UserDefaultsManager.removeValue(for: .sortTransactions)
         sortTransactionsBy = UserDefaultsManager.sorTransactions
-    }
-    
-    deinit {
-        Logger.custom("deinit \(String(describing: self))")
     }
 }

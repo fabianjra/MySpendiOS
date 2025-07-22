@@ -16,7 +16,9 @@ struct TransactionHistoryView: View {
     @Binding var selectedDate: Date
     @Binding var isMutipleAccounts: Bool
     
-    @State private var selectedModel = TransactionModel()
+    @State private var showNewItemModal = false
+    @State private var modelToModify: TransactionModel?
+    @State private var modelToDelete: TransactionModel?
     
     var body: some View {
         ContentContainer {
@@ -28,7 +30,7 @@ struct TransactionHistoryView: View {
                             disabledTrailingAction: viewModel.isEditing,
                             trailingImage: Image.plus,
                             trailingAction: {
-                viewModel.showNewTransactionModal = true
+                showNewItemModal = true
             })
             .padding(.bottom)
             
@@ -43,14 +45,14 @@ struct TransactionHistoryView: View {
             
             TextError(viewModel.errorMessage)
         }
-        .onAppear {
-            print("Router count HISTORY: \(Router.shared.path.count)")
-        }
-        .sheet(isPresented: $viewModel.showNewTransactionModal) {
+        .sheet(isPresented: $showNewItemModal) {
             AddModifyTransactionView(selectedDate: selectedDate)
         }
-        .sheet(isPresented: $viewModel.showModifyTransactionModal) {
-            AddModifyTransactionView(selectedModel)
+        .sheet(item: $modelToModify) { model in
+            AddModifyTransactionView(model)
+                .onDisappear {
+                    modelToModify = nil
+                }
         }
     }
     
@@ -153,8 +155,7 @@ struct TransactionHistoryView: View {
                                         viewModel.selectedTransactions.insert(item)
                                     }
                                 } else {
-                                    selectedModel = item
-                                    viewModel.showModifyTransactionModal = true
+                                    modelToModify = item
                                 }
                             }
                             
@@ -199,7 +200,7 @@ struct TransactionHistoryView: View {
                     
                     .swipeActions(edge: .trailing) {
                         Button {
-                            selectedModel = item
+                            modelToDelete = item
                             viewModel.showAlertDelete = true
                         } label: {
                             Label.delete
@@ -207,8 +208,7 @@ struct TransactionHistoryView: View {
                         .tint(Color.alert)
                         
                         Button {
-                            selectedModel = item
-                            viewModel.showModifyTransactionModal = true
+                            modelToModify = item
                         } label: {
                             Label.edit
                         }
@@ -249,17 +249,19 @@ struct TransactionHistoryView: View {
     // MARK: FUNCTIONS
     
     private func delete() {
-        let result = viewModel.deleteTransaction(selectedModel)
+        defer {
+            modelToDelete = nil
+        }
         
-        if result.status.isSuccess {
-            selectedModel = TransactionModel() //Clean the selected transaction after deleting it.
-        } else {
+        let result = viewModel.delete(modelToDelete)
+        
+        if result.status.isError {
             viewModel.errorMessage = result.message
         }
     }
     
     private func deleteMltipleTransactions() {
-        let result = viewModel.deleteMltipleTransactions()
+        let result = viewModel.deleteMltiple()
         
         if result.status.isError {
             viewModel.errorMessage = result.message
