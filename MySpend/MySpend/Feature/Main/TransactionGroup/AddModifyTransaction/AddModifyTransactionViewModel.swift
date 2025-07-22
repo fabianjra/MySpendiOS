@@ -139,8 +139,4 @@ class AddModifyTransactionViewModel: BaseViewModel {
         
         return ResponseModel(.successful)
     }
-    
-    deinit {
-        Logger.custom("deinit \(String(describing: self))")
-    }
 }
