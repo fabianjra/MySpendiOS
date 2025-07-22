@@ -13,10 +13,7 @@ class AddModifyTransactionViewModel: BaseViewModel {
     
     @Published var amountString: String = ""
 
-    @Published var showDatePicker = false
-    @Published var showCategoryList = false
-    @Published var showAccoountList = false
-    @Published var showAccountTextField = true
+    var showAccountTextField = true
     @Published var showAlert = false
 
     @Published var model: TransactionModel
@@ -141,5 +138,9 @@ class AddModifyTransactionViewModel: BaseViewModel {
         }
         
         return ResponseModel(.successful)
+    }
+    
+    deinit {
+        Logger.custom("deinit \(String(describing: self))")
     }
 }

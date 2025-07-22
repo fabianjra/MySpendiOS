@@ -20,10 +20,14 @@ import SwiftUI
  */
 struct AddModifyTransactionView: View {
     
-    @Environment(\.dismiss) var dismiss
+    @Environment(\.dismiss) private var dismiss
     
     @StateObject private var viewModel: AddModifyTransactionViewModel
     @FocusState private var focusedField: TransactionModel.Field?
+    
+    @State private var showDatePicker = false
+    @State private var showCategoryList = false
+    @State private var showAccountList = false
     
     init(_ model: TransactionModel? = nil, selectedDate: Date? = nil) {
         _viewModel = StateObject(wrappedValue: AddModifyTransactionViewModel(model, selectedDate: selectedDate))
@@ -58,7 +62,7 @@ struct AddModifyTransactionView: View {
                                               colorDisabled: false)
                             .onTapGesture {
                                 focusedField = .none
-                                viewModel.showDatePicker = true
+                                showDatePicker = true
                             }
                         }
                         
@@ -88,7 +92,7 @@ struct AddModifyTransactionView: View {
                                                         errorMessage: $viewModel.errorMessage)
                             .onTapGesture {
                                 focusedField = .none
-                                viewModel.showCategoryList = true
+                                showCategoryList = true
                             }
                             
                             
@@ -100,7 +104,7 @@ struct AddModifyTransactionView: View {
                                                             errorMessage: $viewModel.errorMessage)
                                 .onTapGesture {
                                     focusedField = .none
-                                    viewModel.showAccoountList = true
+                                    showAccountList = true
                                 }
                             }
                             
@@ -159,15 +163,15 @@ struct AddModifyTransactionView: View {
                     viewModel.errorMessage = ""
                     viewModel.model.category = CategoryModel(type: newValue) // Clean category beacause won't be the same CategoryType (Exponse, income).
                 }
-                .sheet(isPresented: $viewModel.showDatePicker) {
+                .sheet(isPresented: $showDatePicker) {
                     DatePickerModalView(selectedDate: $viewModel.model.dateTransaction,
-                                        showModal: $viewModel.showDatePicker)
+                                        showModal: $showDatePicker)
                 }
-                .sheet(isPresented: $viewModel.showCategoryList) {
+                .sheet(isPresented: $showCategoryList) {
                     SelectCategoryModalView(selectedCategory: $viewModel.model.category,
                                             categoryType: $viewModel.model.category.type) //TOD: Refatorizar porque se envia el mismo objeto
                 }
-                .sheet(isPresented: $viewModel.showAccoountList) {
+                .sheet(isPresented: $showAccountList) {
                     SelectAccountModalView(selectedModel: $viewModel.model.account)
                 }
             }

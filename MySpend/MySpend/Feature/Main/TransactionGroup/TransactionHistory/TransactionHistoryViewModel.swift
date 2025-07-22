@@ -60,4 +60,8 @@ class TransactionHistoryViewModel: BaseViewModel {
         UserDefaultsManager.removeValue(for: .sortTransactions)
         sortTransactionsBy = UserDefaultsManager.sorTransactions
     }
+    
+    deinit {
+        Logger.custom("deinit \(String(describing: self))")
+    }
 }
