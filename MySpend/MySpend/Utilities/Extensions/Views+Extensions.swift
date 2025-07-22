@@ -135,11 +135,8 @@ extension View {
         - action:Action to excecute
      
      - Returns: View
-     
      - Authors: Fabian Rodriguez
-     
      - Version: 1.0
-     
      - Date: October 2024
      */
     func onFirstAppear(perform action: @escaping () -> Void) -> some View {
@@ -151,11 +148,11 @@ extension View {
 private struct ViewFirstAppearModifier: ViewModifier {
     @State private var didAppearBefore = false
     private let action: () -> Void
-
+    
     init(perform action: @escaping () -> Void) {
         self.action = action
     }
-
+    
     func body(content: Content) -> some View {
         content.onAppear {
             guard !didAppearBefore else { return }

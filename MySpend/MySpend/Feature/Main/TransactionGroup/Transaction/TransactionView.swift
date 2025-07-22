@@ -99,13 +99,8 @@ struct TransactionView: View {
                 }
             }
         }
-        .onAppear {
-            print("Router count RESUME: \(Router.shared.path.count)")
+        .onFirstAppear {
             viewModel.activateObservers()
-            viewModel.refreshUserName()
-        }
-        .onDisappear {
-            viewModel.deactivateObservers()
         }
     }
 }

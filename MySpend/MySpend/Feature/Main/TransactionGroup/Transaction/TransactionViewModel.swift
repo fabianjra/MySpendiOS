@@ -17,11 +17,12 @@ class TransactionViewModel: BaseViewModel {
     
     @Published var isMutipleAccounts: Bool = false
     
-    func refreshUserName() {
-        userName = UserDefaultsManager.userName
-    }
-    
-    /// Llamar en `onAppear`
+    /**
+     Call this function in `onFirstAppear`.
+     Shoud be called once when open application because this view will be active all alonge the app life.
+     
+     Dont call stopObservingChanges becaise this viewModel will be alive all alonge the app, listening for changes and show them in this home view.
+     */
     func activateObservers() {
         startObserveViewContextChanges { [weak self] in
             self?.fetchAll()
@@ -29,19 +30,10 @@ class TransactionViewModel: BaseViewModel {
         
         startObserveUserDefaultsChanges { [weak self] in
             self?.dateTimeInterval = UserDefaultsManager.dateTimeInterval
+            self?.userName = UserDefaultsManager.userName
         }
         
         fetchAll()
-    }
-    
-    private func fetchAccountCount() throws {
-        let count = try AccountManager(viewContext: viewContext).fetchAllCount()
-        isMutipleAccounts = count > 1 ? true : false
-    }
-    
-    /// Llamar en `onDisappear`
-    func deactivateObservers() {
-        //stopObservingContextChanges() //No permite actualizar cambios vista child (Subview)
     }
     
     private func fetchAll() {
@@ -56,7 +48,8 @@ class TransactionViewModel: BaseViewModel {
         }
     }
     
-    deinit {
-        //stopObservingContextChanges() //TODO: Debe llamarse para remover el osberver
+    private func fetchAccountCount() throws {
+        let count = try AccountManager(viewContext: viewContext).fetchAllCount()
+        isMutipleAccounts = count > 1 ? true : false
     }
 }
