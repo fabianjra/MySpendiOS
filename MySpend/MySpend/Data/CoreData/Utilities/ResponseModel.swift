@@ -15,3 +15,16 @@ struct ResponseModel {
         self.message = message
     }
 }
+
+enum Status {
+    case successful
+    case error
+    
+    var isSuccess: Bool {
+        self == .successful
+    }
+    
+    var isError: Bool {
+        self == .error
+    }
+}
