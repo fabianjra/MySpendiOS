@@ -21,14 +21,17 @@ import SwiftUI
  */
 struct AddModifyCategoryView: View {
     
-    @Environment(\.dismiss) var dismiss
+    @Environment(\.dismiss) private var dismiss
     
     @Binding var categoryType: CategoryType
+    
+    // Variables para validar si el Modal viene desde la seleccion de categoria (para asignarla a la seleccionada en la vista de AddModifyTransaction)
+    // o si es desde el mantenimiento, para solamente agregarla o modificarla.
     @Binding var newCategoryID: UUID
-    var isSelectionMode: Bool
+    private let isSelectionMode: Bool
     @Binding var isNewModelAdded: Bool
     
-    @StateObject var viewModel: AddModifyCategoryViewModel
+    @StateObject private var viewModel: AddModifyCategoryViewModel
     @FocusState private var focusedField: CategoryModel.Field?
     
     init(_ model: CategoryModel? = nil,
@@ -108,6 +111,10 @@ struct AddModifyCategoryView: View {
         }
         .onAppear {
             focusedField = .name
+            
+            if viewModel.isAddModel == false {
+                categoryType = viewModel.model.type
+            }
         }
         .sheet(isPresented: $viewModel.showIconsModal) {
             IconListModalView(model: $viewModel.model, showModal: $viewModel.showIconsModal)

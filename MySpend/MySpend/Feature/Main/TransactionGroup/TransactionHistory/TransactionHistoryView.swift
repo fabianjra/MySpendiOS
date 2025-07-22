@@ -190,13 +190,6 @@ struct TransactionHistoryView: View {
                             //Removes the padding Trailing in the RowSeparator.
                             return viewDimensions[.listRowSeparatorTrailing]
                         }
-                        .opacity(selectedModel.id == item.id ? .zero : 1)
-                        .overlay {
-                            if selectedModel.id == item.id {
-                                Loader()
-                                    .foregroundColor(Color.primaryTop)
-                            }
-                        }
                     }
                     .frame(height: FrameSize.height.rowForListTransactionHistory)
                     .listRowInsets(EdgeInsets(top: .zero, leading: .zero, bottom: .zero, trailing: .zero))

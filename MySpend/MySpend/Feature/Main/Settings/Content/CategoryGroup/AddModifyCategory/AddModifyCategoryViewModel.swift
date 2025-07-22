@@ -33,7 +33,6 @@ final class AddModifyCategoryViewModel: BaseViewModel {
             return ResponseModel(.error, Errors.emptySpaces.localizedDescription)
         }
         
-        //TODO: Cambiar para que mas bien se use el selectedDate con la de Model:
         var modelMutated = model
         modelMutated.type = type
         
@@ -55,7 +54,7 @@ final class AddModifyCategoryViewModel: BaseViewModel {
        
         do {
             // Si el nuevo tipo de categoria es diferente al actual, debe validar que no tega transacciones asociadas
-            // a una cuenta de un tipo incompatible con el nuevo tipo de categoria seleccioando.
+            // a una cuenta de un tipo incompatible con el nuevo tipo de categoria seleccionado.
             // Ver mas en la documentacion del metodo "fetchIncompatibleTypeCount"
             if modelMutated.type != type {
                 let incompatibleTransactionsCount = try TransactionManager(viewContext: viewContext).fetchIncompatibleTypeCount(currentCategoryID: modelMutated.id.uuidString, newCategoryType: type)

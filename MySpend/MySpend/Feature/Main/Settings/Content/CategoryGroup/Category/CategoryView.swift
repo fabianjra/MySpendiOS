@@ -12,6 +12,8 @@ struct CategoryView: View {
     @StateObject private var viewModel = CategoryViewModel()
     
     @State private var showNewItemModal = false
+    
+    @State private var modelType: CategoryType = .expense
     @State private var modelToModify: CategoryModel?
     @State private var modelToDelete: CategoryModel?
     
@@ -53,12 +55,12 @@ struct CategoryView: View {
             viewModel.deactivateObservers()
         }
         .sheet(isPresented: $showNewItemModal) {
-            AddModifyCategoryView(categoryType: $viewModel.categoryType)
+            AddModifyCategoryView(categoryType: $modelType)
                 .presentationDetents([.large])
                 .presentationCornerRadius(ConstantRadius.cornersModal)
         }
         .sheet(item: $modelToModify) { model in
-            AddModifyCategoryView(model, categoryType: $viewModel.categoryType)
+            AddModifyCategoryView(model, categoryType: $modelType)
                 .presentationDetents([.large])
                 .presentationCornerRadius(ConstantRadius.cornersModal)
                 .onDisappear {
@@ -82,7 +84,7 @@ struct CategoryView: View {
             
             
             VStack {
-                PickerView(selection: $viewModel.categoryType)
+                PickerView(selection: $modelType)
                     .frame(maxWidth: ConstantFrames.iPadMaxWidth)
                     .padding(.bottom, ConstantViews.mediumSpacing)
                 
@@ -133,7 +135,7 @@ struct CategoryView: View {
     private var categoryList: some View {
         VStack {
             let categoriesFiltered = UtilsCategories.filteredCategories(viewModel.categories,
-                                                                        by: viewModel.categoryType,
+                                                                        by: modelType,
                                                                         sortType: viewModel.sortCategoriesBy)
             
             if categoriesFiltered.isEmpty {

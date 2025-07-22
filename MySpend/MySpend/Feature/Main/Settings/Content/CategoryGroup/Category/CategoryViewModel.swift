@@ -10,7 +10,7 @@ import Combine
 class CategoryViewModel: BaseViewModel {
     
     @Published var categories: [CategoryModel] = []
-    @Published var categoryType: CategoryType = .expense
+    //@Published var categoryType: CategoryType = .expense
     
     // MARK: EDIT
     @Published var isEditing: Bool = false
@@ -88,9 +88,5 @@ class CategoryViewModel: BaseViewModel {
     func resetSelectedSort() {
         UserDefaultsManager.removeValue(for: .sortCategories)
         sortCategoriesBy = UserDefaultsManager.sorCategories
-    }
-    
-    deinit {
-        Logger.custom("deinit: \(String(describing: self))")
     }
 }
