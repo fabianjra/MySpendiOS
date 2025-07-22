@@ -276,6 +276,8 @@ struct TransactionHistoryView: View {
 
 private struct TransactionPreviewWrapper: View {
     
+    var mockDataType: MockDataType = .normal
+    
     @State private var transactionsLoaded: [TransactionModel] = []
     @State private var dateTimeInterval: DateTimeInterval = .month
     @State private var selectedDate: Date = .now
@@ -286,19 +288,17 @@ private struct TransactionPreviewWrapper: View {
                                dateTimeInterval: $dateTimeInterval,
                                selectedDate: $selectedDate,
                                isMutipleAccounts: $isMultipleAccounts)
-        .onAppear {
-            Task {
-                transactionsLoaded = await MockTransactionModel.fetchAll(type: .normal)
-                
-                let count = await MockAccountModel.fetchAllCount(type: .normal)
-                isMultipleAccounts = count > 1
-            }
+        .task {
+            transactionsLoaded = await MockTransactionModel.fetchAll(type: mockDataType)
+            
+            let count = await MockAccountModel.fetchAllCount(type: mockDataType)
+            isMultipleAccounts = count > 1
         }
     }
 }
 
 #Preview("Normal es_CR") {
-    TransactionPreviewWrapper()
+    TransactionPreviewWrapper(mockDataType: .normal)
         .environment(\.locale, .init(identifier: "es_CR"))
 }
 
@@ -314,17 +314,7 @@ private struct TransactionPreviewWrapper: View {
 //    }
 //}
 
-//#Preview("No content en_US_POSIX") {
-//    @Previewable @State var transactionLoaded: [TransactionModel] = MockTransactionModel.fetchAll(type: .empty)
-//    @Previewable @State var dateTimeInterval = DateTimeInterval.month
-//    @Previewable @State var selectedDate = Date()
-//    @Previewable @State var isMultipleAccounts: Bool = MockAccountModel.fetchAllCount(type: .empty) > 1 ? true : false
-//
-//    VStack {
-//        TransactionHistoryView(transactionsLoaded: $transactionLoaded,
-//                               dateTimeInterval: $dateTimeInterval,
-//                               selectedDate: $selectedDate,
-//                               isMutipleAccounts: $isMultipleAccounts)
-//            .environment(\.locale, .init(identifier: "en_US_POSIX"))
-//    }
-//}
+#Preview("No content en_US_POSIX") {
+    TransactionPreviewWrapper(mockDataType: .empty)
+        .environment(\.locale, .init(identifier: "en_US_POSIX"))
+}
