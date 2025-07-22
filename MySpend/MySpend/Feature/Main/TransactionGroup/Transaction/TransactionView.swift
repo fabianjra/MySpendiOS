@@ -16,7 +16,8 @@ struct TransactionView: View {
     var body: some View {
         ContentContainer {
             
-            // MARK: HEADER
+            // MARK: - HEADER
+            
             HStack {
                 VStack(alignment: .leading) {
                     TextPlain("Hello \(viewModel.userName) \(Emojis.greeting.rawValue)",
@@ -34,7 +35,8 @@ struct TransactionView: View {
             }
             
             
-            // MARK: HISTORY BUTTON
+            // MARK: - HISTORY BUTTON
+            
             VStack {
                 NavigationLink {
                     TransactionHistoryView(transactionsLoaded: $viewModel.transactions,
@@ -51,7 +53,8 @@ struct TransactionView: View {
             }
             
             
-            // MARK: TRANSACTIONS
+            // MARK: - TRANSACTIONS
+            
             if viewModel.isLoading {
                 LoaderView()
             } else {

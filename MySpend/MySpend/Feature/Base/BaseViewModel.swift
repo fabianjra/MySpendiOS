@@ -14,7 +14,6 @@ public class BaseViewModel: ObservableObject {
     
     // MARK: - Estado común
     @Published var isLoading: Bool = false
-    @Published var isLoadingSecondary: Bool = false
     @Published var errorMessage = ""
     @Published var disabled: Bool = false
     
@@ -87,22 +86,6 @@ public class BaseViewModel: ObservableObject {
         defer {
             withAnimation {
                 isLoading = false
-            }
-        }
-        
-        await action()
-    }
-    
-    public func performWithLoaderSecondary(_ action: @escaping () async -> Void) async {
-        errorMessage = ""
-        
-        withAnimation {
-            isLoadingSecondary = true
-        }
-        
-        defer {
-            withAnimation {
-                isLoadingSecondary = false
             }
         }
         

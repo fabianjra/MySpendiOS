@@ -123,7 +123,7 @@ struct AddModifyTransactionView: View {
                                 Button("Delete") {
                                     viewModel.showAlert = true
                                 }
-                                .buttonStyle(ButtonLinkStyle(color: Color.alert, fontfamily: .semibold, isLoading: $viewModel.isLoadingSecondary))
+                                .buttonStyle(ButtonLinkStyle(color: Color.alert, fontfamily: .semibold))
                                 .alert("Delete transaction", isPresented: $viewModel.showAlert) {
                                     Button("Delete", role: .destructive) { process(.delete) }
                                     Button("Cancel", role: .cancel) { }
@@ -175,7 +175,7 @@ struct AddModifyTransactionView: View {
         // This modal sometimes dont apply the corner radius. It looks like is a SwiftUI Bug..
         .presentationDetents([.large])
         .presentationCornerRadius(ConstantRadius.cornersModal)
-        .disabled(viewModel.isLoading || viewModel.isLoadingSecondary)
+        .disabled(viewModel.isLoading)
     }
     
     private func process(_ processType: ProcessType) {

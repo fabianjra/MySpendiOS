@@ -84,7 +84,7 @@ struct AddModifyAccountView: View {
                     Button("Delete") {
                         viewModel.showAlert = true
                     }
-                    .buttonStyle(ButtonLinkStyle(color: Color.alert, fontfamily: .semibold, isLoading: $viewModel.isLoadingSecondary))
+                    .buttonStyle(ButtonLinkStyle(color: Color.alert, fontfamily: .semibold))
                     .alert("Delete account", isPresented: $viewModel.showAlert) {
                         Button("Delete", role: .destructive) { process(.delete) }
                         Button("Cancel", role: .cancel) { }
@@ -108,7 +108,7 @@ struct AddModifyAccountView: View {
                 accountType = viewModel.model.type
             }
         }
-        .disabled(viewModel.isLoading || viewModel.isLoadingSecondary)
+        .disabled(viewModel.isLoading)
     }
     
     private func process(_ processType: ProcessType) {

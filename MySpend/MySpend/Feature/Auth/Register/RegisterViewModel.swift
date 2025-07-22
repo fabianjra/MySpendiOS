@@ -7,7 +7,7 @@
 
 import Foundation
 
-class RegisterViewModel: BaseViewModelFB {
+class RegisterViewModel: BaseViewModel {
     
     @Published var register = Register()
     

@@ -12,7 +12,7 @@ struct LoginView: View {
     @StateObject var viewModel = LoginViewModel()
     @FocusState private var focusedField: Login.Field?
     
-    @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var authViewModel: AuthViewModelFB
  
     var body: some View {
         LogContainer {
@@ -132,5 +132,5 @@ struct LoginView: View {
 
 #Preview {
     LoginView()
-        .environmentObject(AuthViewModel())
+        .environmentObject(AuthViewModelFB())
 }

@@ -37,7 +37,6 @@ struct TransactionHistoryView: View {
                     emptyView
                 } else {
                     transactionsList
-                        .disabled(viewModel.isLoadingSecondary)
                 }
             }
             
@@ -191,9 +190,9 @@ struct TransactionHistoryView: View {
                             //Removes the padding Trailing in the RowSeparator.
                             return viewDimensions[.listRowSeparatorTrailing]
                         }
-                        .opacity(viewModel.isLoadingSecondary && selectedModel.id == item.id ? .zero : 1)
+                        .opacity(selectedModel.id == item.id ? .zero : 1)
                         .overlay {
-                            if viewModel.isLoadingSecondary && selectedModel.id == item.id { //TODO: Agregar loader para cuando son varias transacciones. Aqui solo aplica para una.
+                            if selectedModel.id == item.id {
                                 Loader()
                                     .foregroundColor(Color.primaryTop)
                             }

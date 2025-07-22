@@ -47,7 +47,7 @@ struct RootView: View {
 private struct previewWrapper: View {
     init() {
         UserDefaultsManager.userDefaults = .preview
-        // Configuracion correcta para @AppStorage:
+        // Configuracion correcta para usar @AppStorage con preview:
         UserDefaultsManager.userDefaults.set(false, forKey: UserDefaultsKeys.isOnBoarding.rawValue)
     }
     var body: some View { RootView() }

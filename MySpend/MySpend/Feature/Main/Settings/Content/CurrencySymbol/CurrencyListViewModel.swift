@@ -7,7 +7,7 @@
 
 import Foundation
 
-class CurrencyListViewModel: BaseViewModelFB {
+class CurrencyListViewModel: BaseViewModel {
     
     @Published var localeCurrency = CurrencyManager.localeCurrencyOrDefault.updateModelToUserDefaultsSelected //Get locale currency and set Selected or not, depending on UserDefaults.
     @Published var currenciesAvailables: [CurrencyModel] = []

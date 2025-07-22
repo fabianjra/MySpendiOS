@@ -90,4 +90,8 @@ class CategoryViewModel: BaseViewModel {
         UserDefaultsManager.removeValue(for: .sortCategories)
         sortCategoriesBy = UserDefaultsManager.sorCategories
     }
+    
+    deinit {
+        Logger.custom("deinit: \(String(describing: self))")
+    }
 }

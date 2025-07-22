@@ -8,11 +8,11 @@
 import FirebaseAuth
 
 @MainActor
-class AuthViewModel : ObservableObject {
+class AuthViewModelFB : ObservableObject {
     
     @Published var currentUser: User? = Auth.auth().currentUser
     @Published var isLoggedIn: Bool = false
-    @Published var user: UserModel? = nil
+    @Published var user: UserModelFB? = nil
     
     private var handle : AuthStateDidChangeListenerHandle?
     
@@ -28,7 +28,7 @@ class AuthViewModel : ObservableObject {
             
             if user != nil {
                 self.isLoggedIn = true
-                self.user = UserModel(id: user?.uid ?? "", fullname: user?.displayName ?? "", email: user?.email ?? "")
+                self.user = UserModelFB(id: user?.uid ?? "", fullname: user?.displayName ?? "", email: user?.email ?? "")
                 
             } else {
                 self.isLoggedIn = false

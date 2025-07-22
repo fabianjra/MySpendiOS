@@ -7,7 +7,7 @@
 
 import Foundation
 
-// MARK: CONSTANTS
+// MARK: - CONSTANTS
 
 public struct CurrencyManager {
     
@@ -29,7 +29,7 @@ public struct CurrencyManager {
 }
 
 
-// MARK: UTILS
+// MARK: - UTILS
 
 extension CurrencyManager {
     
@@ -43,7 +43,7 @@ extension CurrencyManager {
 }
 
 
-// MARK: FUNCTIONS
+// MARK: - FUNCTIONS
 
 extension CurrencyManager {
 
@@ -161,7 +161,7 @@ extension CurrencyManager {
 }
 
 
-// MARK: USER DEFAULTS MANAGER
+// MARK: - USER DEFAULTS MANAGER
 
 extension CurrencyManager {
     

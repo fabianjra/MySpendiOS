@@ -9,7 +9,6 @@ struct ConstantValidations {
     
     // MARK: ACCOUNT
     static let showChangeName: Bool = true
-    static let showChangePassword: Bool = true
     static let showValidateAccount: Bool = true
     
     // MARK: CONTENT

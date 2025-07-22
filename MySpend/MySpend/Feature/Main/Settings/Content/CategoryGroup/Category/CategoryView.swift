@@ -60,7 +60,6 @@ struct CategoryView: View {
             .presentationDetents([.large])
             .presentationCornerRadius(ConstantRadius.cornersModal)
         }
-        .disabled(viewModel.isLoadingSecondary)
     }
     
     // MARK: VIEWS

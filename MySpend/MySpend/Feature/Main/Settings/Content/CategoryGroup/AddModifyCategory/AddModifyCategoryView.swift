@@ -93,7 +93,7 @@ struct AddModifyCategoryView: View {
                     Button("Delete") {
                         viewModel.showAlert = true
                     }
-                    .buttonStyle(ButtonLinkStyle(color: Color.alert, fontfamily: .semibold, isLoading: $viewModel.isLoadingSecondary))
+                    .buttonStyle(ButtonLinkStyle(color: Color.alert, fontfamily: .semibold))
                     .alert("Delete category", isPresented: $viewModel.showAlert) {
                         Button("Delete", role: .destructive) { process(.delete) }
                         Button("Cancel", role: .cancel) { }
@@ -112,7 +112,7 @@ struct AddModifyCategoryView: View {
         .sheet(isPresented: $viewModel.showIconsModal) {
             IconListModalView(model: $viewModel.model, showModal: $viewModel.showIconsModal)
         }
-        .disabled(viewModel.isLoading || viewModel.isLoadingSecondary)
+        .disabled(viewModel.isLoading)
     }
     
     private func process(_ processType: ProcessType) {

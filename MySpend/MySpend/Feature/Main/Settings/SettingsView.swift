@@ -10,13 +10,13 @@ import SwiftUI
 struct SettingsView: View {
     
     @State private var showAlert = false
-    //@EnvironmentObject var authViewModel: AuthViewModel
     
     var body: some View {
         ContentContainer(addPading: false) {
             ListContainer {
                 
-                // MARK: ACCOUNT
+                // MARK: - ACCOUNT
+                
                 SectionContainer("Account") {
                     ForEach(AccountOptions.allCases) { option in
                         if option.showOption {
@@ -29,7 +29,8 @@ struct SettingsView: View {
                     }
                 }
                 
-                // MARK: CONTENT
+                // MARK: - CONTENT
+                
                 SectionContainer("Content") {
                     ForEach(ContentOptions.allCases) { option in
                         if option.showOption {
@@ -42,7 +43,8 @@ struct SettingsView: View {
                     }
                 }
                 
-                // MARK: ERASE ALL DATA
+                // MARK: - ERASE ALL DATA
+                
                 SectionContainer("DATA") {
                     
                     Button("Delete data") {
@@ -54,12 +56,7 @@ struct SettingsView: View {
                     .alert("Want to delete all data?", isPresented: $showAlert) {
                         
                         Button("Delete", role: .destructive) {
-                            do {
-                                //TODO: AGREGAR BORRADO DE DATOS
-                                //Router.shared.path.removeLast(Router.shared.path.count) //In case when come from register.
-                            } catch {
-                                Logger.exception(error)
-                            }
+                            //TODO: AGREGAR BORRADO DE DATOS
                         }
                         
                         Button("Cancel", role: .cancel) { }

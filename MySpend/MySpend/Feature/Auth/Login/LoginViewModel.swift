@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class LoginViewModel: BaseViewModelFB {
+class LoginViewModel: BaseViewModel {
     
     @Published var login = Login()
     
