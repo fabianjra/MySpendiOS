@@ -248,9 +248,26 @@ struct CategoryView: View {
     }
 }
 
-#Preview("es_CR") {
-    CategoryView()
+private struct previewWrapper: View {
+    init(_ mockDataType: MockDataType = .normal) {
+        CoreDataUtilities.shared.mockDataType = mockDataType
+    }
+    var body: some View { CategoryView() }
+}
+
+#Preview("Normal es_CR") {
+    previewWrapper()
         .environment(\.locale, .init(identifier: "es_CR"))
+}
+
+#Preview("Saturated en_US") {
+    previewWrapper(.saturated)
+        .environment(\.locale, .init(identifier: "en_US"))
+}
+
+#Preview("Empty es_ES") {
+    previewWrapper(.empty)
+        .environment(\.locale, .init(identifier: "en_ES"))
 }
 
 //#Preview("Only expenses es_CR") {
@@ -261,14 +278,4 @@ struct CategoryView: View {
 //#Preview("Only incomes en_US") {
 //    CategoryView(viewModel: CategoryViewModel(categories: MocksCategoriesFB.onlyIncomes))
 //        .environment(\.locale, .init(identifier: "en_US"))
-//}
-//
-//#Preview("Saturated en_US") {
-//    CategoryView(viewModel: CategoryViewModel(categories: MocksCategoriesFB.random_generated))
-//        .environment(\.locale, .init(identifier: "en_US"))
-//}
-//
-//#Preview("No content es_ES") {
-//    CategoryView()
-//        .environment(\.locale, .init(identifier: "en_ES"))
 //}

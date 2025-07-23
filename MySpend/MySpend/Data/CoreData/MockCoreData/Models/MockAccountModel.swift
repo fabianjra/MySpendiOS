@@ -8,24 +8,11 @@
 @MainActor
 struct MockAccountModel {
     
-    static func fetchAllCount(type: MockDataType) async -> Int {
+    static func fetchAllCount() async -> Int {
         do {
-            var accountCount = Int.zero
-            
-            switch type {
-            case .empty:
-                accountCount = Int.zero
-                
-            case .normal:
-                accountCount = try await AccountManager(viewContext: MockCoreDataNormal.preview.container.viewContext).fetchAllCount()
-                
-            case .saturated:
-                accountCount = try await AccountManager(viewContext: MockCoreDataNormal.preview.container.viewContext).fetchAllCount()
-            }
-            
-            return accountCount
+            return try await AccountManager(viewContext: CoreDataUtilities.getViewContext()).fetchAllCount()
         } catch {
-            return .zero
+            return Int.zero
         }
     }
 }

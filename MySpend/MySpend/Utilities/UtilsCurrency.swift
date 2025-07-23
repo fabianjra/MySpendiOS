@@ -86,12 +86,12 @@ public struct UtilsCurrency {
         return formatter
     }
     
-    static func makeDecimal(_ value: Decimal) -> NSDecimalNumber {
-        let number = NSDecimalNumber(decimal: value)
+    static func makeNSDecimal(_ from: Decimal) -> NSDecimalNumber {
+        let number = NSDecimalNumber(decimal: from)
 
         // Ejemplo de validación de NaN y rango
         guard number != .notANumber else {
-            return 0
+            return .zero
         }
 
         // Fuerza dos decimales con redondeo bancario

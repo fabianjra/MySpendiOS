@@ -275,8 +275,9 @@ struct TransactionHistoryView: View {
 
 
 private struct TransactionPreviewWrapper: View {
-    
-    var mockDataType: MockDataType = .normal
+    init(_ mockDataType: MockDataType = .empty) {
+        CoreDataUtilities.shared.mockDataType = mockDataType
+    }
     
     @State private var transactionsLoaded: [TransactionModel] = []
     @State private var dateTimeInterval: DateTimeInterval = .month
@@ -289,32 +290,25 @@ private struct TransactionPreviewWrapper: View {
                                selectedDate: $selectedDate,
                                isMutipleAccounts: $isMultipleAccounts)
         .task {
-            transactionsLoaded = await MockTransactionModel.fetchAll(type: mockDataType)
+            transactionsLoaded = await MockTransactionModel.fetchAll()
             
-            let count = await MockAccountModel.fetchAllCount(type: mockDataType)
+            let count = await MockAccountModel.fetchAllCount()
             isMultipleAccounts = count > 1
         }
     }
 }
 
 #Preview("Normal es_CR") {
-    TransactionPreviewWrapper(mockDataType: .normal)
+    TransactionPreviewWrapper(.normal)
         .environment(\.locale, .init(identifier: "es_CR"))
 }
 
+#Preview("Random Saturated en_US") {
+    TransactionPreviewWrapper(.saturated)
+        .environment(\.locale, .init(identifier: "en_US"))
+}
 
-//TOD: REPARAR
-//#Preview("Random saturated en_US") {
-//    @Previewable @State var dateTimeInterval = DateTimeInterval.month
-//    @Previewable @State var selectedDate = Date()
-//    
-//    VStack {
-//        TransactionHistoryView(transactionsLoaded: .constant(MockTransactionsFB.random_generated), dateTimeInterval: $dateTimeInterval, selectedDate: $selectedDate)
-//            .environment(\.locale, .init(identifier: "en_US"))
-//    }
-//}
-
-#Preview("No content en_US_POSIX") {
-    TransactionPreviewWrapper(mockDataType: .empty)
+#Preview("Empty en_US_POSIX") {
+    TransactionPreviewWrapper()
         .environment(\.locale, .init(identifier: "en_US_POSIX"))
 }

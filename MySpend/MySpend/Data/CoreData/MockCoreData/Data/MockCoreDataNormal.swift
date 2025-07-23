@@ -5,7 +5,6 @@
 //  Created by Fabian Rodriguez on 6/7/25.
 //
 
-import Foundation
 import CoreData
 
 struct MockCoreDataNormal {
@@ -27,14 +26,14 @@ struct MockCoreDataNormal {
         let categoryIncome = MockCoreDataNormal.categoryIncome(viewContext)
         
         // Transactions:
-        MockCoreDataNormal.transactionExpense(viewContext, category: categoryExpense, account: accountMain)
-        MockCoreDataNormal.transactionExpense(viewContext, category: categoryIncome, account: accountMain)
+        MockCoreDataNormal.transaction1(viewContext, category: categoryExpense, account: accountMain)
+        MockCoreDataNormal.transaction2(viewContext, category: categoryIncome, account: accountMain)
         
         do {
             try viewContext.save()
         } catch {
             let nsError = error as NSError
-            fatalError("Error al cargar CoreData en MockAccount: \(nsError), \(nsError.userInfo)")
+            fatalError("Error al cargar CoreData en: \(String(describing: Self.self)) \(nsError), \(nsError.userInfo)")
         }
         return result
     }()
@@ -103,7 +102,7 @@ struct MockCoreDataNormal {
         return item
     }
     
-    private static func transactionExpense(_ context: NSManagedObjectContext, category: Category, account: Account) {
+    private static func transaction1(_ context: NSManagedObjectContext, category: Category, account: Account) {
         let item = Transaction(context: context)
         item.dateCreated = Calendar.current.date(byAdding: .day, value: 3, to: .now)!
         item.dateModified = .now
@@ -117,7 +116,7 @@ struct MockCoreDataNormal {
         item.account = account
     }
     
-    private static func transactionIncome(_ context: NSManagedObjectContext, category: Category, account: Account) {
+    private static func transaction2(_ context: NSManagedObjectContext, category: Category, account: Account) {
         let item = Transaction(context: context)
         item.dateCreated = Calendar.current.date(byAdding: .day, value: 20, to: .now)!
         item.dateModified = .now

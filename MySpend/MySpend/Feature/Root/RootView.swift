@@ -45,15 +45,33 @@ struct RootView: View {
 
 
 private struct previewWrapper: View {
-    init() {
+    init(_ mockDataType: MockDataType = .normal, showOnBoarding: Bool = false) {
+        CoreDataUtilities.shared.mockDataType = mockDataType
+        
         UserDefaultsManager.userDefaults = .preview
         // Configuracion correcta para usar @AppStorage con preview:
-        UserDefaultsManager.userDefaults.set(false, forKey: UserDefaultsKeys.isOnBoarding.rawValue)
+        UserDefaultsManager.userDefaults.set(showOnBoarding, forKey: UserDefaultsKeys.isOnBoarding.rawValue)
     }
     var body: some View { RootView() }
 }
 
-#Preview("es_CR") {
+#Preview("Normal es_CR") {
     previewWrapper()
+        .environment(\.locale, .init(identifier: "es_CR"))
+}
+
+#Preview("Saturated en_US") {
+    previewWrapper(.saturated)
+        .environment(\.locale, .init(identifier: "en_US"))
+}
+
+
+#Preview("Empty es_ES") {
+    previewWrapper(.empty)
+        .environment(\.locale, .init(identifier: "es_ES"))
+}
+
+#Preview("OnBoarding es_CR") {
+    previewWrapper(.empty, showOnBoarding: true)
         .environment(\.locale, .init(identifier: "es_CR"))
 }

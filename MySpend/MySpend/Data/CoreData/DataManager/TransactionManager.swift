@@ -63,7 +63,7 @@ struct TransactionManager {
             entity.isActive = model.isActive
             
             // Entity-specific Attributes
-            entity.amount = UtilsCurrency.makeDecimal(model.amount)
+            entity.amount = UtilsCurrency.makeNSDecimal(model.amount)
             entity.dateTransaction = model.dateTransaction.dateWithCurrentTime
             entity.notes = model.notes
             
@@ -95,7 +95,7 @@ struct TransactionManager {
             entity.isActive = model.isActive
             
             // Entity-specific Attributes
-            entity.amount = UtilsCurrency.makeDecimal(model.amount)
+            entity.amount = UtilsCurrency.makeNSDecimal(model.amount)
             entity.dateTransaction = model.dateTransaction.dateWithCurrentTime
             entity.notes = model.notes
             entity.category = categoryResolved

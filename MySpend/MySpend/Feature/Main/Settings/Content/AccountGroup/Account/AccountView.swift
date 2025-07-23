@@ -277,14 +277,26 @@ struct AccountView: View {
 
 
 private struct previewWrapper: View {
-    init() {
+    init(_ mockDataType: MockDataType = .normal) {
+        CoreDataUtilities.shared.mockDataType = mockDataType
+        
         UserDefaultsManager.userDefaults = .preview
         UserDefaultsManager.defaultAccountID = MockCDConstants.mainAccountID
     }
     var body: some View { AccountView() }
 }
 
-#Preview("es_CR") {
+#Preview("Normal es_CR") {
     previewWrapper()
         .environment(\.locale, .init(identifier: "es_CR"))
+}
+
+#Preview("Saturated es_ES") {
+    previewWrapper(.saturated)
+        .environment(\.locale, .init(identifier: "es_ES"))
+}
+
+#Preview("Empty en_US") {
+    previewWrapper(.empty)
+        .environment(\.locale, .init(identifier: "en_US"))
 }

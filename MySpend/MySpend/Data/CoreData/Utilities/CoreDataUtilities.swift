@@ -9,10 +9,22 @@ import CoreData
 
 struct CoreDataUtilities {
     
+    static var shared: CoreDataUtilities = CoreDataUtilities()
+    var mockDataType = MockDataType.normal
+    
     @MainActor
     static func getViewContext() -> NSManagedObjectContext {
         if UtilsUI.isRunningOnCanvasPreview {
-            return MockCoreDataNormal.preview.container.viewContext
+            switch CoreDataUtilities.shared.mockDataType {
+            case .empty:
+                return MockCoreDataEmpty.preview.container.viewContext
+                
+            case .normal:
+                return MockCoreDataNormal.preview.container.viewContext
+
+            case .saturated:
+                return MockCoreDataSaturated.preview.container.viewContext
+            }
         } else {
             return PersistenceController.shared.container.viewContext
         }
