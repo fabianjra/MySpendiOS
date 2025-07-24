@@ -30,7 +30,7 @@ final class AddModifyAccountViewModel: BaseViewModel {
             self.model = AccountModel()
         }
         
-        super.init(viewContext: CoreDataUtilities.getViewContext()) //TOD: Utilizarlo para la inyeccion del preview
+        super.init()
     }
     
     func addNew(type: AccountType) async -> ResponseModel {

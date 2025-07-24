@@ -31,7 +31,7 @@ class AddModifyTransactionViewModel: BaseViewModel {
             self.model = TransactionModel(dateTransaction: selectedDate ?? .now)
         }
         
-        super.init(viewContext: CoreDataUtilities.getViewContext())
+        super.init()
     }
     
     func fetchAccounts() async {

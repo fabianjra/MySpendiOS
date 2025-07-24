@@ -24,12 +24,8 @@ public class BaseViewModel: ObservableObject {
     private var userDefaultsObserver: AnyCancellable?
     
     // MARK: - Inits
-    convenience init() {
-        self.init(viewContext: CoreDataUtilities.getViewContext())
-    }
-    
-    init(viewContext: NSManagedObjectContext) {
-        self.viewContext = viewContext
+    init() {
+        self.viewContext = CoreDataUtilities.getViewContext
     }
     
     // MARK: - Funciones

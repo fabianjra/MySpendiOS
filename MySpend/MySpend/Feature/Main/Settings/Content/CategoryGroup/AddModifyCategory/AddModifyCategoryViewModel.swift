@@ -25,7 +25,7 @@ final class AddModifyCategoryViewModel: BaseViewModel {
             self.model = CategoryModel()
         }
         
-        super.init(viewContext: CoreDataUtilities.getViewContext())
+        super.init()
     }
     
     func addNew(type: CategoryType) async -> ResponseModel {

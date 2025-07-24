@@ -10,7 +10,7 @@ struct MockAccountModel {
     
     static func fetchAllCount() async -> Int {
         do {
-            return try await AccountManager(viewContext: CoreDataUtilities.getViewContext()).fetchAllCount()
+            return try await AccountManager(viewContext: CoreDataUtilities.getViewContext).fetchAllCount()
         } catch {
             return Int.zero
         }

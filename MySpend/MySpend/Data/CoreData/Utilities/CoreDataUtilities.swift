@@ -13,7 +13,7 @@ struct CoreDataUtilities {
     var mockDataType = MockDataType.normal
     
     @MainActor
-    static func getViewContext() -> NSManagedObjectContext {
+    static var getViewContext: NSManagedObjectContext {
         if UtilsUI.isRunningOnCanvasPreview {
             switch CoreDataUtilities.shared.mockDataType {
             case .empty:
