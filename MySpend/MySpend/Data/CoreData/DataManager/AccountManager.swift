@@ -15,10 +15,28 @@ import CoreData
  - Version: 1.0
  */
 struct AccountManager {
-    private let viewContext: NSManagedObjectContext
+    private let viewContext: NSManagedObjectContext // Main queue, UI.
+    private let bgContext: NSManagedObjectContext // Private queue, background thread.
     
-    init(viewContext: NSManagedObjectContext) {
+    /**
+     Background context for heavy reads / batch ops.
+     -----------------------------------------------------------
+     • `newBackgroundContext()` → crea un NSManagedObjectContext de tipo `.privateQueueConcurrencyType` asociado al mismo persistent store que `viewContext`.
+     • mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+     -----------------------------------------------------
+     Cuando este contexto guarda y el store ya tiene cambios procedentes de otro contexto (por ejemplo, viewContext),
+     se resuelve el conflicto **propiedad por propiedad**, ganando el valor que este contexto intenta guardar ("lo mío pisa lo del store").
+     
+     ✓ Útil para contextos que generan o actualizan registros en lote donde asumimos que su información es la más reciente o prioritaria.
+     ✱ Si se prefiere lo contrario (mantener lo que esté en disco y descartar lo de este contexto) se usa: `NSMergeByPropertyStoreTrumpMergePolicy`.
+     */
+    init(viewContext: NSManagedObjectContext, container: NSPersistentContainer = PersistenceController.shared.container) {
         self.viewContext = viewContext
+        
+        //TODO: Por utilizar, para llamados y saves.
+        let background = container.newBackgroundContext()
+        background.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        self.bgContext = background
     }
     
     
