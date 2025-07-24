@@ -39,10 +39,11 @@ struct AccountManager {
         self.bgContext = background
     }
     
+    private typealias predicate = CDConstants.Predicate
     
     // MARK: READ
 
-    func fetchAll(predicateFormat: String = CDConstants.Predicate.byIsActive,
+    func fetchAll(predicateFormat: String = predicate.byIsActive,
                   predicateArgs: [Any] = [true],
                   sortedBy sortDescriptors: [NSSortDescriptor] = [NSSortDescriptor(keyPath: \Account.dateCreated, ascending: true)])
     async throws -> [AccountModel] {
@@ -150,7 +151,7 @@ struct AccountManager {
      - Throws: Any error thrown by `viewContextArg.fetch(_:)`.
      - Date: Jul 2025
      */
-    func fetchAllCount(predicateFormat: String = CDConstants.Predicate.byIsActive,
+    func fetchAllCount(predicateFormat: String = predicate.byIsActive,
                        predicateArgs: [Any] = [true],) async throws -> Int {
         try await viewContext.perform {
             let request: NSFetchRequest<Account> = Account.fetchRequest()
@@ -177,15 +178,13 @@ struct AccountManager {
      - Throws: Any error thrown by `viewContextArg.fetch(_:)`.
      - Date: Jul 2025
      */
-    static func fetch(_ model: AccountModel,
-                      viewContextArg: NSManagedObjectContext) async throws -> Account? {
-
+    static func fetch(_ model: AccountModel,viewContextArg: NSManagedObjectContext) async throws -> Account? {
         try await viewContextArg.perform {
             let fetchRequest = CoreDataUtilities.createFetchRequest(ByID: model.id.uuidString, entity: Account.self)
             let itemCoreData = try viewContextArg.fetch(fetchRequest)
             
             guard let item = itemCoreData.first else {
-                Logger.custom(CDError.notFoundFetch(entity: Account.description()).localizedDescription)
+                Logger.custom(CDError.notFoundFetch(entity: Account.entityName).localizedDescription)
                 return nil
             }
             

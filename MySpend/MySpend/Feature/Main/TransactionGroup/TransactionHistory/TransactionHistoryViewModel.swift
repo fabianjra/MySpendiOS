@@ -13,6 +13,15 @@ class TransactionHistoryViewModel: BaseViewModel {
     @Published var showAlertDeleteMultiple = false
     
     @Published var isEditing = false
+    
+    /*
+     Caracteristicas de usar un set para la seleccion de items:
+     
+     Búsqueda (contains):       O(1) – tabla hash.
+     Inserción / eliminación:   O(1) si el elemento existe.
+     Duplicados:                Imposibles: cada elemento es único.
+     Orden:                     No garantiza orden estable.
+     */
     @Published var selectedTransactions = Set<TransactionModel>()
     @Published var sortTransactionsBy = UserDefaultsManager.sorTransactions
 
@@ -34,12 +43,16 @@ class TransactionHistoryViewModel: BaseViewModel {
         }
         
         do {
-            //TODO: Pasar a un metodo que borre items masivamente. Crearlo en el TransactionManager
+            //let idsToDelete = Set(selectedTransactions.map { $0.id })
+            
+            //try await TransactionManager(viewContext: viewContext).deleteMultiple(entityName: Transaction.entityName, idsToDelete: idsToDelete)
+            
             for item in selectedTransactions {
                 try await TransactionManager(viewContext: viewContext).delete(item)
             }
             
             selectedTransactions.removeAll()
+            
             return ResponseModel(.successful)
         } catch {
             Logger.exception(error, type: .CoreData)

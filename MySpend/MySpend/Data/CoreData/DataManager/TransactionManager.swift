@@ -21,10 +21,11 @@ struct TransactionManager {
         self.viewContext = viewContext
     }
     
+    private typealias predicate = CDConstants.Predicate
     
     // MARK: READ
     
-    func fetchAll(predicateFormat: String = CDConstants.Predicate.byIsActive,
+    func fetchAll(predicateFormat: String = predicate.byIsActive,
                   predicateArgs: [Any] = [true],
                   sortedBy sortDescriptors: [NSSortDescriptor] = [NSSortDescriptor(keyPath: \Transaction.dateTransaction, ascending: true)]) async throws -> [TransactionModel] {
         
@@ -89,22 +90,24 @@ struct TransactionManager {
         
         let entity = try await fetch(model)
         
-        try await viewContext.perform {
-            // Shared attributes (Abstract class):
-            entity.dateModified = .now
-            entity.isActive = model.isActive
-            
-            // Entity-specific Attributes
-            entity.amount = UtilsCurrency.makeNSDecimal(model.amount)
-            entity.dateTransaction = model.dateTransaction.dateWithCurrentTime
-            entity.notes = model.notes
-            entity.category = categoryResolved
-            entity.account = accountResolved
+        if let entity = entity {
+            try await viewContext.perform {
+                // Shared attributes (Abstract class):
+                entity.dateModified = .now
+                entity.isActive = model.isActive
+                
+                // Entity-specific Attributes
+                entity.amount = UtilsCurrency.makeNSDecimal(model.amount)
+                entity.dateTransaction = model.dateTransaction.dateWithCurrentTime
+                entity.notes = model.notes
+                entity.category = categoryResolved
+                entity.account = accountResolved
 
-            entity.category?.dateLastUsed = .now
-            entity.category?.usageCount = (entity.category?.usageCount ?? .zero) + 1
-            
-            try viewContext.save()
+                entity.category?.dateLastUsed = .now
+                entity.category?.usageCount = (entity.category?.usageCount ?? .zero) + 1
+                
+                try viewContext.save()
+            }
         }
     }
     
@@ -114,9 +117,11 @@ struct TransactionManager {
     func delete(_ model: TransactionModel) async throws {
         let entity = try await fetch(model)
         
-        try await viewContext.perform {
-            viewContext.delete(entity)
-            try viewContext.save()
+        if let entity = entity {
+            try await viewContext.perform {
+                viewContext.delete(entity)
+                try viewContext.save()
+            }
         }
     }
     
@@ -127,13 +132,61 @@ struct TransactionManager {
         }
     }
     
-    private func fetch(_ model: TransactionModel) async throws -> Transaction {
+    /**
+     Deletes all `Transaction` entities whose **id** matches the models supplied.
+     
+     - Important:
+     * Executes **inside** `viewContext.perform{}` so the UI thread is never blocked.
+     * Uses `NSBatchDeleteRequest` (O-log n) — Core Data elimina a nivel de SQLite sin cargar cada fila en memoria.
+     * Merges the resulting `objectID`s back into `viewContext` so any SwiftUI/List that observes the context refreshes automatically.
+     */
+    private func deleteMultiple_ERROR_Could_not_merge_changes(entityName: String, idsToDelete: Set<UUID>) async throws {
+        if idsToDelete.isEmpty { return }
+        
+        let bgContext = PersistenceController.shared.container.newBackgroundContext()
+        bgContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        
+        let objIDs: [NSManagedObjectID] = try await bgContext.perform {
+            
+            let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
+            fetch.predicate = NSPredicate(format: predicate.byMultipleID, idsToDelete)
+            
+            let deleteReq = NSBatchDeleteRequest(fetchRequest: fetch)
+            deleteReq.resultType = .resultTypeObjectIDs
+            
+            guard let result = try bgContext.execute(deleteReq) as? NSBatchDeleteResult,
+                  let ids = result.result as? [NSManagedObjectID] else { return [] }
+            
+            return ids
+        }
+        
+        // Fusiona en el viewContext para refrescar la UI
+        let changes: [AnyHashable: Any] = [NSDeletedObjectsKey: objIDs]
+        NSManagedObjectContext.mergeChanges(
+            fromRemoteContextSave: changes,
+            into: [viewContext]
+        )
+        
+        // Optional: save pending changes that *this* context might have
+        // Normalmente no hay cambios adicionales, pero si los hubiera (por ejemplo, contadores actualizados) quedan consolidados.
+        if viewContext.hasChanges {
+            try viewContext.save()
+        }
+        
+        /*
+         NOTA: Si luego se usa un background context en lugar de viewContext,
+         se debe pasar ese contexto al perform {} y en el mergeChanges indica ambos contextos (bgContext y viewContext) para que la UI reciba la notificación.
+         */
+    }
+    
+    private func fetch(_ model: TransactionModel) async throws -> Transaction? {
         try await viewContext.perform {
             let fetchRequest = CoreDataUtilities.createFetchRequest(ByID: model.id.uuidString, entity: Transaction.self)
             let entity = try viewContext.fetch(fetchRequest)
             
             guard let item = entity.first else {
-                throw CDError.notFoundFetch(entity: Transaction.description())
+                Logger.custom(CDError.notFoundFetch(entity: Transaction.entityName).localizedDescription)
+                return nil
             }
             
             return item
@@ -169,15 +222,15 @@ struct TransactionManager {
             guard newAccountType != .general else { return .zero }
             
             // 2.  Predicate for the account
-            let accountPredicate = NSPredicate(format: CDConstants.Predicate.byAccountId, id)
+            let accountPredicate = NSPredicate(format: predicate.byAccountId, id)
             
             // 3.  Predicate for the *disallowed* category type
             let disallowedPredicate: NSPredicate
             
             switch newAccountType {
-            case .expenses: disallowedPredicate = NSPredicate(format: CDConstants.Predicate.byCategoryType, CategoryType.income.rawValue)
+            case .expenses: disallowedPredicate = NSPredicate(format: predicate.byCategoryType, CategoryType.income.rawValue)
                 
-            case .incomes: disallowedPredicate = NSPredicate(format: CDConstants.Predicate.byCategoryType, CategoryType.expense.rawValue)
+            case .incomes: disallowedPredicate = NSPredicate(format: predicate.byCategoryType, CategoryType.expense.rawValue)
                 
             case .general: return .zero
             }
@@ -219,7 +272,7 @@ struct TransactionManager {
         try await viewContext.perform {
             
             // Condicion 1: Obtendra las transacciones que usen la categoria actual
-            let categoryPredicate = NSPredicate(format: CDConstants.Predicate.byCategoryId, id)
+            let categoryPredicate = NSPredicate(format: predicate.byCategoryId, id)
             
             // Condicion 2: Verifica si el Account al que pertenece la Transaction NO es compatible con el nuevo tipo de Category
             
@@ -230,11 +283,11 @@ struct TransactionManager {
             switch newCategoryType {
             case .expense:
                 // No se permiten cuentas tipo incomes
-                incompatiblePredicate = NSPredicate(format: CDConstants.Predicate.byAccountType, AccountType.incomes.rawValue)
+                incompatiblePredicate = NSPredicate(format: predicate.byAccountType, AccountType.incomes.rawValue)
                 
             case .income:
                 // No se permiten cuentas tipo expenses
-                incompatiblePredicate = NSPredicate(format: CDConstants.Predicate.byAccountType, AccountType.expenses.rawValue)
+                incompatiblePredicate = NSPredicate(format: predicate.byAccountType, AccountType.expenses.rawValue)
             }
             
             // Combinar ambos predicados

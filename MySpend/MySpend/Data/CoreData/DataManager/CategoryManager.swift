@@ -24,6 +24,7 @@ struct CategoryManager {
         self.viewContext = viewContext
     }
     
+    private typealias predicate = CDConstants.Predicate
     
     // MARK: READ
     
@@ -58,7 +59,7 @@ struct CategoryManager {
      - Returns: An array of `CategoryModel`.
      - Throws: Propagates any Core Data fetch errors.
      */
-    func fetchAll(predicateFormat: String = CDConstants.Predicate.byIsActive,
+    func fetchAll(predicateFormat: String = predicate.byIsActive,
                             predicateArgs: [Any] = [true],
                             sortedBy sortDescriptors: [NSSortDescriptor] = [NSSortDescriptor(keyPath: \Category.name, ascending: true)]) async throws -> [CategoryModel] {
 
@@ -191,7 +192,7 @@ struct CategoryManager {
             let entity = try viewContextArg.fetch(fetchRequest)
             
             guard let item = entity.first else {
-                Logger.custom(CDError.notFoundFetch(entity: Category.description()).localizedDescription)
+                Logger.custom(CDError.notFoundFetch(entity: Category.entityName).localizedDescription)
                 return nil
             }
             
