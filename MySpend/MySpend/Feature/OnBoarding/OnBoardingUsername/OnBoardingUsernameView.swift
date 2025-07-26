@@ -62,5 +62,5 @@ struct OnBoardingUsernameView: View {
 
 #Preview("en_US") {
     OnBoardingUsernameView()
-        .environment(\.locale, .init(identifier: "en_US"))
+        .environment(\.locale, .init(identifier: "en"))
 }

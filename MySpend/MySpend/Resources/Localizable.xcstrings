@@ -4,6 +4,9 @@
     "" : {
 
     },
+    "Accounts" : {
+
+    },
     "Accounts not found. Try adding a new one in settings." : {
 
     },
@@ -23,6 +26,9 @@
 
     },
     "Cancel" : {
+
+    },
+    "Categories" : {
 
     },
     "Category name (A-Z)" : {
@@ -53,6 +59,9 @@
 
     },
     "Creation (Oldest first)" : {
+
+    },
+    "Currency list" : {
 
     },
     "Date (Newest first)" : {
@@ -97,16 +106,34 @@
     "Email sent! follow next steps in your email." : {
 
     },
+    "Enter the account details" : {
+
+    },
+    "Enter the category details" : {
+
+    },
+    "Enter transation details" : {
+
+    },
     "Fill the empty space." : {
 
     },
     "Fill the empty spaces." : {
 
     },
+    "Fill the name space" : {
+
+    },
     "Forgot password?" : {
 
     },
     "Go back" : {
+
+    },
+    "History" : {
+
+    },
+    "Log in to your account" : {
 
     },
     "Login" : {
@@ -118,7 +145,28 @@
     "Modify" : {
 
     },
+    "Modify account" : {
+
+    },
+    "Modify category" : {
+
+    },
+    "Modify the account details" : {
+
+    },
+    "Modify the category details" : {
+
+    },
+    "Modify transaction" : {
+
+    },
+    "Modify transaction details" : {
+
+    },
     "Most often used" : {
+
+    },
+    "mySpend" : {
 
     },
     "Name (A-Z)" : {
@@ -127,7 +175,16 @@
     "Name (Z-A)" : {
 
     },
+    "New account" : {
+
+    },
+    "New category" : {
+
+    },
     "New password and confirm password are different." : {
+
+    },
+    "New transaction" : {
 
     },
     "onboarding.button_continue" : {
@@ -204,10 +261,31 @@
     "Register" : {
 
     },
+    "Register new user" : {
+
+    },
     "Reset selection" : {
 
     },
     "Reset to default" : {
+
+    },
+    "Select or add accounts" : {
+
+    },
+    "Select or add categories" : {
+
+    },
+    "Select the account" : {
+
+    },
+    "Select the category" : {
+
+    },
+    "Select the currency to show" : {
+
+    },
+    "Select the default time interval" : {
 
     },
     "Send email" : {
@@ -231,6 +309,9 @@
     "The user was created without sending the verification email, please send it manually in Settings -> Validate account." : {
 
     },
+    "Time interval list" : {
+
+    },
     "Today" : {
 
     },
@@ -244,6 +325,9 @@
 
     },
     "User is not logged in." : {
+
+    },
+    "Validate account" : {
 
     },
     "Want to delete all data?" : {

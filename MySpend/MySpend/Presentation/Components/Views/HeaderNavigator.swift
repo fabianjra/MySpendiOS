@@ -12,12 +12,12 @@ struct HeaderNavigator: View {
     @Environment(\.dismiss) private var dismiss
     
     // MARK: TITLE
-    var title: String = "mySpend"
+    var title: LocalizedStringKey = "mySpend"
     var titleWeight: Font.Family = .thin
     var titleSize: Font.Sizes = .bigXXL
     
     // MARK: SUBTITLE
-    var subTitle: String = ""
+    var subTitle: LocalizedStringKey = ""
     var subTitleWeight: Font.Family = .light
     var subTitleSize: Font.Sizes = .body
     
@@ -77,7 +77,7 @@ struct HeaderNavigator: View {
     
     private var titleAndSubtitle: some View {
         VStack {
-            TextPlain(title,
+            TextPlainLocalized(title,
                       color: textColor,
                       family: titleWeight,
                       size: titleSize,
@@ -85,7 +85,7 @@ struct HeaderNavigator: View {
                       lineLimit: ConstantViews.singleTextMaxLines,
                       truncateMode: .tail)
             
-            TextPlain(subTitle,
+            TextPlainLocalized(subTitle,
                       color: textColor,
                       family: subTitleWeight,
                       size: subTitleSize,
