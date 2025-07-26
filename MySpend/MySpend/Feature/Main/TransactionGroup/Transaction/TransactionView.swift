@@ -20,13 +20,13 @@ struct TransactionView: View {
             
             HStack {
                 VStack(alignment: .leading) {
-                    TextPlain("Hello \(viewModel.userName) \(Emojis.greeting.rawValue)",
+                    TextPlainLocalized("transaction.greet \(viewModel.userName) \(Emojis.greeting.rawValue)",
                               family: .semibold,
                               size: .big,
                               lineLimit: ConstantViews.singleTextMaxLines,
                               truncateMode: .tail)
                     
-                    TextPlain("Welcome back",
+                    TextPlainLocalized("transaction.welcome",
                               family: .light,
                               size: .small,
                               lineLimit: ConstantViews.singleTextMaxLines)
