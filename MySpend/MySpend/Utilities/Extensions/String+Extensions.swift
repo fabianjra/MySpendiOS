@@ -10,7 +10,7 @@ import SwiftUICore
 
 extension String {
     
-    // MARK: CURRENCY:
+    // MARK: - CURRENCY:
     
     /**
      if there is roughly < 30 substrings to attach together, then concatenation is faster
@@ -119,7 +119,7 @@ extension String {
     }
     
     
-    // MARK: TEXT
+    // MARK: - TEXT
     
     /**
      Validate if a String is empty incluiding white spaces.

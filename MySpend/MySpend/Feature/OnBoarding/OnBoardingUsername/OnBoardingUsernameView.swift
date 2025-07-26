@@ -16,7 +16,7 @@ struct OnBoardingUsernameView: View {
         LogContainer {
             
             // MARK: HEADER
-            HeaderNavigator(subTitle: "Let's start", onlyTitle: true)
+            HeaderNavigator(subTitle: "onboarding.title", onlyTitle: true)
                 .padding(.bottom)
             
             
@@ -55,6 +55,12 @@ struct OnBoardingUsernameView: View {
     }
 }
 
-#Preview {
+#Preview("es") {
     OnBoardingUsernameView()
+        .environment(\.locale, .init(identifier: "es"))
+}
+
+#Preview("en_US") {
+    OnBoardingUsernameView()
+        .environment(\.locale, .init(identifier: "en_US"))
 }

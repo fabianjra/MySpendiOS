@@ -1,0 +1,272 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "" : {
+
+    },
+    "Accounts not found. Try adding a new one in settings." : {
+
+    },
+    "Add" : {
+
+    },
+    "Amount (Highest first)" : {
+
+    },
+    "Amount (Lowest first)" : {
+
+    },
+    "Amount is invalid." : {
+
+    },
+    "Are you completely sure you want to delete all data?" : {
+
+    },
+    "Cancel" : {
+
+    },
+    "Category name (A-Z)" : {
+
+    },
+    "Category name (Z-A)" : {
+
+    },
+    "Change name" : {
+
+    },
+    "Continue" : {
+
+    },
+    "Could not get data from collection snapshot" : {
+
+    },
+    "Could not get data from documentSnapshot" : {
+
+    },
+    "Could not get the query snapshot" : {
+
+    },
+    "Create a new free account" : {
+
+    },
+    "Creation (Newest first)" : {
+
+    },
+    "Creation (Oldest first)" : {
+
+    },
+    "Date (Newest first)" : {
+
+    },
+    "Date (Oldest first)" : {
+
+    },
+    "Delete" : {
+
+    },
+    "Delete account" : {
+
+    },
+    "Delete accounts" : {
+
+    },
+    "Delete categoreis" : {
+
+    },
+    "Delete category" : {
+
+    },
+    "Delete data" : {
+
+    },
+    "Delete transaction" : {
+
+    },
+    "Delete transactions" : {
+
+    },
+    "Do it later" : {
+
+    },
+    "Done" : {
+
+    },
+    "Edit" : {
+
+    },
+    "Email sent! follow next steps in your email." : {
+
+    },
+    "Fill the empty space." : {
+
+    },
+    "Fill the empty spaces." : {
+
+    },
+    "Forgot password?" : {
+
+    },
+    "Go back" : {
+
+    },
+    "Login" : {
+
+    },
+    "Login with" : {
+
+    },
+    "Modify" : {
+
+    },
+    "Most often used" : {
+
+    },
+    "Name (A-Z)" : {
+
+    },
+    "Name (Z-A)" : {
+
+    },
+    "New password and confirm password are different." : {
+
+    },
+    "onboarding.button_continue" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continue"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continuar"
+          }
+        }
+      }
+    },
+    "onboarding.button_ignore" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Do it later"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lo haré despues"
+          }
+        }
+      }
+    },
+    "onboarding.enter_name" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter your username to start"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ingresa tu nombre para comenzar"
+          }
+        }
+      }
+    },
+    "onboarding.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Let's start"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Comencemos"
+          }
+        }
+      }
+    },
+    "or" : {
+
+    },
+    "Register" : {
+
+    },
+    "Reset selection" : {
+
+    },
+    "Reset to default" : {
+
+    },
+    "Send email" : {
+
+    },
+    "Something wrong happened, try again." : {
+
+    },
+    "Sorted by: %@" : {
+
+    },
+    "Successful" : {
+
+    },
+    "The password and confirm password are different." : {
+
+    },
+    "The user was created without name, please add your name manually in Settings -> Change my name." : {
+
+    },
+    "The user was created without sending the verification email, please send it manually in Settings -> Validate account." : {
+
+    },
+    "Today" : {
+
+    },
+    "Type" : {
+
+    },
+    "User is already validated." : {
+
+    },
+    "User is not exists." : {
+
+    },
+    "User is not logged in." : {
+
+    },
+    "Want to delete all data?" : {
+
+    },
+    "Want to delete these accounts? \n This action cannot be undone." : {
+
+    },
+    "Want to delete these categories? \n This action cannot be undone." : {
+
+    },
+    "Want to delete these transactions? \n This action cannot be undone." : {
+
+    },
+    "Want to delete this account? \n This action cannot be undone." : {
+
+    },
+    "Want to delete this category? \n This action cannot be undone." : {
+
+    },
+    "Want to delete this transaction? \n This action cannot be undone." : {
+
+    }
+  },
+  "version" : "1.0"
+}
