@@ -125,7 +125,7 @@ struct CategoryManager {
      */
     func update(_ model: CategoryModel) async throws {
         try await viewContext.perform {
-            guard let entity = try CoreDataUtilities.fetch(ByID: model.id.uuidString,
+            guard let entity = try CoreDataUtilities.fetch(byID: model.id.uuidString,
                                                            entity: Category.self,
                                                            viewContextArg: viewContext) else {
                 throw CDError.notFoundUpdate(entity: Category.entityName)
@@ -149,7 +149,7 @@ struct CategoryManager {
     
     func delete(_ model: CategoryModel) async throws {
         try await viewContext.perform {
-            guard let entity = try CoreDataUtilities.fetch(ByID: model.id.uuidString,
+            guard let entity = try CoreDataUtilities.fetch(byID: model.id.uuidString,
                                                            entity: Category.self,
                                                            viewContextArg: viewContext) else {
                 throw CDError.notFoundUpdate(entity: Category.entityName)
@@ -189,7 +189,7 @@ struct CategoryManager {
      - Date: Jul 2025
      */
     static func resolve(from model: CategoryModel, viewContextArg: NSManagedObjectContext) throws -> Category {
-        if let entity = try CoreDataUtilities.fetch(ByID: model.id.uuidString,
+        if let entity = try CoreDataUtilities.fetch(byID: model.id.uuidString,
                                                     entity: Category.self,
                                                     viewContextArg: viewContextArg) {
             return entity

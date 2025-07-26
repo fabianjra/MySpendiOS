@@ -92,7 +92,7 @@ struct AccountManager {
     
     func update(_ model: AccountModel) async throws {
         try await viewContext.perform {
-            guard let entity = try CoreDataUtilities.fetch(ByID: model.id.uuidString,
+            guard let entity = try CoreDataUtilities.fetch(byID: model.id.uuidString,
                                                            entity: Account.self,
                                                            viewContextArg: viewContext) else {
                 throw CDError.notFoundUpdate(entity: Account.entityName)
@@ -119,7 +119,7 @@ struct AccountManager {
     
     func delete(_ model: AccountModel) async throws {
         try await viewContext.perform {
-            guard let entity = try CoreDataUtilities.fetch(ByID: model.id.uuidString,
+            guard let entity = try CoreDataUtilities.fetch(byID: model.id.uuidString,
                                                            entity: Account.self,
                                                            viewContextArg: viewContext) else {
                 throw CDError.notFoundUpdate(entity: Account.entityName)
@@ -182,7 +182,7 @@ struct AccountManager {
      - Date: Jul 2025
      */
     static func resolve(from model: AccountModel, viewContextArg: NSManagedObjectContext) throws -> Account {
-        if let entity = try CoreDataUtilities.fetch(ByID: model.id.uuidString,
+        if let entity = try CoreDataUtilities.fetch(byID: model.id.uuidString,
                                                     entity: Account.self,
                                                     viewContextArg: viewContextArg) {
             return entity

@@ -57,7 +57,7 @@ struct CoreDataUtilities {
      - Throws: Any error thrown by `viewContextArg.fetch(_:)`.
      - Date: Jul 2025
      */
-    static func fetch<T: NSManagedObject>(ByID id: String, entity: T.Type, viewContextArg: NSManagedObjectContext) throws -> T? {
+    static func fetch<T: NSManagedObject>(byID id: String, entity: T.Type, viewContextArg: NSManagedObjectContext) throws -> T? {
         let request = NSFetchRequest<T>(entityName: entity.entityName)
         request.resultType = .managedObjectResultType
         request.predicate  = NSPredicate(format: CDConstants.Predicate.byID, id)
@@ -67,7 +67,7 @@ struct CoreDataUtilities {
         return entity.first
     }
     
-    static func fetchobjectID<T: NSManagedObject>(ByID id: String, entity: T.Type, viewContextArg: NSManagedObjectContext) throws -> NSManagedObjectID? {
+    static func fetchobjectID<T: NSManagedObject>(byID id: String, entity: T.Type, viewContextArg: NSManagedObjectContext) throws -> NSManagedObjectID? {
         let request = NSFetchRequest<NSManagedObjectID>(entityName: entity.entityName)
         request.resultType = .managedObjectIDResultType
         request.predicate  = NSPredicate(format: CDConstants.Predicate.byID, id)
@@ -93,7 +93,7 @@ struct CoreDataUtilities {
         entity.type          = model.type.rawValue
         entity.usageCount    = Int64(model.usageCount)
         
-        viewContext.processPendingChanges()
+        //viewContext.processPendingChanges() // No se deben procesar porque se encuentra dentro de un llamado "perform"
         return entity
     }
     
@@ -113,7 +113,7 @@ struct CoreDataUtilities {
         entity.type          = model.type.rawValue
         entity.userId        = model.userId
         
-        viewContext.processPendingChanges()
+        //viewContext.processPendingChanges() // No se deben procesar porque se encuentra dentro de un llamado "perform"
         return entity
     }
 }
