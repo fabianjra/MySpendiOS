@@ -67,6 +67,7 @@ struct CoreDataUtilities {
         return entity.first
     }
     
+    //TOD: Por implementar. Usarlo si se necesita con background context.
     static func fetchobjectID<T: NSManagedObject>(byID id: String, entity: T.Type, viewContextArg: NSManagedObjectContext) throws -> NSManagedObjectID? {
         let request = NSFetchRequest<NSManagedObjectID>(entityName: entity.entityName)
         request.resultType = .managedObjectIDResultType

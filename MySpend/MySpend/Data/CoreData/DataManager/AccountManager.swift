@@ -57,9 +57,7 @@ struct AccountManager {
             
             let entities = try viewContext.fetch(request)
             
-            let models = entities.map { entity in
-                AccountModel(entity)
-            }
+            let models = entities.map { AccountModel($0) }
             
             return models
         }

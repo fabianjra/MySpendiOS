@@ -37,9 +37,7 @@ struct TransactionManager {
             
             let coreDataEntities = try viewContext.fetch(request)
             
-            let models = coreDataEntities.map { entity in
-                TransactionModel(entity)
-            }
+            let models = coreDataEntities.map { TransactionModel($0) }
             
             return models
         }

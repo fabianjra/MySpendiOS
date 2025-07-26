@@ -70,9 +70,7 @@ struct CategoryManager {
             
             let coreDataEntities = try viewContext.fetch(request)
             
-            let models = coreDataEntities.map { entity in
-                CategoryModel(entity)
-            }
+            let models = coreDataEntities.map { CategoryModel($0) }
             
             return models
         }
