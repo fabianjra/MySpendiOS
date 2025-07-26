@@ -181,7 +181,7 @@ struct AccountManager {
      - Throws: Rethrows any error raised by `AccountManager.fetch`.
      - Date: Jul 2025
      */
-    static func resolve(from model: AccountModel, viewContextArg: NSManagedObjectContext) async throws -> Account {
+    static func resolve(from model: AccountModel, viewContextArg: NSManagedObjectContext) throws -> Account {
         if let entity = try CoreDataUtilities.fetch(ByID: model.id.uuidString,
                                                     entity: Account.self,
                                                     viewContextArg: viewContextArg) {

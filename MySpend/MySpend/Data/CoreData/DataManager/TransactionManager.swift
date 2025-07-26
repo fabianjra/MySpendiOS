@@ -49,11 +49,10 @@ struct TransactionManager {
     // MARK: CREATE / UPDATE
     
     func create(_ model: TransactionModel) async throws {
-        
-        let categoryResolved = try await CategoryManager.resolve(from: model.category, viewContextArg: viewContext)
-        let accountResolved = try await AccountManager.resolve(from: model.account, viewContextArg: viewContext)
-        
         try await viewContext.perform {
+            
+            let categoryResolved = try CategoryManager.resolve(from: model.category, viewContextArg: viewContext)
+            let accountResolved = try AccountManager.resolve(from: model.account, viewContextArg: viewContext)
             
             let entity = Transaction(context: viewContext)
             
@@ -84,11 +83,11 @@ struct TransactionManager {
     }
     
     func update(_ model: TransactionModel) async throws {
-        
-        let categoryResolved = try await CategoryManager.resolve(from: model.category, viewContextArg: viewContext)
-        let accountResolved = try await AccountManager.resolve(from: model.account, viewContextArg: viewContext)
-        
         try await viewContext.perform {
+            
+            let categoryResolved = try CategoryManager.resolve(from: model.category, viewContextArg: viewContext)
+            let accountResolved = try AccountManager.resolve(from: model.account, viewContextArg: viewContext)
+            
             guard let entity = try CoreDataUtilities.fetch(ByID: model.id.uuidString,
                                                            entity: Transaction.self,
                                                            viewContextArg: viewContext) else {

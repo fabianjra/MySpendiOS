@@ -188,7 +188,7 @@ struct CategoryManager {
      - Throws: Rethrows any error raised by `CategoryManager.fetch`.
      - Date: Jul 2025
      */
-    static func resolve(from model: CategoryModel, viewContextArg: NSManagedObjectContext) async throws -> Category {
+    static func resolve(from model: CategoryModel, viewContextArg: NSManagedObjectContext) throws -> Category {
         if let entity = try CoreDataUtilities.fetch(ByID: model.id.uuidString,
                                                     entity: Category.self,
                                                     viewContextArg: viewContextArg) {

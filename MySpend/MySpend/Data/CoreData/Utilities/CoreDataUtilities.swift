@@ -39,6 +39,15 @@ struct CoreDataUtilities {
      2. Adds the predicate defined in `CDConstants.Predicates.byID` with `id` as its argument (`id == %@`).
      3. Sets `fetchLimit` to `1`, ensuring a single-row result.
      
+     example:
+     ```
+     guard let entity = try CoreDataUtilities.fetch(ByID: model.id.uuidString,
+                                                    entity: Transaction.self,
+                                                    viewContextArg: viewContext) else {
+         throw CDError.notFoundUpdate(entity: Transaction.entityName)
+     }
+     ```
+     
      - Parameters:
         - byID: the ID (UUID.uuidString) for the entity to find.
         - entity: `Entity` to look for. Eg: Account.self, Category.self or Transaction.self
@@ -50,6 +59,17 @@ struct CoreDataUtilities {
      */
     static func fetch<T: NSManagedObject>(ByID id: String, entity: T.Type, viewContextArg: NSManagedObjectContext) throws -> T? {
         let request = NSFetchRequest<T>(entityName: entity.entityName)
+        request.resultType = .managedObjectResultType
+        request.predicate  = NSPredicate(format: CDConstants.Predicate.byID, id)
+        request.fetchLimit = 1
+        
+        let entity = try viewContextArg.fetch(request)
+        return entity.first
+    }
+    
+    static func fetchobjectID<T: NSManagedObject>(ByID id: String, entity: T.Type, viewContextArg: NSManagedObjectContext) throws -> NSManagedObjectID? {
+        let request = NSFetchRequest<NSManagedObjectID>(entityName: entity.entityName)
+        request.resultType = .managedObjectIDResultType
         request.predicate  = NSPredicate(format: CDConstants.Predicate.byID, id)
         request.fetchLimit = 1
         
