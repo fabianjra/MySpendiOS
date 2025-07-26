@@ -124,12 +124,13 @@ struct CategoryManager {
      - Throws: `.notFound` (from `fetchedCategory`) or any Core Data save error.
      */
     func update(_ model: CategoryModel) async throws {
-        
-        guard let entity = try await CategoryManager.fetch(model, viewContextArg: viewContext) else {
-            throw CDError.notFoundUpdate(entity: Category.description())
-        }
-        
         try await viewContext.perform {
+            guard let entity = try CoreDataUtilities.fetch(ByID: model.id.uuidString,
+                                                           entity: Category.self,
+                                                           viewContextArg: viewContext) else {
+                throw CDError.notFoundUpdate(entity: Category.entityName)
+            }
+            
             // Shared attributes (Abstract class):
             entity.dateModified = .now
             entity.isActive = model.isActive
@@ -147,12 +148,13 @@ struct CategoryManager {
     // MARK: DELETE
     
     func delete(_ model: CategoryModel) async throws {
-        
-        guard let entity = try await CategoryManager.fetch(model, viewContextArg: viewContext) else {
-            throw CDError.notFoundUpdate(entity: Category.description())
-        }
-        
         try await viewContext.perform {
+            guard let entity = try CoreDataUtilities.fetch(ByID: model.id.uuidString,
+                                                           entity: Category.self,
+                                                           viewContextArg: viewContext) else {
+                throw CDError.notFoundUpdate(entity: Category.entityName)
+            }
+            
             viewContext.delete(entity)
             try viewContext.save()
         }
@@ -168,38 +170,6 @@ struct CategoryManager {
     
     // MARK: SHARED
 
-    /**
-     Fetches the `Category` entity whose primary key matches `model.id`.
-     
-     Internally:
-     1. Builds an `NSFetchRequest<Category>` via `CoreDataUtilities.createFetchRequest(ByID:entity:)`, using the model’s UUID string.
-     2. Executes the request in `viewContextArg`.
-     3. Logs a `.notFound` message and returns `nil` when no matching object is found; otherwise returns the first (and only) result.
-     
-     - Parameters:
-        - model: `CategoryModel` whose `id` is used as the lookup key.
-        - viewContextArg: The managed-object context that executes the fetch.
-     
-     - Returns: The matching `Category` entity, or `nil` if none exists.
-     - Throws: Any error thrown by `viewContextArg.fetch(_:)`.
-     - Date: Jul 2025
-     */
-    static func fetch(_ model: CategoryModel, viewContextArg: NSManagedObjectContext) async throws -> Category? {
-        
-        try await viewContextArg.perform {
-            
-            let fetchRequest = CoreDataUtilities.createFetchRequest(ByID: model.id.uuidString, entity: Category.self)
-            let entity = try viewContextArg.fetch(fetchRequest)
-            
-            guard let item = entity.first else {
-                Logger.custom(CDError.notFoundFetch(entity: Category.entityName).localizedDescription)
-                return nil
-            }
-            
-            return item
-        }
-    }
-    
     /**
      Returns the `Category` Core Data entity matching the given `CategoryModel`,
      Creating and inserting a new one when none is found.
@@ -219,8 +189,10 @@ struct CategoryManager {
      - Date: Jul 2025
      */
     static func resolve(from model: CategoryModel, viewContextArg: NSManagedObjectContext) async throws -> Category {
-        if let existing = try await CategoryManager.fetch(model, viewContextArg: viewContextArg) {
-            return existing
+        if let entity = try CoreDataUtilities.fetch(ByID: model.id.uuidString,
+                                                    entity: Category.self,
+                                                    viewContextArg: viewContextArg) {
+            return entity
         }
         
         let entity = CoreDataUtilities.createCategoryEntity(from: model, viewContext: viewContextArg)

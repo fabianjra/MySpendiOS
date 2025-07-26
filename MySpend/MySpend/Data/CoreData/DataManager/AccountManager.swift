@@ -70,7 +70,6 @@ struct AccountManager {
     
     func create(_ model: AccountModel) async throws {
         try await viewContext.perform {
-            
             let entity = Account(context: viewContext)
             
             // Shared attributes (Abstract class):
@@ -92,23 +91,24 @@ struct AccountManager {
     }
     
     func update(_ model: AccountModel) async throws {
-        
-        guard let item = try await AccountManager.fetch(model, viewContextArg: viewContext) else {
-            throw CDError.notFoundUpdate(entity: Account.description())
-        }
-        
         try await viewContext.perform {
+            guard let entity = try CoreDataUtilities.fetch(ByID: model.id.uuidString,
+                                                           entity: Account.self,
+                                                           viewContextArg: viewContext) else {
+                throw CDError.notFoundUpdate(entity: Account.entityName)
+            }
+            
             // Shared attributes (Abstract class):
-            item.dateModified = .now
-            item.isActive = model.isActive
+            entity.dateModified = .now
+            entity.isActive = model.isActive
             
             // Entity-specific Attributes
-            item.currencyCode = model.currencyCode
-            item.icon = model.icon
-            item.name = model.name
-            item.notes = model.notes
-            item.type = model.type.rawValue
-            item.userId = model.userId
+            entity.currencyCode = model.currencyCode
+            entity.icon = model.icon
+            entity.name = model.name
+            entity.notes = model.notes
+            entity.type = model.type.rawValue
+            entity.userId = model.userId
             
             try viewContext.save()
         }
@@ -118,13 +118,14 @@ struct AccountManager {
     // MARK: DELETE
     
     func delete(_ model: AccountModel) async throws {
-        
-        guard let item = try await AccountManager.fetch(model, viewContextArg: viewContext) else {
-            throw CDError.notFoundDelete(entity: Account.description())
-        }
-        
         try await viewContext.perform {
-            viewContext.delete(item)
+            guard let entity = try CoreDataUtilities.fetch(ByID: model.id.uuidString,
+                                                           entity: Account.self,
+                                                           viewContextArg: viewContext) else {
+                throw CDError.notFoundUpdate(entity: Account.entityName)
+            }
+            
+            viewContext.delete(entity)
             try viewContext.save()
         }
     }
@@ -163,36 +164,6 @@ struct AccountManager {
     }
     
     /**
-     Fetches the `Account` entity whose primary key matches `model.id`.
-     
-     Internally:
-     1. Builds an `NSFetchRequest<Account>` via `CoreDataUtilities.createFetchRequest(ByID:entity:)`, using the model’s UUID string.
-     2. Executes the request in `viewContextArg`.
-     3. Logs a `.notFound` message and returns `nil` when no matching object is found; otherwise returns the first (and only) result.
-     
-     - Parameters:
-        - model: `AccountModel` whose `id` is used as the lookup key.
-        - viewContextArg: The managed-object context that executes the fetch.
-     
-     - Returns: The matching `Account` entity, or `nil` if none exists.
-     - Throws: Any error thrown by `viewContextArg.fetch(_:)`.
-     - Date: Jul 2025
-     */
-    static func fetch(_ model: AccountModel,viewContextArg: NSManagedObjectContext) async throws -> Account? {
-        try await viewContextArg.perform {
-            let fetchRequest = CoreDataUtilities.createFetchRequest(ByID: model.id.uuidString, entity: Account.self)
-            let itemCoreData = try viewContextArg.fetch(fetchRequest)
-            
-            guard let item = itemCoreData.first else {
-                Logger.custom(CDError.notFoundFetch(entity: Account.entityName).localizedDescription)
-                return nil
-            }
-            
-            return item
-        }
-    }
-    
-    /**
      Returns the `Account` Core Data entity matching the given `AccountModel`,
      Creating and inserting a new one when none is found.
      
@@ -211,8 +182,10 @@ struct AccountManager {
      - Date: Jul 2025
      */
     static func resolve(from model: AccountModel, viewContextArg: NSManagedObjectContext) async throws -> Account {
-        if let existing = try await AccountManager.fetch(model, viewContextArg: viewContextArg) {
-            return existing
+        if let entity = try CoreDataUtilities.fetch(ByID: model.id.uuidString,
+                                                    entity: Account.self,
+                                                    viewContextArg: viewContextArg) {
+            return entity
         }
         
         let entity = CoreDataUtilities.createAccountEntity(from: model, viewContext: viewContextArg)

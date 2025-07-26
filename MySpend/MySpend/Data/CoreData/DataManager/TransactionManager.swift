@@ -88,26 +88,28 @@ struct TransactionManager {
         let categoryResolved = try await CategoryManager.resolve(from: model.category, viewContextArg: viewContext)
         let accountResolved = try await AccountManager.resolve(from: model.account, viewContextArg: viewContext)
         
-        let entity = try await fetch(model)
-        
-        if let entity = entity {
-            try await viewContext.perform {
-                // Shared attributes (Abstract class):
-                entity.dateModified = .now
-                entity.isActive = model.isActive
-                
-                // Entity-specific Attributes
-                entity.amount = UtilsCurrency.makeNSDecimal(model.amount)
-                entity.dateTransaction = model.dateTransaction.dateWithCurrentTime
-                entity.notes = model.notes
-                entity.category = categoryResolved
-                entity.account = accountResolved
-
-                entity.category?.dateLastUsed = .now
-                entity.category?.usageCount = (entity.category?.usageCount ?? .zero) + 1
-                
-                try viewContext.save()
+        try await viewContext.perform {
+            guard let entity = try CoreDataUtilities.fetch(ByID: model.id.uuidString,
+                                                           entity: Transaction.self,
+                                                           viewContextArg: viewContext) else {
+                throw CDError.notFoundUpdate(entity: Transaction.entityName)
             }
+            
+            // Shared attributes (Abstract class):
+            entity.dateModified = .now
+            entity.isActive = model.isActive
+            
+            // Entity-specific Attributes
+            entity.amount = UtilsCurrency.makeNSDecimal(model.amount)
+            entity.dateTransaction = model.dateTransaction.dateWithCurrentTime
+            entity.notes = model.notes
+            entity.category = categoryResolved
+            entity.account = accountResolved
+            
+            entity.category?.dateLastUsed = .now
+            entity.category?.usageCount = (entity.category?.usageCount ?? .zero) + 1
+            
+            try viewContext.save()
         }
     }
     
@@ -115,14 +117,16 @@ struct TransactionManager {
     // MARK: DELETE
     
     func delete(_ model: TransactionModel) async throws {
-        let entity = try await fetch(model)
-        
-        if let entity = entity {
             try await viewContext.perform {
+                guard let entity = try CoreDataUtilities.fetch(ByID: model.id.uuidString,
+                                                               entity: Transaction.self,
+                                                               viewContextArg: viewContext) else {
+                    throw CDError.notFoundUpdate(entity: Transaction.entityName)
+                }
+                
                 viewContext.delete(entity)
                 try viewContext.save()
             }
-        }
     }
     
     func delete(at offsets: IndexSet, from items: [TransactionModel]) async throws {
@@ -178,21 +182,6 @@ struct TransactionManager {
          se debe pasar ese contexto al perform {} y en el mergeChanges indica ambos contextos (bgContext y viewContext) para que la UI reciba la notificación.
          */
     }
-    
-    private func fetch(_ model: TransactionModel) async throws -> Transaction? {
-        try await viewContext.perform {
-            let fetchRequest = CoreDataUtilities.createFetchRequest(ByID: model.id.uuidString, entity: Transaction.self)
-            let entity = try viewContext.fetch(fetchRequest)
-            
-            guard let item = entity.first else {
-                Logger.custom(CDError.notFoundFetch(entity: Transaction.entityName).localizedDescription)
-                return nil
-            }
-            
-            return item
-        }
-    }
-    
     
     // MARK: SHARED
     
