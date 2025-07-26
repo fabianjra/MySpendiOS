@@ -78,6 +78,17 @@ struct CoreDataUtilities {
         return entity.first
     }
     
+    static func delete<T: NSManagedObject>(byID id: String, entity: T.Type, viewContext: NSManagedObjectContext) throws {
+        guard let entity = try CoreDataUtilities.fetch(byID: id,
+                                                       entity: entity.self,
+                                                       viewContextArg: viewContext) else {
+            throw CDError.notFoundUpdate(entity: entity.entityName)
+        }
+        
+        viewContext.delete(entity)
+        try viewContext.save()
+    }
+    
     
     // MARK: CATEGORY
     

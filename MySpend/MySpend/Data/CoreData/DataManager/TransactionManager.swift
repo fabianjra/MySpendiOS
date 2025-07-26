@@ -114,16 +114,9 @@ struct TransactionManager {
     // MARK: DELETE
     
     func delete(_ model: TransactionModel) async throws {
-            try await viewContext.perform {
-                guard let entity = try CoreDataUtilities.fetch(byID: model.id.uuidString,
-                                                               entity: Transaction.self,
-                                                               viewContextArg: viewContext) else {
-                    throw CDError.notFoundUpdate(entity: Transaction.entityName)
-                }
-                
-                viewContext.delete(entity)
-                try viewContext.save()
-            }
+        try await viewContext.perform {
+            try CoreDataUtilities.delete(byID: model.id.uuidString, entity: Transaction.self, viewContext: viewContext)
+        }
     }
     
     func delete(at offsets: IndexSet, from items: [TransactionModel]) async throws {

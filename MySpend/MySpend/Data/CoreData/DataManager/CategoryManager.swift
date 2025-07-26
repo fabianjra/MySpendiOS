@@ -147,14 +147,7 @@ struct CategoryManager {
     
     func delete(_ model: CategoryModel) async throws {
         try await viewContext.perform {
-            guard let entity = try CoreDataUtilities.fetch(byID: model.id.uuidString,
-                                                           entity: Category.self,
-                                                           viewContextArg: viewContext) else {
-                throw CDError.notFoundUpdate(entity: Category.entityName)
-            }
-            
-            viewContext.delete(entity)
-            try viewContext.save()
+            try CoreDataUtilities.delete(byID: model.id.uuidString, entity: Category.self, viewContext: viewContext)
         }
     }
     

@@ -117,14 +117,7 @@ struct AccountManager {
     
     func delete(_ model: AccountModel) async throws {
         try await viewContext.perform {
-            guard let entity = try CoreDataUtilities.fetch(byID: model.id.uuidString,
-                                                           entity: Account.self,
-                                                           viewContextArg: viewContext) else {
-                throw CDError.notFoundUpdate(entity: Account.entityName)
-            }
-            
-            viewContext.delete(entity)
-            try viewContext.save()
+            try CoreDataUtilities.delete(byID: model.id.uuidString, entity: Account.self, viewContext: viewContext)
         }
     }
     
