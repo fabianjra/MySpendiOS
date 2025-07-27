@@ -45,8 +45,8 @@ struct TransactionView: View {
                                            isMutipleAccounts: $viewModel.isMutipleAccounts)
                     .toolbar(.hidden, for: .navigationBar)
                 } label: {
-                    TextButtonHorizontalStyled("History",
-                                               subTitle: "Go to history",
+                    TextButtonHorizontalStyled("button.history",
+                                               subTitle: "button.history_subtitle",
                                                iconLeading: Image.stackFill,
                                                iconTrailing: Image.arrowRight)
                 }
@@ -56,7 +56,7 @@ struct TransactionView: View {
             // MARK: - TRANSACTIONS
             
                 if viewModel.transactions.isEmpty {
-                    NoContentToAddView(title: "No transactions")
+                    NoContentToAddView()
                     Spacer()
                 } else {
                     VStack {
@@ -103,7 +103,7 @@ struct TransactionView: View {
     }
 }
 
-#Preview("es_CR") {
+#Preview("Normal es_CR") {
     @Previewable @State var selectedDate = Date()
     VStack {
         TransactionView(selectedDate: $selectedDate)

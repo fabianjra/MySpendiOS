@@ -310,7 +310,6 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"${SRCROOT}/MySpend/Resources/Localization/LocalizationKey.swift",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

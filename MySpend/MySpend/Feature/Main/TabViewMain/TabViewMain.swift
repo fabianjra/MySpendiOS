@@ -70,6 +70,12 @@ struct TabViewMain: View {
     }
 }
 
-#Preview {
+#Preview("es") {
     TabViewMain()
+        .environment(\.locale, .init(identifier: "es"))
+}
+
+#Preview("en") {
+    TabViewMain()
+        .environment(\.locale, .init(identifier: "en"))
 }

@@ -9,15 +9,15 @@ import SwiftUI
 
 struct NoContentToAddView: View {
     
-    var title: String = "Empty"
-    var message: String = "Try adding a new one in the plus (+) button"
+    var title: LocalizedStringKey = LocalizationKey.View.empty.key
+    var message: LocalizedStringKey = LocalizationKey.View.emptyAddItem.key
     var rotationDegress: CGFloat = ConstantAnimations.rotationArrowBottomCenter
     
     var body: some View {
         VStack {
             HStack {
                 Spacer()
-                TextPlain(title,
+                TextPlainLocalized(title,
                           family: .semibold,
                           size: .bigXL,
                           aligment: .center)
@@ -25,7 +25,7 @@ struct NoContentToAddView: View {
                 Spacer()
             }
             
-            TextPlain(message,
+            TextPlainLocalized(message,
                       size: .big,
                       aligment: .center,
                       lineLimit: ConstantViews.messageMaxLines)
@@ -45,9 +45,18 @@ struct NoContentToAddView: View {
     }
 }
 
-#Preview {
+#Preview("es") {
     VStack {
         NoContentToAddView()
             .background(Color.backgroundBottom)
     }
+    .environment(\.locale, .init(identifier: "es"))
+}
+
+#Preview("en") {
+    VStack {
+        NoContentToAddView()
+            .background(Color.backgroundBottom)
+    }
+    .environment(\.locale, .init(identifier: "en"))
 }

@@ -9,15 +9,15 @@ import SwiftUI
 
 struct TextButtonHorizontalStyled: View {
     
-    private let text: String
-    private let subTitle: String
+    private let text: LocalizedStringKey
+    private let subTitle: LocalizedStringKey
     private let color: Array<Color>
     private let iconLeading: Image?
     private let iconTrailing: Image?
     
-    init(_ text: String = "",
+    init(_ text: LocalizedStringKey = "",
          color: Array<Color> = Color.secondaryGradiant,
-         subTitle: String = "",
+         subTitle: LocalizedStringKey = "",
          iconLeading: Image? = nil,
          iconTrailing: Image? = nil) {
         self.text = text
