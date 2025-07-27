@@ -22,7 +22,7 @@ struct OnBoardingUsernameView: View {
             
             VStack(spacing: ConstantViews.formSpacing) {
                 
-                TextPlain("Enter your username to start", family: .light, size: .big)
+                TextPlainLocalized("onboarding.enter_name", family: .light, size: .big)
                 
                 
                 TextFieldName(text: $viewModel.userName,
@@ -32,13 +32,13 @@ struct OnBoardingUsernameView: View {
                 .onSubmit { viewModel.continueToNextStep(withName: true)}
                 
                 
-                Button("Continue") {
+                Button(LocalizedStringKey("button.continue")) {
                     viewModel.continueToNextStep(withName: true)
                 }
                 .buttonStyle(ButtonPrimaryStyle())
                 
                 
-                Button("Do it later") {
+                Button(LocalizedStringKey("button.skip")) {
                     viewModel.continueToNextStep(withName: false)
                 }
                 .buttonStyle(ButtonLinkStyle())
@@ -60,7 +60,7 @@ struct OnBoardingUsernameView: View {
         .environment(\.locale, .init(identifier: "es"))
 }
 
-#Preview("en_US") {
+#Preview("en") {
     OnBoardingUsernameView()
         .environment(\.locale, .init(identifier: "en"))
 }

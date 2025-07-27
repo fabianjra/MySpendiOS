@@ -25,6 +25,40 @@
     "Are you completely sure you want to delete all data?" : {
 
     },
+    "button.continue" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continue"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continuar"
+          }
+        }
+      }
+    },
+    "button.skip" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Do it later"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Lo haré luego"
+          }
+        }
+      }
+    },
     "Cancel" : {
 
     },
@@ -38,9 +72,6 @@
 
     },
     "Change name" : {
-
-    },
-    "Continue" : {
 
     },
     "Could not get data from collection snapshot" : {
@@ -92,9 +123,6 @@
 
     },
     "Delete transactions" : {
-
-    },
-    "Do it later" : {
 
     },
     "Done" : {
@@ -187,36 +215,18 @@
     "New transaction" : {
 
     },
-    "onboarding.button_continue" : {
-      "extractionState" : "manual",
+    "onboarding.enter_account_name" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Continue"
+            "value" : "Customize your main account name"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Continuar"
-          }
-        }
-      }
-    },
-    "onboarding.button_ignore" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Do it later"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Lo haré despues"
+            "value" : "Ingresa el nombre de la cuenta principal"
           }
         }
       }
