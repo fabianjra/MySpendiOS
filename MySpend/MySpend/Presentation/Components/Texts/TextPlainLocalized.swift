@@ -10,6 +10,7 @@ import SwiftUI
 struct TextPlainLocalized: View {
     
     private let text: LocalizedStringKey
+    private let tableName: String
     private let color: Color
     private let family: Font.Family
     private let size: Font.Sizes
@@ -18,6 +19,7 @@ struct TextPlainLocalized: View {
     private let truncateMode: Text.TruncationMode
     
     init(_ text: LocalizedStringKey,
+         tableName: String = "Localizable",
          color: Color = Color.textPrimaryForeground,
          family: Font.Family = Font.Family.regular,
          size: Font.Sizes = Font.Sizes.body,
@@ -25,6 +27,7 @@ struct TextPlainLocalized: View {
          lineLimit: Int = ConstantViews.singleTextMaxLines,
          truncateMode: Text.TruncationMode = Text.TruncationMode.tail) {
         self.text = text
+        self.tableName = tableName
         self.color = color
         self.family = family
         self.size = size
@@ -34,7 +37,7 @@ struct TextPlainLocalized: View {
     }
     
     var body: some View {
-        Text(text)
+        Text(text, tableName: tableName)
             .foregroundColor(color)
             .font(.montserrat(family, size: size))
             .multilineTextAlignment(aligment)
