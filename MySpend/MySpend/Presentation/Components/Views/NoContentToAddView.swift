@@ -45,18 +45,18 @@ struct NoContentToAddView: View {
     }
 }
 
-#Preview("es") {
+#Preview(Previews.localeES) {
     VStack {
         NoContentToAddView()
             .background(Color.backgroundBottom)
     }
-    .environment(\.locale, .init(identifier: "es"))
+    .environment(\.locale, .init(identifier: Previews.localeES))
 }
 
-#Preview("en") {
+#Preview(Previews.localeEN) {
     VStack {
         NoContentToAddView()
             .background(Color.backgroundBottom)
     }
-    .environment(\.locale, .init(identifier: "en"))
+    .environment(\.locale, .init(identifier: Previews.localeEN))
 }

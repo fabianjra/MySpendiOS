@@ -20,7 +20,11 @@ struct OnBoardingAccountView: View {
             
             
             VStack(spacing: ConstantViews.formSpacing) {
-                TextPlainLocalized("onboarding.enter_account_name", family: .light, size: .big, aligment: .center, lineLimit: 2)
+                TextPlainLocalized(LocalizationKey.Onboarding.enterAccountName.key,
+                                   family: .light,
+                                   size: .big,
+                                   aligment: .center,
+                                   lineLimit: 2)
                 
                 TextFieldName(text: $viewModel.name,
                               iconLeading: nil,
@@ -33,7 +37,7 @@ struct OnBoardingAccountView: View {
                 }
                 
                 
-                Button(LocalizedStringKey("button.continue")) {
+                Button(LocalizationKey.Button.continu.key) {
                     Task {
                         await viewModel.finishOnBoarding(withName: true)
                     }
@@ -41,7 +45,7 @@ struct OnBoardingAccountView: View {
                 .buttonStyle(ButtonPrimaryStyle())
                 
                 
-                Button(LocalizedStringKey("button.skip")) {
+                Button(LocalizationKey.Button.skip.key) {
                     Task {
                         await viewModel.finishOnBoarding(withName: false)
                     }
@@ -60,12 +64,12 @@ struct OnBoardingAccountView: View {
     }
 }
 
-#Preview("es") {
+#Preview(Previews.localeES) {
     OnBoardingAccountView()
-        .environment(\.locale, .init(identifier: "es"))
+        .environment(\.locale, .init(identifier: Previews.localeES))
 }
 
-#Preview("en") {
+#Preview(Previews.localeEN) {
     OnBoardingAccountView()
-        .environment(\.locale, .init(identifier: "en"))
+        .environment(\.locale, .init(identifier: Previews.localeEN))
 }

@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import CoreData
 
 struct TransactionView: View {
     
@@ -21,12 +20,13 @@ struct TransactionView: View {
             HStack {
                 VStack(alignment: .leading) {
                     TextPlainLocalized("transaction.greet \(viewModel.userName) \(Emojis.greeting.rawValue)",
+                                       
                               family: .semibold,
                               size: .big,
                               lineLimit: ConstantViews.singleTextMaxLines,
                               truncateMode: .tail)
                     
-                    TextPlainLocalized("transaction.welcome",
+                    TextPlainLocalized(LocalizationKey.Transaction.welcome.key,
                               family: .light,
                               size: .small,
                               lineLimit: ConstantViews.singleTextMaxLines)
@@ -45,8 +45,8 @@ struct TransactionView: View {
                                            isMutipleAccounts: $viewModel.isMutipleAccounts)
                     .toolbar(.hidden, for: .navigationBar)
                 } label: {
-                    TextButtonHorizontalStyled("button.history",
-                                               subTitle: "button.history_subtitle",
+                    TextButtonHorizontalStyled(LocalizationKey.Button.history.key,
+                                               subTitle: LocalizationKey.Button.historySubtitle.key,
                                                iconLeading: Image.stackFill,
                                                iconTrailing: Image.arrowRight)
                 }
@@ -103,24 +103,27 @@ struct TransactionView: View {
     }
 }
 
-#Preview("Normal es_CR") {
-    @Previewable @State var selectedDate = Date()
-    VStack {
-        TransactionView(selectedDate: $selectedDate)
-            .environment(\.locale, .init(identifier: "es_CR"))
+
+private struct previewWrapper: View {
+    init(_ mockDataType: MockDataType = .normal) {
+        CoreDataUtilities.shared.mockDataType = mockDataType
+        UserDefaultsManager.userDefaults = .preview
     }
+    @State var selectedDate = Date()
+    var body: some View { TransactionView(selectedDate: $selectedDate) }
 }
 
-#Preview("Saturated en_US") {
-    @Previewable @State var selectedDate = Date()
-    VStack {
-        TransactionView(selectedDate: $selectedDate)
-            .environment(\.locale, .init(identifier: "en_US"))
-    }
+#Preview("Normal \(Previews.localeES_CR)") {
+    previewWrapper()
+        .environment(\.locale, .init(identifier: Previews.localeES_CR))
 }
 
-#Preview("No content es_ES") {
-    @Previewable @State var selectedDate = Date()
-    TransactionView(selectedDate: $selectedDate)
-        .environment(\.locale, .init(identifier: "es_ES"))
+#Preview("Saturated \(Previews.localeEN_US)") {
+    previewWrapper(.saturated)
+        .environment(\.locale, .init(identifier: Previews.localeEN_US))
+}
+
+#Preview("Empty \(Previews.localeES_ES)") {
+    previewWrapper(.empty)
+        .environment(\.locale, .init(identifier: Previews.localeES_ES))
 }

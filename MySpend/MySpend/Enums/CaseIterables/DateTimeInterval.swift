@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUICore
 
 /**
  Allows user to select a Date Time interval to show transactions.
@@ -30,5 +31,9 @@ enum DateTimeInterval: String, CaseIterable, Identifiable, Codable {
         case .month: return .month
         case .year: return .year
         }
+    }
+    
+    var localized: LocalizedStringKey {
+        LocalizedStringKey("interval.\(self.rawValue)")
     }
 }

@@ -16,13 +16,13 @@ struct OnBoardingUsernameView: View {
         LogContainer {
             
             // MARK: HEADER
-            HeaderNavigator(subTitle: "onboarding.title", onlyTitle: true)
+            HeaderNavigator(subTitle: LocalizationKey.Onboarding.title.key, onlyTitle: true)
                 .padding(.bottom)
             
             
             VStack(spacing: ConstantViews.formSpacing) {
                 
-                TextPlainLocalized("onboarding.enter_name", family: .light, size: .big)
+                TextPlainLocalized(LocalizationKey.Onboarding.enterName.key, family: .light, size: .big)
                 
                 
                 TextFieldName(text: $viewModel.userName,
@@ -32,13 +32,13 @@ struct OnBoardingUsernameView: View {
                 .onSubmit { viewModel.continueToNextStep(withName: true)}
                 
                 
-                Button(LocalizedStringKey("button.continue")) {
+                Button(LocalizationKey.Button.continu.key) {
                     viewModel.continueToNextStep(withName: true)
                 }
                 .buttonStyle(ButtonPrimaryStyle())
                 
                 
-                Button(LocalizedStringKey("button.skip")) {
+                Button(LocalizationKey.Button.skip.key) {
                     viewModel.continueToNextStep(withName: false)
                 }
                 .buttonStyle(ButtonLinkStyle())
@@ -55,12 +55,12 @@ struct OnBoardingUsernameView: View {
     }
 }
 
-#Preview("es") {
+#Preview(Previews.localeES) {
     OnBoardingUsernameView()
-        .environment(\.locale, .init(identifier: "es"))
+        .environment(\.locale, .init(identifier: Previews.localeES))
 }
 
-#Preview("en") {
+#Preview(Previews.localeEN) {
     OnBoardingUsernameView()
-        .environment(\.locale, .init(identifier: "en"))
+        .environment(\.locale, .init(identifier: Previews.localeEN))
 }

@@ -55,23 +55,23 @@ private struct previewWrapper: View {
     var body: some View { RootView() }
 }
 
-#Preview("Normal es_CR") {
+#Preview("Normal \(Previews.localeES_CR)") {
     previewWrapper()
-        .environment(\.locale, .init(identifier: "es_CR"))
+        .environment(\.locale, .init(identifier: Previews.localeES_CR))
 }
 
-#Preview("Saturated en_US") {
+#Preview("Saturated \(Previews.localeEN_US)") {
     previewWrapper(.saturated)
-        .environment(\.locale, .init(identifier: "en_US"))
+        .environment(\.locale, .init(identifier: Previews.localeEN_US))
 }
 
 
-#Preview("Empty es_ES") {
+#Preview("Empty \(Previews.localeES_ES)") {
     previewWrapper(.empty)
-        .environment(\.locale, .init(identifier: "es_ES"))
+        .environment(\.locale, .init(identifier: Previews.localeES_ES))
 }
 
-#Preview("OnBoarding es_CR") {
+#Preview("OnBoarding \(Previews.localeES_CR)") {
     previewWrapper(.empty, showOnBoarding: true)
-        .environment(\.locale, .init(identifier: "es_CR"))
+        .environment(\.locale, .init(identifier: Previews.localeES_CR))
 }
