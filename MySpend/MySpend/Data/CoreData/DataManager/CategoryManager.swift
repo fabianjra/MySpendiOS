@@ -49,27 +49,27 @@ struct CategoryManager {
       ```
      
      - Parameters:
+        - entity: Entity type to fetch.
        - predicateFormat: NSPredicate format string (default `"isActive == %@"`).
        - predicateArgs: Arguments for the predicate (default `[true]`).
-       - sortDescriptors: Sorting criteria (default by `name` ascending).
+       - sortedBy: Sorting criteria (default by `name` ascending).
+        - viewContext: ViewContext used (For preview or default to use in real stored DataBase.
      
-     - Returns: An array of `CategoryModel`.
+     - Returns: An array of `[Entity]` type.
      - Throws: Propagates any Core Data fetch errors.
+     - Date: Jul 2025
      */
     func fetchAll(predicateFormat: String = predicate.byIsActive,
-                            predicateArgs: [Any] = [true],
-                            sortedBy sortDescriptors: [NSSortDescriptor] = [NSSortDescriptor(keyPath: \Category.name, ascending: true)]) async throws -> [CategoryModel] {
-
+                  predicateArgs: [Any] = [true],
+                  sortedBy: [NSSortDescriptor] = [NSSortDescriptor(keyPath: \Category.name, ascending: true)]) async throws -> [CategoryModel] {
+        
         try await viewContext.perform {
-            let request: NSFetchRequest<Category> = Category.fetchRequest()
-            request.sortDescriptors = sortDescriptors
-            request.predicate = NSPredicate(format: predicateFormat, argumentArray: predicateArgs)
-            
-            let coreDataEntities = try viewContext.fetch(request)
-            
-            let models = coreDataEntities.map { CategoryModel($0) }
-            
-            return models
+            let entities = try CoreDataUtilities.fetchAll(Category.self,
+                                                          predicateFormat: predicateFormat,
+                                                          predicateArgs: predicateArgs,
+                                                          sortedBy: sortedBy,
+                                                          viewContext: viewContext)
+            return entities.map { CategoryModel($0) }
         }
     }
 

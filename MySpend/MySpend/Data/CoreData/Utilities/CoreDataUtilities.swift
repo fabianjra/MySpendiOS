@@ -31,6 +31,9 @@ struct CoreDataUtilities {
         }
     }
 
+    
+    // MARK: - Fetch
+    
     /**
      Fetches the `Entity` entity whose primary key matches `id`.
      Should be called only inside the closures: `context.perform { }` or `performAndWait { }`
@@ -64,8 +67,7 @@ struct CoreDataUtilities {
         request.predicate  = NSPredicate(format: predicate.byID, id)
         request.fetchLimit = 1
         
-        let entity = try viewContextArg.fetch(request)
-        return entity.first
+        return try viewContextArg.fetch(request).first
     }
     
     //TOD: Por implementar. Usarlo si se necesita con background context.
@@ -75,8 +77,7 @@ struct CoreDataUtilities {
         request.predicate  = NSPredicate(format: predicate.byID, id)
         request.fetchLimit = 1
         
-        let entity = try viewContextArg.fetch(request)
-        return entity.first
+        return try viewContextArg.fetch(request).first
     }
     
     /**
@@ -103,6 +104,48 @@ struct CoreDataUtilities {
         return try viewContext.count(for: request)
     }
     
+    /**
+     Fetch `Entities` objects matching a predicate, sort them, and return the results as `[T]` type of the entity passed by parameter.
+     
+     Example:
+     ```
+     try await viewContext.perform {
+         let entities = try CoreDataUtilities.fetchAll(Category.self,
+                                                       predicateFormat: predicateFormat,
+                                                       predicateArgs: predicateArgs,
+                                                       sortedBy: sortedBy,
+                                                       viewContext: viewContext)
+         return entities.map { CategoryModel($0) }
+     }
+     
+     ```
+     
+     - Parameters:
+        - entity: Entity type to fetch.
+       - predicateFormat: NSPredicate format string.
+       - predicateArgs: Arguments for the predicate..
+       - sortedBy: Sorting criteria.
+        - viewContext: ViewContext used (For preview or default to use in real stored DataBase.
+     
+     - Returns: An array of `[Entity]` type.
+     - Throws: Propagates any Core Data fetch errors.
+     - Date: Jul 2025
+     */
+    static func fetchAll<T: NSManagedObject>(_ entity: T.Type,
+                                      predicateFormat: String,
+                                      predicateArgs: [Any],
+                                      sortedBy sortDescriptors: [NSSortDescriptor],
+                                      viewContext: NSManagedObjectContext) throws -> [T] {
+        let request = NSFetchRequest<T>(entityName: entity.entityName)
+        request.sortDescriptors = sortDescriptors
+        request.predicate = NSPredicate(format: predicateFormat, argumentArray: predicateArgs)
+        
+        return try viewContext.fetch(request)
+    }
+    
+    
+    // MARK: - Delete
+    
     static func delete<T: NSManagedObject>(byID id: String, entity: T.Type, viewContext: NSManagedObjectContext) throws {
         guard let entity = try CoreDataUtilities.fetch(byID: id,
                                                        entity: entity.self,
@@ -115,7 +158,7 @@ struct CoreDataUtilities {
     }
     
     
-    // MARK: CATEGORY
+    // MARK: - CATEGORY
     
     static func createCategoryEntity(from model: CategoryModel, viewContext: NSManagedObjectContext) -> Category {
         let entity = Category(context: viewContext)
@@ -135,7 +178,7 @@ struct CoreDataUtilities {
     }
     
     
-    // MARK: ACCOUNT
+    // MARK: - ACCOUNT
     
     static func createAccountEntity(from model: AccountModel, viewContext: NSManagedObjectContext) -> Account {
         let entity = Account(context: viewContext)

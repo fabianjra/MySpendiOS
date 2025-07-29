@@ -24,19 +24,15 @@ struct TransactionManager {
     
     func fetchAll(predicateFormat: String = predicate.byIsActive,
                   predicateArgs: [Any] = [true],
-                  sortedBy sortDescriptors: [NSSortDescriptor] = [NSSortDescriptor(keyPath: \Transaction.dateTransaction, ascending: true)]) async throws -> [TransactionModel] {
+                  sortedBy: [NSSortDescriptor] = [NSSortDescriptor(keyPath: \Transaction.dateTransaction, ascending: true)]) async throws -> [TransactionModel] {
         
         try await viewContext.perform {
-            
-            let request: NSFetchRequest<Transaction> = Transaction.fetchRequest()
-            request.sortDescriptors = sortDescriptors // El ordenamiento se hace a la hora de mostrar los datos
-            request.predicate = NSPredicate(format: predicateFormat, argumentArray: predicateArgs)
-            
-            let coreDataEntities = try viewContext.fetch(request)
-            
-            let models = coreDataEntities.map { TransactionModel($0) }
-            
-            return models
+            let entities = try CoreDataUtilities.fetchAll(Transaction.self,
+                                                          predicateFormat: predicateFormat,
+                                                          predicateArgs: predicateArgs,
+                                                          sortedBy: sortedBy,
+                                                          viewContext: viewContext)
+            return entities.map { TransactionModel($0) }
         }
     }
     
