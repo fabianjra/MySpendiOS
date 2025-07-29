@@ -14,13 +14,17 @@ import CoreData
  - Authors: Fabian Rodriguez
  - Version: 1.0
  */
-@MainActor
+
 struct CategoryManager {
     
     // El ViewContext es lo que se va a modificar.
     // Cuando se agreguen nuevos datos a Core Data, se debe obtener el ViewContext para hacerlo.
-    private let viewContext: NSManagedObjectContext = CoreDataUtilities.getViewContext
+    private let viewContext: NSManagedObjectContext
 
+    init(_ viewContext: NSManagedObjectContext) {
+        self.viewContext = viewContext
+    }
+    
     private typealias predicate = CDConstants.Predicate
     
     // MARK: READ

@@ -14,9 +14,8 @@ import CoreData
  - Authors: Fabian Rodriguez
  - Version: 1.0
  */
-@MainActor
 struct AccountManager {
-    private let viewContext: NSManagedObjectContext = CoreDataUtilities.getViewContext // Main queue, UI.
+    private let viewContext: NSManagedObjectContext // Main queue, UI.
     private let bgContext: NSManagedObjectContext // Private queue, background thread.
     
     /**
@@ -31,8 +30,9 @@ struct AccountManager {
      ✓ Útil para contextos que generan o actualizan registros en lote donde asumimos que su información es la más reciente o prioritaria.
      ✱ Si se prefiere lo contrario (mantener lo que esté en disco y descartar lo de este contexto) se usa: `NSMergeByPropertyStoreTrumpMergePolicy`.
      */
-    @MainActor
-    init(container: NSPersistentContainer = PersistenceController.shared.container) {
+    init(_ viewContext: NSManagedObjectContext, container: NSPersistentContainer = PersistenceController.shared.container) {
+        self.viewContext = viewContext
+    
         //TODO: Por utilizar, para llamados y saves.
         let background = container.newBackgroundContext()
         background.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy

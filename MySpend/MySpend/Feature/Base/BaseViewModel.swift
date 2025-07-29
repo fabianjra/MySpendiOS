@@ -16,7 +16,7 @@ public class BaseViewModel: ObservableObject {
     @Published var disabled: Bool = false
     
     // MARK: - Core Data
-    private let viewContext: NSManagedObjectContext
+    let viewContext: NSManagedObjectContext
     
     // MARK: - Suscripción
     private var viewContextObserver: AnyCancellable?

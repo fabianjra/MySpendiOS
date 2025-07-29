@@ -17,6 +17,8 @@ class TransactionViewModel: BaseViewModel {
     
     @Published var isMutipleAccounts: Bool = false
     
+    let table = Tables.transaction
+    
     /**
      Call this function in `onFirstAppear`.
      Shoud be called once when open application because this view will be active all alonge the app life.
@@ -38,7 +40,7 @@ class TransactionViewModel: BaseViewModel {
     
     private func fetchAll() async {
         do {
-            transactions = try await TransactionManager().fetchAll()
+            transactions = try await TransactionManager(viewContext).fetchAll()
             groupedTransactions = UtilsCurrency.calculateGroupedTransactions(transactions)
             
             try await fetchAccountCount()
@@ -49,7 +51,7 @@ class TransactionViewModel: BaseViewModel {
     }
     
     private func fetchAccountCount() async throws {
-        let count = try await AccountManager().fetchAllCount()
+        let count = try await AccountManager(viewContext).fetchAllCount()
         isMutipleAccounts = count > 1 ? true : false
     }
 }

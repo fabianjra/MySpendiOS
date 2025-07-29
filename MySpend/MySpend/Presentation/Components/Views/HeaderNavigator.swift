@@ -12,6 +12,7 @@ struct HeaderNavigator: View {
     @Environment(\.dismiss) private var dismiss
     
     // MARK: TITLE
+    var table: String = Tables.main
     var title: LocalizedStringKey = "mySpend"
     var titleWeight: Font.Family = .thin
     var titleSize: Font.Sizes = .bigXXL
@@ -78,20 +79,22 @@ struct HeaderNavigator: View {
     private var titleAndSubtitle: some View {
         VStack {
             TextPlainLocalized(title,
-                      color: textColor,
-                      family: titleWeight,
-                      size: titleSize,
-                      aligment: .center,
-                      lineLimit: ConstantViews.singleTextMaxLines,
-                      truncateMode: .tail)
+                               table: table,
+                               color: textColor,
+                               family: titleWeight,
+                               size: titleSize,
+                               aligment: .center,
+                               lineLimit: ConstantViews.singleTextMaxLines,
+                               truncateMode: .tail)
             
             TextPlainLocalized(subTitle,
-                      color: textColor,
-                      family: subTitleWeight,
-                      size: subTitleSize,
-                      aligment: .center,
-                      lineLimit: ConstantViews.singleTextMaxLines,
-                      truncateMode: .tail)
+                               table: table,
+                               color: textColor,
+                               family: subTitleWeight,
+                               size: subTitleSize,
+                               aligment: .center,
+                               lineLimit: ConstantViews.singleTextMaxLines,
+                               truncateMode: .tail)
         }
     }
 }

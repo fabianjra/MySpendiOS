@@ -19,17 +19,18 @@ struct TransactionView: View {
             
             HStack {
                 VStack(alignment: .leading) {
-                    TextPlainLocalized("transaction.greet \(viewModel.userName) \(Emojis.greeting.rawValue)",
-                                       
-                              family: .semibold,
-                              size: .big,
-                              lineLimit: ConstantViews.singleTextMaxLines,
-                              truncateMode: .tail)
+                    TextPlainLocalized("greet \(viewModel.userName) \(Emojis.greeting.rawValue)",
+                                       table: viewModel.table,
+                                       family: .semibold,
+                                       size: .big,
+                                       lineLimit: ConstantViews.singleTextMaxLines,
+                                       truncateMode: .tail)
                     
-                    TextPlainLocalized(LocalizationKey.Transaction.welcome.key,
-                              family: .light,
-                              size: .small,
-                              lineLimit: ConstantViews.singleTextMaxLines)
+                    TextPlainLocalized(Localizations.transaction.welcome.key,
+                                       table: viewModel.table,
+                                       family: .light,
+                                       size: .small,
+                                       lineLimit: ConstantViews.singleTextMaxLines)
                 }
                 Spacer()
             }
@@ -45,8 +46,8 @@ struct TransactionView: View {
                                            isMutipleAccounts: $viewModel.isMutipleAccounts)
                     .toolbar(.hidden, for: .navigationBar)
                 } label: {
-                    TextButtonHorizontalStyled(LocalizationKey.Button.history.key,
-                                               subTitle: LocalizationKey.Button.historySubtitle.key,
+                    TextButtonHorizontalStyled(Localizations.button.history.key,
+                                               subTitle: Localizations.button.history_subtitle.key,
                                                iconLeading: Image.stackFill,
                                                iconTrailing: Image.arrowRight)
                 }

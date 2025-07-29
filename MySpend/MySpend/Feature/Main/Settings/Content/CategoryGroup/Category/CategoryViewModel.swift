@@ -38,7 +38,7 @@ class CategoryViewModel: BaseViewModel {
     
     private func fetchAll() async {
         do {
-            categories = try await CategoryManager().fetchAll()
+            categories = try await CategoryManager(viewContext).fetchAll()
         } catch {
             errorMessage = error.localizedDescription
             Logger.exception(error, type: .CoreData)
@@ -49,7 +49,7 @@ class CategoryViewModel: BaseViewModel {
         guard let model = model else { return ResponseModel(.successful) }
         
         do {
-            try await CategoryManager().delete(model)
+            try await CategoryManager(viewContext).delete(model)
             return ResponseModel(.successful)
         } catch {
             Logger.exception(error, type: .CoreData)
@@ -64,7 +64,7 @@ class CategoryViewModel: BaseViewModel {
         
         do {
             for item in selectedCategories {
-                try await CategoryManager().delete(item)
+                try await CategoryManager(viewContext).delete(item)
             }
             
             selectedCategories.removeAll()

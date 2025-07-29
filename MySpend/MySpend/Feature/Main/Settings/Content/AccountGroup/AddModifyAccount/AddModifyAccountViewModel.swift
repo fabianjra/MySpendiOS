@@ -42,7 +42,7 @@ final class AddModifyAccountViewModel: BaseViewModel {
         modelMutated.type = type
         
         do {
-            try await AccountManager().create(modelMutated)
+            try await AccountManager(viewContext).create(modelMutated)
             
             if isDefaultSelected {
                 UserDefaultsManager.defaultAccountID = modelMutated.id.uuidString
@@ -67,7 +67,7 @@ final class AddModifyAccountViewModel: BaseViewModel {
             // a una categoria de un tipo incompatible del nuevo tipo de categoria seleccioanda.
             // Ver mas en la documentacion del metodo "fetchIncompatibleTypeCount"
             if modelMutated.type != type {
-                let incompatibleTransactionsCount = try await TransactionManager().fetchIncompatibleTypeCount(currentAccountID: modelMutated.id.uuidString,
+                let incompatibleTransactionsCount = try await TransactionManager(viewContext).fetchIncompatibleTypeCount(currentAccountID: modelMutated.id.uuidString,
                                                                                                               newAccountType: type)
                 
                 if incompatibleTransactionsCount > .zero {
@@ -76,7 +76,7 @@ final class AddModifyAccountViewModel: BaseViewModel {
             }
             
             modelMutated.type = type
-            try await AccountManager().update(modelMutated)
+            try await AccountManager(viewContext).update(modelMutated)
             
             if isDefaultSelected {
                 UserDefaultsManager.defaultAccountID = modelMutated.id.uuidString
@@ -95,7 +95,7 @@ final class AddModifyAccountViewModel: BaseViewModel {
     
     func delete() async -> ResponseModel {
         do {
-            try await AccountManager().delete(model)
+            try await AccountManager(viewContext).delete(model)
             return ResponseModel(.successful)
         } catch {
             Logger.exception(error, type: .CoreData)

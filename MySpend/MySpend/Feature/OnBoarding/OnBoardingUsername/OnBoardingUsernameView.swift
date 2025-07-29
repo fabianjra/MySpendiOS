@@ -12,17 +12,23 @@ struct OnBoardingUsernameView: View {
     @StateObject private var viewModel = OnBoardingUsernameViewModel()
     @FocusState private var focusedField: OnBoardingUsernameViewModel.Field?
     
+    private let table = Tables.onboarding
+    private let tableButton = Tables.button
+    
     var body: some View {
         LogContainer {
             
             // MARK: HEADER
-            HeaderNavigator(subTitle: LocalizationKey.Onboarding.title.key, onlyTitle: true)
+            HeaderNavigator(table: table, subTitle: Localizations.onboarding.title.key, onlyTitle: true)
                 .padding(.bottom)
             
             
             VStack(spacing: ConstantViews.formSpacing) {
                 
-                TextPlainLocalized(LocalizationKey.Onboarding.enterName.key, family: .light, size: .big)
+                TextPlainLocalized(Localizations.onboarding.enter_name.key,
+                                   table: table,
+                                   family: .light,
+                                   size: .big)
                 
                 
                 TextFieldName(text: $viewModel.userName,
@@ -32,14 +38,17 @@ struct OnBoardingUsernameView: View {
                 .onSubmit { viewModel.continueToNextStep(withName: true)}
                 
                 
-                Button(LocalizationKey.Button.continu.key) {
+                Button {
                     viewModel.continueToNextStep(withName: true)
+                } label: {
+                    Text(Localizations.button.continu.key, tableName: tableButton)
                 }
                 .buttonStyle(ButtonPrimaryStyle())
                 
-                
-                Button(LocalizationKey.Button.skip.key) {
+                Button {
                     viewModel.continueToNextStep(withName: false)
+                } label: {
+                    Text(Localizations.button.skip.key, tableName: tableButton)
                 }
                 .buttonStyle(ButtonLinkStyle())
                 .padding(.bottom)

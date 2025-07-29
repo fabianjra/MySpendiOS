@@ -14,9 +14,12 @@ import CoreData
  - Authors: Fabian Rodriguez
  - Version: 1.0
  */
-@MainActor
 struct TransactionManager {
-    private let viewContext: NSManagedObjectContext = CoreDataUtilities.getViewContext
+    private let viewContext: NSManagedObjectContext
+    
+    init(_ viewContext: NSManagedObjectContext) {
+        self.viewContext = viewContext
+    }
     
     private typealias predicate = CDConstants.Predicate
     

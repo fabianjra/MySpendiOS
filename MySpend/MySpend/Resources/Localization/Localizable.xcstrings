@@ -25,74 +25,6 @@
     "Are you completely sure you want to delete all data?" : {
 
     },
-    "button.continue" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Continue"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Continuar"
-          }
-        }
-      }
-    },
-    "button.history" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "History"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Historial"
-          }
-        }
-      }
-    },
-    "button.history_subtitle" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Go to history"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ir al historial"
-          }
-        }
-      }
-    },
-    "button.skip" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Do it later"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Lo haré luego"
-          }
-        }
-      }
-    },
     "Cancel" : {
 
     },
@@ -191,6 +123,16 @@
     },
     "Go back" : {
 
+    },
+    "greet %@ %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "greet %1$@ %2$@"
+          }
+        }
+      }
     },
     "History" : {
 
@@ -323,57 +265,6 @@
     "No categories" : {
 
     },
-    "onboarding.enter_account_name" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Customize your main account name"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ingresa el nombre de la cuenta principal"
-          }
-        }
-      }
-    },
-    "onboarding.enter_name" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Enter your username to start"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ingresa tu nombre para comenzar"
-          }
-        }
-      }
-    },
-    "onboarding.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Let's start"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Comencemos"
-          }
-        }
-      }
-    },
     "or" : {
 
     },
@@ -434,40 +325,6 @@
     "Today" : {
 
     },
-    "transaction.greet %@ %@" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hello %@ %@"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hola %@ %@"
-          }
-        }
-      }
-    },
-    "transaction.welcome" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Welcome back"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bienvenido"
-          }
-        }
-      }
-    },
     "Type" : {
 
     },
@@ -482,40 +339,6 @@
     },
     "Validate account" : {
 
-    },
-    "view.empty" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Empty"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sin datos"
-          }
-        }
-      }
-    },
-    "view.empty_add_item" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Try adding a new item in the plus (+) button"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Intenta agregando un nuevo valor en el botón de más (+)"
-          }
-        }
-      }
     },
     "Want to delete all data?" : {
 

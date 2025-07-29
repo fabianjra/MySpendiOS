@@ -36,7 +36,7 @@ class AddModifyTransactionViewModel: BaseViewModel {
     
     func fetchAccounts() async {
         do {
-            accounts = try await AccountManager().fetchAll()
+            accounts = try await AccountManager(viewContext).fetchAll()
             
             if accounts.isEmpty {
                 disabled = true
@@ -82,7 +82,7 @@ class AddModifyTransactionViewModel: BaseViewModel {
         modelMutated.amount = amountString.convertAmountToDecimal
         
         do {
-            try await TransactionManager().create(modelMutated)
+            try await TransactionManager(viewContext).create(modelMutated)
             return ResponseModel(.successful)
         } catch {
             Logger.exception(error, type: .CoreData)
@@ -104,7 +104,7 @@ class AddModifyTransactionViewModel: BaseViewModel {
         modelMutated.amount = amountString.convertAmountToDecimal
         
         do {
-            try await TransactionManager().update(modelMutated)
+            try await TransactionManager(viewContext).update(modelMutated)
             return ResponseModel(.successful)
         } catch {
             Logger.exception(error, type: .CoreData)
@@ -114,7 +114,7 @@ class AddModifyTransactionViewModel: BaseViewModel {
     
     func delete() async -> ResponseModel {
         do {
-            try await TransactionManager().delete(model)
+            try await TransactionManager(viewContext).delete(model)
             return ResponseModel(.successful)
         } catch {
             Logger.exception(error, type: .CoreData)

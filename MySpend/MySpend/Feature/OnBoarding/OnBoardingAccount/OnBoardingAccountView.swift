@@ -12,15 +12,19 @@ struct OnBoardingAccountView: View {
     @StateObject private var viewModel = OnBoardingAccountViewModel()
     @FocusState private var focusedField: OnBoardingAccountViewModel.Field?
     
+    private let table = Tables.onboarding
+    private let tableButton = Tables.button
+    
     var body: some View {
         LogContainer {
             
-            HeaderNavigator(onlyTitle: true)
+            HeaderNavigator(table: table, onlyTitle: true)
                 .padding(.bottom)
             
             
             VStack(spacing: ConstantViews.formSpacing) {
-                TextPlainLocalized(LocalizationKey.Onboarding.enterAccountName.key,
+                TextPlainLocalized(Localizations.onboarding.enter_account_name.key,
+                                   table: table,
                                    family: .light,
                                    size: .big,
                                    aligment: .center,
@@ -37,18 +41,22 @@ struct OnBoardingAccountView: View {
                 }
                 
                 
-                Button(LocalizationKey.Button.continu.key) {
+                Button {
                     Task {
                         await viewModel.finishOnBoarding(withName: true)
                     }
+                } label: {
+                    Text(Localizations.button.continu.key, tableName: tableButton)
                 }
                 .buttonStyle(ButtonPrimaryStyle())
                 
                 
-                Button(LocalizationKey.Button.skip.key) {
+                Button {
                     Task {
                         await viewModel.finishOnBoarding(withName: false)
                     }
+                } label: {
+                    Text(Localizations.button.skip.key, tableName: tableButton)
                 }
                 .buttonStyle(ButtonLinkStyle())
                 .padding(.bottom)

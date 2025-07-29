@@ -10,17 +10,20 @@ import SwiftUI
 struct TextButtonHorizontalStyled: View {
     
     private let text: LocalizedStringKey
+    private let table: String
     private let subTitle: LocalizedStringKey
     private let color: Array<Color>
     private let iconLeading: Image?
     private let iconTrailing: Image?
     
     init(_ text: LocalizedStringKey = "",
+         table: String = Tables.button,
          color: Array<Color> = Color.secondaryGradiant,
          subTitle: LocalizedStringKey = "",
          iconLeading: Image? = nil,
          iconTrailing: Image? = nil) {
         self.text = text
+        self.table = table
         self.subTitle = subTitle
         self.color = color
         self.iconLeading = iconLeading
@@ -45,12 +48,12 @@ struct TextButtonHorizontalStyled: View {
             
             
             VStack(alignment: .leading) {
-                Text(text)
+                Text(text, tableName: table)
                     .font(.montserrat(size: .big))
                     .foregroundColor(Color.buttonForeground)
                     .lineLimit(ConstantViews.singleTextMaxLines)
                 
-                Text(subTitle)
+                Text(subTitle, tableName: table)
                     .font(.montserrat(size: .small))
                     .foregroundColor(Color.textFieldPlaceholder)
                     .lineLimit(ConstantViews.singleTextMaxLines)

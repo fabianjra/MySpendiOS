@@ -9,26 +9,30 @@ import SwiftUI
 
 struct NoContentToAddView: View {
     
-    var title: LocalizedStringKey = LocalizationKey.View.empty.key
-    var message: LocalizedStringKey = LocalizationKey.View.emptyAddItem.key
+    var title: LocalizedStringKey = Localizations.view.empty.key
+    var message: LocalizedStringKey = Localizations.view.empty_add_item.key
     var rotationDegress: CGFloat = ConstantAnimations.rotationArrowBottomCenter
+    
+    private let table = Tables.view
     
     var body: some View {
         VStack {
             HStack {
                 Spacer()
                 TextPlainLocalized(title,
-                          family: .semibold,
-                          size: .bigXL,
-                          aligment: .center)
+                                   table: table,
+                                   family: .semibold,
+                                   size: .bigXL,
+                                   aligment: .center)
                 .padding(.vertical)
                 Spacer()
             }
             
             TextPlainLocalized(message,
-                      size: .big,
-                      aligment: .center,
-                      lineLimit: ConstantViews.messageMaxLines)
+                               table: table,
+                               size: .big,
+                               aligment: .center,
+                               lineLimit: ConstantViews.messageMaxLines)
             .padding(.bottom)
             
             Image.arrowTurnUpLeft
