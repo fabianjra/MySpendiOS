@@ -15,7 +15,7 @@ import Foundation
  - Identifiable: To asign and ID to every item when iterate.
  - Codable: To Set and Get valures in UserDefaults.
  */
-enum DateTimeInterval: String, CaseIterable, Identifiable, Codable {
+enum DateTimeInterval: String, CaseIterable, Identifiable, Codable, Localizable {
     public var id: Self { self }
     
     case day
@@ -30,9 +30,5 @@ enum DateTimeInterval: String, CaseIterable, Identifiable, Codable {
         case .month: return .month
         case .year: return .year
         }
-    }
-    
-    var localized: String {
-        String(localized: String.LocalizationValue(rawValue), table: Tables.enums)
     }
 }

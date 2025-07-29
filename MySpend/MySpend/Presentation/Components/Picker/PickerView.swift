@@ -18,7 +18,7 @@ import SwiftUI
  Type constraints:
  `E` must conform to `CaseIterable`, `RawRepresentable` (with `String`
  */
-struct PickerView<E>: UIViewRepresentable where E: CaseIterable & RawRepresentable & Hashable, E.RawValue == String {
+struct PickerView<E>: UIViewRepresentable where E: CaseIterable & RawRepresentable & Hashable & Localizable, E.RawValue == String {
     
     @Binding var selection: E
     var fontSize = Font.Sizes.medium
@@ -26,14 +26,8 @@ struct PickerView<E>: UIViewRepresentable where E: CaseIterable & RawRepresentab
     // UIViewRepresentable
     func makeUIView(context: Context) -> UISegmentedControl {
         
-        //TODO: Aplicar Correctamente localization
-        let items = E.allCases.map {
-            if let localizable = $0 as? DateTimeInterval {
-                return localizable.localized
-            } else {
-                return $0.rawValue.capitalized
-            }
-        }
+        // Localizable no funciona en Preview por este codigo: String(localized: String.LocalizationValue(:))
+        let items = E.allCases.map { $0.localized }
         
         let control = UISegmentedControl(items: items)
 

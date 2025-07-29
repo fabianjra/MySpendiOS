@@ -5,10 +5,10 @@
 //  Created by Fabian Rodriguez on 5/7/25.
 //
 
-enum AccountType: String, CaseIterable, Hashable {
-    case general = "general"
-    case expenses = "expenses"
-    case incomes = "incomes"
+enum AccountType: String, CaseIterable, Hashable, Localizable {
+    case general
+    case expenses
+    case incomes
     
     var allowedCategory: CategoryType? {
         switch self {

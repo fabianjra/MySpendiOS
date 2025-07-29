@@ -34,6 +34,11 @@ extension Localizable {
     var key: LocalizedStringKey {
         LocalizedStringKey(self.rawValue)
     }
+    
+    /// Para los enumerables que van en el PickerView: Deben conformarlo para localizar sus textos y deben ir en el catalogo de Enums
+    var localized: String {
+        String(localized: String.LocalizationValue(self.rawValue), table: Tables.enums)
+    }
 }
 
 struct Localizations {

@@ -1,7 +1,26 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "code" : {
+      "comment" : "CurrencySymbolType",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Currency Code"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Codigo"
+          }
+        }
+      }
+    },
     "day" : {
+      "comment" : "DateTimeInterval",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -18,7 +37,98 @@
         }
       }
     },
+    "expense" : {
+      "comment" : "CategoryType",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Expense"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Gasto"
+          }
+        }
+      }
+    },
+    "expenses" : {
+      "comment" : "AccountType",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Expenses"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Gastos"
+          }
+        }
+      }
+    },
+    "general" : {
+      "comment" : "AccountType",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "General"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "General"
+          }
+        }
+      }
+    },
+    "income" : {
+      "comment" : "CategoryType",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Income"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ingreso"
+          }
+        }
+      }
+    },
+    "incomes" : {
+      "comment" : "AccountType",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Incomes"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ingresos"
+          }
+        }
+      }
+    },
     "month" : {
+      "comment" : "DateTimeInterval",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -35,7 +145,26 @@
         }
       }
     },
+    "symbol" : {
+      "comment" : "CurrencySymbolType",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Currency Symbol"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Simbolo"
+          }
+        }
+      }
+    },
     "week" : {
+      "comment" : "DateTimeInterval",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -53,6 +182,7 @@
       }
     },
     "year" : {
+      "comment" : "DateTimeInterval",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
