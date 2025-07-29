@@ -7,7 +7,6 @@
 
 import Combine
 import CoreData
-import SwiftUI
 
 @MainActor
 public class BaseViewModel: ObservableObject {
@@ -17,7 +16,7 @@ public class BaseViewModel: ObservableObject {
     @Published var disabled: Bool = false
     
     // MARK: - Core Data
-    let viewContext: NSManagedObjectContext
+    private let viewContext: NSManagedObjectContext
     
     // MARK: - Suscripción
     private var viewContextObserver: AnyCancellable?

@@ -14,8 +14,9 @@ import CoreData
  - Authors: Fabian Rodriguez
  - Version: 1.0
  */
+@MainActor
 struct AccountManager {
-    private let viewContext: NSManagedObjectContext // Main queue, UI.
+    private let viewContext: NSManagedObjectContext = CoreDataUtilities.getViewContext // Main queue, UI.
     private let bgContext: NSManagedObjectContext // Private queue, background thread.
     
     /**
@@ -30,9 +31,8 @@ struct AccountManager {
      ✓ Útil para contextos que generan o actualizan registros en lote donde asumimos que su información es la más reciente o prioritaria.
      ✱ Si se prefiere lo contrario (mantener lo que esté en disco y descartar lo de este contexto) se usa: `NSMergeByPropertyStoreTrumpMergePolicy`.
      */
-    init(viewContext: NSManagedObjectContext, container: NSPersistentContainer = PersistenceController.shared.container) {
-        self.viewContext = viewContext
-        
+    @MainActor
+    init(container: NSPersistentContainer = PersistenceController.shared.container) {
         //TODO: Por utilizar, para llamados y saves.
         let background = container.newBackgroundContext()
         background.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
@@ -48,7 +48,6 @@ struct AccountManager {
                   sortedBy sortDescriptors: [NSSortDescriptor] = [NSSortDescriptor(keyPath: \Account.dateCreated, ascending: true)])
     async throws -> [AccountModel] {
         
-        // Perfom: It's async so dont block de UI
         try await viewContext.perform {
             
             let request: NSFetchRequest<Account> = Account.fetchRequest()
@@ -121,7 +120,8 @@ struct AccountManager {
         }
     }
     
-    func delete(at offsets: IndexSet, from items: [AccountModel]) async throws {
+    /// No used at this moment.
+    private func delete(at offsets: IndexSet, from items: [AccountModel]) async throws {
         for offset in offsets {
             let model = items[offset]
             try await delete(model)
@@ -135,22 +135,21 @@ struct AccountManager {
      Fetches the total count of `Account` entities that are stored in CoreData.
      
      - Parameters:
-        - viewContextArg: ViewContext used (For preview or default to use in real stored DataBase.
         - predicateFormat: Predicates usted. isActive -> True by default.
         - predicateArgs: Value for the predicates.
      
      - Returns: Int count of all accounts entities stored.
-     - Throws: Any error thrown by `viewContextArg.fetch(_:)`.
+     - Throws: Any error thrown by `CoreDataUtilities.fetchAllCount(_:)`.
      - Date: Jul 2025
      */
     func fetchAllCount(predicateFormat: String = predicate.byIsActive,
-                       predicateArgs: [Any] = [true],) async throws -> Int {
+                       predicateArgs: [Any] = [true]) async throws -> Int {
         try await viewContext.perform {
-            let request: NSFetchRequest<Account> = Account.fetchRequest()
-            request.predicate = NSPredicate(format: predicateFormat, argumentArray: predicateArgs)
-            request.resultType  = .countResultType
-            
-            return try viewContext.count(for: request)
+            let result = try CoreDataUtilities.fetchAllCount(Account.self,
+                                                             predicateFormat: predicateFormat,
+                                                             predicateArgs: predicateArgs,
+                                                             viewContext: viewContext)
+            return result
         }
     }
     

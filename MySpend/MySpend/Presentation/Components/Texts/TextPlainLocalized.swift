@@ -46,7 +46,7 @@ struct TextPlainLocalized: View {
     }
 }
 
-#Preview("es") {
+#Preview(Previews.localeES) {
     VStack {
         Spacer()
         
@@ -64,14 +64,14 @@ struct TextPlainLocalized: View {
         Spacer()
     }
     .background(Color.backgroundBottom)
-    .environment(\.locale, .init(identifier: "es"))
+    .environment(\.locale, .init(identifier: Previews.localeES))
 }
 
-#Preview("en") {
+#Preview(Previews.localeEN) {
     VStack {
         TextPlainLocalized("onboarding.title")
             .padding()
     }
     .background(Color.backgroundBottom)
-    .environment(\.locale, .init(identifier: "en"))
+    .environment(\.locale, .init(identifier: Previews.localeEN))
 }

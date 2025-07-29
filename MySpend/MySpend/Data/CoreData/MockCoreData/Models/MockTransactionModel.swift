@@ -10,7 +10,7 @@ struct MockTransactionModel {
     
     static func fetchAll() async -> [TransactionModel] {
         do {
-            return try await TransactionManager(viewContext: CoreDataUtilities.getViewContext).fetchAll()
+            return try await TransactionManager().fetchAll()
         } catch {
             return []
         }

@@ -11,6 +11,7 @@ struct CoreDataUtilities {
     
     static var shared: CoreDataUtilities = CoreDataUtilities()
     var mockDataType = MockDataType.normal
+    private typealias predicate = CDConstants.Predicate
     
     @MainActor
     static var getViewContext: NSManagedObjectContext {
@@ -60,7 +61,7 @@ struct CoreDataUtilities {
     static func fetch<T: NSManagedObject>(byID id: String, entity: T.Type, viewContextArg: NSManagedObjectContext) throws -> T? {
         let request = NSFetchRequest<T>(entityName: entity.entityName)
         request.resultType = .managedObjectResultType
-        request.predicate  = NSPredicate(format: CDConstants.Predicate.byID, id)
+        request.predicate  = NSPredicate(format: predicate.byID, id)
         request.fetchLimit = 1
         
         let entity = try viewContextArg.fetch(request)
@@ -71,11 +72,35 @@ struct CoreDataUtilities {
     static func fetchobjectID<T: NSManagedObject>(byID id: String, entity: T.Type, viewContextArg: NSManagedObjectContext) throws -> NSManagedObjectID? {
         let request = NSFetchRequest<NSManagedObjectID>(entityName: entity.entityName)
         request.resultType = .managedObjectIDResultType
-        request.predicate  = NSPredicate(format: CDConstants.Predicate.byID, id)
+        request.predicate  = NSPredicate(format: predicate.byID, id)
         request.fetchLimit = 1
         
         let entity = try viewContextArg.fetch(request)
         return entity.first
+    }
+    
+    /**
+     Fetches the total count of `Entities` that are stored in CoreData.
+     
+     - Parameters:
+        - entity: Entity type to fetch.
+        - predicateFormat: Predicates usted. isActive -> True by default.
+        - predicateArgs: Value for the predicates.
+        - viewContext: ViewContext used (For preview or default to use in real stored DataBase.
+     
+     - Returns: Int count of all accounts entities stored.
+     - Throws: Any error thrown by `viewContext.fetch(_:)`.
+     - Date: Jul 2025
+     */
+    static func fetchAllCount<T: NSManagedObject>(_ entity: T.Type,
+                                                  predicateFormat: String,
+                                                  predicateArgs: [Any],
+                                                  viewContext: NSManagedObjectContext) throws -> Int {
+        let request = NSFetchRequest<T>(entityName: entity.entityName)
+        request.predicate = NSPredicate(format: predicateFormat, argumentArray: predicateArgs)
+        request.resultType  = .countResultType
+        
+        return try viewContext.count(for: request)
     }
     
     static func delete<T: NSManagedObject>(byID id: String, entity: T.Type, viewContext: NSManagedObjectContext) throws {

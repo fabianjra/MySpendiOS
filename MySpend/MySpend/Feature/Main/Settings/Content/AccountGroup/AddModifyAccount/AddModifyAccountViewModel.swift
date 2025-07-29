@@ -42,7 +42,7 @@ final class AddModifyAccountViewModel: BaseViewModel {
         modelMutated.type = type
         
         do {
-            try await AccountManager(viewContext: viewContext).create(modelMutated)
+            try await AccountManager().create(modelMutated)
             
             if isDefaultSelected {
                 UserDefaultsManager.defaultAccountID = modelMutated.id.uuidString
@@ -67,8 +67,8 @@ final class AddModifyAccountViewModel: BaseViewModel {
             // a una categoria de un tipo incompatible del nuevo tipo de categoria seleccioanda.
             // Ver mas en la documentacion del metodo "fetchIncompatibleTypeCount"
             if modelMutated.type != type {
-                let incompatibleTransactionsCount = try await TransactionManager(viewContext: viewContext).fetchIncompatibleTypeCount(currentAccountID: modelMutated.id.uuidString,
-                                                                                                                                      newAccountType: type)
+                let incompatibleTransactionsCount = try await TransactionManager().fetchIncompatibleTypeCount(currentAccountID: modelMutated.id.uuidString,
+                                                                                                              newAccountType: type)
                 
                 if incompatibleTransactionsCount > .zero {
                     return ResponseModel(.error, Errors.cannotUpdateAccountWithTransactions(incompatibleTransactionsCount.description).localizedDescription)
@@ -76,7 +76,7 @@ final class AddModifyAccountViewModel: BaseViewModel {
             }
             
             modelMutated.type = type
-            try await AccountManager(viewContext: viewContext).update(modelMutated)
+            try await AccountManager().update(modelMutated)
             
             if isDefaultSelected {
                 UserDefaultsManager.defaultAccountID = modelMutated.id.uuidString
@@ -95,7 +95,7 @@ final class AddModifyAccountViewModel: BaseViewModel {
     
     func delete() async -> ResponseModel {
         do {
-            try await AccountManager(viewContext: viewContext).delete(model)
+            try await AccountManager().delete(model)
             return ResponseModel(.successful)
         } catch {
             Logger.exception(error, type: .CoreData)

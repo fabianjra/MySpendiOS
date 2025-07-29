@@ -55,7 +55,7 @@ class AccountViewModel: BaseViewModel {
     
     private func fetchAll() async {
         do {
-            models = try await AccountManager(viewContext: viewContext).fetchAll()
+            models = try await AccountManager().fetchAll()
         } catch {
             errorMessage = error.localizedDescription
             Logger.exception(error, type: .CoreData)
@@ -66,7 +66,7 @@ class AccountViewModel: BaseViewModel {
         guard let model = model else { return ResponseModel(.successful) }
         
         do {
-            try await AccountManager(viewContext: viewContext).delete(model)
+            try await AccountManager().delete(model)
             return ResponseModel(.successful)
         } catch {
             Logger.exception(error, type: .CoreData)
@@ -81,7 +81,7 @@ class AccountViewModel: BaseViewModel {
         
         do {
             for item in selectedModels {
-                try await AccountManager(viewContext: viewContext).delete(item)
+                try await AccountManager().delete(item)
             }
             
             selectedModels.removeAll()

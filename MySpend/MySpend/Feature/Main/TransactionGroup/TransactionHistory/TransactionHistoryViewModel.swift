@@ -29,7 +29,7 @@ class TransactionHistoryViewModel: BaseViewModel {
         guard let model = model else { return ResponseModel(.successful) }
         
         do {
-            try await TransactionManager(viewContext: viewContext).delete(model)
+            try await TransactionManager().delete(model)
             return ResponseModel(.successful)
         } catch {
             Logger.exception(error, type: .CoreData)
@@ -48,7 +48,7 @@ class TransactionHistoryViewModel: BaseViewModel {
             //try await TransactionManager(viewContext: viewContext).deleteMultiple(entityName: Transaction.entityName, idsToDelete: idsToDelete)
             
             for item in selectedTransactions {
-                try await TransactionManager(viewContext: viewContext).delete(item)
+                try await TransactionManager().delete(item)
             }
             
             selectedTransactions.removeAll()

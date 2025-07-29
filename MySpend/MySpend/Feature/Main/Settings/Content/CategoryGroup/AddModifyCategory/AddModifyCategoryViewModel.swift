@@ -37,7 +37,7 @@ final class AddModifyCategoryViewModel: BaseViewModel {
         modelMutated.type = type
         
         do {
-            try await CategoryManager(viewContext: viewContext).create(modelMutated)
+            try await CategoryManager().create(modelMutated)
             return ResponseModel(.successful)
         } catch {
             Logger.exception(error, type: .CoreData)
@@ -57,8 +57,8 @@ final class AddModifyCategoryViewModel: BaseViewModel {
             // a una cuenta de un tipo incompatible con el nuevo tipo de categoria seleccionado.
             // Ver mas en la documentacion del metodo "fetchIncompatibleTypeCount"
             if modelMutated.type != type {
-                let incompatibleTransactionsCount = try await TransactionManager(viewContext: viewContext).fetchIncompatibleTypeCount(currentCategoryID: modelMutated.id.uuidString,
-                                                                                                                                      newCategoryType: type)
+                let incompatibleTransactionsCount = try await TransactionManager().fetchIncompatibleTypeCount(currentCategoryID: modelMutated.id.uuidString,
+                                                                                                              newCategoryType: type)
                 
                 if incompatibleTransactionsCount > .zero {
                     return ResponseModel(.error, Errors.cannotUpdateCategoryDueToAccountType(incompatibleTransactionsCount.description).localizedDescription)
@@ -66,7 +66,7 @@ final class AddModifyCategoryViewModel: BaseViewModel {
             }
             
             modelMutated.type = type
-            try await CategoryManager(viewContext: viewContext).update(modelMutated)
+            try await CategoryManager().update(modelMutated)
             return ResponseModel(.successful)
         } catch {
             Logger.exception(error, type: .CoreData)
@@ -76,7 +76,7 @@ final class AddModifyCategoryViewModel: BaseViewModel {
     
     func delete() async -> ResponseModel {
         do {
-            try await CategoryManager(viewContext: viewContext).delete(model)
+            try await CategoryManager().delete(model)
             return ResponseModel(.successful)
         } catch {
             Logger.exception(error, type: .CoreData)

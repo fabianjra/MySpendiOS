@@ -38,7 +38,7 @@ class TransactionViewModel: BaseViewModel {
     
     private func fetchAll() async {
         do {
-            transactions = try await TransactionManager(viewContext: viewContext).fetchAll()
+            transactions = try await TransactionManager().fetchAll()
             groupedTransactions = UtilsCurrency.calculateGroupedTransactions(transactions)
             
             try await fetchAccountCount()
@@ -49,7 +49,7 @@ class TransactionViewModel: BaseViewModel {
     }
     
     private func fetchAccountCount() async throws {
-        let count = try await AccountManager(viewContext: viewContext).fetchAllCount()
+        let count = try await AccountManager().fetchAllCount()
         isMutipleAccounts = count > 1 ? true : false
     }
 }
