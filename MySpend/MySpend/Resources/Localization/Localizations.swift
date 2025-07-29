@@ -9,7 +9,7 @@ import SwiftUICore
 
 struct Tables {
     
-    static let main = "Localization"
+    static let main = "Localizable"
     
     
     // MARK: - Features

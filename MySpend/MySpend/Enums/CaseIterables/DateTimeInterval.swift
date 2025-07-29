@@ -33,7 +33,7 @@ enum DateTimeInterval: String, CaseIterable, Identifiable, Codable {
         }
     }
     
-    var localized: LocalizedStringKey {
-        LocalizedStringKey("interval.\(self.rawValue)")
+    var localized: String {
+        String(localized: String.LocalizationValue(rawValue), table: Tables.main)
     }
 }

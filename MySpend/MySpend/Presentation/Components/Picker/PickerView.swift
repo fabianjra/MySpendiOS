@@ -25,7 +25,17 @@ struct PickerView<E>: UIViewRepresentable where E: CaseIterable & RawRepresentab
 
     // UIViewRepresentable
     func makeUIView(context: Context) -> UISegmentedControl {
-        let control = UISegmentedControl(items: E.allCases.map { $0.rawValue.capitalized }) //TODO: Aplicar localization
+        
+        //TODO: Aplicar Correctamente localization
+        let items = E.allCases.map {
+            if let localizable = $0 as? DateTimeInterval {
+                return localizable.localized
+            } else {
+                return $0.rawValue.capitalized
+            }
+        }
+        
+        let control = UISegmentedControl(items: items)
 
         control.addTarget(context.coordinator,
                           action: #selector(Coordinator.valueChanged(_:)),
@@ -86,7 +96,7 @@ struct PickerView<E>: UIViewRepresentable where E: CaseIterable & RawRepresentab
     }
 }
 
-#Preview {
+#Preview("All en") {
     @Previewable @State var accountType: AccountType = .general
     @Previewable @State var categoryType: CategoryType = .expense
     @Previewable @State var currencyType: CurrencySymbolType = .symbol
@@ -100,5 +110,13 @@ struct PickerView<E>: UIViewRepresentable where E: CaseIterable & RawRepresentab
         PickerView(selection: $currencyType)
         
         PickerView(selection: $dateTimeInterval)
+            .environment(\.locale, .init(identifier: Previews.localeEN))
     }
+}
+
+#Preview(Previews.localeES) {
+    @Previewable @State var dateTimeInterval: DateTimeInterval = .month
+    
+    PickerView(selection: $dateTimeInterval)
+        .environment(\.locale, .init(identifier: Previews.localeES))
 }
