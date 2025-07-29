@@ -10,4 +10,6 @@ enum CurrencySymbolType: String, CaseIterable, Identifiable, Codable, Localizabl
     
     case symbol
     case code
+    
+    var table: String { Tables.enums }
 }

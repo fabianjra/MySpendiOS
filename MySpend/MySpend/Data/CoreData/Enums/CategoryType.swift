@@ -10,4 +10,6 @@ enum CategoryType: String, CaseIterable, Identifiable, Codable, Hashable, Locali
     
     case expense
     case income
+    
+    var table: String { Tables.enums }
 }

@@ -31,4 +31,6 @@ enum DateTimeInterval: String, CaseIterable, Identifiable, Codable, Localizable 
         case .year: return .year
         }
     }
+    
+    var table: String { Tables.enums }
 }

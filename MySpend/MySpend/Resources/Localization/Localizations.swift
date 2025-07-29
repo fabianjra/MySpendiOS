@@ -25,9 +25,10 @@ struct Tables {
     static let enums = "Enums"
 }
 
-
+/// Todo enum que herede de este protocolo debe conformar a table: Para saber en que catalogo ir a buscar su Localizeble y rawValue para que sea un string a utulizar como key y buscar su valor en el catalogo correcto.
 protocol Localizable {
     var rawValue: String { get }
+    var table: String { get }
 }
 
 extension Localizable {
@@ -37,7 +38,7 @@ extension Localizable {
     
     /// Para los enumerables que van en el PickerView: Deben conformarlo para localizar sus textos y deben ir en el catalogo de Enums
     var localized: String {
-        String(localized: String.LocalizationValue(self.rawValue), table: Tables.enums)
+        String(localized: String.LocalizationValue(self.rawValue), table: self.table)
     }
 }
 
@@ -49,10 +50,14 @@ struct Localizations {
         case title
         case enter_name
         case enter_account_name
+        
+        var table: String { Tables.onboarding }
     }
     
     enum transaction: String, Localizable {
         case welcome
+        
+        var table: String { Tables.transaction }
     }
     
     // MARK: - Generic
@@ -60,6 +65,8 @@ struct Localizations {
     enum view: String, Localizable {
         case empty
         case empty_add_item
+        
+        var table: String { Tables.view }
     }
     
     enum button: String, Localizable {
@@ -67,5 +74,7 @@ struct Localizations {
         case skip
         case history
         case history_subtitle
+        
+        var table: String { Tables.button }
     }
 }

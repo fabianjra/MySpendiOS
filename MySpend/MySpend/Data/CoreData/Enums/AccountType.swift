@@ -20,4 +20,6 @@ enum AccountType: String, CaseIterable, Hashable, Localizable {
             return nil
         }
     }
+    
+    var table: String { Tables.enums }
 }
