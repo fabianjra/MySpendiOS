@@ -58,7 +58,7 @@ struct TextPlainLocalized: View {
                   truncateMode: .middle)
         .padding()
         
-        TextPlainLocalized("onboarding.title")
+        TextPlainLocalized(Localizations.onboarding.title.key, table: Tables.onboarding)
             .padding()
             
         Spacer()
@@ -69,7 +69,7 @@ struct TextPlainLocalized: View {
 
 #Preview(Previews.localeEN) {
     VStack {
-        TextPlainLocalized("onboarding.title")
+        TextPlainLocalized("title")
             .padding()
     }
     .background(Color.backgroundBottom)
