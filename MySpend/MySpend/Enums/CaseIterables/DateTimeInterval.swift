@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import SwiftUICore
 
 /**
  Allows user to select a Date Time interval to show transactions.
@@ -19,10 +18,10 @@ import SwiftUICore
 enum DateTimeInterval: String, CaseIterable, Identifiable, Codable {
     public var id: Self { self }
     
-    case day = "Daily"
-    case week = "Weekly"
-    case month = "Monthly"
-    case year = "Yearly"
+    case day
+    case week
+    case month
+    case year
     
     var componentType: Calendar.Component {
         switch self {
@@ -34,6 +33,6 @@ enum DateTimeInterval: String, CaseIterable, Identifiable, Codable {
     }
     
     var localized: String {
-        String(localized: String.LocalizationValue(rawValue), table: Tables.main)
+        String(localized: String.LocalizationValue(rawValue), table: Tables.enums)
     }
 }

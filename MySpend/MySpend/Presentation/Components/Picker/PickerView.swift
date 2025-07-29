@@ -96,7 +96,7 @@ struct PickerView<E>: UIViewRepresentable where E: CaseIterable & RawRepresentab
     }
 }
 
-#Preview("All en") {
+#Preview("All \(Previews.localeES)") {
     @Previewable @State var accountType: AccountType = .general
     @Previewable @State var categoryType: CategoryType = .expense
     @Previewable @State var currencyType: CurrencySymbolType = .symbol
@@ -110,8 +110,8 @@ struct PickerView<E>: UIViewRepresentable where E: CaseIterable & RawRepresentab
         PickerView(selection: $currencyType)
         
         PickerView(selection: $dateTimeInterval)
-            .environment(\.locale, .init(identifier: Previews.localeEN))
     }
+    .environment(\.locale, .init(identifier: Previews.localeES))
 }
 
 #Preview(Previews.localeES) {

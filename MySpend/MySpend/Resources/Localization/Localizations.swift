@@ -22,6 +22,7 @@ struct Tables {
     
     static let view = "View"
     static let button = "Button"
+    static let enums = "Enums"
 }
 
 
