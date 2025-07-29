@@ -50,7 +50,6 @@ struct TextPlainLocalized: View {
 struct TextPlainLocalized2<E: Localizable>: View {
     
     private let localized: E
-    private let table: String
     private let color: Color
     private let family: Font.Family
     private let size: Font.Sizes
@@ -59,7 +58,6 @@ struct TextPlainLocalized2<E: Localizable>: View {
     private let truncateMode: Text.TruncationMode
     
     init(_ localized: E,
-         table: String = Tables.main,
          color: Color = Color.textPrimaryForeground,
          family: Font.Family = Font.Family.regular,
          size: Font.Sizes = Font.Sizes.body,
@@ -67,7 +65,6 @@ struct TextPlainLocalized2<E: Localizable>: View {
          lineLimit: Int = ConstantViews.singleTextMaxLines,
          truncateMode: Text.TruncationMode = Text.TruncationMode.tail) {
         self.localized = localized
-        self.table = table
         self.color = color
         self.family = family
         self.size = size
@@ -89,7 +86,7 @@ struct TextPlainLocalized2<E: Localizable>: View {
 
 #Preview("ESPA") {
     VStack {
-        TextPlainLocalized2(Localizations.onboarding.title)
+        TextPlainLocalized2(LocalKey.Onboarding.title)
             .padding()
     }
     .background(Color.backgroundBottom)

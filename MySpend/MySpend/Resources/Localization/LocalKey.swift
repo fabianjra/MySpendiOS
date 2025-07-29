@@ -42,11 +42,11 @@ extension Localizable {
     }
 }
 
-struct Localizations {
+struct LocalKey {
     
     // MARK: - Features
     
-    enum onboarding: String, Localizable {
+    enum Onboarding: String, Localizable {
         case title
         case enter_name
         case enter_account_name
@@ -54,7 +54,7 @@ struct Localizations {
         var table: String { Tables.onboarding }
     }
     
-    enum transaction: String, Localizable {
+    enum Transaction: String, Localizable {
         case welcome
         
         var table: String { Tables.transaction }
@@ -62,14 +62,14 @@ struct Localizations {
     
     // MARK: - Generic
     
-    enum view: String, Localizable {
+    enum View: String, Localizable {
         case empty
         case empty_add_item
         
         var table: String { Tables.view }
     }
     
-    enum button: String, Localizable {
+    enum Button: String, Localizable {
         case continu = "continue"
         case skip
         case history

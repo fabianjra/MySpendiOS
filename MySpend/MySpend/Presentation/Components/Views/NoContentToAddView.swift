@@ -9,8 +9,8 @@ import SwiftUI
 
 struct NoContentToAddView: View {
     
-    var title: LocalizedStringKey = Localizations.view.empty.key
-    var message: LocalizedStringKey = Localizations.view.empty_add_item.key
+    var title: LocalizedStringKey = LocalKey.View.empty.key
+    var message: LocalizedStringKey = LocalKey.View.empty_add_item.key
     var rotationDegress: CGFloat = ConstantAnimations.rotationArrowBottomCenter
     
     private let table = Tables.view

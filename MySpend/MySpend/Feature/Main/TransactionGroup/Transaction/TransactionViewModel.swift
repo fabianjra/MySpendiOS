@@ -17,8 +17,6 @@ class TransactionViewModel: BaseViewModel {
     
     @Published var isMutipleAccounts: Bool = false
     
-    let table = Tables.transaction
-    
     /**
      Call this function in `onFirstAppear`.
      Shoud be called once when open application because this view will be active all alonge the app life.

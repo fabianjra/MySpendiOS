@@ -13,20 +13,18 @@ struct OnBoardingUsernameView: View {
     @FocusState private var focusedField: OnBoardingUsernameViewModel.Field?
     
     private let table = Tables.onboarding
-    private let tableButton = Tables.button
     
     var body: some View {
         LogContainer {
             
             // MARK: HEADER
-            HeaderNavigator(table: table, subTitle: Localizations.onboarding.title.key, onlyTitle: true)
+            HeaderNavigator(table: table, subTitle: LocalKey.Onboarding.title.key, onlyTitle: true)
                 .padding(.bottom)
             
             
             VStack(spacing: ConstantViews.formSpacing) {
                 
-                TextPlainLocalized(Localizations.onboarding.enter_name.key,
-                                   table: table,
+                TextPlainLocalized2(LocalKey.Onboarding.enter_name,
                                    family: .light,
                                    size: .big)
                 
@@ -41,14 +39,14 @@ struct OnBoardingUsernameView: View {
                 Button {
                     viewModel.continueToNextStep(withName: true)
                 } label: {
-                    Text(Localizations.button.continu.key, tableName: tableButton)
+                    TextPlainLocalized2(LocalKey.Button.continu)
                 }
                 .buttonStyle(ButtonPrimaryStyle())
                 
                 Button {
                     viewModel.continueToNextStep(withName: false)
                 } label: {
-                    Text(Localizations.button.skip.key, tableName: tableButton)
+                    TextPlainLocalized2(LocalKey.Button.skip)
                 }
                 .buttonStyle(ButtonLinkStyle())
                 .padding(.bottom)
