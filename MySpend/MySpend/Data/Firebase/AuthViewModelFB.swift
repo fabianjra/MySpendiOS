@@ -51,7 +51,7 @@ class AuthViewModelFB : ObservableObject {
     }
 }
 
-//TODO: Pasar a un struct y utilizarlo para mapear el user de Firebase.
+//TOD: Pasar a un struct y utilizarlo para mapear el user de Firebase.
 //struct UserJSON: Codable {
 //    let uid: String
 //    let email: String?

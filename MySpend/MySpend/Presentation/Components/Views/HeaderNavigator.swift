@@ -42,14 +42,13 @@ struct HeaderNavigator: View {
             HStack {
                 ButtonNavigation(tintColor: textColor) {
                     
-                    //TODO: Posible solucion para remover el ultimo item del navigationPath.
                     //El problema es que no funciona cuando es Swipe to go Back, porque no se utiliza este botón.
                     //Parece que dismiss borra el ultimo item igualmente, cuando se pasa de un tab a otro, en el TabView.
-                    //                    if Router.shared.path.count > 0 {
-                    //                        Router.shared.path.removeLast()
-                    //                    } else {
-                    //                        dismiss()
-                    //                    }
+                    //  if Router.shared.path.count > 0 {
+                    //      Router.shared.path.removeLast()
+                    //  } else {
+                    //      dismiss()
+                    //  }
                     
                     dismiss()
                 }

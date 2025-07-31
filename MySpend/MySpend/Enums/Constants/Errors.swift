@@ -88,7 +88,6 @@ extension Errors: LocalizedError {
         case .notGetDataFromDocument: return NSLocalizedString("Could not get data from documentSnapshot", comment: "")
         case .notGetDataFromCollection: return NSLocalizedString("Could not get data from collection snapshot", comment: "")
             
-            //TODO: Agregar a que subcoleccion pertenece el documentID.
         case .decodeDocument(let documentId): return NSLocalizedString("Error while trying to decode document form Firebase. ID: \(documentId)", comment: "")
         case .addDuplicatedDocument(let documentId): return NSLocalizedString("Trying to add new document but it's duplicated. ID: \(documentId)", comment: "")
         case .notGetDataFromCollectionChanges: return NSLocalizedString("Could not get the query snapshot", comment: "")

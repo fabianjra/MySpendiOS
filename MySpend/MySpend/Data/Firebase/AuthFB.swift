@@ -21,7 +21,7 @@ public struct AuthFB: UserValidationProtocol {
         try Auth.auth().signOut()
     }
     
-    //TODO: Agregar funcion de Transaccion para que sea atomico (Se complete todo o no haga ninguna accion).
+    //TOD: Agregar funcion de Transaccion para que sea atomico (Se complete todo o no haga ninguna accion).
     func updatePassword(actualPassword: String, newPasword: String) async throws {
         let user = try validateCurrentUser(currentUser)
         
@@ -47,7 +47,7 @@ public struct AuthFB: UserValidationProtocol {
         try await user.updatePassword(to: newPasword)
     }
     
-    //TODO: Agregar funcion de Transaccion para que sea atomico (Se complete todo o no haga ninguna accion).
+    //TOD: Agregar funcion de Transaccion para que sea atomico (Se complete todo o no haga ninguna accion).
     func registerUser(withEmail email: String, password: String, username: String) async throws {
         
         let user = try await Auth.auth().createUser(withEmail: email, password: password).user

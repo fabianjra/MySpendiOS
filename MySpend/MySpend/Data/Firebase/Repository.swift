@@ -152,7 +152,6 @@ public struct Repository: UserValidationProtocol {
         try await document.delete()
     }
     
-    //TODO: Se debe probar
     func deleteDocuments(_ documentIds: [String], forSubCollection collection: CollectionsFB) async throws {
         let currentUserId = try validateCurrentUser(currentUser).uid
         let subCollectionRef = UtilsFB.userSubCollectionRef(collection, for: currentUserId)
