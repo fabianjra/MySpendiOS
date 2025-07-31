@@ -18,6 +18,7 @@ struct TextFieldAmount: View {
                   prompt: Text(placeHolder).foregroundColor(.textFieldPlaceholder))
         
         .textFieldStyle(TextFieldIconStyle($text,
+                                           placeHolder: placeHolder,
                                            iconLeading: iconLeading,
                                            isAmount: true,
                                            showErrorIndicador: false))

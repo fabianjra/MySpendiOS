@@ -29,7 +29,12 @@ struct TextFieldIconStyle: TextFieldStyle {
     private var submitLabel: SubmitLabel
     @FocusState private var isFocused: Bool
     
+    // For Placeholder label:
+    private let placeHolder: String
+    @State private var showLabel: Bool = false
+    
     public init(_ text: Binding<String>,
+                placeHolder: String = "",
                 family: Font.Family = .regular,
                 size: Font.Sizes = .body,
                 iconLeading: Image? = nil,
@@ -43,6 +48,7 @@ struct TextFieldIconStyle: TextFieldStyle {
                 submitLabel: SubmitLabel = .done) {
         
         self._text = text
+        self.placeHolder = placeHolder
         self.family = family
         self.size = size
         self.iconLeading = iconLeading
@@ -57,93 +63,116 @@ struct TextFieldIconStyle: TextFieldStyle {
     }
     
     public func _body(configuration: TextField<Self._Label>) -> some View {
-        HStack {
-            if let iconLeading = iconLeading {
-                iconLeading
-                    .frame(width: ConstantFrames.textFieldHeight,
-                           height: ConstantFrames.textFieldHeight)
-                    .background(Color.textFieldIconBackground)
-            }
-            
-            configuration
-            //.background(.red) //For testing
-                .frame(height: ConstantFrames.textFieldHeight)
-            //.background(.green) //For testing
-                .padding(.horizontal, iconLeading == nil ? nil : .zero)
-                .padding(.trailing, iconLeading != nil ? nil : .zero)
-                .font(.montserrat(family, size: size))
-                .submitLabel(submitLabel)
-                .focused($isFocused)
-                .onChange(of: text, {
+            HStack {
+                if let iconLeading = iconLeading {
+                    iconLeading
+                        .frame(width: ConstantFrames.textFieldHeight,
+                               height: ConstantFrames.textFieldHeight)
+                        .background(Color.textFieldIconBackground)
+                }
+                
+                ZStack {
                     
-                    /// Clean error messages on screen. Var taken from Father View.
-                    errorMessage = ""
-                    isError = false
-                    
-                    if isAmount {
-                        text = onChangeAmount()
-                    } else {
-                        /// Validate the limit character count. Delete extra characters typed.
-                        if text.count > textLimit {
-                            text = String(text.prefix(textLimit))
+                    VStack {
+                        HStack {
+                            //TODO: Cambiar por localized.
+                            TextPlain(placeHolder,
+                                      color: .textFieldPlaceholder,
+                                      size: .mediumSmall)
+                            Spacer()
                         }
+                        .padding(.leading, iconLeading == nil ? nil : .zero)
+                        .modifier(ShowReservesSpace(showLabel))
+                        .animation(.default, value: showLabel)
+                        
+                        Spacer()
                     }
-                })
-                .onChange(of: errorMessage) {
-                    if text.isEmpty && !errorMessage.isEmpty {
-                        isError = true
+                    .frame(height: ConstantFrames.textFieldHeight)
+                    
+                    configuration
+                    //.background(.red) //For testing
+                        .frame(height: ConstantFrames.textFieldHeight)
+                    //.background(.green) //For testing
+                        .padding(.horizontal, iconLeading == nil ? nil : .zero)
+                        .padding(.trailing, iconLeading != nil ? nil : .zero)
+                        .font(.montserrat(family, size: size))
+                        .submitLabel(submitLabel)
+                        .focused($isFocused)
+                        .onAppear { showLabel = !text.isEmpty }
+                        .onChange(of: text, {
+                            
+                            /// Clean error messages on screen. Var taken from Father View.
+                            errorMessage = ""
+                            isError = false
+                            
+                            if isAmount {
+                                text = onChangeAmount()
+                            } else {
+                                /// Validate the limit character count. Delete extra characters typed.
+                                if text.count > textLimit {
+                                    text = String(text.prefix(textLimit))
+                                }
+                            }
+                            
+                            showLabel = !text.isEmpty
+                        })
+                        .onChange(of: errorMessage) {
+                            if text.isEmpty && !errorMessage.isEmpty {
+                                isError = true
+                            }
+                        }
+                        .onChange(of: isFocused) {
+                            if isAmount {
+                                onChangeFocusAmount(isFocused)
+                            }
+                        }
+                }
+                
+                if isFocused && !text.isEmpty {
+                    Image.xmarkCircleFIll
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: FrameSize.width.iconInsideTextField,
+                               height: FrameSize.height.iconInsideTextField)
+                        .foregroundColor(Color.textFieldPlaceholder)
+                        .padding(.trailing)
+                        .onTapGesture {
+                            DispatchQueue.main.async { // Allows to clean the text even if its selected by autocorrect.
+                                text = ""
+                            }
+                        }
+                }
+                
+            }
+            .foregroundColor(foregroundColor)
+            
+            /// if apply disabled background, all textfield will change to gray when a view is loading.
+            //.background(isEnabled ? backgroundColor : Color.disabledBackground)
+            .background(backgroundColor)
+            .cornerRadius(.infinity)
+            .overlay {
+                if showFocusedIndicador {
+                    if isFocused {
+                        RoundedRectangle(cornerRadius: .infinity)
+                            .stroke(LinearGradient(
+                                colors: Color.primaryGradiant,
+                                startPoint: .leading,
+                                endPoint: .trailing), lineWidth: ConstantShapes.textFieldLineWidth)
                     }
                 }
-                .onChange(of: isFocused) {
-                    if isAmount {
-                        onChangeFocusAmount(isFocused)
-                    }
-                }
-            
-            if isFocused && !text.isEmpty {
-                Image.xmarkCircleFIll
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: FrameSize.width.iconInsideTextField,
-                           height: FrameSize.height.iconInsideTextField)
-                    .foregroundColor(Color.textFieldPlaceholder)
-                    .padding(.trailing)
-                    .onTapGesture {
-                        DispatchQueue.main.async { // Allows to clean the text even if its selected by autocorrect.
-                            text = ""
-                        }
-                    }
-            }
-        }
-        .foregroundColor(foregroundColor)
-        
-        /// if apply disabled background, all textfield will change to gray when a view is loading.
-        //.background(isEnabled ? backgroundColor : Color.disabledBackground)
-        .background(backgroundColor)
-        .cornerRadius(.infinity)
-        .overlay {
-            if showFocusedIndicador {
-                if isFocused {
+                
+                if isError && showErrorIndicador {
                     RoundedRectangle(cornerRadius: .infinity)
                         .stroke(LinearGradient(
-                            colors: Color.primaryGradiant,
+                            colors: [Color.alert],
                             startPoint: .leading,
                             endPoint: .trailing), lineWidth: ConstantShapes.textFieldLineWidth)
                 }
             }
-            
-            if isError && showErrorIndicador {
-                RoundedRectangle(cornerRadius: .infinity)
-                    .stroke(LinearGradient(
-                        colors: [Color.alert],
-                        startPoint: .leading,
-                        endPoint: .trailing), lineWidth: ConstantShapes.textFieldLineWidth)
+            .frame(maxWidth: ConstantFrames.iPadMaxWidth)
+            .onTapGesture {
+                isFocused = true
             }
-        }
-        .frame(maxWidth: ConstantFrames.iPadMaxWidth)
-        .onTapGesture {
-            isFocused = true
-        }
     }
     
     private func onChangeAmount() -> String {

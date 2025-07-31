@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TextFieldReadOnly: View {
     
-    var placeHolder: String = "Name"
+    var placeHolder: String = ""
     @Binding var text: String
     var iconLeading: Image? = nil
     var colorDisabled: Bool = true
@@ -19,6 +19,7 @@ struct TextFieldReadOnly: View {
                   prompt: Text(placeHolder).foregroundColor(.textFieldPlaceholder))
         
         .textFieldStyle(TextFieldIconStyle($text,
+                                           placeHolder: placeHolder,
                                            iconLeading: iconLeading,
                                            backgroundColor: colorDisabled ? Color.disabledBackground : Color.textFieldBackground))
         .disabled(true)

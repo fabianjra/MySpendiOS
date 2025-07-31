@@ -17,6 +17,7 @@ struct TextFieldNotes: View {
                   prompt: Text(placeHolder).foregroundColor(.textFieldPlaceholder), axis: .vertical)
         
         .textFieldStyle(TextFieldIconStyle($text,
+                                           placeHolder: placeHolder,
                                            textLimit: ConstantViews.textMaxLength,
                                            showErrorIndicador: false))
         .keyboardType(.alphabet)

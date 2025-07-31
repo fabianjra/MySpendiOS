@@ -27,7 +27,7 @@ struct ChangeNameView: View {
             // MARK: FIELDS
             VStack(spacing: ConstantViews.formSpacing) {
                 
-                TextFieldReadOnly(text: $viewModel.model.username, iconLeading: Image.personFill)
+                TextFieldReadOnly(placeHolder: "Name", text: $viewModel.model.username, iconLeading: Image.personFill)
                 
                 
                 TextFieldName(placeHolder: "New name",

@@ -57,7 +57,7 @@ struct AddModifyTransactionView: View {
                         // MARK: DATE
                         
                         VStack {
-                            TextFieldReadOnly(text: .constant(viewModel.model.dateTransaction.toStringShortLocale),
+                            TextFieldReadOnly(placeHolder: "Date", text: .constant(viewModel.model.dateTransaction.toStringShortLocale),
                                               iconLeading: Image.calendar,
                                               colorDisabled: false)
                             .onTapGesture {

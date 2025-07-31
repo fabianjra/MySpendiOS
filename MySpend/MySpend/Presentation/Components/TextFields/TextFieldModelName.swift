@@ -20,6 +20,7 @@ struct TextFieldModelName: View {
                   prompt: Text(placeHolder).foregroundColor(.textFieldPlaceholder))
         
         .textFieldStyle(TextFieldIconStyle($text,
+                                           placeHolder: placeHolder,
                                            iconLeading: iconLeading,
                                            textLimit: ConstantViews.textLimitName,
                                            errorMessage: $errorMessage))
