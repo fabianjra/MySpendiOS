@@ -32,6 +32,9 @@ protocol LocalizableProtocol {
 }
 
 extension LocalizableProtocol {
+    
+    /// Key es un valor en el que para todos se aplica de la misma forma, por lo que se deja en extension para que la implementacion dentro del ENUM sea opcional si se quiere realizar de diferente forma.
+    /// A diferencia de table, en donde cada enum tiene su propio valor por Catalogo, key es un valor por igual para cada enum ya que se basa en sus propios case internos.
     var key: LocalizedStringKey {
         LocalizedStringKey(self.rawValue)
     }
