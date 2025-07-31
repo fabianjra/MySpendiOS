@@ -34,6 +34,9 @@ struct AddModifyCategoryView: View {
     @StateObject private var viewModel: AddModifyCategoryViewModel
     @FocusState private var focusedField: CategoryModel.Field?
     
+    @State private var selectedIcon = ""
+    @State private var showIconsModal = false
+    
     init(_ model: CategoryModel? = nil,
          categoryType: Binding<CategoryType>,
          newCategoryID: Binding<UUID> = .constant(UUID()),
@@ -76,7 +79,7 @@ struct AddModifyCategoryView: View {
                 .onSubmit { process(viewModel.isAddModel ? .add : .modify) }
                 
                 Button("") {
-                    viewModel.showIconsModal = true
+                    showIconsModal = true
                 }
                 .buttonStyle(ButtonTextFieldStyle(icon: viewModel.model.icon, actionClear: {
                     viewModel.model.icon = ""
@@ -116,8 +119,11 @@ struct AddModifyCategoryView: View {
                 categoryType = viewModel.model.type
             }
         }
-        .sheet(isPresented: $viewModel.showIconsModal) {
-            IconListModalView(model: $viewModel.model, showModal: $viewModel.showIconsModal)
+        .sheet(isPresented: $showIconsModal) {
+            IconListModalView(selectedIcon: $selectedIcon, showModal: $showIconsModal)
+        }
+        .onChange(of: selectedIcon) { _, newValue in
+            viewModel.model.icon = newValue
         }
     }
     

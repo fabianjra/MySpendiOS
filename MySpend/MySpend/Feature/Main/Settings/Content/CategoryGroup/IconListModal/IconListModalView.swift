@@ -9,7 +9,7 @@ import SwiftUI
 
 struct IconListModalView: View {
     
-    @Binding var model: CategoryModel
+    @Binding var selectedIcon: String
     @Binding var showModal: Bool
     
     var body: some View {
@@ -27,7 +27,7 @@ struct IconListModalView: View {
                             LazyVGrid(columns: columns, alignment: .center, spacing: ConstantViews.formSpacing) {
                                 ForEach(icon.list, id: \.self) { icon in
                                     Button {
-                                        model.icon = icon
+                                        selectedIcon = icon
                                         showModal = false
                                     } label: {
                                         Image(systemName: icon)
@@ -83,15 +83,15 @@ struct IconListModalView: View {
 
 #Preview {
     @Previewable @State var showModal: Bool = true
-    @Previewable @State var model = CategoryModel()
+    @Previewable @State var selectedIcon = ""
     
     ZStack(alignment: .top) {
         Color.backgroundBottom
         VStack {
             Spacer()
-            TextPlain("Icono: \(model.icon)")
+            TextPlain("Icono: \(selectedIcon)")
             
-            Image(systemName: model.icon)
+            Image(systemName: selectedIcon)
             
             Button("Show modal") {
                 showModal = true
@@ -99,6 +99,6 @@ struct IconListModalView: View {
             Spacer()
         }
     }.sheet(isPresented: $showModal) {
-        IconListModalView(model: $model, showModal: $showModal)
+        IconListModalView(selectedIcon: $selectedIcon, showModal: $showModal)
     }
 }

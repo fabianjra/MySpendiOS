@@ -16,6 +16,9 @@ struct AddModifyAccountView: View {
     @StateObject private var viewModel: AddModifyAccountViewModel
     @FocusState private var focusedField: AccountModel.Field?
     
+    @State private var selectedIcon = ""
+    @State private var showIconsModal = false
+    
     init(_ model: AccountModel? = nil, accountType: Binding<AccountType>) {
         _viewModel = StateObject(wrappedValue: AddModifyAccountViewModel(model))
         
@@ -52,7 +55,7 @@ struct AddModifyAccountView: View {
                 .onSubmit { process(viewModel.isAddModel ? .add : .modify) }
                 
                 Button("") {
-                    viewModel.showIconsModal = true
+                    showIconsModal = true
                 }
                 .buttonStyle(ButtonTextFieldStyle(icon: viewModel.model.icon, actionClear: {
                     viewModel.model.icon = ""
@@ -97,10 +100,12 @@ struct AddModifyAccountView: View {
                 TextError(viewModel.errorMessage)
             }
         }
-        //TODO: Arreglar. Convertir el parametro a string para poder reautilizar en category y account
-        //.sheet(isPresented: $viewModel.showIconsModal) {
-            //IconListModalView(model: $viewModel.model, showModal: $viewModel.showIconsModal)
-        //}
+        .sheet(isPresented: $showIconsModal) {
+            IconListModalView(selectedIcon: $selectedIcon, showModal: $showIconsModal)
+        }
+        .onChange(of: selectedIcon) { _, newValue in
+            viewModel.model.icon = newValue
+        }
         .onAppear {
             focusedField = .name
             

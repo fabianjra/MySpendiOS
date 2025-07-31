@@ -12,7 +12,6 @@ final class AddModifyAccountViewModel: BaseViewModel {
     @Published var model: AccountModel
     @Published var isDefaultSelected = false
     
-    @Published var showIconsModal = false
     @Published var showAlert = false
     var isAddModel: Bool = true
     

@@ -11,7 +11,6 @@ final class AddModifyCategoryViewModel: BaseViewModel {
     
     @Published var model: CategoryModel
     
-    @Published var showIconsModal = false
     @Published var showAlert = false
     var isAddModel: Bool = true
     
