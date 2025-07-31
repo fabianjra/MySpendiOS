@@ -7,7 +7,7 @@
 
 import SwiftUICore
 
-struct Tables {
+struct LocalizableTable {
     
     static let main = "Localizable"
     
@@ -26,12 +26,12 @@ struct Tables {
 }
 
 /// Todo enum que herede de este protocolo debe conformar a table: Para saber en que catalogo ir a buscar su Localizeble y rawValue para que sea un string a utulizar como key y buscar su valor en el catalogo correcto.
-protocol Localizable {
+protocol LocalizableProtocol {
     var rawValue: String { get }
     var table: String { get }
 }
 
-extension Localizable {
+extension LocalizableProtocol {
     var key: LocalizedStringKey {
         LocalizedStringKey(self.rawValue)
     }
@@ -42,39 +42,39 @@ extension Localizable {
     }
 }
 
-struct LocalKey {
+struct Localizable {
     
     // MARK: - Features
     
-    enum Onboarding: String, Localizable {
+    enum Onboarding: String, LocalizableProtocol {
         case title
         case enter_name
         case enter_account_name
         
-        var table: String { Tables.onboarding }
+        var table: String { LocalizableTable.onboarding }
     }
     
-    enum Transaction: String, Localizable {
+    enum Transaction: String, LocalizableProtocol {
         case welcome
         
-        var table: String { Tables.transaction }
+        var table: String { LocalizableTable.transaction }
     }
     
     // MARK: - Generic
     
-    enum View: String, Localizable {
+    enum View: String, LocalizableProtocol {
         case empty
         case empty_add_item
         
-        var table: String { Tables.view }
+        var table: String { LocalizableTable.view }
     }
     
-    enum Button: String, Localizable {
+    enum Button: String, LocalizableProtocol {
         case continu = "continue"
         case skip
         case history
         case history_subtitle
         
-        var table: String { Tables.button }
+        var table: String { LocalizableTable.button }
     }
 }

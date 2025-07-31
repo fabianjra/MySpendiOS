@@ -18,7 +18,7 @@ import SwiftUI
  Type constraints:
  `E` must conform to `CaseIterable`, `RawRepresentable` (with `String`
  */
-struct PickerView<E>: UIViewRepresentable where E: CaseIterable & RawRepresentable & Hashable & Localizable, E.RawValue == String {
+struct PickerView<E>: UIViewRepresentable where E: CaseIterable & RawRepresentable & Hashable & LocalizableProtocol, E.RawValue == String {
     
     @Binding var selection: E
     var fontSize = Font.Sizes.medium

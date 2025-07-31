@@ -17,7 +17,7 @@ struct TextButtonHorizontalStyled: View {
     private let iconTrailing: Image?
     
     init(_ text: LocalizedStringKey = "",
-         table: String = Tables.button,
+         table: String = LocalizableTable.button,
          color: Array<Color> = Color.secondaryGradiant,
          subTitle: LocalizedStringKey = "",
          iconLeading: Image? = nil,

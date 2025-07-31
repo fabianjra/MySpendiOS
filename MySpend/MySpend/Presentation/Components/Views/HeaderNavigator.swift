@@ -12,7 +12,7 @@ struct HeaderNavigator: View {
     @Environment(\.dismiss) private var dismiss
     
     // MARK: TITLE
-    var table: String = Tables.main
+    var table: String = LocalizableTable.main
     var title: LocalizedStringKey? = nil
     var titleWeight: Font.Family = .thin
     var titleSize: Font.Sizes = .bigXXL

@@ -5,7 +5,7 @@
 //  Created by Fabian Rodriguez on 5/7/25.
 //
 
-enum AccountType: String, CaseIterable, Hashable, Localizable {
+enum AccountType: String, CaseIterable, Hashable, LocalizableProtocol {
     case general
     case expenses
     case incomes
@@ -21,5 +21,5 @@ enum AccountType: String, CaseIterable, Hashable, Localizable {
         }
     }
     
-    var table: String { Tables.enums }
+    var table: String { LocalizableTable.enums }
 }

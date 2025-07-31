@@ -20,7 +20,7 @@ struct OnBoardingAccountView: View {
             
             
             VStack(spacing: ConstantViews.formSpacing) {
-                TextPlainLocalized(LocalKey.Onboarding.enter_account_name,
+                TextPlainLocalized(Localizable.Onboarding.enter_account_name,
                                    family: .light,
                                    size: .big,
                                    aligment: .center,
@@ -42,7 +42,7 @@ struct OnBoardingAccountView: View {
                         await viewModel.finishOnBoarding(withName: true)
                     }
                 } label: {
-                    TextPlainLocalized(LocalKey.Button.continu)
+                    TextPlainLocalized(Localizable.Button.continu)
                 }
                 .buttonStyle(ButtonPrimaryStyle())
                 
@@ -52,7 +52,7 @@ struct OnBoardingAccountView: View {
                         await viewModel.finishOnBoarding(withName: false)
                     }
                 } label: {
-                    TextPlainLocalized(LocalKey.Button.skip)
+                    TextPlainLocalized(Localizable.Button.skip)
                 }
                 .buttonStyle(ButtonLinkStyle())
                 .padding(.bottom)

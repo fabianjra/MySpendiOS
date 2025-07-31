@@ -9,10 +9,10 @@ import SwiftUI
 
 /**
  A flexible text component that renders **either**
- 1. a `LocalizedStringKey` coming from any enum that conforms to `Localizable`, **or**
+ 1. a `LocalizedStringKey` coming from any enum that conforms to `LocalizableProtocol`, **or**
  2. an ad-hoc `LocalizedStringKey` supplied directly, while exposing a single, uniform API for colour, font and line-breaking options.
  
- The view is generic over `E`, constrained to `Localizable`.
+ The view is generic over `E`, constrained to `LocalizableProtocol`.
  When you pass an enum case (`E`), the view pulls both the
  *key* **and** its *table name* from that case.
  When you need a literal `LocalizedStringKey` instead, use the
@@ -23,7 +23,7 @@ import SwiftUI
 
  ```swift
  // 1️⃣ Enum-based (table resolved automatically)
- TextPlainLocalized(LocalKey.Onboarding.title)
+ TextPlainLocalized(Localizable.Onboarding.title)
 
  // 2️⃣ Literal key + table
  TextPlainLocalized(
@@ -38,7 +38,7 @@ import SwiftUI
  > so this view localises correctly inside `#Preview` blocks.
 
  ### Generic Parameters
- * `E` – any type that conforms to `Localizable`.
+ * `E` – any type that conforms to `LocalizableProtocol`.
    Use `Never` implicitly when you initialise with
    `textLocalized:`.
 
@@ -66,10 +66,10 @@ import SwiftUI
      tableName: localizedEnum == nil ? table : localizedEnum?.table)
    ```
 
- * `Never` is extended to conform to `Localizable` so the
+ * `Never` is extended to conform to `LocalizableProtocol` so the
    overload can specialise `E == Never` without boiler-plate.
  */
-struct TextPlainLocalized<E: Localizable>: View {
+struct TextPlainLocalized<E: LocalizableProtocol>: View {
     private let localizedEnum: E?
     private let textLocalized: LocalizedStringKey?
     private let table: String?
@@ -113,7 +113,7 @@ struct TextPlainLocalized<E: Localizable>: View {
     }
 }
 
-extension Never: Localizable {
+extension Never: LocalizableProtocol {
     var rawValue: String { "" }
     var key: LocalizedStringKey { "" }
     var table: String { "" }
@@ -144,7 +144,7 @@ extension TextPlainLocalized where E == Never {
 
 #Preview("ESPA") {
     VStack {
-        TextPlainLocalized(LocalKey.Onboarding.title)
+        TextPlainLocalized(Localizable.Onboarding.title)
             .padding()
     }
     .background(Color.backgroundBottom)

@@ -20,13 +20,13 @@ struct TransactionView: View {
             HStack {
                 VStack(alignment: .leading) {
                     TextPlainLocalized(textLocalized: "greet \(viewModel.userName) \(Emojis.greeting.rawValue)",
-                                        table: Tables.transaction,
+                                        table: LocalizableTable.transaction,
                                         family: .semibold,
                                         size: .big,
                                         lineLimit: ConstantViews.singleTextMaxLines,
                                         truncateMode: .tail)
                     
-                    TextPlainLocalized(LocalKey.Transaction.welcome,
+                    TextPlainLocalized(Localizable.Transaction.welcome,
                                         family: .light,
                                         size: .small,
                                         lineLimit: ConstantViews.singleTextMaxLines)
@@ -45,8 +45,8 @@ struct TransactionView: View {
                                            isMutipleAccounts: $viewModel.isMutipleAccounts)
                     .toolbar(.hidden, for: .navigationBar)
                 } label: {
-                    TextButtonHorizontalStyled(LocalKey.Button.history.key,
-                                               subTitle: LocalKey.Button.history_subtitle.key,
+                    TextButtonHorizontalStyled(Localizable.Button.history.key,
+                                               subTitle: Localizable.Button.history_subtitle.key,
                                                iconLeading: Image.stackFill,
                                                iconTrailing: Image.arrowRight)
                 }
