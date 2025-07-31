@@ -36,7 +36,7 @@ struct DateTimeIntervalListView: View {
                                     Button {
                                         viewModel.updateDateTimeInterval(item)
                                     } label: {
-                                        TextPlainLocalized(item.key, table: Tables.enums, color: Color.textFieldForeground)
+                                        TextPlainLocalized(item, color: Color.textFieldForeground)
                                     }
                                 }
                             }

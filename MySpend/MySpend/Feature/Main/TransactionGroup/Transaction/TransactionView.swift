@@ -19,17 +19,17 @@ struct TransactionView: View {
             
             HStack {
                 VStack(alignment: .leading) {
-                    TextPlainLocalized("greet \(viewModel.userName) \(Emojis.greeting.rawValue)",
-                                       table: Tables.transaction,
-                                       family: .semibold,
-                                       size: .big,
-                                       lineLimit: ConstantViews.singleTextMaxLines,
-                                       truncateMode: .tail)
+                    TextPlainLocalized(textLocalized: "greet \(viewModel.userName) \(Emojis.greeting.rawValue)",
+                                        table: Tables.transaction,
+                                        family: .semibold,
+                                        size: .big,
+                                        lineLimit: ConstantViews.singleTextMaxLines,
+                                        truncateMode: .tail)
                     
-                    TextPlainLocalized2(LocalKey.Transaction.welcome,
-                                       family: .light,
-                                       size: .small,
-                                       lineLimit: ConstantViews.singleTextMaxLines)
+                    TextPlainLocalized(LocalKey.Transaction.welcome,
+                                        family: .light,
+                                        size: .small,
+                                        lineLimit: ConstantViews.singleTextMaxLines)
                 }
                 Spacer()
             }
@@ -108,6 +108,7 @@ private struct previewWrapper: View {
     init(_ mockDataType: MockDataType = .normal) {
         CoreDataUtilities.shared.mockDataType = mockDataType
         UserDefaultsManager.userDefaults = .preview
+        UserDefaultsManager.userName = "Fabian"
     }
     @State var selectedDate = Date()
     var body: some View { TransactionView(selectedDate: $selectedDate) }

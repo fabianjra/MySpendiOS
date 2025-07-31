@@ -24,7 +24,7 @@ struct OnBoardingUsernameView: View {
             
             VStack(spacing: ConstantViews.formSpacing) {
                 
-                TextPlainLocalized2(LocalKey.Onboarding.enter_name,
+                TextPlainLocalized(LocalKey.Onboarding.enter_name,
                                    family: .light,
                                    size: .big)
                 
@@ -39,14 +39,14 @@ struct OnBoardingUsernameView: View {
                 Button {
                     viewModel.continueToNextStep(withName: true)
                 } label: {
-                    TextPlainLocalized2(LocalKey.Button.continu)
+                    TextPlainLocalized(LocalKey.Button.continu)
                 }
                 .buttonStyle(ButtonPrimaryStyle())
                 
                 Button {
                     viewModel.continueToNextStep(withName: false)
                 } label: {
-                    TextPlainLocalized2(LocalKey.Button.skip)
+                    TextPlainLocalized(LocalKey.Button.skip)
                 }
                 .buttonStyle(ButtonLinkStyle())
                 .padding(.bottom)

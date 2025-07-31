@@ -13,12 +13,12 @@ struct HeaderNavigator: View {
     
     // MARK: TITLE
     var table: String = Tables.main
-    var title: LocalizedStringKey = "mySpend"
+    var title: LocalizedStringKey? = nil
     var titleWeight: Font.Family = .thin
     var titleSize: Font.Sizes = .bigXXL
     
     // MARK: SUBTITLE
-    var subTitle: LocalizedStringKey = ""
+    var subTitle: LocalizedStringKey? = nil
     var subTitleWeight: Font.Family = .light
     var subTitleSize: Font.Sizes = .body
     
@@ -78,23 +78,27 @@ struct HeaderNavigator: View {
     
     private var titleAndSubtitle: some View {
         VStack {
-            TextPlainLocalized(title,
-                               table: table,
-                               color: textColor,
-                               family: titleWeight,
-                               size: titleSize,
-                               aligment: .center,
-                               lineLimit: ConstantViews.singleTextMaxLines,
-                               truncateMode: .tail)
+            if let title = title {
+                TextPlainLocalized(textLocalized: title,
+                                    table: table,
+                                    color: textColor,
+                                    family: titleWeight,
+                                    size: titleSize,
+                                    aligment: .center,
+                                    lineLimit: ConstantViews.singleTextMaxLines,
+                                    truncateMode: .tail)
+            }
             
-            TextPlainLocalized(subTitle,
-                               table: table,
-                               color: textColor,
-                               family: subTitleWeight,
-                               size: subTitleSize,
-                               aligment: .center,
-                               lineLimit: ConstantViews.singleTextMaxLines,
-                               truncateMode: .tail)
+            if let subTitle = subTitle {
+                TextPlainLocalized(textLocalized: subTitle,
+                                    table: table,
+                                    color: textColor,
+                                    family: subTitleWeight,
+                                    size: subTitleSize,
+                                    aligment: .center,
+                                    lineLimit: ConstantViews.singleTextMaxLines,
+                                    truncateMode: .tail)
+            }
         }
     }
 }
@@ -132,6 +136,12 @@ struct HeaderNavigator: View {
         HeaderNavigator(title: "Only title",
                         subTitle: "Only Subtitle",
                         onlyTitle: true)
+        
+        DividerView()
+        
+        HeaderNavigator()
+        
+        DividerView()
     }
     .background(Color.backgroundBottom)
 }
