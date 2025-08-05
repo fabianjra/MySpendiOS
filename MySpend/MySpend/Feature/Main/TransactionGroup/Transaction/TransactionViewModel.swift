@@ -16,6 +16,7 @@ class TransactionViewModel: BaseViewModel {
     @Published var groupedTransactions: UtilsCurrency.groupedTransactions = []
     
     @Published var isMutipleAccounts: Bool = false
+    @Published var showAccountFilter: Bool = false
     
     /**
      Call this function in `onFirstAppear`.

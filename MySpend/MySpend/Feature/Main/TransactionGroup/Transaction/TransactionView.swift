@@ -32,6 +32,8 @@ struct TransactionView: View {
                                         lineLimit: ConstantViews.singleTextMaxLines)
                 }
                 Spacer()
+                
+                //TODO: Agregar boton para filtrar Accounts. A la derecha del nombre del usuario
             }
             
             
@@ -88,6 +90,13 @@ struct TransactionView: View {
                         TextError(viewModel.errorMessage)
                         
                         TotalBalanceView(transactions: transactionsFiltered)
+                        
+                        //TODO: Aplicar wheel de accounts
+//                        if viewModel.showAccountFilter {
+//                            Picker("Accounts", selection: $viewModel.dateTimeInterval) {
+//                                
+//                            }.pickerStyle(.wheel)
+//                        }
                     }
                     
                     //Tiene un efecto no deseado al transicionar entre tab y tab.
