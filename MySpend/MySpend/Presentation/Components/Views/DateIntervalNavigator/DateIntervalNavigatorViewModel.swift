@@ -13,16 +13,55 @@ struct DateIntervalNavigatorViewModel {
     func navigateDateTime(_ selectedDate: Date, to timeNavigate: TimeNavigate, byAdding dateTimeInterval: DateTimeInterval) -> Date {
         
         if timeNavigate == .today {
-            return .now
-        } else {
-            let timeToMove = timeNavigate == .next ? 1 : timeNavigate == .previous ? -1 : .zero
-            
-            if let newDate = Calendar.current.date(byAdding: dateTimeInterval.componentType, value: timeToMove, to: selectedDate) {
-                return newDate
-            } else {
-                return selectedDate
-            }
+            return Date.now
         }
+        
+        let timeToMove = timeNavigate == .next ? 1 : timeNavigate == .previous ? -1 : .zero
+        
+        guard let newDate = Calendar.current.date(byAdding: dateTimeInterval.componentType,
+                                                  value: timeToMove,
+                                                  to: selectedDate)
+        else { return selectedDate }
+        
+        // Normalise to “first unit” and 00:00
+        let calendar = Calendar.current
+        var components = calendar.dateComponents([.year, .month, .day], from: newDate)
+        
+        switch dateTimeInterval {
+        case .day, .week:
+            break // keep day/month, just zero the time
+            
+        case .month:
+            components.day = 1
+            break
+            
+        case .year:
+            components.day = 1
+            components.month = 1
+            break
+        }
+        
+        // Devuelve a las 00:00 h
+        return calendar.date(from: components).map {
+            
+            /*
+             `Calendar.startOfDay(for:)` devuelve la misma fecha pero **ajustada a la medianoche local (00 h 00 m 00 s)**
+             Respeta calendario y zona horaria.
+             
+             En este helper se emplea para:
+             
+             • Garantizar que toda navegación (día, semana, mes o año) termine en las 00:00:00 y no arrastre la hora/minuto/segundo original.
+             Evita saltos visuales inesperados y hace coherentes las comparaciones/cálculos.
+             
+             • Evitar rellenar manualmente los componentes `hour`, `minute`, `second`, reduciendo errores con DST u otros calendarios.
+             
+             Ejemplo:
+             4 ago 2025 18:42  +1 mes   → 4 sep 2025 18:42  (hora heredada)
+             startOfDay(...)           → 1 sep 2025 00:00  (día 1 + hora 0)
+             */
+            calendar.startOfDay(for: $0)
+            
+        } ?? newDate
     }
     
     func getHeader(_ selectedDate: Date, by timeInterval: DateTimeInterval) -> String {
@@ -53,10 +92,12 @@ struct DateIntervalNavigatorViewModel {
     }
     
     private func getFormatDay(_ selectedDate: Date, style formatStyle: Date.FormatStyle, isCurrentMonth: Bool, isCurrentYear: Bool) -> String {
-        var format = isCurrentMonth ? formatStyle.day().weekday(.wide) : formatStyle.day().weekday().month()
+        var format = formatStyle.day()
         
-        if !isCurrentYear {
-            format = format.year()
+        if isCurrentYear {
+            format = format.weekday(.wide).month()
+        } else {
+            format = format.weekday().month().year()
         }
         
         return selectedDate.formatted(format)
