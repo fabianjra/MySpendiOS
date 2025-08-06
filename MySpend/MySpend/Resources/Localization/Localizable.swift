@@ -22,6 +22,10 @@ struct LocalizableTable {
     static let user = "User"
     static let data = "Data"
     static let button = "Button"
+    static let currency = "Currency"
+    
+    // MARK: - Shared
+    
     static let enums = "Enums"
 }
 
@@ -79,5 +83,13 @@ struct Localizable {
         case history_subtitle
         
         var table: String { LocalizableTable.button }
+    }
+    
+    enum Currency: String, LocalizableProtocol {
+        case incomes
+        case expenses
+        case total_balance
+        
+        var table: String { LocalizableTable.currency }
     }
 }

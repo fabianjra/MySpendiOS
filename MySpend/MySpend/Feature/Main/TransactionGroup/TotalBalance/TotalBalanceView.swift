@@ -23,7 +23,7 @@ struct TotalBalanceView: View {
             }
             
             HStack {
-                TextPlain("Incomes")
+                TextPlainLocalized(Localizable.Currency.incomes)
                 Spacer()
                 TextPlain(viewModel.totalIncomeFormatted,
                           color: Color.primaryTop,
@@ -32,7 +32,7 @@ struct TotalBalanceView: View {
             .padding(.bottom, ConstantViews.minimumSpacing)
             
             HStack {
-                TextPlain("Expenses")
+                TextPlainLocalized(Localizable.Currency.expenses)
                 Spacer()
                 TextPlain(viewModel.totalExpensesFormatted,
                           color: Color.alert,
@@ -42,7 +42,7 @@ struct TotalBalanceView: View {
             
             if showTotalBalance {
                 HStack {
-                    TextPlain("Total balance", size: .big)
+                    TextPlainLocalized(Localizable.Currency.total_balance, size: .big)
                     Spacer()
                     TextPlain(viewModel.totalBalanceFormatted, size: .big)
                 }
@@ -58,11 +58,22 @@ struct TotalBalanceView: View {
     }
 }
 
-#Preview {
+#Preview(Previews.localeES) {
     VStack {
         TotalBalanceView(transactions: [])
         
         TotalBalanceView(transactions: [], showTotalBalance: false, addBottomSpacing: false)
     }
     .background(Color.backgroundBottom)
+    .environment(\.locale, .init(identifier: Previews.localeES))
+}
+
+#Preview(Previews.localeEN) {
+    VStack {
+        TotalBalanceView(transactions: [])
+        
+        TotalBalanceView(transactions: [], showTotalBalance: false, addBottomSpacing: false)
+    }
+    .background(Color.backgroundBottom)
+    .environment(\.locale, .init(identifier: Previews.localeEN))
 }
