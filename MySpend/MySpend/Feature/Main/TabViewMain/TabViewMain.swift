@@ -56,7 +56,7 @@ struct TabViewMain: View {
         TabViewContainer {
             showNewTransactionModal = true
         } content: {
-            ForEach(TabViewIcons.allCases, id: \.id) { item in
+            ForEach(TabViewIcons.allCases) { item in
                 
                 TabViewButton(selectedTab: $selectedTab, item: item)
                     .padding(.horizontal, ConstantViews.paddingTabViewHorizontal)
