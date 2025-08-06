@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-enum TabViewIcons: String, CaseIterable, Identifiable {
+enum TabViewIcons: String, CaseIterable, Identifiable, LocalizableProtocol {
     public var id: Self { self }
     
-    case transaction = "Transactions"
-    case settings = "Settings"
+    case transaction
+    case settings
     
     var iconSelected: Image {
         switch self {
@@ -26,6 +26,8 @@ enum TabViewIcons: String, CaseIterable, Identifiable {
         case .settings: return Image.tabSettings
         }
     }
+    
+    var table: String { LocalizableTable.enums }
     
 //    @ViewBuilder
 //    var view: some View {

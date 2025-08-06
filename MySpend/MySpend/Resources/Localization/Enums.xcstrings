@@ -145,6 +145,24 @@
         }
       }
     },
+    "settings" : {
+      "comment" : "Tabview",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajustes"
+          }
+        }
+      }
+    },
     "symbol" : {
       "comment" : "CurrencySymbolType",
       "extractionState" : "manual",
@@ -159,6 +177,24 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Simbolo"
+          }
+        }
+      }
+    },
+    "transaction" : {
+      "comment" : "Tabview",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Transactions"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Transacciones"
           }
         }
       }

@@ -24,22 +24,17 @@ struct TabViewButton: View {
                 .frame(width: FrameSize.width.tabViewIcon,
                        height: FrameSize.height.tabViewIcon)
                 
-                .tint(selectedTab == item ?
-                      Color.tabViewIconSelected
-                      : Color.tabViewIconDeselected)
+                .tint(selectedTab == item ? Color.tabViewIconSelected : Color.tabViewIconDeselected)
                 
                 
-                Text(item.rawValue)
-                    .font(.montserrat(size: .small))
-                    .tint(selectedTab == item ?
-                          Color.tabViewIconSelected
-                          : Color.tabViewIconDeselected)
+                TextPlainLocalized(item, color: selectedTab == item ? Color.tabViewIconSelected : Color.tabViewIconDeselected,
+                                   size: .small)
             }
         }
     }
 }
 
-#Preview {
+#Preview(Previews.localeES) {
     @Previewable @State var selectedTab: TabViewIcons = .transaction
     ZStack {
         Color.backgroundBottom
@@ -49,4 +44,18 @@ struct TabViewButton: View {
         }
         .background(Color.textPrimaryForeground)
     }
+    .environment(\.locale, .init(identifier: Previews.localeES))
+}
+
+#Preview(Previews.localeEN) {
+    @Previewable @State var selectedTab: TabViewIcons = .transaction
+    ZStack {
+        Color.backgroundBottom
+        
+        HStack {
+            TabViewButton(selectedTab: $selectedTab, item: .transaction)
+        }
+        .background(Color.textPrimaryForeground)
+    }
+    .environment(\.locale, .init(identifier: Previews.localeEN))
 }
