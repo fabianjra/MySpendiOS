@@ -20,13 +20,13 @@ struct TransactionView: View {
             HStack {
                 VStack(alignment: .leading) {
                     TextPlainLocalized(textLocalized: "greet \(viewModel.userName) \(Emojis.greeting.rawValue)",
-                                        table: LocalizableTable.transaction,
+                                        table: LocalizableTable.user,
                                         family: .semibold,
                                         size: .big,
                                         lineLimit: ConstantViews.singleTextMaxLines,
                                         truncateMode: .tail)
                     
-                    TextPlainLocalized(Localizable.Transaction.welcome,
+                    TextPlainLocalized(Localizable.User.welcome,
                                         family: .light,
                                         size: .small,
                                         lineLimit: ConstantViews.singleTextMaxLines)

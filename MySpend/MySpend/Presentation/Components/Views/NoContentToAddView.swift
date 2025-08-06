@@ -15,7 +15,7 @@ struct NoContentToAddView: View {
         VStack {
             HStack {
                 Spacer()
-                TextPlainLocalized(Localizable.View.empty,
+                TextPlainLocalized(Localizable.Data.empty,
                                    family: .semibold,
                                    size: .bigXL,
                                    aligment: .center)
@@ -23,7 +23,7 @@ struct NoContentToAddView: View {
                 Spacer()
             }
             
-            TextPlainLocalized(Localizable.View.empty_add_item,
+            TextPlainLocalized(Localizable.Data.empty_add_item,
                                size: .big,
                                aligment: .center,
                                lineLimit: ConstantViews.messageMaxLines)

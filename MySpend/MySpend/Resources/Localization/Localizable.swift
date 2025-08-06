@@ -15,12 +15,12 @@ struct LocalizableTable {
     // MARK: - Features
     
     static let onboarding = "Onboarding"
-    static let transaction = "Transaction"
-    
+
     
     // MARK: - Generic
     
-    static let view = "View"
+    static let user = "User"
+    static let data = "Data"
     static let button = "Button"
     static let enums = "Enums"
 }
@@ -57,19 +57,19 @@ struct Localizable {
         var table: String { LocalizableTable.onboarding }
     }
     
-    enum Transaction: String, LocalizableProtocol {
-        case welcome
-        
-        var table: String { LocalizableTable.transaction }
-    }
-    
     // MARK: - Generic
     
-    enum View: String, LocalizableProtocol {
+    enum User: String, LocalizableProtocol {
+        case welcome
+        
+        var table: String { LocalizableTable.user }
+    }
+    
+    enum Data: String, LocalizableProtocol {
         case empty
         case empty_add_item
         
-        var table: String { LocalizableTable.view }
+        var table: String { LocalizableTable.data }
     }
     
     enum Button: String, LocalizableProtocol {
