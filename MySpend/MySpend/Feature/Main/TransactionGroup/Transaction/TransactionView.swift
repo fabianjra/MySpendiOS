@@ -10,6 +10,8 @@ import SwiftUI
 struct TransactionView: View {
     
     @StateObject var viewModel = TransactionViewModel()
+    
+    @State var dateTimeInterval = UserDefaultsManager.dateTimeInterval
     @Binding var selectedDate: Date
     
     var body: some View {
@@ -42,7 +44,7 @@ struct TransactionView: View {
             VStack {
                 NavigationLink {
                     TransactionHistoryView(transactionsLoaded: $viewModel.transactions,
-                                           dateTimeInterval: $viewModel.dateTimeInterval,
+                                           dateTimeInterval: $dateTimeInterval,
                                            selectedDate: $selectedDate,
                                            isMutipleAccounts: $viewModel.isMutipleAccounts)
                     .toolbar(.hidden, for: .navigationBar)
@@ -62,13 +64,13 @@ struct TransactionView: View {
                     Spacer()
                 } else {
                     VStack {
-                        DateIntervalNavigatorView(dateTimeInterval: $viewModel.dateTimeInterval,
+                        DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval,
                                                   selectedDate: $selectedDate,
                                                   isEditing: .constant(false)){}
                         
                         let transactionsFiltered = UtilsTransactions.filteredTransactions(selectedDate,
                                                                                           transactions: viewModel.transactions,
-                                                                                          for: viewModel.dateTimeInterval)
+                                                                                          for: dateTimeInterval)
                         
                         let groupedTransactions = UtilsCurrency.calculateGroupedTransactions(transactionsFiltered)
                             .sorted(by: { $0.totalAmount > $1.totalAmount })

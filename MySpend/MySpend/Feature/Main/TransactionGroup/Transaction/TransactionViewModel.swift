@@ -10,7 +10,7 @@ import Combine
 class TransactionViewModel: BaseViewModel {
 
     @Published var userName = UserDefaultsManager.userName
-    @Published var dateTimeInterval = UserDefaultsManager.dateTimeInterval
+    //@Published var dateTimeInterval = UserDefaultsManager.dateTimeInterval
     
     @Published var transactions: [TransactionModel] = []
     @Published var groupedTransactions: UtilsCurrency.groupedTransactions = []
@@ -30,7 +30,7 @@ class TransactionViewModel: BaseViewModel {
         }
         
         startObserveUserDefaultsChanges { [weak self] in
-            self?.dateTimeInterval = UserDefaultsManager.dateTimeInterval
+            //self?.dateTimeInterval = UserDefaultsManager.dateTimeInterval //TODO: Pasar al view para actualizar el segment en caso de que cambie desde el UserDefaults de settings. Ahorita solamente carga el segment al inicio.
             self?.userName = UserDefaultsManager.userName
         }
         
