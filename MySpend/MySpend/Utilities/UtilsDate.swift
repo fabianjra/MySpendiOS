@@ -64,7 +64,6 @@ struct UtilsDate {
      - Returns: A `String` representing the language code of the current locale or the fallback `"en_US"`
      
      - Authors: Fabian Rodriguez
-     
      - Date: November 2024
      */
     private static var getLocaleCurrentCode: String {
@@ -88,7 +87,6 @@ struct UtilsDate {
      - Returns: A `Date.FormatStyle` configured with the user's preferred locale
      
      - Authors: Fabian Rodriguez
-     
      - Date: November 2024
      */
     public static var getDateFormatStyleLocale: Date.FormatStyle {
@@ -99,5 +97,35 @@ struct UtilsDate {
         //dateFormatStyle.capitalizationContext = .beginningOfSentence
         
         return dateFormatStyle
+    }
+    
+    /**
+     Normalizes a given date by adjusting its time depending on whether it is in the past or not.
+     - If the date is **before today** (ignoring hours/minutes/seconds), its time will be set to the **end of the day (23:59:59)**.
+     - If the date is **today or in the future**, the original time will be preserved.
+     
+     Esto se hace asi, porque si se agrega una transaccion en un dia anterior a hoy, debe qudar totalmente arriba ya que la fecha ya pasó y seria la ultima(s).
+     Si la transacción se agrega a futuro, entonces debe ser al inicio del dia y en la vista de `DateIntervalNavigatorView` ya se maneja la logica de set a 00:00:00
+     
+     - Parameters:
+        - date: The `Date` to normalize.
+     
+     - Returns: A normalized `Date` with adjusted time.
+     
+     - Authors: Fabian Rodriguez.
+     - Date: Sep 2025
+     */
+    static func normalizeTransactionDate(_ date: Date) -> Date {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date.now)
+        let transactionDay = calendar.startOfDay(for: date)
+        
+        if transactionDay < today {
+            // Date is in the past -> set to last second of the day (23:59:59)
+            return calendar.date(bySettingHour: 23, minute: 59, second: 59, of: date) ?? date
+        } else {
+            // Date is today or in the future -> keep as is
+            return date
+        }
     }
 }

@@ -80,6 +80,7 @@ class AddModifyTransactionViewModel: BaseViewModel {
         
         var modelMutated = model
         modelMutated.amount = amountString.convertAmountToDecimal
+        modelMutated.dateTransaction = UtilsDate.normalizeTransactionDate(model.dateTransaction)
         
         do {
             try await TransactionManager(viewContext).create(modelMutated)
