@@ -5,7 +5,7 @@
 //  Created by Fabian Rodriguez on 27/7/25.
 //
 
-import SwiftUICore
+import SwiftUI
 
 struct LocalizableTable {
     
