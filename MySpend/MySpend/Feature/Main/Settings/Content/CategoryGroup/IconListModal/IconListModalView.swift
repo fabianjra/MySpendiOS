@@ -48,19 +48,21 @@ struct IconListModalView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .destructiveAction) {
-                    Button {
+                    Button(role: .close) {
                         showModal = false
-                    } label: {
-                        Image.xmarkCircle
-                            .resizable()
-                            .frame(width: FrameSize.width.headerButton,
-                                   height: FrameSize.height.headerButton)
-                            .font(.montserrat(size: .bigXXL))
-                            .foregroundColor(Color.textPrimaryForeground)
-                            .fontWeight(.ultraLight)
                     }
-                    .padding()
-                    .padding(.top)
+                    
+//                    Button {
+//                        showModal = false
+//                    } label: {
+//                        Image.xmarkCircle
+//                            .resizable()
+//                            .frame(width: FrameSize.width.headerButton,
+//                                   height: FrameSize.height.headerButton)
+//                            .font(.montserrat(size: .bigXXL))
+//                            .foregroundColor(Color.textPrimaryForeground)
+//                            .fontWeight(.ultraLight)
+//                    }
                 }
             }
             .toolbarBackground(.hidden, for: .navigationBar)
@@ -76,7 +78,7 @@ struct IconListModalView: View {
             )
         }
         .presentationDragIndicator(.visible)
-        .presentationCornerRadius(ConstantRadius.cornersModal)
+        //.presentationCornerRadius(ConstantRadius.cornersModal)
         .presentationDetents([.large])
     }
 }
