@@ -19,9 +19,9 @@ struct ListContainer<Content: View>: View {
         List(content: content)
             .font(.montserrat())
             .foregroundColor(Color.listRowForeground)
-            .listStyle(.insetGrouped)
+            //.listStyle(.insetGrouped) //Coomentend for: iOS26
             .scrollContentBackground(.hidden)
-            .contentMargins(.top, ConstantViews.mediumSpacing)
+            //.contentMargins(.top, ConstantViews.mediumSpacing) //Coomentend for: iOS26
     }
 }
 

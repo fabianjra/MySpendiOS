@@ -47,7 +47,7 @@ struct TransactionView: View {
                                            dateTimeInterval: $dateTimeInterval,
                                            selectedDate: $selectedDate,
                                            isMutipleAccounts: $viewModel.isMutipleAccounts)
-                    .toolbar(.hidden, for: .navigationBar)
+                    .toolbar(.hidden, for: .navigationBar) //TODO: Quitar el navegador.
                 } label: {
                     TextButtonHorizontalStyled(Localizable.Button.history.key,
                                                subTitle: Localizable.Button.history_subtitle.key,
