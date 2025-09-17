@@ -217,6 +217,9 @@ playground.xcworkspace
 #tm_build_errors
 
 #Ignore firebase API Key string connection:
+**/GoogleService-Info.plist
+MySpend/MySpend/GoogleService-Info.plist
+MySpend/GoogleService-Info.plist
 GoogleService-Info.plist
 
 #################################################################################
