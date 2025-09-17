@@ -27,14 +27,12 @@ struct DatePickerModalView: View {
                     }
                     
                     ToolbarItem(placement: .confirmationAction) {
-                        Button("Done") {
+                        Button(role: .close) {
                             showModal = false
                         }
                     }
                 }
         }
-        .presentationDragIndicator(.visible)
-        //.presentationCornerRadius(ConstantRadius.cornersModal)
         //.presentationDetents([.height(FrameSize.height.calendar)])
         .presentationDetents([.medium])
     }

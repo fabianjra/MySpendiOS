@@ -99,7 +99,6 @@ struct SelectAccountModalView: View {
             viewModel.deactivateObservers()
         }
         .presentationDetents([.large])
-        .presentationCornerRadius(ConstantRadius.cornersModal)
     }
     
     private func sortButton(for sortingOption: SortAccounts) -> some View {

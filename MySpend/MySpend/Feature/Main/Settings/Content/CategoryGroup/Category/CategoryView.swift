@@ -57,12 +57,10 @@ struct CategoryView: View {
         .sheet(isPresented: $showNewItemModal) {
             AddModifyCategoryView(categoryType: $modelType)
                 .presentationDetents([.large])
-                .presentationCornerRadius(ConstantRadius.cornersModal)
         }
         .sheet(item: $modelToModify) { model in
             AddModifyCategoryView(model, categoryType: $modelType)
                 .presentationDetents([.large])
-                .presentationCornerRadius(ConstantRadius.cornersModal)
                 .onDisappear {
                     modelToModify = nil
                 }

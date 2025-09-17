@@ -58,12 +58,10 @@ struct AccountView: View {
         .sheet(isPresented: $showNewItemModal) {
             AddModifyAccountView(accountType: $modelType)
                 .presentationDetents([.large])
-                .presentationCornerRadius(ConstantRadius.cornersModal)
         }
         .sheet(item: $modelToModify) { model in
             AddModifyAccountView(model, accountType: $modelType)
                 .presentationDetents([.large])
-                .presentationCornerRadius(ConstantRadius.cornersModal)
                 .onDisappear {
                     modelToModify = nil
                 }

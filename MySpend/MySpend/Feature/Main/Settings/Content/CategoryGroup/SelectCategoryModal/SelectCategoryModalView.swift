@@ -125,10 +125,8 @@ struct SelectCategoryModalView: View {
                                   isSelectionMode: true,
                                   isNewModelAdded: $isNewModelAdded)
             .presentationDetents([.large])
-            .presentationCornerRadius(ConstantRadius.cornersModal)
         }
         .presentationDetents([.large])
-        .presentationCornerRadius(ConstantRadius.cornersModal)
     }
     
     private func sortButton(for sortingOption: SortCategories) -> some View {

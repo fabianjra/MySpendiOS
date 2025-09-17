@@ -50,35 +50,10 @@ struct IconListModalView: View {
                 ToolbarItem(placement: .destructiveAction) {
                     Button(role: .close) {
                         showModal = false
-                    }
-                    
-//                    Button {
-//                        showModal = false
-//                    } label: {
-//                        Image.xmarkCircle
-//                            .resizable()
-//                            .frame(width: FrameSize.width.headerButton,
-//                                   height: FrameSize.height.headerButton)
-//                            .font(.montserrat(size: .bigXXL))
-//                            .foregroundColor(Color.textPrimaryForeground)
-//                            .fontWeight(.ultraLight)
-//                    }
-                }
+                    }                }
             }
-            .toolbarBackground(.hidden, for: .navigationBar)
-            .overlay(
-                Rectangle()
-                    .fill(Color.backgroundFormDark)
-                    .frame(height: ConstantFrames.toolbarNavigationBarHeight)
-                    .edgesIgnoringSafeArea(.top)
-                    .shadow(color: Color.backgroundFormDark.opacity(ConstantColors.opacityToolbarNavigationBar),
-                            radius: ConstantRadius.shadow,
-                            y: ConstantRadius.shadowToolbarNavigationBarY)
-                , alignment: .top
-            )
+            .navigationTitle("Select icon")
         }
-        .presentationDragIndicator(.visible)
-        //.presentationCornerRadius(ConstantRadius.cornersModal)
         .presentationDetents([.large])
     }
 }
