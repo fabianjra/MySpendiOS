@@ -18,27 +18,25 @@ struct DatePickerModalView: View {
                 .datePickerStyle(.graphical)
                 .frame(width: FrameSize.width.calendar, height: FrameSize.width.calendar)
                 .scaleEffect(ConstantViews.calendarScale)
+                .padding(.bottom, 70)
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction) {
                         Button("Today") {
                             selectedDate = .now
                         }
-                        .padding()
-                        .padding(.top)
                     }
                     
                     ToolbarItem(placement: .confirmationAction) {
                         Button("Done") {
                             showModal = false
                         }
-                        .padding()
-                        .padding(.top)
                     }
                 }
         }
         .presentationDragIndicator(.visible)
-        .presentationCornerRadius(ConstantRadius.cornersModal)
-        .presentationDetents([.height(FrameSize.height.calendar)])
+        //.presentationCornerRadius(ConstantRadius.cornersModal)
+        //.presentationDetents([.height(FrameSize.height.calendar)])
+        .presentationDetents([.medium])
     }
 }
 
