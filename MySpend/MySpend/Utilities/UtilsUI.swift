@@ -36,7 +36,12 @@ struct UtilsUI {
             return .unknown
         }
         
-        return firstWindow.windowScene?.interfaceOrientation ?? .unknown
+        // Prefer effectiveGeometry.interfaceOrientation on iOS 26+, fallback otherwise
+        if #available(iOS 26.0, *) {
+            return firstWindow.windowScene?.effectiveGeometry.interfaceOrientation ?? .unknown
+        } else {
+            return firstWindow.windowScene?.interfaceOrientation ?? .unknown
+        }
     }
     
     /**

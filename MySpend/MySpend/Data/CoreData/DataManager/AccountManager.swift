@@ -44,14 +44,13 @@ struct AccountManager {
     // MARK: READ
 
     func fetchAll(predicateFormat: String = predicate.byIsActive,
-                  predicateArgs: [Any] = [true],
-                  sortedBy: [NSSortDescriptor] = [NSSortDescriptor(keyPath: \Account.dateCreated, ascending: true)]) async throws -> [AccountModel] {
+                  predicateArgs: [Any] = [true]) async throws -> [AccountModel] {
         
         try await viewContext.perform {
             let entities = try CoreDataUtilities.fetchAll(Account.self,
                                                           predicateFormat: predicateFormat,
                                                           predicateArgs: predicateArgs,
-                                                          sortedBy: sortedBy,
+                                                          sortedBy: [NSSortDescriptor(keyPath: \Account.dateCreated, ascending: true)],
                                                           viewContext: viewContext)
             return entities.map { AccountModel($0) }
         }

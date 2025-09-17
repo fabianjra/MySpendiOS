@@ -10,7 +10,7 @@ import UIKit
 public struct ConstantFrames {
     static let textFieldHeight: CGFloat = 50.0
     static let dividerHeight: CGFloat = 0.5
-    static let screenSize = UIScreen.main.bounds.size
+    //static let screenSize = UIScreen.main.bounds.size //DEPRECATED
     static let tabViewHeight: CGFloat = 75.0
     static let toolbarNavigationBarHeight: CGFloat = 55.0
     

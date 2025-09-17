@@ -64,14 +64,13 @@ struct CategoryManager {
      - Date: Jul 2025
      */
     func fetchAll(predicateFormat: String = predicate.byIsActive,
-                  predicateArgs: [Any] = [true],
-                  sortedBy: [NSSortDescriptor] = [NSSortDescriptor(keyPath: \Category.name, ascending: true)]) async throws -> [CategoryModel] {
+                  predicateArgs: [Any] = [true]) async throws -> [CategoryModel] {
         
         try await viewContext.perform {
             let entities = try CoreDataUtilities.fetchAll(Category.self,
                                                           predicateFormat: predicateFormat,
                                                           predicateArgs: predicateArgs,
-                                                          sortedBy: sortedBy,
+                                                          sortedBy: [NSSortDescriptor(keyPath: \Category.name, ascending: true)],
                                                           viewContext: viewContext)
             return entities.map { CategoryModel($0) }
         }
