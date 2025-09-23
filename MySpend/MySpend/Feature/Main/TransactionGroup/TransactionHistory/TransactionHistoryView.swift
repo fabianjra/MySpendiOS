@@ -43,6 +43,7 @@ struct TransactionHistoryView: View {
                 } label: {
                     Label("Add Item", systemImage: "plus")
                 }
+                .disabled(viewModel.isEditing)
             }
         }
         .sheet(isPresented: $showNewItemModal) {
