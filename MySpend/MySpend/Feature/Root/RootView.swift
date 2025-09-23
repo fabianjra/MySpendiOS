@@ -33,7 +33,7 @@ struct RootView: View {
                     TabViewMain().toolbar(.hidden, for: .navigationBar)
                     
                 case .onBoardingName:
-                    OnBoardingAccountView().toolbar(.hidden, for: .navigationBar)
+                    OnBoardingUsernameView()
                     
                 case .onBoardinAccount:
                     OnBoardingAccountView().toolbar(.hidden, for: .navigationBar)

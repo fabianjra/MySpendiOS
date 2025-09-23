@@ -14,16 +14,7 @@ struct ChangeNameView: View {
     
     var body: some View {
         FormContainer {
-            
-            // MARK: HEADER
-            HeaderNavigator(title: "Change name",
-                            titleWeight: .regular,
-                            titleSize: .bigXL,
-                            subTitle: "Fill the name space",
-                            subTitleWeight: .regular)
-            .padding(.bottom)
-            
-            
+
             // MARK: FIELDS
             VStack(spacing: ConstantViews.formSpacing) {
                 
@@ -41,7 +32,7 @@ struct ChangeNameView: View {
                 }
                 
                 
-                Button("Change name") {
+                Button("Confirm") {
                         viewModel.changeUserName()
                 }
                 .buttonStyle(ButtonPrimaryStyle())
@@ -51,6 +42,7 @@ struct ChangeNameView: View {
                 TextError(viewModel.errorMessage)
             }
         }
+        .navigationTitle("Change name")
         .onAppear {
             focusedField = .newUsername
             viewModel.onAppear()
@@ -59,5 +51,7 @@ struct ChangeNameView: View {
 }
 
 #Preview {
-    ChangeNameView()
+    NavigationStack {
+        ChangeNameView()
+    }
 }

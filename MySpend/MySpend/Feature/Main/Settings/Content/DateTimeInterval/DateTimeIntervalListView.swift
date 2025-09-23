@@ -13,13 +13,6 @@ struct DateTimeIntervalListView: View {
     
     var body: some View {
         ContentContainer(addPading: false) {
-            
-            HeaderNavigator(title: "Time interval list",
-                            titleSize: .bigXL,
-                            subTitle: "Select the default time interval")
-            .padding(.bottom)
-            
-            
             VStack {
                 ListContainer {
                     SectionContainer("Intervals", isInsideList: true) {
@@ -53,12 +46,15 @@ struct DateTimeIntervalListView: View {
                 }
             }
         }
+        .navigationTitle("Time interval list")
     }
 }
 
 #Preview(Previews.localeES) {
-    DateTimeIntervalListView()
-        .environment(\.locale, .init(identifier: Previews.localeES))
+    NavigationStack {
+        DateTimeIntervalListView()
+            .environment(\.locale, .init(identifier: Previews.localeES))
+    }
 }
 
 #Preview(Previews.localeEN) {

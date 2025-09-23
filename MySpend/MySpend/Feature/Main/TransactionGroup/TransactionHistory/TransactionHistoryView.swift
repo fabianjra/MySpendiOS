@@ -23,17 +23,6 @@ struct TransactionHistoryView: View {
     var body: some View {
         ContentContainer {
             
-            HeaderNavigator(title: "History",
-                            titleWeight: .regular,
-                            titleSize: .bigXL,
-                            showTrailingAction: true,
-                            disabledTrailingAction: viewModel.isEditing,
-                            trailingImage: Image.plus,
-                            trailingAction: {
-                showNewItemModal = true
-            })
-            .padding(.bottom)
-            
             ZStack {
                 if transactionsLoaded.isEmpty {
                     emptyView
@@ -44,6 +33,17 @@ struct TransactionHistoryView: View {
             
             
             TextError(viewModel.errorMessage)
+        }
+        .navigationTitle("History")
+        .navigationBarTitleDisplayMode(.inline) //TODO: CAMBIAR: El navegador de fechas va a ir abajo, entonces va a ponerse el titulo en grande al bajar.
+        .toolbar {
+            ToolbarItemGroup(placement: .navigationBarTrailing) {
+                Button {
+                    showNewItemModal = true
+                } label: {
+                    Label("Add Item", systemImage: "plus")
+                }
+            }
         }
         .sheet(isPresented: $showNewItemModal) {
             AddModifyTransactionView(selectedDate: selectedDate)
@@ -311,4 +311,11 @@ private struct TransactionPreviewWrapper: View {
 #Preview("Empty en_US_POSIX") {
     TransactionPreviewWrapper()
         .environment(\.locale, .init(identifier: "en_US_POSIX"))
+}
+
+#Preview("Navigation es_CR") {
+    NavigationStack {
+        TransactionPreviewWrapper(.normal)
+            .environment(\.locale, .init(identifier: "es_CR"))
+    }
 }

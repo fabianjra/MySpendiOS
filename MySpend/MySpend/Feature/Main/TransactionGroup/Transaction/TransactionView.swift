@@ -47,7 +47,6 @@ struct TransactionView: View {
                                            dateTimeInterval: $dateTimeInterval,
                                            selectedDate: $selectedDate,
                                            isMutipleAccounts: $viewModel.isMutipleAccounts)
-                    .toolbar(.hidden, for: .navigationBar) //TODO: Quitar el navegador.
                 } label: {
                     TextButtonHorizontalStyled(Localizable.Button.history.key,
                                                subTitle: Localizable.Button.history_subtitle.key,
@@ -138,4 +137,21 @@ private struct previewWrapper: View {
 #Preview("Empty \(Previews.localeES_ES)") {
     previewWrapper(.empty)
         .environment(\.locale, .init(identifier: Previews.localeES_ES))
+}
+
+
+private struct previewWrapperRoot: View {
+    init(_ mockDataType: MockDataType = .normal, showOnBoarding: Bool = false) {
+        CoreDataUtilities.shared.mockDataType = mockDataType
+        
+        UserDefaultsManager.userDefaults = .preview
+        // Configuracion correcta para usar @AppStorage con preview:
+        UserDefaultsManager.userDefaults.set(showOnBoarding, forKey: UserDefaultsKeys.isOnBoarding.rawValue)
+    }
+    var body: some View { RootView() }
+}
+
+#Preview("Navigation \(Previews.localeES_CR)") {
+    previewWrapperRoot()
+        .environment(\.locale, .init(identifier: Previews.localeES_CR))
 }

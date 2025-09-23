@@ -19,30 +19,15 @@ struct AccountView: View {
     
     var body: some View {
         ContentContainer(addPading: false) {
-            
-            HeaderNavigator(title: "Accounts",
-                            titleWeight: .regular,
-                            titleSize: .bigXL,
-                            subTitle: "Select or add accounts",
-                            subTitleWeight: .regular)
-            .padding(.bottom)
-            
-            
+
             if !viewModel.models.isEmpty {
                 topMenu
+                    .padding(.top)
             }
             
             
             ZStack(alignment: .bottomTrailing) {
-                
                 itemList
-                
-                ButtonRounded {
-                    showNewItemModal = true
-                }
-                .disabled(viewModel.isEditing)
-                .padding(.trailing, ConstantViews.paddingButtonAddCategory)
-                .padding(.bottom, ConstantViews.paddingButtonAddCategory)
             }
             
             TextError(viewModel.errorMessage)
@@ -53,6 +38,18 @@ struct AccountView: View {
         .onDisappear {
             viewModel.deactivateObservers()
         }
+        .navigationTitle("Accounts")
+        .toolbar {
+            ToolbarItemGroup(placement: .navigationBarTrailing) {
+                Button {
+                    showNewItemModal = true
+                } label: {
+                    Label("Add Item", systemImage: "plus")
+                }
+                .disabled(viewModel.isEditing)
+            }
+        }
+        
         // Siempre con bordes pero hace mas lento la activacion del sheet:
         //.sheet(isPresented: $showNewItemModal, onDismiss:{ UtilsUI.actionDelayed{ isSheetOpen = false }}) {
         .sheet(isPresented: $showNewItemModal) {
@@ -285,8 +282,10 @@ private struct previewWrapper: View {
 }
 
 #Preview("Normal es_CR") {
-    previewWrapper()
-        .environment(\.locale, .init(identifier: "es_CR"))
+    NavigationStack {
+        previewWrapper()
+            .environment(\.locale, .init(identifier: "es_CR"))
+    }
 }
 
 #Preview("Saturated es_ES") {

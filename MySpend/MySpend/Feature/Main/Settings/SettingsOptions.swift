@@ -51,9 +51,8 @@ enum AccountOptions: String, CaseIterable, Identifiable {
     @ViewBuilder
     var view: some View {
         switch self {
-        //"for: .navigationBar" is disabling the navigator to navigate the next View.
-        case .changeName: ChangeNameView().toolbar(.hidden, for: .navigationBar)
-        case .validateAccount: ValidateAccountView().toolbar(.hidden, for: .navigationBar)
+        case .changeName: ChangeNameView()
+        case .validateAccount: ValidateAccountView()
         }
     }
 }
@@ -89,11 +88,10 @@ enum ContentOptions: String, CaseIterable, Identifiable {
     @ViewBuilder
     var view: some View {
         switch self {
-        //"for: .navigationBar" is disabling the navigator to navigate the next View.
-        case .accounts: AccountView().toolbar(.hidden, for: .navigationBar)
-        case .categories: CategoryView().toolbar(.hidden, for: .navigationBar)
-        case .currencySymbol: CurrencyListView().toolbar(.hidden, for: .navigationBar)
-        case .dateTimeInterval: DateTimeIntervalListView().toolbar(.hidden, for: .navigationBar)
+        case .accounts: AccountView()
+        case .categories: CategoryView()
+        case .currencySymbol: CurrencyListView()
+        case .dateTimeInterval: DateTimeIntervalListView()
         }
     }
 }

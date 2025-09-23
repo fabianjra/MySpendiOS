@@ -13,13 +13,9 @@ struct CurrencyListView: View {
     
     var body: some View {
         ContentContainer(addPading: false) {
-            
-            HeaderNavigator(title: "Currency list",
-                            subTitle: "Select the currency to show")
-            .padding(.bottom)
-            
 
             PickerView(selection: $viewModel.currencySymbolType)
+                .padding(.top)
                 .padding(.horizontal)
 
             ListContainer {
@@ -39,6 +35,7 @@ struct CurrencyListView: View {
                 }
             }
         }
+        .navigationTitle("Currency list")
         .onAppear {
             viewModel.fetchCurrencyList()
         }
@@ -71,5 +68,7 @@ struct CurrencyListView: View {
 }
 
 #Preview {
-    CurrencyListView()
+    NavigationStack {
+        CurrencyListView()
+    }
 }

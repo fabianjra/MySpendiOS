@@ -21,16 +21,9 @@ struct CategoryView: View {
     var body: some View {
         ContentContainer(addPading: false) {
             
-            HeaderNavigator(title: "Categories",
-                            titleWeight: .regular,
-                            titleSize: .bigXL,
-                            subTitle: "Select or add categories",
-                            subTitleWeight: .regular)
-            .padding(.bottom)
-            
-            
             if !viewModel.categories.isEmpty {
                 topMenu
+                    .padding(.top)
             }
             
             
@@ -38,16 +31,28 @@ struct CategoryView: View {
                 
                 categoryList
                 
-                ButtonRounded {
-                    showNewItemModal = true
-                }
-                .disabled(viewModel.isEditing)
-                .padding(.trailing, ConstantViews.paddingButtonAddCategory)
-                .padding(.bottom, ConstantViews.paddingButtonAddCategory)
+//                ButtonRounded {
+//                    showNewItemModal = true
+//                }
+//                .disabled(viewModel.isEditing)
+//                .padding(.trailing, ConstantViews.paddingButtonAddCategory)
+//                .padding(.bottom, ConstantViews.paddingButtonAddCategory)
             }
             
             TextError(viewModel.errorMessage)
         }
+        .navigationTitle("Categories")
+        .toolbar {
+            ToolbarItemGroup(placement: .navigationBarTrailing) {
+                Button {
+                    showNewItemModal = true
+                } label: {
+                    Label("Add Item", systemImage: "plus")
+                }
+                .disabled(viewModel.isEditing)
+            }
+        }
+        
         .task {
             await viewModel.activateObservers()
         }
@@ -254,8 +259,10 @@ private struct previewWrapper: View {
 }
 
 #Preview("Normal es_CR") {
-    previewWrapper()
-        .environment(\.locale, .init(identifier: "es_CR"))
+    NavigationStack {
+        previewWrapper()
+            .environment(\.locale, .init(identifier: "es_CR"))
+    }
 }
 
 #Preview("Saturated en_US") {

@@ -14,12 +14,6 @@ struct ValidateAccountView: View {
     var body: some View {
         FormContainer {
             
-            // MARK: HEADER
-            HeaderNavigator(title: "Validate account",
-                            titleWeight: .regular,
-                            titleSize: .bigXL)
-            .padding(.bottom)
-            
             if viewModel.userIsValidated {
                 
                 // MARK: PLAIN SCREEN
@@ -33,6 +27,7 @@ struct ValidateAccountView: View {
             }
         }
         //.disabled(viewModel.isLoading)
+        .navigationTitle("Validate account")
         .onAppear {
             Task {
                 await viewModel.onAppear()
@@ -101,5 +96,7 @@ struct ValidateAccountView: View {
 }
 
 #Preview {
-    ValidateAccountView()
+    NavigationStack {
+        ValidateAccountView()
+    }
 }
