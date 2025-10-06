@@ -8,11 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1FB12A1A2E05044600FF8AA0 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 1FB12A192E05044600FF8AA0 /* FirebaseAnalytics */; };
-		1FB12A1C2E05044600FF8AA0 /* FirebaseAuthCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 1FB12A1B2E05044600FF8AA0 /* FirebaseAuthCombine-Community */; };
 		1FB12A1E2E05044600FF8AA0 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 1FB12A1D2E05044600FF8AA0 /* FirebaseCrashlytics */; };
-		1FB12A202E05044600FF8AA0 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 1FB12A1F2E05044600FF8AA0 /* FirebaseFirestore */; };
-		1FB12A222E05044600FF8AA0 /* FirebaseFirestoreCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 1FB12A212E05044600FF8AA0 /* FirebaseFirestoreCombine-Community */; };
-		1FB12A242E05044600FF8AA0 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 1FB12A232E05044600FF8AA0 /* FirebaseStorage */; };
 		1FB12A2F2E0507A400FF8AA0 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 1FB12A2E2E0507A400FF8AA0 /* README.md */; };
 /* End PBXBuildFile section */
 
@@ -77,11 +73,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1FB12A1E2E05044600FF8AA0 /* FirebaseCrashlytics in Frameworks */,
-				1FB12A202E05044600FF8AA0 /* FirebaseFirestore in Frameworks */,
 				1FB12A1A2E05044600FF8AA0 /* FirebaseAnalytics in Frameworks */,
-				1FB12A222E05044600FF8AA0 /* FirebaseFirestoreCombine-Community in Frameworks */,
-				1FB12A1C2E05044600FF8AA0 /* FirebaseAuthCombine-Community in Frameworks */,
-				1FB12A242E05044600FF8AA0 /* FirebaseStorage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -145,11 +137,7 @@
 			name = MySpend;
 			packageProductDependencies = (
 				1FB12A192E05044600FF8AA0 /* FirebaseAnalytics */,
-				1FB12A1B2E05044600FF8AA0 /* FirebaseAuthCombine-Community */,
 				1FB12A1D2E05044600FF8AA0 /* FirebaseCrashlytics */,
-				1FB12A1F2E05044600FF8AA0 /* FirebaseFirestore */,
-				1FB12A212E05044600FF8AA0 /* FirebaseFirestoreCombine-Community */,
-				1FB12A232E05044600FF8AA0 /* FirebaseStorage */,
 			);
 			productName = MySpend;
 			productReference = 1F85818B2DEFF40E00CDEE4B /* MySpend.app */;
@@ -669,30 +657,10 @@
 			package = 1FB12A182E05044600FF8AA0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAnalytics;
 		};
-		1FB12A1B2E05044600FF8AA0 /* FirebaseAuthCombine-Community */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 1FB12A182E05044600FF8AA0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = "FirebaseAuthCombine-Community";
-		};
 		1FB12A1D2E05044600FF8AA0 /* FirebaseCrashlytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 1FB12A182E05044600FF8AA0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseCrashlytics;
-		};
-		1FB12A1F2E05044600FF8AA0 /* FirebaseFirestore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 1FB12A182E05044600FF8AA0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseFirestore;
-		};
-		1FB12A212E05044600FF8AA0 /* FirebaseFirestoreCombine-Community */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 1FB12A182E05044600FF8AA0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = "FirebaseFirestoreCombine-Community";
-		};
-		1FB12A232E05044600FF8AA0 /* FirebaseStorage */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 1FB12A182E05044600FF8AA0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseStorage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
