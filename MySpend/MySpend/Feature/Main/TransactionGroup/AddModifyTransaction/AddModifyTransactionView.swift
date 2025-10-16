@@ -169,7 +169,7 @@ struct AddModifyTransactionView: View {
                         SelectAccountModalView(selectedModel: $viewModel.model.account)
                     }
                 }
-                .safeAreaInset(edge: .bottom) { } // Para agregar objetos flotantes al pie de la pantalla.
+                //.safeAreaInset(edge: .bottom) { } // Para agregar objetos flotantes al pie de la pantalla.
             }
             .navigationTitle(viewModel.isNewModel ? "New transaction" : "Modify transaction")
             //.navigationSubtitle(viewModel.isNewModel ? "Enter transation details" : "Modify transaction details")
