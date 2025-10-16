@@ -27,7 +27,7 @@ struct DatePickerModalView: View {
                     }
                     
                     ToolbarItem(placement: .confirmationAction) {
-                        Button(role: .close) {
+                        Button(role: .confirm) {
                             showModal = false
                         }
                     }
