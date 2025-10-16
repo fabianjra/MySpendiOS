@@ -73,8 +73,8 @@ public enum FrameSize {
     
     var calendar: CGFloat {
         switch self {
-        case .width: return 320.0
-        case .height: return 440.0
+        case .width: return 400.0
+        case .height: return 500.0
         }
     }
 

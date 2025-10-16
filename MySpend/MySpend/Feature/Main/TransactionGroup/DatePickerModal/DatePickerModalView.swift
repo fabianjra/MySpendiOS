@@ -14,24 +14,25 @@ struct DatePickerModalView: View {
     
     var body: some View {
         NavigationStack {
-            DatePicker("", selection: $selectedDate, displayedComponents: .date)
-                .datePickerStyle(.graphical)
-                .frame(width: FrameSize.width.calendar, height: FrameSize.width.calendar)
-                .scaleEffect(ConstantViews.calendarScale)
-                .padding(.bottom, 70)
-                .toolbar {
-                    ToolbarItem(placement: .cancellationAction) {
-                        Button("Today") {
-                            selectedDate = .now
+            VStack {
+                DatePicker("", selection: $selectedDate, displayedComponents: .date)
+                    .datePickerStyle(.graphical)
+                    .frame(width: FrameSize.width.calendar, height: FrameSize.width.calendar)
+                    //.scaleEffect(ConstantViews.calendarScale)
+                    .toolbar {
+                        ToolbarItem(placement: .cancellationAction) {
+                            Button("Today") {
+                                selectedDate = .now
+                            }
+                        }
+                        
+                        ToolbarItem(placement: .confirmationAction) {
+                            Button(role: .confirm) {
+                                showModal = false
+                            }
                         }
                     }
-                    
-                    ToolbarItem(placement: .confirmationAction) {
-                        Button(role: .confirm) {
-                            showModal = false
-                        }
-                    }
-                }
+            }
         }
         //.presentationDetents([.height(FrameSize.height.calendar)])
         .presentationDetents([.medium])
