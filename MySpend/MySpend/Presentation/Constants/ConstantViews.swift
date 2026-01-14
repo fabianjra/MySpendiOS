@@ -37,7 +37,7 @@ struct ConstantViews {
     static let paddingTabViewHorizontal: CGFloat = 60.0
     static let paddingButtonRoundedBottom: CGFloat = 60.0
     static let paddingButtonRoundedBottomForCurvedTabview: CGFloat = 50.0
-    static let paddingBottomResumeview: CGFloat = 110.0
+    static let paddingBottomResumeview: CGFloat = 30.0
     static let paddingButtonAddCategory: CGFloat = 20.0
     static let paddingLoaderView: CGFloat = 50.0
     

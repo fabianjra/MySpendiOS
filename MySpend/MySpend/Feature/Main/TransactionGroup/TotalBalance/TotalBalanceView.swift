@@ -14,7 +14,6 @@ struct TotalBalanceView: View {
     
     var showDivider: Bool = true
     var showTotalBalance: Bool = true
-    var addBottomSpacing: Bool = true
 
     var body: some View {
         VStack {
@@ -48,7 +47,6 @@ struct TotalBalanceView: View {
                 }
             }
         }
-        .padding(.bottom, addBottomSpacing ? ConstantViews.paddingBottomResumeview : .zero)
         .onAppear {
             viewModel.calculateTotalBalance(transactions)
         }
@@ -62,7 +60,7 @@ struct TotalBalanceView: View {
     VStack {
         TotalBalanceView(transactions: [])
         
-        TotalBalanceView(transactions: [], showTotalBalance: false, addBottomSpacing: false)
+        TotalBalanceView(transactions: [], showTotalBalance: false)
     }
     .background(Color.backgroundBottom)
     .environment(\.locale, .init(identifier: Previews.localeES))
@@ -72,7 +70,7 @@ struct TotalBalanceView: View {
     VStack {
         TotalBalanceView(transactions: [])
         
-        TotalBalanceView(transactions: [], showTotalBalance: false, addBottomSpacing: false)
+        TotalBalanceView(transactions: [], showTotalBalance: false)
     }
     .background(Color.backgroundBottom)
     .environment(\.locale, .init(identifier: Previews.localeEN))

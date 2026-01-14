@@ -91,6 +91,7 @@ struct TransactionView: View {
                         TextError(viewModel.errorMessage)
                         
                         TotalBalanceView(transactions: transactionsFiltered)
+                            .padding(.bottom, ConstantViews.paddingBottomResumeview)
                         
                         //TODO: Aplicar wheel de accounts
 //                        if viewModel.showAccountFilter {
