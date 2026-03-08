@@ -64,17 +64,6 @@ struct AddModifyTransactionView: View {
                             VStack {
                                 TextFieldAmount(text: $viewModel.amountString)
                                     .focused($focusedField, equals: .amount)
-                                    .toolbar {
-                                        if focusedField == .amount {
-                                            ToolbarItemGroup(placement: .keyboard) {
-                                                Spacer()
-                                                
-                                                Button("Done") {
-                                                    focusedField = .none
-                                                }
-                                            }
-                                        }
-                                    }
                                 
                                 
                                 TextFieldReadOnlySelectable(placeHolder: "Category",
@@ -108,28 +97,7 @@ struct AddModifyTransactionView: View {
                             }
                             
                             
-                            // MARK: BUTTONS
-                            VStack {
-                                Button(viewModel.isNewModel ? "Add" : "Modify") {
-                                    process(viewModel.isNewModel ? .add : .modify)
-                                }
-                                .buttonStyle(ButtonPrimaryStyle())
-                                
-                                if viewModel.isNewModel == false {
-                                    Button("Delete") {
-                                        viewModel.showAlert = true
-                                    }
-                                    .buttonStyle(ButtonLinkStyle(color: Color.alert, fontfamily: .semibold))
-                                    .alert("Delete transaction", isPresented: $viewModel.showAlert) {
-                                        Button("Delete", role: .destructive) { process(.delete) }
-                                        Button("Cancel", role: .cancel) { }
-                                    } message: {
-                                        Text("Want to delete this transaction? \n This action cannot be undone.")
-                                    }
-                                }
-                                
-                                TextError(viewModel.errorMessage)
-                            }
+                            TextError(viewModel.errorMessage)
                         }
                         .disabled(viewModel.disabled)
                         
@@ -169,7 +137,30 @@ struct AddModifyTransactionView: View {
                         SelectAccountModalView(selectedModel: $viewModel.model.account)
                     }
                 }
-                //.safeAreaInset(edge: .bottom) { } // Para agregar objetos flotantes al pie de la pantalla.
+                .safeAreaInset(edge: .bottom) {
+                    VStack {
+                        Button(viewModel.isNewModel ? "Add" : "Modify") {
+                            process(viewModel.isNewModel ? .add : .modify)
+                        }
+                        .buttonStyle(ButtonPrimaryStyle())
+                        .padding(.bottom, viewModel.isNewModel ? nil : .zero)
+                        
+                        if viewModel.isNewModel == false {
+                            Button("Delete") {
+                                viewModel.showAlert = true
+                            }
+                            .buttonStyle(ButtonLinkStyle(color: Color.alert, fontfamily: .semibold))
+                            .alert("Delete transaction", isPresented: $viewModel.showAlert) {
+                                Button("Delete", role: .destructive) { process(.delete) }
+                                Button("Cancel", role: .cancel) { }
+                            } message: {
+                                Text("Want to delete this transaction? \n This action cannot be undone.")
+                            }
+                        }
+                    }
+                    .padding(.horizontal)
+                    
+                } // Para agregar objetos flotantes al pie de la pantalla.
             }
             .navigationTitle(viewModel.isNewModel ? "New transaction" : "Modify transaction")
             //.navigationSubtitle(viewModel.isNewModel ? "Enter transation details" : "Modify transaction details")
