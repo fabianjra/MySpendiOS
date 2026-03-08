@@ -53,7 +53,7 @@ struct AddModifyTransactionView: View {
                                                   iconLeading: Image.calendar,
                                                   colorDisabled: false)
                                 .onTapGesture {
-                                    focusedField = .none
+                                    //focusedField = .none
                                     showDatePicker = true
                                 }
                             }
@@ -72,7 +72,7 @@ struct AddModifyTransactionView: View {
                                                             colorDisabled: false,
                                                             errorMessage: $viewModel.errorMessage)
                                 .onTapGesture {
-                                    focusedField = .none
+                                    //focusedField = .none
                                     showCategoryList = true
                                 }
                                 
@@ -84,7 +84,7 @@ struct AddModifyTransactionView: View {
                                                                 colorDisabled: false,
                                                                 errorMessage: $viewModel.errorMessage)
                                     .onTapGesture {
-                                        focusedField = .none
+                                        //focusedField = .none
                                         showAccountList = true
                                     }
                                 }
@@ -163,7 +163,6 @@ struct AddModifyTransactionView: View {
                 } // Para agregar objetos flotantes al pie de la pantalla.
             }
             .navigationTitle(viewModel.isNewModel ? "New transaction" : "Modify transaction")
-            //.navigationSubtitle(viewModel.isNewModel ? "Enter transation details" : "Modify transaction details")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .destructiveAction) {
