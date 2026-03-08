@@ -12,41 +12,40 @@ struct DateTimeIntervalListView: View {
     @StateObject var viewModel = DateTimeIntervalListViewModel()
     
     var body: some View {
-        ContentContainer(addPading: false) {
-            VStack {
-                ListContainer {
-                    SectionContainer("Intervals", isInsideList: true) {
-                        ForEach(DateTimeInterval.allCases) { item in
-                            VStack {
-                                HStack {
-                                    Image(systemName: item == viewModel.DateTimeIntervalSelected ? ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle)
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: FrameSize.height.selectIconInsideTextField,
-                                               height: FrameSize.width.selectIconInsideTextField)
-                                        .foregroundStyle(item == viewModel.DateTimeIntervalSelected ? Color.primaryBottom : Color.textFieldPlaceholder)
-                                    
-                                    Button {
-                                        viewModel.updateDateTimeInterval(item)
-                                    } label: {
-                                        TextPlainLocalized(item, color: Color.textFieldForeground)
-                                    }
+        VStack {
+            ListContainer {
+                SectionContainer("Intervals", isInsideList: true) {
+                    ForEach(DateTimeInterval.allCases) { item in
+                        VStack {
+                            HStack {
+                                Image(systemName: item == viewModel.DateTimeIntervalSelected ? ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: FrameSize.height.selectIconInsideTextField,
+                                           height: FrameSize.width.selectIconInsideTextField)
+                                    .foregroundStyle(item == viewModel.DateTimeIntervalSelected ? Color.primaryBottom : Color.textFieldPlaceholder)
+                                
+                                Button {
+                                    viewModel.updateDateTimeInterval(item)
+                                } label: {
+                                    TextPlainLocalized(item, color: Color.textFieldForeground)
                                 }
                             }
                         }
                     }
-                    
-                    SectionContainer(isInsideList: true, rowColor: Color.clear) {
-                        Button("Reset to default") {
-                            viewModel.resetDateTimeInterval()
-                        }
-                        .buttonStyle(ButtonLinkStyle(color: Color.alert))
-                    }
-                    
                 }
+                
+                SectionContainer(isInsideList: true, rowColor: Color.clear) {
+                    Button("Reset to default") {
+                        viewModel.resetDateTimeInterval()
+                    }
+                    .buttonStyle(ButtonLinkStyle(color: Color.alert))
+                }
+                
             }
         }
         .navigationTitle("Time interval list")
+        .background(Color.backgroundContentGradient)
     }
 }
 

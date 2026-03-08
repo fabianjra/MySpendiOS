@@ -12,17 +12,10 @@ struct ValidateAccountView: View {
     @StateObject var viewModel = ValidateAccountViewModel()
     
     var body: some View {
-        FormContainer {
-            
+        VStack {
             if viewModel.userIsValidated {
-                
-                // MARK: PLAIN SCREEN
                 userIsValidatedBody
-                    .padding(.top)
-                
             } else {
-                
-                // MARK: FIELDS
                 sendEmailBody
             }
         }
@@ -33,6 +26,8 @@ struct ValidateAccountView: View {
                 await viewModel.onAppear()
             }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.backgroundContentGradient)
     }
     
     @Environment(\.dismiss) private var dismiss

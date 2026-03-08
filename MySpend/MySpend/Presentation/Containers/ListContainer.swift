@@ -27,10 +27,11 @@ struct ListContainer<Content: View>: View {
 
 #Preview {
     //Add ContentContainer for the background color style
-    ContentContainer(addPading: false) {
+    VStack {
         ListContainer {
             Text("Inside list container")
                 .listRowBackground(Color.listRowBackground)
         }
     }
+    .background(Color.backgroundContentGradient)
 }

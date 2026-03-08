@@ -18,7 +18,7 @@ struct AccountView: View {
     @State private var modelToDelete: AccountModel?
     
     var body: some View {
-        ContentContainer(addPading: false) {
+        VStack {
 
             if !viewModel.models.isEmpty {
                 topMenu
@@ -63,6 +63,7 @@ struct AccountView: View {
                     modelToModify = nil
                 }
         }
+        .background(Color.backgroundContentGradient)
     }
     
     // MARK: - VIEWS

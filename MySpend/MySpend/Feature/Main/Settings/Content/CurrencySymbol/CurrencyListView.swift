@@ -12,7 +12,7 @@ struct CurrencyListView: View {
     @StateObject var viewModel = CurrencyListViewModel()
     
     var body: some View {
-        ContentContainer(addPading: false) {
+        VStack {
 
             PickerView(selection: $viewModel.currencySymbolType)
                 .padding(.top)
@@ -42,6 +42,7 @@ struct CurrencyListView: View {
         .onChange(of: viewModel.currencySymbolType) {
             viewModel.updateCurrencySymbolTypeSelected()
         }
+        .background(Color.backgroundContentGradient)
     }
     
     func rowView(_ currency: CurrencyModel, action: @escaping () -> Void) -> some View {

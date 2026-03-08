@@ -65,7 +65,6 @@ private struct previewWrapper: View {
         .environment(\.locale, .init(identifier: Previews.localeEN_US))
 }
 
-
 #Preview("Empty \(Previews.localeES_ES)") {
     previewWrapper(.empty)
         .environment(\.locale, .init(identifier: Previews.localeES_ES))

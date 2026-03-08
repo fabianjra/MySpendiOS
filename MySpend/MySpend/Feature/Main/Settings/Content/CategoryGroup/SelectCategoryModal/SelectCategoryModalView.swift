@@ -24,7 +24,7 @@ struct SelectCategoryModalView: View {
     @State private var showNewItemModal = false
     
     var body: some View {
-        ContentContainer(addPading: false) {
+        VStack {
             
             HeaderNavigator(title: "Categories",
                             titleWeight: .regular,
@@ -127,6 +127,7 @@ struct SelectCategoryModalView: View {
             .presentationDetents([.large])
         }
         .presentationDetents([.large])
+        .background(Color.backgroundContentGradient)
     }
     
     private func sortButton(for sortingOption: SortCategories) -> some View {

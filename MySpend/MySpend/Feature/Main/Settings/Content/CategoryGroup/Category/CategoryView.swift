@@ -19,24 +19,15 @@ struct CategoryView: View {
     
     //TOD: MOVER A VISTAS POR SEPARADO PARA PODER AGREGAR EL LOADER
     var body: some View {
-        ContentContainer(addPading: false) {
+        VStack {
             
             if !viewModel.categories.isEmpty {
                 topMenu
                     .padding(.top)
             }
             
-            
             ZStack(alignment: .bottomTrailing) {
-                
                 categoryList
-                
-//                ButtonRounded {
-//                    showNewItemModal = true
-//                }
-//                .disabled(viewModel.isEditing)
-//                .padding(.trailing, ConstantViews.paddingButtonAddCategory)
-//                .padding(.bottom, ConstantViews.paddingButtonAddCategory)
             }
             
             TextError(viewModel.errorMessage)
@@ -70,6 +61,7 @@ struct CategoryView: View {
                     modelToModify = nil
                 }
         }
+        .background(Color.backgroundContentGradient)
     }
     
     // MARK: - VIEWS

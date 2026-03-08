@@ -13,7 +13,7 @@ struct SettingsView: View {
     @State private var showAlertConfirmation = false
     
     var body: some View {
-        ContentContainer(addPading: false) {
+        VStack {
             ListContainer {
                 
                 // MARK: - ACCOUNT
@@ -78,6 +78,7 @@ struct SettingsView: View {
                 }
             }
         }
+        .background(Color.backgroundContentGradient)
     }
 }
 

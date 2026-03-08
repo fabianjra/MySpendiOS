@@ -23,7 +23,8 @@ struct LoaderView: View {
 }
 
 #Preview {
-    ContentContainer {
+    VStack {
         LoaderView()
     }
+    .background(Color.backgroundContentGradient)
 }

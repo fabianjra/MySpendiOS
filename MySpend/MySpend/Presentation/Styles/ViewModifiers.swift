@@ -8,45 +8,6 @@
 import SwiftUI
 
 /**
- Style color and shape for forms. Must be used in ZStack
- 
- **Example:**
- ```swift
- ZStack {
-     Color.background
-         .ignoresSafeArea()
-     
-     VStack {
-        Text("Form style")
-    }
- }
- .modifier(FormStyle())
- ```
- 
- - Authors: Fabian Rodriguez
- 
- - Version: 1.0
- 
- - Date: Jul 2023
- */
-struct FormStyleBordered: ViewModifier {
-    
-    @ViewBuilder
-    func body(content: Content) -> some View {
-        content
-            .padding()
-            .background(LinearGradient(colors: Color.backgroundFormGradiant,
-                                       startPoint: .leading,
-                                       endPoint: .trailing))
-            .cornerRadius(ConstantRadius.corners)
-            .padding()
-            .shadow(color: .shadow,
-                    radius: ConstantRadius.shadow,
-                    x: .zero, y: .zero)
-    }
-}
-
-/**
  Style color for full form view. Must be applied to a VStack, inside a ZStack.
  Padding added to separete components from edges inside container.
  
@@ -184,81 +145,6 @@ struct Hidden: ViewModifier {
     func body(content: Content) -> some View {
         if hide {
             EmptyView()
-        } else {
-            content
-        }
-    }
-}
-
-/**
- Lets you ignore safe area in views with condition.
- 
- **Example:**
- ```swift
- @State var condition: Bool = true
- 
- VStack {
-    Color.red
- }
- .modifier(IgnoreSafeArea(condition: condition))
- ```
- 
- - Parameters:
-    - condition: Boolean condition.
- 
- - Authors: Fabian Rodriguez
- 
- - Version: 1.0
- 
- - Date: Jul 2023
- */
-struct IgnoreSafeArea: ViewModifier {
-    let condition: Bool
-    
-    @ViewBuilder
-    func body(content: Content) -> some View {
-        
-        if condition {
-            content.ignoresSafeArea()
-        } else {
-            content
-        }
-    }
-}
-
-/**
- Lets you add the background radial radient color to views with condition.
- 
- **Example:**
- ```swift
- @State var condition: Bool = true
- 
- VStack {
-    Color.red
- }
- .modifier(addRadialGradientBackGround(condition: addBackground,
-                                       color: Color.backgroundContentGradient))
- ```
- 
- - Parameters:
-    - condition: Boolean condition.
-    - color: Gradient radial color.
- 
- - Authors: Fabian Rodriguez
- 
- - Version: 1.0
- 
- - Date: Aug 2024
- */
-struct addRadialGradientBackGround: ViewModifier {
-    let condition: Bool
-    let color: RadialGradient
-    
-    @ViewBuilder
-    func body(content: Content) -> some View {
-        
-        if condition {
-            content.background(color)
         } else {
             content
         }

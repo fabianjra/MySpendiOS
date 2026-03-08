@@ -15,7 +15,7 @@ struct TransactionView: View {
     @Binding var selectedDate: Date
     
     var body: some View {
-        ContentContainer {
+        VStack {
             
             // MARK: - HEADER
             
@@ -59,8 +59,9 @@ struct TransactionView: View {
             // MARK: - TRANSACTIONS
             
                 if viewModel.transactions.isEmpty {
+                    
                     NoContentToAddView()
-                    Spacer()
+                    
                 } else {
                     VStack {
                         DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval,
@@ -111,6 +112,8 @@ struct TransactionView: View {
                 await viewModel.activateObservers()
             }
         }
+        .padding(.horizontal)
+        .background(Color.backgroundContentGradient)
     }
 }
 

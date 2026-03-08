@@ -21,16 +21,18 @@ struct TransactionHistoryView: View {
     @State private var modelToDelete: TransactionModel?
     
     var body: some View {
-        ContentContainer {
-            
-            ZStack {
-                if transactionsLoaded.isEmpty {
-                    emptyView
-                } else {
-                    transactionsList
-                }
+        VStack {
+            if transactionsLoaded.isEmpty {
+                
+                TextPlain("No transactions",
+                          family: .semibold,
+                          size: .bigXL,
+                          aligment: .center)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                
+            } else {
+                transactionsList
             }
-            
             
             TextError(viewModel.errorMessage)
         }
@@ -55,21 +57,10 @@ struct TransactionHistoryView: View {
                     modelToModify = nil
                 }
         }
+        .background(Color.backgroundContentGradient)
     }
     
     // MARK: VIEWS
-    
-    private var emptyView: some View {
-        VStack {
-            Spacer()
-            TextPlain("No transactions",
-                      family: .semibold,
-                      size: .bigXL,
-                      aligment: .center)
-            .padding(.vertical)
-            Spacer()
-        }
-    }
     
     private func sortButton(_ sortingOption: SortTransactions) -> some View {
         Button {
@@ -245,6 +236,7 @@ struct TransactionHistoryView: View {
             
             TotalBalanceView(transactions: transactionsFiltered, showTotalBalance: false)
         }
+        .padding(.horizontal)
     }
     
     // MARK: FUNCTIONS

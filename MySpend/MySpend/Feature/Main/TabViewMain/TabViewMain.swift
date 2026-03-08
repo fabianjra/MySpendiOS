@@ -90,23 +90,6 @@ struct TabViewMain: View {
             AddModifyTransactionView(selectedDate: selectedDate)
         }
     }
-    
-//    var tabView: some View {
-//        TabViewContainer {
-//            showNewTransactionModal = true
-//        } content: {
-//            ForEach(TabViewIcons.allCases) { item in
-//                
-//                TabViewButton(selectedTab: $selectedTab, item: item)
-//                    .padding(.horizontal, ConstantViews.paddingTabViewHorizontal)
-//                    .padding(.bottom)
-//                
-//                if item == TabViewIcons.allCases.first {
-//                    Spacer()
-//                }
-//            }
-//        }
-//    }
 }
 
 #Preview(Previews.localeES) {

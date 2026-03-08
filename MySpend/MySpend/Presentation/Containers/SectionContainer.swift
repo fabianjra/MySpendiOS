@@ -53,16 +53,14 @@ struct SectionContainer<Content: View>: View {
 
 #Preview {
     VStack {
-        ContentContainer(addPading: false) {
-            ListContainer {
-                SectionContainer("Header for section") {
-                    Text("Content of section")
-                }
-                
-                SectionContainer {
-                    Text("Content without header")
-                    Text("Item 2")
-                }
+        ListContainer {
+            SectionContainer("Header for section") {
+                Text("Content of section")
+            }
+            
+            SectionContainer {
+                Text("Content without header")
+                Text("Item 2")
             }
         }
         
@@ -76,4 +74,5 @@ struct SectionContainer<Content: View>: View {
         .padding()
         .background(Color.backgroundBottom)
     }
+    .background(Color.backgroundContentGradient)
 }

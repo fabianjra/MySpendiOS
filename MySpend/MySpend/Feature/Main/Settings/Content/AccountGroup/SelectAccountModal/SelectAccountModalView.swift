@@ -17,7 +17,7 @@ struct SelectAccountModalView: View {
     @StateObject var viewModel = AccountViewModel()
     
     var body: some View {
-        ContentContainer(addPading: false) {
+        VStack {
             
             HeaderNavigator(title: "Accounts",
                             titleWeight: .regular,
@@ -99,6 +99,7 @@ struct SelectAccountModalView: View {
             viewModel.deactivateObservers()
         }
         .presentationDetents([.large])
+        .background(Color.backgroundContentGradient)
     }
     
     private func sortButton(for sortingOption: SortAccounts) -> some View {
