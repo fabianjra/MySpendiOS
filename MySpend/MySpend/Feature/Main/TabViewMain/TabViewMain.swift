@@ -10,7 +10,6 @@ import SwiftUI
 struct TabViewMain: View {
     
     @State private var showNewTransactionModal = false
-    //@State private var selectedTab: TabViewIcons = .transaction
     @State private var navigateToHistory: Bool = false
     @State private var selectedDate: Date = .now
     
@@ -22,8 +21,7 @@ struct TabViewMain: View {
 //    }
     
     var body: some View {
-        //ZStack(alignment: .bottom) {
-        VStack {
+        ZStack(alignment: .bottom) {
             
             /*
              Los tabView siempre estan cargadas en memoria, su totalidad de vistas,
@@ -68,16 +66,27 @@ struct TabViewMain: View {
                 }
                 
             }
-            
-            //.tabBarMinimizeBehavior(.onScrollDown)
-            .tabViewBottomAccessory {
-                Button("Add transaction") {
-                    showNewTransactionModal = true
-                }
-            }
             .searchable(text: $searchText)
-            
             .tint(Color.primaryTop)
+            
+            VStack {
+                Button {
+                    showNewTransactionModal = true
+                } label: {
+                    HStack {
+                        Spacer()
+                        
+                        TextPlain("Add transaction")
+                            .padding(.vertical, 7)
+                        
+                        Spacer()
+                    }
+                }
+                .buttonStyle(.glass)
+            }
+            .padding(.horizontal)
+            .padding(.bottom, 60)
+               
         }
         .onAppear {
             /// Disable Swipe to go back when ResumeView is showing.
@@ -101,3 +110,4 @@ struct TabViewMain: View {
     TabViewMain()
         .environment(\.locale, .init(identifier: Previews.localeEN))
 }
+

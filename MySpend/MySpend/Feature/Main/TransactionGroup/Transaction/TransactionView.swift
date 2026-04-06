@@ -101,6 +101,7 @@ struct TransactionView: View {
 //                            }.pickerStyle(.wheel)
 //                        }
                     }
+                    .padding(.bottom, 50)
                     
                     //Tiene un efecto no deseado al transicionar entre tab y tab.
                     //TODO: Revisar si con listener se comporta diferente.
