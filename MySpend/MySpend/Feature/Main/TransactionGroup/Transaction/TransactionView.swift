@@ -159,10 +159,9 @@ struct TransactionView: View {
         }
         
         .sheet(isPresented: $showSettings) {
-            SettingsView()
-                .navigationTransition(
-                    .zoom(sourceID: transitionSettings, in: namesapce)
-                )
+            NavigationStack {
+                SettingsView()
+            }
         }
         .sheet(isPresented: $showNewTransactionModal) {
             AddModifyTransactionView(selectedDate: selectedDate)

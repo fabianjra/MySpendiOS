@@ -14,8 +14,8 @@ import SwiftUI
  manage the model data in the view and no the Binding model used for paraemter.
  
  - Parameters:
-    - model: This model should be passed only when you want to modify something in the model already loaded.
-
+ - model: This model should be passed only when you want to modify something in the model already loaded.
+ 
  - Date: December 2024
  */
 struct AddModifyTransactionView: View {
@@ -32,148 +32,151 @@ struct AddModifyTransactionView: View {
     init(_ model: TransactionModel? = nil, selectedDate: Date? = nil) {
         _viewModel = StateObject(wrappedValue: AddModifyTransactionViewModel(model, selectedDate: selectedDate))
     }
-
+    
     var body: some View {
-        NavigationStack { // This is needed for showing toolBar Keyboard.
-            VStack {
-                ScrollViewReader { scrollViewProxy in
-                    FormContainer {
+        VStack {
+            ScrollViewReader { scrollViewProxy in
+                FormContainer {
+                    VStack {
+                        // MARK: SEGMENT
+                        
                         VStack {
-                            // MARK: SEGMENT
+                            PickerView(selection: $viewModel.model.category.type)
+                                .padding(.bottom)
+                        }
+                        
+                        // MARK: DATE
+                        
+                        VStack {
+                            TextFieldReadOnly(placeHolder: "Date", text: .constant(viewModel.model.dateTransaction.toStringShortLocale),
+                                              iconLeading: Image.calendar,
+                                              colorDisabled: false)
+                            .onTapGesture {
+                                //focusedField = .none
+                                showDatePicker = true
+                            }
+                        }
+                        
+                        
+                        // MARK: TEXTFIELDS
+                        
+                        VStack {
+                            TextFieldAmount(text: $viewModel.amountString)
+                                .focused($focusedField, equals: .amount)
                             
-                            VStack {
-                                PickerView(selection: $viewModel.model.category.type)
-                                    .padding(.bottom)
+                            
+                            TextFieldReadOnlySelectable(placeHolder: "Category",
+                                                        text: $viewModel.model.category.name,
+                                                        iconLeading: Image.stackFill,
+                                                        colorDisabled: false,
+                                                        errorMessage: $viewModel.errorMessage)
+                            .onTapGesture {
+                                //focusedField = .none
+                                showCategoryList = true
                             }
                             
-                            // MARK: DATE
                             
-                            VStack {
-                                TextFieldReadOnly(placeHolder: "Date", text: .constant(viewModel.model.dateTransaction.toStringShortLocale),
-                                                  iconLeading: Image.calendar,
-                                                  colorDisabled: false)
-                                .onTapGesture {
-                                    //focusedField = .none
-                                    showDatePicker = true
-                                }
-                            }
-                            
-                            
-                            // MARK: TEXTFIELDS
-                            
-                            VStack {
-                                TextFieldAmount(text: $viewModel.amountString)
-                                    .focused($focusedField, equals: .amount)
-                                
-                                
-                                TextFieldReadOnlySelectable(placeHolder: "Category",
-                                                            text: $viewModel.model.category.name,
-                                                            iconLeading: Image.stackFill,
+                            if viewModel.showAccountTextField {
+                                TextFieldReadOnlySelectable(placeHolder: "Account",
+                                                            text: $viewModel.model.account.name,
+                                                            iconLeading: Image.walletFill,
                                                             colorDisabled: false,
                                                             errorMessage: $viewModel.errorMessage)
                                 .onTapGesture {
                                     //focusedField = .none
-                                    showCategoryList = true
+                                    showAccountList = true
                                 }
-                                
-                                
-                                if viewModel.showAccountTextField {
-                                    TextFieldReadOnlySelectable(placeHolder: "Account",
-                                                                text: $viewModel.model.account.name,
-                                                                iconLeading: Image.walletFill,
-                                                                colorDisabled: false,
-                                                                errorMessage: $viewModel.errorMessage)
-                                    .onTapGesture {
-                                        //focusedField = .none
-                                        showAccountList = true
-                                    }
-                                }
-                                
-                                
-                                TextFieldNotes(text: $viewModel.model.notes)
-                                    .id(viewModel.notesId)
-                                    .focused($focusedField, equals: .notes)
-                                    .padding(.bottom, ConstantViews.mediumSpacing)
                             }
                             
                             
-                            TextError(viewModel.errorMessage)
-                        }
-                        .disabled(viewModel.disabled)
-                        
-                        Spacer()
-                    }
-                    .onAppear {
-                        Task {
-                            await viewModel.fetchAccounts()
+                            TextFieldNotes(text: $viewModel.model.notes)
+                                .id(viewModel.notesId)
+                                .focused($focusedField, equals: .notes)
+                                .padding(.bottom, ConstantViews.mediumSpacing)
                         }
                         
-                        if viewModel.isNewModel {
-                            focusedField = .amount
-                        }
+                        
+                        TextError(viewModel.errorMessage)
                     }
-                    .onChange(of: focusedField) {
-                        if focusedField == .notes {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-                                withAnimation {
-                                    scrollViewProxy.scrollTo(viewModel.notesId, anchor: .bottom)
-                                }
-                            }
-                        }
+                    .disabled(viewModel.disabled)
+                    
+                    Spacer()
+                }
+                .onAppear {
+                    Task {
+                        await viewModel.fetchAccounts()
                     }
-                    .onChange(of: viewModel.model.category.type) {_, newValue in
-                        viewModel.errorMessage = ""
-                        viewModel.model.category = CategoryModel(type: newValue) // Clean category beacause won't be the same CategoryType (Exponse, income).
-                    }
-                    .sheet(isPresented: $showDatePicker) {
-                        DatePickerModalView(selectedDate: $viewModel.model.dateTransaction,
-                                            showModal: $showDatePicker)
-                    }
-                    .sheet(isPresented: $showCategoryList) {
-                        SelectCategoryModalView(selectedCategory: $viewModel.model.category,
-                                                categoryType: $viewModel.model.category.type) //TOD: Refatorizar porque se envia el mismo objeto
-                    }
-                    .sheet(isPresented: $showAccountList) {
-                        SelectAccountModalView(selectedModel: $viewModel.model.account)
+                    
+                    if viewModel.isNewModel {
+                        focusedField = .amount
                     }
                 }
-                .safeAreaInset(edge: .bottom) {
-                    VStack {
-                        Button(viewModel.isNewModel ? "Add" : "Modify") {
-                            process(viewModel.isNewModel ? .add : .modify)
-                        }
-                        .buttonStyle(ButtonPrimaryStyle())
-                        .padding(.bottom, viewModel.isNewModel ? nil : .zero)
-                        
-                        if viewModel.isNewModel == false {
-                            Button("Delete") {
-                                viewModel.showAlert = true
-                            }
-                            .buttonStyle(ButtonLinkStyle(color: Color.alert, fontfamily: .semibold))
-                            .alert("Delete transaction", isPresented: $viewModel.showAlert) {
-                                Button("Delete", role: .destructive) { process(.delete) }
-                                Button("Cancel", role: .cancel) { }
-                            } message: {
-                                Text("Want to delete this transaction? \n This action cannot be undone.")
+                .onChange(of: focusedField) {
+                    if focusedField == .notes {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                            withAnimation {
+                                scrollViewProxy.scrollTo(viewModel.notesId, anchor: .bottom)
                             }
                         }
                     }
-                    .padding(.horizontal)
-                    
-                } // Para agregar objetos flotantes al pie de la pantalla.
+                }
+                .onChange(of: viewModel.model.category.type) {_, newValue in
+                    viewModel.errorMessage = ""
+                    viewModel.model.category = CategoryModel(type: newValue) // Clean category beacause won't be the same CategoryType (Exponse, income).
+                }
+                .sheet(isPresented: $showDatePicker) {
+                    DatePickerModalView(selectedDate: $viewModel.model.dateTransaction,
+                                        showModal: $showDatePicker)
+                }
+                .sheet(isPresented: $showCategoryList) {
+                    SelectCategoryModalView(selectedCategory: $viewModel.model.category,
+                                            categoryType: $viewModel.model.category.type) //TOD: Refatorizar porque se envia el mismo objeto
+                }
+                .sheet(isPresented: $showAccountList) {
+                    SelectAccountModalView(selectedModel: $viewModel.model.account)
+                }
             }
-            .navigationTitle(viewModel.isNewModel ? "New transaction" : "Modify transaction")
+            .safeAreaInset(edge: .bottom) {
+                VStack {
+                    Button(viewModel.isNewModel ? "Add" : "Modify") {
+                        process(viewModel.isNewModel ? .add : .modify)
+                    }
+                    .buttonStyle(ButtonPrimaryStyle())
+                    .padding(.bottom, viewModel.isNewModel ? nil : .zero)
+                    
+                    if viewModel.isNewModel == false {
+                        Button("Delete") {
+                            viewModel.showAlert = true
+                        }
+                        .buttonStyle(ButtonLinkStyle(color: Color.alert, fontfamily: .semibold))
+                        .alert("Delete transaction", isPresented: $viewModel.showAlert) {
+                            Button("Delete", role: .destructive) { process(.delete) }
+                            Button("Cancel", role: .cancel) { }
+                        } message: {
+                            Text("Want to delete this transaction? \n This action cannot be undone.")
+                        }
+                    }
+                }
+                .padding(.horizontal)
+                
+            } // Para agregar objetos flotantes al pie de la pantalla.
+            
+            // MARK: NAVIGATION
+            .navigationTitle(viewModel.isNewModel ? "New transaction" : "Modify transaction") // Necesario para ver la descripcion al presionar el boton atras al navegar.
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
+                
+                ToolbarItem(placement: .title) {
+                    TextPlain(viewModel.isNewModel ? "New transaction" : "Modify transaction")
+                }
+                
                 ToolbarItem(placement: .destructiveAction) {
-                    Button(role: .cancel) {
+                    Button(role: .close) {
                         dismiss()
                     }
                 }
             }
-            
         }
-        .presentationDetents([.large])
     }
     
     private func process(_ processType: ProcessType) {
@@ -203,14 +206,17 @@ struct AddModifyTransactionView: View {
     //@Previewable @State var model = TransactionModel()
     
     //@Previewable @State var selectedDate = Date()
-    AddModifyTransactionView()
+    
+    NavigationStack {
+        AddModifyTransactionView()
+    }
 }
 
 //TOD: REPARAR
 //#Preview("Modify") {
 //    @Previewable @State var model = MockTransaction.preview.container.viewContext.fe
 //    @Previewable @State var selectedDate = MockTransactionsFB.normal.first!.dateTransaction
-//    
+//
 //    AddModifyTransactionView(model: $model,
 //                             selectedDate: $selectedDate,
 //                             viewContext: MockTransaction.preview.container.viewContext)
