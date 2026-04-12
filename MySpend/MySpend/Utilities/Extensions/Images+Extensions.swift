@@ -25,6 +25,7 @@ extension Image {
     static let plus = Image(systemName: "plus")
     static let stack = Image(systemName: "mail.stack") // History
     static let stackFill = Image(systemName: "mail.stack.fill")
+    static let filter = Image(systemName: "line.3.horizontal.decrease")
     
     // MARK: TEXFIELD
     static let envelopeFill = Image(systemName: "envelope.fill") // Email

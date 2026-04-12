@@ -20,113 +20,131 @@ struct TransactionView: View {
     @State private var showNewTransactionModal = false
     @State private var showSettings = false
     @State private var navigateToHistory: Bool = false
+    @State private var showSearchView = false
+    
+    // MARK: NAMESPACES
+    @Namespace private var namesapce
+    
+    private var transitionNewTransaction = "id-new-transaction"
+    private var transitionSettings = "id-settings"
     
     var body: some View {
         VStack {
             
-            // MARK: - HEADER
-            
-            HStack {
-                VStack(alignment: .leading) {
-                    TextPlainLocalized(textLocalized: "greet \(viewModel.userName) \(Emojis.greeting.rawValue)",
-                                       table: LocalizableTable.user,
-                                       family: .semibold,
-                                       size: .big,
-                                       lineLimit: ConstantViews.singleTextMaxLines,
-                                       truncateMode: .tail)
-                    
-                    TextPlainLocalized(Localizable.User.welcome,
-                                       family: .light,
-                                       size: .small,
-                                       lineLimit: ConstantViews.singleTextMaxLines)
-                }
-                Spacer()
+            if showSearchView {
                 
-                Button {
-                    showSettings = true
-                } label: {
-                    Image.settingsFill
-                        .resizable()
-                        .frame(width: ConstantFrames.navigationBarIcon,
-                               height: ConstantFrames.navigationBarIcon)
-                        .padding(ConstantViews.paddingNavigationBarIcon)
-                    //.foregroundStyle(Color.buttonForeground)
-                }
-                .buttonStyle(.glass)
-                .buttonBorderShape(.circle)
-                
-                //TODO: Agregar boton para filtrar Accounts. A la derecha del nombre del usuario
-            }
-            
-            
-            // MARK: - HISTORY BUTTON
-            
-            VStack {
-                NavigationLink {
-                    TransactionHistoryView(transactionsLoaded: $viewModel.transactions,
-                                           dateTimeInterval: $dateTimeInterval,
-                                           selectedDate: $selectedDate,
-                                           isMutipleAccounts: $viewModel.isMutipleAccounts)
-                } label: {
-                    TextButtonHorizontalStyled(Localizable.Button.history.key,
-                                               subTitle: Localizable.Button.history_subtitle.key,
-                                               iconLeading: Image.stackFill,
-                                               iconTrailing: Image.arrowRight)
-                }
-            }
-            
-            
-            // MARK: - TRANSACTIONS
-            
-            if viewModel.transactions.isEmpty {
-                
-                NoContentToAddView()
+                Color.red //TODO: Agregar vista de busqueda
                 
             } else {
-                VStack {
-                    DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval,
-                                              selectedDate: $selectedDate,
-                                              isEditing: .constant(false)){}
-                    
-                    let transactionsFiltered = UtilsTransactions.filteredTransactions(selectedDate,
-                                                                                      transactions: viewModel.transactions,
-                                                                                      for: dateTimeInterval)
-                    
-                    let groupedTransactions = UtilsCurrency.calculateGroupedTransactions(transactionsFiltered)
-                        .sorted(by: { $0.totalAmount > $1.totalAmount })
-                    
-                    ScrollView(showsIndicators: false) {
-                        ForEach(groupedTransactions, id:\.category.id) { item in
-                            HStack {
-                                TextPlain(item.category.name)
-                                
-                                Spacer()
-                                
-                                TextPlain(item.totalAmount.convertAmountDecimalToString.addCurrencySymbol)
-                            }
-                            .padding(.vertical, ConstantViews.minimumSpacing)
-                        }
+
+                // MARK: - HEADER
+                
+                HStack {
+                    VStack(alignment: .leading) {
+                        TextPlainLocalized(textLocalized: "greet \(viewModel.userName) \(Emojis.greeting.rawValue)",
+                                           table: LocalizableTable.user,
+                                           family: .semibold,
+                                           size: .big,
+                                           lineLimit: ConstantViews.singleTextMaxLines,
+                                           truncateMode: .tail)
+                        
+                        TextPlainLocalized(Localizable.User.welcome,
+                                           family: .light,
+                                           size: .small,
+                                           lineLimit: ConstantViews.singleTextMaxLines)
                     }
-                    .animation(.default, value: transactionsFiltered.count)
+                    Spacer()
                     
-                    TextError(viewModel.errorMessage)
+                    Button {
+                        showSettings = true
+                    } label: {
+                        Image.settingsFill
+                            .resizable()
+                            .frame(width: ConstantFrames.navigationBarIcon,
+                                   height: ConstantFrames.navigationBarIcon)
+                            .padding(ConstantViews.paddingNavigationBarIcon)
+                        //.foregroundStyle(Color.buttonForeground)
+                    }
+                    .buttonStyle(.glass)
+                    .buttonBorderShape(.circle)
+                    .matchedTransitionSource(id: transitionSettings, in: namesapce)
                     
-                    TotalBalanceView(transactions: transactionsFiltered)
-                        //.padding(.bottom, ConstantViews.paddingBottomResumeview)
-                    
-                    //TODO: Aplicar wheel de accounts
-                    //                        if viewModel.showAccountFilter {
-                    //                            Picker("Accounts", selection: $viewModel.dateTimeInterval) {
-                    //
-                    //                            }.pickerStyle(.wheel)
-                    //                        }
+                    //TODO: Agregar boton para filtrar Accounts. A la derecha del nombre del usuario
                 }
                 
-                //Tiene un efecto no deseado al transicionar entre tab y tab.
-                //TODO: Revisar si con listener se comporta diferente.
-                //.redacted(reason: viewModel.isLoading ? .placeholder : [])
+                
+                // MARK: - HISTORY BUTTON
+                
+                VStack {
+                    NavigationLink {
+                        TransactionHistoryView(transactionsLoaded: $viewModel.transactions,
+                                               dateTimeInterval: $dateTimeInterval,
+                                               selectedDate: $selectedDate,
+                                               isMutipleAccounts: $viewModel.isMutipleAccounts)
+                    } label: {
+                        TextButtonHorizontalStyled(Localizable.Button.history.key,
+                                                   subTitle: Localizable.Button.history_subtitle.key,
+                                                   iconLeading: Image.stackFill,
+                                                   iconTrailing: Image.arrowRight)
+                    }
+                }
+                
+                
+                // MARK: - TRANSACTIONS
+                
+                if viewModel.transactions.isEmpty {
+                    
+                    NoContentToAddView()
+                    
+                } else {
+                    VStack {
+                        DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval,
+                                                  selectedDate: $selectedDate,
+                                                  isEditing: .constant(false)){}
+                        
+                        let transactionsFiltered = UtilsTransactions.filteredTransactions(selectedDate,
+                                                                                          transactions: viewModel.transactions,
+                                                                                          for: dateTimeInterval)
+                        
+                        let groupedTransactions = UtilsCurrency.calculateGroupedTransactions(transactionsFiltered)
+                            .sorted(by: { $0.totalAmount > $1.totalAmount })
+                        
+                        ScrollView(showsIndicators: false) {
+                            ForEach(groupedTransactions, id:\.category.id) { item in
+                                HStack {
+                                    TextPlain(item.category.name)
+                                    
+                                    Spacer()
+                                    
+                                    TextPlain(item.totalAmount.convertAmountDecimalToString.addCurrencySymbol)
+                                }
+                                .padding(.vertical, ConstantViews.minimumSpacing)
+                            }
+                        }
+                        .animation(.default, value: transactionsFiltered.count)
+                        
+                        TextError(viewModel.errorMessage)
+                        
+                        TotalBalanceView(transactions: transactionsFiltered)
+                        //.padding(.bottom, ConstantViews.paddingBottomResumeview)
+                        
+                        //TODO: Aplicar wheel de accounts
+                        //                        if viewModel.showAccountFilter {
+                        //                            Picker("Accounts", selection: $viewModel.dateTimeInterval) {
+                        //
+                        //                            }.pickerStyle(.wheel)
+                        //                        }
+                    }
+                    
+                    //Tiene un efecto no deseado al transicionar entre tab y tab.
+                    //TODO: Revisar si con listener se comporta diferente.
+                    //.redacted(reason: viewModel.isLoading ? .placeholder : [])
+                }
             }
         }
+        .padding(.horizontal)
+        .background(Color.backgroundContentGradient)
+        
         .onFirstAppear {
             Task {
                 await viewModel.activateObservers()
@@ -140,15 +158,53 @@ struct TransactionView: View {
             AppState.shared.swipeEnabled = true
         }
         
-        .padding(.horizontal)
-        .background(Color.backgroundContentGradient)
-        
         .sheet(isPresented: $showSettings) {
             SettingsView()
+                .navigationTransition(
+                    .zoom(sourceID: transitionSettings, in: namesapce)
+                )
         }
         .sheet(isPresented: $showNewTransactionModal) {
             AddModifyTransactionView(selectedDate: selectedDate)
+                .navigationTransition(
+                    .zoom(sourceID: transitionNewTransaction, in: namesapce)
+                )
         }
+        .toolbar {
+            ToolbarItemGroup(placement: .bottomBar) {
+                Button {
+                    //Filter
+                } label: {
+                    Image.filter
+                }
+                
+                VStack(alignment: .leading) {
+                    TextPlain("Filtered by", size: .medium)
+                    TextPlain("none", size: .mediumSmall)
+                }
+                .padding(.trailing)
+                .fixedSize(horizontal: true, vertical: false)
+                //.layoutPriority(1)
+            }
+            
+            ToolbarSpacer(.flexible, placement: .bottomBar)
+            
+            DefaultToolbarItem(kind: .search, placement: .bottomBar)
+            
+            ToolbarSpacer(.fixed, placement: .bottomBar)
+            
+            ToolbarItem(placement: .bottomBar) {
+                
+                Button("Add transaction", systemImage: "plus", role: .confirm) {
+                    showNewTransactionModal = true
+                }
+                .tint(Color.primaryTop)
+            }
+            .matchedTransitionSource(id: transitionNewTransaction, in: namesapce)
+        }
+        .searchable(text: $searchText, isPresented: $showSearchView, placement: .toolbar)
+        .searchToolbarBehavior(.minimize)
+        .toolbar(.hidden, for: .navigationBar)
     }
 }
 
