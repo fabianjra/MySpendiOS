@@ -39,23 +39,29 @@ struct TransactionHistoryView: View {
         .navigationTitle("History")
         .navigationBarTitleDisplayMode(.inline) //TODO: CAMBIAR: El navegador de fechas va a ir abajo, entonces va a ponerse el titulo en grande al bajar.
         .toolbar {
-            ToolbarItemGroup(placement: .navigationBarTrailing) {
-                Button {
+            ToolbarItem(placement: .title) {
+                TextPlain("History")
+            }
+            
+            ToolbarItem(placement: .topBarTrailing) {
+                Button("Add item", systemImage: "plus") {
                     showNewItemModal = true
-                } label: {
-                    Label("Add Item", systemImage: "plus")
                 }
                 .disabled(viewModel.isEditing)
             }
         }
         .sheet(isPresented: $showNewItemModal) {
-            AddModifyTransactionView(selectedDate: selectedDate)
+            NavigationStack {
+                AddModifyTransactionView(selectedDate: selectedDate)
+            }
         }
         .sheet(item: $modelToModify) { model in
-            AddModifyTransactionView(model)
-                .onDisappear {
-                    modelToModify = nil
-                }
+            NavigationStack {
+                AddModifyTransactionView(model)
+                    .onDisappear {
+                        modelToModify = nil
+                    }
+            }
         }
         .background(Color.backgroundContentGradient)
     }
@@ -84,7 +90,7 @@ struct TransactionHistoryView: View {
                 .foregroundStyle(Color.alert, Color.alert)
         }
     }
-
+    
     private var transactionsList: some View {
         VStack {
             DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval,
@@ -115,7 +121,7 @@ struct TransactionHistoryView: View {
                                                                               transactions: transactionsLoaded,
                                                                               for: dateTimeInterval,
                                                                               sortTransactions: viewModel.sortTransactionsBy)
- 
+            
             List {
                 ForEach(transactionsFiltered, id: \.self) { item in
                     VStack {
@@ -138,7 +144,7 @@ struct TransactionHistoryView: View {
                                            height: FrameSize.height.iconInsideTextField)
                                     .foregroundStyle(Color.textPrimaryForeground)
                             }
-
+                            
                             Button("") {
                                 if viewModel.isEditing {
                                     if viewModel.selectedTransactions.contains(item) {
@@ -292,8 +298,10 @@ private struct TransactionPreviewWrapper: View {
 }
 
 #Preview("Normal es_CR") {
-    TransactionPreviewWrapper(.normal)
-        .environment(\.locale, .init(identifier: "es_CR"))
+    NavigationStack {
+        TransactionPreviewWrapper(.normal)
+            .environment(\.locale, .init(identifier: "es_CR"))
+    }
 }
 
 #Preview("Random Saturated en_US") {
