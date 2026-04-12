@@ -36,7 +36,7 @@ struct TransactionView: View {
                 Color.red //TODO: Agregar vista de busqueda
                 
             } else {
-
+                
                 // MARK: - HEADER
                 
                 HStack {
@@ -162,12 +162,17 @@ struct TransactionView: View {
             NavigationStack {
                 SettingsView()
             }
+            .navigationTransition(
+                .zoom(sourceID: transitionSettings, in: namesapce)
+            )
         }
         .sheet(isPresented: $showNewTransactionModal) {
-            AddModifyTransactionView(selectedDate: selectedDate)
-                .navigationTransition(
-                    .zoom(sourceID: transitionNewTransaction, in: namesapce)
-                )
+            NavigationStack {
+                AddModifyTransactionView(selectedDate: selectedDate)
+            }
+            .navigationTransition(
+                .zoom(sourceID: transitionNewTransaction, in: namesapce)
+            )
         }
         .toolbar {
             ToolbarItemGroup(placement: .bottomBar) {
