@@ -33,17 +33,19 @@ struct CategoryView: View {
             TextError(viewModel.errorMessage)
         }
         .navigationTitle("Categories")
+        .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItemGroup(placement: .navigationBarTrailing) {
-                Button {
+            ToolbarItem(placement: .title) {
+                TextPlain("Categories")
+            }
+            
+            ToolbarItem(placement: .topBarTrailing) {
+                Button("Add item", systemImage: "plus") {
                     showNewItemModal = true
-                } label: {
-                    Label("Add Item", systemImage: "plus")
                 }
                 .disabled(viewModel.isEditing)
             }
         }
-        
         .task {
             await viewModel.activateObservers()
         }

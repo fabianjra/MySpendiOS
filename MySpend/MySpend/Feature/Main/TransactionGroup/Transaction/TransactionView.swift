@@ -162,9 +162,6 @@ struct TransactionView: View {
             NavigationStack {
                 SettingsView()
             }
-            .navigationTransition(
-                .zoom(sourceID: transitionSettings, in: namesapce)
-            )
         }
         .sheet(isPresented: $showNewTransactionModal) {
             NavigationStack {
