@@ -20,7 +20,7 @@ struct RootView: View {
                 if isOnboarding {
                     OnBoardingUsernameView()
                 } else {
-                    TabViewMain()
+                    TransactionView()
                 }
             }
             .onAppear {
@@ -30,7 +30,7 @@ struct RootView: View {
                 switch destination {
                     
                 case .mainView:
-                    TabViewMain().toolbar(.hidden, for: .navigationBar)
+                    TransactionView().toolbar(.hidden, for: .navigationBar)
                     
                 case .onBoardingName:
                     OnBoardingUsernameView()
@@ -49,6 +49,7 @@ private struct previewWrapper: View {
         CoreDataUtilities.shared.mockDataType = mockDataType
         
         UserDefaultsManager.userDefaults = .preview
+        
         // Configuracion correcta para usar @AppStorage con preview:
         UserDefaultsManager.userDefaults.set(showOnBoarding, forKey: UserDefaultsKeys.isOnBoarding.rawValue)
     }

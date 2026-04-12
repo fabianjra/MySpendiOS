@@ -38,8 +38,8 @@ extension Image {
     // MARK: TABVIEW
     static let tabResume = Image(systemName: "list.bullet.rectangle") // Resume
     static let tabResumeFill = Image(systemName: "list.bullet.rectangle.fill")
-    static let tabSettings = Image(systemName: "gearshape") // Settings
-    static let tabSettingsFill = Image(systemName: "gearshape.fill")
+    static let settings = Image(systemName: "gearshape") // Settings
+    static let settingsFill = Image(systemName: "gearshape.fill")
     
     // MARK: LIST
     static let listBulletClipboard = Image(systemName: "list.bullet.clipboard") // Categories

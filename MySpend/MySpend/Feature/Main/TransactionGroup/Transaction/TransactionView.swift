@@ -9,10 +9,17 @@ import SwiftUI
 
 struct TransactionView: View {
     
-    @StateObject var viewModel = TransactionViewModel()
+    @StateObject private var viewModel = TransactionViewModel()
     
-    @State var dateTimeInterval = UserDefaultsManager.dateTimeInterval
-    @Binding var selectedDate: Date
+    //MARK: VIEW PROPERTIES
+    @State private var dateTimeInterval = UserDefaultsManager.dateTimeInterval
+    @State private var selectedDate: Date = .now
+    @State private var searchText: String = ""
+    
+    // MARK: NAVIGATION
+    @State private var showNewTransactionModal = false
+    @State private var showSettings = false
+    @State private var navigateToHistory: Bool = false
     
     var body: some View {
         VStack {
@@ -22,18 +29,31 @@ struct TransactionView: View {
             HStack {
                 VStack(alignment: .leading) {
                     TextPlainLocalized(textLocalized: "greet \(viewModel.userName) \(Emojis.greeting.rawValue)",
-                                        table: LocalizableTable.user,
-                                        family: .semibold,
-                                        size: .big,
-                                        lineLimit: ConstantViews.singleTextMaxLines,
-                                        truncateMode: .tail)
+                                       table: LocalizableTable.user,
+                                       family: .semibold,
+                                       size: .big,
+                                       lineLimit: ConstantViews.singleTextMaxLines,
+                                       truncateMode: .tail)
                     
                     TextPlainLocalized(Localizable.User.welcome,
-                                        family: .light,
-                                        size: .small,
-                                        lineLimit: ConstantViews.singleTextMaxLines)
+                                       family: .light,
+                                       size: .small,
+                                       lineLimit: ConstantViews.singleTextMaxLines)
                 }
                 Spacer()
+                
+                Button {
+                    showSettings = true
+                } label: {
+                    Image.settingsFill
+                        .resizable()
+                        .frame(width: ConstantFrames.navigationBarIcon,
+                               height: ConstantFrames.navigationBarIcon)
+                        .padding(ConstantViews.paddingNavigationBarIcon)
+                    //.foregroundStyle(Color.buttonForeground)
+                }
+                .buttonStyle(.glass)
+                .buttonBorderShape(.circle)
                 
                 //TODO: Agregar boton para filtrar Accounts. A la derecha del nombre del usuario
             }
@@ -58,63 +78,77 @@ struct TransactionView: View {
             
             // MARK: - TRANSACTIONS
             
-                if viewModel.transactions.isEmpty {
+            if viewModel.transactions.isEmpty {
+                
+                NoContentToAddView()
+                
+            } else {
+                VStack {
+                    DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval,
+                                              selectedDate: $selectedDate,
+                                              isEditing: .constant(false)){}
                     
-                    NoContentToAddView()
+                    let transactionsFiltered = UtilsTransactions.filteredTransactions(selectedDate,
+                                                                                      transactions: viewModel.transactions,
+                                                                                      for: dateTimeInterval)
                     
-                } else {
-                    VStack {
-                        DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval,
-                                                  selectedDate: $selectedDate,
-                                                  isEditing: .constant(false)){}
-                        
-                        let transactionsFiltered = UtilsTransactions.filteredTransactions(selectedDate,
-                                                                                          transactions: viewModel.transactions,
-                                                                                          for: dateTimeInterval)
-                        
-                        let groupedTransactions = UtilsCurrency.calculateGroupedTransactions(transactionsFiltered)
-                            .sorted(by: { $0.totalAmount > $1.totalAmount })
-                        
-                        ScrollView(showsIndicators: false) {
-                            ForEach(groupedTransactions, id:\.category.id) { item in
-                                HStack {
-                                    TextPlain(item.category.name)
-                                    
-                                    Spacer()
-                                    
-                                    TextPlain(item.totalAmount.convertAmountDecimalToString.addCurrencySymbol)
-                                }
-                                .padding(.vertical, ConstantViews.minimumSpacing)
+                    let groupedTransactions = UtilsCurrency.calculateGroupedTransactions(transactionsFiltered)
+                        .sorted(by: { $0.totalAmount > $1.totalAmount })
+                    
+                    ScrollView(showsIndicators: false) {
+                        ForEach(groupedTransactions, id:\.category.id) { item in
+                            HStack {
+                                TextPlain(item.category.name)
+                                
+                                Spacer()
+                                
+                                TextPlain(item.totalAmount.convertAmountDecimalToString.addCurrencySymbol)
                             }
+                            .padding(.vertical, ConstantViews.minimumSpacing)
                         }
-                        .animation(.default, value: transactionsFiltered.count)
-                        
-                        TextError(viewModel.errorMessage)
-                        
-                        TotalBalanceView(transactions: transactionsFiltered)
-                            .padding(.bottom, ConstantViews.paddingBottomResumeview)
-                        
-                        //TODO: Aplicar wheel de accounts
-//                        if viewModel.showAccountFilter {
-//                            Picker("Accounts", selection: $viewModel.dateTimeInterval) {
-//                                
-//                            }.pickerStyle(.wheel)
-//                        }
                     }
-                    .padding(.bottom, 50)
+                    .animation(.default, value: transactionsFiltered.count)
                     
-                    //Tiene un efecto no deseado al transicionar entre tab y tab.
-                    //TODO: Revisar si con listener se comporta diferente.
-                    //.redacted(reason: viewModel.isLoading ? .placeholder : [])
+                    TextError(viewModel.errorMessage)
+                    
+                    TotalBalanceView(transactions: transactionsFiltered)
+                        //.padding(.bottom, ConstantViews.paddingBottomResumeview)
+                    
+                    //TODO: Aplicar wheel de accounts
+                    //                        if viewModel.showAccountFilter {
+                    //                            Picker("Accounts", selection: $viewModel.dateTimeInterval) {
+                    //
+                    //                            }.pickerStyle(.wheel)
+                    //                        }
                 }
+                
+                //Tiene un efecto no deseado al transicionar entre tab y tab.
+                //TODO: Revisar si con listener se comporta diferente.
+                //.redacted(reason: viewModel.isLoading ? .placeholder : [])
+            }
         }
         .onFirstAppear {
             Task {
                 await viewModel.activateObservers()
             }
         }
+        .onAppear {
+            /// Disable Swipe to go back when ResumeView is showing.
+            AppState.shared.swipeEnabled = false
+        }
+        .onDisappear {
+            AppState.shared.swipeEnabled = true
+        }
+        
         .padding(.horizontal)
         .background(Color.backgroundContentGradient)
+        
+        .sheet(isPresented: $showSettings) {
+            SettingsView()
+        }
+        .sheet(isPresented: $showNewTransactionModal) {
+            AddModifyTransactionView(selectedDate: selectedDate)
+        }
     }
 }
 
@@ -123,40 +157,29 @@ private struct previewWrapper: View {
     init(_ mockDataType: MockDataType = .normal) {
         CoreDataUtilities.shared.mockDataType = mockDataType
         UserDefaultsManager.userDefaults = .preview
-        UserDefaultsManager.userName = "Fabian"
+        UserDefaultsManager.userName = "Preview pruebas"
     }
-    @State var selectedDate = Date()
-    var body: some View { TransactionView(selectedDate: $selectedDate) }
+    
+    var body: some View { TransactionView() }
 }
 
 #Preview("Normal \(Previews.localeES_CR)") {
-    previewWrapper()
-        .environment(\.locale, .init(identifier: Previews.localeES_CR))
+    NavigationStack {
+        previewWrapper()
+            .environment(\.locale, .init(identifier: Previews.localeES_CR))
+    }
 }
 
 #Preview("Saturated \(Previews.localeEN_US)") {
-    previewWrapper(.saturated)
-        .environment(\.locale, .init(identifier: Previews.localeEN_US))
+    NavigationStack {
+        previewWrapper(.saturated)
+            .environment(\.locale, .init(identifier: Previews.localeEN_US))
+    }
 }
 
 #Preview("Empty \(Previews.localeES_ES)") {
-    previewWrapper(.empty)
-        .environment(\.locale, .init(identifier: Previews.localeES_ES))
-}
-
-
-private struct previewWrapperRoot: View {
-    init(_ mockDataType: MockDataType = .normal, showOnBoarding: Bool = false) {
-        CoreDataUtilities.shared.mockDataType = mockDataType
-        
-        UserDefaultsManager.userDefaults = .preview
-        // Configuracion correcta para usar @AppStorage con preview:
-        UserDefaultsManager.userDefaults.set(showOnBoarding, forKey: UserDefaultsKeys.isOnBoarding.rawValue)
+    NavigationStack {
+        previewWrapper(.empty)
+            .environment(\.locale, .init(identifier: Previews.localeES_ES))
     }
-    var body: some View { RootView() }
-}
-
-#Preview("Navigation \(Previews.localeES_CR)") {
-    previewWrapperRoot()
-        .environment(\.locale, .init(identifier: Previews.localeES_CR))
 }

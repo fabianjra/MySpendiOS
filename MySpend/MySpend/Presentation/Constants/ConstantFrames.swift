@@ -19,6 +19,7 @@ public struct ConstantFrames {
     
     // MARK: BUTTONS
     static let roundedButtonIcon: CGFloat = 35.0
+    static let navigationBarIcon: CGFloat = 20.0
     
     // MARK: IPAD
     static let iPadMaxWidth: CGFloat = 500.0
