@@ -43,11 +43,19 @@ struct TransactionHistoryView: View {
                 TextPlain("History")
             }
             
-            ToolbarItem(placement: .topBarTrailing) {
-                Button("Add item", systemImage: "plus") {
+            ToolbarItem(placement: .primaryAction) {
+                
+                Button("Add item", systemImage: "plus", role: .none) {
                     showNewItemModal = true
                 }
                 .disabled(viewModel.isEditing)
+                .glassEffect(.clear)
+                
+//                Button("Add item", systemImage: "plus") {
+//                    showNewItemModal = true
+//                }
+//                //.glassEffect(.clear)
+//                .disabled(viewModel.isEditing)
             }
         }
         .sheet(isPresented: $showNewItemModal) {

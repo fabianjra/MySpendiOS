@@ -47,7 +47,7 @@ struct PickerView<E>: UIViewRepresentable where E: CaseIterable & RawRepresentab
         control.setTitleTextAttributes(attributeSelected, for: .selected)
         
         control.selectedSegmentTintColor = UIColor(Color.textSecondaryForeground.opacity(ConstantColors.opacityHalf))
-        control.backgroundColor = UIColor(Color.secondaryTop.opacity(0.2))
+        //control.backgroundColor = UIColor(Color.secondaryTop.opacity(0.2))
         
         return control
     }
@@ -70,7 +70,7 @@ struct PickerView<E>: UIViewRepresentable where E: CaseIterable & RawRepresentab
             }
             
         } else {
-            uiView.selectedSegmentTintColor = UIColor(Color.textSecondaryForeground.opacity(ConstantColors.opacityHalf))
+            //uiView.selectedSegmentTintColor = UIColor(Color.textSecondaryForeground.opacity(ConstantColors.opacityHalf))
         }
     }
 
@@ -97,6 +97,8 @@ struct PickerView<E>: UIViewRepresentable where E: CaseIterable & RawRepresentab
     @Previewable @State var dateTimeInterval: DateTimeInterval = .month
     
     VStack {
+        Spacer()
+        
         PickerView(selection: $accountType)
         
         PickerView(selection: $categoryType)
@@ -104,8 +106,11 @@ struct PickerView<E>: UIViewRepresentable where E: CaseIterable & RawRepresentab
         PickerView(selection: $currencyType)
         
         PickerView(selection: $dateTimeInterval)
+        
+        Spacer()
     }
     .environment(\.locale, .init(identifier: Previews.localeES))
+    .background(Color.backgroundBottom)
 }
 
 #Preview(Previews.localeES) {

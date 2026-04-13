@@ -27,7 +27,7 @@ struct MenuContainer<Content: View>: View {
     
     var body: some View {
         Menu(content: content) {
-            TextPlain(title, color: disabled ? Color.disabledForeground : Color.buttonForeground)
+            TextPlain(title, color: disabled ? Color.disabledForeground : Color.buttonForeground, size: .medium)
                 .padding(.trailing, addHorizontalPadding ? nil : .zero)
         }
         .menuOrder(.fixed)

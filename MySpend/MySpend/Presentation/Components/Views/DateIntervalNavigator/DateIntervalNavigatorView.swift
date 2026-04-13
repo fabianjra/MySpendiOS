@@ -59,6 +59,7 @@ struct DateIntervalNavigatorView<Content: View>: View {
             PickerView(selection: $dateTimeInterval)
                 .disabled(isEditing)
                 .animation(.default,value: isEditing)
+                .glassEffect(.regular)
             
             
             RowLCTCointainer(disabled: isEditing) {
@@ -74,7 +75,7 @@ struct DateIntervalNavigatorView<Content: View>: View {
                 Button {
                     selectedDate = viewModel.navigateDateTime(selectedDate, to: .today, byAdding: dateTimeInterval)
                 } label: {
-                    TextPlain("Today", color: isEditing ? Color.disabledForeground : Color.textPrimaryForeground)
+                    TextPlain("Today", color: isEditing ? Color.disabledForeground : Color.textPrimaryForeground, size: .medium)
                 }
                 .modifier(ShowReservesSpace(!selectedDate.isSameDate(.now))) //Uses modifier because need to keep space.
             }
@@ -92,10 +93,9 @@ struct DateIntervalNavigatorView<Content: View>: View {
                     .fontWeight(.thin)
                     .frame(width: FrameSize.width.buttonSelectValueInterval,
                            height: FrameSize.height.buttonSelectValueInterval)
-                    .padding(.leading, ConstantViews.bigSpacing)
-                    .contentShape(Rectangle())
             }
-            
+            .padding(ConstantViews.paddingButtonNavigator)
+            .glassEffect(.regular.interactive())
             
             Button {
                 //Pressed many times by mistake. There is now a button to the right called "today".
@@ -103,7 +103,7 @@ struct DateIntervalNavigatorView<Content: View>: View {
             } label: {
                 let header = viewModel.getHeader(selectedDate, by: dateTimeInterval)
                 
-                TextPlain(header, color: isEditing ? Color.disabledForeground : Color.buttonForeground)
+                TextPlain(header, color: isEditing ? Color.disabledForeground : Color.buttonForeground, size: .medium)
                     .frame(width: FrameSize.width.buttonSelectValueIntervalCenter,
                            height: FrameSize.height.buttonSelectValueInterval)
                     .contentShape(Rectangle())
@@ -119,9 +119,9 @@ struct DateIntervalNavigatorView<Content: View>: View {
                     .fontWeight(.thin)
                     .frame(width: FrameSize.width.buttonSelectValueInterval,
                            height: FrameSize.height.buttonSelectValueInterval)
-                    .padding(.trailing, ConstantViews.bigSpacing)
-                    .contentShape(Rectangle())
             }
+            .padding(ConstantViews.paddingButtonNavigator)
+            .glassEffect(.regular.interactive())
         }
         .padding(.vertical, ConstantViews.mediumSpacing)
         .buttonStyle(ButtonScaleStyle())

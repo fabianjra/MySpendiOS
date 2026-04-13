@@ -32,12 +32,13 @@ struct DateIntervalNavigatorViewModel {
             break // keep day/month, just zero the time
             
         case .month:
-            components.day = 1
+            //components.day = 1 //Ya no se navegará hacia el dia 1, al cambiar entre meses
             break
             
         case .year:
-            components.day = 1
-            components.month = 1
+            //Ya no se navegará hacia el dia 1, al cambiar entre meses o años
+            //components.day = 1
+            //components.month = 1
             break
         }
         

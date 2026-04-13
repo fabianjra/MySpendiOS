@@ -30,7 +30,7 @@ struct RootView: View {
                 switch destination {
                     
                 case .mainView:
-                    TransactionView().toolbar(.hidden, for: .navigationBar)
+                    TransactionView()
                     
                 case .onBoardingName:
                     OnBoardingUsernameView()

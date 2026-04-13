@@ -83,12 +83,10 @@ struct TransactionView: View {
                                                isMutipleAccounts: $viewModel.isMutipleAccounts)
                     } label: {
                         TextButtonHorizontalStyled(Localizable.Button.history.key,
-                                                   subTitle: Localizable.Button.history_subtitle.key,
                                                    iconLeading: Image.stackFill,
                                                    iconTrailing: Image.arrowRight)
                     }
                 }
-                
                 
                 // MARK: - TRANSACTIONS
                 
@@ -196,10 +194,10 @@ struct TransactionView: View {
             
             ToolbarItem(placement: .bottomBar) {
                 
-                Button("Add transaction", systemImage: "plus", role: .confirm) {
+                Button("Add transaction", systemImage: "plus") {
                     showNewTransactionModal = true
                 }
-                .tint(Color.primaryTop)
+                //.tint(Color.primaryTop)
             }
             .matchedTransitionSource(id: transitionNewTransaction, in: namesapce)
         }

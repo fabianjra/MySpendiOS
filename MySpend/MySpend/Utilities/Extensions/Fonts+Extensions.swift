@@ -59,7 +59,7 @@ extension Font {
             switch self {
             case .small: return UIFont.preferredFont(forTextStyle: .caption1).pointSize //12
             case .mediumSmall: return UIFont.preferredFont(forTextStyle: .footnote).pointSize //13
-            case .medium: return (UIFont.preferredFont(forTextStyle: .callout).pointSize - 1) //15 (16-1)
+            case .medium: return (UIFont.preferredFont(forTextStyle: .callout).pointSize) //16
             case .body: return UIFont.preferredFont(forTextStyle: .body).pointSize //17
             case .big: return UIFont.preferredFont(forTextStyle: .title3).pointSize //20
             case .bigL: return UIFont.preferredFont(forTextStyle: .title2).pointSize //22

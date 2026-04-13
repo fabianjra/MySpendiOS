@@ -40,7 +40,7 @@ extension Image {
     static let tabResume = Image(systemName: "list.bullet.rectangle") // Resume
     static let tabResumeFill = Image(systemName: "list.bullet.rectangle.fill")
     static let settings = Image(systemName: "gearshape") // Settings
-    static let settingsFill = Image(systemName: "gearshape.fill")
+    static let settingsFill = Image(systemName: "gear")
     
     // MARK: LIST
     static let listBulletClipboard = Image(systemName: "list.bullet.clipboard") // Categories

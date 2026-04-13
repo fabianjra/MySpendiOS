@@ -11,7 +11,7 @@ struct TextButtonHorizontalStyled: View {
     
     private let text: LocalizedStringKey
     private let table: String
-    private let subTitle: LocalizedStringKey
+    private let subTitle: LocalizedStringKey?
     private let color: Array<Color>
     private let iconLeading: Image?
     private let iconTrailing: Image?
@@ -19,7 +19,7 @@ struct TextButtonHorizontalStyled: View {
     init(_ text: LocalizedStringKey = "",
          table: String = LocalizableTable.button,
          color: Array<Color> = Color.secondaryGradiant,
-         subTitle: LocalizedStringKey = "",
+         subTitle: LocalizedStringKey? = nil,
          iconLeading: Image? = nil,
          iconTrailing: Image? = nil) {
         self.text = text
@@ -37,7 +37,7 @@ struct TextButtonHorizontalStyled: View {
             if let iconLeading = iconLeading {
                 iconLeading
                     .foregroundColor(Color.textPrimaryForeground)
-                    .padding()
+                    .padding(ConstantViews.paddingButtonNavigator)
                     .background(
                         LinearGradient(colors: Color.primaryGradiant,
                                        startPoint: .top,
@@ -49,24 +49,24 @@ struct TextButtonHorizontalStyled: View {
             
             VStack(alignment: .leading) {
                 Text(text, tableName: table)
-                    .font(.montserrat(size: .big))
+                    .font(.montserrat())
                     .foregroundColor(Color.buttonForeground)
                     .lineLimit(ConstantViews.singleTextMaxLines)
                 
-                Text(subTitle, tableName: table)
-                    .font(.montserrat(size: .small))
-                    .foregroundColor(Color.textFieldPlaceholder)
-                    .lineLimit(ConstantViews.singleTextMaxLines)
+                if let subtitle = subTitle {
+                    Text(subtitle, tableName: table)
+                        .font(.montserrat(size: .small))
+                        .foregroundColor(Color.textFieldPlaceholder)
+                        .lineLimit(ConstantViews.singleTextMaxLines)
+                }
             }
             .padding(.horizontal)
-            
             
             Spacer()
             
             if let iconTrailing = iconTrailing {
                 iconTrailing
                     .foregroundColor(Color.textPrimaryForeground)
-                    .padding()
                     .padding(.trailing)
             }
         }
@@ -74,11 +74,10 @@ struct TextButtonHorizontalStyled: View {
         
         // MARK: SHAPE
         .frame(maxWidth: .infinity)
-        .padding(.vertical)
-        .background(LinearGradient(colors: color,
-                                   startPoint: .top,
-                                   endPoint: .bottom))
-        .cornerRadius(ConstantRadius.corners)
+        .padding(.vertical, ConstantViews.paddingButtonNavigator)
+        //.glassEffect(.regular.tint(Color.secondaryTop).interactive())
+        .glassEffect(.regular.interactive())
+
     }
 }
 

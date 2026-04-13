@@ -41,6 +41,8 @@ struct ConstantViews {
     static let paddingButtonAddCategory: CGFloat = 20.0
     static let paddingLoaderView: CGFloat = 50.0
     static let paddingNavigationBarIcon: CGFloat = 5.0
+    static let paddingButtonLarge: CGFloat = 10.0
+    static let paddingButtonNavigator: CGFloat = 7.5
     
     // MARK: SCALE
     static let calendarScale: CGFloat = 1.10
