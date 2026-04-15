@@ -24,13 +24,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "History"
+            "value" : "Go to History"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Historial"
+            "value" : "Ir al Historial"
           }
         }
       }
@@ -41,13 +41,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Go to history"
+            "value" : "You can view the full history"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ir al historial"
+            "value" : "Puedes ver el historial completo"
           }
         }
       }

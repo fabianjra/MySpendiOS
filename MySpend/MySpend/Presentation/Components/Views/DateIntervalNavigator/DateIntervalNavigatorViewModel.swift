@@ -25,7 +25,7 @@ struct DateIntervalNavigatorViewModel {
         
         // Normalise to “first unit” and 00:00
         let calendar = Calendar.current
-        var components = calendar.dateComponents([.year, .month, .day], from: newDate)
+        let components = calendar.dateComponents([.year, .month, .day], from: newDate)
         
         switch dateTimeInterval {
         case .day, .week:

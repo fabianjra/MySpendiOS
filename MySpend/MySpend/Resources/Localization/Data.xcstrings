@@ -29,7 +29,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Intenta agregando un nuevo valor en el botón de más (+)"
           }
         }

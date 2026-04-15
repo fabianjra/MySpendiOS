@@ -136,7 +136,7 @@ struct CategoryView: View {
                                                                         sortType: viewModel.sortCategoriesBy)
             
             if categoriesFiltered.isEmpty {
-                NoContentToAddView(rotationDegress: ConstantAnimations.rotationArrowBottomTrailing)
+                NoContentToAddView()
             } else {
                 ListContainer {
                     ForEach(categoriesFiltered) { item in

@@ -93,9 +93,8 @@ struct DateIntervalNavigatorView<Content: View>: View {
                     .fontWeight(.thin)
                     .frame(width: FrameSize.width.buttonSelectValueInterval,
                            height: FrameSize.height.buttonSelectValueInterval)
+                    .padding(.leading, ConstantViews.bigSpacing)
             }
-            .padding(ConstantViews.paddingButtonNavigator)
-            .glassEffect(.regular.interactive())
             
             Button {
                 //Pressed many times by mistake. There is now a button to the right called "today".
@@ -119,9 +118,8 @@ struct DateIntervalNavigatorView<Content: View>: View {
                     .fontWeight(.thin)
                     .frame(width: FrameSize.width.buttonSelectValueInterval,
                            height: FrameSize.height.buttonSelectValueInterval)
+                    .padding(.trailing, ConstantViews.bigSpacing)
             }
-            .padding(ConstantViews.paddingButtonNavigator)
-            .glassEffect(.regular.interactive())
         }
         .padding(.vertical, ConstantViews.mediumSpacing)
         .buttonStyle(ButtonScaleStyle())

@@ -73,32 +73,27 @@ struct TransactionView: View {
                 }
                 
                 
-                // MARK: - HISTORY BUTTON
-                
-                VStack {
-                    NavigationLink {
-                        TransactionHistoryView(transactionsLoaded: $viewModel.transactions,
-                                               dateTimeInterval: $dateTimeInterval,
-                                               selectedDate: $selectedDate,
-                                               isMutipleAccounts: $viewModel.isMutipleAccounts)
-                    } label: {
-                        TextButtonHorizontalStyled(Localizable.Button.history.key,
-                                                   iconLeading: Image.stackFill,
-                                                   iconTrailing: Image.arrowRight)
-                    }
-                }
-                
                 // MARK: - TRANSACTIONS
                 
                 if viewModel.transactions.isEmpty {
-                    
                     NoContentToAddView()
-                    
                 } else {
                     VStack {
+                        NavigationLink {
+                            TransactionHistoryView(transactionsLoaded: $viewModel.transactions,
+                                                   dateTimeInterval: $dateTimeInterval,
+                                                   selectedDate: $selectedDate,
+                                                   isMutipleAccounts: $viewModel.isMutipleAccounts)
+                        } label: {
+                            TextButtonHorizontalStyled(Localizable.Button.history.key,
+                                                       iconLeading: Image.stackFill,
+                                                       iconTrailing: Image.arrowRight)
+                        }
+                        
                         DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval,
                                                   selectedDate: $selectedDate,
                                                   isEditing: .constant(false)){}
+                        
                         
                         let transactionsFiltered = UtilsTransactions.filteredTransactions(selectedDate,
                                                                                           transactions: viewModel.transactions,

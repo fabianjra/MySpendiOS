@@ -12,20 +12,17 @@ struct TextButtonHorizontalStyled: View {
     private let text: LocalizedStringKey
     private let table: String
     private let subTitle: LocalizedStringKey?
-    private let color: Array<Color>
     private let iconLeading: Image?
     private let iconTrailing: Image?
     
     init(_ text: LocalizedStringKey = "",
          table: String = LocalizableTable.button,
-         color: Array<Color> = Color.secondaryGradiant,
          subTitle: LocalizedStringKey? = nil,
          iconLeading: Image? = nil,
          iconTrailing: Image? = nil) {
         self.text = text
         self.table = table
         self.subTitle = subTitle
-        self.color = color
         self.iconLeading = iconLeading
         self.iconTrailing = iconTrailing
     }
@@ -37,13 +34,6 @@ struct TextButtonHorizontalStyled: View {
             if let iconLeading = iconLeading {
                 iconLeading
                     .foregroundColor(Color.textPrimaryForeground)
-                    .padding(ConstantViews.paddingButtonNavigator)
-                    .background(
-                        LinearGradient(colors: Color.primaryGradiant,
-                                       startPoint: .top,
-                                       endPoint: .bottom)
-                    )
-                    .clipShape(Circle())
             }
             
             
@@ -56,7 +46,7 @@ struct TextButtonHorizontalStyled: View {
                 if let subtitle = subTitle {
                     Text(subtitle, tableName: table)
                         .font(.montserrat(size: .small))
-                        .foregroundColor(Color.textFieldPlaceholder)
+                        .foregroundColor(Color.textPrimaryForeground)
                         .lineLimit(ConstantViews.singleTextMaxLines)
                 }
             }
@@ -74,7 +64,7 @@ struct TextButtonHorizontalStyled: View {
         
         // MARK: SHAPE
         .frame(maxWidth: .infinity)
-        .padding(.vertical, ConstantViews.paddingButtonNavigator)
+        .padding(.vertical)
         //.glassEffect(.regular.tint(Color.secondaryTop).interactive())
         .glassEffect(.regular.interactive())
 
@@ -83,6 +73,10 @@ struct TextButtonHorizontalStyled: View {
 
 #Preview {
     VStack {
+        TextButtonHorizontalStyled("Go to hitory",
+                                   iconLeading: Image.stackFill,
+                                   iconTrailing: Image.arrowRight)
+        
         TextButtonHorizontalStyled("Go to hitory",
                                    subTitle: "Enter the history",
                                    iconLeading: Image.stackFill,
