@@ -119,7 +119,7 @@ struct TransactionView: View {
                         TextError(viewModel.errorMessage)
                         
                         TotalBalanceView(transactions: transactionsFiltered)
-                        //.padding(.bottom, ConstantViews.paddingBottomResumeview)
+                            .padding(.bottom)
                         
                         //TODO: Aplicar wheel de accounts
                         //                        if viewModel.showAccountFilter {
@@ -128,6 +128,7 @@ struct TransactionView: View {
                         //                            }.pickerStyle(.wheel)
                         //                        }
                     }
+                    .ignoresSafeArea(.keyboard, edges: .bottom)
                     
                     //Tiene un efecto no deseado al transicionar entre tab y tab.
                     //TODO: Revisar si con listener se comporta diferente.
