@@ -84,16 +84,23 @@ struct AddModifyCategoryView: View {
                 .buttonStyle(ButtonTextFieldStyle(icon: viewModel.model.icon, actionClear: {
                     viewModel.model.icon = ""
                 }))
+                
+                TextError(viewModel.errorMessage)
+                    .padding(.vertical)
             }
-            
-            
-            // MARK: BUTTONS
+        }
+        .safeAreaInset(edge: .bottom) {
             VStack {
-                Button(viewModel.isAddModel ? "Add" : "Modify") {
+                Button(action: {
                     process(viewModel.isAddModel ? .add : .modify)
-                }
-                .buttonStyle(ButtonPrimaryStyle())
-                .padding(.vertical)
+                }, label: {
+                    TextPlain(viewModel.isAddModel ? "Add" : "Modify")
+                        .padding(.vertical, ConstantViews.paddingButtonTransaction)
+                        .frame(maxWidth: ConstantFrames.iPadMaxWidth)
+                })
+                .buttonStyle(.glass)
+                .padding(.bottom, viewModel.isAddModel ? nil : .zero)
+                
                 
                 if viewModel.isAddModel == false {
                     Button("Delete") {
@@ -107,11 +114,10 @@ struct AddModifyCategoryView: View {
                         Text("Want to delete this category? \n This action cannot be undone.")
                     }
                 }
-                
-                
-                TextError(viewModel.errorMessage)
             }
+            .padding(.horizontal)
         }
+        
         .onAppear {
             focusedField = .name
             

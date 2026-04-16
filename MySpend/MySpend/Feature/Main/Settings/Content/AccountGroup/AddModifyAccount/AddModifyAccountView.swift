@@ -71,17 +71,23 @@ struct AddModifyAccountView: View {
                 }
                 .tint(Color.primaryBottom)
                 .padding(.horizontal)
+                
+                TextError(viewModel.errorMessage)
+                    .padding(.vertical)
             }
-            
-            
-            // MARK: BUTTONS
-            
+        }
+        .safeAreaInset(edge: .bottom) {
             VStack {
-                Button(viewModel.isAddModel ? "Add" : "Modify") {
+                Button(action: {
                     process(viewModel.isAddModel ? .add : .modify)
-                }
-                .buttonStyle(ButtonPrimaryStyle())
-                .padding(.vertical)
+                }, label: {
+                    TextPlain(viewModel.isAddModel ? "Add" : "Modify")
+                        .padding(.vertical, ConstantViews.paddingButtonTransaction)
+                        .frame(maxWidth: ConstantFrames.iPadMaxWidth)
+                })
+                .buttonStyle(.glass)
+                .padding(.bottom, viewModel.isAddModel ? nil : .zero)
+                
                 
                 if viewModel.isAddModel == false {
                     Button("Delete") {
@@ -95,11 +101,10 @@ struct AddModifyAccountView: View {
                         Text("Want to delete this account? \n This action cannot be undone.")
                     }
                 }
-                
-                
-                TextError(viewModel.errorMessage)
             }
+            .padding(.horizontal)
         }
+        
         .sheet(isPresented: $showIconsModal) {
             IconListModalView(selectedIcon: $selectedIcon, showModal: $showIconsModal)
         }

@@ -35,24 +35,26 @@ struct OnBoardingUsernameView: View {
                 
                 
                 Button {
-                    viewModel.continueToNextStep(withName: true)
+                    Task {
+                        viewModel.continueToNextStep(withName: true)
+                    }
                 } label: {
                     TextPlainLocalized(Localizable.Button.continu)
+                        .padding(.vertical, ConstantViews.paddingButtonTransaction)
+                        .frame(maxWidth: ConstantFrames.iPadMaxWidth)
                 }
-                .buttonStyle(ButtonPrimaryStyle())
+                .buttonStyle(.glass)
+                
                 
                 Button {
                     viewModel.continueToNextStep(withName: false)
                 } label: {
                     TextPlainLocalized(Localizable.Button.skip)
                 }
-                .buttonStyle(ButtonLinkStyle())
-                .padding(.bottom)
                 
                 
                 TextError(viewModel.errorMessage)
             }
-            .modifier(AddKeyboardToolbar(focusedField: $focusedField))
         }
         .onAppear {
             focusedField = .userName

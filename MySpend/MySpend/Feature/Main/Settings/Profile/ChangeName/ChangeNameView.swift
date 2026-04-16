@@ -32,17 +32,26 @@ struct ChangeNameView: View {
                 }
                 
                 
-                Button("Confirm") {
-                        viewModel.changeUserName()
-                }
-                .buttonStyle(ButtonPrimaryStyle())
-                .disabled(viewModel.disabled)
-                
-                
                 TextError(viewModel.errorMessage)
             }
         }
         .navigationTitle("Change name")
+        
+        .safeAreaInset(edge: .bottom) {
+            VStack {
+                Button(action: {
+                    viewModel.changeUserName()
+                }, label: {
+                    TextPlain("Confirm")
+                        .padding(.vertical, ConstantViews.paddingButtonTransaction)
+                        .frame(maxWidth: ConstantFrames.iPadMaxWidth)
+                })
+                .buttonStyle(.glass)
+                .padding(.bottom)
+            }
+            .padding(.horizontal)
+        }
+        
         .onAppear {
             focusedField = .newUsername
             viewModel.onAppear()

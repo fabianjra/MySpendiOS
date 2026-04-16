@@ -36,15 +36,16 @@ struct OnBoardingAccountView: View {
                     }
                 }
                 
-                
                 Button {
                     Task {
                         await viewModel.finishOnBoarding(withName: true)
                     }
                 } label: {
                     TextPlainLocalized(Localizable.Button.continu)
+                        .padding(.vertical, ConstantViews.paddingButtonTransaction)
+                        .frame(maxWidth: ConstantFrames.iPadMaxWidth)
                 }
-                .buttonStyle(ButtonPrimaryStyle())
+                .buttonStyle(.glass)
                 
                 
                 Button {
@@ -54,13 +55,10 @@ struct OnBoardingAccountView: View {
                 } label: {
                     TextPlainLocalized(Localizable.Button.skip)
                 }
-                .buttonStyle(ButtonLinkStyle())
-                .padding(.bottom)
-                
                 
                 TextError(viewModel.errorMessage)
             }
-            .modifier(AddKeyboardToolbar(focusedField: $focusedField))
+            //.modifier(AddKeyboardToolbar(focusedField: $focusedField))
         }
         .onAppear {
             focusedField = .name

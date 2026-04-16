@@ -137,11 +137,16 @@ struct AddModifyTransactionView: View {
         }
         .safeAreaInset(edge: .bottom) {
             VStack {
-                Button(viewModel.isNewModel ? "Add" : "Modify") {
+                Button(action: {
                     process(viewModel.isNewModel ? .add : .modify)
-                }
-                .buttonStyle(ButtonPrimaryStyle())
+                }, label: {
+                    TextPlain(viewModel.isNewModel ? "Add" : "Modify")
+                        .padding(.vertical, ConstantViews.paddingButtonTransaction)
+                        .frame(maxWidth: ConstantFrames.iPadMaxWidth)
+                })
+                .buttonStyle(.glass)
                 .padding(.bottom, viewModel.isNewModel ? nil : .zero)
+                
                 
                 if viewModel.isNewModel == false {
                     Button("Delete") {
