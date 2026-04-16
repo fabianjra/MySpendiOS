@@ -43,6 +43,7 @@ struct FormContainer<Content: View>: View {
                                    center: backgroundCenter,
                                    startRadius: .zero,
                                    endRadius: ConstantColors.endRadiusBackground))
+        .ignoresSafeArea(.all, edges: .bottom)
     }
 }
 
