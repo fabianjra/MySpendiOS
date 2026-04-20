@@ -11,11 +11,6 @@ struct TransactionView: View {
     
     @StateObject private var viewModel = TransactionViewModel()
     
-    //MARK: VIEW PROPERTIES
-    @State private var dateTimeInterval = UserDefaultsManager.dateTimeInterval
-    @State private var selectedDate: Date = .now
-    @State private var searchText: String = ""
-    
     // MARK: NAVIGATION
     @State private var showNewTransactionModal = false
     @State private var showSettings = false
@@ -24,10 +19,7 @@ struct TransactionView: View {
     
     // MARK: NAMESPACES
     @Namespace private var namesapce
-    
-    private var transitionNewTransaction = "id-new-transaction"
-    private var transitionSettings = "id-settings"
-    
+
     var body: some View {
         VStack {
             
@@ -63,11 +55,11 @@ struct TransactionView: View {
                             .frame(width: ConstantFrames.navigationBarIcon,
                                    height: ConstantFrames.navigationBarIcon)
                             .padding(ConstantViews.paddingNavigationBarIcon)
-                        //.foregroundStyle(Color.buttonForeground)
+                        .foregroundStyle(Color.buttonForeground)
                     }
                     .buttonStyle(.glass)
                     .buttonBorderShape(.circle)
-                    .matchedTransitionSource(id: transitionSettings, in: namesapce)
+                    .matchedTransitionSource(id: viewModel.transitionSettings, in: namesapce)
                     
                     //TODO: Agregar boton para filtrar Accounts. A la derecha del nombre del usuario
                 }
@@ -81,23 +73,23 @@ struct TransactionView: View {
                     VStack {
                         NavigationLink {
                             TransactionHistoryView(transactionsLoaded: $viewModel.transactions,
-                                                   dateTimeInterval: $dateTimeInterval,
-                                                   selectedDate: $selectedDate,
-                                                   isMutipleAccounts: $viewModel.isMutipleAccounts)
+                                                   dateTimeInterval: $viewModel.dateTimeInterval,
+                                                   selectedDate: $viewModel.selectedDate,
+                                                   isMutipleAccounts: viewModel.accounts.count > 1 ? true : false)
                         } label: {
                             TextButtonHorizontalStyled(Localizable.Button.history.key,
                                                        iconLeading: Image.stackFill,
                                                        iconTrailing: Image.arrowRight)
                         }
                         
-                        DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval,
-                                                  selectedDate: $selectedDate,
+                        DateIntervalNavigatorView(dateTimeInterval: $viewModel.dateTimeInterval,
+                                                  selectedDate: $viewModel.selectedDate,
                                                   isEditing: .constant(false)){}
                         
                         
-                        let transactionsFiltered = UtilsTransactions.filteredTransactions(selectedDate,
+                        let transactionsFiltered = UtilsTransactions.filteredTransactions(viewModel.selectedDate,
                                                                                           transactions: viewModel.transactions,
-                                                                                          for: dateTimeInterval)
+                                                                                          for: viewModel.dateTimeInterval)
                         
                         let groupedTransactions = UtilsCurrency.calculateGroupedTransactions(transactionsFiltered)
                             .sorted(by: { $0.totalAmount > $1.totalAmount })
@@ -120,13 +112,6 @@ struct TransactionView: View {
                         
                         TotalBalanceView(transactions: transactionsFiltered)
                             .padding(.bottom)
-                        
-                        //TODO: Aplicar wheel de accounts
-                        //                        if viewModel.showAccountFilter {
-                        //                            Picker("Accounts", selection: $viewModel.dateTimeInterval) {
-                        //
-                        //                            }.pickerStyle(.wheel)
-                        //                        }
                     }
                     .ignoresSafeArea(.keyboard, edges: .bottom)
                     
@@ -159,47 +144,102 @@ struct TransactionView: View {
         }
         .sheet(isPresented: $showNewTransactionModal) {
             NavigationStack {
-                AddModifyTransactionView(selectedDate: selectedDate)
+                AddModifyTransactionView(selectedDate: viewModel.selectedDate)
             }
-            .navigationTransition(
-                .zoom(sourceID: transitionNewTransaction, in: namesapce)
-            )
+//            .navigationTransition(
+//                .zoom(sourceID: transitionNewTransaction, in: namesapce)
+//            )
         }
         .toolbar {
-            ToolbarItemGroup(placement: .bottomBar) {
-                Button {
-                    //Filter
-                } label: {
-                    Image.filter
-                }
-                
-                VStack(alignment: .leading) {
-                    TextPlain("Filtered by", size: .medium)
-                    TextPlain("none", size: .mediumSmall)
-                }
-                .padding(.trailing)
-                .fixedSize(horizontal: true, vertical: false)
-                //.layoutPriority(1)
-            }
+            filterButton
             
             ToolbarSpacer(.flexible, placement: .bottomBar)
             
             DefaultToolbarItem(kind: .search, placement: .bottomBar)
             
-            ToolbarSpacer(.fixed, placement: .bottomBar)
+            //ToolbarSpacer(.fixed, placement: .bottomBar)
             
             ToolbarItem(placement: .bottomBar) {
-                
                 Button("Add transaction", systemImage: "plus") {
                     showNewTransactionModal = true
                 }
-                //.tint(Color.primaryTop)
+                .tint(Color.primaryTop)
             }
-            .matchedTransitionSource(id: transitionNewTransaction, in: namesapce)
+            .matchedTransitionSource(id: viewModel.transitionNewTransaction, in: namesapce)
         }
-        .searchable(text: $searchText, isPresented: $showSearchView, placement: .toolbar)
+        .searchable(text: $viewModel.searchText, isPresented: $showSearchView, placement: .toolbar)
         .searchToolbarBehavior(.minimize)
         .toolbar(.hidden, for: .navigationBar)
+    }
+    
+    private var filterButton: some ToolbarContent {
+        ToolbarItemGroup(placement: .bottomBar) {
+            
+            Button {
+                withAnimation {
+                    viewModel.showFilter.toggle()
+                }
+                
+            } label: {
+                if viewModel.showFilter {
+                    Image.filter
+                        .foregroundStyle(.textPrimaryForeground)
+                        .font(.system(size: 18, weight: .semibold))
+                        .padding(.horizontal, ConstantViews.paddingMedium)
+                        .padding(.vertical, ConstantViews.paddingMedium)
+                        .background(Capsule().fill(Color.primaryTop))
+                } else {
+                    Image.filter
+                        .foregroundStyle(.textPrimaryForeground)
+                        .font(.system(size: 18, weight: .semibold))
+                        .padding(.horizontal, ConstantViews.paddingMedium)
+                        .padding(.vertical, ConstantViews.paddingMedium)
+                }
+            }
+            
+            if viewModel.showFilter {
+                Menu {
+                    if viewModel.selectedAccountFilter != nil {
+                        Button("Clear filter", role: .destructive) {
+                            viewModel.selectedAccountFilter = nil
+                        }
+                    }
+                    
+                    if viewModel.accounts.isEmpty {
+                        Text("No accounts yet")
+                            .foregroundStyle(.secondary)
+                    } else {
+                        ForEach(viewModel.accounts) { account in
+                            Button(account.name) {
+                                viewModel.selectedAccountFilter = account
+                                viewModel.filterTransactions()
+                            }
+                        }
+                    }
+                } label: {
+                    // Texto “Filtered by …” que aparece solo si hay selección
+                    if let filter = viewModel.selectedAccountFilter {
+                        VStack(alignment: .leading) {
+                            TextPlain("Filtered by", size: .medium)
+                            TextPlain(filter.name, color: .primaryTop, size: .mediumSmall, truncateMode: .tail)
+                        }
+                        .padding(.trailing)
+                        .frame(maxWidth: ConstantFrames.filterMaxWidth)
+                        .transition(.opacity.combined(with: .move(edge: .trailing)))
+                        .animation(.default, value: viewModel.selectedAccountFilter)
+                    } else {
+                        // Si quieres mostrar “none” cuando no hay filtro:
+                        VStack(alignment: .leading) {
+                            TextPlain("Filtered by", size: .medium)
+                            TextPlain("none", size: .mediumSmall)
+                        }
+                        .padding(.trailing)
+                        .transition(.opacity.combined(with: .move(edge: .trailing)))
+                        .animation(.default, value: viewModel.selectedAccountFilter)
+                    }
+                }
+            }
+        }
     }
 }
 

@@ -14,7 +14,7 @@ struct TransactionHistoryView: View {
     @Binding var transactionsLoaded: [TransactionModel]
     @Binding var dateTimeInterval: DateTimeInterval
     @Binding var selectedDate: Date
-    @Binding var isMutipleAccounts: Bool
+    var isMutipleAccounts: Bool
     
     @State private var showNewItemModal = false
     @State private var modelToModify: TransactionModel?
@@ -295,7 +295,7 @@ private struct TransactionPreviewWrapper: View {
         TransactionHistoryView(transactionsLoaded: $transactionsLoaded,
                                dateTimeInterval: $dateTimeInterval,
                                selectedDate: $selectedDate,
-                               isMutipleAccounts: $isMultipleAccounts)
+                               isMutipleAccounts: isMultipleAccounts)
         .task {
             transactionsLoaded = await MockTransactionModel.fetchAll()
             

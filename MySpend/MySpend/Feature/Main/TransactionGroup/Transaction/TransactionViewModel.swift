@@ -5,18 +5,33 @@
 //  Created by Fabian Rodriguez on 8/8/24.
 //
 
-import Combine
+import Foundation
 
 class TransactionViewModel: BaseViewModel {
 
     @Published var userName = UserDefaultsManager.userName
-    //@Published var dateTimeInterval = UserDefaultsManager.dateTimeInterval
     
+    private var allTransactions: [TransactionModel] = []
     @Published var transactions: [TransactionModel] = []
     @Published var groupedTransactions: UtilsCurrency.groupedTransactions = []
     
-    @Published var isMutipleAccounts: Bool = false
-    @Published var showAccountFilter: Bool = false
+    
+    //MARK: VIEW PROPERTIES
+    @Published var dateTimeInterval = UserDefaultsManager.dateTimeInterval
+    @Published var selectedDate: Date = .now
+    @Published var searchText: String = ""
+
+    
+    // MARK: NAMESPACES
+    var transitionNewTransaction = "id-new-transaction"
+    var transitionSettings = "id-settings"
+
+    
+    // MARK: FILTER
+    //@Published var isMutipleAccounts: Bool = false
+    @Published var showFilter = false
+    @Published var selectedAccountFilter: AccountModel? = nil
+    @Published var accounts: [AccountModel] = []
     
     /**
      Call this function in `onFirstAppear`.
@@ -39,18 +54,25 @@ class TransactionViewModel: BaseViewModel {
     
     private func fetchAll() async {
         do {
-            transactions = try await TransactionManager(viewContext).fetchAll()
-            groupedTransactions = UtilsCurrency.calculateGroupedTransactions(transactions)
+            let fetched = try await TransactionManager(viewContext).fetchAll()
+            allTransactions = fetched
+            transactions = fetched
             
-            try await fetchAccountCount()
+            groupedTransactions = UtilsCurrency.calculateGroupedTransactions(transactions)
+            accounts = try await AccountManager(viewContext).fetchAll()
         } catch {
             errorMessage = error.localizedDescription
             Logger.exception(error, type: .CoreData)
         }
     }
     
-    private func fetchAccountCount() async throws {
-        let count = try await AccountManager(viewContext).fetchAllCount()
-        isMutipleAccounts = count > 1 ? true : false
+    func filterTransactions() {
+        if let selectedAccountFilter {
+            transactions = allTransactions.filter { $0.account.id == selectedAccountFilter.id }
+        } else {
+            transactions = allTransactions
+        }
+
+        groupedTransactions = UtilsCurrency.calculateGroupedTransactions(transactions)
     }
 }
