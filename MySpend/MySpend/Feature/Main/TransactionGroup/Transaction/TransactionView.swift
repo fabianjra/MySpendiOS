@@ -14,8 +14,11 @@ struct TransactionView: View {
     // MARK: NAVIGATION
     @State private var showNewTransactionModal = false
     @State private var showSettings = false
-    @State private var navigateToHistory: Bool = false
+    @State private var showFiltersView = false
     @State private var showSearchView = false
+    
+    @State private var navigateToHistory: Bool = false
+    
     
     // MARK: NAMESPACES
     @Namespace private var namesapce
@@ -124,6 +127,55 @@ struct TransactionView: View {
         .padding(.horizontal)
         .background(Color.backgroundContentGradient)
         
+        
+        // MARK: SHEETS
+        
+        .sheet(isPresented: $showSettings) {
+            NavigationStack {
+                SettingsView()
+            }
+        }
+        .sheet(isPresented: $showNewTransactionModal) {
+            NavigationStack {
+                AddModifyTransactionView(selectedDate: viewModel.selectedDate)
+            }
+            //            .navigationTransition(
+            //                .zoom(sourceID: transitionNewTransaction, in: namesapce)
+            //            )
+        }
+        .popover(isPresented: $showFiltersView) {
+            NavigationStack {
+                FilterTransactionsView()
+            }
+            .navigationTransition(
+                .zoom(sourceID: viewModel.transitionFilters, in: namesapce)
+            )
+        }
+        
+        .toolbar {
+            filterDescriptionView
+            
+            ToolbarSpacer(.flexible, placement: .bottomBar)
+            
+            DefaultToolbarItem(kind: .search, placement: .bottomBar)
+            
+            //ToolbarSpacer(.fixed, placement: .bottomBar)
+            
+            ToolbarItem(placement: .bottomBar) {
+                Button("Add transaction", systemImage: "plus") {
+                    showNewTransactionModal = true
+                }
+                .tint(Color.primaryTop)
+            }
+            //.matchedTransitionSource(id: viewModel.transitionNewTransaction, in: namesapce)
+        }
+        .searchable(text: $viewModel.searchText, isPresented: $showSearchView, placement: .toolbar)
+        .searchToolbarBehavior(.minimize)
+        .toolbar(.hidden, for: .navigationBar)
+        
+        
+        // MARK: EVENTS
+        
         .onFirstAppear {
             Task {
                 await viewModel.activateObservers()
@@ -139,45 +191,14 @@ struct TransactionView: View {
         .onChange(of: viewModel.selectedAccountsFilter, {
             viewModel.filterTransactions()
         })
-        
-        .sheet(isPresented: $showSettings) {
-            NavigationStack {
-                SettingsView()
-            }
-        }
-        .sheet(isPresented: $showNewTransactionModal) {
-            NavigationStack {
-                AddModifyTransactionView(selectedDate: viewModel.selectedDate)
-            }
-            //            .navigationTransition(
-            //                .zoom(sourceID: transitionNewTransaction, in: namesapce)
-            //            )
-        }
-        .toolbar {
-            filterButton
-            
-            ToolbarSpacer(.flexible, placement: .bottomBar)
-            
-            DefaultToolbarItem(kind: .search, placement: .bottomBar)
-            
-            //ToolbarSpacer(.fixed, placement: .bottomBar)
-            
-            ToolbarItem(placement: .bottomBar) {
-                Button("Add transaction", systemImage: "plus") {
-                    showNewTransactionModal = true
-                }
-                .tint(Color.primaryTop)
-            }
-            .matchedTransitionSource(id: viewModel.transitionNewTransaction, in: namesapce)
-        }
-        .searchable(text: $viewModel.searchText, isPresented: $showSearchView, placement: .toolbar)
-        .searchToolbarBehavior(.minimize)
-        .toolbar(.hidden, for: .navigationBar)
     }
     
-    private var filterButton: some ToolbarContent {
+    
+    // MARK: FILTER
+    
+    //@ToolbarContentBuilder
+    private var filterDescriptionView: some ToolbarContent {
         ToolbarItemGroup(placement: .bottomBar) {
-            
             Button {
                 withAnimation {
                     viewModel.showFilter.toggle()
@@ -195,31 +216,10 @@ struct TransactionView: View {
                     .background(viewModel.selectedAccountsFilter.isEmpty ? nil : Capsule().fill(Color.primaryTop))
             }
             
+            
             if viewModel.showFilter {
-                Menu {
-                    Section("Filter by account") {
-                        if viewModel.allAccounts.isEmpty {
-                            Text("No accounts yet")
-                                .foregroundStyle(.secondary)
-                        } else {
-                            ForEach(viewModel.allAccounts) { account in
-                                Button(account.name) {
-                                    viewModel.selectedAccountsFilter.append(account)
-                                }
-                            }
-                        }
-                    }
-                    
-                    // Remove all selected accounts to show all accounts
-                    Section {
-                        Button {
-                            viewModel.selectedAccountsFilter.removeAll()
-                        } label: {
-                            Label.clearFilter
-                                .foregroundStyle(Color.alert, Color.alert)
-                        }
-                        
-                    }
+                Button {
+                    showFiltersView = true
                 } label: {
                     VStack(alignment: .leading) {
                         TextPlain("Filtered by", size: .medium)
@@ -229,12 +229,10 @@ struct TransactionView: View {
                                   size: .mediumSmall,
                                   truncateMode: .tail)
                     }
-                    .padding(.trailing)
-                    .frame(maxWidth: ConstantFrames.filterMaxWidth)
-                    .transition(.opacity.combined(with: .move(edge: .trailing)))
-                    .animation(.default, value: viewModel.selectedAccountsFilter)
                 }
-                .menuOrder(.fixed)
+                .frame(width: ConstantFrames.filterMaxWidth)
+                .contentShape(Rectangle())
+                .matchedTransitionSource(id: viewModel.transitionFilters, in: namesapce)
             }
         }
     }
@@ -251,6 +249,58 @@ struct TransactionView: View {
             return "none"
         }
     }
+
+    
+    
+    
+    
+    
+    private var filterButton: some ToolbarContent {
+        ToolbarItemGroup(placement: .bottomBar) {
+
+//                Menu {
+//                    Section("Filter by account") {
+//                        if viewModel.allAccounts.isEmpty {
+//                            Text("No accounts yet")
+//                                .foregroundStyle(.secondary)
+//                        } else {
+//                            ForEach(viewModel.allAccounts) { account in
+//                                Button(account.name) {
+//                                    viewModel.selectedAccountsFilter.append(account)
+//                                }
+//                            }
+//                        }
+//                    }
+//                    
+//                    // Remove all selected accounts to show all accounts
+//                    Section {
+//                        Button {
+//                            viewModel.selectedAccountsFilter.removeAll()
+//                        } label: {
+//                            Label.clearFilter
+//                                .foregroundStyle(Color.alert, Color.alert)
+//                        }
+//                        
+//                    }
+//                } label: {
+//                    VStack(alignment: .leading) {
+//                        TextPlain("Filtered by", size: .medium)
+//                        
+//                        TextPlain(getTextDescription(by: viewModel.selectedAccountsFilter),
+//                                  color: viewModel.selectedAccountsFilter.isEmpty ? .textPrimaryForeground : .primaryTop,
+//                                  size: .mediumSmall,
+//                                  truncateMode: .tail)
+//                    }
+//                    .padding(.trailing)
+//                    .frame(maxWidth: ConstantFrames.filterMaxWidth)
+//                    .transition(.opacity.combined(with: .move(edge: .trailing)))
+//                    .animation(.default, value: viewModel.selectedAccountsFilter)
+//                }
+//                .menuOrder(.fixed)
+        }
+    }
+
+    
 }
 
 private struct previewWrapper: View {

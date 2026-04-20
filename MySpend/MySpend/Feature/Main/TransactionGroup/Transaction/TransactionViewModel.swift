@@ -25,6 +25,7 @@ class TransactionViewModel: BaseViewModel {
     // MARK: NAMESPACES
     var transitionNewTransaction = "id-new-transaction"
     var transitionSettings = "id-settings"
+    var transitionFilters = "id-filters"
 
     
     // MARK: FILTER
