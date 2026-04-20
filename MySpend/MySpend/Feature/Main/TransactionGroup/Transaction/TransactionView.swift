@@ -136,6 +136,9 @@ struct TransactionView: View {
         .onDisappear {
             AppState.shared.swipeEnabled = true
         }
+        .onChange(of: viewModel.selectedAccountFilter, {
+            viewModel.filterTransactions()
+        })
         
         .sheet(isPresented: $showSettings) {
             NavigationStack {
@@ -212,7 +215,6 @@ struct TransactionView: View {
                         ForEach(viewModel.accounts) { account in
                             Button(account.name) {
                                 viewModel.selectedAccountFilter = account
-                                viewModel.filterTransactions()
                             }
                         }
                     }
