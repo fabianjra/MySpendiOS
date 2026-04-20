@@ -39,4 +39,7 @@ extension Label where Title == Text, Icon == Image {
     static let nameZa = Label("Name (Z-A)", systemImage: ConstantSystemImage.arrowUp)
     
     static let mostOftenUsed = Label("Most often used", systemImage: ConstantSystemImage.clockArrowCounterClockwise)
+    
+    // MARK: MENU FILTER
+    static let clearFilter = Label("Clear filter", systemImage: ConstantSystemImage.arrowCounterClockwise)
 }

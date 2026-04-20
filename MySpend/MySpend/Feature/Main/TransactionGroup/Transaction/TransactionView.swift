@@ -19,7 +19,7 @@ struct TransactionView: View {
     
     // MARK: NAMESPACES
     @Namespace private var namesapce
-
+    
     var body: some View {
         VStack {
             
@@ -55,7 +55,7 @@ struct TransactionView: View {
                             .frame(width: ConstantFrames.navigationBarIcon,
                                    height: ConstantFrames.navigationBarIcon)
                             .padding(ConstantViews.paddingNavigationBarIcon)
-                        .foregroundStyle(Color.buttonForeground)
+                            .foregroundStyle(Color.buttonForeground)
                     }
                     .buttonStyle(.glass)
                     .buttonBorderShape(.circle)
@@ -75,7 +75,7 @@ struct TransactionView: View {
                             TransactionHistoryView(transactionsLoaded: $viewModel.transactions,
                                                    dateTimeInterval: $viewModel.dateTimeInterval,
                                                    selectedDate: $viewModel.selectedDate,
-                                                   isMutipleAccounts: viewModel.accounts.count > 1 ? true : false)
+                                                   isMutipleAccounts: viewModel.allAccounts.count > 1 ? true : false)
                         } label: {
                             TextButtonHorizontalStyled(Localizable.Button.history.key,
                                                        iconLeading: Image.stackFill,
@@ -136,7 +136,7 @@ struct TransactionView: View {
         .onDisappear {
             AppState.shared.swipeEnabled = true
         }
-        .onChange(of: viewModel.selectedAccountFilter, {
+        .onChange(of: viewModel.selectedAccountsFilter, {
             viewModel.filterTransactions()
         })
         
@@ -149,9 +149,9 @@ struct TransactionView: View {
             NavigationStack {
                 AddModifyTransactionView(selectedDate: viewModel.selectedDate)
             }
-//            .navigationTransition(
-//                .zoom(sourceID: transitionNewTransaction, in: namesapce)
-//            )
+            //            .navigationTransition(
+            //                .zoom(sourceID: transitionNewTransaction, in: namesapce)
+            //            )
         }
         .toolbar {
             filterButton
@@ -181,62 +181,77 @@ struct TransactionView: View {
             Button {
                 withAnimation {
                     viewModel.showFilter.toggle()
+                    
+                    if viewModel.showFilter == false {
+                        viewModel.selectedAccountsFilter.removeAll()
+                    }
                 }
-                
             } label: {
                 Image.filter
                     .foregroundStyle(.textPrimaryForeground)
                     .font(.system(size: 18, weight: .semibold))
                     .padding(.horizontal, ConstantViews.paddingMedium)
                     .padding(.vertical, ConstantViews.paddingMedium)
-                    .background(viewModel.selectedAccountFilter == nil ? nil : Capsule().fill(Color.primaryTop))
+                    .background(viewModel.selectedAccountsFilter.isEmpty ? nil : Capsule().fill(Color.primaryTop))
             }
             
             if viewModel.showFilter {
                 Menu {
-                    if viewModel.selectedAccountFilter != nil {
-                        Button("Clear filter", role: .destructive) {
-                            viewModel.selectedAccountFilter = nil
-                        }
-                    }
-                    
-                    if viewModel.accounts.isEmpty {
-                        Text("No accounts yet")
-                            .foregroundStyle(.secondary)
-                    } else {
-                        ForEach(viewModel.accounts) { account in
-                            Button(account.name) {
-                                viewModel.selectedAccountFilter = account
+                    Section("Filter by account") {
+                        if viewModel.allAccounts.isEmpty {
+                            Text("No accounts yet")
+                                .foregroundStyle(.secondary)
+                        } else {
+                            ForEach(viewModel.allAccounts) { account in
+                                Button(account.name) {
+                                    viewModel.selectedAccountsFilter.append(account)
+                                }
                             }
                         }
                     }
-                } label: {
-                    // Texto “Filtered by …” que aparece solo si hay selección
-                    if let filter = viewModel.selectedAccountFilter {
-                        VStack(alignment: .leading) {
-                            TextPlain("Filtered by", size: .medium)
-                            TextPlain(filter.name, color: .primaryTop, size: .mediumSmall, truncateMode: .tail)
+                    
+                    // Remove all selected accounts to show all accounts
+                    Section {
+                        Button {
+                            viewModel.selectedAccountsFilter.removeAll()
+                        } label: {
+                            Label.clearFilter
+                                .foregroundStyle(Color.alert, Color.alert)
                         }
-                        .padding(.trailing)
-                        .frame(maxWidth: ConstantFrames.filterMaxWidth)
-                        .transition(.opacity.combined(with: .move(edge: .trailing)))
-                        .animation(.default, value: viewModel.selectedAccountFilter)
-                    } else {
-                        // Si quieres mostrar “none” cuando no hay filtro:
-                        VStack(alignment: .leading) {
-                            TextPlain("Filtered by", size: .medium)
-                            TextPlain("none", size: .mediumSmall)
-                        }
-                        .padding(.trailing)
-                        .transition(.opacity.combined(with: .move(edge: .trailing)))
-                        .animation(.default, value: viewModel.selectedAccountFilter)
+                        
                     }
+                } label: {
+                    VStack(alignment: .leading) {
+                        TextPlain("Filtered by", size: .medium)
+                        
+                        TextPlain(getTextDescription(by: viewModel.selectedAccountsFilter),
+                                  color: viewModel.selectedAccountsFilter.isEmpty ? .textPrimaryForeground : .primaryTop,
+                                  size: .mediumSmall,
+                                  truncateMode: .tail)
+                    }
+                    .padding(.trailing)
+                    .frame(maxWidth: ConstantFrames.filterMaxWidth)
+                    .transition(.opacity.combined(with: .move(edge: .trailing)))
+                    .animation(.default, value: viewModel.selectedAccountsFilter)
                 }
+                .menuOrder(.fixed)
             }
         }
     }
+    
+    private func getTextDescription(by account: [AccountModel]) -> String {
+        
+        if account.count == 1 {
+            return account.first?.name ?? ""
+            
+        } else if account.count > 1 {
+            return "some accounts"
+            
+        } else {
+            return "none"
+        }
+    }
 }
-
 
 private struct previewWrapper: View {
     init(_ mockDataType: MockDataType = .normal) {

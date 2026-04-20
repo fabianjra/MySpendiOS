@@ -14,6 +14,8 @@ class TransactionHistoryViewModel: BaseViewModel {
     
     @Published var isEditing = false
     
+    @Published var searchText = ""
+    
     /*
      Caracteristicas de usar un set para la seleccion de items:
      

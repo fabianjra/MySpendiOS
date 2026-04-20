@@ -28,10 +28,9 @@ class TransactionViewModel: BaseViewModel {
 
     
     // MARK: FILTER
-    //@Published var isMutipleAccounts: Bool = false
     @Published var showFilter = false
-    @Published var selectedAccountFilter: AccountModel? = nil
-    @Published var accounts: [AccountModel] = []
+    @Published var selectedAccountsFilter: [AccountModel] = []
+    @Published var allAccounts: [AccountModel] = []
     
     /**
      Call this function in `onFirstAppear`.
@@ -59,7 +58,7 @@ class TransactionViewModel: BaseViewModel {
             transactions = fetched
             
             groupedTransactions = UtilsCurrency.calculateGroupedTransactions(transactions)
-            accounts = try await AccountManager(viewContext).fetchAll()
+            allAccounts = try await AccountManager(viewContext).fetchAll()
         } catch {
             errorMessage = error.localizedDescription
             Logger.exception(error, type: .CoreData)
@@ -67,12 +66,14 @@ class TransactionViewModel: BaseViewModel {
     }
     
     func filterTransactions() {
-        if let selectedAccountFilter {
-            transactions = allTransactions.filter { $0.account.id == selectedAccountFilter.id }
-        } else {
+        if selectedAccountsFilter.isEmpty {
             transactions = allTransactions
+        } else {
+            let selectedIDs = Set(selectedAccountsFilter.compactMap(\.id))
+            transactions = allTransactions.filter { selectedIDs.contains($0.account.id) }
         }
-
+        
         groupedTransactions = UtilsCurrency.calculateGroupedTransactions(transactions)
     }
 }
+

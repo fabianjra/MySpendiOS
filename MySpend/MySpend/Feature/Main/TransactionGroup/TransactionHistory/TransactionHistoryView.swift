@@ -16,7 +16,9 @@ struct TransactionHistoryView: View {
     @Binding var selectedDate: Date
     var isMutipleAccounts: Bool
     
+    // MARK: NAVIGATION
     @State private var showNewItemModal = false
+    @State private var showSearchView = false
     @State private var modelToModify: TransactionModel?
     @State private var modelToDelete: TransactionModel?
     
@@ -43,21 +45,22 @@ struct TransactionHistoryView: View {
                 TextPlain("History")
             }
             
-            ToolbarItem(placement: .primaryAction) {
-                
-                Button("Add item", systemImage: "plus", role: .none) {
+            //filterButton
+            
+            ToolbarSpacer(.flexible, placement: .bottomBar)
+            
+            DefaultToolbarItem(kind: .search, placement: .bottomBar)
+            
+            ToolbarItem(placement: .bottomBar) {
+                Button("Add transaction", systemImage: "plus") {
                     showNewItemModal = true
                 }
-                .disabled(viewModel.isEditing)
-                .glassEffect(.clear)
-                
-//                Button("Add item", systemImage: "plus") {
-//                    showNewItemModal = true
-//                }
-//                //.glassEffect(.clear)
-//                .disabled(viewModel.isEditing)
+                .tint(Color.primaryTop)
             }
         }
+        .searchable(text: $viewModel.searchText, isPresented: $showSearchView, placement: .toolbar)
+        .searchToolbarBehavior(.minimize)
+        
         .sheet(isPresented: $showNewItemModal) {
             NavigationStack {
                 AddModifyTransactionView(selectedDate: selectedDate)
