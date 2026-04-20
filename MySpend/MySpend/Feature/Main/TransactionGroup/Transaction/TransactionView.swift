@@ -184,20 +184,12 @@ struct TransactionView: View {
                 }
                 
             } label: {
-                if viewModel.showFilter {
-                    Image.filter
-                        .foregroundStyle(.textPrimaryForeground)
-                        .font(.system(size: 18, weight: .semibold))
-                        .padding(.horizontal, ConstantViews.paddingMedium)
-                        .padding(.vertical, ConstantViews.paddingMedium)
-                        .background(Capsule().fill(Color.primaryTop))
-                } else {
-                    Image.filter
-                        .foregroundStyle(.textPrimaryForeground)
-                        .font(.system(size: 18, weight: .semibold))
-                        .padding(.horizontal, ConstantViews.paddingMedium)
-                        .padding(.vertical, ConstantViews.paddingMedium)
-                }
+                Image.filter
+                    .foregroundStyle(.textPrimaryForeground)
+                    .font(.system(size: 18, weight: .semibold))
+                    .padding(.horizontal, ConstantViews.paddingMedium)
+                    .padding(.vertical, ConstantViews.paddingMedium)
+                    .background(viewModel.selectedAccountFilter == nil ? nil : Capsule().fill(Color.primaryTop))
             }
             
             if viewModel.showFilter {
