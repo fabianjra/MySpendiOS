@@ -69,11 +69,12 @@ class TransactionViewModel: BaseViewModel {
     }
     
     func filterTransactions() {
-        if selectedAccountsFilter.isEmpty {
-            transactions = allTransactions
-        } else {
+        
+        if showFilter {
             let selectedIDs = Set(selectedAccountsFilter.compactMap(\.id))
             transactions = allTransactions.filter { selectedIDs.contains($0.account.id) }
+        } else {
+            transactions = allTransactions
         }
         
         groupedTransactions = UtilsCurrency.calculateGroupedTransactions(transactions)

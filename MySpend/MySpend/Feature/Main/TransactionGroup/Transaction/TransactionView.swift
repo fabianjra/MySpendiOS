@@ -192,6 +192,9 @@ struct TransactionView: View {
         .onChange(of: viewModel.selectedAccountsFilter, {
             viewModel.filterTransactions()
         })
+        .onChange(of: viewModel.showFilter, {
+            viewModel.filterTransactions()
+        })
     }
     
     
@@ -203,10 +206,6 @@ struct TransactionView: View {
             Button {
                 withAnimation {
                     viewModel.showFilter.toggle()
-                    
-                    if viewModel.showFilter == false {
-                        viewModel.selectedAccountsFilter.removeAll()
-                    }
                 }
             } label: {
                 Image.filter
@@ -214,7 +213,7 @@ struct TransactionView: View {
                     .font(.system(size: 18, weight: .semibold))
                     .padding(.horizontal, ConstantViews.paddingMedium)
                     .padding(.vertical, ConstantViews.paddingMedium)
-                    .background(viewModel.selectedAccountsFilter.isEmpty ? nil : Capsule().fill(.primaryTop))
+                    .background(viewModel.showFilter ? Capsule().fill(.primaryTop) : nil)
             }
             
             
@@ -230,6 +229,7 @@ struct TransactionView: View {
                                   size: .mediumSmall,
                                   truncateMode: .tail)
                     }
+                    .frame(width: ConstantFrames.filterMaxWidth)
                 }
                 .frame(width: ConstantFrames.filterMaxWidth)
                 .contentShape(Rectangle())
@@ -245,7 +245,7 @@ struct TransactionView: View {
             return selectedAccountsFilter.first?.name ?? ""
             
         } else if selectedAccountsFilter.count > 1 {
-            return "some accounts"
+            return "accounts"
             
         } else {
             return "none"
