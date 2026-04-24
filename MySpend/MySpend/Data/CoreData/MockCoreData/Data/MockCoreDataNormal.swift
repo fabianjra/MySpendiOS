@@ -18,16 +18,18 @@ struct MockCoreDataNormal {
         //viewContext.processPendingChanges()
         
         // Accounts:
-        let accountMain = MockCoreDataNormal.accountMain(viewContext)
-        let accountGeneral = MockCoreDataNormal.accountExpenses(viewContext)
+        let account1 = MockCoreDataNormal.accountMain(viewContext)
+        let account2 = MockCoreDataNormal.accountExpenses(viewContext)
+        let account3 = MockCoreDataNormal.accountIncomes(viewContext)
         
         // Categories:
-        let categoryExpense = MockCoreDataNormal.categoryExpense(viewContext)
-        let categoryIncome = MockCoreDataNormal.categoryIncome(viewContext)
+        let category1 = MockCoreDataNormal.categoryExpense(viewContext)
+        let category2 = MockCoreDataNormal.categoryIncome(viewContext)
         
         // Transactions:
-        MockCoreDataNormal.transaction1(viewContext, category: categoryExpense, account: accountMain)
-        MockCoreDataNormal.transaction2(viewContext, category: categoryIncome, account: accountMain)
+        MockCoreDataNormal.transaction1(viewContext, category: category1, account: account1)
+        MockCoreDataNormal.transaction2(viewContext, category: category2, account: account2)
+        MockCoreDataNormal.transaction3(viewContext, category: category2, account: account3)
         
         do {
             try viewContext.save()
@@ -65,6 +67,22 @@ struct MockCoreDataNormal {
         item.name = "Only expenses"
         item.notes = ""
         item.type = AccountType.expenses.rawValue
+        item.userId = ""
+        
+        return item
+    }
+    
+    private static func accountIncomes(_ context: NSManagedObjectContext) -> Account {
+        let item = Account(context: context)
+        item.dateCreated = Calendar.current.date(byAdding: .day, value: 3, to: .now)!
+        item.dateModified = .now
+        item.id = UUID()
+        item.isActive = true
+        
+        item.icon = ""
+        item.name = "Only incomes"
+        item.notes = ""
+        item.type = AccountType.incomes.rawValue
         item.userId = ""
         
         return item
@@ -119,6 +137,20 @@ struct MockCoreDataNormal {
     private static func transaction2(_ context: NSManagedObjectContext, category: Category, account: Account) {
         let item = Transaction(context: context)
         item.dateCreated = Calendar.current.date(byAdding: .day, value: 20, to: .now)!
+        item.dateModified = .now
+        item.id = UUID()
+        item.isActive = true
+        
+        item.amount = 122343.15
+        item.dateTransaction = .now
+        item.notes = ""
+        item.category = category
+        item.account = account
+    }
+    
+    private static func transaction3(_ context: NSManagedObjectContext, category: Category, account: Account) {
+        let item = Transaction(context: context)
+        item.dateCreated = Calendar.current.date(byAdding: .day, value: 21, to: .now)!
         item.dateModified = .now
         item.id = UUID()
         item.isActive = true
