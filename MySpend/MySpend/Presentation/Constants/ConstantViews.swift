@@ -46,6 +46,7 @@ struct ConstantViews {
     static let paddingButtonTransaction: CGFloat = 6.0
     
     static let paddingMedium: CGFloat = 6.0
+    static let paddingMediumPlus: CGFloat = 8.0
     
     // MARK: SCALE
     static let calendarScale: CGFloat = 1.10

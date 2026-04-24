@@ -209,11 +209,11 @@ struct TransactionView: View {
                 } label: {
                     Image.filter
                         .foregroundStyle(.textPrimaryForeground)
-                        .font(.system(size: 18, weight: .semibold))
+                        .fontWeight(.semibold)
+                        .padding(.vertical, ConstantViews.paddingMediumPlus)
                         .padding(.horizontal, ConstantViews.paddingMedium)
-                        .padding(.vertical, ConstantViews.paddingMedium)
                         .background(viewModel.showFilter ? Capsule().fill(.primaryTop) : nil)
-                        .animation(nil, value: UUID())
+                        //.animation(nil, value: UUID()) //otra manera de desabilitar la animacion.
                         .transaction { transaction in
                             transaction.animation = nil
                         }
