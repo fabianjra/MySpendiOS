@@ -24,7 +24,8 @@ struct FilterTransactionsView: View {
                         ForEach(viewModel.allAccounts) { account in
                             
                             HStack {
-                                Label(account.name, systemImage: "wallet.bifold.fill")
+                                Label(account.name, systemImage: account.icon)
+                                    .foregroundStyle(.textPrimaryForeground)
                                 
                                 Spacer()
                                 
@@ -35,6 +36,7 @@ struct FilterTransactionsView: View {
                                            height: FrameSize.width.selectIconInsideTextField)
                                     .foregroundStyle(.primaryTop)
                             }
+                            .contentShape(Rectangle())
                             .onTapGesture {
                                 if viewModel.selectedAccountsFilter.contains(account) {
                                     viewModel.selectedAccountsFilter.remove(account)
@@ -46,15 +48,15 @@ struct FilterTransactionsView: View {
                     } header: {
                         TextPlain("By accounts")
                     }
+                    //.listRowBackground(Color.listRowBackground)
                 }
             }
             
-            // Remove all selected accounts to show all accounts
             Button {
-                viewModel.selectedAccountsFilter.removeAll()
+                viewModel.restoreFilterSelection()
             } label: {
-                Label.clearFilter
-                    .foregroundStyle(Color.alert, Color.alert)
+                Label.restoreSelection
+                    .foregroundStyle(.textPrimaryForeground)
             }
         }
         .font(.montserrat())

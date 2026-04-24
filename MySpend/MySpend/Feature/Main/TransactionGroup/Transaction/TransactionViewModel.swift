@@ -60,6 +60,8 @@ class TransactionViewModel: BaseViewModel {
             
             groupedTransactions = UtilsCurrency.calculateGroupedTransactions(transactions)
             allAccounts = try await AccountManager(viewContext).fetchAll()
+            
+            selectedAccountsFilter = Set(allAccounts)
         } catch {
             errorMessage = error.localizedDescription
             Logger.exception(error, type: .CoreData)
@@ -75,6 +77,10 @@ class TransactionViewModel: BaseViewModel {
         }
         
         groupedTransactions = UtilsCurrency.calculateGroupedTransactions(transactions)
+    }
+    
+    func restoreFilterSelection() {
+        selectedAccountsFilter = Set(allAccounts)
     }
 }
 

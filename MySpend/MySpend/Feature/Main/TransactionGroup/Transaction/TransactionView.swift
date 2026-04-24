@@ -225,7 +225,7 @@ struct TransactionView: View {
                     VStack(alignment: .leading) {
                         TextPlain("Filtered by", size: .medium)
                         
-                        TextPlain(getTextDescription(by: viewModel.selectedAccountsFilter),
+                        TextPlain(getTextDescription,
                                   color: viewModel.selectedAccountsFilter.isEmpty ? .textPrimaryForeground : .primaryTop,
                                   size: .mediumSmall,
                                   truncateMode: .tail)
@@ -238,12 +238,13 @@ struct TransactionView: View {
         }
     }
     
-    private func getTextDescription(by account: Set<AccountModel>) -> String {
+    private var getTextDescription: String {
+        let selectedAccountsFilter = viewModel.selectedAccountsFilter
         
-        if account.count == 1 {
-            return account.first?.name ?? ""
+        if selectedAccountsFilter.count == 1 {
+            return selectedAccountsFilter.first?.name ?? ""
             
-        } else if account.count > 1 {
+        } else if selectedAccountsFilter.count > 1 {
             return "some accounts"
             
         } else {

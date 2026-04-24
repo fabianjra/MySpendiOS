@@ -24,5 +24,9 @@ struct ConstantSystemImage {
     static let walletPassFill = "wallet.pass.fill"
     
     // MARK: CURRENCY
-    static let bankDollarFill = "dollarsign.bank.building.fill" 
+    static let bankDollarFill = "dollarsign.bank.building.fill"
+    
+    // MARK: FILTER
+    static let minusClockwise = "minus.arrow.trianglehead.clockwise"
+    static let plusClockwise = "plus.arrow.trianglehead.clockwise"
 }
