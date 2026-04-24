@@ -12,13 +12,11 @@ struct TransactionView: View {
     @StateObject private var viewModel = TransactionViewModel()
     
     // MARK: NAVIGATION
-    @State private var showNewTransactionModal = false
+    @State private var showNewTransactionView = false
     @State private var showSettings = false
     @State private var showFiltersView = false
     @State private var showSearchView = false
-    
     @State private var navigateToHistory: Bool = false
-    
     
     // MARK: NAMESPACES
     @Namespace private var namesapce
@@ -135,7 +133,7 @@ struct TransactionView: View {
                 SettingsView()
             }
         }
-        .sheet(isPresented: $showNewTransactionModal) {
+        .sheet(isPresented: $showNewTransactionView) {
             NavigationStack {
                 AddModifyTransactionView(selectedDate: viewModel.selectedDate)
             }
@@ -164,7 +162,7 @@ struct TransactionView: View {
             
             ToolbarItem(placement: .bottomBar) {
                 Button("Add transaction", systemImage: "plus") {
-                    showNewTransactionModal = true
+                    showNewTransactionView = true
                 }
                 .tint(Color.primaryTop)
             }
@@ -202,38 +200,44 @@ struct TransactionView: View {
     
     //@ToolbarContentBuilder
     private var filterDescriptionView: some ToolbarContent {
-        ToolbarItemGroup(placement: .bottomBar) {
-            Button {
-                withAnimation {
-                    viewModel.showFilter.toggle()
-                }
-            } label: {
-                Image.filter
-                    .foregroundStyle(.textPrimaryForeground)
-                    .font(.system(size: 18, weight: .semibold))
-                    .padding(.horizontal, ConstantViews.paddingMedium)
-                    .padding(.vertical, ConstantViews.paddingMedium)
-                    .background(viewModel.showFilter ? Capsule().fill(.primaryTop) : nil)
-            }
-            
-            
-            if viewModel.showFilter {
+        ToolbarItem(placement: .bottomBar) {
+            HStack {
                 Button {
-                    showFiltersView = true
+//                    withAnimation {
+                        viewModel.showFilter.toggle()
+//                    }
                 } label: {
-                    VStack(alignment: .leading) {
-                        TextPlain("Filtered by", size: .medium)
-                        
-                        TextPlain(getTextDescription,
-                                  color: viewModel.selectedAccountsFilter.isEmpty ? .textPrimaryForeground : .primaryTop,
-                                  size: .mediumSmall,
-                                  truncateMode: .tail)
+                    Image.filter
+                        .foregroundStyle(.textPrimaryForeground)
+                        .font(.system(size: 18, weight: .semibold))
+                        .padding(.horizontal, ConstantViews.paddingMedium)
+                        .padding(.vertical, ConstantViews.paddingMedium)
+                        .background(viewModel.showFilter ? Capsule().fill(.primaryTop) : nil)
+                        .animation(nil, value: UUID())
+                        .transaction { transaction in
+                            transaction.animation = nil
+                        }
+                }
+                
+                if viewModel.showFilter {
+                    Button {
+                        showFiltersView = true
+                    } label: {
+                        VStack(alignment: .leading) {
+                            TextPlain("Filtered by", size: .medium)
+                            
+                            TextPlain(getTextDescription,
+                                      color: viewModel.selectedAccountsFilter.isEmpty ? .textPrimaryForeground : .primaryTop,
+                                      size: .mediumSmall,
+                                      truncateMode: .tail)
+                        }
+                        .frame(width: ConstantFrames.filterMaxWidth)
                     }
                     .frame(width: ConstantFrames.filterMaxWidth)
+                    .contentShape(Rectangle())
+//                    .transition(.opacity.combined(with: .move(edge: .leading)))
+                    .matchedTransitionSource(id: viewModel.transitionFilters, in: namesapce)
                 }
-                .frame(width: ConstantFrames.filterMaxWidth)
-                .contentShape(Rectangle())
-                .matchedTransitionSource(id: viewModel.transitionFilters, in: namesapce)
             }
         }
     }
