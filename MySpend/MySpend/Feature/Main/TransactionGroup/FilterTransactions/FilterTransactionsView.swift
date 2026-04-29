@@ -55,14 +55,14 @@ struct FilterTransactionsView: View {
             Button {
                 viewModel.restoreFilterSelection()
             } label: {
-                Label.restoreSelection
+                Label.restoreFilters
                     .foregroundStyle(.textPrimaryForeground)
             }
         }
         .font(.montserrat())
         //.foregroundColor(Color.listRowForeground)
         .scrollContentBackground(.hidden)
-        .background(Color.backgroundContentGradient)
+//        .background(Color.backgroundContentGradient.opacity(0.2))
         
         // MARK: NAVIGATION
         .navigationTitle("Filters")

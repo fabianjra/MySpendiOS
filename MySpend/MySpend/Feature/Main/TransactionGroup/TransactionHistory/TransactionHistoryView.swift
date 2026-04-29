@@ -75,6 +75,7 @@ struct TransactionHistoryView: View {
             }
         }
         .background(Color.backgroundContentGradient)
+        .ignoresSafeArea(.keyboard, edges: .bottom)
     }
     
     // MARK: VIEWS

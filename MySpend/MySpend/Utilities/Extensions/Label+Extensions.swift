@@ -42,6 +42,7 @@ extension Label where Title == Text, Icon == Image {
     
     // MARK: MENU FILTER
     
+    static let restoreFilters = Label("Restore filters", systemImage: ConstantSystemImage.arrowCounterClockwise)
     static let removeAllFilter = Label("Remove all", systemImage: ConstantSystemImage.minusClockwise)
     static let selectAllFilter = Label("Select all", systemImage: ConstantSystemImage.plusClockwise)
 }
