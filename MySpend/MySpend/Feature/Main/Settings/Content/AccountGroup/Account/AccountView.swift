@@ -145,8 +145,8 @@ struct AccountView: View {
                                     Image(systemName: viewModel.selectedModels.contains(item) ? ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle)
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
-                                        .frame(width: FrameSize.width.selectIconInsideTextField,
-                                               height: FrameSize.height.selectIconInsideTextField)
+                                        .frame(width: FrameSize.width.iconRowList,
+                                               height: FrameSize.height.iconRowList)
                                         .foregroundStyle(Color.alert)
                                         .transition(.scale.combined(with: .move(edge: .leading)))
                                 }
@@ -233,8 +233,8 @@ struct AccountView: View {
                 image
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: FrameSize.height.selectIconInsideTextField,
-                           height: FrameSize.width.selectIconInsideTextField)
+                    .frame(width: FrameSize.height.iconRowList,
+                           height: FrameSize.width.iconRowList)
             }
             
             TextPlain(model?.name ?? "No default account selected", color: Color.disabledForeground)

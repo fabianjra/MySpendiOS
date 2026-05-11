@@ -21,8 +21,8 @@ struct DateTimeIntervalListView: View {
                                 Image(systemName: item == viewModel.DateTimeIntervalSelected ? ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle)
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
-                                    .frame(width: FrameSize.height.selectIconInsideTextField,
-                                           height: FrameSize.width.selectIconInsideTextField)
+                                    .frame(width: FrameSize.height.iconRowList,
+                                           height: FrameSize.width.iconRowList)
                                     .foregroundStyle(item == viewModel.DateTimeIntervalSelected ? Color.primaryBottom : Color.textFieldPlaceholder)
                                 
                                 Button {

@@ -142,9 +142,9 @@ struct TransactionHistoryView: View {
                                 Image(systemName: viewModel.selectedTransactions.contains(item) ? ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle)
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
-                                    .frame(width: FrameSize.height.selectIconInsideTextField,
-                                           height: FrameSize.width.selectIconInsideTextField)
-                                    .foregroundStyle(Color.alert)
+                                    .frame(width: FrameSize.height.iconRowList,
+                                           height: FrameSize.width.iconRowList)
+                                    .foregroundStyle(.alert)
                                     .transition(.scale.combined(with: .move(edge: .leading)))
                             }
                             
@@ -154,7 +154,7 @@ struct TransactionHistoryView: View {
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: FrameSize.width.iconInsideTextField,
                                            height: FrameSize.height.iconInsideTextField)
-                                    .foregroundStyle(Color.textPrimaryForeground)
+                                    .foregroundStyle(.textPrimaryForeground)
                             }
                             
                             Button("") {
@@ -190,8 +190,18 @@ struct TransactionHistoryView: View {
                             TextPlain(item.amount.convertAmountDecimalToString.addCurrencySymbol,
                                       color: item.category.type == .income ? Color.primaryTop : Color.alert)
                             
+                            Image(systemName: item.favorite ? ConstantSystemImage.favoriteFill : ConstantSystemImage.favorite)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: FrameSize.height.iconRowList,
+                                       height: FrameSize.width.iconRowList)
+                                .foregroundStyle(.textPrimaryForeground)
+                                .onTapGesture {
+                                    favorite(item)
+                                }
+                            
                             Image.chevronRight
-                                .foregroundStyle(Color.textPrimaryForeground)
+                                .foregroundStyle(.textPrimaryForeground)
                         }
                         .alignmentGuide(.listRowSeparatorLeading) { _ in
                             //Removes the padding Leading in the RowSeparator.
@@ -204,7 +214,7 @@ struct TransactionHistoryView: View {
                     }
                     .frame(height: FrameSize.height.rowForListTransactionHistory)
                     .listRowInsets(EdgeInsets(top: .zero, leading: .zero, bottom: .zero, trailing: .zero))
-                    .listRowSeparatorTint(Color.textPrimaryForeground.opacity(ConstantColors.opacityHalf))
+                    .listRowSeparatorTint(.textPrimaryForeground.opacity(ConstantColors.opacityHalf))
                     
                     // MARK: SWIPE ACTIONS:
                     
@@ -258,6 +268,16 @@ struct TransactionHistoryView: View {
     }
     
     // MARK: FUNCTIONS
+    
+    private func favorite(_ model: TransactionModel) {
+        Task {
+            let result = await viewModel.favorite(model)
+            
+            if result.status.isError {
+                viewModel.errorMessage = result.message
+            }
+        }
+    }
     
     private func delete() {
         Task {

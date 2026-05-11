@@ -47,7 +47,7 @@ public enum FrameSize {
         return 25.0
     }
     
-    var selectIconInsideTextField: CGFloat {
+    var iconRowList: CGFloat {
         return 23.0
     }
     

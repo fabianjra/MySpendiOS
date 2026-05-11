@@ -33,6 +33,8 @@ class TransactionViewModel: BaseViewModel {
     @Published var selectedAccountsFilter = Set<AccountModel>()
     @Published var allAccounts: [AccountModel] = []
     
+    @Published var favoriteSelected: Bool = false
+    
     /**
      Call this function in `onFirstAppear`.
      Shoud be called once when open application because this view will be active all alonge the app life.
@@ -69,10 +71,15 @@ class TransactionViewModel: BaseViewModel {
     }
     
     func filterTransactions() {
-        
         if showFilter {
             let selectedIDs = Set(selectedAccountsFilter.compactMap(\.id))
-            transactions = allTransactions.filter { selectedIDs.contains($0.account.id) }
+            
+            if favoriteSelected {
+                transactions = allTransactions.filter { selectedIDs.contains($0.account.id) && $0.favorite }
+            } else {
+                transactions = allTransactions.filter { selectedIDs.contains($0.account.id) }
+            }
+            
         } else {
             transactions = allTransactions
         }
@@ -82,6 +89,7 @@ class TransactionViewModel: BaseViewModel {
     
     func restoreFilterSelection() {
         selectedAccountsFilter = Set(allAccounts)
+        favoriteSelected = false
     }
 }
 

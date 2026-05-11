@@ -27,6 +27,17 @@ class TransactionHistoryViewModel: BaseViewModel {
     @Published var selectedTransactions = Set<TransactionModel>()
     @Published var sortTransactionsBy = UserDefaultsManager.sorTransactions
 
+    func favorite(_ model: TransactionModel) async -> ResponseModel {
+        do {
+            try await TransactionManager(viewContext).updateFavorite(model)
+            
+            return ResponseModel(.successful)
+        } catch {
+            Logger.exception(error, type: .CoreData)
+            return ResponseModel(.error, error.localizedDescription)
+        }
+    }
+    
     func delete(_ model: TransactionModel?) async -> ResponseModel {
         guard let model = model else { return ResponseModel(.successful) }
         

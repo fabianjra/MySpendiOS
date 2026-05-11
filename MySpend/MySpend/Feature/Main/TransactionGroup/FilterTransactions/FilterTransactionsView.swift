@@ -32,8 +32,8 @@ struct FilterTransactionsView: View {
                                 Image(systemName: viewModel.selectedAccountsFilter.contains(account) ? ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle)
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
-                                    .frame(width: FrameSize.height.selectIconInsideTextField,
-                                           height: FrameSize.width.selectIconInsideTextField)
+                                    .frame(width: FrameSize.height.iconRowList,
+                                           height: FrameSize.width.iconRowList)
                                     .foregroundStyle(.primaryTop)
                             }
                             .contentShape(Rectangle())
@@ -49,6 +49,28 @@ struct FilterTransactionsView: View {
                         TextPlain("By accounts")
                     }
                     //.listRowBackground(Color.listRowBackground)
+                    
+                    Section {
+                            HStack {
+                                Label("Only favorites", systemImage: ConstantSystemImage.favoriteFill)
+                                    .foregroundStyle(.textPrimaryForeground)
+                                
+                                Spacer()
+                                
+                                Image(systemName: viewModel.favoriteSelected ? ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: FrameSize.height.iconRowList,
+                                           height: FrameSize.width.iconRowList)
+                                    .foregroundStyle(.primaryTop)
+                            }
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                viewModel.favoriteSelected.toggle()
+                            }
+                    } header: {
+                        TextPlain("Include")
+                    }
                 }
             }
             

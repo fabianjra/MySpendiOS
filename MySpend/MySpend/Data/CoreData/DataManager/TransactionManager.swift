@@ -59,6 +59,7 @@ struct TransactionManager {
             entity.amount = UtilsCurrency.makeNSDecimal(model.amount)
             entity.dateTransaction = model.dateTransaction.dateWithCurrentTime
             entity.notes = model.notes
+            entity.favorite = model.favorite
             
             // NOTA:
             // Con asignar uno de los lados basta; el otro se actualiza al guardar el contexto.
@@ -95,6 +96,8 @@ struct TransactionManager {
             entity.amount = UtilsCurrency.makeNSDecimal(model.amount)
             entity.dateTransaction = model.dateTransaction.dateWithCurrentTime
             entity.notes = model.notes
+            entity.favorite = model.favorite
+            
             entity.category = categoryResolved
             entity.account = accountResolved
             
@@ -105,6 +108,19 @@ struct TransactionManager {
         }
     }
     
+    func updateFavorite(_ model: TransactionModel) async throws {
+        try await viewContext.perform {
+            guard let entity = try CoreDataUtilities.fetch(byID: model.id.uuidString,
+                                                           entity: Transaction.self,
+                                                           viewContextArg: viewContext) else {
+                throw CDError.notFoundUpdate(entity: Transaction.entityName)
+            }
+            
+            entity.favorite.toggle()
+            
+            try viewContext.save()
+        }
+    }
     
     // MARK: DELETE
     

@@ -193,6 +193,9 @@ struct TransactionView: View {
         .onChange(of: viewModel.showFilter, {
             viewModel.filterTransactions()
         })
+        .onChange(of: viewModel.favoriteSelected, {
+            viewModel.filterTransactions()
+        })
     }
     
     

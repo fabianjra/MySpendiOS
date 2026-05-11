@@ -50,8 +50,8 @@ struct CurrencyListView: View {
             Image(systemName: currency.selected ? ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .frame(width: FrameSize.height.selectIconInsideTextField,
-                       height: FrameSize.width.selectIconInsideTextField)
+                .frame(width: FrameSize.height.iconRowList,
+                       height: FrameSize.width.iconRowList)
                 .foregroundStyle(currency.selected ? Color.primaryBottom : Color.textFieldPlaceholder)
                 .transition(.scale.combined(with: .move(edge: .leading)))
             

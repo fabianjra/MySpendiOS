@@ -145,8 +145,8 @@ struct CategoryView: View {
                                 Image(systemName: viewModel.selectedCategories.contains(item) ? ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle)
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
-                                    .frame(width: FrameSize.width.selectIconInsideTextField,
-                                           height: FrameSize.height.selectIconInsideTextField)
+                                    .frame(width: FrameSize.width.iconRowList,
+                                           height: FrameSize.height.iconRowList)
                                     .foregroundStyle(Color.alert)
                                     .transition(.scale.combined(with: .move(edge: .leading)))
                             }

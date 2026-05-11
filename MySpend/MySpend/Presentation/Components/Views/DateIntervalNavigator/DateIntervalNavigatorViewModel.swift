@@ -25,20 +25,53 @@ struct DateIntervalNavigatorViewModel {
         
         // Normalise to “first unit” and 00:00
         let calendar = Calendar.current
-        let components = calendar.dateComponents([.year, .month, .day], from: newDate)
+        var components = calendar.dateComponents([.year, .month, .day], from: newDate)
         
         switch dateTimeInterval {
         case .day, .week:
             break // keep day/month, just zero the time
             
         case .month:
-            //components.day = 1 //Ya no se navegará hacia el dia 1, al cambiar entre meses
+            
+            // Validacion del dia cuando se navega entre meses
+            switch calendar.compare(newDate, to: Date.now, toGranularity: .month) {
+                
+                // Mes futuro: Si es el mes siguiente, el dia será 1,
+            case .orderedDescending:
+                components.day = 1
+                
+                // Mes pasado: si es el mes anterior, el día será el ultimo dia del mes.
+            case .orderedAscending:
+                if let range = calendar.range(of: .day, in: .month, for: newDate) {
+                    components.day = range.count
+                }
+                
+                // Mes Actual: Se vuelve al dia de hoy
+            case .orderedSame:
+                components.day = calendar.component(.day, from: Date.now)
+            }
             break
             
         case .year:
-            //Ya no se navegará hacia el dia 1, al cambiar entre meses o años
-            //components.day = 1
-            //components.month = 1
+            
+            // Cuando se navega entre años, si es el siguiente, el mes será 1,
+            // si es el año anterior, entonces será el ultimo mes del año.
+            switch calendar.compare(newDate, to: Date.now, toGranularity: .year) {
+                
+                // Año futuro
+            case .orderedDescending:
+                components.month = 1
+                
+                // Año pasado
+            case .orderedAscending:
+                components.month = 12
+                
+                // Año Actual: Se vuelve al dia y mes de hoy.
+            case .orderedSame:
+                components.day = calendar.component(.day, from: Date.now)
+                components.month = calendar.component(.month, from: Date.now)
+                break
+            }
             break
         }
         
@@ -46,10 +79,10 @@ struct DateIntervalNavigatorViewModel {
         return calendar.date(from: components).map {
             
             /*
-             `Calendar.startOfDay(for:)` devuelve la misma fecha pero **ajustada a la medianoche local (00 h 00 m 00 s)**
+             `Calendar.startOfDay(for:)` devuelve la misma fecha pero ajustada a la medianoche local (00 h 00 m 00 s)
              Respeta calendario y zona horaria.
              
-             En este helper se emplea para:
+             Este helper se usa para:
              
              • Garantizar que toda navegación (día, semana, mes o año) termine en las 00:00:00 y no arrastre la hora/minuto/segundo original.
              Evita saltos visuales inesperados y hace coherentes las comparaciones/cálculos.

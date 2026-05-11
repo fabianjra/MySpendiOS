@@ -22,6 +22,7 @@ struct TransactionModel: Identifiable, Equatable, Hashable {
     var amount: Decimal
     var dateTransaction: Date
     var notes: String
+    var favorite: Bool
     
     // Relationships
     var category: CategoryModel
@@ -36,16 +37,25 @@ struct TransactionModel: Identifiable, Equatable, Hashable {
         amount = .zero
         dateTransaction = .init()
         notes = ""
+        favorite = false
+        
         category = CategoryModel()
         account = AccountModel()
     }
     
     // When a new Transaction is created
-    init(amount: Decimal = .zero, dateTransaction: Date = .now, notes: String = "", category: CategoryModel = CategoryModel(), account: AccountModel = AccountModel()) {
+    init(amount: Decimal = .zero,
+         dateTransaction: Date = .now,
+         notes: String = "",
+         favorite: Bool = false,
+         category: CategoryModel = CategoryModel(),
+         account: AccountModel = AccountModel()) {
+        
         self.init()
         self.amount = amount
         self.dateTransaction = dateTransaction
         self.notes = notes
+        self.favorite = favorite
         self.category = category
         self.account = account
     }
@@ -60,6 +70,8 @@ struct TransactionModel: Identifiable, Equatable, Hashable {
         amount = entity.amount?.decimalValue ?? .zero
         dateTransaction = entity.dateTransaction ?? .init()
         notes = entity.notes ?? ""
+        favorite = entity.favorite
+        
         category = TransactionModel.convertToCategoryModel(entity.category)
         account = TransactionModel.convertToAccountModel(entity.account)
     }
