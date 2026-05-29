@@ -13,6 +13,8 @@ class TransactionViewModel: BaseViewModel {
     
     private var allTransactions: [TransactionModel] = []
     @Published var transactions: [TransactionModel] = []
+    
+    @Published var transactionsFiltered: [TransactionModel] = []
     @Published var groupedTransactions: UtilsCurrency.groupedTransactions = []
     
     
@@ -60,7 +62,6 @@ class TransactionViewModel: BaseViewModel {
             allTransactions = fetched
             transactions = fetched
             
-            groupedTransactions = UtilsCurrency.calculateGroupedTransactions(transactions)
             allAccounts = try await AccountManager(viewContext).fetchAll()
             
             selectedAccountsFilter = Set(allAccounts)
@@ -70,7 +71,7 @@ class TransactionViewModel: BaseViewModel {
         }
     }
     
-    func filterTransactions() {
+    func filterTransactionsByOptions() {
         if showFilter {
             let selectedIDs = Set(selectedAccountsFilter.compactMap(\.id))
             
@@ -83,13 +84,19 @@ class TransactionViewModel: BaseViewModel {
         } else {
             transactions = allTransactions
         }
-        
-        groupedTransactions = UtilsCurrency.calculateGroupedTransactions(transactions)
     }
     
-    func restoreFilterSelection() {
+    func restoreFilterSelectionByOptions() {
         selectedAccountsFilter = Set(allAccounts)
         favoriteSelected = false
+    }
+    
+    func filterTransactionsByDate() {
+        transactionsFiltered = UtilsTransactions.filteredTransactions(selectedDate,
+                                                                      transactions: transactions,
+                                                                      for: dateTimeInterval)
+        
+        groupedTransactions = UtilsCurrency.calculateGroupedTransactions(transactionsFiltered).sorted(by: { $0.totalAmount > $1.totalAmount })
     }
 }
 

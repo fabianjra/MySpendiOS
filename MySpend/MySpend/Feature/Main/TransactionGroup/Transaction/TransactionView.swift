@@ -88,15 +88,8 @@ struct TransactionView: View {
                                                   isEditing: .constant(false)){}
                         
                         
-                        let transactionsFiltered = UtilsTransactions.filteredTransactions(viewModel.selectedDate,
-                                                                                          transactions: viewModel.transactions,
-                                                                                          for: viewModel.dateTimeInterval)
-                        
-                        let groupedTransactions = UtilsCurrency.calculateGroupedTransactions(transactionsFiltered)
-                            .sorted(by: { $0.totalAmount > $1.totalAmount })
-                        
                         ScrollView(showsIndicators: false) {
-                            ForEach(groupedTransactions, id:\.category.id) { item in
+                            ForEach(viewModel.groupedTransactions, id:\.category.id) { item in
                                 HStack {
                                     TextPlain(item.category.name)
                                     
@@ -107,11 +100,11 @@ struct TransactionView: View {
                                 .padding(.vertical, ConstantViews.minimumSpacing)
                             }
                         }
-                        .animation(.default, value: transactionsFiltered.count)
+                        .animation(.default, value: viewModel.transactionsFiltered.count)
                         
                         TextError(viewModel.errorMessage)
                         
-                        TotalBalanceView(transactions: transactionsFiltered)
+                        TotalBalanceView(transactions: viewModel.transactionsFiltered)
                             .padding(.bottom)
                     }
                     .ignoresSafeArea(.keyboard, edges: .bottom)
@@ -173,7 +166,7 @@ struct TransactionView: View {
         .toolbar(.hidden, for: .navigationBar)
         
         
-        // MARK: EVENTS
+        // MARK: ON APPEAR / DISSAPEAR
         
         .onFirstAppear {
             Task {
@@ -187,17 +180,36 @@ struct TransactionView: View {
         .onDisappear {
             AppState.shared.swipeEnabled = true
         }
+        
+        
+        // MARK: LOAD FILTER BY OPTIONS
+        .onChange(of: viewModel.transactions, {
+            viewModel.filterTransactionsByOptions()
+        })
         .onChange(of: viewModel.selectedAccountsFilter, {
-            viewModel.filterTransactions()
+            viewModel.filterTransactionsByOptions()
         })
         .onChange(of: viewModel.showFilter, {
-            viewModel.filterTransactions()
+            viewModel.filterTransactionsByOptions()
         })
         .onChange(of: viewModel.favoriteSelected, {
-            viewModel.filterTransactions()
+            viewModel.filterTransactionsByOptions()
         })
+        
+        
+        // MARK: FILTER TRANSACTIONS BY DATE
+        
+        .onChange(of: viewModel.selectedDate) {
+            viewModel.filterTransactionsByDate()
+        }
+        .onChange(of: viewModel.transactions) {
+            viewModel.filterTransactionsByDate()
+        }
+        .onChange(of: viewModel.dateTimeInterval) {
+            viewModel.filterTransactionsByDate()
+        }
     }
-    
+
     
     // MARK: FILTER
     

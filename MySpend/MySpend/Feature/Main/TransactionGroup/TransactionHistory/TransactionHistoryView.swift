@@ -76,6 +76,29 @@ struct TransactionHistoryView: View {
         }
         .background(Color.backgroundContentGradient)
         .ignoresSafeArea(.keyboard, edges: .bottom)
+        
+        .onAppear {
+            filterTransactionsByDate()
+        }
+        .onChange(of: selectedDate) {
+            filterTransactionsByDate()
+        }
+        .onChange(of: transactionsLoaded) {
+            filterTransactionsByDate()
+        }
+        .onChange(of: dateTimeInterval) {
+            filterTransactionsByDate()
+        }
+        .onChange(of: viewModel.sortTransactionsBy) {
+            filterTransactionsByDate()
+        }
+    }
+    
+    private func filterTransactionsByDate() {
+        viewModel.transactionsFiltered = UtilsTransactions.filteredTransactions(selectedDate,
+                                                                                transactions: transactionsLoaded,
+                                                                                for: dateTimeInterval,
+                                                                                sortTransactions: viewModel.sortTransactionsBy)
     }
     
     // MARK: VIEWS
@@ -128,14 +151,10 @@ struct TransactionHistoryView: View {
                     sortButtonResetToDefault
                 }
             }
-            
-            let transactionsFiltered = UtilsTransactions.filteredTransactions(selectedDate,
-                                                                              transactions: transactionsLoaded,
-                                                                              for: dateTimeInterval,
-                                                                              sortTransactions: viewModel.sortTransactionsBy)
+
             
             List {
-                ForEach(transactionsFiltered, id: \.self) { item in
+                ForEach(viewModel.transactionsFiltered, id: \.self) { item in
                     VStack {
                         HStack {
                             if viewModel.isEditing {
@@ -258,11 +277,11 @@ struct TransactionHistoryView: View {
             }
             .listStyle(.plain)
             .scrollIndicators(.hidden)
-            .animation(.default, value: transactionsFiltered.count)
+            .animation(.default, value: viewModel.transactionsFiltered.count)
             .animation(.default, value: viewModel.isEditing)
             .animation(.default, value: viewModel.sortTransactionsBy)
             
-            TotalBalanceView(transactions: transactionsFiltered, showTotalBalance: false)
+            TotalBalanceView(transactions: viewModel.transactionsFiltered, showTotalBalance: false)
         }
         .padding(.horizontal)
     }

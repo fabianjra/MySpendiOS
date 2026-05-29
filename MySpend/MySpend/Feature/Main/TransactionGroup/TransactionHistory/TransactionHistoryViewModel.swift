@@ -13,7 +13,6 @@ class TransactionHistoryViewModel: BaseViewModel {
     @Published var showAlertDeleteMultiple = false
     
     @Published var isEditing = false
-    
     @Published var searchText = ""
     
     /*
@@ -25,6 +24,8 @@ class TransactionHistoryViewModel: BaseViewModel {
      Orden:                     No garantiza orden estable.
      */
     @Published var selectedTransactions = Set<TransactionModel>()
+    @Published var transactionsFiltered: [TransactionModel] = []
+    
     @Published var sortTransactionsBy = UserDefaultsManager.sorTransactions
 
     func favorite(_ model: TransactionModel) async -> ResponseModel {

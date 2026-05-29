@@ -75,7 +75,7 @@ struct FilterTransactionsView: View {
             }
             
             Button {
-                viewModel.restoreFilterSelection()
+                viewModel.restoreFilterSelectionByOptions()
             } label: {
                 Label.restoreFilters
                     .foregroundStyle(.textPrimaryForeground)
