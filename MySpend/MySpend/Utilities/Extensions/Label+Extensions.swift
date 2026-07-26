@@ -13,6 +13,7 @@ extension Label where Title == Text, Icon == Image {
     
     static let delete = Label("Delete", systemImage: ConstantSystemImage.trash)
     static let edit = Label("Edit", systemImage: ConstantSystemImage.squareAndPencil)
+    static let favorite = Label("Favorite", systemImage: ConstantSystemImage.favoriteFill)
     
     // MARK: MENU SORT
     

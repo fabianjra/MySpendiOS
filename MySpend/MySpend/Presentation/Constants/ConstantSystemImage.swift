@@ -16,8 +16,10 @@ struct ConstantSystemImage {
     static let checkmarkCircleFill = "checkmark.circle.fill"
     
     // Favorite:
-    static let favorite = "bookmark"
-    static let favoriteFill = "bookmark.fill"
+    //static let favorite = "bookmark"
+    //static let favoriteFill = "bookmark.fill"
+    static let favorite = "star"
+    static let favoriteFill = "star.fill"
     
     
     // MARK: SWIPE ACTIONS:

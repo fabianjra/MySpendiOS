@@ -33,7 +33,11 @@ struct TransactionHistoryView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 
             } else {
-                transactionsList
+                VStack {
+                    header
+                    transactionsList
+                }
+                .padding(.horizontal)
             }
             
             TextError(viewModel.errorMessage)
@@ -101,6 +105,7 @@ struct TransactionHistoryView: View {
                                                                                 sortTransactions: viewModel.sortTransactionsBy)
     }
     
+    
     // MARK: VIEWS
     
     private func sortButton(_ sortingOption: SortTransactions) -> some View {
@@ -126,33 +131,34 @@ struct TransactionHistoryView: View {
         }
     }
     
+    private var header: some View {
+        DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval,
+                                  selectedDate: $selectedDate,
+                                  isEditing: $viewModel.isEditing,
+                                  showEditor: true,
+                                  counterSelected: viewModel.selectedTransactions.count) {
+            
+            viewModel.selectedTransactions.removeAll()
+            
+        } actionTrailingEdit: {
+            viewModel.showAlertDeleteMultiple = true
+            
+        } contentLeadingSort: {
+            Section("Sorted by: \(viewModel.sortTransactionsBy.rawValue)") {
+                sortButton(.byDateNewest)
+                sortButton(.byAmountHigher)
+                sortButton(.byCategoryNameAz)
+            }
+            
+            // Reset the sort selection to default
+            Section {
+                sortButtonResetToDefault
+            }
+        }
+    }
+    
     private var transactionsList: some View {
         VStack {
-            DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval,
-                                      selectedDate: $selectedDate,
-                                      isEditing: $viewModel.isEditing,
-                                      showEditor: true,
-                                      counterSelected: viewModel.selectedTransactions.count) {
-                
-                viewModel.selectedTransactions.removeAll()
-                
-            } actionTrailingEdit: {
-                viewModel.showAlertDeleteMultiple = true
-                
-            } contentLeadingSort: {
-                Section("Sorted by: \(viewModel.sortTransactionsBy.rawValue)") {
-                    sortButton(.byDateNewest)
-                    sortButton(.byAmountHigher)
-                    sortButton(.byCategoryNameAz)
-                }
-                
-                // Reset the sort selection to default
-                Section {
-                    sortButtonResetToDefault
-                }
-            }
-
-            
             List {
                 ForEach(viewModel.transactionsFiltered, id: \.self) { item in
                     VStack {
@@ -209,18 +215,20 @@ struct TransactionHistoryView: View {
                             TextPlain(item.amount.convertAmountDecimalToString.addCurrencySymbol,
                                       color: item.category.type == .income ? Color.primaryTop : Color.alert)
                             
-                            Image(systemName: item.favorite ? ConstantSystemImage.favoriteFill : ConstantSystemImage.favorite)
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: FrameSize.height.iconRowList,
-                                       height: FrameSize.width.iconRowList)
-                                .foregroundStyle(.textPrimaryForeground)
-                                .onTapGesture {
-                                    favorite(item)
-                                }
+                            if item.favorite {
+                                Image(systemName: ConstantSystemImage.favoriteFill)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: FrameSize.height.iconRowList,
+                                           height: FrameSize.width.iconRowList)
+                                    .foregroundStyle(.yellow)
+                                    .onTapGesture {
+                                        favorite(item)
+                                    }
+                            }
                             
-                            Image.chevronRight
-                                .foregroundStyle(.textPrimaryForeground)
+                            //Image.chevronRight
+                            //.foregroundStyle(.textPrimaryForeground)
                         }
                         .alignmentGuide(.listRowSeparatorLeading) { _ in
                             //Removes the padding Leading in the RowSeparator.
@@ -236,22 +244,12 @@ struct TransactionHistoryView: View {
                     .listRowSeparatorTint(.textPrimaryForeground.opacity(ConstantColors.opacityHalf))
                     
                     // MARK: SWIPE ACTIONS:
-                    
+
                     .swipeActions(edge: .trailing) {
-                        Button {
-                            modelToDelete = item
-                            viewModel.showAlertDelete = true
-                        } label: {
-                            Label.delete
-                        }
-                        .tint(Color.alert)
-                        
-                        Button {
-                            modelToModify = item
-                        } label: {
-                            Label.edit
-                        }
-                        .tint(Color.warning)
+                        contextMenuActions(item)
+                    }
+                    .contextMenu {
+                        contextMenuActions(item)
                     }
                     
                     // MARK: DELETE TRANSACTION SINGLE
@@ -283,8 +281,32 @@ struct TransactionHistoryView: View {
             
             TotalBalanceView(transactions: viewModel.transactionsFiltered, showTotalBalance: false)
         }
-        .padding(.horizontal)
     }
+    
+    
+    private func contextMenuActions(_ item: TransactionModel) -> some View {
+        VStack {
+            Button("Delete", systemImage: ConstantSystemImage.trash) {
+                modelToDelete = item
+                viewModel.showAlertDelete = true
+            }
+            .tint(.alert)
+            
+            
+            Button("Edit", systemImage: ConstantSystemImage.squareAndPencil) {
+                modelToModify = item
+            }
+            //.tint(.warning)
+            
+            
+            Button("Favorite", systemImage: ConstantSystemImage.favoriteFill) {
+                favorite(item)
+            }
+            .foregroundStyle(.textFieldForeground)
+            .tint(Color.warning)
+        }
+    }
+    
     
     // MARK: FUNCTIONS
     
@@ -322,7 +344,6 @@ struct TransactionHistoryView: View {
         }
     }
 }
-
 
 private struct TransactionPreviewWrapper: View {
     init(_ mockDataType: MockDataType = .empty) {
