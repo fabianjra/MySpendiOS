@@ -108,7 +108,7 @@ struct TransactionManager {
         }
     }
     
-    func updateFavorite(_ model: TransactionModel) async throws {
+    func updateFavorite(_ model: TransactionModel, newState: Bool? = nil) async throws {
         try await viewContext.perform {
             guard let entity = try CoreDataUtilities.fetch(byID: model.id.uuidString,
                                                            entity: Transaction.self,
@@ -116,13 +116,17 @@ struct TransactionManager {
                 throw CDError.notFoundUpdate(entity: Transaction.entityName)
             }
             
-            entity.favorite.toggle()
+            if let newState = newState {
+                entity.favorite = newState
+            } else {
+                entity.favorite.toggle()
+            }
             
             try viewContext.save()
         }
     }
     
-    func favoriteMultiple(_ models: [TransactionModel], favorite: Bool = true) async throws {
+    func favoriteMultiple(_ models: [TransactionModel], newState: Bool = true) async throws {
         
         let idsToUpdate: Set<String> = models.isEmpty ? [] : Set(models.map { $0.id.uuidString })
         if idsToUpdate.isEmpty { return }
@@ -131,7 +135,7 @@ struct TransactionManager {
 
             let batchRequest = NSBatchUpdateRequest(entityName: Transaction.entityName)
             batchRequest.predicate = NSPredicate(format: "id IN %@", idsToUpdate)
-            batchRequest.propertiesToUpdate = ["favorite": favorite]
+            batchRequest.propertiesToUpdate = ["favorite": newState]
             batchRequest.resultType = .updatedObjectIDsResultType
             
             let anyResult = try viewContext.execute(batchRequest)
@@ -149,6 +153,8 @@ struct TransactionManager {
                     into: [viewContext]
                 )
                 
+                //TODO: BORRAR ESTE CODIGO CUANDO SE USE WRAPPER DE @FetchRequest:
+                
                 // Refresca cada objeto si ya está registrado en el contexto
                 for objID in objectIDs {
                     if let obj = try? viewContext.existingObject(with: objID) {
@@ -158,6 +164,8 @@ struct TransactionManager {
 
                 // Procesa notificaciones pendientes para que SwiftUI reciba los cambios
                 viewContext.processPendingChanges()
+                
+                //TODO: BORRAR HASTA AQUI.
             }
         }
     }

@@ -24,7 +24,7 @@ class TransactionHistoryViewModel: BaseViewModel {
     @Published var transactionsFiltered: [TransactionModel] = []
     
     @Published var sortTransactionsBy = UserDefaultsManager.sorTransactions
-
+    
     func favorite(_ model: TransactionModel) async -> ResponseModel {
         do {
             try await TransactionManager(viewContext).updateFavorite(model)
@@ -36,17 +36,26 @@ class TransactionHistoryViewModel: BaseViewModel {
         }
     }
     
-    func favoriteMltiple() async -> ResponseModel {
+    /*
+     Si solamente hay una transacción seleccionada, hace un Toggle para cambiar su estado de favorito.
+     Si hay varias transacciones seleccionadas, entonces marca todas como favoritas.
+     */
+    func favoriteMltiple(_ newState: Bool) async -> ResponseModel {
         defer {
             isEditing = false
         }
         
         do {
-            //let idsToDelete = Set(selectedTransactions.map { $0.id })
+            if selectedTransactions.count == 1 {
+                
+                if let selectedTransaction = selectedTransactions.first {
+                    try await TransactionManager(viewContext).updateFavorite(selectedTransaction, newState: newState)
+                }
+                
+            } else {
+                try await TransactionManager(viewContext).favoriteMultiple(Array(selectedTransactions), newState: newState)
+            }
             
-            //try await TransactionManager(viewContext: viewContext).deleteMultiple(entityName: Transaction.entityName, idsToDelete: idsToDelete)
-            
-            try await TransactionManager(viewContext).favoriteMultiple(Array(selectedTransactions))
             selectedTransactions.removeAll()
             
             return ResponseModel(.successful)
