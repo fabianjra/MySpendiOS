@@ -21,6 +21,7 @@ struct ConstantSystemImage {
     static let favorite = "star"
     static let favoriteFill = "star.fill"
     static let unfavorite = "star.slash"
+    static let unfavoriteFill = "star.slash.fill"
     
     
     // MARK: SWIPE ACTIONS:

@@ -151,12 +151,12 @@ struct TransactionHistoryView: View {
             
             ToolbarItem(placement: .bottomBar) {
                 
-                let newFavoriteState = shouldMarkAsFavorite
+                let shouldMarkAsFavorite = shouldMarkAsFavorite
                 
-                Button(newFavoriteState ? "Favorite" : "Unfavorite",
-                       systemImage: newFavoriteState ? ConstantSystemImage.favorite : ConstantSystemImage.unfavorite) {
+                Button(shouldMarkAsFavorite ? "Favorite" : "Unfavorite",
+                       systemImage: shouldMarkAsFavorite ? ConstantSystemImage.favoriteFill : ConstantSystemImage.unfavoriteFill) {
                     
-                    favoriteMultipleTransactions(newState: newFavoriteState)
+                    favoriteMultipleTransactions(newState: shouldMarkAsFavorite)
                 }
                        .disabled(viewModel.selectedTransactions.isEmpty)
             }
@@ -332,12 +332,54 @@ struct TransactionHistoryView: View {
                     
                     .swipeActions(edge: .trailing) {
                         if !viewModel.isEditing {
-                            contextMenuActions(item)
+                            
+                            Button("", systemImage: ConstantSystemImage.trash, role: .destructive) {
+                                modelToDelete = item
+                                showAlertDelete = true
+                            }
+                            .tint(.alert)
+                            
+                            
+                            Button("", systemImage: ConstantSystemImage.squareAndPencil) {
+                                modelToModify = item
+                            }
+                            //.tint(.warning)
+                            
+                            if item.favorite == false {
+                                Button("", systemImage: ConstantSystemImage.favoriteFill) {
+                                    favorite(item)
+                                }
+                                .tint(Color.primaryTop)
+                                
+                            }
                         }
                     }
                     .contextMenu {
                         if !viewModel.isEditing {
-                            contextMenuActions(item)
+                            
+                            if item.favorite {
+                                Button("Unfavorite", systemImage: ConstantSystemImage.unfavoriteFill) {
+                                    favorite(item)
+                                }
+                                
+                            } else {
+                                Button("Favorite", systemImage: ConstantSystemImage.favoriteFill) {
+                                    favorite(item)
+                                }
+                            }
+                            
+                            
+                            
+                            Button("Edit", systemImage: ConstantSystemImage.squareAndPencil) {
+                                modelToModify = item
+                            }
+                            
+                            
+                            Button("Delete", systemImage: ConstantSystemImage.trash, role: .destructive) {
+                                modelToDelete = item
+                                showAlertDelete = true
+                            }
+                            .tint(.alert)
                         }
                     }
                     
@@ -372,29 +414,6 @@ struct TransactionHistoryView: View {
         }
     }
     
-    private func contextMenuActions(_ item: TransactionModel) -> some View {
-        VStack {
-            Button("Delete", systemImage: ConstantSystemImage.trash) {
-                modelToDelete = item
-                showAlertDelete = true
-            }
-            .tint(.alert)
-            
-            
-            Button("Edit", systemImage: ConstantSystemImage.squareAndPencil) {
-                modelToModify = item
-            }
-            //.tint(.warning)
-            
-            
-            Button("Favorite", systemImage: ConstantSystemImage.favoriteFill) {
-                favorite(item)
-            }
-            .foregroundStyle(.textFieldForeground)
-            .tint(Color.primaryTop)
-        }
-    }
-    
     
     // MARK: FUNCTIONS
     
@@ -403,8 +422,8 @@ struct TransactionHistoryView: View {
      Si al menos una no es favorita, debe marcar todas como favoritas.
     */
     private var shouldMarkAsFavorite: Bool {
-        guard !viewModel.selectedTransactions.isEmpty else {
-            return false
+        if viewModel.selectedTransactions.isEmpty {
+            return true
         }
 
         return !viewModel.selectedTransactions.allSatisfy(\.favorite)
