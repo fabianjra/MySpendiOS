@@ -98,8 +98,8 @@ struct SelectAccountModalView: View {
         .onDisappear {
             viewModel.deactivateObservers()
         }
-        .presentationDetents([.large])
-        .background(Color.backgroundContentGradient)
+        .presentationDetents([.medium, .large])
+        //.background(Color.backgroundContentGradient)
     }
     
     private func sortButton(for sortingOption: SortAccounts) -> some View {

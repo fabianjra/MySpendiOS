@@ -126,8 +126,8 @@ struct SelectCategoryModalView: View {
                                   isNewModelAdded: $isNewModelAdded)
             .presentationDetents([.large])
         }
-        .presentationDetents([.large])
-        .background(Color.backgroundContentGradient)
+        .presentationDetents([.medium, .large])
+        //.background(Color.backgroundContentGradient.opacity(0.5))
     }
     
     private func sortButton(for sortingOption: SortCategories) -> some View {

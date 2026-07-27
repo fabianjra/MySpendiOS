@@ -333,7 +333,7 @@ struct TransactionHistoryView: View {
                     .swipeActions(edge: .trailing) {
                         if !viewModel.isEditing {
                             
-                            Button("", systemImage: ConstantSystemImage.trash, role: .destructive) {
+                            Button("", systemImage: ConstantSystemImage.trash) {
                                 modelToDelete = item
                                 showAlertDelete = true
                             }
@@ -367,7 +367,6 @@ struct TransactionHistoryView: View {
                                     favorite(item)
                                 }
                             }
-                            
                             
                             
                             Button("Edit", systemImage: ConstantSystemImage.squareAndPencil) {
