@@ -92,10 +92,18 @@ struct AddModifyTransactionView: View {
                             .id(viewModel.notesId)
                             .focused($focusedField, equals: .notes)
                             .padding(.bottom, ConstantViews.mediumSpacing)
+                        
+                        
+                        Toggle(isOn: $viewModel.favorite) {
+                            TextPlain("Mark as favorite:")
+                        }
+                        .tint(Color.primaryBottom)
+                        .padding(.horizontal)
                     }
                     
                     
                     TextError(viewModel.errorMessage)
+                    //.padding(.vertical)
                 }
                 .disabled(viewModel.disabled)
                 

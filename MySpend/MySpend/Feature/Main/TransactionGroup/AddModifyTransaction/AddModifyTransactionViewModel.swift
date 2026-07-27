@@ -12,6 +12,7 @@ class AddModifyTransactionViewModel: BaseViewModel {
     @Published var accounts: [AccountModel] = []
     
     @Published var amountString: String = ""
+    @Published var favorite: Bool = false
 
     var showAccountTextField = true
     @Published var showAlert = false
@@ -27,6 +28,7 @@ class AddModifyTransactionViewModel: BaseViewModel {
             self.model = modelLoaded
             self.isNewModel = false
             self.amountString = modelLoaded.amount.convertAmountDecimalToString
+            self.favorite = modelLoaded.favorite
         } else {
             self.model = TransactionModel(dateTransaction: selectedDate ?? .now)
         }
@@ -81,6 +83,7 @@ class AddModifyTransactionViewModel: BaseViewModel {
         var modelMutated = model
         modelMutated.amount = amountString.convertAmountToDecimal
         modelMutated.dateTransaction = UtilsDate.normalizeTransactionDate(model.dateTransaction)
+        modelMutated.favorite = favorite
         
         do {
             try await TransactionManager(viewContext).create(modelMutated)
@@ -103,6 +106,7 @@ class AddModifyTransactionViewModel: BaseViewModel {
         
         var modelMutated = model
         modelMutated.amount = amountString.convertAmountToDecimal
+        modelMutated.favorite = favorite
         
         do {
             try await TransactionManager(viewContext).update(modelMutated)
