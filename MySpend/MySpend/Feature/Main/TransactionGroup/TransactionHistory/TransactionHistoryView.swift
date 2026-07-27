@@ -16,6 +16,12 @@ struct TransactionHistoryView: View {
     @Binding var selectedDate: Date
     var isMutipleAccounts: Bool
     
+    
+    // MARK: ALERTS (Solo manejadas dentro de la vista, no hacen nada en ViewModel)
+    @State private var showAlertDelete = false
+    @State private var showAlertDeleteMultiple = false
+    
+    
     // MARK: NAVIGATION
     @State private var showNewItemModal = false
     @State private var showSearchView = false
@@ -45,25 +51,78 @@ struct TransactionHistoryView: View {
         .navigationTitle("History")
         .navigationBarTitleDisplayMode(.inline) //TODO: CAMBIAR: El navegador de fechas va a ir abajo, entonces va a ponerse el titulo en grande al bajar.
         .toolbar {
-            ToolbarItem(placement: .title) {
-                TextPlain("History")
+            
+            //Toolbar Top:
+            
+            ToolbarItem(placement: .navigation) {
+                if viewModel.isEditing {
+                    Button("Select all") {
+                        //TODO: ...
+                    }
+                }
             }
             
-            //filterButton
+            ToolbarItem(placement: .title) {
+                
+                if viewModel.selectedTransactions.count == .zero {
+                    TextPlain("History")
+                } else {
+                    TextPlain("\(viewModel.selectedTransactions.count.description) selected")
+                }
+                
+            }
             
-            ToolbarSpacer(.flexible, placement: .bottomBar)
+            ToolbarItem(placement: .primaryAction) {
+                
+                if viewModel.isEditing {
+                    Button(role: .cancel) {
+                        viewModel.selectedTransactions.removeAll()
+                        viewModel.isEditing = false
+                    }
+                    
+                } else {
+                    Button("Select") {
+                        viewModel.isEditing = true
+                    }
+                }
+            }
             
-            DefaultToolbarItem(kind: .search, placement: .bottomBar)
+            
+            //Toolbar Bottom:
+            
+            if viewModel.isEditing {
+                ToolbarItem(placement: .bottomBar) {
+                    Button("Favorite", systemImage: ConstantSystemImage.favorite) {
+                        favoriteMultipleTransactions()
+                    }
+                }
+                
+                ToolbarSpacer(.flexible, placement: .bottomBar)
+                
+            } else {
+                //filterButton
+                ToolbarSpacer(.flexible, placement: .bottomBar)
+                DefaultToolbarItem(kind: .search, placement: .bottomBar)
+            }
             
             ToolbarItem(placement: .bottomBar) {
-                Button("Add transaction", systemImage: "plus") {
-                    showNewItemModal = true
+                
+                if viewModel.isEditing {
+                    Button("Delete", systemImage: ConstantSystemImage.trash) {
+                        showAlertDeleteMultiple = true
+                    }
+                    
+                } else {
+                    Button("Add transaction", systemImage: "plus") {
+                        showNewItemModal = true
+                    }
+                    .tint(Color.primaryTop)
                 }
-                .tint(Color.primaryTop)
             }
         }
         .searchable(text: $viewModel.searchText, isPresented: $showSearchView, placement: .toolbar)
         .searchToolbarBehavior(.minimize)
+        .navigationBarBackButtonHidden(viewModel.isEditing)
         
         .sheet(isPresented: $showNewItemModal) {
             NavigationStack {
@@ -132,16 +191,22 @@ struct TransactionHistoryView: View {
     }
     
     private var header: some View {
+        //        DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval,
+        //                                  selectedDate: $selectedDate,
+        //                                  isEditing: $viewModel.isEditing,
+        //                                  showEditor: true,
+        //                                  counterSelected: viewModel.selectedTransactions.count) {
+        //
+        //            viewModel.selectedTransactions.removeAll()
+        
+        
         DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval,
                                   selectedDate: $selectedDate,
                                   isEditing: $viewModel.isEditing,
-                                  showEditor: true,
+                                  showEditor: false, //TODO: Convertir a True para mostrar el Sort by
                                   counterSelected: viewModel.selectedTransactions.count) {
-            
-            viewModel.selectedTransactions.removeAll()
-            
         } actionTrailingEdit: {
-            viewModel.showAlertDeleteMultiple = true
+            //showAlertDeleteMultiple = true
             
         } contentLeadingSort: {
             Section("Sorted by: \(viewModel.sortTransactionsBy.rawValue)") {
@@ -244,17 +309,21 @@ struct TransactionHistoryView: View {
                     .listRowSeparatorTint(.textPrimaryForeground.opacity(ConstantColors.opacityHalf))
                     
                     // MARK: SWIPE ACTIONS:
-
+                    
                     .swipeActions(edge: .trailing) {
-                        contextMenuActions(item)
+                        if !viewModel.isEditing {
+                            contextMenuActions(item)
+                        }
                     }
                     .contextMenu {
-                        contextMenuActions(item)
+                        if !viewModel.isEditing {
+                            contextMenuActions(item)
+                        }
                     }
                     
                     // MARK: DELETE TRANSACTION SINGLE
                     
-                    .alert("Delete transaction", isPresented: $viewModel.showAlertDelete) {
+                    .alert("Delete transaction", isPresented: $showAlertDelete) {
                         Button("Delete", role: .destructive) { delete() }
                         Button("Cancel", role: .cancel) { }
                     } message: {
@@ -263,7 +332,7 @@ struct TransactionHistoryView: View {
                     
                     // MARK: DELETE TRANSACTION MULTIPLE
                     
-                    .alert("Delete transactions", isPresented: $viewModel.showAlertDeleteMultiple) {
+                    .alert("Delete transactions", isPresented: $showAlertDeleteMultiple) {
                         Button("Delete", role: .destructive) { deleteMltipleTransactions() }
                         Button("Cancel", role: .cancel) { }
                     } message: {
@@ -283,16 +352,8 @@ struct TransactionHistoryView: View {
         }
     }
     
-    
     private func contextMenuActions(_ item: TransactionModel) -> some View {
         VStack {
-            Button("Delete", systemImage: ConstantSystemImage.trash) {
-                modelToDelete = item
-                viewModel.showAlertDelete = true
-            }
-            .tint(.alert)
-            
-            
             Button("Edit", systemImage: ConstantSystemImage.squareAndPencil) {
                 modelToModify = item
             }
@@ -304,6 +365,13 @@ struct TransactionHistoryView: View {
             }
             .foregroundStyle(.textFieldForeground)
             .tint(Color.warning)
+            
+            
+            Button("Delete", systemImage: ConstantSystemImage.trash) {
+                modelToDelete = item
+                showAlertDelete = true
+            }
+            .tint(.alert)
         }
     }
     
@@ -313,6 +381,16 @@ struct TransactionHistoryView: View {
     private func favorite(_ model: TransactionModel) {
         Task {
             let result = await viewModel.favorite(model)
+            
+            if result.status.isError {
+                viewModel.errorMessage = result.message
+            }
+        }
+    }
+    
+    private func favoriteMultipleTransactions() {
+        Task {
+            let result = await viewModel.favoriteMltiple()
             
             if result.status.isError {
                 viewModel.errorMessage = result.message

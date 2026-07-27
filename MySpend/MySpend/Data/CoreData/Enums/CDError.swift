@@ -14,6 +14,8 @@ enum CDError: Error {
     
     case duplicateEntity(name: String, entity: String)
     case invalidData(String)
+    
+    case unexpectedResultType(expected: String, actual: String)
 }
 
 extension CDError: LocalizedError {
@@ -25,6 +27,8 @@ extension CDError: LocalizedError {
             
         case .duplicateEntity(let name, let entity): return NSLocalizedString("An entity of type \"\(entity)\" with the name \"\(name)\" already exists.", comment: "")
         case .invalidData(let reason): return NSLocalizedString("Invalid data: \(reason)", comment: "")
+            
+        case .unexpectedResultType(let expected, let actual): return NSLocalizedString("Core data failed to convert value type while casting. Value expected: \(expected). Actual value received: \(actual).", comment: "")
         }
     }
 }

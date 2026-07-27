@@ -16,20 +16,13 @@ struct ListEditorView: View {
     var actionLeadingEdit: (() -> Void)? = nil
     var actionTrailingEdit: (() -> Void)? = nil
     
-    // Para filtrar las Accounts:
-    var onlyAccountFilter: Bool = false
-    var showAccountFilter: Bool = false
-    var actionTrailingFilterAccounts: (() -> Void)? = nil
-    
     var body: some View {
         RowLCTCointainer {
-            if onlyAccountFilter == false {
-                Button {
-                    isEditing.toggle()
-                    if let action = actionLeadingEdit { action() }
-                } label: {
-                    TextPlain(isEditing ? "Done" : "Edit")
-                }
+            Button {
+                isEditing.toggle()
+                if let action = actionLeadingEdit { action() }
+            } label: {
+                TextPlain(isEditing ? "Done" : "Edit")
             }
             
         } centerContent: {
@@ -45,14 +38,6 @@ struct ListEditorView: View {
                     TextPlain("Delete", color: counterSelected <= 0 ? Color.disabledForeground : Color.alert)
                 }
                 .disabled(counterSelected <= 0)
-            } else {
-                if showAccountFilter {
-                    Button {
-                        if let action = actionTrailingFilterAccounts { action() }
-                    } label: {
-                        TextPlain("Accounts")
-                    }
-                }
             }
         }
         .animation(.default, value: isEditing)
@@ -66,9 +51,7 @@ struct ListEditorView: View {
     ListEditorView(isEditing: $isEditing,
                    counterSelected: counter,
                    actionLeadingEdit: {},
-                   actionTrailingEdit: {},
-                   showAccountFilter: true,
-                   actionTrailingFilterAccounts: {})
+                   actionTrailingEdit: {})
     .background(Color.backgroundBottom)
     .environment(\.locale, .init(identifier: Previews.localeES))
     

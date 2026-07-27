@@ -122,6 +122,47 @@ struct TransactionManager {
         }
     }
     
+    func favoriteMultiple(_ models: [TransactionModel], favorite: Bool = true) async throws {
+        
+        let idsToUpdate: Set<String> = models.isEmpty ? [] : Set(models.map { $0.id.uuidString })
+        if idsToUpdate.isEmpty { return }
+        
+        try await viewContext.perform {
+
+            let batchRequest = NSBatchUpdateRequest(entityName: Transaction.entityName)
+            batchRequest.predicate = NSPredicate(format: "id IN %@", idsToUpdate)
+            batchRequest.propertiesToUpdate = ["favorite": favorite]
+            batchRequest.resultType = .updatedObjectIDsResultType
+            
+            let anyResult = try viewContext.execute(batchRequest)
+            
+            guard let result = anyResult as? NSBatchUpdateResult else {
+                throw CDError.unexpectedResultType(expected: "NSBatchUpdateResult", actual: String(describing: type(of: anyResult)))
+            }
+            
+            if let objectIDs = result.result as? [NSManagedObjectID] {
+                
+                let changes: [AnyHashable: Any] = [NSUpdatedObjectsKey: objectIDs]
+                
+                NSManagedObjectContext.mergeChanges(
+                    fromRemoteContextSave: changes,
+                    into: [viewContext]
+                )
+                
+                // Refresca cada objeto si ya está registrado en el contexto
+                for objID in objectIDs {
+                    if let obj = try? viewContext.existingObject(with: objID) {
+                        viewContext.refresh(obj, mergeChanges: true)
+                    }
+                }
+
+                // Procesa notificaciones pendientes para que SwiftUI reciba los cambios
+                viewContext.processPendingChanges()
+            }
+        }
+    }
+    
+    
     // MARK: DELETE
     
     func delete(_ model: TransactionModel) async throws {

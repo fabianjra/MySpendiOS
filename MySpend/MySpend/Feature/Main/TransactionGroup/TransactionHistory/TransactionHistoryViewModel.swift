@@ -9,9 +9,6 @@ import Foundation
 
 class TransactionHistoryViewModel: BaseViewModel {
     
-    @Published var showAlertDelete = false
-    @Published var showAlertDeleteMultiple = false
-    
     @Published var isEditing = false
     @Published var searchText = ""
     
@@ -31,6 +28,26 @@ class TransactionHistoryViewModel: BaseViewModel {
     func favorite(_ model: TransactionModel) async -> ResponseModel {
         do {
             try await TransactionManager(viewContext).updateFavorite(model)
+            
+            return ResponseModel(.successful)
+        } catch {
+            Logger.exception(error, type: .CoreData)
+            return ResponseModel(.error, error.localizedDescription)
+        }
+    }
+    
+    func favoriteMltiple() async -> ResponseModel {
+        defer {
+            isEditing = false
+        }
+        
+        do {
+            //let idsToDelete = Set(selectedTransactions.map { $0.id })
+            
+            //try await TransactionManager(viewContext: viewContext).deleteMultiple(entityName: Transaction.entityName, idsToDelete: idsToDelete)
+            
+            try await TransactionManager(viewContext).favoriteMultiple(Array(selectedTransactions))
+            selectedTransactions.removeAll()
             
             return ResponseModel(.successful)
         } catch {
@@ -89,3 +106,4 @@ class TransactionHistoryViewModel: BaseViewModel {
         sortTransactionsBy = UserDefaultsManager.sorTransactions
     }
 }
+

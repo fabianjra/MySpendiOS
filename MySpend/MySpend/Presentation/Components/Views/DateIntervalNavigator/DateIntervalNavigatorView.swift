@@ -21,11 +21,6 @@ struct DateIntervalNavigatorView<Content: View>: View {
     var actionLeadingEdit: (() -> Void)? = nil
     var actionTrailingEdit: (() -> Void)? = nil
     
-    // Para filtrar las Accounts:
-    var onlyAccountFilter: Bool = false
-    var showAccountFilter: Bool = false
-    var actionTrailingFilterAccounts: (() -> Void)? = nil
-    
     @ViewBuilder var contentLeadingSort: () -> Content
     
     var body: some View {
@@ -37,23 +32,7 @@ struct DateIntervalNavigatorView<Content: View>: View {
                     if let action = actionLeadingEdit { action() }
                 }, actionTrailingEdit: {
                     if let action = actionTrailingEdit { action() }
-                },
-                               showAccountFilter: showAccountFilter,
-                               actionTrailingFilterAccounts: {
-                    if let action = actionTrailingFilterAccounts { action() }
-                    
                 })
-            } else {
-                if showAccountFilter {
-                    ListEditorView(isEditing: .constant(false),
-                                   counterSelected: .zero,
-                                   actionLeadingEdit: {}, actionTrailingEdit: {},
-                                   onlyAccountFilter: onlyAccountFilter,
-                                   showAccountFilter: showAccountFilter,
-                                   actionTrailingFilterAccounts: {
-                        if let action = actionTrailingFilterAccounts { action() }
-                    })
-                }
             }
             
             PickerView(selection: $dateTimeInterval)
@@ -139,8 +118,7 @@ struct DateIntervalNavigatorView<Content: View>: View {
         DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval,
                                   selectedDate: $selectedDate,
                                   isEditing: $isEditing,
-                                  showEditor: true,
-                                  showAccountFilter: true) {}
+                                  showEditor: true) {}
             .background(Color.backgroundBottom.opacity(0.8))
         
         Spacer()
@@ -167,17 +145,14 @@ struct DateIntervalNavigatorView<Content: View>: View {
         DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval,
                                   selectedDate: $selectedDate,
                                   isEditing: $isEditing,
-                                  showEditor: true,
-                                  showAccountFilter: true) {}
+                                  showEditor: true) {}
             .background(Color.backgroundBottom.opacity(0.8))
         
         Spacer()
         
         DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval,
                                   selectedDate: $selectedDate,
-                                  isEditing: .constant(false),
-                                  showAccountFilter: true,
-                                  actionTrailingFilterAccounts: {}){}
+                                  isEditing: .constant(false)){}
             .background(Color.backgroundBottom.opacity(0.8))
         
         Spacer()
