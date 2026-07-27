@@ -87,15 +87,42 @@ struct TransactionView: View {
                         
                         
                         ScrollView(showsIndicators: false) {
-                            ForEach(viewModel.groupedTransactions, id:\.category.id) { item in
-                                HStack {
-                                    TextPlain(item.category.name)
+                            
+                            if !viewModel.groupedTransactionsIncomes.isEmpty {
+                                VStack(alignment: .leading) {
+                                    TextPlain("Incomes", color: Color.primaryTop, family: .semibold, size: .big)
+                                        .padding(.vertical, ConstantViews.minimumSpacing)
                                     
-                                    Spacer()
-                                    
-                                    TextPlain(item.totalAmount.convertAmountDecimalToString.addCurrencySymbol)
+                                    ForEach(viewModel.groupedTransactionsIncomes, id:\.category.id) { item in
+                                        HStack {
+                                            TextPlain(item.category.name)
+                                                .padding(.leading)
+                                            
+                                            Spacer()
+                                            
+                                            TextPlain(item.totalAmount.convertAmountDecimalToString.addCurrencySymbol)
+                                        }
+                                    }
                                 }
-                                .padding(.vertical, ConstantViews.minimumSpacing)
+                                .padding(.vertical)
+                            }
+                            
+                            if !viewModel.groupedTransactionsExpenses.isEmpty {
+                                VStack(alignment: .leading) {
+                                    TextPlain("Expenses", color: Color.alert, family: .semibold, size: .big)
+                                        .padding(.vertical, ConstantViews.minimumSpacing)
+                                    
+                                    ForEach(viewModel.groupedTransactionsExpenses, id:\.category.id) { item in
+                                        HStack {
+                                            TextPlain(item.category.name)
+                                                .padding(.leading)
+                                            
+                                            Spacer()
+                                            
+                                            TextPlain(item.totalAmount.convertAmountDecimalToString.addCurrencySymbol)
+                                        }
+                                    }
+                                }
                             }
                         }
                         .animation(.default, value: viewModel.transactionsFiltered.count)

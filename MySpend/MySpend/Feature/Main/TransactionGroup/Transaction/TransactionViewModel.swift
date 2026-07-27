@@ -15,7 +15,8 @@ class TransactionViewModel: BaseViewModel {
     @Published var transactions: [TransactionModel] = []
     
     @Published var transactionsFiltered: [TransactionModel] = []
-    @Published var groupedTransactions: UtilsCurrency.groupedTransactions = []
+    @Published var groupedTransactionsIncomes: UtilsCurrency.groupedTransactions = []
+    @Published var groupedTransactionsExpenses: UtilsCurrency.groupedTransactions = []
     
     
     //MARK: VIEW PROPERTIES
@@ -96,7 +97,8 @@ class TransactionViewModel: BaseViewModel {
                                                                       transactions: transactions,
                                                                       for: dateTimeInterval)
         
-        groupedTransactions = UtilsCurrency.calculateGroupedTransactions(transactionsFiltered).sorted(by: { $0.totalAmount > $1.totalAmount })
+        groupedTransactionsIncomes = UtilsCurrency.calculateGroupedTransactions(transactionsFiltered).filter {$0.category.type == .income}.sorted(by: { $0.totalAmount > $1.totalAmount })
+        groupedTransactionsExpenses = UtilsCurrency.calculateGroupedTransactions(transactionsFiltered).filter {$0.category.type == .expense}.sorted(by: { $0.totalAmount > $1.totalAmount })
     }
 }
 
