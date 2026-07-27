@@ -61,8 +61,6 @@ struct TransactionView: View {
                     .buttonStyle(.glass)
                     .buttonBorderShape(.circle)
                     .matchedTransitionSource(id: viewModel.transitionSettings, in: namesapce)
-                    
-                    //TODO: Agregar boton para filtrar Accounts. A la derecha del nombre del usuario
                 }
                 
                 
