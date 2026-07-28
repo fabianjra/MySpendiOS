@@ -33,20 +33,11 @@ struct ConstantViews {
     static let gridSpacing: CGFloat = 50.0
     
     // MARK: PADDING
-    static let paddingSmallButton: CGFloat = 60.0
-    static let paddingTabViewHorizontal: CGFloat = 60.0
-    static let paddingButtonRoundedBottom: CGFloat = 60.0
-    static let paddingButtonRoundedBottomForCurvedTabview: CGFloat = 50.0
-    static let paddingBottomResumeview: CGFloat = 30.0
     static let paddingButtonAddCategory: CGFloat = 20.0
-    static let paddingLoaderView: CGFloat = 50.0
     static let paddingNavigationBarIcon: CGFloat = 5.0
-    static let paddingButtonLarge: CGFloat = 10.0
-    static let paddingButtonNavigator: CGFloat = 6.0
     static let paddingButtonTransaction: CGFloat = 6.0
     
-    static let paddingMedium: CGFloat = 6.0
-    static let paddingMediumPlus: CGFloat = 8.0
+    static let paddingSmall: CGFloat = 10.0
     
     // MARK: SCALE
     static let calendarScale: CGFloat = 1.10

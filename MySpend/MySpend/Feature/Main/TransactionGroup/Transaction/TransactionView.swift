@@ -249,33 +249,35 @@ struct TransactionView: View {
                 } label: {
                     Image.filter
                         .foregroundStyle(.textPrimaryForeground)
-                        .fontWeight(.semibold)
-                        .padding(.vertical, ConstantViews.paddingMediumPlus)
-                        .padding(.horizontal, ConstantViews.paddingMedium)
+                        .padding(ConstantViews.paddingSmall)
                         .background(viewModel.showFilter ? Capsule().fill(.primaryTop) : nil)
-                        //.animation(nil, value: UUID()) //otra manera de desabilitar la animacion.
+                    //.animation(nil, value: UUID()) //otra manera de desabilitar la animacion.
                         .transaction { transaction in
                             transaction.animation = nil
                         }
                 }
                 
+                
                 if viewModel.showFilter {
                     Button {
                         showFiltersView = true
                     } label: {
-                        VStack(alignment: .leading) {
-                            TextPlain("Filtered by", size: .medium)
+                        HStack {
+                            VStack(alignment: .leading) {
+                                TextPlain("Filtered by", size: .medium)
+                                
+                                TextPlain(getTextDescription,
+                                          color: viewModel.selectedAccountsFilter.isEmpty ? .textPrimaryForeground : .primaryTop,
+                                          size: .mediumSmall,
+                                          truncateMode: .tail)
+                            }
                             
-                            TextPlain(getTextDescription,
-                                      color: viewModel.selectedAccountsFilter.isEmpty ? .textPrimaryForeground : .primaryTop,
-                                      size: .mediumSmall,
-                                      truncateMode: .tail)
+                            Spacer()
                         }
                         .frame(width: ConstantFrames.filterMaxWidth)
                     }
                     .frame(width: ConstantFrames.filterMaxWidth)
-                    .contentShape(Rectangle())
-//                    .transition(.opacity.combined(with: .move(edge: .leading)))
+                    .contentShape(Rectangle()) //Para detectar el touch en todo el espacio disponible.
                     .matchedTransitionSource(id: viewModel.transitionFilters, in: namesapce)
                 }
             }
