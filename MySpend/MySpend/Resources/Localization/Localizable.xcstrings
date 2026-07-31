@@ -426,6 +426,42 @@
         }
       }
     },
+    "TransactionType.Expense" : {
+      "comment" : "Tipo de transaccion para gasto",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Expense"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gasto"
+          }
+        }
+      }
+    },
+    "TransactionType.Income" : {
+      "comment" : "Tipo de transaccion para ingreso",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Income"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ingreso"
+          }
+        }
+      }
+    },
     "Type" : {
 
     },

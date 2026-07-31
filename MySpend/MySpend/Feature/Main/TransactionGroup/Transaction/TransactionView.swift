@@ -111,17 +111,21 @@ struct TransactionView: View {
                             
                             if !viewModel.groupedTransactionsIncomes.isEmpty {
                                 VStack(alignment: .leading) {
-                                    TextPlain("Incomes", color: Color.primaryTop, family: .semibold, size: .big)
+                                    
+                                    Text(.transactionTypeIncome)
+                                        .modifier(TextStyle(color: .primaryTop, family: .semibold, size: .big))
                                         .padding(.bottom, ConstantViews.minimumSpacing)
                                     
                                     ForEach(viewModel.groupedTransactionsIncomes, id:\.category.id) { item in
                                         HStack {
-                                            TextPlain(item.category.name)
+                                            Text(item.category.name)
+                                                .modifier(TextStyle())
                                                 .padding(.leading)
                                             
                                             Spacer()
                                             
-                                            TextPlain(item.totalAmount.convertAmountDecimalToString.addCurrencySymbol)
+                                            Text(item.totalAmount.convertAmountDecimalToString.addCurrencySymbol)
+                                                .modifier(TextStyle())
                                         }
                                     }
                                 }
@@ -130,17 +134,21 @@ struct TransactionView: View {
                             
                             if !viewModel.groupedTransactionsExpenses.isEmpty {
                                 VStack(alignment: .leading) {
-                                    TextPlain("Expenses", color: Color.alert, family: .semibold, size: .big)
+
+                                    Text(.transactionTypeExpense)
+                                        .modifier(TextStyle(color: .alert, family: .semibold, size: .big))
                                         .padding(.bottom, ConstantViews.minimumSpacing)
                                     
                                     ForEach(viewModel.groupedTransactionsExpenses, id:\.category.id) { item in
                                         HStack {
-                                            TextPlain(item.category.name)
+                                            Text(item.category.name)
+                                                .modifier(TextStyle())
                                                 .padding(.leading)
                                             
                                             Spacer()
                                             
-                                            TextPlain(item.totalAmount.convertAmountDecimalToString.addCurrencySymbol)
+                                            Text(item.totalAmount.convertAmountDecimalToString.addCurrencySymbol)
+                                                .modifier(TextStyle())
                                         }
                                     }
                                 }
