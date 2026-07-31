@@ -85,13 +85,34 @@ struct TransactionView: View {
                                                   selectedDate: $viewModel.selectedDate,
                                                   isEditing: .constant(false)){}
                         
+                        VStack {
+                            if viewModel.allAccounts.count > 1 {
+                                
+                                let text: String = {
+                                    
+                                    // Si todas las cuentas están seleccionadas, muestra “All accounts”
+                                    if viewModel.selectedAccountsFilter.count == viewModel.allAccounts.count {
+                                        return "All accounts"
+                                    }
+                                    
+                                    // Si hay un subconjunto de cuentas, se enlistan los nombres
+                                    let accountsSelected = viewModel.selectedAccountsFilter
+                                        .map(\.name)
+                                        .joined(separator: ", ")
+                                    
+                                    return accountsSelected
+                                }()
+
+                                TextPlain(text, size: .medium, truncateMode: .tail)
+                            }
+                        }
                         
                         ScrollView(showsIndicators: false) {
                             
                             if !viewModel.groupedTransactionsIncomes.isEmpty {
                                 VStack(alignment: .leading) {
                                     TextPlain("Incomes", color: Color.primaryTop, family: .semibold, size: .big)
-                                        .padding(.vertical, ConstantViews.minimumSpacing)
+                                        .padding(.bottom, ConstantViews.minimumSpacing)
                                     
                                     ForEach(viewModel.groupedTransactionsIncomes, id:\.category.id) { item in
                                         HStack {
@@ -104,13 +125,13 @@ struct TransactionView: View {
                                         }
                                     }
                                 }
-                                .padding(.vertical)
+                                .padding(.bottom)
                             }
                             
                             if !viewModel.groupedTransactionsExpenses.isEmpty {
                                 VStack(alignment: .leading) {
                                     TextPlain("Expenses", color: Color.alert, family: .semibold, size: .big)
-                                        .padding(.vertical, ConstantViews.minimumSpacing)
+                                        .padding(.bottom, ConstantViews.minimumSpacing)
                                     
                                     ForEach(viewModel.groupedTransactionsExpenses, id:\.category.id) { item in
                                         HStack {
@@ -234,7 +255,7 @@ struct TransactionView: View {
             viewModel.filterTransactionsByDate()
         }
     }
-
+    
     
     // MARK: FILTER
     
@@ -264,12 +285,13 @@ struct TransactionView: View {
                     } label: {
                         HStack {
                             VStack(alignment: .leading) {
-                                TextPlain("Filtered by", size: .medium)
+                                Text(.filterTitleDescription)
+                                    .modifier(TextStyle(size: .medium))
                                 
-                                TextPlain(getTextDescription,
-                                          color: viewModel.selectedAccountsFilter.isEmpty ? .textPrimaryForeground : .primaryTop,
-                                          size: .mediumSmall,
-                                          truncateMode: .tail)
+                                Text(getTextDescription)
+                                    .modifier(TextStyle(color: viewModel.selectedAccountsFilter.isEmpty ? .textPrimaryForeground : .primaryTop,
+                                                        size: .mediumSmall,truncateMode: .tail))
+                                
                             }
                             
                             Spacer()
@@ -284,20 +306,26 @@ struct TransactionView: View {
         }
     }
     
-    private var getTextDescription: String {
-        let selectedAccountsFilter = viewModel.selectedAccountsFilter
-        
-        if selectedAccountsFilter.count == 1 {
-            return selectedAccountsFilter.first?.name ?? ""
+    private var getTextDescription: LocalizedStringResource {
+        if viewModel.favoriteSelected {
+            return .filterAccountFavorites
+        }
+
+        switch viewModel.selectedAccountsFilter.count {
             
-        } else if selectedAccountsFilter.count > 1 {
-            return "accounts"
+        case .zero:
+            return .filterAccountNone
             
-        } else {
-            return "none"
+        case 1:
+            return LocalizedStringResource(stringLiteral: viewModel.selectedAccountsFilter.first?.name ?? "")
+            
+        case viewModel.allAccounts.count:
+            return .filterAccountAllAccounts
+
+        default:
+            return .filterAccountSomeAccounts
         }
     }
-    
 }
 
 private struct previewWrapper: View {
@@ -330,3 +358,4 @@ private struct previewWrapper: View {
             .environment(\.locale, .init(identifier: Previews.localeES_ES))
     }
 }
+
