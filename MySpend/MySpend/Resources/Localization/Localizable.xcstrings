@@ -173,7 +173,7 @@
     "Fill the empty spaces." : {
 
     },
-    "Filter.Account.AllAccounts" : {
+    "Filter.Account.All" : {
       "comment" : "Indica que se han seleccionado todas las cuentas en el filtro de cuentas",
       "extractionState" : "manual",
       "localizations" : {
@@ -186,7 +186,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Todas"
+            "value" : "Todas las cuentas"
           }
         }
       }
@@ -452,7 +452,7 @@
         }
       }
     },
-    "TransactionType.Expense" : {
+    "TransactionType.Expenses" : {
       "comment" : "Tipo de transaccion para gasto",
       "extractionState" : "manual",
       "localizations" : {
@@ -470,7 +470,7 @@
         }
       }
     },
-    "TransactionType.Income" : {
+    "TransactionType.Incomes" : {
       "comment" : "Tipo de transaccion para ingreso",
       "extractionState" : "manual",
       "localizations" : {

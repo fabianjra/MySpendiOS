@@ -88,11 +88,11 @@ struct TransactionView: View {
                         VStack {
                             if viewModel.allAccounts.count > 1 {
                                 
-                                let text: String = {
+                                let text: LocalizedStringResource = {
                                     
                                     // Si todas las cuentas están seleccionadas, muestra “All accounts”
                                     if viewModel.selectedAccountsFilter.count == viewModel.allAccounts.count {
-                                        return "All accounts"
+                                        return .filterAccountAll
                                     }
                                     
                                     // Si hay un subconjunto de cuentas, se enlistan los nombres
@@ -100,10 +100,11 @@ struct TransactionView: View {
                                         .map(\.name)
                                         .joined(separator: ", ")
                                     
-                                    return accountsSelected
+                                    return LocalizedStringResource(stringLiteral: accountsSelected)
                                 }()
-
-                                TextPlain(text, size: .medium, truncateMode: .tail)
+                                
+                                Text(text)
+                                    .textStyle(size: .medium, truncateMode: .tail)
                             }
                         }
                         
@@ -112,7 +113,7 @@ struct TransactionView: View {
                             if !viewModel.groupedTransactionsIncomes.isEmpty {
                                 VStack(alignment: .leading) {
                                     
-                                    Text(.transactionTypeIncome)
+                                    Text(.transactionTypeIncomes)
                                         .textStyle(color: .primaryTop, family: .semibold, size: .big)
                                         .padding(.bottom, ConstantViews.minimumSpacing)
                                     
@@ -135,7 +136,7 @@ struct TransactionView: View {
                             if !viewModel.groupedTransactionsExpenses.isEmpty {
                                 VStack(alignment: .leading) {
 
-                                    Text(.transactionTypeExpense)
+                                    Text(.transactionTypeExpenses)
                                         .textStyle(color: .alert, family: .semibold, size: .big)
                                         .padding(.bottom, ConstantViews.minimumSpacing)
                                     
@@ -304,9 +305,9 @@ struct TransactionView: View {
                             
                             Spacer()
                         }
-                        .frame(width: ConstantFrames.filterMaxWidth)
+                        .frame(maxWidth: ConstantFrames.filterMaxWidth)
                     }
-                    .frame(width: ConstantFrames.filterMaxWidth)
+                    .frame(maxWidth: ConstantFrames.filterMaxWidth)
                     .contentShape(Rectangle()) //Para detectar el touch en todo el espacio disponible.
                     .matchedTransitionSource(id: viewModel.transitionFilters, in: namesapce)
                 }
@@ -328,7 +329,7 @@ struct TransactionView: View {
             return LocalizedStringResource(stringLiteral: viewModel.selectedAccountsFilter.first?.name ?? "")
             
         case viewModel.allAccounts.count:
-            return .filterAccountAllAccounts
+            return .filterAccountAll
 
         default:
             return .filterAccountSomeAccounts

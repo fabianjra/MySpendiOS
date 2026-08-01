@@ -66,7 +66,7 @@ struct MockCoreDataNormal {
         item.isActive = true
         
         item.icon = ""
-        item.name = "Only expenses"
+        item.name = "Only expenses in green context abc abcabc"
         item.notes = ""
         item.type = AccountType.expenses.rawValue
         item.userId = ""
