@@ -34,18 +34,18 @@ struct TransactionView: View {
                 
                 HStack {
                     VStack(alignment: .leading) {
-                        TextPlainLocalized(textLocalized: "greet \(viewModel.userName) \(Emojis.greeting.rawValue)",
-                                           table: LocalizableTable.user,
-                                           family: .semibold,
-                                           size: .big,
-                                           lineLimit: ConstantViews.singleTextMaxLines,
-                                           truncateMode: .tail)
+                        Text(.mainHeaderGreet(viewModel.userName, Emojis.greeting.rawValue))
+                            .textStyle(family: .semibold,
+                                       size: .big,
+                                       lineLimit: ConstantViews.singleTextMaxLines,
+                                       truncateMode: .tail)
                         
-                        TextPlainLocalized(Localizable.User.welcome,
-                                           family: .light,
-                                           size: .small,
-                                           lineLimit: ConstantViews.singleTextMaxLines)
+                        Text(.mainHeaderSubtitle)
+                            .textStyle(family: .light,
+                                       size: .small,
+                                       lineLimit: ConstantViews.singleTextMaxLines)
                     }
+                    
                     Spacer()
                     
                     Button {
@@ -113,19 +113,19 @@ struct TransactionView: View {
                                 VStack(alignment: .leading) {
                                     
                                     Text(.transactionTypeIncome)
-                                        .modifier(TextStyle(color: .primaryTop, family: .semibold, size: .big))
+                                        .textStyle(color: .primaryTop, family: .semibold, size: .big)
                                         .padding(.bottom, ConstantViews.minimumSpacing)
                                     
                                     ForEach(viewModel.groupedTransactionsIncomes, id:\.category.id) { item in
                                         HStack {
                                             Text(item.category.name)
-                                                .modifier(TextStyle())
+                                                .textStyle()
                                                 .padding(.leading)
                                             
                                             Spacer()
                                             
                                             Text(item.totalAmount.convertAmountDecimalToString.addCurrencySymbol)
-                                                .modifier(TextStyle())
+                                                .textStyle()
                                         }
                                     }
                                 }
@@ -136,19 +136,19 @@ struct TransactionView: View {
                                 VStack(alignment: .leading) {
 
                                     Text(.transactionTypeExpense)
-                                        .modifier(TextStyle(color: .alert, family: .semibold, size: .big))
+                                        .textStyle(color: .alert, family: .semibold, size: .big)
                                         .padding(.bottom, ConstantViews.minimumSpacing)
                                     
                                     ForEach(viewModel.groupedTransactionsExpenses, id:\.category.id) { item in
                                         HStack {
                                             Text(item.category.name)
-                                                .modifier(TextStyle())
+                                                .textStyle()
                                                 .padding(.leading)
                                             
                                             Spacer()
                                             
                                             Text(item.totalAmount.convertAmountDecimalToString.addCurrencySymbol)
-                                                .modifier(TextStyle())
+                                                .textStyle()
                                         }
                                     }
                                 }
@@ -294,11 +294,11 @@ struct TransactionView: View {
                         HStack {
                             VStack(alignment: .leading) {
                                 Text(.filterTitleDescription)
-                                    .modifier(TextStyle(size: .medium))
+                                    .textStyle(size: .medium)
                                 
                                 Text(getTextDescription)
-                                    .modifier(TextStyle(color: viewModel.selectedAccountsFilter.isEmpty ? .textPrimaryForeground : .primaryTop,
-                                                        size: .mediumSmall,truncateMode: .tail))
+                                    .textStyle(color: viewModel.selectedAccountsFilter.isEmpty ? .textPrimaryForeground : .primaryTop,
+                                                        size: .mediumSmall,truncateMode: .tail)
                                 
                             }
                             
@@ -350,6 +350,13 @@ private struct previewWrapper: View {
     NavigationStack {
         previewWrapper()
             .environment(\.locale, .init(identifier: Previews.localeES_CR))
+    }
+}
+
+#Preview("Normal \(Previews.localeEN)") {
+    NavigationStack {
+        previewWrapper()
+            .environment(\.locale, .init(identifier: Previews.localeEN))
     }
 }
 

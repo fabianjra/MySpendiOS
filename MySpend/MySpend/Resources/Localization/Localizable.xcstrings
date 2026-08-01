@@ -270,18 +270,44 @@
     "Go back" : {
 
     },
-    "greet %@ %@" : {
+    "History" : {
+
+    },
+    "Main.Header.Greet %@ %@" : {
+      "comment" : "Saludo inicial",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "greet %1$@ %2$@"
+            "state" : "translated",
+            "value" : "Hello %@ %@ "
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hola %@ %@ "
           }
         }
       }
     },
-    "History" : {
-
+    "Main.Header.Subtitle" : {
+      "comment" : "Subtitulo de saludo inicial",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Welcome back"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bienvenido"
+          }
+        }
+      }
     },
     "Modify account" : {
 

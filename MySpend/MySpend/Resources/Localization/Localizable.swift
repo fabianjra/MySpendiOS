@@ -19,7 +19,6 @@ struct LocalizableTable {
     
     // MARK: - Generic
     
-    static let user = "User"
     static let data = "Data"
     static let button = "Button"
     static let currency = "Currency"
@@ -62,12 +61,6 @@ struct Localizable {
     }
     
     // MARK: - Generic
-    
-    enum User: String, LocalizableProtocol {
-        case welcome
-        
-        var table: String { LocalizableTable.user }
-    }
     
     enum Data: String, LocalizableProtocol {
         case empty
