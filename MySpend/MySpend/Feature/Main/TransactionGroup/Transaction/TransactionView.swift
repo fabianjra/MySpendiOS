@@ -19,7 +19,7 @@ struct TransactionView: View {
     @State private var navigateToHistory: Bool = false
     
     // MARK: NAMESPACES
-    @Namespace private var namesapce
+    //@Namespace private var namesapce
     
     var body: some View {
         VStack {
@@ -60,7 +60,7 @@ struct TransactionView: View {
                     }
                     .buttonStyle(.glass)
                     .buttonBorderShape(.circle)
-                    .matchedTransitionSource(id: viewModel.transitionSettings, in: namesapce)
+                    //.matchedTransitionSource(id: viewModel.transitionSettings, in: namesapce)
                 }
                 
                 
@@ -189,18 +189,18 @@ struct TransactionView: View {
             //                .zoom(sourceID: transitionNewTransaction, in: namesapce)
             //            )
         }
-        .popover(isPresented: $showFiltersView) {
-            NavigationStack {
-                FilterTransactionsView(viewModel: viewModel)
-                    .presentationDetents([.medium, .large])
-            }
-            .navigationTransition(
-                .zoom(sourceID: viewModel.transitionFilters, in: namesapce)
-            )
-        }
+//        .popover(isPresented: $showFiltersView) {
+//            NavigationStack {
+//                FilterTransactionsView(viewModel: viewModel)
+//                    .presentationDetents([.medium, .large])
+//            }
+//            .navigationTransition(
+//                .zoom(sourceID: viewModel.transitionFilters, in: namesapce)
+//            )
+//        }
         
         .toolbar {
-            filterDescriptionView
+            FilterTransactionsButtonView(viewModel: viewModel)
             
             ToolbarSpacer(.flexible, placement: .bottomBar)
             
@@ -266,75 +266,75 @@ struct TransactionView: View {
     }
     
     
-    // MARK: FILTER
-    
-    //@ToolbarContentBuilder
-    private var filterDescriptionView: some ToolbarContent {
-        ToolbarItem(placement: .bottomBar) {
-            HStack {
-                Button {
-//                    withAnimation {
-                        viewModel.showFilter.toggle()
+//    // MARK: FILTER
+//    
+//    //@ToolbarContentBuilder
+//    private var filterDescriptionView: some ToolbarContent {
+//        ToolbarItem(placement: .bottomBar) {
+//            HStack {
+//                Button {
+////                    withAnimation {
+//                        viewModel.showFilter.toggle()
+////                    }
+//                } label: {
+//                    Image.filter
+//                        .foregroundStyle(.textPrimaryForeground)
+//                        .padding(ConstantViews.paddingSmall)
+//                        .background(viewModel.showFilter ? Capsule().fill(.primaryTop) : nil)
+//                    //.animation(nil, value: UUID()) //otra manera de desabilitar la animacion.
+//                        .transaction { transaction in
+//                            transaction.animation = nil
+//                        }
+//                }
+//                
+//                
+//                if viewModel.showFilter {
+//                    Button {
+//                        showFiltersView = true
+//                    } label: {
+//                        HStack {
+//                            VStack(alignment: .leading) {
+//                                Text(.filterTitleDescription)
+//                                    .textStyle(size: .medium)
+//                                
+//                                Text(getTextDescription)
+//                                    .textStyle(color: viewModel.selectedAccountsFilter.isEmpty ? .textPrimaryForeground : .primaryTop,
+//                                                        size: .mediumSmall,truncateMode: .tail)
+//                                
+//                            }
+//                            
+//                            Spacer()
+//                        }
+//                        .frame(maxWidth: ConstantFrames.filterMaxWidth)
 //                    }
-                } label: {
-                    Image.filter
-                        .foregroundStyle(.textPrimaryForeground)
-                        .padding(ConstantViews.paddingSmall)
-                        .background(viewModel.showFilter ? Capsule().fill(.primaryTop) : nil)
-                    //.animation(nil, value: UUID()) //otra manera de desabilitar la animacion.
-                        .transaction { transaction in
-                            transaction.animation = nil
-                        }
-                }
-                
-                
-                if viewModel.showFilter {
-                    Button {
-                        showFiltersView = true
-                    } label: {
-                        HStack {
-                            VStack(alignment: .leading) {
-                                Text(.filterTitleDescription)
-                                    .textStyle(size: .medium)
-                                
-                                Text(getTextDescription)
-                                    .textStyle(color: viewModel.selectedAccountsFilter.isEmpty ? .textPrimaryForeground : .primaryTop,
-                                                        size: .mediumSmall,truncateMode: .tail)
-                                
-                            }
-                            
-                            Spacer()
-                        }
-                        .frame(maxWidth: ConstantFrames.filterMaxWidth)
-                    }
-                    .frame(maxWidth: ConstantFrames.filterMaxWidth)
-                    .contentShape(Rectangle()) //Para detectar el touch en todo el espacio disponible.
-                    .matchedTransitionSource(id: viewModel.transitionFilters, in: namesapce)
-                }
-            }
-        }
-    }
-    
-    private var getTextDescription: LocalizedStringResource {
-        if viewModel.favoriteSelected {
-            return .filterAccountFavorites
-        }
-
-        switch viewModel.selectedAccountsFilter.count {
-            
-        case .zero:
-            return .filterAccountNone
-            
-        case 1:
-            return LocalizedStringResource(stringLiteral: viewModel.selectedAccountsFilter.first?.name ?? "")
-            
-        case viewModel.allAccounts.count:
-            return .filterAccountAll
-
-        default:
-            return .filterAccountSomeAccounts
-        }
-    }
+//                    .frame(maxWidth: ConstantFrames.filterMaxWidth)
+//                    .contentShape(Rectangle()) //Para detectar el touch en todo el espacio disponible.
+//                    .matchedTransitionSource(id: viewModel.transitionFilters, in: namesapce)
+//                }
+//            }
+//        }
+//    }
+//    
+//    private var getTextDescription: LocalizedStringResource {
+//        if viewModel.favoriteSelected {
+//            return .filterAccountFavorites
+//        }
+//
+//        switch viewModel.selectedAccountsFilter.count {
+//            
+//        case .zero:
+//            return .filterAccountNone
+//            
+//        case 1:
+//            return LocalizedStringResource(stringLiteral: viewModel.selectedAccountsFilter.first?.name ?? "")
+//            
+//        case viewModel.allAccounts.count:
+//            return .filterAccountAll
+//
+//        default:
+//            return .filterAccountSomeAccounts
+//        }
+//    }
 }
 
 private struct previewWrapper: View {
