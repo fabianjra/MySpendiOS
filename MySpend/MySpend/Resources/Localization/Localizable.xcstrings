@@ -459,13 +459,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Expense"
+            "value" : "Expenses"
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gasto"
+            "state" : "needs_review",
+            "value" : "Gastos "
           }
         }
       }
@@ -477,13 +477,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Income"
+            "value" : "Incomes"
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ingreso"
+            "state" : "needs_review",
+            "value" : "Ingresos"
           }
         }
       }
