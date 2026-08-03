@@ -126,8 +126,8 @@ struct TransactionHistoryView: View {
                 Text(.titleHistoryView)
                     .textStyle
             } else {
-                //TextPlain("\(viewModel.selectedTransactions.count.description) selected")
                 Text(.selectorTransactionsCount(viewModel.selectedTransactions.count))
+                    .textStyle
             }
             
         }

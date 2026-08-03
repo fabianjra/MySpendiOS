@@ -32,7 +32,7 @@ class TransactionViewModel: BaseViewModel {
 
     
     // MARK: FILTER
-    @Published var showFilter = false
+    @Published var showFilter: Bool = false
     @Published var selectedAccountsFilter = Set<AccountModel>()
     @Published var allAccounts: [AccountModel] = []
     
