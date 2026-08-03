@@ -49,7 +49,7 @@ struct TransactionHistoryView: View {
             Text(viewModel.errorMessage)
                 .textErrorStyle
         }
-        .navigationTitle("History")
+        .navigationTitle(.titleHistoryView)
         .navigationBarTitleDisplayMode(.inline) //TODO: CAMBIAR: El navegador de fechas va a ir abajo, entonces va a ponerse el titulo en grande al bajar.
         .toolbar {
             toolbarItems
@@ -109,11 +109,11 @@ struct TransactionHistoryView: View {
             if viewModel.isEditing {
                 
                 if viewModel.selectedTransactions.count == viewModel.transactionsFiltered.count {
-                    Button("Deselect all") {
+                    Button(.selectorDeselectAll) {
                         viewModel.selectedTransactions = Set()
                     }
                 } else {
-                    Button("Select all") {
+                    Button(.selectorSelectAll) {
                         viewModel.selectedTransactions = Set(viewModel.transactionsFiltered)
                     }
                 }
@@ -141,7 +141,7 @@ struct TransactionHistoryView: View {
                 }
                 
             } else {
-                Button("Select") {
+                Button(.selectorSelect) {
                     viewModel.isEditing = true
                 }
             }

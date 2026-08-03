@@ -199,7 +199,7 @@ struct TransactionView: View {
 //            )
 //        }
         
-        .navigationTitle("Home")
+        .navigationTitle(.titleHomeView)
         .toolbar {
             FilterTransactionsButtonView(viewModel: viewModel)
             
