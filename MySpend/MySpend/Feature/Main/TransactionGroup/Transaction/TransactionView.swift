@@ -239,19 +239,17 @@ struct TransactionView: View {
         
         
         // MARK: LOAD FILTER BY OPTIONS
-        .onChange(of: viewModel.transactions, {
+        .onChange(of: viewModel.transactions) {
             viewModel.filterTransactionsByOptions()
-        })
-        .onChange(of: viewModel.selectedAccountsFilter, {
+        }
+        .onChange(of: viewModel.selectedAccountsFilter) {
             viewModel.filterTransactionsByOptions()
-        })
-        
+        }
         .onChange(of: [viewModel.showFilter, viewModel.favoriteSelected]) {
             viewModel.filterTransactionsByOptions()
         }
         
         // MARK: FILTER TRANSACTIONS BY DATE
-        
         .onChange(of: viewModel.selectedDate) {
             viewModel.filterTransactionsByDate()
         }
