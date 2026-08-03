@@ -120,13 +120,13 @@ struct TransactionView: View {
                                     ForEach(viewModel.groupedTransactionsIncomes, id:\.category.id) { item in
                                         HStack {
                                             Text(item.category.name)
-                                                .textStyle()
+                                                .textStyle
                                                 .padding(.leading)
                                             
                                             Spacer()
                                             
                                             Text(item.totalAmount.convertAmountDecimalToString.addCurrencySymbol)
-                                                .textStyle()
+                                                .textStyle
                                         }
                                     }
                                 }
@@ -143,13 +143,13 @@ struct TransactionView: View {
                                     ForEach(viewModel.groupedTransactionsExpenses, id:\.category.id) { item in
                                         HStack {
                                             Text(item.category.name)
-                                                .textStyle()
+                                                .textStyle
                                                 .padding(.leading)
                                             
                                             Spacer()
                                             
                                             Text(item.totalAmount.convertAmountDecimalToString.addCurrencySymbol)
-                                                .textStyle()
+                                                .textStyle
                                         }
                                     }
                                 }

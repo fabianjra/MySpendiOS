@@ -32,10 +32,10 @@ struct TransactionHistoryView: View {
         VStack {
             if transactionsLoaded.isEmpty {
                 
-                TextPlain("No transactions",
-                          family: .semibold,
-                          size: .bigXL,
-                          aligment: .center)
+                Text(.transactionsEmpty)
+                    .textStyle(family: .semibold,
+                               size: .bigXL,
+                               aligment: .center)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 
             } else {
@@ -46,7 +46,8 @@ struct TransactionHistoryView: View {
                 .padding(.horizontal)
             }
             
-            TextError(viewModel.errorMessage)
+            Text(viewModel.errorMessage)
+                .textErrorStyle
         }
         .navigationTitle("History")
         .navigationBarTitleDisplayMode(.inline) //TODO: CAMBIAR: El navegador de fechas va a ir abajo, entonces va a ponerse el titulo en grande al bajar.
@@ -122,9 +123,11 @@ struct TransactionHistoryView: View {
         ToolbarItem(placement: .title) {
             
             if viewModel.selectedTransactions.count == .zero {
-                TextPlain("History")
+                Text(.titleHistoryView)
+                    .textStyle
             } else {
-                TextPlain("\(viewModel.selectedTransactions.count.description) selected")
+                //TextPlain("\(viewModel.selectedTransactions.count.description) selected")
+                Text(.selectorTransactionsCount(viewModel.selectedTransactions.count))
             }
             
         }
