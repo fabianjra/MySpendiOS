@@ -13,18 +13,17 @@ struct OnBoardingUsernameView: View {
     @FocusState private var focusedField: OnBoardingUsernameViewModel.Field?
     
     var body: some View {
-        LogContainer {
+        ScrollView {
             
-            // MARK: HEADER
-            HeaderNavigator(table: LocalizableTable.onboarding, subTitle: Localizable.Onboarding.title.key, onlyTitle: true)
-                .padding(.bottom)
+            Text(.onBoardingUsernameStart)
+                .textStyle
+                .padding(.vertical)
             
             
             VStack(spacing: ConstantViews.formSpacing) {
                 
-                TextPlainLocalized(Localizable.Onboarding.enter_name,
-                                   family: .light,
-                                   size: .big)
+                Text(.onBoardingUsernameEnterUsername)
+                    .textStyle(family: .light, size: .big)
                 
                 
                 TextFieldName(text: $viewModel.userName,
@@ -39,7 +38,7 @@ struct OnBoardingUsernameView: View {
                         viewModel.continueToNextStep(withName: true)
                     }
                 } label: {
-                    TextPlainLocalized(Localizable.Button.continu)
+                    Text(.buttonContinue)
                         .padding(.vertical, ConstantViews.paddingButtonTransaction)
                         .frame(maxWidth: ConstantFrames.iPadMaxWidth)
                 }
@@ -49,16 +48,18 @@ struct OnBoardingUsernameView: View {
                 Button {
                     viewModel.continueToNextStep(withName: false)
                 } label: {
-                    TextPlainLocalized(Localizable.Button.skip)
+                    Text(.onBoardingSkip)
+                        .textStyle
                 }
                 
                 
                 TextError(viewModel.errorMessage)
             }
         }
-        .onAppear {
-            focusedField = .userName
-        }
+        .padding(.horizontal)
+        .scrollDisabled(false)
+        .background(Color.backgroundContentGradient)
+        .onAppear { focusedField = .userName }
     }
 }
 

@@ -19,7 +19,6 @@ struct TransactionHistoryView: View {
     
     // MARK: ALERTS (Solo manejadas dentro de la vista, no hacen nada en ViewModel)
     @State private var showAlertDelete = false
-    //@State private var showAlertDeleteMultiple = false
     
     
     // MARK: NAVIGATION
@@ -226,7 +225,7 @@ struct TransactionHistoryView: View {
         DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval,
                                   selectedDate: $selectedDate,
                                   isEditing: $viewModel.isEditing,
-                                  showEditor: false, //TODO: Convertir a True para mostrar el Sort by
+                                  showEditor: false, //TODO: Convertir a True para mostrar el Sort by. Eliminar la linea de arriba de edit.
                                   counterSelected: viewModel.selectedTransactions.count) {
         } actionTrailingEdit: {
             //showAlertDeleteMultiple = true
