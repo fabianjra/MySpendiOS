@@ -71,6 +71,14 @@ struct FilterTransactionsButtonView: ToolbarContent {
         
     }
 
+    /**
+     Permite obtener directamente un texto del string catalog en base a su llave en el resource.
+     El struct `LocalizedStringResource(stringLiteral:` permite convertir un string a tipo string catalog resource.
+     
+     - Authors: Fabian Rodriguez
+     
+     - Date: August 2026
+     */
     private var getTextDescription: LocalizedStringResource {
         if viewModel.favoriteSelected {
             return .filterAccountFavorites

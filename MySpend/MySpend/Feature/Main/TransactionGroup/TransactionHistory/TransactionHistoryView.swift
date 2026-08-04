@@ -156,7 +156,7 @@ struct TransactionHistoryView: View {
                 
                 let shouldMarkAsFavorite = shouldMarkAsFavorite
                 
-                Button(shouldMarkAsFavorite ? "Favorite" : "Unfavorite",
+                Button(shouldMarkAsFavorite ? .selectorFavorite : .selectorUnfavorite,
                        systemImage: shouldMarkAsFavorite ? ConstantSystemImage.favoriteFill : ConstantSystemImage.unfavoriteFill) {
                     
                     favoriteMultipleTransactions(newState: shouldMarkAsFavorite)
@@ -176,16 +176,16 @@ struct TransactionHistoryView: View {
         ToolbarItem(placement: .bottomBar) {
             
             if viewModel.isEditing {
-                Button("Delete", systemImage: ConstantSystemImage.trash) {
+                Button(.selectorDelete, systemImage: ConstantSystemImage.trash) {
                     showAlertDeleteMultiple = true
                 }
                 .disabled(viewModel.selectedTransactions.isEmpty)
                 
             } else {
-                Button("Add transaction", systemImage: "plus") {
+                Button(.transactionAdd, systemImage: ConstantSystemImage.addTransaction) {
                     showNewItemModal = true
                 }
-                .tint(Color.primaryTop)
+                .tint(.primaryTop)
             }
         }
     }
@@ -209,7 +209,7 @@ struct TransactionHistoryView: View {
             viewModel.resetSelectedSort()
         } label: {
             Label.restoreSelection
-                .foregroundStyle(Color.alert, Color.alert)
+                .foregroundStyle(.alert, .alert)
         }
     }
     
@@ -232,7 +232,7 @@ struct TransactionHistoryView: View {
             //showAlertDeleteMultiple = true
             
         } contentLeadingSort: {
-            Section("Sorted by: \(viewModel.sortTransactionsBy.rawValue)") {
+            Section(.sortTitleDescription(viewModel.sortTransactionsBy.rawValue)) {
                 sortButton(.byDateNewest)
                 sortButton(.byAmountHigher)
                 sortButton(.byCategoryNameAz)
@@ -284,24 +284,28 @@ struct TransactionHistoryView: View {
                             
                             VStack(alignment: .leading) {
                                 if item.notes.isEmptyOrWhitespace {
-                                    TextPlain(item.category.name)
+                                    Text(item.category.name)
+                                        .textStyle
                                 } else {
-                                    TextPlain(item.notes)
+                                    Text(item.notes)
+                                        .textStyle
                                 }
                                 
                                 HStack {
                                     if isMutipleAccounts {
-                                        TextPlain("\(item.account.name):", size: .small)
+                                        Text("\(item.account.name):")
+                                            .textStyle(size: .small)
                                     }
                                     
-                                    TextPlain(item.dateTransaction.toStringShortLocale, size: .small)
+                                    Text(item.dateTransaction.toStringShortLocale)
+                                        .textStyle(size: .small)
                                 }
                             }
                             
                             Spacer()
                             
-                            TextPlain(item.amount.convertAmountDecimalToString.addCurrencySymbol,
-                                      color: item.category.type == .income ? Color.primaryTop : Color.alert)
+                            Text(item.amount.convertAmountDecimalToString.addCurrencySymbol)
+                                .textStyle(color: item.category.type == .income ? .primaryTop : .alert)
                             
                             if item.favorite {
                                 Image(systemName: ConstantSystemImage.favoriteFill)
@@ -329,7 +333,7 @@ struct TransactionHistoryView: View {
                     }
                     .frame(height: FrameSize.height.rowForListTransactionHistory)
                     .listRowInsets(EdgeInsets(top: .zero, leading: .zero, bottom: .zero, trailing: .zero))
-                    .listRowSeparatorTint(.textPrimaryForeground.opacity(ConstantColors.opacityHalf))
+                    //.listRowSeparatorTint(.textPrimaryForeground.opacity(ConstantColors.opacityHalf)) //Linea separadora
                     
                     // MARK: SWIPE ACTIONS:
                     
@@ -352,7 +356,7 @@ struct TransactionHistoryView: View {
                                 Button("", systemImage: ConstantSystemImage.favoriteFill) {
                                     favorite(item)
                                 }
-                                .tint(Color.primaryTop)
+                                .tint(.primaryTop)
                                 
                             }
                         }
@@ -361,23 +365,23 @@ struct TransactionHistoryView: View {
                         if !viewModel.isEditing {
                             
                             if item.favorite {
-                                Button("Unfavorite", systemImage: ConstantSystemImage.unfavoriteFill) {
+                                Button(.selectorUnfavorite, systemImage: ConstantSystemImage.unfavoriteFill) {
                                     favorite(item)
                                 }
                                 
                             } else {
-                                Button("Favorite", systemImage: ConstantSystemImage.favoriteFill) {
+                                Button(.selectorFavorite, systemImage: ConstantSystemImage.favoriteFill) {
                                     favorite(item)
                                 }
                             }
                             
                             
-                            Button("Edit", systemImage: ConstantSystemImage.squareAndPencil) {
+                            Button(.selectorEdit, systemImage: ConstantSystemImage.squareAndPencil) {
                                 modelToModify = item
                             }
                             
                             
-                            Button("Delete", systemImage: ConstantSystemImage.trash, role: .destructive) {
+                            Button(.selectorDelete, systemImage: ConstantSystemImage.trash, role: .destructive) {
                                 modelToDelete = item
                                 showAlertDelete = true
                             }

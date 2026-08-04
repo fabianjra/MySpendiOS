@@ -9,6 +9,8 @@ struct ConstantSystemImage {
     
     // MARK: TRANSACTIONS
     
+    static let addTransaction = "plus"
+    
     static let circleFill = "circle.fill" //Sin uso
     
     // Select:
