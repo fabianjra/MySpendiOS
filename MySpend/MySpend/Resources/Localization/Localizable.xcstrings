@@ -111,6 +111,42 @@
         }
       }
     },
+    "Alert.Option.Cancel" : {
+      "comment" : "Descripcion de cancelar en una alerta",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancelar"
+          }
+        }
+      }
+    },
+    "Alert.Option.Delete" : {
+      "comment" : "Descripcion de eliminar en una alerta",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Borrar"
+          }
+        }
+      }
+    },
     "Amount (Highest first)" : {
 
     },
@@ -429,6 +465,12 @@
             "state" : "translated",
             "value" : "Delete"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eliminar"
+          }
         }
       }
     },
@@ -675,6 +717,114 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Agregar transacción"
+          }
+        }
+      }
+    },
+    "Transaction.Delete %lld" : {
+      "comment" : "Titulo para el mensaje emergente de eliminar n cantidad de transacciones",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Delete %lld transaction"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Delete %lld transactions"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Delete transaction"
+                }
+              }
+            }
+          }
+        },
+        "es" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Eliminar %lld transacccion"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "Eliminar %lld transaccciones"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Eliminar transacccion"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Transaction.Delete.Message %lld" : {
+      "comment" : "Mensaje para confirmar la eliminacion de transacciones en una alerta",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Want to delete %lld transaction? This action can’t be undone."
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Want to delete %lld transactions? This action can’t be undone."
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Want to delete this transaction? This action can’t be undone."
+                }
+              }
+            }
+          }
+        },
+        "es" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "Desea eliminar %lld transacción? Esta acción no se puede deshacer."
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "Desea eliminar %lld transacciones? Esta acción no se puede deshacer."
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "Desea eliminar esta transacción? Esta acción no se puede deshacer."
+                }
+              }
+            }
           }
         }
       }

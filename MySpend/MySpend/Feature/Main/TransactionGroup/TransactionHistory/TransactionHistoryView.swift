@@ -19,7 +19,7 @@ struct TransactionHistoryView: View {
     
     // MARK: ALERTS (Solo manejadas dentro de la vista, no hacen nada en ViewModel)
     @State private var showAlertDelete = false
-    @State private var showAlertDeleteMultiple = false
+    //@State private var showAlertDeleteMultiple = false
     
     
     // MARK: NAVIGATION
@@ -177,7 +177,7 @@ struct TransactionHistoryView: View {
             
             if viewModel.isEditing {
                 Button(.selectorDelete, systemImage: ConstantSystemImage.trash) {
-                    showAlertDeleteMultiple = true
+                    showAlertDelete = true
                 }
                 .disabled(viewModel.selectedTransactions.isEmpty)
                 
@@ -389,24 +389,19 @@ struct TransactionHistoryView: View {
                         }
                     }
                     
-                    // MARK: DELETE TRANSACTION SINGLE
-                    
-                    .alert("Delete transaction", isPresented: $showAlertDelete) {
-                        Button("Delete", role: .destructive) { delete() }
-                        Button("Cancel", role: .cancel) { }
+                    .alert(.transactionDelete(viewModel.selectedTransactions.count), isPresented: $showAlertDelete) {
+                        Button(.alertOptionDelete, role: .destructive) {
+                            if viewModel.selectedTransactions.isEmpty {
+                                delete()
+                            } else {
+                                deleteMltipleTransactions()
+                            }
+                        }
+                        
+                        Button(.alertOptionCancel, role: .cancel) { }
                     } message: {
-                        Text("Want to delete this transaction? \n This action cannot be undone.")
+                        Text(.transactionDeleteMessage(viewModel.selectedTransactions.count))
                     }
-                    
-                    // MARK: DELETE TRANSACTION MULTIPLE
-                    
-                    .alert("Delete transactions", isPresented: $showAlertDeleteMultiple) {
-                        Button("Delete", role: .destructive) { deleteMltipleTransactions() }
-                        Button("Cancel", role: .cancel) { }
-                    } message: {
-                        Text("Want to delete these transactions? \n This action cannot be undone.")
-                    }
-                    .padding(.vertical, ConstantViews.mediumSpacing)
                 }
                 .listRowBackground(Color.clear)
             }
