@@ -5,7 +5,7 @@
 //  Created by Fabian Rodriguez on 5/7/25.
 //
 
-enum AccountType: String, CaseIterable, Hashable, LocalizableProtocol {
+enum AccountType: String, CaseIterable, Hashable, Codable, LocalizableProtocol {
     case general
     case expenses
     case incomes

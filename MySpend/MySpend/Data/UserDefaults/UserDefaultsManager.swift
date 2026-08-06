@@ -21,12 +21,9 @@ struct UserDefaultsManager {
             removeValue(for: key)
         }
     }
-}
-
-
-// MARK: SORT
-
-extension UserDefaultsManager {
+    
+    
+    // MARK: SORT
     
     static var sorTransactions: SortTransactions {
         get { return UserDefaultsDataStore<SortTransactions>(for: .sortTransactions).value ?? .byDateNewest }
@@ -51,12 +48,9 @@ extension UserDefaultsManager {
             manager.value = newValue
         }
     }
-}
-
-
-// MARK: PREFERENCE
-
-extension UserDefaultsManager {
+    
+    
+    // MARK: PREFERENCE
     
     static var dateTimeInterval: DateTimeInterval {
         get { return UserDefaultsDataStore<DateTimeInterval>(for: .dateTimeInterval).value ?? .month }
@@ -81,12 +75,9 @@ extension UserDefaultsManager {
             manager.value = newValue
         }
     }
-}
-
-
-// MARK: USER DATA
-
-extension UserDefaultsManager {
+    
+    
+    // MARK: USER DATA
     
     static var isOnBoarding: Bool {
         get { return UserDefaultsDataStore<Bool>(for: .isOnBoarding).value ?? true }
@@ -116,6 +107,14 @@ extension UserDefaultsManager {
         get { return UserDefaultsDataStore<String>(for: .defaultAccountID).value ?? "" }
         set {
             var manager = UserDefaultsDataStore<String>(for: .defaultAccountID)
+            manager.value = newValue
+        }
+    }
+    
+    static var filterAccountSelected: Set<AccountModel> {
+        get { return UserDefaultsDataStore<Set<AccountModel>>(for: .filterAccountSelected).value ?? [] }
+        set {
+            var manager = UserDefaultsDataStore<Set<AccountModel>>(for: .filterAccountSelected)
             manager.value = newValue
         }
     }
@@ -186,3 +185,4 @@ private struct UserDefaultsDataStore<T: Codable> {
         }
     }
 }
+

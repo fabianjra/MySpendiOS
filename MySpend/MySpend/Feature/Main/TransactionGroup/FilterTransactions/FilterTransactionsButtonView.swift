@@ -12,9 +12,11 @@ struct FilterTransactionsButtonView: ToolbarContent {
     @ObservedObject var viewModel: TransactionViewModel
     @State private var showFiltersView: Bool = false
     
-//    @AppStorage(UserDefaultsKeys.filterAccountSelected.rawValue,
-//                store: UserDefaultsManager.userDefaults)
-//    private var filterAccountSelected: Bool = true
+    @AppStorage(UserDefaultsKeys.filterAccountSelected.rawValue,
+                store: UserDefaultsManager.userDefaults)
+    private var filterAccountSelectedData: Data = Data()
+    
+    
     
     //@ToolbarContentBuilder
     var body: some ToolbarContent {
@@ -108,6 +110,11 @@ struct FilterTransactionsButtonView: ToolbarContent {
 private struct previewWrapper: View {
     init(_ mockDataType: MockDataType = .empty) {
         CoreDataUtilities.shared.mockDataType = mockDataType
+        
+        UserDefaultsManager.userDefaults = .preview
+
+        // Configuracion correcta para usar @AppStorage con preview:
+        //UserDefaultsManager.userDefaults.set([], forKey: UserDefaultsKeys.filterAccountSelected.rawValue)
     }
     
     @StateObject private var viewModel = TransactionViewModel()
