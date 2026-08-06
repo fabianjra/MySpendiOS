@@ -12,15 +12,19 @@ struct FilterTransactionsButtonView: ToolbarContent {
     @ObservedObject var viewModel: TransactionViewModel
     @State private var showFiltersView: Bool = false
     
+//    @AppStorage(UserDefaultsKeys.filterAccountSelected.rawValue,
+//                store: UserDefaultsManager.userDefaults)
+//    private var filterAccountSelected: Bool = true
+    
     //@ToolbarContentBuilder
     var body: some ToolbarContent {
         
         ToolbarItem(placement: .bottomBar) {
             HStack {
                 Button {
-//                    withAnimation {
-                        viewModel.showFilter.toggle()
-//                    }
+                    //withAnimation {
+                    viewModel.showFilter.toggle()
+                    //}
                 } label: {
                     Image.filter
                         .foregroundStyle(.textPrimaryForeground)
@@ -110,8 +114,12 @@ private struct previewWrapper: View {
     @State private var showFiltersView = false
     
     var body: some View {
-        VStack {
-            Text("Filtros")
+        VStack(spacing: 20) {
+            Text("Accounts selected:").bold()
+            
+            ForEach(Array(viewModel.selectedAccountsFilter).sorted(by: { $0.name < $1.name }), id: \.id) { item in
+                Text(item.name)
+            }
         }
         .toolbar {
             FilterTransactionsButtonView(viewModel: viewModel)

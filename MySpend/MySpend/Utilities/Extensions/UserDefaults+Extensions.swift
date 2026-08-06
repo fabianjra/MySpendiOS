@@ -25,5 +25,5 @@ extension UserDefaults {
 }
 
 private struct MockUDConstants {
-    static let suiteNamePreview: String = "MySpend.Preview"
+    static let suiteNamePreview: String = "preview.myspend.app"
 }
