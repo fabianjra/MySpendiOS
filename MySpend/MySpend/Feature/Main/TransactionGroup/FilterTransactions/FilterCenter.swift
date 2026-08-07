@@ -11,9 +11,7 @@ import Observation
 final class FilterCenter {
     static let shared = FilterCenter()
         
-    //var isFilterActive: Bool = false
     var showOnlyFavorites: Bool = false
-    
     var selectedAccountsFilter = UserDefaultsManager.selectedAccountsFilter {
         didSet {
             UserDefaultsManager.selectedAccountsFilter = selectedAccountsFilter
@@ -24,7 +22,7 @@ final class FilterCenter {
     private init() {}
 
     
-    func restoreFilterSelectionByOptions(allAccountsAvailable allAccounts: [AccountModel]) {
+    func restoreFilter(allAccountsAvailable allAccounts: [AccountModel]) {
         selectedAccountsFilter = Set(allAccounts)
         showOnlyFavorites = false
     }

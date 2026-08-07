@@ -24,13 +24,6 @@ class TransactionViewModel: BaseViewModel {
     @Published var selectedDate: Date = .now
     @Published var searchText: String = ""
     
-    
-    // MARK: NAMESPACES
-    var transitionNewTransaction = "id-new-transaction"
-    var transitionSettings = "id-settings"
-    var transitionFilters = "id-filters"
-    
-    
     // MARK: FILTER
     @Published var allAccounts: [AccountModel] = []
     
@@ -68,7 +61,7 @@ class TransactionViewModel: BaseViewModel {
         }
     }
 
-    func filterTransactionsByOptions(byAccounts selectedAccountsFilter: Set<AccountModel>, showOnlyFavorites: Bool, isFilterActive: Bool) {
+    func filterTransactions(byAccounts selectedAccountsFilter: Set<AccountModel>, showOnlyFavorites: Bool, isFilterActive: Bool) {
         
         guard isFilterActive else {
             transactions = allTransactions
@@ -79,11 +72,6 @@ class TransactionViewModel: BaseViewModel {
         transactions = allTransactions.filter { accountIDs.contains($0.account.id) && (showOnlyFavorites ? $0.favorite : true) }
     }
     
-//    func restoreFilterSelectionByOptions() {
-//        selectedAccountsFilter = Set(allAccounts)
-//        showOnlyFavorites = false
-//    }
-    
     func filterTransactionsByDate() {
         transactionsFiltered = UtilsTransactions.filteredTransactions(selectedDate,
                                                                       transactions: transactions,
@@ -92,15 +80,5 @@ class TransactionViewModel: BaseViewModel {
         groupedTransactionsIncomes = UtilsCurrency.calculateGroupedTransactions(transactionsFiltered).filter {$0.category.type == .income}.sorted(by: { $0.totalAmount > $1.totalAmount })
         groupedTransactionsExpenses = UtilsCurrency.calculateGroupedTransactions(transactionsFiltered).filter {$0.category.type == .expense}.sorted(by: { $0.totalAmount > $1.totalAmount })
     }
-    
-//    func addRemoveAccountsInUserDefaults(account: AccountModel) {
-//        if selectedAccountsFilter.contains(account) {
-//            selectedAccountsFilter.remove(account)
-//        } else {
-//            selectedAccountsFilter.insert(account)
-//        }
-//        
-//        UserDefaultsManager.selectedAccountsFilter = Set(selectedAccountsFilter)
-//    }
 }
 

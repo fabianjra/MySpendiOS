@@ -72,7 +72,7 @@ struct FilterTransactionsView: View {
             }
             
             Button {
-                filters.restoreFilterSelectionByOptions(allAccountsAvailable: allAccounts)
+                filters.restoreFilter(allAccountsAvailable: allAccounts)
             } label: {
                 Label.restoreFilters
                     .foregroundStyle(.textPrimaryForeground)

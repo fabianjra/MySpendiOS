@@ -18,9 +18,6 @@ struct TransactionView: View {
     @State private var showSearchView = false
     @State private var navigateToHistory: Bool = false
     
-    // MARK: NAMESPACES
-    //@Namespace private var namesapce
-    
     private var filters = FilterCenter.shared
     
     @AppStorage(UserDefaultsKeys.isFilterActive.rawValue,
@@ -88,17 +85,17 @@ struct TransactionView: View {
         
         // MARK: LOAD FILTER BY OPTIONS
         .onChange(of: viewModel.transactions) {
-            viewModel.filterTransactionsByOptions(byAccounts: filters.selectedAccountsFilter,
+            viewModel.filterTransactions(byAccounts: filters.selectedAccountsFilter,
                                                   showOnlyFavorites: filters.showOnlyFavorites,
                                                   isFilterActive: isFilterActive)
         }
         .onChange(of: filters.selectedAccountsFilter) {
-            viewModel.filterTransactionsByOptions(byAccounts: filters.selectedAccountsFilter,
+            viewModel.filterTransactions(byAccounts: filters.selectedAccountsFilter,
                                                   showOnlyFavorites: filters.showOnlyFavorites,
                                                   isFilterActive: isFilterActive)
         }
         .onChange(of: [isFilterActive, filters.showOnlyFavorites]) {
-            viewModel.filterTransactionsByOptions(byAccounts: filters.selectedAccountsFilter,
+            viewModel.filterTransactions(byAccounts: filters.selectedAccountsFilter,
                                                   showOnlyFavorites: filters.showOnlyFavorites,
                                                   isFilterActive: isFilterActive)
         }
