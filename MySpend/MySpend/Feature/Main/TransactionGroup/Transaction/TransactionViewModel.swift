@@ -8,7 +8,7 @@
 import Foundation
 
 class TransactionViewModel: BaseViewModel {
-
+    
     @Published var userName = UserDefaultsManager.userName
     
     private var allTransactions: [TransactionModel] = []
@@ -23,20 +23,20 @@ class TransactionViewModel: BaseViewModel {
     @Published var dateTimeInterval = UserDefaultsManager.dateTimeInterval
     @Published var selectedDate: Date = .now
     @Published var searchText: String = ""
-
+    
     
     // MARK: NAMESPACES
     var transitionNewTransaction = "id-new-transaction"
     var transitionSettings = "id-settings"
     var transitionFilters = "id-filters"
-
+    
     
     // MARK: FILTER
     @Published var showFilter: Bool = false
-    @Published var selectedAccountsFilter = Set<AccountModel>()
+    @Published var selectedAccountsFilter = UserDefaultsManager.selectedAccountsFilter
     @Published var allAccounts: [AccountModel] = []
     
-    @Published var favoriteSelected: Bool = false
+    @Published var showOnlyFavorites: Bool = false
     
     /**
      Call this function in `onFirstAppear`.
@@ -65,31 +65,27 @@ class TransactionViewModel: BaseViewModel {
             
             allAccounts = try await AccountManager(viewContext).fetchAll()
             
-            selectedAccountsFilter = Set(allAccounts)
+            //selectedAccountsFilter = Set(allAccounts) //TODO: Ahora se van a agregar al userDefaults al momento de agregarla manualmente desde el Account manager.
         } catch {
             errorMessage = error.localizedDescription
             Logger.exception(error, type: .CoreData)
         }
     }
-    
+
     func filterTransactionsByOptions() {
-        if showFilter {
-            let selectedIDs = Set(selectedAccountsFilter.compactMap(\.id))
-            
-            if favoriteSelected {
-                transactions = allTransactions.filter { selectedIDs.contains($0.account.id) && $0.favorite }
-            } else {
-                transactions = allTransactions.filter { selectedIDs.contains($0.account.id) }
-            }
-            
-        } else {
+        
+        guard showFilter else {
             transactions = allTransactions
+            return
         }
+        
+        let accountIDs = Set(selectedAccountsFilter.compactMap { $0.id })
+        transactions = allTransactions.filter { accountIDs.contains($0.account.id) && (showOnlyFavorites ? $0.favorite : true) }
     }
     
     func restoreFilterSelectionByOptions() {
         selectedAccountsFilter = Set(allAccounts)
-        favoriteSelected = false
+        showOnlyFavorites = false
     }
     
     func filterTransactionsByDate() {
@@ -99,6 +95,16 @@ class TransactionViewModel: BaseViewModel {
         
         groupedTransactionsIncomes = UtilsCurrency.calculateGroupedTransactions(transactionsFiltered).filter {$0.category.type == .income}.sorted(by: { $0.totalAmount > $1.totalAmount })
         groupedTransactionsExpenses = UtilsCurrency.calculateGroupedTransactions(transactionsFiltered).filter {$0.category.type == .expense}.sorted(by: { $0.totalAmount > $1.totalAmount })
+    }
+    
+    func addRemoveAccountsInUserDefaults(account: AccountModel) {
+        if selectedAccountsFilter.contains(account) {
+            selectedAccountsFilter.remove(account)
+        } else {
+            selectedAccountsFilter.insert(account)
+        }
+        
+        UserDefaultsManager.selectedAccountsFilter = Set(selectedAccountsFilter)
     }
 }
 

@@ -38,11 +38,12 @@ struct FilterTransactionsView: View {
                             }
                             .contentShape(Rectangle())
                             .onTapGesture {
-                                if viewModel.selectedAccountsFilter.contains(account) {
-                                    viewModel.selectedAccountsFilter.remove(account)
-                                } else {
-                                    viewModel.selectedAccountsFilter.insert(account)
-                                }
+//                                if viewModel.selectedAccountsFilter.contains(account) {
+//                                    viewModel.selectedAccountsFilter.remove(account)
+//                                } else {
+//                                    viewModel.selectedAccountsFilter.insert(account)
+//                                }
+                                viewModel.addRemoveAccountsInUserDefaults(account: account)
                             }
                         }
                     } header: {
@@ -57,7 +58,7 @@ struct FilterTransactionsView: View {
                                 
                                 Spacer()
                                 
-                                Image(systemName: viewModel.favoriteSelected ? ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle)
+                                Image(systemName: viewModel.showOnlyFavorites ? ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle)
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: FrameSize.height.iconRowList,
@@ -66,7 +67,7 @@ struct FilterTransactionsView: View {
                             }
                             .contentShape(Rectangle())
                             .onTapGesture {
-                                viewModel.favoriteSelected.toggle()
+                                viewModel.showOnlyFavorites.toggle()
                             }
                     } header: {
                         TextPlain("Include")
@@ -110,6 +111,7 @@ struct FilterTransactionsView: View {
 private struct previewWrapper: View {
     init(_ mockDataType: MockDataType = .empty) {
         CoreDataUtilities.shared.mockDataType = mockDataType
+        UserDefaultsManager.userDefaults = .preview
     }
     
     @StateObject private var viewModel = TransactionViewModel()

@@ -12,12 +12,6 @@ struct FilterTransactionsButtonView: ToolbarContent {
     @ObservedObject var viewModel: TransactionViewModel
     @State private var showFiltersView: Bool = false
     
-    @AppStorage(UserDefaultsKeys.filterAccountSelected.rawValue,
-                store: UserDefaultsManager.userDefaults)
-    private var filterAccountSelectedData: Data = Data()
-    
-    
-    
     //@ToolbarContentBuilder
     var body: some ToolbarContent {
         
@@ -50,7 +44,7 @@ struct FilterTransactionsButtonView: ToolbarContent {
                                 
                                 Text(getTextDescription)
                                     .textStyle(color: viewModel.selectedAccountsFilter.isEmpty ? .textPrimaryForeground : .primaryTop,
-                                                        size: .mediumSmall,truncateMode: .tail)
+                                               size: .mediumSmall,truncateMode: .tail)
                                 
                             }
                             
@@ -60,7 +54,6 @@ struct FilterTransactionsButtonView: ToolbarContent {
                     }
                     .frame(maxWidth: ConstantFrames.filterMaxWidth)
                     .contentShape(Rectangle()) //Para detectar el touch en todo el espacio disponible.
-                    //.matchedTransitionSource(id: viewModel.transitionFilters, in: namesapce)
                 }
             }
             .popover(isPresented: $showFiltersView) {
@@ -68,15 +61,11 @@ struct FilterTransactionsButtonView: ToolbarContent {
                     FilterTransactionsView(viewModel: viewModel)
                         .presentationDetents([.medium, .large])
                 }
-//                .navigationTransition(
-//                    .zoom(sourceID: viewModel.transitionFilters, in: namesapce)
-//                )
             }
         }
         
-        
     }
-
+    
     /**
      Permite obtener directamente un texto del string catalog en base a su llave en el resource.
      El struct `LocalizedStringResource(stringLiteral:` permite convertir un string a tipo string catalog resource.
@@ -86,10 +75,10 @@ struct FilterTransactionsButtonView: ToolbarContent {
      - Date: August 2026
      */
     private var getTextDescription: LocalizedStringResource {
-        if viewModel.favoriteSelected {
+        if viewModel.showOnlyFavorites {
             return .filterAccountFavorites
         }
-
+        
         switch viewModel.selectedAccountsFilter.count {
             
         case .zero:
@@ -100,7 +89,7 @@ struct FilterTransactionsButtonView: ToolbarContent {
             
         case viewModel.allAccounts.count:
             return .filterAccountAll
-
+            
         default:
             return .filterAccountSomeAccounts
         }
@@ -110,11 +99,7 @@ struct FilterTransactionsButtonView: ToolbarContent {
 private struct previewWrapper: View {
     init(_ mockDataType: MockDataType = .empty) {
         CoreDataUtilities.shared.mockDataType = mockDataType
-        
         UserDefaultsManager.userDefaults = .preview
-
-        // Configuracion correcta para usar @AppStorage con preview:
-        //UserDefaultsManager.userDefaults.set([], forKey: UserDefaultsKeys.filterAccountSelected.rawValue)
     }
     
     @StateObject private var viewModel = TransactionViewModel()

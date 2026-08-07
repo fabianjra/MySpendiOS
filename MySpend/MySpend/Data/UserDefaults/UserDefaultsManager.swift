@@ -111,10 +111,10 @@ struct UserDefaultsManager {
         }
     }
     
-    static var filterAccountSelected: Set<AccountModel> {
-        get { return UserDefaultsDataStore<Set<AccountModel>>(for: .filterAccountSelected).value ?? [] }
+    static var selectedAccountsFilter: Set<AccountModel> {
+        get { return UserDefaultsDataStore<Set<AccountModel>>(for: .selectedAccountsFilter).value ?? [] }
         set {
-            var manager = UserDefaultsDataStore<Set<AccountModel>>(for: .filterAccountSelected)
+            var manager = UserDefaultsDataStore<Set<AccountModel>>(for: .selectedAccountsFilter)
             manager.value = newValue
         }
     }
@@ -138,7 +138,7 @@ enum UserDefaultsKeys: String, Codable, CaseIterable {
     case userEmail = "user_email_key"
     case defaultAccountID = "default_account_id_key"
     
-    case filterAccountSelected = "filter_account_selected_key"
+    case selectedAccountsFilter = "selected_account_filter_key"
     
 //    var valueType: Codable.Type {
 //        switch self {
@@ -185,4 +185,3 @@ private struct UserDefaultsDataStore<T: Codable> {
         }
     }
 }
-
