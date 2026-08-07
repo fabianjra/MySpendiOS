@@ -9,8 +9,10 @@ import SwiftUI
 
 struct FilterTransactionsButtonView: ToolbarContent {
     
-    @ObservedObject var viewModel: TransactionViewModel
+    @Binding var allAccounts: [AccountModel]
     @State private var showFiltersView: Bool = false
+    
+    private let filters = FilterCenter.shared
     
     //@ToolbarContentBuilder
     var body: some ToolbarContent {
@@ -19,13 +21,14 @@ struct FilterTransactionsButtonView: ToolbarContent {
             HStack {
                 Button {
                     //withAnimation {
-                    viewModel.showFilter.toggle()
+                    //viewModel.showFilter.toggle()
+                    filters.isFilterActive.toggle()
                     //}
                 } label: {
                     Image.filter
                         .foregroundStyle(.textPrimaryForeground)
                         .padding(ConstantViews.paddingSmall)
-                        .background(viewModel.showFilter ? Capsule().fill(.primaryTop) : nil)
+                        .background(filters.isFilterActive ? Capsule().fill(.primaryTop) : nil)
                     //.animation(nil, value: UUID()) //otra manera de desabilitar la animacion.
                         .transaction { transaction in
                             transaction.animation = nil
@@ -33,7 +36,7 @@ struct FilterTransactionsButtonView: ToolbarContent {
                 }
                 
                 
-                if viewModel.showFilter {
+                if filters.isFilterActive {
                     Button {
                         showFiltersView = true
                     } label: {
@@ -43,7 +46,7 @@ struct FilterTransactionsButtonView: ToolbarContent {
                                     .textStyle(size: .medium)
                                 
                                 Text(getTextDescription)
-                                    .textStyle(color: viewModel.selectedAccountsFilter.isEmpty ? .textPrimaryForeground : .primaryTop,
+                                    .textStyle(color: filters.selectedAccountsFilter.isEmpty ? .textPrimaryForeground : .primaryTop,
                                                size: .mediumSmall,truncateMode: .tail)
                                 
                             }
@@ -58,7 +61,7 @@ struct FilterTransactionsButtonView: ToolbarContent {
             }
             .popover(isPresented: $showFiltersView) {
                 NavigationStack {
-                    FilterTransactionsView(viewModel: viewModel)
+                    FilterTransactionsView(allAccounts: $allAccounts)
                         .presentationDetents([.medium, .large])
                 }
             }
@@ -75,19 +78,19 @@ struct FilterTransactionsButtonView: ToolbarContent {
      - Date: August 2026
      */
     private var getTextDescription: LocalizedStringResource {
-        if viewModel.showOnlyFavorites {
+        if filters.showOnlyFavorites {
             return .filterAccountFavorites
         }
         
-        switch viewModel.selectedAccountsFilter.count {
+        switch filters.selectedAccountsFilter.count {
             
         case .zero:
             return .filterAccountNone
             
         case 1:
-            return LocalizedStringResource(stringLiteral: viewModel.selectedAccountsFilter.first?.name ?? "")
+            return LocalizedStringResource(stringLiteral: filters.selectedAccountsFilter.first?.name ?? "")
             
-        case viewModel.allAccounts.count:
+        case allAccounts.count:
             return .filterAccountAll
             
         default:
@@ -103,18 +106,17 @@ private struct previewWrapper: View {
     }
     
     @StateObject private var viewModel = TransactionViewModel()
-    @State private var showFiltersView = false
     
     var body: some View {
         VStack(spacing: 20) {
             Text("Accounts selected:").bold()
             
-            ForEach(Array(viewModel.selectedAccountsFilter).sorted(by: { $0.name < $1.name }), id: \.id) { item in
+            ForEach(Array(FilterCenter.shared.selectedAccountsFilter).sorted(by: { $0.name < $1.name }), id: \.id) { item in
                 Text(item.name)
             }
         }
         .toolbar {
-            FilterTransactionsButtonView(viewModel: viewModel)
+            FilterTransactionsButtonView(allAccounts: $viewModel.allAccounts)
         }
         .task {
             await viewModel.activateObservers()

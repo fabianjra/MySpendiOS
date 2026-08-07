@@ -20,6 +20,8 @@ struct TransactionView: View {
     
     // MARK: NAMESPACES
     //@Namespace private var namesapce
+    
+    private var filters = FilterCenter.shared
 
     var body: some View {
         VStack {
@@ -82,13 +84,19 @@ struct TransactionView: View {
         
         // MARK: LOAD FILTER BY OPTIONS
         .onChange(of: viewModel.transactions) {
-            viewModel.filterTransactionsByOptions()
+            viewModel.filterTransactionsByOptions(byAccounts: filters.selectedAccountsFilter,
+                                                  showOnlyFavorites: filters.showOnlyFavorites,
+                                                  isFilterActive: filters.isFilterActive)
         }
-        .onChange(of: viewModel.selectedAccountsFilter) {
-            viewModel.filterTransactionsByOptions()
+        .onChange(of: filters.selectedAccountsFilter) {
+            viewModel.filterTransactionsByOptions(byAccounts: filters.selectedAccountsFilter,
+                                                  showOnlyFavorites: filters.showOnlyFavorites,
+                                                  isFilterActive: filters.isFilterActive)
         }
-        .onChange(of: [viewModel.showFilter, viewModel.showOnlyFavorites]) {
-            viewModel.filterTransactionsByOptions()
+        .onChange(of: [filters.isFilterActive, filters.showOnlyFavorites]) {
+            viewModel.filterTransactionsByOptions(byAccounts: filters.selectedAccountsFilter,
+                                                  showOnlyFavorites: filters.showOnlyFavorites,
+                                                  isFilterActive: filters.isFilterActive)
         }
         
         // MARK: FILTER TRANSACTIONS BY DATE
@@ -163,12 +171,12 @@ struct TransactionView: View {
                 let text: LocalizedStringResource = {
                     
                     // Si todas las cuentas están seleccionadas, muestra “All accounts”
-                    if viewModel.selectedAccountsFilter.count == viewModel.allAccounts.count {
+                    if filters.selectedAccountsFilter.count == viewModel.allAccounts.count {
                         return .filterAccountAll
                     }
                     
                     // Si hay un subconjunto de cuentas, se enlistan los nombres
-                    let accountsSelected = viewModel.selectedAccountsFilter
+                    let accountsSelected = filters.selectedAccountsFilter
                         .map(\.name)
                         .joined(separator: ", ")
                     
@@ -226,7 +234,7 @@ struct TransactionView: View {
                     }
                 }
             }
-            .animation(.default, value: viewModel.selectedAccountsFilter.count)
+            .animation(.default, value: filters.selectedAccountsFilter.count)
             
             TextError(viewModel.errorMessage)
             
@@ -243,7 +251,7 @@ struct TransactionView: View {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
         
-        FilterTransactionsButtonView(viewModel: viewModel)
+        FilterTransactionsButtonView(allAccounts: $viewModel.allAccounts)
         
         ToolbarSpacer(.flexible, placement: .bottomBar)
         

@@ -11,17 +11,18 @@ struct FilterTransactionsView: View {
     
     @Environment(\.dismiss) private var dismiss
     
-    @ObservedObject var viewModel: TransactionViewModel
+    @Binding var allAccounts: [AccountModel]
+    private let filters = FilterCenter.shared
     
     var body: some View {
         VStack {
             List {
-                if viewModel.allAccounts.isEmpty {
+                if allAccounts.isEmpty {
                     Text("No accounts yet")
                         .foregroundStyle(.secondary)
                 } else {
                     Section {
-                        ForEach(viewModel.allAccounts) { account in
+                        ForEach(allAccounts) { account in
                             
                             HStack {
                                 Label(account.name, systemImage: account.icon)
@@ -29,7 +30,7 @@ struct FilterTransactionsView: View {
                                 
                                 Spacer()
                                 
-                                Image(systemName: viewModel.selectedAccountsFilter.contains(account) ? ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle)
+                                Image(systemName: filters.selectedAccountsFilter.contains(account) ? ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle)
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: FrameSize.height.iconRowList,
@@ -38,12 +39,7 @@ struct FilterTransactionsView: View {
                             }
                             .contentShape(Rectangle())
                             .onTapGesture {
-//                                if viewModel.selectedAccountsFilter.contains(account) {
-//                                    viewModel.selectedAccountsFilter.remove(account)
-//                                } else {
-//                                    viewModel.selectedAccountsFilter.insert(account)
-//                                }
-                                viewModel.addRemoveAccountsInUserDefaults(account: account)
+                                filters.addRemoveAccountsInUserDefaults(account: account)
                             }
                         }
                     } header: {
@@ -58,7 +54,7 @@ struct FilterTransactionsView: View {
                                 
                                 Spacer()
                                 
-                                Image(systemName: viewModel.showOnlyFavorites ? ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle)
+                                Image(systemName: filters.showOnlyFavorites ? ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle)
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: FrameSize.height.iconRowList,
@@ -67,7 +63,7 @@ struct FilterTransactionsView: View {
                             }
                             .contentShape(Rectangle())
                             .onTapGesture {
-                                viewModel.showOnlyFavorites.toggle()
+                                filters.showOnlyFavorites.toggle()
                             }
                     } header: {
                         TextPlain("Include")
@@ -76,7 +72,7 @@ struct FilterTransactionsView: View {
             }
             
             Button {
-                viewModel.restoreFilterSelectionByOptions()
+                filters.restoreFilterSelectionByOptions(allAccountsAvailable: allAccounts)
             } label: {
                 Label.restoreFilters
                     .foregroundStyle(.textPrimaryForeground)
@@ -114,12 +110,12 @@ private struct previewWrapper: View {
         UserDefaultsManager.userDefaults = .preview
     }
     
-    @StateObject private var viewModel = TransactionViewModel()
+    @State private var accountsLoaded: [AccountModel] = []
     
     var body: some View {
-        FilterTransactionsView(viewModel: viewModel)
+        FilterTransactionsView(allAccounts: $accountsLoaded)
             .task {
-                await viewModel.activateObservers()
+                accountsLoaded = await MockAccountModel.fetchAll()
             }
     }
 }
@@ -130,3 +126,4 @@ private struct previewWrapper: View {
             .environment(\.locale, .init(identifier: Previews.localeES_CR))
     }
 }
+

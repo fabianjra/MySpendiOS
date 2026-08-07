@@ -32,11 +32,11 @@ class TransactionViewModel: BaseViewModel {
     
     
     // MARK: FILTER
-    @Published var showFilter: Bool = false
-    @Published var selectedAccountsFilter = UserDefaultsManager.selectedAccountsFilter
+//    @Published var showFilter: Bool = false
+//    @Published var selectedAccountsFilter = UserDefaultsManager.selectedAccountsFilter
     @Published var allAccounts: [AccountModel] = []
     
-    @Published var showOnlyFavorites: Bool = false
+    //@Published var showOnlyFavorites: Bool = false
     
     /**
      Call this function in `onFirstAppear`.
@@ -72,9 +72,9 @@ class TransactionViewModel: BaseViewModel {
         }
     }
 
-    func filterTransactionsByOptions() {
+    func filterTransactionsByOptions(byAccounts selectedAccountsFilter: Set<AccountModel>, showOnlyFavorites: Bool, isFilterActive: Bool) {
         
-        guard showFilter else {
+        guard isFilterActive else {
             transactions = allTransactions
             return
         }
@@ -83,10 +83,10 @@ class TransactionViewModel: BaseViewModel {
         transactions = allTransactions.filter { accountIDs.contains($0.account.id) && (showOnlyFavorites ? $0.favorite : true) }
     }
     
-    func restoreFilterSelectionByOptions() {
-        selectedAccountsFilter = Set(allAccounts)
-        showOnlyFavorites = false
-    }
+//    func restoreFilterSelectionByOptions() {
+//        selectedAccountsFilter = Set(allAccounts)
+//        showOnlyFavorites = false
+//    }
     
     func filterTransactionsByDate() {
         transactionsFiltered = UtilsTransactions.filteredTransactions(selectedDate,
@@ -97,14 +97,14 @@ class TransactionViewModel: BaseViewModel {
         groupedTransactionsExpenses = UtilsCurrency.calculateGroupedTransactions(transactionsFiltered).filter {$0.category.type == .expense}.sorted(by: { $0.totalAmount > $1.totalAmount })
     }
     
-    func addRemoveAccountsInUserDefaults(account: AccountModel) {
-        if selectedAccountsFilter.contains(account) {
-            selectedAccountsFilter.remove(account)
-        } else {
-            selectedAccountsFilter.insert(account)
-        }
-        
-        UserDefaultsManager.selectedAccountsFilter = Set(selectedAccountsFilter)
-    }
+//    func addRemoveAccountsInUserDefaults(account: AccountModel) {
+//        if selectedAccountsFilter.contains(account) {
+//            selectedAccountsFilter.remove(account)
+//        } else {
+//            selectedAccountsFilter.insert(account)
+//        }
+//        
+//        UserDefaultsManager.selectedAccountsFilter = Set(selectedAccountsFilter)
+//    }
 }
 

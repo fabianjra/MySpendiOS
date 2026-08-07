@@ -8,6 +8,14 @@
 @MainActor
 struct MockAccountModel {
     
+    static func fetchAll() async -> [AccountModel] {
+        do {
+            return try await AccountManager(CoreDataUtilities.getViewContext).fetchAll()
+        } catch {
+            return []
+        }
+    }
+    
     static func fetchAllCount() async -> Int {
         do {
             return try await AccountManager(CoreDataUtilities.getViewContext).fetchAllCount()
