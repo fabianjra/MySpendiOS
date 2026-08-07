@@ -14,6 +14,10 @@ struct FilterTransactionsButtonView: ToolbarContent {
     
     private let filters = FilterCenter.shared
     
+    @AppStorage(UserDefaultsKeys.isFilterActive.rawValue,
+                store: UserDefaultsManager.userDefaults)
+    private var isFilterActive: Bool = false
+    
     //@ToolbarContentBuilder
     var body: some ToolbarContent {
         
@@ -22,13 +26,13 @@ struct FilterTransactionsButtonView: ToolbarContent {
                 Button {
                     //withAnimation {
                     //viewModel.showFilter.toggle()
-                    filters.isFilterActive.toggle()
+                    isFilterActive.toggle()
                     //}
                 } label: {
                     Image.filter
                         .foregroundStyle(.textPrimaryForeground)
                         .padding(ConstantViews.paddingSmall)
-                        .background(filters.isFilterActive ? Capsule().fill(.primaryTop) : nil)
+                        .background(isFilterActive ? Capsule().fill(.primaryTop) : nil)
                     //.animation(nil, value: UUID()) //otra manera de desabilitar la animacion.
                         .transaction { transaction in
                             transaction.animation = nil
@@ -36,7 +40,7 @@ struct FilterTransactionsButtonView: ToolbarContent {
                 }
                 
                 
-                if filters.isFilterActive {
+                if isFilterActive {
                     Button {
                         showFiltersView = true
                     } label: {
@@ -100,9 +104,11 @@ struct FilterTransactionsButtonView: ToolbarContent {
 }
 
 private struct previewWrapper: View {
-    init(_ mockDataType: MockDataType = .empty) {
+    init(_ mockDataType: MockDataType = .empty, isFilterActive: Bool = false) {
         CoreDataUtilities.shared.mockDataType = mockDataType
         UserDefaultsManager.userDefaults = .preview
+        
+        UserDefaultsManager.userDefaults.set(isFilterActive, forKey: UserDefaultsKeys.isFilterActive.rawValue)
     }
     
     @StateObject private var viewModel = TransactionViewModel()
@@ -124,9 +130,16 @@ private struct previewWrapper: View {
     }
 }
 
-#Preview("Normal \(Previews.localeES_CR)") {
+#Preview("Normal filtrado \(Previews.localeES_CR)") {
+    NavigationStack {
+        previewWrapper(.normal, isFilterActive: true)
+            .environment(\.locale, .init(identifier: Previews.localeES_CR))
+    }
+}
+
+#Preview("Normal sin filtrado \(Previews.localeEN)") {
     NavigationStack {
         previewWrapper(.normal)
-            .environment(\.locale, .init(identifier: Previews.localeES_CR))
+            .environment(\.locale, .init(identifier: Previews.localeEN))
     }
 }

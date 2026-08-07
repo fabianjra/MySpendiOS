@@ -22,6 +22,10 @@ struct TransactionView: View {
     //@Namespace private var namesapce
     
     private var filters = FilterCenter.shared
+    
+    @AppStorage(UserDefaultsKeys.isFilterActive.rawValue,
+                store: UserDefaultsManager.userDefaults)
+    private var isFilterActive: Bool = false
 
     var body: some View {
         VStack {
@@ -86,17 +90,17 @@ struct TransactionView: View {
         .onChange(of: viewModel.transactions) {
             viewModel.filterTransactionsByOptions(byAccounts: filters.selectedAccountsFilter,
                                                   showOnlyFavorites: filters.showOnlyFavorites,
-                                                  isFilterActive: filters.isFilterActive)
+                                                  isFilterActive: isFilterActive)
         }
         .onChange(of: filters.selectedAccountsFilter) {
             viewModel.filterTransactionsByOptions(byAccounts: filters.selectedAccountsFilter,
                                                   showOnlyFavorites: filters.showOnlyFavorites,
-                                                  isFilterActive: filters.isFilterActive)
+                                                  isFilterActive: isFilterActive)
         }
-        .onChange(of: [filters.isFilterActive, filters.showOnlyFavorites]) {
+        .onChange(of: [isFilterActive, filters.showOnlyFavorites]) {
             viewModel.filterTransactionsByOptions(byAccounts: filters.selectedAccountsFilter,
                                                   showOnlyFavorites: filters.showOnlyFavorites,
-                                                  isFilterActive: filters.isFilterActive)
+                                                  isFilterActive: isFilterActive)
         }
         
         // MARK: FILTER TRANSACTIONS BY DATE
@@ -270,10 +274,12 @@ struct TransactionView: View {
 }
 
 private struct previewWrapper: View {
-    init(_ mockDataType: MockDataType = .normal) {
+    init(_ mockDataType: MockDataType = .normal, isFilterActive: Bool = false) {
         CoreDataUtilities.shared.mockDataType = mockDataType
+        
         UserDefaultsManager.userDefaults = .preview
         UserDefaultsManager.userName = "Preview pruebas"
+        UserDefaultsManager.userDefaults.set(isFilterActive, forKey: UserDefaultsKeys.isFilterActive.rawValue)
     }
     
     var body: some View { TransactionView() }
@@ -281,7 +287,7 @@ private struct previewWrapper: View {
 
 #Preview("Normal \(Previews.localeES_CR)") {
     NavigationStack {
-        previewWrapper()
+        previewWrapper(isFilterActive: true)
             .environment(\.locale, .init(identifier: Previews.localeES_CR))
     }
 }

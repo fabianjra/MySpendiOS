@@ -138,7 +138,9 @@ enum UserDefaultsKeys: String, Codable, CaseIterable {
     case userEmail = "user_email_key"
     case defaultAccountID = "default_account_id_key"
     
+    // MARK: FILTER
     case selectedAccountsFilter = "selected_account_filter_key"
+    case isFilterActive = "is_filter_active_key"
     
 //    var valueType: Codable.Type {
 //        switch self {

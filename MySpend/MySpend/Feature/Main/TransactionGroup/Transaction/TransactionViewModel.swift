@@ -32,11 +32,7 @@ class TransactionViewModel: BaseViewModel {
     
     
     // MARK: FILTER
-//    @Published var showFilter: Bool = false
-//    @Published var selectedAccountsFilter = UserDefaultsManager.selectedAccountsFilter
     @Published var allAccounts: [AccountModel] = []
-    
-    //@Published var showOnlyFavorites: Bool = false
     
     /**
      Call this function in `onFirstAppear`.

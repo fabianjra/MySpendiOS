@@ -11,7 +11,7 @@ import Observation
 final class FilterCenter {
     static let shared = FilterCenter()
         
-    var isFilterActive: Bool = false
+    //var isFilterActive: Bool = false
     var showOnlyFavorites: Bool = false
     
     var selectedAccountsFilter = UserDefaultsManager.selectedAccountsFilter {

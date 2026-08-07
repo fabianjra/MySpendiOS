@@ -14,13 +14,14 @@ extension UserDefaults {
      Se borra cada vez.
      */
     static var preview: UserDefaults = {
-        if let suite = UserDefaults(suiteName: MockUDConstants.suiteNamePreview) {
-            suite.removePersistentDomain(forName: MockUDConstants.suiteNamePreview)
-            return suite
+        
+        guard let suite = UserDefaults(suiteName: MockUDConstants.suiteNamePreview) else {
+            return UserDefaults() // Fallback: volatile in-memory store (doesn't touch real defaults)
         }
         
-        // Fallback: volatile in-memory store (doesn't touch real defaults)
-        return UserDefaults()
+        suite.removePersistentDomain(forName: MockUDConstants.suiteNamePreview)
+        
+        return suite
     }()
 }
 
