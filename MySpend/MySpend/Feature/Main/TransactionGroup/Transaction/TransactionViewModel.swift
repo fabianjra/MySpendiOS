@@ -12,7 +12,7 @@ class TransactionViewModel: BaseViewModel {
     @Published var userName = UserDefaultsManager.userName
     
     private var allTransactions: [TransactionModel] = []
-    @Published var transactions: [TransactionModel] = []
+    @Published var transactions: [TransactionModel] = [] //TODO: Validar si se debe quitar y solamente usar las transacciones filtradas.
     
     @Published var transactionsFiltered: [TransactionModel] = []
     @Published var groupedTransactionsIncomes: UtilsCurrency.groupedTransactions = []

@@ -18,12 +18,12 @@ struct TransactionView: View {
     @State private var showSearchView = false
     @State private var navigateToHistory: Bool = false
     
-    private var filters = FilterCenter.shared
+    private let filters = FilterCenter.shared
     
     @AppStorage(UserDefaultsKeys.isFilterActive.rawValue,
                 store: UserDefaultsManager.userDefaults)
     private var isFilterActive: Bool = false
-
+    
     var body: some View {
         VStack {
             if showSearchView {
@@ -85,19 +85,13 @@ struct TransactionView: View {
         
         // MARK: LOAD FILTER BY OPTIONS
         .onChange(of: viewModel.transactions) {
-            viewModel.filterTransactions(byAccounts: filters.selectedAccountsFilter,
-                                                  showOnlyFavorites: filters.showOnlyFavorites,
-                                                  isFilterActive: isFilterActive)
+            applyFilters()
         }
         .onChange(of: filters.selectedAccountsFilter) {
-            viewModel.filterTransactions(byAccounts: filters.selectedAccountsFilter,
-                                                  showOnlyFavorites: filters.showOnlyFavorites,
-                                                  isFilterActive: isFilterActive)
+            applyFilters()
         }
         .onChange(of: [isFilterActive, filters.showOnlyFavorites]) {
-            viewModel.filterTransactions(byAccounts: filters.selectedAccountsFilter,
-                                                  showOnlyFavorites: filters.showOnlyFavorites,
-                                                  isFilterActive: isFilterActive)
+            applyFilters()
         }
         
         // MARK: FILTER TRANSACTIONS BY DATE
@@ -215,7 +209,7 @@ struct TransactionView: View {
                 
                 if !viewModel.groupedTransactionsExpenses.isEmpty {
                     VStack(alignment: .leading) {
-
+                        
                         Text(.transactionTypeExpenses)
                             .textStyle(color: .alert, family: .semibold, size: .big)
                             .padding(.bottom, ConstantViews.minimumSpacing)
@@ -267,6 +261,12 @@ struct TransactionView: View {
             .tint(Color.primaryTop)
         }
         //.matchedTransitionSource(id: viewModel.transitionNewTransaction, in: namesapce)
+    }
+    
+    private func applyFilters() {
+        viewModel.filterTransactions(byAccounts: filters.selectedAccountsFilter,
+                                     showOnlyFavorites: filters.showOnlyFavorites,
+                                     isFilterActive: isFilterActive)
     }
 }
 
