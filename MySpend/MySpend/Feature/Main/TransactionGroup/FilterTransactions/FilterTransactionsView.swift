@@ -39,7 +39,7 @@ struct FilterTransactionsView: View {
                             }
                             .contentShape(Rectangle())
                             .onTapGesture {
-                                filters.addRemoveAccountsInUserDefaults(account: account)
+                                filters.toggleAccount(account)
                             }
                         }
                     } header: {
