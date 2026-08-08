@@ -21,7 +21,7 @@ class TransactionViewModel: BaseViewModel {
     //MARK: VIEW PROPERTIES
     @Published var dateTimeInterval = UserDefaultsManager.dateTimeInterval
     @Published var selectedDate: Date = .now
-    //@Published var searchText: String = ""
+    @Published var searchText: String = ""
     
     // MARK: FILTER
     @Published var allAccounts: [AccountModel] = []
