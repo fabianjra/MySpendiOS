@@ -284,14 +284,14 @@ private struct previewWrapper: View {
 
 #Preview("Normal \(Previews.localeES_CR)") {
     NavigationStack {
-        previewWrapper(isFilterActive: true)
+        previewWrapper()
             .environment(\.locale, .init(identifier: Previews.localeES_CR))
     }
 }
 
-#Preview("Normal \(Previews.localeEN)") {
+#Preview("Normal filtered \(Previews.localeEN)") {
     NavigationStack {
-        previewWrapper()
+        previewWrapper(isFilterActive: true)
             .environment(\.locale, .init(identifier: Previews.localeEN))
     }
 }
@@ -309,4 +309,3 @@ private struct previewWrapper: View {
             .environment(\.locale, .init(identifier: Previews.localeES_ES))
     }
 }
-
