@@ -86,7 +86,6 @@ struct TransactionView: View {
         // MARK: LOAD FILTER BY OPTIONS
         .onChange(of: viewModel.transactionsFiltered) {
             applyFilters()
-            viewModel.filterTransactionsByDate()
         }
         .onChange(of: filters.selectedAccountsFilter) {
             applyFilters()
@@ -97,10 +96,10 @@ struct TransactionView: View {
         
         // MARK: FILTER TRANSACTIONS BY DATE
         .onChange(of: viewModel.selectedDate) {
-            viewModel.filterTransactionsByDate()
+            applyFilters()
         }
         .onChange(of: viewModel.dateTimeInterval) {
-            viewModel.filterTransactionsByDate()
+            applyFilters()
         }
     }
     

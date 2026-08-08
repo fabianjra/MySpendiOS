@@ -21,7 +21,7 @@ class TransactionViewModel: BaseViewModel {
     //MARK: VIEW PROPERTIES
     @Published var dateTimeInterval = UserDefaultsManager.dateTimeInterval
     @Published var selectedDate: Date = .now
-    @Published var searchText: String = ""
+    //@Published var searchText: String = ""
     
     // MARK: FILTER
     @Published var allAccounts: [AccountModel] = []
@@ -52,26 +52,22 @@ class TransactionViewModel: BaseViewModel {
             transactionsFiltered = fetched
             
             allAccounts = try await AccountManager(viewContext).fetchAll()
-            
-            //selectedAccountsFilter = Set(allAccounts) //TODO: Ahora se van a agregar al userDefaults al momento de agregarla manualmente desde el Account manager.
         } catch {
             errorMessage = error.localizedDescription
             Logger.exception(error, type: .CoreData)
         }
     }
-
+    
     func filterTransactions(byAccounts selectedAccountsFilter: Set<AccountModel>, showOnlyFavorites: Bool, isFilterActive: Bool) {
         
-        guard isFilterActive else {
+        if isFilterActive {
+            let accountIDs = Set(selectedAccountsFilter.compactMap { $0.id })
+            transactionsFiltered = allTransactions.filter { accountIDs.contains($0.account.id) && (showOnlyFavorites ? $0.favorite : true) }
+            
+        } else {
             transactionsFiltered = allTransactions
-            return
         }
         
-        let accountIDs = Set(selectedAccountsFilter.compactMap { $0.id })
-        transactionsFiltered = allTransactions.filter { accountIDs.contains($0.account.id) && (showOnlyFavorites ? $0.favorite : true) }
-    }
-    
-    func filterTransactionsByDate() {
         transactionsFiltered = UtilsTransactions.filteredTransactions(selectedDate,
                                                                       transactions: transactionsFiltered,
                                                                       for: dateTimeInterval)
