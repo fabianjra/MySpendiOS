@@ -34,7 +34,7 @@ struct TransactionView: View {
                 
                 headerActions
                 
-                if viewModel.transactions.isEmpty {
+                if viewModel.transactionsFiltered.isEmpty {
                     NoContentToAddView()
                 } else {
                     bodyContent
@@ -84,8 +84,9 @@ struct TransactionView: View {
         
         
         // MARK: LOAD FILTER BY OPTIONS
-        .onChange(of: viewModel.transactions) {
+        .onChange(of: viewModel.transactionsFiltered) {
             applyFilters()
+            viewModel.filterTransactionsByDate()
         }
         .onChange(of: filters.selectedAccountsFilter) {
             applyFilters()
@@ -96,9 +97,6 @@ struct TransactionView: View {
         
         // MARK: FILTER TRANSACTIONS BY DATE
         .onChange(of: viewModel.selectedDate) {
-            viewModel.filterTransactionsByDate()
-        }
-        .onChange(of: viewModel.transactions) {
             viewModel.filterTransactionsByDate()
         }
         .onChange(of: viewModel.dateTimeInterval) {
@@ -142,7 +140,7 @@ struct TransactionView: View {
     var headerActions: some View {
         VStack {
             NavigationLink {
-                TransactionHistoryView(transactionsLoaded: $viewModel.transactions,
+                TransactionHistoryView(transactionsLoaded: $viewModel.transactionsFiltered,
                                        dateTimeInterval: $viewModel.dateTimeInterval,
                                        selectedDate: $viewModel.selectedDate,
                                        isMutipleAccounts: viewModel.allAccounts.count > 1 ? true : false)
@@ -151,7 +149,7 @@ struct TransactionView: View {
                                            iconLeading: Image.stackFill,
                                            iconTrailing: Image.arrowRight)
             }
-            .disabled(viewModel.transactions.isEmpty)
+            .disabled(viewModel.transactionsFiltered.isEmpty)
             
             DateIntervalNavigatorView(dateTimeInterval: $viewModel.dateTimeInterval,
                                       selectedDate: $viewModel.selectedDate,

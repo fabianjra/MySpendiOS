@@ -12,9 +12,8 @@ class TransactionViewModel: BaseViewModel {
     @Published var userName = UserDefaultsManager.userName
     
     private var allTransactions: [TransactionModel] = []
-    @Published var transactions: [TransactionModel] = [] //TODO: Validar si se debe quitar y solamente usar las transacciones filtradas.
-    
     @Published var transactionsFiltered: [TransactionModel] = []
+    
     @Published var groupedTransactionsIncomes: UtilsCurrency.groupedTransactions = []
     @Published var groupedTransactionsExpenses: UtilsCurrency.groupedTransactions = []
     
@@ -50,7 +49,7 @@ class TransactionViewModel: BaseViewModel {
         do {
             let fetched = try await TransactionManager(viewContext).fetchAll()
             allTransactions = fetched
-            transactions = fetched
+            transactionsFiltered = fetched
             
             allAccounts = try await AccountManager(viewContext).fetchAll()
             
@@ -64,17 +63,17 @@ class TransactionViewModel: BaseViewModel {
     func filterTransactions(byAccounts selectedAccountsFilter: Set<AccountModel>, showOnlyFavorites: Bool, isFilterActive: Bool) {
         
         guard isFilterActive else {
-            transactions = allTransactions
+            transactionsFiltered = allTransactions
             return
         }
         
         let accountIDs = Set(selectedAccountsFilter.compactMap { $0.id })
-        transactions = allTransactions.filter { accountIDs.contains($0.account.id) && (showOnlyFavorites ? $0.favorite : true) }
+        transactionsFiltered = allTransactions.filter { accountIDs.contains($0.account.id) && (showOnlyFavorites ? $0.favorite : true) }
     }
     
     func filterTransactionsByDate() {
         transactionsFiltered = UtilsTransactions.filteredTransactions(selectedDate,
-                                                                      transactions: transactions,
+                                                                      transactions: transactionsFiltered,
                                                                       for: dateTimeInterval)
         
         groupedTransactionsIncomes = UtilsCurrency.calculateGroupedTransactions(transactionsFiltered).filter {$0.category.type == .income}.sorted(by: { $0.totalAmount > $1.totalAmount })
