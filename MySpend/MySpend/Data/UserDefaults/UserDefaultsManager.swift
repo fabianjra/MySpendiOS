@@ -195,3 +195,19 @@ private struct UserDefaultsDataStore<T: Codable> {
         }
     }
 }
+
+
+extension UserDefaults {
+    static let preview: UserDefaults = {
+        let suiteName = "preview.myspend.app"
+
+        guard let suite = UserDefaults(suiteName: suiteName) else {
+            return UserDefaults() // Fallback: volatile in-memory store (doesn't touch real defaults)
+        }
+
+        // Borra todos los valores guardados dentro de ese suite.
+        suite.removePersistentDomain(forName: suiteName)
+
+        return suite
+    }()
+}

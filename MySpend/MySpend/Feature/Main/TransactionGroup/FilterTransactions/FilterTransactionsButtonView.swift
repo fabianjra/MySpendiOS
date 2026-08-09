@@ -108,7 +108,8 @@ private struct previewWrapper: View {
         CoreDataUtilities.shared.mockDataType = mockDataType
         UserDefaultsManager.userDefaults = .preview
         
-        UserDefaultsManager.userDefaults.set(isFilterActive, forKey: UserDefaultsKeys.isFilterActive.rawValue)
+        FilterCenter.shared.isFilterActive = isFilterActive
+        //UserDefaultsManager.userDefaults.set(isFilterActive, forKey: UserDefaultsKeys.isFilterActive.rawValue)
     }
     
     @StateObject private var viewModel = TransactionViewModel()

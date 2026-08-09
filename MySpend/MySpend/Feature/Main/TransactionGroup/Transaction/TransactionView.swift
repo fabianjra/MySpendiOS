@@ -268,7 +268,7 @@ private struct previewWrapper: View {
         
         UserDefaultsManager.userDefaults = .preview
         UserDefaultsManager.userName = "Preview pruebas"
-        UserDefaultsManager.userDefaults.set(isFilterActive, forKey: UserDefaultsKeys.isFilterActive.rawValue)
+        FilterCenter.shared.isFilterActive = isFilterActive
     }
     
     var body: some View { TransactionView() }
