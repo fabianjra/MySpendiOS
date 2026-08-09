@@ -48,8 +48,6 @@ private struct previewWrapper: View {
     init(_ mockDataType: MockDataType = .normal, showOnBoarding: Bool = false) {
         CoreDataUtilities.shared.mockDataType = mockDataType
         
-        //UserDefaultsManager.userDefaults = .preview
-        
         // Configuracion correcta para usar @AppStorage con preview:
         UserDefaultsManager.userDefaults.set(showOnBoarding, forKey: UserDefaultsKeys.isOnBoarding.rawValue)
     }

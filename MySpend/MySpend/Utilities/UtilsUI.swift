@@ -112,11 +112,7 @@ struct UtilsUI {
      - Date: March 2023
      */
     public static var isRunningOnCanvasPreview: Bool {
-        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1" {
-            return true
-        }
-        
-        return false
+        ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1"
     }
     
     /**

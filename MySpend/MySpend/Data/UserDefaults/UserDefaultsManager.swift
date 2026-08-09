@@ -10,7 +10,10 @@ import Foundation
 // MARK: GENERAL
 
 struct UserDefaultsManager {
-    static let userDefaults: UserDefaults = .standard
+    
+    static var userDefaults: UserDefaults {
+        UtilsUI.isRunningOnCanvasPreview ? .preview : .standard
+    }
     
     static func removeValue(for key: UserDefaultsKeys) {
         userDefaults.removeObject(forKey: key.rawValue)
@@ -202,10 +205,11 @@ extension UserDefaults {
         let suiteName = "preview.myspend.app"
 
         guard let suite = UserDefaults(suiteName: suiteName) else {
-            return UserDefaults() // Fallback: volatile in-memory store (doesn't touch real defaults)
+            //assertionFailure("Unable to create Preview UserDefaults suite") // El programa llegó a un punto que, según mi lógica, nunca debería ocurrir.
+            fatalError("Unable to create Preview UserDefaults suite")
         }
 
-        // Borra todos los valores guardados dentro de ese suite.
+        // Borra todos los valores guardados dentro de ese suite, cada vez que se reinicia el Preview Canvas.
         suite.removePersistentDomain(forName: suiteName)
 
         return suite
