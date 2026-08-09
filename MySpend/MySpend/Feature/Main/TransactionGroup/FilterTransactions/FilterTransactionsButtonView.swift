@@ -106,7 +106,7 @@ struct FilterTransactionsButtonView: ToolbarContent {
 private struct previewWrapper: View {
     init(_ mockDataType: MockDataType = .empty, isFilterActive: Bool = false) {
         CoreDataUtilities.shared.mockDataType = mockDataType
-        UserDefaultsManager.userDefaults = .preview
+//        UserDefaultsManager.userDefaults = .preview
         
         FilterCenter.shared.isFilterActive = isFilterActive
         //UserDefaultsManager.userDefaults.set(isFilterActive, forKey: UserDefaultsKeys.isFilterActive.rawValue)

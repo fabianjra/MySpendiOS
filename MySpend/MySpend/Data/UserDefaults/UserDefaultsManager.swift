@@ -10,15 +10,15 @@ import Foundation
 // MARK: GENERAL
 
 struct UserDefaultsManager {
-    static var userDefaults: UserDefaults = .standard
+    static let userDefaults: UserDefaults = .standard
     
     static func removeValue(for key: UserDefaultsKeys) {
-        UserDefaultsManager.userDefaults.removeObject(forKey: key.rawValue)
+        userDefaults.removeObject(forKey: key.rawValue)
     }
     
     static func removeAll() {
-        for key in UserDefaultsKeys.allCases {
-            removeValue(for: key)
+        UserDefaultsKeys.allCases.forEach {
+            removeValue(for: $0)
         }
     }
     

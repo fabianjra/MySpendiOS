@@ -266,7 +266,7 @@ private struct previewWrapper: View {
     init(_ mockDataType: MockDataType = .normal, isFilterActive: Bool = false) {
         CoreDataUtilities.shared.mockDataType = mockDataType
         
-        UserDefaultsManager.userDefaults = .preview
+        //UserDefaultsManager.userDefaults = .preview
         UserDefaultsManager.userName = "Preview pruebas"
         FilterCenter.shared.isFilterActive = isFilterActive
     }

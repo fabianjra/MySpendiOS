@@ -107,7 +107,7 @@ struct FilterTransactionsView: View {
 private struct previewWrapper: View {
     init(_ mockDataType: MockDataType = .empty) {
         CoreDataUtilities.shared.mockDataType = mockDataType
-        UserDefaultsManager.userDefaults = .preview
+        //UserDefaultsManager.userDefaults = .preview
     }
     
     @State private var accountsLoaded: [AccountModel] = []

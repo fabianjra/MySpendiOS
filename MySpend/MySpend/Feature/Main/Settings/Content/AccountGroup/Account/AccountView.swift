@@ -276,7 +276,7 @@ private struct previewWrapper: View {
     init(_ mockDataType: MockDataType = .normal) {
         CoreDataUtilities.shared.mockDataType = mockDataType
         
-        UserDefaultsManager.userDefaults = .preview
+        //UserDefaultsManager.userDefaults = .preview
         UserDefaultsManager.defaultAccountID = MockCDConstants.mainAccountID
     }
     var body: some View { AccountView() }
