@@ -20,10 +20,6 @@ struct TransactionView: View {
     
     private let filters = FilterCenter.shared
     
-    @AppStorage(UserDefaultsKeys.isFilterActive.rawValue,
-                store: UserDefaultsManager.userDefaults)
-    private var isFilterActive: Bool = false
-    
     var body: some View {
         VStack {
             if showSearchView {
@@ -90,7 +86,7 @@ struct TransactionView: View {
         .onChange(of: filters.selectedAccountsFilter) {
             applyFilters()
         }
-        .onChange(of: [isFilterActive, filters.showOnlyFavorites]) {
+        .onChange(of: [filters.isFilterActive, filters.showOnlyFavorites]) {
             applyFilters()
         }
         
@@ -262,8 +258,7 @@ struct TransactionView: View {
     
     private func applyFilters() {
         viewModel.filterTransactions(byAccounts: filters.selectedAccountsFilter,
-                                     showOnlyFavorites: filters.showOnlyFavorites,
-                                     isFilterActive: isFilterActive)
+                                     showOnlyFavorites: filters.showOnlyFavorites)
     }
 }
 

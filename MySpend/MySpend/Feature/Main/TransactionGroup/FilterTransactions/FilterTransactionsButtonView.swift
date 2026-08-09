@@ -13,11 +13,7 @@ struct FilterTransactionsButtonView: ToolbarContent {
     @State private var showFiltersView: Bool = false
     
     private let filters = FilterCenter.shared
-    
-    @AppStorage(UserDefaultsKeys.isFilterActive.rawValue,
-                store: UserDefaultsManager.userDefaults)
-    private var isFilterActive: Bool = false
-    
+
     //@ToolbarContentBuilder
     var body: some ToolbarContent {
         
@@ -25,13 +21,13 @@ struct FilterTransactionsButtonView: ToolbarContent {
             HStack {
                 Button {
                     //withAnimation {
-                    isFilterActive.toggle()
+                    filters.isFilterActive.toggle()
                     //}
                 } label: {
                     Image.filter
                         .foregroundStyle(.textPrimaryForeground)
                         .padding(ConstantViews.paddingSmall)
-                        .background(isFilterActive ? Capsule().fill(.primaryTop) : nil)
+                        .background(filters.isFilterActive ? Capsule().fill(.primaryTop) : nil)
                     //.animation(nil, value: UUID()) //otra manera de desabilitar la animacion.
                         .transaction { transaction in
                             transaction.animation = nil
@@ -39,7 +35,7 @@ struct FilterTransactionsButtonView: ToolbarContent {
                 }
                 
                 
-                if isFilterActive {
+                if filters.isFilterActive {
                     Button {
                         showFiltersView = true
                     } label: {

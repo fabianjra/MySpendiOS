@@ -14,9 +14,11 @@ final class FilterCenter {
         
     var showOnlyFavorites: Bool = false
     var selectedAccountsFilter = UserDefaultsManager.selectedAccountsFilter {
-        didSet {
-            UserDefaultsManager.selectedAccountsFilter = selectedAccountsFilter
-        }
+        didSet { UserDefaultsManager.selectedAccountsFilter = selectedAccountsFilter }
+    }
+    
+    var isFilterActive = UserDefaultsManager.isFilterActive {
+        didSet { UserDefaultsManager.isFilterActive = isFilterActive }
     }
     
     // Permite que se instancie una unica vez y que no se pueda cambiar su instancia

@@ -118,6 +118,14 @@ struct UserDefaultsManager {
             manager.value = newValue
         }
     }
+    
+    static var isFilterActive: Bool {
+        get { return UserDefaultsDataStore<Bool>(for: .isFilterActive).value ?? false }
+        set {
+            var manager = UserDefaultsDataStore<Bool>(for: .isFilterActive)
+            manager.value = newValue
+        }
+    }
 }
 
 enum UserDefaultsKeys: String, Codable, CaseIterable {

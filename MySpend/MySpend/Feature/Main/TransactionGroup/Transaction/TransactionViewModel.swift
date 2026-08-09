@@ -58,22 +58,22 @@ class TransactionViewModel: BaseViewModel {
         }
     }
     
-    func filterTransactions(byAccounts accountIDs: Set<UUID>, showOnlyFavorites: Bool, isFilterActive: Bool) {
+    func filterTransactions(byAccounts accountIDs: Set<UUID>, showOnlyFavorites: Bool) {
+        let filteredByOptions: [TransactionModel]
         
-        if isFilterActive {
-            //let accountIDs = Set(selectedAccountsFilter.compactMap { $0 })
-            transactionsFiltered = allTransactions.filter { accountIDs.contains($0.account.id) && (showOnlyFavorites ? $0.favorite : true) }
-            
+        if FilterCenter.shared.isFilterActive {
+            filteredByOptions = allTransactions.filter { accountIDs.contains($0.account.id) && (showOnlyFavorites ? $0.favorite : true) }
         } else {
-            transactionsFiltered = allTransactions
+            filteredByOptions = allTransactions
         }
         
         transactionsFiltered = UtilsTransactions.filteredTransactions(selectedDate,
-                                                                      transactions: transactionsFiltered,
+                                                                      transactions: filteredByOptions,
                                                                       for: dateTimeInterval)
         
-        groupedTransactionsIncomes = UtilsCurrency.calculateGroupedTransactions(transactionsFiltered).filter {$0.category.type == .income}.sorted(by: { $0.totalAmount > $1.totalAmount })
-        groupedTransactionsExpenses = UtilsCurrency.calculateGroupedTransactions(transactionsFiltered).filter {$0.category.type == .expense}.sorted(by: { $0.totalAmount > $1.totalAmount })
+        let groupedTransactions = UtilsCurrency.calculateGroupedTransactions(transactionsFiltered)
+        
+        groupedTransactionsIncomes = groupedTransactions.filter { $0.category.type == .income }.sorted { $0.totalAmount > $1.totalAmount }
+        groupedTransactionsExpenses = groupedTransactions.filter { $0.category.type == .expense }.sorted { $0.totalAmount > $1.totalAmount }
     }
 }
-
