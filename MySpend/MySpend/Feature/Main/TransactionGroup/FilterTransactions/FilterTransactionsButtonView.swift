@@ -25,7 +25,6 @@ struct FilterTransactionsButtonView: ToolbarContent {
             HStack {
                 Button {
                     //withAnimation {
-                    //viewModel.showFilter.toggle()
                     isFilterActive.toggle()
                     //}
                 } label: {
@@ -92,7 +91,12 @@ struct FilterTransactionsButtonView: ToolbarContent {
             return .filterAccountNone
             
         case 1:
-            return LocalizedStringResource(stringLiteral: filters.selectedAccountsFilter.first?.name ?? "")
+            guard let accountID = filters.selectedAccountsFilter.first,
+                  let account = allAccounts.first(where: { $0.id == accountID }) else {
+                return ""
+            }
+            
+            return LocalizedStringResource(stringLiteral: account.name)
             
         case allAccounts.count:
             return .filterAccountAll
@@ -117,7 +121,7 @@ private struct previewWrapper: View {
         VStack(spacing: 20) {
             Text("Accounts selected:").bold()
             
-            ForEach(Array(FilterCenter.shared.selectedAccountsFilter).sorted(by: { $0.name < $1.name }), id: \.id) { item in
+            ForEach(viewModel.allAccounts.filter { FilterCenter.shared.selectedAccountsFilter.contains($0.id)}) { item in
                 Text(item.name)
             }
         }

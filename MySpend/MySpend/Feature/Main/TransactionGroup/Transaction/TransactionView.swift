@@ -168,7 +168,7 @@ struct TransactionView: View {
                     }
                     
                     // Si hay un subconjunto de cuentas, se enlistan los nombres
-                    let accountsSelected = filters.selectedAccountsFilter
+                    let accountsSelected = viewModel.allAccounts.filter { filters.selectedAccountsFilter.contains($0.id) }
                         .map(\.name)
                         .joined(separator: ", ")
                     

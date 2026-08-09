@@ -5,7 +5,8 @@
 //  Created by Fabian Rodriguez on 7/8/26.
 //
 
-import Observation
+//import Observation
+import Foundation
 
 @Observable
 final class FilterCenter {
@@ -22,16 +23,16 @@ final class FilterCenter {
     private init() {}
 
     
-    func restoreFilter(allAccountsAvailable allAccounts: [AccountModel]) {
-        selectedAccountsFilter = Set(allAccounts)
+    func restoreFilter(allAccountsAvailable accounts: [AccountModel]) {
+        selectedAccountsFilter = Set(accounts.compactMap(\.id))
         showOnlyFavorites = false
     }
     
     func toggleAccount(_ account: AccountModel) {
-        if selectedAccountsFilter.contains(account) {
-            selectedAccountsFilter.remove(account)
+        if selectedAccountsFilter.contains(account.id) {
+            selectedAccountsFilter.remove(account.id)
         } else {
-            selectedAccountsFilter.insert(account)
+            selectedAccountsFilter.insert(account.id)
         }
     }
 }

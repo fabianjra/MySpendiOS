@@ -42,7 +42,7 @@ final class AddModifyAccountViewModel: BaseViewModel {
         
         do {
             try await AccountManager(viewContext).create(modelMutated)
-            FilterCenter.shared.selectedAccountsFilter.insert(modelMutated)
+            FilterCenter.shared.selectedAccountsFilter.insert(modelMutated.id)
             
             if isDefaultSelected {
                 UserDefaultsManager.defaultAccountID = modelMutated.id.uuidString

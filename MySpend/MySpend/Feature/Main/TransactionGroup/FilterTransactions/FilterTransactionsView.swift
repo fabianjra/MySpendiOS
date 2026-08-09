@@ -30,7 +30,7 @@ struct FilterTransactionsView: View {
                                 
                                 Spacer()
                                 
-                                Image(systemName: filters.selectedAccountsFilter.contains(account) ? ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle)
+                                Image(systemName: filters.selectedAccountsFilter.contains(account.id) ? ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle)
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: FrameSize.height.iconRowList,

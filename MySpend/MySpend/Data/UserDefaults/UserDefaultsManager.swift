@@ -111,10 +111,10 @@ struct UserDefaultsManager {
         }
     }
     
-    static var selectedAccountsFilter: Set<AccountModel> {
-        get { return UserDefaultsDataStore<Set<AccountModel>>(for: .selectedAccountsFilter).value ?? [] }
+    static var selectedAccountsFilter: Set<UUID> {
+        get { return UserDefaultsDataStore<Set<UUID>>(for: .selectedAccountsFilter).value ?? [] }
         set {
-            var manager = UserDefaultsDataStore<Set<AccountModel>>(for: .selectedAccountsFilter)
+            var manager = UserDefaultsDataStore<Set<UUID>>(for: .selectedAccountsFilter)
             manager.value = newValue
         }
     }

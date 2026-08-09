@@ -58,10 +58,10 @@ class TransactionViewModel: BaseViewModel {
         }
     }
     
-    func filterTransactions(byAccounts selectedAccountsFilter: Set<AccountModel>, showOnlyFavorites: Bool, isFilterActive: Bool) {
+    func filterTransactions(byAccounts accountIDs: Set<UUID>, showOnlyFavorites: Bool, isFilterActive: Bool) {
         
         if isFilterActive {
-            let accountIDs = Set(selectedAccountsFilter.compactMap { $0.id })
+            //let accountIDs = Set(selectedAccountsFilter.compactMap { $0 })
             transactionsFiltered = allTransactions.filter { accountIDs.contains($0.account.id) && (showOnlyFavorites ? $0.favorite : true) }
             
         } else {

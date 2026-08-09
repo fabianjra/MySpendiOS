@@ -26,7 +26,7 @@ class OnBoardingAccountViewModel: BaseViewModel {
         
         do {
             try await AccountManager(viewContext).create(account)
-            FilterCenter.shared.selectedAccountsFilter.insert(account)
+            FilterCenter.shared.selectedAccountsFilter.insert(account.id)
         } catch {
             Logger.exception(error, type: .CoreData)
         }
