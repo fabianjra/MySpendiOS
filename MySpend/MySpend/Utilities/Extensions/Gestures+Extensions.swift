@@ -7,12 +7,6 @@
 
 import UIKit
 
-//Controls the state to enable or disable swipe to go back on Views.
-class AppState {
-    static let shared = AppState()
-    private init() {}
-}
-
 extension UIApplication: UIGestureRecognizerDelegate {
     
     /**
