@@ -11,12 +11,6 @@ struct LocalizableTable {
     
     static let main = "Localizable"
     
-    
-    // MARK: - Features
-    
-    static let onboarding = "Onboarding"
-
-    
     // MARK: - Generic
     
     static let data = "Data"
@@ -49,17 +43,7 @@ extension LocalizableProtocol {
 }
 
 struct Localizable {
-    
-    // MARK: - Features
-    
-    enum Onboarding: String, LocalizableProtocol {
-        case title
-        case enter_name
-        case enter_account_name
-        
-        var table: String { LocalizableTable.onboarding }
-    }
-    
+
     // MARK: - Generic
     
     enum Data: String, LocalizableProtocol {

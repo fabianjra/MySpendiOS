@@ -12,6 +12,12 @@ class Router: ObservableObject {
 
     static let shared: Router = Router()
     
+    private init() {}
+    
+    func reset() {
+        path = NavigationPath()
+    }
+    
     enum Destination {
         case mainView
         case onBoardingName

@@ -36,7 +36,7 @@ struct RootView: View {
                     OnBoardingUsernameView()
                     
                 case .onBoardinAccount:
-                    OnBoardingAccountView().toolbar(.hidden, for: .navigationBar)
+                    OnBoardingAccountView()
                 }
             }
         }

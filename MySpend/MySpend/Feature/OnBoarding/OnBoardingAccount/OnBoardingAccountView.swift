@@ -13,65 +13,63 @@ struct OnBoardingAccountView: View {
     @FocusState private var focusedField: OnBoardingAccountViewModel.Field?
     
     var body: some View {
-        LogContainer {
+        VStack(spacing: ConstantViews.formSpacing) {
             
-            HeaderNavigator(onlyTitle: true)
-                .padding(.bottom)
-            
-            
-            VStack(spacing: ConstantViews.formSpacing) {
-                TextPlainLocalized(Localizable.Onboarding.enter_account_name,
-                                   family: .light,
-                                   size: .big,
-                                   aligment: .center,
-                                   lineLimit: 2)
-                
-                TextFieldName(text: $viewModel.name,
-                              iconLeading: nil,
-                              errorMessage: $viewModel.errorMessage)
-                .focused($focusedField, equals: .name)
-                .onSubmit {
-                    Task {
-                        await viewModel.finishOnBoarding(withName: true)
-                    }
+            TextFieldName(placeHolder: "Account name",
+                          text: $viewModel.accountName,
+                          iconLeading: nil,
+                          errorMessage: $viewModel.errorMessage)
+            .focused($focusedField, equals: .accountName)
+            .onSubmit {
+                Task {
+                    await viewModel.finishOnBoarding(withAccountName: true)
                 }
-                
-                Button {
-                    Task {
-                        await viewModel.finishOnBoarding(withName: true)
-                    }
-                } label: {
-                    TextPlainLocalized(Localizable.Button.continu)
-                        .padding(.vertical, ConstantViews.paddingButtonTransaction)
-                        .frame(maxWidth: ConstantFrames.iPadMaxWidth)
-                }
-                .buttonStyle(.glass)
-                
-                
-                Button {
-                    Task {
-                        await viewModel.finishOnBoarding(withName: false)
-                    }
-                } label: {
-                    TextPlainLocalized(Localizable.Button.skip)
-                }
-                
-                TextError(viewModel.errorMessage)
             }
-            //.modifier(AddKeyboardToolbar(focusedField: $focusedField))
+            
+            Button {
+                Task {
+                    await viewModel.finishOnBoarding(withAccountName: true)
+                }
+            } label: {
+                Text(.buttonContinue)
+                    .padding(.vertical, ConstantViews.paddingButtonTransaction)
+                    .frame(maxWidth: ConstantFrames.iPadMaxWidth)
+            }
+            .buttonStyle(.glass)
+            
+            
+            Button {
+                Task {
+                    await viewModel.finishOnBoarding(withAccountName: false)
+                }
+            } label: {
+                Text(.buttonSkip)
+                    .textStyle
+            }
+            
+            Text(viewModel.errorMessage)
+                .textErrorStyle
+            
+            Spacer()
         }
-        .onAppear {
-            focusedField = .name
-        }
+        .padding(.horizontal)
+        .navigationTitle(.onBoardingAccountTitle)
+        .navigationSubtitle(.onBoardingAccountEntertName)
+        .background(Color.backgroundContentGradient)
+        .onAppear { focusedField = .accountName }
     }
 }
 
 #Preview(Previews.localeES) {
-    OnBoardingAccountView()
-        .environment(\.locale, .init(identifier: Previews.localeES))
+    NavigationStack {
+        OnBoardingAccountView()
+    }
+    .environment(\.locale, .init(identifier: Previews.localeES))
 }
 
 #Preview(Previews.localeEN) {
-    OnBoardingAccountView()
-        .environment(\.locale, .init(identifier: Previews.localeEN))
+    NavigationStack {
+        OnBoardingAccountView()
+    }
+    .environment(\.locale, .init(identifier: Previews.localeEN))
 }

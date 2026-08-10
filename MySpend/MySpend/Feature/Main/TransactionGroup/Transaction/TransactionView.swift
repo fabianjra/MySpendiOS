@@ -69,15 +69,7 @@ struct TransactionView: View {
             Task {
                 await viewModel.activateObservers()
             }
-        }
-        .onAppear {
-            /// Disable Swipe to go back when ResumeView is showing.
-            AppState.shared.swipeEnabled = false
-        }
-        .onDisappear {
-            AppState.shared.swipeEnabled = true
-        }
-        
+        }        
         
         // MARK: LOAD FILTER BY OPTIONS
         .onChange(of: viewModel.transactionsFiltered) {

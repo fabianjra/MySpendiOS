@@ -9,35 +9,39 @@ import Foundation
 
 class OnBoardingAccountViewModel: BaseViewModel {
     
-    @Published var name = ""
+    @Published var accountName = ""
     
-    func finishOnBoarding(withName: Bool) async {
+    func finishOnBoarding(withAccountName: Bool) async {
         
-        if withName {
-            if name.isEmptyOrWhitespace {
+        var mutatedName = accountName
+        
+        if withAccountName {
+            if accountName.isEmptyOrWhitespace {
                 errorMessage = Errors.emptySpace.localizedDescription
                 return
             }
         } else {
-            name = CDConstants.mainAccountName
+            mutatedName = CDConstants.mainAccountName
         }
         
-        let account = AccountModel(icon: ConstantSystemImage.bankDollarFill, name: name, type: .general)
+        let account = AccountModel(icon: ConstantSystemImage.bankDollarFill, name: mutatedName, type: .general)
         
         do {
             try await AccountManager(viewContext).create(account)
+            
             FilterCenter.shared.selectedAccountsFilter.insert(account.id)
+            
+            UserDefaultsManager.defaultAccountID = account.id.uuidString
+            UserDefaultsManager.isOnBoarding = false
+
+            Router.shared.reset()
         } catch {
             Logger.exception(error, type: .CoreData)
+            errorMessage = error.localizedDescription
         }
-        
-        UserDefaultsManager.defaultAccountID = account.id.uuidString
-        UserDefaultsManager.isOnBoarding = false
-        
-        Router.shared.path.append(Router.Destination.mainView)
     }
     
     enum Field: Hashable, CaseIterable {
-        case name
+        case accountName
     }
 }
