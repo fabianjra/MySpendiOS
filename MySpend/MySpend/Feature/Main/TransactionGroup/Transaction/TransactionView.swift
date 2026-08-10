@@ -20,6 +20,8 @@ struct TransactionView: View {
     
     private let filters = FilterCenter.shared
     
+    @State private var shakeTrigger = 0
+    
     var body: some View {
         VStack {
             if showSearchView {
@@ -32,6 +34,7 @@ struct TransactionView: View {
                 
                 if viewModel.transactionsFiltered.isEmpty {
                     NoContentToAddView()
+                        .modifier(ShakeEffect(trigger: shakeTrigger))
                 } else {
                     bodyContent
                 }
@@ -137,6 +140,11 @@ struct TransactionView: View {
                                            iconTrailing: Image.arrowRight)
             }
             .disabled(viewModel.transactionsFiltered.isEmpty)
+            .onTapGesture {
+                if viewModel.transactionsFiltered.isEmpty {
+                    shakeTrigger += 1
+                }
+            }
             
             DateIntervalNavigatorView(dateTimeInterval: $viewModel.dateTimeInterval,
                                       selectedDate: $viewModel.selectedDate,
@@ -245,7 +253,6 @@ struct TransactionView: View {
             }
             .tint(Color.primaryTop)
         }
-        //.matchedTransitionSource(id: viewModel.transitionNewTransaction, in: namesapce)
     }
     
     private func applyFilters() {

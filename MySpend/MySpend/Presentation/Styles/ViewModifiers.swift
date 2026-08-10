@@ -275,3 +275,47 @@ struct AddKeyboardToolbar<Field: Hashable & CaseIterable>: ViewModifier {
             }
     }
 }
+
+/**
+ Applies a horizontal shake animation to a view whenever the trigger value changes.
+ 
+ **Example:**
+ ```swift
+ if viewModel.transactionsFiltered.isEmpty {
+     NoContentToAddView()
+         .modifier(ShakeEffect(trigger: shakeTrigger))
+ }
+ ```
+ 
+ - Parameters:
+    - trigger: A value used to trigger the animation. Change this value each time the shake should be performed.
+ 
+ - Authors: FabianJRA
+ 
+ - Version: 1.0
+ 
+ - Date: Aug 2026
+ */
+struct ShakeEffect: ViewModifier {
+    let trigger: Int
+    
+    /// Creates a horizontal shake animation using a sequence of keyframes.
+    func body(content: Content) -> some View {
+        content
+            .keyframeAnimator(
+                initialValue: CGFloat.zero,
+                trigger: trigger
+            ) { content, offset in
+                content
+                    .offset(x: offset)
+            } keyframes: { _ in
+                KeyframeTrack {
+                    LinearKeyframe(-8, duration: 0.07)
+                    LinearKeyframe(8, duration: 0.07)
+                    LinearKeyframe(-6, duration: 0.07)
+                    LinearKeyframe(6, duration: 0.07)
+                    LinearKeyframe(0, duration: 0.07)
+                }
+            }
+    }
+}
