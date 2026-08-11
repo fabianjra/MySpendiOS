@@ -144,17 +144,16 @@ struct TransactionView: View {
                 
                 let text: LocalizedStringResource = {
                     
-                    // Si todas las cuentas están seleccionadas, muestra “All accounts”
-                    if filters.selectedAccountsFilter.count == viewModel.allAccounts.count {
-                        return .filterAccountAll
+                    // Si hay un subconjunto de cuentas, se enlistan los nombres
+                    if !filters.selectedAccountsFilter.isEmpty && filters.isFilterActive && filters.selectedAccountsFilter.count != viewModel.allAccounts.count {
+                        let accountsSelected = viewModel.allAccounts.filter { filters.selectedAccountsFilter.contains($0.id) }
+                            .map(\.name)
+                            .joined(separator: ", ")
+                        
+                        return .filterAccountSelected(accountsSelected)
                     }
                     
-                    // Si hay un subconjunto de cuentas, se enlistan los nombres
-                    let accountsSelected = viewModel.allAccounts.filter { filters.selectedAccountsFilter.contains($0.id) }
-                        .map(\.name)
-                        .joined(separator: ", ")
-                    
-                    return LocalizedStringResource(stringLiteral: accountsSelected)
+                    return ""
                 }()
                 
                 Text(text)
@@ -185,6 +184,7 @@ struct TransactionView: View {
                                     Text(item.totalAmount.convertAmountDecimalToString.addCurrencySymbol)
                                         .textStyle
                                 }
+                                .padding(.bottom, ConstantViews.minimumSpacing)
                             }
                         }
                         .padding(.bottom)
@@ -208,6 +208,7 @@ struct TransactionView: View {
                                     Text(item.totalAmount.convertAmountDecimalToString.addCurrencySymbol)
                                         .textStyle
                                 }
+                                .padding(.bottom, ConstantViews.minimumSpacing)
                             }
                         }
                     }
@@ -258,7 +259,7 @@ private struct previewWrapper: View {
     init(_ mockDataType: MockDataType = .normal, isFilterActive: Bool = false) {
         CoreDataUtilities.shared.mockDataType = mockDataType
         
-        UserDefaultsManager.userName = "Preview pruebas"
+        UserDefaultsManager.userName = "Previews"
         FilterCenter.shared.isFilterActive = isFilterActive
     }
     

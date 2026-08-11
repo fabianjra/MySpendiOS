@@ -324,6 +324,24 @@
         }
       }
     },
+    "Filter.Account.Selected %@" : {
+      "comment" : "Muestra las cuentas seleccionadas en el filtro",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Accounts: %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cuentas: %@"
+          }
+        }
+      }
+    },
     "Filter.Account.SomeAccounts" : {
       "comment" : "Indica que se han seleccionado algunas de las cuentas en el filtro de cuentas",
       "extractionState" : "manual",
@@ -337,7 +355,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Algunas cuentas"
+            "value" : "Varias cuentas"
           }
         }
       }

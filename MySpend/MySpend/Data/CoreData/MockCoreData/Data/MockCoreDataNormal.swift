@@ -23,15 +23,20 @@ struct MockCoreDataNormal {
         let account3 = MockCoreDataNormal.accountIncomes(viewContext)
         
         // Categories:
-        let category1 = MockCoreDataNormal.categoryExpense(viewContext)
-        let category2 = MockCoreDataNormal.categoryIncome(viewContext)
+        let categoryExpense1 = MockCoreDataNormal.categoryExpense1(viewContext)
+        let categoryExpense2 = MockCoreDataNormal.categoryExpense2(viewContext)
+        let categoryExpense3 = MockCoreDataNormal.categoryExpense3(viewContext)
+        
+        let categoryIncome1 = MockCoreDataNormal.categoryIncome1(viewContext)
+        let categoryIncome2 = MockCoreDataNormal.categoryIncome2(viewContext)
         
         // Transactions:
-        MockCoreDataNormal.transaction1(viewContext, category: category1, account: account1)
-        MockCoreDataNormal.transaction2(viewContext, category: category2, account: account2)
-        MockCoreDataNormal.transaction3(viewContext, category: category2, account: account3)
-        MockCoreDataNormal.transaction4(viewContext, category: category2, account: account3)
-        MockCoreDataNormal.transaction5(viewContext, category: category2, account: account3)
+        MockCoreDataNormal.transaction1(viewContext, category: categoryExpense1, account: account1)
+        MockCoreDataNormal.transaction2(viewContext, category: categoryExpense2, account: account1)
+        MockCoreDataNormal.transaction2(viewContext, category: categoryExpense3, account: account2)
+        MockCoreDataNormal.transaction3(viewContext, category: categoryIncome1, account: account3)
+        MockCoreDataNormal.transaction4(viewContext, category: categoryIncome2, account: account3)
+        MockCoreDataNormal.transaction5(viewContext, category: categoryIncome2, account: account3)
         
         do {
             try viewContext.save()
@@ -90,7 +95,7 @@ struct MockCoreDataNormal {
         return item
     }
     
-    private static func categoryExpense(_ context: NSManagedObjectContext) -> Category {
+    private static func categoryExpense1(_ context: NSManagedObjectContext) -> Category {
         let item = Category(context: context)
         item.dateCreated = .now
         item.dateModified = .now
@@ -106,7 +111,39 @@ struct MockCoreDataNormal {
         return item
     }
     
-    private static func categoryIncome(_ context: NSManagedObjectContext) -> Category {
+    private static func categoryExpense2(_ context: NSManagedObjectContext) -> Category {
+        let item = Category(context: context)
+        item.dateCreated = .now
+        item.dateModified = .now
+        item.id = UUID()
+        item.isActive = true
+        
+        item.dateLastUsed = .now
+        item.icon = "✅"
+        item.name = "Comidas afuera"
+        item.type = CategoryType.expense.rawValue
+        item.usageCount = 0
+        
+        return item
+    }
+    
+    private static func categoryExpense3(_ context: NSManagedObjectContext) -> Category {
+        let item = Category(context: context)
+        item.dateCreated = .now
+        item.dateModified = .now
+        item.id = UUID()
+        item.isActive = true
+        
+        item.dateLastUsed = .now
+        item.icon = "✅"
+        item.name = "Diario mensual casa"
+        item.type = CategoryType.expense.rawValue
+        item.usageCount = 0
+        
+        return item
+    }
+    
+    private static func categoryIncome1(_ context: NSManagedObjectContext) -> Category {
         let item = Category(context: context)
         item.dateCreated = Calendar.current.date(byAdding: .day, value: 22, to: .now)!
         item.dateModified = .now
@@ -116,6 +153,22 @@ struct MockCoreDataNormal {
         item.dateLastUsed = Calendar.current.date(byAdding: .day, value: 1, to: .now)!
         item.icon = "✅"
         item.name = "Ingreso"
+        item.type = CategoryType.income.rawValue
+        item.usageCount = 1
+        
+        return item
+    }
+    
+    private static func categoryIncome2(_ context: NSManagedObjectContext) -> Category {
+        let item = Category(context: context)
+        item.dateCreated = Calendar.current.date(byAdding: .day, value: 22, to: .now)!
+        item.dateModified = .now
+        item.id = UUID()
+        item.isActive = true
+        
+        item.dateLastUsed = Calendar.current.date(byAdding: .day, value: 1, to: .now)!
+        item.icon = "✅"
+        item.name = "Ingresos para las recargas"
         item.type = CategoryType.income.rawValue
         item.usageCount = 1
         
