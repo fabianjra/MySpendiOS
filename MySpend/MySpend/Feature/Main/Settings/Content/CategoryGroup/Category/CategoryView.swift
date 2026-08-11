@@ -136,7 +136,7 @@ struct CategoryView: View {
                                                                         sortType: viewModel.sortCategoriesBy)
             
             if categoriesFiltered.isEmpty {
-                NoContentToAddView()
+                TransactionsEmptyView()
             } else {
                 ListContainer {
                     ForEach(categoriesFiltered) { item in

@@ -13,7 +13,6 @@ struct LocalizableTable {
     
     // MARK: - Generic
     
-    static let data = "Data"
     static let button = "Button"
     static let currency = "Currency"
     
@@ -45,14 +44,7 @@ extension LocalizableProtocol {
 struct Localizable {
 
     // MARK: - Generic
-    
-    enum Data: String, LocalizableProtocol {
-        case empty
-        case empty_add_item
-        
-        var table: String { LocalizableTable.data }
-    }
-    
+
     enum Button: String, LocalizableProtocol {
         case continu = "continue"
         case skip

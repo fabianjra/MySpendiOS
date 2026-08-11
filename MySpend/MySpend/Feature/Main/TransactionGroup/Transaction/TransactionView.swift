@@ -20,8 +20,6 @@ struct TransactionView: View {
     
     private let filters = FilterCenter.shared
     
-    @State private var shakeTrigger = 0
-    
     var body: some View {
         VStack {
             if showSearchView {
@@ -29,15 +27,10 @@ struct TransactionView: View {
                 
             } else {
                 headerTitle
-                
+
                 headerActions
                 
-                if viewModel.transactionsFiltered.isEmpty {
-                    NoContentToAddView()
-                        .modifier(ShakeEffect(trigger: shakeTrigger))
-                } else {
-                    bodyContent
-                }
+                bodyContent
             }
         }
         .padding(.horizontal)
@@ -123,7 +116,6 @@ struct TransactionView: View {
             }
             .buttonStyle(.glass)
             .buttonBorderShape(.circle)
-            //.matchedTransitionSource(id: viewModel.transitionSettings, in: namesapce)
         }
     }
     
@@ -138,12 +130,6 @@ struct TransactionView: View {
                 TextButtonHorizontalStyled(Localizable.Button.history.key,
                                            iconLeading: Image.stackFill,
                                            iconTrailing: Image.arrowRight)
-            }
-            .disabled(viewModel.transactionsFiltered.isEmpty)
-            .onTapGesture {
-                if viewModel.transactionsFiltered.isEmpty {
-                    shakeTrigger += 1
-                }
             }
             
             DateIntervalNavigatorView(dateTimeInterval: $viewModel.dateTimeInterval,
@@ -175,56 +161,63 @@ struct TransactionView: View {
                     .textStyle(size: .medium, truncateMode: .tail)
             }
             
-            ScrollView(showsIndicators: false) {
+            if viewModel.transactionsFiltered.isEmpty {
+                TransactionsEmptyView()
                 
-                if !viewModel.groupedTransactionsIncomes.isEmpty {
-                    VStack(alignment: .leading) {
-                        
-                        Text(.transactionTypeIncomes)
-                            .textStyle(color: .primaryTop, family: .semibold, size: .big)
-                            .padding(.bottom, ConstantViews.minimumSpacing)
-                        
-                        ForEach(viewModel.groupedTransactionsIncomes, id:\.category.id) { item in
-                            HStack {
-                                Text(item.category.name)
-                                    .textStyle
-                                    .padding(.leading)
-                                
-                                Spacer()
-                                
-                                Text(item.totalAmount.convertAmountDecimalToString.addCurrencySymbol)
-                                    .textStyle
+            } else {
+                ScrollView(showsIndicators: false) {
+                    
+                    if !viewModel.groupedTransactionsIncomes.isEmpty {
+                        VStack(alignment: .leading) {
+                            
+                            Text(.transactionTypeIncomes)
+                                .textStyle(color: .primaryTop, family: .semibold, size: .big)
+                                .padding(.bottom, ConstantViews.minimumSpacing)
+                            
+                            ForEach(viewModel.groupedTransactionsIncomes, id:\.category.id) { item in
+                                HStack {
+                                    Text(item.category.name)
+                                        .textStyle
+                                        .padding(.leading)
+                                    
+                                    Spacer()
+                                    
+                                    Text(item.totalAmount.convertAmountDecimalToString.addCurrencySymbol)
+                                        .textStyle
+                                }
+                            }
+                        }
+                        .padding(.bottom)
+                    }
+                    
+                    if !viewModel.groupedTransactionsExpenses.isEmpty {
+                        VStack(alignment: .leading) {
+                            
+                            Text(.transactionTypeExpenses)
+                                .textStyle(color: .alert, family: .semibold, size: .big)
+                                .padding(.bottom, ConstantViews.minimumSpacing)
+                            
+                            ForEach(viewModel.groupedTransactionsExpenses, id:\.category.id) { item in
+                                HStack {
+                                    Text(item.category.name)
+                                        .textStyle
+                                        .padding(.leading)
+                                    
+                                    Spacer()
+                                    
+                                    Text(item.totalAmount.convertAmountDecimalToString.addCurrencySymbol)
+                                        .textStyle
+                                }
                             }
                         }
                     }
-                    .padding(.bottom)
                 }
+                .animation(.default, value: filters.selectedAccountsFilter.count)
                 
-                if !viewModel.groupedTransactionsExpenses.isEmpty {
-                    VStack(alignment: .leading) {
-                        
-                        Text(.transactionTypeExpenses)
-                            .textStyle(color: .alert, family: .semibold, size: .big)
-                            .padding(.bottom, ConstantViews.minimumSpacing)
-                        
-                        ForEach(viewModel.groupedTransactionsExpenses, id:\.category.id) { item in
-                            HStack {
-                                Text(item.category.name)
-                                    .textStyle
-                                    .padding(.leading)
-                                
-                                Spacer()
-                                
-                                Text(item.totalAmount.convertAmountDecimalToString.addCurrencySymbol)
-                                    .textStyle
-                            }
-                        }
-                    }
-                }
             }
-            .animation(.default, value: filters.selectedAccountsFilter.count)
             
-            TextError(viewModel.errorMessage)
+            Text(viewModel.errorMessage)
+                .textErrorStyle
             
             TotalBalanceView(transactions: viewModel.transactionsFiltered)
                 .padding(.bottom)

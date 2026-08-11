@@ -919,6 +919,24 @@
         }
       }
     },
+    "Transaction.Empty.AddNewItem" : {
+      "comment" : "Mensaje para indicar que puedes agregar mas transacciones",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Try adding a new transaction in the plus (+) button"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Intenta agregar una nueva transacción en el botón de más (+)"
+          }
+        }
+      }
+    },
     "Transactions.Empty" : {
       "comment" : "Mensaje para cuando no hay transacciones",
       "extractionState" : "manual",

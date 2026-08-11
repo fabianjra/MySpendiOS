@@ -281,6 +281,12 @@ struct AddKeyboardToolbar<Field: Hashable & CaseIterable>: ViewModifier {
  
  **Example:**
  ```swift
+ @State private var shakeTrigger = 0
+ 
+ Button("Test") {
+        shakeTrigger += 1
+ }
+ 
  if viewModel.transactionsFiltered.isEmpty {
      NoContentToAddView()
          .modifier(ShakeEffect(trigger: shakeTrigger))

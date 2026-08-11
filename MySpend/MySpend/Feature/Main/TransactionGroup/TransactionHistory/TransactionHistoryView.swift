@@ -29,25 +29,18 @@ struct TransactionHistoryView: View {
     
     var body: some View {
         VStack {
+            header
+            
             if transactionsLoaded.isEmpty {
-                
-                Text(.transactionsEmpty)
-                    .textStyle(family: .semibold,
-                               size: .bigXL,
-                               aligment: .center)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                
+                TransactionsEmptyView()
             } else {
-                VStack {
-                    header
-                    transactionsList
-                }
-                .padding(.horizontal)
+                transactionsList
             }
             
             Text(viewModel.errorMessage)
                 .textErrorStyle
         }
+        .padding(.horizontal)
         .navigationTitle(.titleHistoryView)
         .navigationBarTitleDisplayMode(.inline) //TODO: CAMBIAR: El navegador de fechas va a ir abajo, entonces va a ponerse el titulo en grande al bajar.
         .toolbar {
@@ -143,6 +136,7 @@ struct TransactionHistoryView: View {
                 Button(.selectorSelect) {
                     viewModel.isEditing = true
                 }
+                .disabled(transactionsLoaded.isEmpty)
             }
         }
         
@@ -498,26 +492,29 @@ private struct TransactionPreviewWrapper: View {
     }
 }
 
-#Preview("Normal es_CR") {
+#Preview("Normal \(Previews.localeES_CR)") {
     NavigationStack {
         TransactionPreviewWrapper(.normal)
-            .environment(\.locale, .init(identifier: "es_CR"))
+            
     }
+    .environment(\.locale, .init(identifier: Previews.localeES_CR))
 }
 
-#Preview("Random Saturated en_US") {
+#Preview("Random Saturated \(Previews.localeEN_US)") {
     TransactionPreviewWrapper(.saturated)
-        .environment(\.locale, .init(identifier: "en_US"))
+        .environment(\.locale, .init(identifier: Previews.localeEN_US))
 }
 
-#Preview("Empty en_US_POSIX") {
-    TransactionPreviewWrapper()
-        .environment(\.locale, .init(identifier: "en_US_POSIX"))
+#Preview("Empty \(Previews.localeEN_US_POSIX)") {
+    NavigationStack {
+        TransactionPreviewWrapper()
+    }
+        .environment(\.locale, .init(identifier: Previews.localeEN_US_POSIX))
 }
 
-#Preview("Navigation es_CR") {
+#Preview("Navigation \(Previews.localeES_CR)") {
     NavigationStack {
         TransactionPreviewWrapper(.normal)
-            .environment(\.locale, .init(identifier: "es_CR"))
+            .environment(\.locale, .init(identifier: Previews.localeES_CR))
     }
 }

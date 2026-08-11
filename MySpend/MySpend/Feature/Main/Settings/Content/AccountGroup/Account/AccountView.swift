@@ -135,7 +135,7 @@ struct AccountView: View {
                                                                 sortType: viewModel.sortModelsBy)
             
             if modelsFiltered.isEmpty {
-                NoContentToAddView()
+                TransactionsEmptyView()
             } else {
                 ListContainer {
                     SectionContainer("Available accounts", isInsideList: true) {

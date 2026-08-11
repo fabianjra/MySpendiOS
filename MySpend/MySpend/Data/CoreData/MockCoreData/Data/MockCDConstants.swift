@@ -16,4 +16,5 @@ struct Previews {
     static let localeES_CR = "es_CR"
     static let localeES_ES = "es_ES"
     static let localeEN_US = "en_US"
+    static let localeEN_US_POSIX = "en_US_POSIX"
 }
