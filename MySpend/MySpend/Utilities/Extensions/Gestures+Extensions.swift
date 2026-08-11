@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension UIApplication: UIGestureRecognizerDelegate {
+extension UIApplication {
     
     /**
      Tap anywhere to hide the keyboard:
@@ -36,31 +36,38 @@ extension UIApplication: UIGestureRecognizerDelegate {
      
      - Date: Jul 2025
      */
+    private static let keyboardDismissGestureDelegate = KeyboardDismissGestureDelegate()
+    
     func addTapGestureRecognizer() {
-        guard let window = UtilsUI.getFirstWindow else { return }
+        guard let window = UtilsUI.getFirstWindow else {
+            return
+        }
         
-        let tap = UITapGestureRecognizer(target: window,
-                                         action: #selector(UIView.endEditing))
+        let tap = UITapGestureRecognizer(target: window, action: #selector(UIView.endEditing))
+        
         tap.requiresExclusiveTouchType = false
-        tap.cancelsTouchesInView       = false
-        tap.delegate                   = self // delegate
+        tap.cancelsTouchesInView = false
+        tap.delegate = Self.keyboardDismissGestureDelegate
+        
         window.addGestureRecognizer(tap)
     }
+}
+
+final class KeyboardDismissGestureDelegate: NSObject, UIGestureRecognizerDelegate {
     
-    // Sólo dimite el teclado cuando se toca "fuera" de un control interactivo
-    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+    // Sólo oculta el teclado cuando se toca "fuera" de un control interactivo
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         
         switch touch.view {
             
-        // Lista de controles que no deben cerrar el teclado al presionarse:
         case is UISegmentedControl,
             is UISwitch,
-            //is UIButton, // Si debe cerrarse porque al presionar el Modificar, agregar, etc. Se va a mostra abajo un mensaje de error en caso de que exista
+            //is UIButton, // Si debe ocultarse porque al presionar el Modificar, agregar, etc. Se va a mostra abajo un mensaje de error en caso de que exista
             is UIControl:
-            return false // ❌ no cerrar teclado
+            return false // NO ocultar teclado.
             
         default:
-            return true // ✅ dimitir teclado
+            return true // SI ocultar teclado
         }
     }
 }

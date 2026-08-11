@@ -65,7 +65,7 @@ struct TransactionView: View {
             Task {
                 await viewModel.activateObservers()
             }
-        }        
+        }
         
         // MARK: LOAD FILTER BY OPTIONS
         .onChange(of: viewModel.transactionsFiltered) {

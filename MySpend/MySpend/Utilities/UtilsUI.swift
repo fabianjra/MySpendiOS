@@ -57,15 +57,21 @@ struct UtilsUI {
         
         //Not deprecated code fot the windowScene:
         //'windows' was deprecated in iOS 15.0: Use UIWindowScene.windows on a relevant window scene instead
-        guard let firstScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
-            return nil
-        }
+//        guard let firstScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
+//            return nil
+//        }
+//        
+//        guard let firstWindow = firstScene.windows.first else {
+//            return nil
+//        }
+//        
+//        return firstWindow
         
-        guard let firstWindow = firstScene.windows.first else {
-            return nil
-        }
-        
-        return firstWindow
+        UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .first { $0.activationState == .foregroundActive }?
+            .windows
+            .first { $0.isKeyWindow }
     }
     
     /**
