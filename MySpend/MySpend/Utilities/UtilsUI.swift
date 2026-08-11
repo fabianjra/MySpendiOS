@@ -141,7 +141,7 @@ struct UtilsUI {
      
      - Date: May 2023
      */
-    public static var getEdgeInsets: UIEdgeInsets {
+    private static var getEdgeInsets: UIEdgeInsets {
         return (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first(where: {$0.isKeyWindow})?.safeAreaInsets ?? .zero
     }
     
@@ -155,9 +155,5 @@ struct UtilsUI {
         }
         
         return true
-    }
-    
-    public static func actionDelayed(after delay: TimeInterval = 0.5, _ action: @escaping () -> Void) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: action)
     }
 }

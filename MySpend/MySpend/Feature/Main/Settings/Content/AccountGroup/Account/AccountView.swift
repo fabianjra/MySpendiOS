@@ -51,7 +51,6 @@ struct AccountView: View {
         }
         
         // Siempre con bordes pero hace mas lento la activacion del sheet:
-        //.sheet(isPresented: $showNewItemModal, onDismiss:{ UtilsUI.actionDelayed{ isSheetOpen = false }}) {
         .sheet(isPresented: $showNewItemModal) {
             AddModifyAccountView(accountType: $modelType)
                 .presentationDetents([.large])
