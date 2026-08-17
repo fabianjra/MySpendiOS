@@ -81,25 +81,23 @@ struct FilterTransactionsButtonView: ToolbarContent {
             return .filterAccountFavorites
         }
         
-        switch filters.selectedAccountsFilter.count {
-            
-        case .zero:
+        let selectedAccounts = filters.selectedAccountsFilter
+        
+        if selectedAccounts.isEmpty {
             return .filterAccountNone
-            
-        case 1:
-            guard let accountID = filters.selectedAccountsFilter.first,
-                  let account = allAccounts.first(where: { $0.id == accountID }) else {
-                return ""
-            }
-            
-            return LocalizedStringResource(stringLiteral: account.name)
-            
-        case allAccounts.count:
-            return .filterAccountAll
-            
-        default:
-            return .filterAccountSomeAccounts
         }
+        
+        if selectedAccounts.count == allAccounts.count {
+            return .filterAccountAll
+        }
+        
+        if selectedAccounts.count == 1,
+           let accountID = selectedAccounts.first,
+           let account = allAccounts.first(where: { $0.id == accountID }) {
+            return LocalizedStringResource(stringLiteral: account.name)
+        }
+        
+        return .filterAccountSomeAccounts
     }
 }
 

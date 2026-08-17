@@ -161,25 +161,41 @@ struct TransactionView: View {
         VStack {
             if viewModel.allAccounts.count > 1 {
                 
+                /// ¿Filtro activo?
+                ///     ↓
+                /// ¿Ninguna cuenta? → "None"
+                ///     ↓
+                /// ¿Todas? → "All"
+                ///     ↓
+                /// Entonces → nombres de las seleccionadas
                 let text: LocalizedStringResource = {
-                    
-                    // Si hay un subconjunto de cuentas, se enlistan los nombres
-                    if !filters.selectedAccountsFilter.isEmpty && filters.isFilterActive && filters.selectedAccountsFilter.count != viewModel.allAccounts.count {
-                        let accountsSelected = viewModel.allAccounts.filter { filters.selectedAccountsFilter.contains($0.id) }
-                            .map(\.name)
-                            .joined(separator: ", ")
-                        
-                        return .filterAccountSelected(accountsSelected)
+                    guard filters.isFilterActive else {
+                        return ""
                     }
                     
-                    return ""
+                    let selectedAccounts = filters.selectedAccountsFilter
+                    
+                    if selectedAccounts.isEmpty {
+                        return .filterAccountNoneTitle
+                    }
+                    
+                    if selectedAccounts.count == viewModel.allAccounts.count {
+                        return .filterAccountAll
+                    }
+                    
+                    let accountNames = viewModel.allAccounts
+                        .filter { selectedAccounts.contains($0.id) }
+                        .map(\.name)
+                        .joined(separator: ", ")
+                    
+                    return LocalizedStringResource(stringLiteral: accountNames)
                 }()
                 
                 Text(text)
                     .textStyle(size: .medium, truncateMode: .tail)
             }
             
-            if viewModel.transactionsFiltered.isEmpty {
+            if viewModel.transactionsFiltered.isEmpty && !filters.isFilterActive {
                 TransactionsEmptyView()
                 
             } else {

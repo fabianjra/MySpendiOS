@@ -378,6 +378,24 @@
         }
       }
     },
+    "Filter.Account.None.Title" : {
+      "comment" : "Indica que ninguna cuenta esta seleccionada en los filtros",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No account selected"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ninguna cuenta seleccionada"
+          }
+        }
+      }
+    },
     "Filter.Account.Selected %@" : {
       "comment" : "Muestra las cuentas seleccionadas en el filtro",
       "extractionState" : "manual",
