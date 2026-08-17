@@ -18,8 +18,9 @@ struct FilterTransactionsView: View {
         VStack {
             List {
                 if allAccounts.isEmpty {
-                    Text("No accounts yet")
-                        .foregroundStyle(.secondary)
+                    Text(.accountsEmpty)
+                        .textStyle(color: .secondary)
+                    
                 } else {
                     Section {
                         ForEach(allAccounts) { account in
@@ -32,7 +33,6 @@ struct FilterTransactionsView: View {
                                 
                                 Image(systemName: filters.selectedAccountsFilter.contains(account.id) ? ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle)
                                     .resizable()
-                                    .aspectRatio(contentMode: .fit)
                                     .frame(width: FrameSize.height.iconRowList,
                                            height: FrameSize.width.iconRowList)
                                     .foregroundStyle(.primaryTop)
@@ -43,13 +43,14 @@ struct FilterTransactionsView: View {
                             }
                         }
                     } header: {
-                        TextPlain("By accounts")
+                        Text(.filterByAccount)
+                            .textStyle
                     }
                     //.listRowBackground(Color.listRowBackground)
                     
                     Section {
                             HStack {
-                                Label("Only favorites", systemImage: ConstantSystemImage.favoriteFill)
+                                Label(.filterByFavorite, systemImage: ConstantSystemImage.favoriteFill)
                                     .foregroundStyle(.textPrimaryForeground)
                                 
                                 Spacer()
@@ -66,7 +67,8 @@ struct FilterTransactionsView: View {
                                 filters.showOnlyFavorites.toggle()
                             }
                     } header: {
-                        TextPlain("Include")
+                        Text(.filterInclude)
+                            .textStyle
                     }
                 }
             }
@@ -74,22 +76,22 @@ struct FilterTransactionsView: View {
             Button {
                 filters.restoreFilter(allAccountsAvailable: allAccounts)
             } label: {
-                Label.restoreFilters
+                Label(.filterRestore, systemImage: ConstantSystemImage.arrowCounterClockwise)
                     .foregroundStyle(.textPrimaryForeground)
             }
         }
-        .font(.montserrat())
         //.foregroundColor(Color.listRowForeground)
         .scrollContentBackground(.hidden)
 //        .background(Color.backgroundContentGradient.opacity(0.2))
         
         // MARK: NAVIGATION
-        .navigationTitle("Filters")
+        //.navigationTitle("Filters")
         .navigationBarTitleDisplayMode(.inline)
         
         .toolbar {
-            ToolbarItem(placement: .title) {
-                TextPlain("Filters")
+            ToolbarItem(placement: .principal) {
+                Text(.filters)
+                    .textStyle
             }
             
             ToolbarItem(placement: .destructiveAction) {
@@ -119,10 +121,23 @@ private struct previewWrapper: View {
     }
 }
 
-#Preview("Normal \(Previews.localeES_CR)") {
+#Preview(Previews.localeES_CR) {
     NavigationStack {
         previewWrapper(.normal)
             .environment(\.locale, .init(identifier: Previews.localeES_CR))
     }
 }
 
+#Preview(Previews.localeEN) {
+    NavigationStack {
+        previewWrapper(.normal)
+            .environment(\.locale, .init(identifier: Previews.localeEN))
+    }
+}
+
+#Preview("Empty \(Previews.localeES)") {
+    NavigationStack {
+        previewWrapper()
+            .environment(\.locale, .init(identifier: Previews.localeES))
+    }
+}
