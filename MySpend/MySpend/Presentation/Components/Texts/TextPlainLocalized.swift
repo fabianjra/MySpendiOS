@@ -144,7 +144,7 @@ extension TextPlainLocalized where E == Never {
 
 #Preview("ESPA") {
     VStack {
-        TextPlainLocalized(Localizable.Button.continu)
+        TextPlainLocalized(textLocalized: "BLANK")
             .padding()
     }
     .background(Color.backgroundBottom)

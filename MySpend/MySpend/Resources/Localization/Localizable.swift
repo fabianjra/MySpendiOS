@@ -13,7 +13,6 @@ struct LocalizableTable {
     
     // MARK: - Generic
     
-    static let button = "Button"
     static let currency = "Currency"
     
     // MARK: - Shared
@@ -45,15 +44,6 @@ struct Localizable {
 
     // MARK: - Generic
 
-    enum Button: String, LocalizableProtocol {
-        case continu = "continue"
-        case skip
-        case history
-        case history_subtitle
-        
-        var table: String { LocalizableTable.button }
-    }
-    
     enum Currency: String, LocalizableProtocol {
         case incomes
         case expenses

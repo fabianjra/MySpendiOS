@@ -127,9 +127,28 @@ struct TransactionView: View {
                                        selectedDate: $viewModel.selectedDate,
                                        isMutipleAccounts: viewModel.allAccounts.count > 1 ? true : false)
             } label: {
-                TextButtonHorizontalStyled(Localizable.Button.history.key,
-                                           iconLeading: Image.stackFill,
-                                           iconTrailing: Image.arrowRight)
+                HStack {
+                    Image.stackFill
+                        .foregroundColor(Color.textPrimaryForeground)
+                    
+                    VStack(alignment: .leading) {
+                        Text(.buttonHistory)
+                            .textStyle
+                        
+                        Text(.buttonHistorySubtitle)
+                            .textStyle(size: .small)
+                    }
+                    .padding(.leading)
+                    
+                    Spacer()
+                    
+                    Image.arrowRight
+                        .foregroundColor(Color.textPrimaryForeground)
+                }
+                .padding(.horizontal)
+                .padding(.vertical)
+                //.glassEffect(.regular.tint(Color.secondaryTop).interactive())
+                .glassEffect(.regular.interactive())
             }
             
             DateIntervalNavigatorView(dateTimeInterval: $viewModel.dateTimeInterval,
