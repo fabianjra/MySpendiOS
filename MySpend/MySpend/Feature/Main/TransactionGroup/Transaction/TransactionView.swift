@@ -125,7 +125,7 @@ struct TransactionView: View {
                 TransactionHistoryView(transactionsLoaded: $viewModel.transactionsFiltered,
                                        dateTimeInterval: $viewModel.dateTimeInterval,
                                        selectedDate: $viewModel.selectedDate,
-                                       isMutipleAccounts: viewModel.allAccounts.count > 1 ? true : false)
+                                       allAccounts: $viewModel.allAccounts)
             } label: {
                 HStack {
                     Image.stackFill

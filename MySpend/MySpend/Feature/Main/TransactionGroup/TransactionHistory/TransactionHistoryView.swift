@@ -14,8 +14,8 @@ struct TransactionHistoryView: View {
     @Binding var transactionsLoaded: [TransactionModel]
     @Binding var dateTimeInterval: DateTimeInterval
     @Binding var selectedDate: Date
-    var isMutipleAccounts: Bool
-    
+    @Binding var allAccounts: [AccountModel]
+
     
     // MARK: ALERTS (Solo manejadas dentro de la vista, no hacen nada en ViewModel)
     @State private var showAlertDelete = false
@@ -285,7 +285,7 @@ struct TransactionHistoryView: View {
                                 }
                                 
                                 HStack {
-                                    if isMutipleAccounts {
+                                    if allAccounts.count > 1 {
                                         Text("\(item.account.name):")
                                             .textStyle(size: .small)
                                     }
@@ -476,18 +476,16 @@ private struct TransactionPreviewWrapper: View {
     @State private var transactionsLoaded: [TransactionModel] = []
     @State private var dateTimeInterval: DateTimeInterval = .month
     @State private var selectedDate: Date = .now
-    @State private var isMultipleAccounts: Bool = false
+    @State private var allAccounts: [AccountModel] = []
     
     var body: some View {
         TransactionHistoryView(transactionsLoaded: $transactionsLoaded,
                                dateTimeInterval: $dateTimeInterval,
                                selectedDate: $selectedDate,
-                               isMutipleAccounts: isMultipleAccounts)
+                               allAccounts: $allAccounts)
         .task {
             transactionsLoaded = await MockTransactionModel.fetchAll()
-            
-            let count = await MockAccountModel.fetchAllCount()
-            isMultipleAccounts = count > 1
+            allAccounts = await MockAccountModel.fetchAll()
         }
     }
 }
