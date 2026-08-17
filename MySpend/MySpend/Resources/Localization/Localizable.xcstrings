@@ -1009,6 +1009,24 @@
         }
       }
     },
+    "Transactions.TotalBalance" : {
+      "comment" : "Balance total de las transacciones de ingresos y gastos",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total balance"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Balance total"
+          }
+        }
+      }
+    },
     "TransactionType.Expenses" : {
       "comment" : "Tipo de transaccion para gasto",
       "extractionState" : "manual",

@@ -9,41 +9,53 @@ import SwiftUI
 
 struct TotalBalanceView: View {
     
-    @StateObject var viewModel = TotalBalanceViewModel()
+    @State var viewModel = TotalBalanceViewModel()
     let transactions: [TransactionModel]
     
-    var showDivider: Bool = true
-    var showTotalBalance: Bool = true
-
+    var showTotalBalance: Bool = true // Doesn't show in History.
+    
     var body: some View {
         VStack {
-            if showDivider {
-                DividerView()
-            }
+            Divider()
+                .frame(height: ConstantFrames.dividerHeight)
+                .frame(maxWidth: ConstantFrames.iPadMaxWidth)
+                .overlay(Color.divider)
             
             HStack {
-                TextPlainLocalized(Localizable.Currency.incomes)
+                Text(.transactionTypeIncomes)
+                    .textStyle
+                
                 Spacer()
-                TextPlain(viewModel.totalIncomeFormatted,
-                          color: Color.primaryTop,
-                          family: .semibold)
+                
+                Text(viewModel.totalIncomesFormatted)
+                    .textStyle(color: .primaryTop,
+                               family: .semibold)
             }
             .padding(.bottom, ConstantViews.minimumSpacing)
             
             HStack {
-                TextPlainLocalized(Localizable.Currency.expenses)
+                
+                Text(.transactionTypeExpenses)
+                
                 Spacer()
-                TextPlain(viewModel.totalExpensesFormatted,
-                          color: Color.alert,
-                          family: .semibold)
+                
+                Text(viewModel.totalExpensesFormatted)
+                    .textStyle(color: .alert,
+                               family: .semibold)
             }
             .padding(.bottom, ConstantViews.minimumSpacing)
+            
             
             if showTotalBalance {
                 HStack {
-                    TextPlainLocalized(Localizable.Currency.total_balance, size: .big)
+                    
+                    Text(.transactionsTotalBalance)
+                        .textStyle(size: .big)
+                    
                     Spacer()
-                    TextPlain(viewModel.totalBalanceFormatted, size: .big)
+                    
+                    Text(viewModel.totalBalanceFormatted)
+                        .textStyle(size: .big)
                 }
             }
         }
@@ -56,22 +68,33 @@ struct TotalBalanceView: View {
     }
 }
 
-#Preview(Previews.localeES) {
-    VStack {
-        TotalBalanceView(transactions: [])
-        
-        TotalBalanceView(transactions: [], showTotalBalance: false)
+private struct PreviewWrapper: View {
+    init(_ mockDataType: MockDataType = .empty) {
+        CoreDataUtilities.shared.mockDataType = mockDataType
     }
-    .background(Color.backgroundBottom)
-    .environment(\.locale, .init(identifier: Previews.localeES))
+    
+    @State private var transactionsLoaded: [TransactionModel] = []
+    
+    var body: some View {
+        TotalBalanceView(transactions: transactionsLoaded)
+        .task {
+            transactionsLoaded = await MockTransactionModel.fetchAll()
+        }
+    }
+}
+
+#Preview(Previews.localeES_CR) {
+    ZStack {
+        Color(.backgroundBottom)
+        PreviewWrapper(.normal)
+    }
+    .environment(\.locale, .init(identifier: Previews.localeES_CR))
 }
 
 #Preview(Previews.localeEN) {
-    VStack {
-        TotalBalanceView(transactions: [])
-        
-        TotalBalanceView(transactions: [], showTotalBalance: false)
+    ZStack {
+        Color(.backgroundBottom)
+        PreviewWrapper(.normal)
     }
-    .background(Color.backgroundBottom)
     .environment(\.locale, .init(identifier: Previews.localeEN))
 }

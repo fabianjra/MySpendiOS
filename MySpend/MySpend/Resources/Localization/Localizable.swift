@@ -11,10 +11,6 @@ struct LocalizableTable {
     
     static let main = "Localizable"
     
-    // MARK: - Generic
-    
-    static let currency = "Currency"
-    
     // MARK: - Shared
     
     static let enums = "Enums"
@@ -37,18 +33,5 @@ extension LocalizableProtocol {
     /// Para los enumerables que van en el PickerView: Deben conformarlo para localizar sus textos y deben ir en el catalogo de Enums
     var localized: String {
         String(localized: String.LocalizationValue(self.rawValue), table: self.table)
-    }
-}
-
-struct Localizable {
-
-    // MARK: - Generic
-
-    enum Currency: String, LocalizableProtocol {
-        case incomes
-        case expenses
-        case total_balance
-        
-        var table: String { LocalizableTable.currency }
     }
 }

@@ -7,11 +7,12 @@
 
 import Foundation
 
-class TotalBalanceViewModel: ObservableObject {
+@Observable
+class TotalBalanceViewModel {
     
-    @Published var totalIncomeFormatted: String =  Decimal.zero.convertAmountDecimalToString.addCurrencySymbol
-    @Published var totalExpensesFormatted: String = Decimal.zero.convertAmountDecimalToString.addCurrencySymbol
-    @Published var totalBalanceFormatted: String = Decimal.zero.convertAmountDecimalToString.addCurrencySymbol
+    var totalIncomesFormatted: String =  Decimal.zero.convertAmountDecimalToString.addCurrencySymbol
+    var totalExpensesFormatted: String = Decimal.zero.convertAmountDecimalToString.addCurrencySymbol
+    var totalBalanceFormatted: String = Decimal.zero.convertAmountDecimalToString.addCurrencySymbol
     
     /**
      Esta función filtra las transacciones por CategoryType, sumando los ingresos (income) y los gastos (expense).
@@ -29,7 +30,7 @@ class TotalBalanceViewModel: ObservableObject {
 
         let totalBalance = totalIncome - totalExpenses
 
-        totalIncomeFormatted = totalIncome.convertAmountDecimalToString.addCurrencySymbol
+        totalIncomesFormatted = totalIncome.convertAmountDecimalToString.addCurrencySymbol
         totalExpensesFormatted = totalExpenses.convertAmountDecimalToString.addCurrencySymbol
         totalBalanceFormatted = totalBalance.convertAmountDecimalToString.addCurrencySymbol
     }

@@ -111,36 +111,36 @@ struct HeaderNavigator: View {
                         subTitleWeight: .light,
                         subTitleSize: .body)
         
-        DividerView()
+        Divider()
         
         HeaderNavigator(title: "Title and close",
                         subTitle: "Press right button to close",
                         showTrailingAction: true)
         
-        DividerView()
+        Divider()
         
         HeaderNavigator(title: "Only close",
                         subTitle: "Press right button to close",
                         showLeadingAction: false,
                         showTrailingAction: true)
         
-        DividerView()
+        Divider()
         
         HeaderNavigator(title: "Truncated text because its too large to show entirely",
                         subTitle: "truncated subtitle because its too large to show entirely",
                         showTrailingAction: true)
         
-        DividerView()
+        Divider()
         
         HeaderNavigator(title: "Only title",
                         subTitle: "Only Subtitle",
                         onlyTitle: true)
         
-        DividerView()
+        Divider()
         
         HeaderNavigator()
         
-        DividerView()
+        Divider()
     }
     .background(Color.backgroundBottom)
 }
