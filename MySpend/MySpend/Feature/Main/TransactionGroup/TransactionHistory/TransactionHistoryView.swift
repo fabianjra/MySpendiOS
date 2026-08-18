@@ -9,12 +9,13 @@ import SwiftUI
 
 struct TransactionHistoryView: View {
     
-    @StateObject var viewModel = TransactionHistoryViewModel()
+    @StateObject private var viewModel = TransactionHistoryViewModel()
     
     @Binding var transactionsLoaded: [TransactionModel]
     @Binding var dateTimeInterval: DateTimeInterval
     @Binding var selectedDate: Date
-    @Binding var allAccounts: [AccountModel]
+    
+    private let filters = FilterCenter.shared
 
     
     // MARK: ALERTS (Solo manejadas dentro de la vista, no hacen nada en ViewModel)
@@ -44,7 +45,7 @@ struct TransactionHistoryView: View {
         .navigationTitle(.titleHistoryView)
         .navigationBarTitleDisplayMode(.inline) //TODO: CAMBIAR: El navegador de fechas va a ir abajo, entonces va a ponerse el titulo en grande al bajar.
         .toolbar {
-            toolbarItems
+            toolbarContent
         }
         .searchable(text: $viewModel.searchText, isPresented: $showSearchView, placement: .toolbar)
         .searchToolbarBehavior(.minimize)
@@ -94,7 +95,7 @@ struct TransactionHistoryView: View {
     // MARK: VIEWS
     
     @ToolbarContentBuilder
-    private var toolbarItems: some ToolbarContent {
+    private var toolbarContent: some ToolbarContent {
         
         ToolbarItem(placement: .navigation) {
             
@@ -161,13 +162,13 @@ struct TransactionHistoryView: View {
             ToolbarSpacer(.flexible, placement: .bottomBar)
             
         } else {
-            //filterButton
+            FilterTransactionsToolbarBottom(placement: .bottomBar)
+            
             ToolbarSpacer(.flexible, placement: .bottomBar)
             DefaultToolbarItem(kind: .search, placement: .bottomBar)
         }
         
         ToolbarItem(placement: .bottomBar) {
-            
             if viewModel.isEditing {
                 Button(.selectorDelete, systemImage: ConstantSystemImage.trash) {
                     showAlertDelete = true
@@ -285,7 +286,7 @@ struct TransactionHistoryView: View {
                                 }
                                 
                                 HStack {
-                                    if allAccounts.count > 1 {
+                                    if filters.allAccounts.count > 1 {
                                         Text("\(item.account.name):")
                                             .textStyle(size: .small)
                                     }
@@ -476,16 +477,13 @@ private struct TransactionPreviewWrapper: View {
     @State private var transactionsLoaded: [TransactionModel] = []
     @State private var dateTimeInterval: DateTimeInterval = .month
     @State private var selectedDate: Date = .now
-    @State private var allAccounts: [AccountModel] = []
     
     var body: some View {
         TransactionHistoryView(transactionsLoaded: $transactionsLoaded,
                                dateTimeInterval: $dateTimeInterval,
-                               selectedDate: $selectedDate,
-                               allAccounts: $allAccounts)
+                               selectedDate: $selectedDate)
         .task {
             transactionsLoaded = await MockTransactionModel.fetchAll()
-            allAccounts = await MockAccountModel.fetchAll()
         }
     }
 }

@@ -23,9 +23,6 @@ class TransactionViewModel: BaseViewModel {
     @Published var selectedDate: Date = .now
     @Published var searchText: String = ""
     
-    // MARK: FILTER
-    @Published var allAccounts: [AccountModel] = []
-    
     /**
      Call this function in `onFirstAppear`.
      Shoud be called once when open application because this view will be active all alonge the app life.
@@ -51,18 +48,21 @@ class TransactionViewModel: BaseViewModel {
             allTransactions = fetched
             transactionsFiltered = fetched
             
-            allAccounts = try await AccountManager(viewContext).fetchAll()
         } catch {
             errorMessage = error.localizedDescription
             Logger.exception(error, type: .CoreData)
         }
     }
     
-    func filterTransactions(byAccounts accountIDs: Set<UUID>, showOnlyFavorites: Bool) {
+    func filterTransactions() {
         let filteredByOptions: [TransactionModel]
         
         if FilterCenter.shared.isFilterActive {
-            filteredByOptions = allTransactions.filter { accountIDs.contains($0.account.id) && (showOnlyFavorites ? $0.favorite : true) }
+            
+            filteredByOptions = allTransactions.filter {
+                FilterCenter.shared.selectedAccountsFilter.contains($0.account.id) && (FilterCenter.shared.showOnlyFavorites ? $0.favorite : true)
+            }
+            
         } else {
             filteredByOptions = allTransactions
         }

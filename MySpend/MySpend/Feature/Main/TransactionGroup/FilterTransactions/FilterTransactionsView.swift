@@ -11,19 +11,18 @@ struct FilterTransactionsView: View {
     
     @Environment(\.dismiss) private var dismiss
     
-    @Binding var allAccounts: [AccountModel]
     private let filters = FilterCenter.shared
     
     var body: some View {
         VStack {
             List {
-                if allAccounts.isEmpty {
+                if filters.allAccounts.isEmpty {
                     Text(.accountsEmpty)
                         .textStyle(color: .secondary)
                     
                 } else {
                     Section {
-                        ForEach(allAccounts) { account in
+                        ForEach(filters.allAccounts) { account in
                             
                             HStack {
                                 Label(account.name, systemImage: account.icon)
@@ -74,7 +73,7 @@ struct FilterTransactionsView: View {
             }
             
             Button {
-                filters.restoreFilter(allAccountsAvailable: allAccounts)
+                filters.restoreFilter()
             } label: {
                 Label(.filterRestore, systemImage: ConstantSystemImage.arrowCounterClockwise)
                     .foregroundStyle(.textPrimaryForeground)
@@ -111,13 +110,8 @@ private struct previewWrapper: View {
         CoreDataUtilities.shared.mockDataType = mockDataType
     }
     
-    @State private var accountsLoaded: [AccountModel] = []
-    
     var body: some View {
-        FilterTransactionsView(allAccounts: $accountsLoaded)
-            .task {
-                accountsLoaded = await MockAccountModel.fetchAll()
-            }
+        FilterTransactionsView()
     }
 }
 

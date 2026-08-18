@@ -99,26 +99,6 @@
         }
       }
     },
-    "Add transaction" : {
-
-    },
-    "add_transaction" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Add transaction"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Agregar transacción"
-          }
-        }
-      }
-    },
     "Alert.Option.Cancel" : {
       "comment" : "Descripcion de cancelar en una alerta",
       "extractionState" : "manual",

@@ -69,21 +69,21 @@ struct TransactionView: View {
         
         // MARK: LOAD FILTER BY OPTIONS
         .onChange(of: viewModel.transactionsFiltered) {
-            applyFilters()
+            viewModel.filterTransactions()
         }
         .onChange(of: filters.selectedAccountsFilter) {
-            applyFilters()
+            viewModel.filterTransactions()
         }
         .onChange(of: [filters.isFilterActive, filters.showOnlyFavorites]) {
-            applyFilters()
+            viewModel.filterTransactions()
         }
         
         // MARK: FILTER TRANSACTIONS BY DATE
         .onChange(of: viewModel.selectedDate) {
-            applyFilters()
+            viewModel.filterTransactions()
         }
         .onChange(of: viewModel.dateTimeInterval) {
-            applyFilters()
+            viewModel.filterTransactions()
         }
     }
     
@@ -124,8 +124,7 @@ struct TransactionView: View {
             NavigationLink {
                 TransactionHistoryView(transactionsLoaded: $viewModel.transactionsFiltered,
                                        dateTimeInterval: $viewModel.dateTimeInterval,
-                                       selectedDate: $viewModel.selectedDate,
-                                       allAccounts: $viewModel.allAccounts)
+                                       selectedDate: $viewModel.selectedDate)
             } label: {
                 HStack {
                     Image.stackFill
@@ -159,7 +158,7 @@ struct TransactionView: View {
     
     var bodyContent: some View {
         VStack {
-            if viewModel.allAccounts.count > 1 {
+            if filters.allAccounts.count > 1 {
                 
                 /// ¿Filtro activo?
                 ///     ↓
@@ -179,11 +178,11 @@ struct TransactionView: View {
                         return .filterAccountNoneTitle
                     }
                     
-                    if selectedAccounts.count == viewModel.allAccounts.count {
+                    if selectedAccounts.count == filters.allAccounts.count {
                         return .filterAccountAll
                     }
                     
-                    let accountNames = viewModel.allAccounts
+                    let accountNames = filters.allAccounts
                         .filter { selectedAccounts.contains($0.id) }
                         .map(\.name)
                         .joined(separator: ", ")
@@ -268,25 +267,19 @@ struct TransactionView: View {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
         
-        FilterTransactionsButtonView(allAccounts: $viewModel.allAccounts)
+        FilterTransactionsToolbarBottom(placement: .bottomBar)
         
         ToolbarSpacer(.flexible, placement: .bottomBar)
-        
         DefaultToolbarItem(kind: .search, placement: .bottomBar)
         
         //ToolbarSpacer(.fixed, placement: .bottomBar)
         
         ToolbarItem(placement: .bottomBar) {
-            Button("Add transaction", systemImage: "plus") {
+            Button(.transactionAdd, systemImage: ConstantSystemImage.addTransaction) {
                 showNewTransactionView = true
             }
             .tint(Color.primaryTop)
         }
-    }
-    
-    private func applyFilters() {
-        viewModel.filterTransactions(byAccounts: filters.selectedAccountsFilter,
-                                     showOnlyFavorites: filters.showOnlyFavorites)
     }
 }
 

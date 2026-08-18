@@ -7,9 +7,10 @@
 
 import SwiftUI
 
-struct FilterTransactionsButtonView: ToolbarContent {
+struct FilterTransactionsToolbarBottom: ToolbarContent {
     
-    @Binding var allAccounts: [AccountModel]
+    let placement: ToolbarItemPlacement
+    
     @State private var showFiltersView: Bool = false
     
     private let filters = FilterCenter.shared
@@ -17,7 +18,7 @@ struct FilterTransactionsButtonView: ToolbarContent {
     //@ToolbarContentBuilder
     var body: some ToolbarContent {
         
-        ToolbarItem(placement: .bottomBar) {
+        ToolbarItem(placement: placement) {
             HStack {
                 Button {
                     //withAnimation {
@@ -60,7 +61,7 @@ struct FilterTransactionsButtonView: ToolbarContent {
             }
             .popover(isPresented: $showFiltersView) {
                 NavigationStack {
-                    FilterTransactionsView(allAccounts: $allAccounts)
+                    FilterTransactionsView()
                         .presentationDetents([.medium, .large])
                 }
             }
@@ -87,13 +88,13 @@ struct FilterTransactionsButtonView: ToolbarContent {
             return .filterAccountNone
         }
         
-        if selectedAccounts.count == allAccounts.count {
+        if selectedAccounts.count == filters.allAccounts.count {
             return .filterAccountAll
         }
         
         if selectedAccounts.count == 1,
            let accountID = selectedAccounts.first,
-           let account = allAccounts.first(where: { $0.id == accountID }) {
+           let account = filters.allAccounts.first(where: { $0.id == accountID }) {
             return LocalizedStringResource(stringLiteral: account.name)
         }
         
@@ -108,21 +109,16 @@ private struct previewWrapper: View {
         FilterCenter.shared.isFilterActive = isFilterActive
     }
     
-    @StateObject private var viewModel = TransactionViewModel()
-    
     var body: some View {
         VStack(spacing: 20) {
             Text("Accounts selected:").bold()
             
-            ForEach(viewModel.allAccounts.filter { FilterCenter.shared.selectedAccountsFilter.contains($0.id)}) { item in
+            ForEach(FilterCenter.shared.allAccounts.filter { FilterCenter.shared.selectedAccountsFilter.contains($0.id)}) { item in
                 Text(item.name)
             }
         }
         .toolbar {
-            FilterTransactionsButtonView(allAccounts: $viewModel.allAccounts)
-        }
-        .task {
-            await viewModel.activateObservers()
+            FilterTransactionsToolbarBottom(placement: .bottomBar)
         }
     }
 }
