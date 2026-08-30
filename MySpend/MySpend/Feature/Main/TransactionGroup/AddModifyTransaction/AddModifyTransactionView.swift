@@ -71,7 +71,6 @@ struct AddModifyTransactionView: View {
                                                     colorDisabled: false,
                                                     errorMessage: $viewModel.errorMessage)
                         .onTapGesture {
-                            //focusedField = .none
                             showCategoryList = true
                         }
                         
@@ -83,7 +82,6 @@ struct AddModifyTransactionView: View {
                                                         colorDisabled: false,
                                                         errorMessage: $viewModel.errorMessage)
                             .onTapGesture {
-                                //focusedField = .none
                                 showAccountList = true
                             }
                         }
@@ -96,15 +94,16 @@ struct AddModifyTransactionView: View {
                         
                         
                         Toggle(isOn: $viewModel.favorite) {
-                            TextPlain("Mark as favorite:")
+                            Text(.favoriteMarkFavorite)
+                                .textStyle
                         }
                         .tint(Color.primaryBottom)
                         .padding(.horizontal)
                     }
                     
                     
-                    TextError(viewModel.errorMessage)
-                    //.padding(.vertical)
+                    Text(viewModel.errorMessage)
+                        .textErrorStyle
                 }
                 .disabled(viewModel.disabled)
                 
@@ -155,43 +154,21 @@ struct AddModifyTransactionView: View {
                 SelectAccountModalView(selectedModel: $viewModel.model.account)
             }
         }
+        
+        // Para agregar objetos flotantes al pie de la pantalla.
         .safeAreaInset(edge: .bottom) {
-            VStack {
-                Button(action: {
-                    process(viewModel.isNewModel ? .add : .modify)
-                }, label: {
-                    TextPlain(viewModel.isNewModel ? "Add" : "Modify")
-                        .padding(.vertical, ConstantViews.paddingButtonTransaction)
-                        .frame(maxWidth: ConstantFrames.iPadMaxWidth)
-                })
-                .buttonStyle(.glass)
-                .padding(.bottom, viewModel.isNewModel ? nil : .zero)
-                
-                
-                if viewModel.isNewModel == false {
-                    Button("Delete") {
-                        viewModel.showAlert = true
-                    }
-                    .buttonStyle(ButtonLinkStyle(color: Color.alert, fontfamily: .semibold))
-                    .alert("Delete transaction", isPresented: $viewModel.showAlert) {
-                        Button("Delete", role: .destructive) { process(.delete) }
-                        Button("Cancel", role: .cancel) { }
-                    } message: {
-                        Text("Want to delete this transaction? \n This action cannot be undone.")
-                    }
-                }
-            }
-            .padding(.horizontal)
-            
-        } // Para agregar objetos flotantes al pie de la pantalla.
+            safeAreaBottomView
+        }
         
         // MARK: NAVIGATION
-        .navigationTitle(viewModel.isNewModel ? "New transaction" : "Modify transaction") // Necesario para ver la descripcion al presionar el boton atras al navegar.
+        .navigationTitle(viewModel.isNewModel ? .transactionNew : .transactionModify) // Necesario para ver la descripcion al presionar el boton atras al navegar.
         .navigationBarTitleDisplayMode(.inline)
+        
         .toolbar {
             
             ToolbarItem(placement: .title) {
-                TextPlain(viewModel.isNewModel ? "New transaction" : "Modify transaction")
+                Text(viewModel.isNewModel ? .transactionNew : .transactionModify)
+                    .textStyle
             }
             
             ToolbarItem(placement: .destructiveAction) {
@@ -200,6 +177,39 @@ struct AddModifyTransactionView: View {
                 }
             }
         }
+    }
+    
+    private var safeAreaBottomView: some View {
+        VStack {
+            Button {
+                process(viewModel.isNewModel ? .add : .modify)
+            } label: {
+                Text(.transactionAdd)
+                    .textStyle
+                    .padding(.vertical, ConstantViews.paddingButtonTransaction)
+                    .frame(maxWidth: ConstantFrames.iPadMaxWidth)
+            }
+            .buttonStyle(.glass)
+            .padding(.bottom, viewModel.isNewModel ? nil : .zero)
+            
+            
+            if viewModel.isNewModel == false {
+                Button(.transactionDelete(.zero)) {
+                    viewModel.showAlert = true
+                }
+                .buttonStyle(ButtonLinkStyle(color: Color.alert, fontfamily: .semibold))
+                
+                .alert(.transactionDelete(.zero), isPresented: $viewModel.showAlert) {
+                    
+                    Button(.alertOptionDelete, role: .destructive) { process(.delete) }
+                    Button(.alertOptionCancel, role: .cancel) { }
+                    
+                } message: {
+                    Text(.transactionDeleteMessage(.zero))
+                }
+            }
+        }
+        .padding(.horizontal)
     }
     
     private func process(_ processType: ProcessType) {
