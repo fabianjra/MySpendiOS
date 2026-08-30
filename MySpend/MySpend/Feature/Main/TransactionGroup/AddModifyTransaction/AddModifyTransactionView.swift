@@ -35,8 +35,9 @@ struct AddModifyTransactionView: View {
     
     var body: some View {
         ScrollViewReader { scrollViewProxy in
-            FormContainer {
+            ScrollView(showsIndicators: false) {
                 VStack {
+                    
                     // MARK: SEGMENT
                     
                     VStack {
@@ -109,6 +110,17 @@ struct AddModifyTransactionView: View {
                 
                 Spacer()
             }
+            
+            // MARK: SCROLL OPTIONS
+            
+            .padding(.horizontal)
+            .scrollDisabled(true)
+            .background(Color.backgroundContentGradient)
+            .ignoresSafeArea(.all, edges: .bottom)
+            
+            
+            // MARK: EVENTS
+            
             .onAppear {
                 Task {
                     await viewModel.fetchAccounts()

@@ -13,7 +13,7 @@ extension Color {
     static let primaryGradiant: Array = [Color.primaryTop,
                                          Color.primaryBottom]
     static let secondaryGradiant: Array = [Color.secondaryTop,
-                                         Color.secondaryBottom]
+                                           Color.secondaryBottom]
     static let backgroundContentGradient = RadialGradient(colors: [Color.backgroundTop,
                                                                    Color.backgroundBottom],
                                                           center: .top,
