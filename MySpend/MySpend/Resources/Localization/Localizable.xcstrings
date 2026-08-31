@@ -1269,24 +1269,6 @@
         }
       }
     },
-    "Settings.Profile.Option.ValidateAccount" : {
-      "comment" : "Titulo para la opcion de validar cuenta en ajustes",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Validate account"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Validar cuenta"
-          }
-        }
-      }
-    },
     "Settings.Profile.SectionTitle" : {
       "comment" : "Sección de ajustes para el perfil",
       "extractionState" : "manual",

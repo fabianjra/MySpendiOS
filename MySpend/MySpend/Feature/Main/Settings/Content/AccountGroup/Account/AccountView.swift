@@ -32,19 +32,18 @@ struct AccountView: View {
             
             TextError(viewModel.errorMessage)
         }
+        .navigationTitle("Accounts")
+        
         .task {
             await viewModel.activateObservers()
         }
         .onDisappear {
             viewModel.deactivateObservers()
         }
-        .navigationTitle("Accounts")
         .toolbar {
-            ToolbarItemGroup(placement: .navigationBarTrailing) {
-                Button {
+            ToolbarItemGroup(placement: .primaryAction) {
+                Button(.transactionAdd, systemImage: ConstantSystemImage.addNewItem) {
                     showNewItemModal = true
-                } label: {
-                    Label("Add Item", systemImage: "plus")
                 }
                 .disabled(viewModel.isEditing)
             }
@@ -53,11 +52,9 @@ struct AccountView: View {
         // Siempre con bordes pero hace mas lento la activacion del sheet:
         .sheet(isPresented: $showNewItemModal) {
             AddModifyAccountView(accountType: $modelType)
-                .presentationDetents([.large])
         }
         .sheet(item: $modelToModify) { model in
             AddModifyAccountView(model, accountType: $modelType)
-                .presentationDetents([.large])
                 .onDisappear {
                     modelToModify = nil
                 }

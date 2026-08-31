@@ -118,6 +118,7 @@ struct AddModifyAccountView: View {
                 accountType = viewModel.model.type
             }
         }
+        .presentationDetents([.large])
     }
     
     private func process(_ processType: ProcessType) {

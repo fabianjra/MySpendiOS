@@ -32,19 +32,16 @@ import SwiftUI
 enum ProfileOptions: String, CaseIterable, Identifiable {
     public var id: Self { self }
     case personalInformation
-    case validateAccount
     
     var title: LocalizedStringResource {
         switch self {
         case .personalInformation: return .settingsProfileOptionPersonalInformation
-        case .validateAccount: return .settingsProfileOptionValidateAccount
         }
     }
     
     var icon: String {
         switch self {
         case .personalInformation: return "👤"
-        case .validateAccount: return "✅"
         }
     }
     
@@ -52,7 +49,6 @@ enum ProfileOptions: String, CaseIterable, Identifiable {
     var view: some View {
         switch self {
         case .personalInformation: PersonalInformationView()
-        case .validateAccount: ValidateAccountView()
         }
     }
 }

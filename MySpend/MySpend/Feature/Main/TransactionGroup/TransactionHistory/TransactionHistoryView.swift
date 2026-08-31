@@ -176,7 +176,7 @@ struct TransactionHistoryView: View {
                 .disabled(viewModel.selectedTransactions.isEmpty)
                 
             } else {
-                Button(.transactionAdd, systemImage: ConstantSystemImage.addTransaction) {
+                Button(.transactionAdd, systemImage: ConstantSystemImage.addNewItem) {
                     showNewItemModal = true
                 }
                 .tint(.primaryTop)

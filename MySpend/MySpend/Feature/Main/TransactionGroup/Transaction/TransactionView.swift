@@ -275,7 +275,7 @@ struct TransactionView: View {
         //ToolbarSpacer(.fixed, placement: .bottomBar)
         
         ToolbarItem(placement: .bottomBar) {
-            Button(.transactionAdd, systemImage: ConstantSystemImage.addTransaction) {
+            Button(.transactionAdd, systemImage: ConstantSystemImage.addNewItem) {
                 showNewTransactionView = true
             }
             .tint(Color.primaryTop)
