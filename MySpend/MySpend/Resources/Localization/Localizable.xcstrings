@@ -562,9 +562,6 @@
         }
       }
     },
-    "First name" : {
-
-    },
     "Go back" : {
 
     },
@@ -705,8 +702,44 @@
         }
       }
     },
+    "PersonalInformation.Input.Email" : {
+      "comment" : "Indica el email del profile",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Email"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Email"
+          }
+        }
+      }
+    },
+    "PersonalInformation.Input.Email.Placeholder" : {
+      "comment" : "Placeholder para escribir el email",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter your email"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ingresa tu email"
+          }
+        }
+      }
+    },
     "PersonalInformation.Input.Name" : {
-      "comment" : "Indica el nombre de la persona",
+      "comment" : "Indica el nombre del profile",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -737,6 +770,42 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Ingresa tu nombre"
+          }
+        }
+      }
+    },
+    "PersonalInformation.Input.Phone" : {
+      "comment" : "Indica el número de teléfono del profile",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Phone"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teléfono"
+          }
+        }
+      }
+    },
+    "PersonalInformation.Input.Phone.Placeholder" : {
+      "comment" : "Placeholder para escribir el número de teléfono",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter your phone"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ingresa tu # de teléfono"
           }
         }
       }

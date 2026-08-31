@@ -31,6 +31,7 @@ struct ConstantViews {
     
     static let formSpacing: CGFloat = 15.0
     static let gridSpacing: CGFloat = 50.0
+    static let formLabeledContentSpacing: CGFloat = 20.0
     
     // MARK: PADDING
     static let paddingButtonAddCategory: CGFloat = 20.0

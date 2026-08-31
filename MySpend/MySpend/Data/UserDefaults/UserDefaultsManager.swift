@@ -106,6 +106,14 @@ struct UserDefaultsManager {
         }
     }
     
+    static var userPhone: String {
+        get { return UserDefaultsDataStore<String>(for: .userPhone).value ?? "" }
+        set {
+            var manager = UserDefaultsDataStore<String>(for: .userPhone)
+            manager.value = newValue
+        }
+    }
+    
     static var defaultAccountID: String {
         get { return UserDefaultsDataStore<String>(for: .defaultAccountID).value ?? "" }
         set {
@@ -147,6 +155,7 @@ enum UserDefaultsKeys: String, Codable, CaseIterable {
     case isOnBoarding = "is_on_boarding_key"
     case username = "user_name_key"
     case userEmail = "user_email_key"
+    case userPhone = "user_phone_key"
     case defaultAccountID = "default_account_id_key"
     
     // MARK: FILTER

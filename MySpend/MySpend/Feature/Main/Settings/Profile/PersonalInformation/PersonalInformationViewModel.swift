@@ -11,6 +11,8 @@ import Foundation
 final class PersonalInformationViewModel {
     
     var username = ""
+    var email = ""
+    var phoneNumber = ""
     
     var showToast: Bool = false
     var responseToast = ResponseToast() {
@@ -26,10 +28,15 @@ final class PersonalInformationViewModel {
         }
         
         UserDefaultsManager.userName = username
+        UserDefaultsManager.userEmail = email
+        UserDefaultsManager.userPhone = phoneNumber
+        
         responseToast = ResponseToast(.personalInformationMessageUpdated, .ok)
     }
     
-    func onAppear() {
+    func loadData() {
         username = UserDefaultsManager.userName
+        email = UserDefaultsManager.userEmail
+        phoneNumber = UserDefaultsManager.userPhone
     }
 }

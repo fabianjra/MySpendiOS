@@ -10,32 +10,40 @@ import SwiftUI
 struct PersonalInformationView: View {
 
     @State private var viewModel = PersonalInformationViewModel()
-    @FocusState private var isFocused: Bool
-
+    
     var body: some View {
         Form {
             Section {
                 LabeledContent(.personalInformationInputName) {
                     TextField(.personalInformationInputNamePlaceholder, text: $viewModel.username)
+                        .formInputStyle($viewModel.username)
                         .textContentType(.name)
-                        .keyboardType(.alphabet)
-                        .scrollDismissesKeyboard(.interactively)
-                        .focused($isFocused)
-                        .onSubmit {
-                            isFocused = false
-                        }
                 }
+                .formLabeledInputStyle
+                
+                LabeledContent(.personalInformationInputEmail) {
+                    TextField(.personalInformationInputEmailPlaceholder, text: $viewModel.email)
+                        .formInputStyle($viewModel.email)
+                        .textContentType(.emailAddress)
+                }
+                .formLabeledInputStyle
+                
+                LabeledContent(.personalInformationInputPhone) {
+                    TextField(.personalInformationInputPhonePlaceholder, text: $viewModel.phoneNumber)
+                        .formInputStyle($viewModel.phoneNumber)
+                        .textContentType(.telephoneNumber)
+                }
+                .formLabeledInputStyle
             }
         }
         .scrollContentBackground(.hidden)
-        //        .scrollDisabled(true)
         .navigationBarTitleDisplayMode(.large)
         .navigationTitle(.personalInformationTitle)
         .navigationSubtitle(.personalInformationSubtitle)
         .background(Color.backgroundContentGradient)
         
         .onAppear {
-            viewModel.onAppear()
+            viewModel.loadData()
         }
         
         .safeAreaInset(edge: .bottom) {
