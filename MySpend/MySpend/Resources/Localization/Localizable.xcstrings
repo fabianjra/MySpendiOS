@@ -705,6 +705,42 @@
         }
       }
     },
+    "PersonalInformation.Input.Name" : {
+      "comment" : "Indica el nombre de la persona",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nombre"
+          }
+        }
+      }
+    },
+    "PersonalInformation.Input.Name.Placeholder" : {
+      "comment" : "Placeholder para escribir el nombre",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter your name"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ingresa tu nombre"
+          }
+        }
+      }
+    },
     "PersonalInformation.Message.Updated" : {
       "comment" : "Mensaje para indicar que la información se actualizó ",
       "extractionState" : "manual",

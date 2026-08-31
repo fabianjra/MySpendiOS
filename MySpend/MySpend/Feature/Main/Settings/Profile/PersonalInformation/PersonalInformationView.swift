@@ -14,16 +14,17 @@ struct PersonalInformationView: View {
 
     var body: some View {
         Form {
-            
             Section {
-                TextField("First name", text: $viewModel.username)
-                    .textContentType(.name)
-                    .keyboardType(.alphabet)
-                    .scrollDismissesKeyboard(.interactively)
-                    .focused($isFocused)
-                    .onSubmit {
-                        isFocused = false
-                    }
+                LabeledContent(.personalInformationInputName) {
+                    TextField(.personalInformationInputNamePlaceholder, text: $viewModel.username)
+                        .textContentType(.name)
+                        .keyboardType(.alphabet)
+                        .scrollDismissesKeyboard(.interactively)
+                        .focused($isFocused)
+                        .onSubmit {
+                            isFocused = false
+                        }
+                }
             }
         }
         .scrollContentBackground(.hidden)
