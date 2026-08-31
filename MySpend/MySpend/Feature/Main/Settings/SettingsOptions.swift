@@ -36,8 +36,8 @@ enum ProfileOptions: String, CaseIterable, Identifiable {
     
     var title: LocalizedStringResource {
         switch self {
-        case .personalInformation: return .settingsProfileOptionPersonalInformationTitle
-        case .validateAccount: return .settingsProfileOptionValidateAccountTitle
+        case .personalInformation: return .settingsProfileOptionPersonalInformation
+        case .validateAccount: return .settingsProfileOptionValidateAccount
         }
     }
     
@@ -62,17 +62,26 @@ enum ProfileOptions: String, CaseIterable, Identifiable {
 
 enum ContentOptions: String, CaseIterable, Identifiable {
     public var id: Self { self }
-    case accounts = "Accounts"
-    case categories = "Categories"
-    case currencySymbol = "Currency symbol"
-    case dateTimeInterval = "Time interval"
+    case accounts
+    case categories
+    case currencySymbol
+    case dateTimeInterval
     
-    var icon: Image {
+    var title: LocalizedStringResource {
         switch self {
-        case .accounts: return Image.walletFill
-        case .categories: return Image.listBulletClipboardFill
-        case .currencySymbol: return Image.dollar
-        case .dateTimeInterval: return Image.calendar
+        case .accounts: return .settingsGeneralOptionAccounts
+        case .categories: return .settingsGeneralOptionCategories
+        case .currencySymbol: return .settingsGeneralOptionCurrencySymbol
+        case .dateTimeInterval: return .settingsGeneralOptionDateTimeInterval
+        }
+    }
+    
+    var icon: String {
+        switch self {
+        case .accounts: return "🏦"
+        case .categories: return "📋"
+        case .currencySymbol: return "💰"
+        case .dateTimeInterval: return "📅"
         }
     }
     

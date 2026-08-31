@@ -16,7 +16,7 @@ struct SettingsView: View {
     
     var body: some View {
         List {
-            // MARK: - ACCOUNT
+            // MARK: - PROFILE
             
             Section(.settingsProfileSectionTitle) {
                 ForEach(ProfileOptions.allCases) { option in
@@ -34,10 +34,12 @@ struct SettingsView: View {
             
             Section(.settingsGeneralSectionTitle) {
                 ForEach(ContentOptions.allCases) { option in
-                    HStack {
-                        option.icon
-                        
-                        NavigationLink(option.rawValue, destination: option.view)
+                    NavigationLink(destination: option.view) {
+                        Label {
+                            Text(option.title)
+                        } icon: {
+                            Text(option.icon)
+                        }
                     }
                 }
             }
@@ -118,4 +120,20 @@ struct SettingsView: View {
         }
     }
     .environment(\.locale, .init(identifier: Previews.localeES_ES))
+}
+
+#Preview(Previews.localeEN) {
+    @Previewable @State var showSettings = true
+    
+    VStack {
+        Button(.settingsTitle) {
+            showSettings.toggle()
+        }
+    }
+    .sheet(isPresented: $showSettings) {
+        NavigationStack {
+            SettingsView()
+        }
+    }
+    .environment(\.locale, .init(identifier: Previews.localeEN))
 }
