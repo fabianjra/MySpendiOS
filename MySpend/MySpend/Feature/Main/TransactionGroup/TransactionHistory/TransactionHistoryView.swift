@@ -469,7 +469,7 @@ struct TransactionHistoryView: View {
     }
 }
 
-private struct TransactionPreviewWrapper: View {
+private struct PreviewWrapper: View {
     init(_ mockDataType: MockDataType = .empty) {
         CoreDataUtilities.shared.mockDataType = mockDataType
     }
@@ -490,27 +490,27 @@ private struct TransactionPreviewWrapper: View {
 
 #Preview("Normal \(Previews.localeES_CR)") {
     NavigationStack {
-        TransactionPreviewWrapper(.normal)
+        PreviewWrapper(.normal)
             
     }
     .environment(\.locale, .init(identifier: Previews.localeES_CR))
 }
 
 #Preview("Random Saturated \(Previews.localeEN_US)") {
-    TransactionPreviewWrapper(.saturated)
+    PreviewWrapper(.saturated)
         .environment(\.locale, .init(identifier: Previews.localeEN_US))
 }
 
 #Preview("Empty \(Previews.localeEN_US_POSIX)") {
     NavigationStack {
-        TransactionPreviewWrapper()
+        PreviewWrapper()
     }
         .environment(\.locale, .init(identifier: Previews.localeEN_US_POSIX))
 }
 
 #Preview("Navigation \(Previews.localeES_CR)") {
     NavigationStack {
-        TransactionPreviewWrapper(.normal)
+        PreviewWrapper(.normal)
             .environment(\.locale, .init(identifier: Previews.localeES_CR))
     }
 }

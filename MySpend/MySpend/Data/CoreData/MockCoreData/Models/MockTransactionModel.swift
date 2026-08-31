@@ -15,4 +15,12 @@ struct MockTransactionModel {
             return []
         }
     }
+    
+//    static func fetchSingle() async -> TransactionModel {
+//        do {
+//            return try await TransactionManager(CoreDataUtilities.getViewContext).fetchAll().first ?? TransactionModel()
+//        } catch {
+//            return TransactionModel()
+//        }
+//    }
 }

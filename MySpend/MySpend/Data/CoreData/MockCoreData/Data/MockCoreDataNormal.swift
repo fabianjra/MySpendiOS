@@ -71,7 +71,7 @@ struct MockCoreDataNormal {
         item.isActive = true
         
         item.icon = ""
-        item.name = "Only expenses in green context abc abcabc"
+        item.name = "Only expenses in green context"
         item.notes = ""
         item.type = AccountType.expenses.rawValue
         item.userId = ""
@@ -197,7 +197,7 @@ struct MockCoreDataNormal {
         item.id = UUID()
         item.isActive = true
         
-        item.amount = 122343.15
+        item.amount = 343.15
         item.dateTransaction = .now
         item.notes = ""
         item.category = category
@@ -211,7 +211,7 @@ struct MockCoreDataNormal {
         item.id = UUID()
         item.isActive = true
         
-        item.amount = 122343.15
+        item.amount = 99.25
         item.dateTransaction = Calendar.current.date(byAdding: .day, value: 21, to: .now)!
         item.notes = ""
         item.category = category
@@ -226,7 +226,7 @@ struct MockCoreDataNormal {
         item.id = UUID()
         item.isActive = true
         
-        item.amount = 122343.15
+        item.amount = 143.15
         item.dateTransaction = Calendar.current.date(byAdding: .day, value: 121, to: .now)!
         item.notes = ""
         item.category = category
@@ -240,7 +240,7 @@ struct MockCoreDataNormal {
         item.id = UUID()
         item.isActive = true
         
-        item.amount = 122343.15
+        item.amount = 99
         item.dateTransaction = Calendar.current.date(byAdding: .day, value: 50, to: .now)!
         item.notes = ""
         item.category = category

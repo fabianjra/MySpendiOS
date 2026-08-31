@@ -184,7 +184,7 @@ struct AddModifyTransactionView: View {
             Button {
                 process(viewModel.isNewModel ? .add : .modify)
             } label: {
-                Text(.transactionAdd)
+                Text(viewModel.isNewModel ? .transactionAdd : .transactionModify)
                     .textStyle
                     .padding(.vertical, ConstantViews.paddingButtonTransaction)
                     .frame(maxWidth: ConstantFrames.iPadMaxWidth)
@@ -234,23 +234,51 @@ struct AddModifyTransactionView: View {
     }
 }
 
-#Preview("New") {
-    //@Previewable @State var selectedDate = Date()
-    //@Previewable @State var model = TransactionModel()
+private struct PreviewWrapper: View {
+    init(_ mockDataType: MockDataType = .empty) {
+        CoreDataUtilities.shared.mockDataType = mockDataType
+    }
     
-    //@Previewable @State var selectedDate = Date()
+    @State private var selectedModel: TransactionModel?
+    @State private var models: [TransactionModel] = []
     
-    NavigationStack {
-        AddModifyTransactionView()
+    var body: some View {
+        VStack {
+            Text("Transacciones:")
+            
+            List(models) { model in
+                Button(model.id.uuidString) {
+                    selectedModel = model
+                }
+            }
+            .sheet(item: $selectedModel) { model in
+                NavigationStack {
+                    AddModifyTransactionView(model)
+                }
+            }
+        }
+        .task {
+            models = await MockTransactionModel.fetchAll()
+            
+            if !models.isEmpty && models.first != nil {
+                selectedModel = models.first
+            }
+        }
     }
 }
 
-//TOD: REPARAR
-//#Preview("Modify") {
-//    @Previewable @State var model = MockTransaction.preview.container.viewContext.fe
-//    @Previewable @State var selectedDate = MockTransactionsFB.normal.first!.dateTransaction
-//
-//    AddModifyTransactionView(model: $model,
-//                             selectedDate: $selectedDate,
-//                             viewContext: MockTransaction.preview.container.viewContext)
-//}
+
+#Preview("New \(Previews.localeEN)") {
+    NavigationStack {
+        AddModifyTransactionView()
+    }
+    .environment(\.locale, .init(identifier: Previews.localeEN))
+}
+
+#Preview("Modify \(Previews.localeES_CR)") {
+    NavigationStack {
+        PreviewWrapper(.normal)
+        
+    }
+    .environment(\.locale, .init(identifier: Previews.localeES_CR))
+}
