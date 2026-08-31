@@ -24,7 +24,6 @@ struct CDConstants {
         
         // Account:
         static let byAccountId: String = "account.id == %@"
-        static let byAccountType: String = "account.type == %@"
         
         // Category:
         static let byCategoryId: String = "category.id == %@"

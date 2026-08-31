@@ -74,7 +74,6 @@ struct AccountManager {
             entity.icon = model.icon
             entity.name = model.name
             entity.notes = model.notes
-            entity.type = model.type.rawValue
             entity.userId = model.userId
             
             try viewContext.save()
@@ -98,7 +97,6 @@ struct AccountManager {
             entity.icon = model.icon
             entity.name = model.name
             entity.notes = model.notes
-            entity.type = model.type.rawValue
             entity.userId = model.userId
             
             try viewContext.save()

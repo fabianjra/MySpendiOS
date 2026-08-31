@@ -11,18 +11,14 @@ struct AddModifyAccountView: View {
     
     @Environment(\.dismiss) private var dismiss
     
-    @Binding var accountType: AccountType
-    
     @StateObject private var viewModel: AddModifyAccountViewModel
     @FocusState private var focusedField: AccountModel.Field?
     
     @State private var selectedIcon = ""
     @State private var showIconsModal = false
     
-    init(_ model: AccountModel? = nil, accountType: Binding<AccountType>) {
+    init(_ model: AccountModel? = nil) {
         _viewModel = StateObject(wrappedValue: AddModifyAccountViewModel(model))
-        
-        self._accountType = accountType
     }
     
     var body: some View {
@@ -35,15 +31,6 @@ struct AddModifyAccountView: View {
                             showLeadingAction: false,
                             showTrailingAction: true)
             .padding(.vertical)
-            
-            
-            // MARK: SEGMENT
-            
-            VStack {
-                PickerView(selection: $accountType)
-                    .frame(maxWidth: ConstantFrames.iPadMaxWidth)
-                    .padding(.bottom)
-            }
             
             
             // MARK: TEXTFIELDS
@@ -113,10 +100,6 @@ struct AddModifyAccountView: View {
         }
         .onAppear {
             focusedField = .name
-            
-            if viewModel.isAddModel == false {
-                accountType = viewModel.model.type
-            }
         }
         .presentationDetents([.large])
     }
@@ -127,9 +110,9 @@ struct AddModifyAccountView: View {
             
             switch processType {
             case .add:
-                result = await viewModel.addNew(type: accountType)
+                result = await viewModel.addNew()
             case .modify:
-                result = await viewModel.modify(type: accountType)
+                result = await viewModel.modify()
             case .delete:
                 result = await viewModel.delete()
             }
@@ -145,9 +128,8 @@ struct AddModifyAccountView: View {
 
 
 #Preview("New") {
-    @Previewable @State var type: AccountType = .general
     
     VStack {
-        AddModifyAccountView(accountType: $type)
+        AddModifyAccountView()
     }
 }

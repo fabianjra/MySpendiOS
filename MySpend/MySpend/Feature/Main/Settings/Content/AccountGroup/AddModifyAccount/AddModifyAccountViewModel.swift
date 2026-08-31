@@ -32,20 +32,17 @@ final class AddModifyAccountViewModel: BaseViewModel {
         super.init()
     }
     
-    func addNew(type: AccountType) async -> ResponseModel {
+    func addNew() async -> ResponseModel {
         if model.name.isEmptyOrWhitespace {
             return ResponseModel(.error, Errors.emptySpaces.localizedDescription)
         }
         
-        var modelMutated = model
-        modelMutated.type = type
-        
         do {
-            try await AccountManager(viewContext).create(modelMutated)
-            FilterCenter.shared.selectedAccountsFilter.insert(modelMutated.id)
+            try await AccountManager(viewContext).create(model)
+            FilterCenter.shared.selectedAccountsFilter.insert(model.id)
             
             if isDefaultSelected {
-                UserDefaultsManager.defaultAccountID = modelMutated.id.uuidString
+                UserDefaultsManager.defaultAccountID = model.id.uuidString
             }
             
             return ResponseModel(.successful)
@@ -55,33 +52,18 @@ final class AddModifyAccountViewModel: BaseViewModel {
         }
     }
     
-    func modify(type: AccountType) async -> ResponseModel {
+    func modify() async -> ResponseModel {
         if model.name.isEmptyOrWhitespace {
             return ResponseModel(.error, Errors.emptySpaces.localizedDescription)
         }
         
-        var modelMutated = model
-        
         do {
-            // Si el nuevo tipo de account es difente al actual, debe validar que no tega transacciones asociadas
-            // a una categoria de un tipo incompatible del nuevo tipo de categoria seleccioanda.
-            // Ver mas en la documentacion del metodo "fetchIncompatibleTypeCount"
-            if modelMutated.type != type {
-                let incompatibleTransactionsCount = try await TransactionManager(viewContext).fetchIncompatibleTypeCount(currentAccountID: modelMutated.id.uuidString,
-                                                                                                              newAccountType: type)
-                
-                if incompatibleTransactionsCount > .zero {
-                    return ResponseModel(.error, Errors.cannotUpdateAccountWithTransactions(incompatibleTransactionsCount.description).localizedDescription)
-                }
-            }
-            
-            modelMutated.type = type
-            try await AccountManager(viewContext).update(modelMutated)
+            try await AccountManager(viewContext).update(model)
             
             if isDefaultSelected {
-                UserDefaultsManager.defaultAccountID = modelMutated.id.uuidString
+                UserDefaultsManager.defaultAccountID = model.id.uuidString
             } else {
-                if UserDefaultsManager.defaultAccountID == modelMutated.id.uuidString {
+                if UserDefaultsManager.defaultAccountID == model.id.uuidString {
                     UserDefaultsManager.defaultAccountID = ""
                 }
             }

@@ -74,12 +74,7 @@ class AddModifyTransactionViewModel: BaseViewModel {
         if model.category.name.isEmptyOrWhitespace {
             return ResponseModel(.error, Errors.emptySpaces.localizedDescription)
         }
-        
-        let response = validateAccountCategoryMatch()
-        if response.status.isError {
-            return response
-        }
-        
+
         var modelMutated = model
         modelMutated.amount = amountString.convertAmountToDecimal
         modelMutated.dateTransaction = UtilsDate.normalizeTransactionDate(model.dateTransaction)
@@ -98,12 +93,7 @@ class AddModifyTransactionViewModel: BaseViewModel {
         if model.category.name.isEmptyOrWhitespace {
             return ResponseModel(.error, Errors.emptySpaces.localizedDescription)
         }
-        
-        let response = validateAccountCategoryMatch()
-        if response.status.isError {
-            return response
-        }
-        
+
         var modelMutated = model
         modelMutated.amount = amountString.convertAmountToDecimal
         modelMutated.favorite = favorite
@@ -125,23 +115,5 @@ class AddModifyTransactionViewModel: BaseViewModel {
             Logger.exception(error, type: .CoreData)
             return ResponseModel(.error, error.localizedDescription)
         }
-    }
-    
-    private func validateAccountCategoryMatch() -> ResponseModel {
-        let account = model.account
-        let categoryType = model.category.type
-        
-        // Verifica que se este intentando guardar un tipo de cuenta sin restricciones por tipo de categoria
-        guard let allowed = account.type.allowedCategory else {
-            return ResponseModel(.successful)
-        }
-        
-        // Si el tipo de categoria es el permitido para el tipo de cuenta seleccionado, continua sin error.
-        // Si no son el mismo, es porque no es un tipo de categoria permitido para el tipo de cuenta seleccionado.
-        guard categoryType == allowed else {
-            return ResponseModel(.error, Errors.accountTypeNotMatchCategoryType(account.name, account.type.rawValue).localizedDescription)
-        }
-        
-        return ResponseModel(.successful)
     }
 }

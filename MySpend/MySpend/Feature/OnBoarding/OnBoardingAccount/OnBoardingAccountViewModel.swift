@@ -24,7 +24,7 @@ class OnBoardingAccountViewModel: BaseViewModel {
             mutatedName = CDConstants.mainAccountName
         }
         
-        let account = AccountModel(icon: ConstantSystemImage.bankDollarFill, name: mutatedName, type: .general)
+        let account = AccountModel(icon: ConstantSystemImage.bankDollarFill, name: mutatedName)
         
         do {
             try await AccountManager(viewContext).create(account)

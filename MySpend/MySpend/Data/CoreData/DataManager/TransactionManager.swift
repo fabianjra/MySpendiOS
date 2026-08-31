@@ -254,29 +254,15 @@ struct TransactionManager {
      - Returns: Number of incompatible transactions.
      - Throws: Any error thrown by `viewContext.count(for:)`.
      */
-    func fetchIncompatibleTypeCount(currentAccountID id: String, newAccountType: AccountType) async throws -> Int {
+    func fetchIncompatibleTypeCount(currentAccountID id: String) async throws -> Int {
         try await viewContext.perform {
-            
-            // 1.  General accepts everything -> nothing to validate
-            guard newAccountType != .general else { return .zero }
             
             // 2.  Predicate for the account
             let accountPredicate = NSPredicate(format: predicate.byAccountId, id)
             
-            // 3.  Predicate for the *disallowed* category type
-            let disallowedPredicate: NSPredicate
-            
-            switch newAccountType {
-            case .expenses: disallowedPredicate = NSPredicate(format: predicate.byCategoryType, CategoryType.income.rawValue)
-                
-            case .incomes: disallowedPredicate = NSPredicate(format: predicate.byCategoryType, CategoryType.expense.rawValue)
-                
-            case .general: return .zero
-            }
-            
             // 4.  Combined query (COUNT only)
             let request: NSFetchRequest<Transaction> = Transaction.fetchRequest()
-            request.predicate   = NSCompoundPredicate(andPredicateWithSubpredicates: [accountPredicate, disallowedPredicate])
+            request.predicate   = NSCompoundPredicate(andPredicateWithSubpredicates: [accountPredicate])
             request.resultType  = .countResultType // fastest
             
             return try viewContext.count(for: request)
@@ -313,25 +299,9 @@ struct TransactionManager {
             // Condicion 1: Obtendra las transacciones que usen la categoria actual
             let categoryPredicate = NSPredicate(format: predicate.byCategoryId, id)
             
-            // Condicion 2: Verifica si el Account al que pertenece la Transaction NO es compatible con el nuevo tipo de Category
-            
-            // Condicion 2: Obtendra las transacciones que no sean compatibles con el nuevo tipo de categoria seleccionado,
-            // asi se puede saber si existen transacciones que no deberian poder actualizarse por perteneceer a una categoria incompatible con el tipo de cuenta.
-            let incompatiblePredicate: NSPredicate
-            
-            switch newCategoryType {
-            case .expense:
-                // No se permiten cuentas tipo incomes
-                incompatiblePredicate = NSPredicate(format: predicate.byAccountType, AccountType.incomes.rawValue)
-                
-            case .income:
-                // No se permiten cuentas tipo expenses
-                incompatiblePredicate = NSPredicate(format: predicate.byAccountType, AccountType.expenses.rawValue)
-            }
-            
             // Combinar ambos predicados
             let request: NSFetchRequest<Transaction> = Transaction.fetchRequest()
-            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, incompatiblePredicate])
+            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate])
             request.resultType = .countResultType // Faster call to CoreData
             
             return try viewContext.count(for: request)

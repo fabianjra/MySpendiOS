@@ -56,14 +56,7 @@ struct PickerView<E>: UIViewRepresentable where E: CaseIterable & RawRepresentab
         uiView.selectedSegmentIndex = Array(E.allCases).firstIndex(of: selection) ?? .zero
         
         // Valida si debe aplicar colores dependiendo del tipo de enum
-        if let accountType = selection as? AccountType {
-            switch accountType {
-            case .expenses: uiView.selectedSegmentTintColor = UIColor(Color.alert)
-            case .incomes:  uiView.selectedSegmentTintColor = UIColor(Color.primaryBottom)
-            case .general:  uiView.selectedSegmentTintColor = UIColor(Color.textSecondaryForeground.opacity(ConstantColors.opacityHalf))
-            }
-            
-        } else if let categoryType = selection as? CategoryType {
+        if let categoryType = selection as? CategoryType {
             switch categoryType {
             case .expense: uiView.selectedSegmentTintColor = UIColor(Color.alert)
             case .income:  uiView.selectedSegmentTintColor = UIColor(Color.primaryBottom)
@@ -91,15 +84,12 @@ struct PickerView<E>: UIViewRepresentable where E: CaseIterable & RawRepresentab
 }
 
 #Preview("All \(Previews.localeES)") {
-    @Previewable @State var accountType: AccountType = .general
     @Previewable @State var categoryType: CategoryType = .expense
     @Previewable @State var currencyType: CurrencySymbolType = .symbol
     @Previewable @State var dateTimeInterval: DateTimeInterval = .month
     
     VStack {
         Spacer()
-        
-        PickerView(selection: $accountType)
         
         PickerView(selection: $categoryType)
         

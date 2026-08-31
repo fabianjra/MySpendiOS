@@ -21,7 +21,6 @@ struct AccountModel: Codable, Identifiable, Equatable, Hashable {
     var icon: String // Emoji
     var name: String
     var notes: String
-    var type: AccountType
     var userId: String // For Firebase
     
     init() {
@@ -34,18 +33,16 @@ struct AccountModel: Codable, Identifiable, Equatable, Hashable {
         icon = ""
         name = ""
         notes = ""
-        type = .general
         userId = ""
     }
     
     // When a new Transaction is created
-    init(currencyCode: String = "", icon: String = "", name: String, notes: String = "", type: AccountType = .general) {
+    init(currencyCode: String = "", icon: String = "", name: String, notes: String = "") {
         self.init()
         self.currencyCode = currencyCode
         self.icon = icon
         self.name = name
         self.notes = notes
-        self.type = type
     }
     
     // Init the model from Entity
@@ -59,13 +56,7 @@ struct AccountModel: Codable, Identifiable, Equatable, Hashable {
         icon = entity.icon ?? ""
         name = entity.name ?? ""
         notes = entity.notes ?? ""
-        type = AccountModel.getAccountType(from: entity.type)
         userId = entity.userId ?? ""
-    }
-    
-    
-    static private func getAccountType(from rawType: String?) -> AccountType {
-        return AccountType(rawValue: rawType ?? AccountType.general.rawValue) ?? .general
     }
     
     enum Field: Hashable, CaseIterable {

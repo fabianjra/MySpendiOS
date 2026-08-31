@@ -13,7 +13,6 @@ struct AccountView: View {
     
     @State private var showNewItemModal = false
     
-    @State private var modelType: AccountType = .general
     @State private var modelToModify: AccountModel?
     @State private var modelToDelete: AccountModel?
     
@@ -51,10 +50,10 @@ struct AccountView: View {
         
         // Siempre con bordes pero hace mas lento la activacion del sheet:
         .sheet(isPresented: $showNewItemModal) {
-            AddModifyAccountView(accountType: $modelType)
+            AddModifyAccountView()
         }
         .sheet(item: $modelToModify) { model in
-            AddModifyAccountView(model, accountType: $modelType)
+            AddModifyAccountView(model)
                 .onDisappear {
                     modelToModify = nil
                 }
@@ -77,10 +76,6 @@ struct AccountView: View {
             
             
             VStack {
-                PickerView(selection: $modelType)
-                    .frame(maxWidth: ConstantFrames.iPadMaxWidth)
-                    .padding(.bottom, ConstantViews.mediumSpacing)
-                
                 RowLCTCointainer(disabled: viewModel.isEditing, leadingContent:  {
                     MenuContainer(addHorizontalPadding: true, disabled: viewModel.isEditing) {
                         Section("Sorted by: \(viewModel.sortModelsBy.rawValue)") {
@@ -127,7 +122,6 @@ struct AccountView: View {
     private var itemList: some View {
         VStack {
             let modelsFiltered = UtilsAccounts.filteredAccounts(viewModel.models,
-                                                                by: modelType,
                                                                 sortType: viewModel.sortModelsBy)
             
             if modelsFiltered.isEmpty {
