@@ -22,8 +22,4 @@ class OnBoardingUsernameViewModel: BaseViewModel {
         UserDefaultsManager.userName = userName
         Router.shared.path.append(Router.Destination.onBoardinAccount)
     }
-    
-    enum Field: Hashable, CaseIterable {
-        case userName
-    }
 }

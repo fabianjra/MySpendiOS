@@ -10,7 +10,7 @@ import SwiftUI
 struct OnBoardingUsernameView: View {
     
     @StateObject private var viewModel = OnBoardingUsernameViewModel()
-    @FocusState private var focusedField: OnBoardingUsernameViewModel.Field?
+    @FocusState private var isFocused: Bool
     
     var body: some View {
         VStack(spacing: ConstantViews.formSpacing) {
@@ -18,7 +18,7 @@ struct OnBoardingUsernameView: View {
             TextFieldName(text: $viewModel.userName,
                           iconLeading: nil,
                           errorMessage: $viewModel.errorMessage)
-            .focused($focusedField, equals: .userName)
+            .focused($isFocused)
             .onSubmit { viewModel.continueToNextStep(withName: true)}
             
             
@@ -28,7 +28,7 @@ struct OnBoardingUsernameView: View {
                 }
             } label: {
                 Text(.buttonContinue)
-                    .padding(.vertical, ConstantViews.paddingButtonTransaction)
+                    .padding(.vertical, ConstantViews.paddingButtonVertical)
                     .frame(maxWidth: ConstantFrames.iPadMaxWidth)
             }
             .buttonStyle(.glass)
@@ -50,7 +50,7 @@ struct OnBoardingUsernameView: View {
         .navigationTitle(.onBoardingUsernameTitle)
         .navigationSubtitle(.onBoardingUsernameEnterName)
         .background(Color.backgroundContentGradient)
-        .onAppear { focusedField = .userName }
+        .onAppear { isFocused = true }
     }
 }
 

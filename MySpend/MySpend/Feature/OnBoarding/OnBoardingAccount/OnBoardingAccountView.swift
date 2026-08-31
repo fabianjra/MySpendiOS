@@ -32,7 +32,7 @@ struct OnBoardingAccountView: View {
                 }
             } label: {
                 Text(.buttonContinue)
-                    .padding(.vertical, ConstantViews.paddingButtonTransaction)
+                    .padding(.vertical, ConstantViews.paddingButtonVertical)
                     .frame(maxWidth: ConstantFrames.iPadMaxWidth)
             }
             .buttonStyle(.glass)

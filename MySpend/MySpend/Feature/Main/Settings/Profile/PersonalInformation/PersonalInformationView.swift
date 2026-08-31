@@ -13,54 +13,57 @@ struct PersonalInformationView: View {
     @FocusState private var isFocused: Bool
     
     var body: some View {
-        FormContainer {
-
-            // MARK: FIELDS
             VStack(spacing: ConstantViews.formSpacing) {
                 
-                TextFieldReadOnly(placeHolder: "Name", text: $viewModel.username, iconLeading: Image.personFill)
-                
-                
-                TextFieldName(placeHolder: "New name",
-                              text: $viewModel.newUsername,
-                              iconLeading: Image.checkmark,
+                TextFieldName(placeHolder: "Username",
+                              text: $viewModel.username,
+                              iconLeading: Image.personFill,
                               errorMessage: $viewModel.errorMessage)
                 .padding(.bottom)
                 .focused($isFocused)
-                .onSubmit {
-                        viewModel.changeUserName()
-                }
+                .onSubmit { viewModel.changeUserName() }
                 
                 
-                TextError(viewModel.errorMessage)
-            }
+                Text(viewModel.errorMessage)
+                    .textErrorStyle
+                
+                Spacer()
         }
-        .navigationTitle("Change name")
-        
-        .safeAreaInset(edge: .bottom) {
-            VStack {
-                Button(action: {
-                    viewModel.changeUserName()
-                }, label: {
-                    TextPlain("Confirm")
-                        .padding(.vertical, ConstantViews.paddingButtonTransaction)
-                        .frame(maxWidth: ConstantFrames.iPadMaxWidth)
-                })
-                .buttonStyle(.glass)
-                .padding(.bottom)
-            }
-            .padding(.horizontal)
-        }
+        .padding(.horizontal)
+        .navigationTitle(.personalInformationTitle)
+        .navigationSubtitle(.personalInformationSubtitle)
+        .background(Color.backgroundContentGradient)
         
         .onAppear {
             isFocused = true
             viewModel.onAppear()
         }
+        
+        .safeAreaInset(edge: .bottom) {
+            Button(action: {
+                viewModel.changeUserName()
+            }, label: {
+                Text(.buttonSave)
+                    .padding(.vertical, ConstantViews.paddingButtonVertical)
+                    .frame(maxWidth: ConstantFrames.iPadMaxWidth)
+            })
+            .padding(.horizontal)
+            .buttonStyle(.glass)
+            .padding(.bottom)
+        }
     }
 }
 
-#Preview {
+#Preview(Previews.localeES) {
     NavigationStack {
         PersonalInformationView()
     }
+    .environment(\.locale, .init(identifier: Previews.localeES))
+}
+
+#Preview(Previews.localeEN_US) {
+    NavigationStack {
+        PersonalInformationView()
+    }
+    .environment(\.locale, .init(identifier: Previews.localeEN_US))
 }

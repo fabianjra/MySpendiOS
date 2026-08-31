@@ -11,18 +11,15 @@ import Observation
 final class PersonalInformationViewModel {
     
     var username = ""
-    var newUsername = ""
     var errorMessage = ""
     
     func changeUserName() {
-        if newUsername.isEmptyOrWhitespace {
+        if username.isEmptyOrWhitespace {
             errorMessage = Errors.emptySpace.localizedDescription
             return
         }
         
-        UserDefaultsManager.userName = newUsername
-        username = newUsername
-        newUsername = ""
+        UserDefaultsManager.userName = username
     }
     
     func onAppear() {

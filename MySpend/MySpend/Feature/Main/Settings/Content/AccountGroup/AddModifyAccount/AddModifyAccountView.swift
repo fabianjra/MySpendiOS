@@ -82,7 +82,7 @@ struct AddModifyAccountView: View {
                     process(viewModel.isAddModel ? .add : .modify)
                 }, label: {
                     TextPlain(viewModel.isAddModel ? "Add" : "Modify")
-                        .padding(.vertical, ConstantViews.paddingButtonTransaction)
+                        .padding(.vertical, ConstantViews.paddingButtonVertical)
                         .frame(maxWidth: ConstantFrames.iPadMaxWidth)
                 })
                 .buttonStyle(.glass)

@@ -185,7 +185,7 @@ struct AddModifyTransactionView: View {
             } label: {
                 Text(viewModel.isNewModel ? .transactionAdd : .transactionModify)
                     .textStyle
-                    .padding(.vertical, ConstantViews.paddingButtonTransaction)
+                    .padding(.vertical, ConstantViews.paddingButtonVertical)
                     .frame(maxWidth: ConstantFrames.iPadMaxWidth)
             }
             .buttonStyle(.glass)

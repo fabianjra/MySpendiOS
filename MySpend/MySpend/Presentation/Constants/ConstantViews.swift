@@ -35,7 +35,7 @@ struct ConstantViews {
     // MARK: PADDING
     static let paddingButtonAddCategory: CGFloat = 20.0
     static let paddingNavigationBarIcon: CGFloat = 5.0
-    static let paddingButtonTransaction: CGFloat = 6.0
+    static let paddingButtonVertical: CGFloat = 6.0
     
     static let paddingSmall: CGFloat = 10.0
     

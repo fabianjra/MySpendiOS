@@ -198,6 +198,24 @@
         }
       }
     },
+    "Button.Save" : {
+      "comment" : "Indica que el boton es para guardar informacion",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Guardar"
+          }
+        }
+      }
+    },
     "Button.Skip" : {
       "comment" : "Skip text when on boarding",
       "extractionState" : "manual",
@@ -686,6 +704,42 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "¡Comencemos!"
+          }
+        }
+      }
+    },
+    "PersonalInformation.Subtitle" : {
+      "comment" : "Indica que puedes cambiar la informacion de la informacion personal",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Update your personal information"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Actualiza tu información personal"
+          }
+        }
+      }
+    },
+    "PersonalInformation.Title" : {
+      "comment" : "Titulo para la vista de información personal",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Personal information"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Información personal"
           }
         }
       }
