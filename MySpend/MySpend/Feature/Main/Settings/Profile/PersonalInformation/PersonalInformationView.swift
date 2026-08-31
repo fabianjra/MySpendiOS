@@ -11,46 +11,47 @@ struct PersonalInformationView: View {
 
     @State private var viewModel = PersonalInformationViewModel()
     @FocusState private var isFocused: Bool
-    
+
     var body: some View {
-            VStack(spacing: ConstantViews.formSpacing) {
-                
-                TextFieldName(placeHolder: "Username",
-                              text: $viewModel.username,
-                              iconLeading: Image.personFill,
-                              errorMessage: $viewModel.errorMessage)
-                .padding(.bottom)
-                .focused($isFocused)
-                .onSubmit { viewModel.changeUserName() }
-                
-                
-                Text(viewModel.errorMessage)
-                    .textErrorStyle
-                
-                Spacer()
+        Form {
+            
+            Section {
+                TextField("First name", text: $viewModel.username)
+                    .textContentType(.name)
+                    .keyboardType(.alphabet)
+                    .scrollDismissesKeyboard(.interactively)
+                    .focused($isFocused)
+                    .onSubmit {
+                        isFocused = false
+                    }
+            }
         }
-        .padding(.horizontal)
+        .scrollContentBackground(.hidden)
+        //        .scrollDisabled(true)
+        .navigationBarTitleDisplayMode(.large)
         .navigationTitle(.personalInformationTitle)
         .navigationSubtitle(.personalInformationSubtitle)
         .background(Color.backgroundContentGradient)
         
         .onAppear {
-            isFocused = true
             viewModel.onAppear()
         }
         
         .safeAreaInset(edge: .bottom) {
-            Button(action: {
+            Button {
                 viewModel.changeUserName()
-            }, label: {
+            } label: {
                 Text(.buttonSave)
                     .padding(.vertical, ConstantViews.paddingButtonVertical)
                     .frame(maxWidth: ConstantFrames.iPadMaxWidth)
-            })
+            }
             .padding(.horizontal)
             .buttonStyle(.glass)
             .padding(.bottom)
+            .disabled(viewModel.showToast)
         }
+        
+        .toast(viewModel.responseToast, isPresented: $viewModel.showToast)
     }
 }
 

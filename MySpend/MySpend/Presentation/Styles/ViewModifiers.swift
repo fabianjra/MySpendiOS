@@ -325,3 +325,50 @@ struct ShakeEffect: ViewModifier {
             }
     }
 }
+
+
+private struct ToastModifier: ViewModifier {
+    let response: ResponseToast
+    
+    @Binding var isPresented: Bool
+    
+    func body(content: Content) -> some View {
+        content
+            .overlay(alignment: .bottom) {
+                if isPresented {
+                    Label {
+                        Text(response.message)
+                    } icon: {
+                        Text(response.type?.rawValue ?? "")
+                    }
+                    .padding(.horizontal)
+                    .padding(.vertical)
+                    .background(.ultraThinMaterial)
+                    .clipShape(.capsule)
+                    .padding(.bottom)
+                    .transition(.move(edge: .bottom).combined(with: .opacity))
+                    
+                    .onTapGesture {
+                        withAnimation {
+                            isPresented = false
+                        }
+                    }
+                    
+                    .task {
+                        try? await Task.sleep(for: .seconds(2))
+                        
+                        withAnimation {
+                            isPresented = false
+                        }
+                    }
+                }
+            }
+            .animation(.easeInOut, value: isPresented)
+    }
+}
+
+extension View {
+    func toast(_ response: ResponseToast, isPresented: Binding<Bool>) -> some View {
+        modifier(ToastModifier(response: response, isPresented: isPresented))
+    }
+}

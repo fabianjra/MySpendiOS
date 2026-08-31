@@ -246,9 +246,6 @@
     "Category name (Z-A)" : {
 
     },
-    "Change name" : {
-
-    },
     "Could not get data from collection snapshot" : {
 
     },
@@ -565,11 +562,11 @@
         }
       }
     },
-    "Go back" : {
+    "First name" : {
 
     },
-    "Key" : {
-      "extractionState" : "manual"
+    "Go back" : {
+
     },
     "Main.Header.Greet %@ %@" : {
       "comment" : "Saludo inicial",
@@ -708,6 +705,24 @@
         }
       }
     },
+    "PersonalInformation.Message.Updated" : {
+      "comment" : "Mensaje para indicar que la información se actualizó ",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Information updated"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Información actualizada"
+          }
+        }
+      }
+    },
     "PersonalInformation.Subtitle" : {
       "comment" : "Indica que puedes cambiar la informacion de la informacion personal",
       "extractionState" : "manual",
@@ -753,6 +768,42 @@
     },
     "Reset to default" : {
 
+    },
+    "Response.Error.TextField.EmptySpace" : {
+      "comment" : "Indica que deben llenarse los espacios en blanco",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fill the empty spaces"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Completa los espacios en blanco"
+          }
+        }
+      }
+    },
+    "Response.Succesful" : {
+      "comment" : "Respuesta exitosa",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Successful"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Operación realizada con éxito"
+          }
+        }
+      }
     },
     "Select all" : {
       "comment" : "A label for selecting all items.",

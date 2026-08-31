@@ -5,21 +5,28 @@
 //  Created by Fabian Rodriguez on 8/8/24.
 //
 
-import Observation
+import Foundation
 
 @Observable
 final class PersonalInformationViewModel {
     
     var username = ""
-    var errorMessage = ""
+    
+    var showToast: Bool = false
+    var responseToast = ResponseToast() {
+        didSet {
+            showToast = true
+        }
+    }
     
     func changeUserName() {
         if username.isEmptyOrWhitespace {
-            errorMessage = Errors.emptySpace.localizedDescription
+            responseToast = ResponseToast(.responseErrorTextFieldEmptySpace, .error)
             return
         }
         
         UserDefaultsManager.userName = username
+        responseToast = ResponseToast(.personalInformationMessageUpdated, .ok)
     }
     
     func onAppear() {
