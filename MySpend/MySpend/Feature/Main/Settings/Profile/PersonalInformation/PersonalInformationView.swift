@@ -18,6 +18,7 @@ struct PersonalInformationView: View {
                     TextField(.personalInformationInputNamePlaceholder, text: $viewModel.username)
                         .formInputStyle($viewModel.username)
                         .textContentType(.name)
+                        .keyboardType(.alphabet)
                 }
                 .formLabeledInputStyle
                 
@@ -25,6 +26,7 @@ struct PersonalInformationView: View {
                     TextField(.personalInformationInputEmailPlaceholder, text: $viewModel.email)
                         .formInputStyle($viewModel.email)
                         .textContentType(.emailAddress)
+                        .keyboardType(.emailAddress)
                 }
                 .formLabeledInputStyle
                 
@@ -32,6 +34,7 @@ struct PersonalInformationView: View {
                     TextField(.personalInformationInputPhonePlaceholder, text: $viewModel.phoneNumber)
                         .formInputStyle($viewModel.phoneNumber)
                         .textContentType(.telephoneNumber)
+                        .keyboardType(.phonePad)
                 }
                 .formLabeledInputStyle
             }
