@@ -117,10 +117,10 @@ struct TransactionHistoryView: View {
             
             if viewModel.selectedTransactions.count == .zero {
                 Text(.titleHistoryView)
-                    .textStyle
+                    .textStyle(size: .big)
             } else {
                 Text(.selectorTransactionsCount(viewModel.selectedTransactions.count))
-                    .textStyle
+                    .textStyle(size: .medium)
             }
             
         }

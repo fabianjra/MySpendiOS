@@ -63,6 +63,28 @@ struct PersonalInformationView: View {
             .disabled(viewModel.showToast)
         }
         
+        .toolbar {
+//            ToolbarItem(placement: .title) {
+//                Text(.personalInformationTitle)
+//                    .textStyle(size: .big)
+//            }
+//            
+//            ToolbarItem(placement: .subtitle) {
+//                Text(.personalInformationSubtitle)
+//                    .textStyle(size: .mediumSmall)
+//            }
+            
+//            ToolbarItem(placement: .largeTitle) {
+//                Text(.personalInformationTitle)
+//                    .textStyle
+//            }
+//            
+//            ToolbarItem(placement: .largeSubtitle) {
+//                Text(.personalInformationSubtitle)
+//                    .textStyle
+//            }
+        }
+        
         .toast(viewModel.responseToast, isPresented: $viewModel.showToast)
     }
 }
