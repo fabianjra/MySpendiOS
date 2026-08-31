@@ -29,36 +29,36 @@ import SwiftUI
  
  - Date: Jul 2023
  */
-enum AccountOptions: String, CaseIterable, Identifiable {
+enum ProfileOptions: String, CaseIterable, Identifiable {
     public var id: Self { self }
-    case changeName = "Change my name"
-    case validateAccount = "Validate account"
+    case personalInformation
+    case validateAccount
     
-    var icon: Image {
+    var title: LocalizedStringResource {
         switch self {
-        case .changeName: return Image.personFill
-        case .validateAccount: return Image.checkmark
+        case .personalInformation: return .settingsProfileOptionPersonalInformationTitle
+        case .validateAccount: return .settingsProfileOptionValidateAccountTitle
         }
     }
     
-    var showOption: Bool {
+    var icon: String {
         switch self {
-        case .changeName: return ConstantValidations.showChangeName
-        case .validateAccount: return ConstantValidations.showValidateAccount
+        case .personalInformation: return "👤"
+        case .validateAccount: return "✅"
         }
     }
     
     @ViewBuilder
     var view: some View {
         switch self {
-        case .changeName: ChangeNameView()
+        case .personalInformation: PersonalInformationView()
         case .validateAccount: ValidateAccountView()
         }
     }
 }
 
 
-// MARK: - CONTENT
+// MARK: - GENERAL
 
 enum ContentOptions: String, CaseIterable, Identifiable {
     public var id: Self { self }
@@ -73,15 +73,6 @@ enum ContentOptions: String, CaseIterable, Identifiable {
         case .categories: return Image.listBulletClipboardFill
         case .currencySymbol: return Image.dollar
         case .dateTimeInterval: return Image.calendar
-        }
-    }
-    
-    var showOption: Bool {
-        switch self {
-        case .accounts: return ConstantValidations.showAccounts
-        case .categories: return ConstantValidations.showCategories
-        case .currencySymbol: return ConstantValidations.showCurrencySymbol
-        case .dateTimeInterval: return ConstantValidations.showDateTimeInterval
         }
     }
     

@@ -18,82 +18,81 @@ struct SettingsView: View {
         List {
             // MARK: - ACCOUNT
             
-            SectionContainer("Profile") {
-                ForEach(AccountOptions.allCases) { option in
-                    if option.showOption {
-                        HStack {
-                            option.icon
-                            
-                            NavigationLink(option.rawValue, destination: option.view)
+            Section(.settingsProfileSectionTitle) {
+                ForEach(ProfileOptions.allCases) { option in
+                    NavigationLink(destination: option.view) {
+                        Label {
+                            Text(option.title)
+                        } icon: {
+                            Text(option.icon)
                         }
                     }
                 }
             }
             
-            // MARK: - CONTENT
+            // MARK: - GENERAL
             
-            SectionContainer("Content") {
+            Section(.settingsGeneralSectionTitle) {
                 ForEach(ContentOptions.allCases) { option in
-                    if option.showOption {
-                        HStack {
-                            option.icon
-                            
-                            NavigationLink(option.rawValue, destination: option.view)
-                        }
+                    HStack {
+                        option.icon
+                        
+                        NavigationLink(option.rawValue, destination: option.view)
                     }
                 }
             }
             
             // MARK: - ERASE ALL DATA
             
-            SectionContainer("Data") {
+            Section(.settingsDataSectionTitle) {
                 
-                Button("Delete data") {
+                Button(.settingsDataDeleteButtonTitle) {
                     showAlert = true
                 }
                 .foregroundColor(Color.alert)
-                .font(.montserrat(.semibold))
+                .fontWeight(.semibold)
                 
-                .alert("Want to delete all data?", isPresented: $showAlert) {
+                .alert(.settingsDataDeleteTitle, isPresented: $showAlert) {
                     
-                    Button("Delete", role: .destructive) {
+                    Button(.alertOptionCancel, role: .cancel) { }
+                    
+                    Button(.alertOptionDelete, role: .destructive) {
                         showAlertConfirmation = true
                     }
-                    
-                    Button("Cancel", role: .cancel) { }
                 } message: {
-                    TextPlain("This action cannot be undone.")
+                    Text(.settingsDataDeleteDescription)
+                        .textStyle
                 }
                 
-                .alert("Are you completely sure you want to delete all data?", isPresented: $showAlertConfirmation) {
+                .alert(.settingsDataDeleteTitleConfirmation, isPresented: $showAlertConfirmation) {
                     
-                    Button("Delete", role: .destructive) {
+                    Button(.alertOptionCancel, role: .cancel) { }
+                    
+                    Button(.alertOptionDelete, role: .destructive) {
                         //TODO: AGREGAR BORRADO DE DATOS
                     }
-                    
-                    Button("Cancel", role: .cancel) { }
                 } message: {
-                    TextPlain("All accounts, categories and transactions will be permanently deleted.")
+                    Text(.settingsDataDeleteDescriptionConfirmation)
+                        .textStyle
                 }
             }
         }
         
         // MARK: STYLES
         .font(.montserrat())
-        .foregroundColor(Color.listRowForeground)
+        //.foregroundColor(Color.listRowForeground)
         //.listStyle(.insetGrouped) //Coomentend for: iOS26
         .scrollContentBackground(.hidden)
-        //.contentMargins(.top, ConstantViews.mediumSpacing) //Coomentend for: iOS26
-        .background(Color.backgroundContentGradient)
+        //.background(Color.backgroundContentGradient)
         
         // MARK: NAVIGATION
-        .navigationTitle("Settings") // Necesario para ver la descripcion al presionar el boton atras al navegar.
+        .navigationTitle(.settingsTitle) // Necesario para ver la descripcion al presionar el boton atras al navegar.
         .navigationBarTitleDisplayMode(.inline)
         
         .toolbar {
-            
             ToolbarItem(placement: .title) {
-                TextPlain("Settings")
+                Text(.settingsTitle)
+                    .textStyle
             }
             
             ToolbarItem(placement: .destructiveAction) {
@@ -105,8 +104,18 @@ struct SettingsView: View {
     }
 }
 
-#Preview {
-    NavigationStack {
-        SettingsView()
+#Preview(Previews.localeES_ES) {
+    @Previewable @State var showSettings = true
+    
+    VStack {
+        Button(.settingsTitle) {
+            showSettings.toggle()
+        }
     }
+    .sheet(isPresented: $showSettings) {
+        NavigationStack {
+            SettingsView()
+        }
+    }
+    .environment(\.locale, .init(identifier: Previews.localeES_ES))
 }

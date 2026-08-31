@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-struct ChangeNameView: View {
+struct PersonalInformationView: View {
 
-    @StateObject private var viewModel = ChangeNameViewModel()
-    @FocusState private var focusedField: ChangeName.Field?
+    @State private var viewModel = PersonalInformationViewModel()
+    @FocusState private var isFocused: Bool
     
     var body: some View {
         FormContainer {
@@ -18,15 +18,15 @@ struct ChangeNameView: View {
             // MARK: FIELDS
             VStack(spacing: ConstantViews.formSpacing) {
                 
-                TextFieldReadOnly(placeHolder: "Name", text: $viewModel.model.username, iconLeading: Image.personFill)
+                TextFieldReadOnly(placeHolder: "Name", text: $viewModel.username, iconLeading: Image.personFill)
                 
                 
                 TextFieldName(placeHolder: "New name",
-                              text: $viewModel.model.newUsername,
+                              text: $viewModel.newUsername,
                               iconLeading: Image.checkmark,
                               errorMessage: $viewModel.errorMessage)
                 .padding(.bottom)
-                .focused($focusedField, equals: .newUsername)
+                .focused($isFocused)
                 .onSubmit {
                         viewModel.changeUserName()
                 }
@@ -53,7 +53,7 @@ struct ChangeNameView: View {
         }
         
         .onAppear {
-            focusedField = .newUsername
+            isFocused = true
             viewModel.onAppear()
         }
     }
@@ -61,6 +61,6 @@ struct ChangeNameView: View {
 
 #Preview {
     NavigationStack {
-        ChangeNameView()
+        PersonalInformationView()
     }
 }
