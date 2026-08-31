@@ -88,7 +88,7 @@ struct FilterTransactionsView: View {
         .navigationBarTitleDisplayMode(.inline)
         
         .toolbar {
-            ToolbarItem(placement: .principal) {
+            ToolbarItem(placement: .title) {
                 Text(.filters)
                     .textStyle
             }
