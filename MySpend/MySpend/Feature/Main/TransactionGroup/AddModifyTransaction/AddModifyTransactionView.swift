@@ -52,7 +52,6 @@ struct AddModifyTransactionView: View {
                                           iconLeading: Image.calendar,
                                           colorDisabled: false)
                         .onTapGesture {
-                            //focusedField = .none
                             showDatePicker = true
                         }
                     }

@@ -9,45 +9,48 @@ import SwiftUI
 
 struct DatePickerModalView: View {
     
+    @State private var datePickerID = UUID()
+    
     @Binding var selectedDate: Date
     @Binding var showModal: Bool
     
     var body: some View {
         NavigationStack {
-            VStack {
+            ScrollView {
                 DatePicker("", selection: $selectedDate, displayedComponents: .date)
+                    .id(datePickerID)
                     .datePickerStyle(.graphical)
-                    .frame(width: FrameSize.width.calendar, height: FrameSize.width.calendar)
-                    //.scaleEffect(ConstantViews.calendarScale)
-                    .toolbar {
-                        ToolbarItem(placement: .cancellationAction) {
-                            Button("Today") {
-                                selectedDate = .now
-                            }
-                        }
-                        
-                        ToolbarItem(placement: .confirmationAction) {
-                            Button(role: .confirm) {
-                                showModal = false
-                            }
-                        }
+                //.frame(width: FrameSize.width.calendar, height: FrameSize.width.calendar)
+            }
+            .scrollDisabled(true)
+            .toolbar {
+                ToolbarItem(placement: .navigation) {
+                    Button(.datetimeToday) {
+                        selectedDate = .now
+                        datePickerID = UUID()
                     }
+                }
+                
+                ToolbarItem(placement: .confirmationAction) {
+                    Button(role: .confirm) {
+                        showModal = false
+                    }
+                }
             }
         }
-        //.presentationDetents([.height(FrameSize.height.calendar)])
+        .navigationBarTitleDisplayMode(.inline)
         .presentationDetents([.medium])
     }
 }
 
-#Preview {
+#Preview(Previews.localeES_CR) {
     @Previewable @State var selectedDate = Date()
     @Previewable @State var showModal = true
     @Previewable @State var dateString = ""
     
     ZStack(alignment: .top) {
-        Color.backgroundBottom
         VStack {
-            TextPlain("Selected date: \(selectedDate.toStringShortLocale)")
+            Text("Selected date: \(selectedDate.toStringShortLocale)")
             
             Button("Show modal") {
                 showModal = true
@@ -61,4 +64,5 @@ struct DatePickerModalView: View {
         dateString = selectedDate.toStringShortLocale
         showModal = true
     }
+    .environment(\.locale, .init(identifier: Previews.localeES_CR))
 }
