@@ -11,6 +11,7 @@ struct FormLabeledInputStyle: LabeledContentStyle {
     func makeBody(configuration: Configuration) -> some View {
         HStack(spacing: ConstantViews.formLabeledContentSpacing) {
             configuration.label
+                .frame(width: ConstantFrames.formLabelWidth, alignment: .leading)
             
             configuration.content
         }
@@ -24,7 +25,7 @@ extension View {
     }
 }
 
-#Preview {
+#Preview(Previews.localeES_ES) {
     @Previewable @State var text = ""
     
     Form {
@@ -34,8 +35,21 @@ extension View {
                     .formInputStyle($text)
             }
             .formLabeledInputStyle
+            
+            LabeledContent(.personalInformationInputEmail) {
+                TextField(.personalInformationInputEmailPlaceholder, text: $text)
+                    .formInputStyle($text)
+            }
+            .formLabeledInputStyle
+            
+            LabeledContent(.personalInformationInputPhone) {
+                TextField(.personalInformationInputPhonePlaceholder, text: $text)
+                    .formInputStyle($text)
+            }
+            .formLabeledInputStyle
         }
     }
     .scrollContentBackground(.hidden)
     .background(.backgroundBottom)
+    .environment(\.locale, .init(identifier: Previews.localeES_ES))
 }

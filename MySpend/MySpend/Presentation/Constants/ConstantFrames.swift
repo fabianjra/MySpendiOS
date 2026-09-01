@@ -13,6 +13,7 @@ public struct ConstantFrames {
     //static let screenSize = UIScreen.main.bounds.size //DEPRECATED
     static let tabViewHeight: CGFloat = 75.0
     static let toolbarNavigationBarHeight: CGFloat = 55.0
+    static let formLabelWidth: CGFloat = 80
     
     // MARK: IMAGES
     static let emojiSize: CGFloat = 50.0
