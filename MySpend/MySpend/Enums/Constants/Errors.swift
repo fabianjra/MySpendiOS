@@ -24,7 +24,6 @@ public enum Errors: Error {
     case notFoundAccount
     case accountTypeNotMatchCategoryType(String, String)
     case cannotUpdateAccountWithTransactions(String)
-    case cannotUpdateCategoryDueToAccountType(String)
     
     // MARK: CORE DATE MAGER
     case notSavedAccount(String)
@@ -69,7 +68,6 @@ extension Errors: LocalizedError {
                                                                                          comment: "Shown when the user tries to assign a category whose type doesn’t match the account’s configured type (expense / income).")
         case .cannotUpdateAccountWithTransactions(let count): return NSLocalizedString("Cannot update this account, because it has \(count) transactions associated to an incompatible category type.",
                                                                                        comment: "Shown when the user tries to update an account with transactions associated to it.")
-        case .cannotUpdateCategoryDueToAccountType(let count): return NSLocalizedString("Cannot update this category, because it has \(count) transactions associated to an incompatible account type.", comment: "")
             
             // MARK: CORE DATE MAGER
         case .notSavedAccount(let itemId): return NSLocalizedString("Error while saving account for ID: \(itemId)", comment: "")
@@ -114,7 +112,6 @@ extension Errors {
         case .notFoundAccount: return 100
         case .accountTypeNotMatchCategoryType: return 101
         case .cannotUpdateAccountWithTransactions: return 102
-        case .cannotUpdateCategoryDueToAccountType: return 103
             
             // MARK: CORE DATE MAGER
         case .notSavedAccount: return 200

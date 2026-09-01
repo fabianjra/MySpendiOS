@@ -236,40 +236,6 @@ struct TransactionManager {
     // MARK: SHARED
     
     /**
-     Counts the transactions that would become **invalid** after changing an account to `newAccountType`.
-    
-     A transaction is “invalid” when:
-       1. It belongs to the account whose primary-key is `accountID`, **and**
-       2. Its category type is *not* accepted by the `newAccountType`.
-    
-     Rules:
-     * `.general` accepts both category types → always returns 0.
-     * `.expenses` rejects categories of type `.income`.
-     * `.incomes`  rejects categories of type `.expense`.
-    
-     - Parameters:
-       - accountID: UUID string of the account being edited.
-       - newAccountType: The prospective `AccountType`.
-     
-     - Returns: Number of incompatible transactions.
-     - Throws: Any error thrown by `viewContext.count(for:)`.
-     */
-    func fetchIncompatibleTypeCount(currentAccountID id: String) async throws -> Int {
-        try await viewContext.perform {
-            
-            // 2.  Predicate for the account
-            let accountPredicate = NSPredicate(format: predicate.byAccountId, id)
-            
-            // 4.  Combined query (COUNT only)
-            let request: NSFetchRequest<Transaction> = Transaction.fetchRequest()
-            request.predicate   = NSCompoundPredicate(andPredicateWithSubpredicates: [accountPredicate])
-            request.resultType  = .countResultType // fastest
-            
-            return try viewContext.count(for: request)
-        }
-    }
-    
-    /**
      Returns the number of `Transaction` records that would become **incompatible** after changing a category’s type.
     
      “Incompatible” means:
@@ -296,12 +262,8 @@ struct TransactionManager {
     func fetchIncompatibleTypeCount(currentCategoryID id: String, newCategoryType: CategoryType) async throws -> Int {
         try await viewContext.perform {
             
-            // Condicion 1: Obtendra las transacciones que usen la categoria actual
-            let categoryPredicate = NSPredicate(format: predicate.byCategoryId, id)
-            
-            // Combinar ambos predicados
             let request: NSFetchRequest<Transaction> = Transaction.fetchRequest()
-            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate])
+            request.predicate = NSPredicate(format: predicate.byCategoryId, id) //NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate])
             request.resultType = .countResultType // Faster call to CoreData
             
             return try viewContext.count(for: request)

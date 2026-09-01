@@ -57,10 +57,10 @@ final class AddModifyCategoryViewModel: BaseViewModel {
             // Ver mas en la documentacion del metodo "fetchIncompatibleTypeCount"
             if modelMutated.type != type {
                 let incompatibleTransactionsCount = try await TransactionManager(viewContext).fetchIncompatibleTypeCount(currentCategoryID: modelMutated.id.uuidString,
-                                                                                                              newCategoryType: type)
+                                                                                                                         newCategoryType: type)
                 
                 if incompatibleTransactionsCount > .zero {
-                    return ResponseModel(.error, Errors.cannotUpdateCategoryDueToAccountType(incompatibleTransactionsCount.description).localizedDescription)
+                    return ResponseModel(.error, Errors.cannotUpdateAccountWithTransactions(incompatibleTransactionsCount.description).localizedDescription)
                 }
             }
             
