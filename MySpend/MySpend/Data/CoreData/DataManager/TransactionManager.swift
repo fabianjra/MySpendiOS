@@ -240,7 +240,6 @@ struct TransactionManager {
     
      “Incompatible” means:
      * The transaction currently uses the category whose primary-key is `currentCategoryID`.
-     * The account linked to that transaction has a type that does **not** accept the prospective `newCategoryType`.
     
      Internally:
      1. Builds an `NSPredicate` that matches `category.id == currentCategoryID`.
@@ -258,15 +257,17 @@ struct TransactionManager {
     
      - Returns: The number of incompatible transactions found.
      - Throws: Any error thrown by `viewContext.count(for:)`.
+     
+     - NOTA: Se dejó de utilizar porque debe permitir el cambio de tipo de categoria, aunque ya existan transacciones. No deberia ser problema.
      */
-    func fetchIncompatibleTypeCount(currentCategoryID id: String, newCategoryType: CategoryType) async throws -> Int {
-        try await viewContext.perform {
-            
-            let request: NSFetchRequest<Transaction> = Transaction.fetchRequest()
-            request.predicate = NSPredicate(format: predicate.byCategoryId, id) //NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate])
-            request.resultType = .countResultType // Faster call to CoreData
-            
-            return try viewContext.count(for: request)
-        }
-    }
+//    func fetchIncompatibleTypeCount(currentCategoryID id: String, newCategoryType: CategoryType) async throws -> Int {
+//        try await viewContext.perform {
+//            
+//            let request: NSFetchRequest<Transaction> = Transaction.fetchRequest()
+//            request.predicate = NSPredicate(format: predicate.byCategoryId, id) //NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate])
+//            request.resultType = .countResultType // Faster call to CoreData
+//            
+//            return try viewContext.count(for: request)
+//        }
+//    }
 }

@@ -119,9 +119,9 @@ struct AddModifyCategoryView: View {
         }
         
         .onAppear {
-            focusedField = .name
-            
-            if viewModel.isAddModel == false {
+            if viewModel.isAddModel {
+                focusedField = .name
+            } else {
                 categoryType = viewModel.model.type
             }
         }
