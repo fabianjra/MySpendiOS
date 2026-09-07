@@ -6,97 +6,120 @@
 //
 
 import Combine
-import Foundation
+import CoreData
 
-class AccountViewModel: BaseViewModel {
+@MainActor
+@Observable
+final class AccountViewModel {
     
-    @Published var models: [AccountModel] = []
+    //var models: [AccountModel] = []
     
     // MARK: EDIT
-    @Published var isEditing: Bool = false
-    @Published var selectedModels = Set<AccountModel>()
+    var isEditing: Bool = false
+    var selectedAccounts = Set<AccountModel>()
     
     // MARK: SORT
-    @Published var sortModelsBy = UserDefaultsManager.sortAccounts
+    var sortSelection = UserDefaultsManager.sortAccounts {
+        didSet {
+            UserDefaultsManager.sortAccounts = sortSelection
+            allAccounts = allAccounts.sortedAccounts(by: sortSelection)
+        }
+    }
     
-    @Published var showAlertDelete = false
-    @Published var showAlertDeleteMultiple = false
+    var allAccounts: [AccountModel] = []
+    var accountToUpdate: AccountModel?
     
     // MARK: DATA ON SCREEN
     var defaultModelSelected: AccountModel? {
         let defaultID = UserDefaultsManager.defaultAccountID
         guard defaultID.isEmptyOrWhitespace == false else { return nil }
-        return models.first { $0.id.uuidString == defaultID }
+        return allAccounts.first { $0.id.uuidString == defaultID }
     }
     
-    /// Llamar en `onAppear`
-    func activateObservers() async {
-        // CoreData:
-        startObserveViewContextChanges { [weak self] in
-            await self?.fetchAll()
+    var showToast: Bool = false
+    var responseToast = ResponseToast() {
+        didSet {
+            showToast = true
         }
-        
-        // UserDefaults:
-        startObserveUserDefaultsChanges { [weak self] in
-            // Se actualiza el objeto que se pasa por parametro,
-            // en este caso, es por defecto el userDefaults que ya se envia por defecto en esta funcion en BaseViewModel.
-            self?.objectWillChange.send()
-        }
-        
-        // Primera carga:
-        await fetchAll()
     }
     
-    /// Llamar en `onDisappear`
-    func deactivateObservers() {
-        stopObservingContextChanges()
-        stopObserveUserDefaultsChanges()
-    }
-    
-    private func fetchAll() async {
-        do {
-            models = try await AccountManager(viewContext).fetchAll()
-        } catch {
-            errorMessage = error.localizedDescription
-            Logger.exception(error, type: .CoreData)
-        }
-    }
+    private var viewContextObserver: AnyCancellable?
+    private let viewContext: NSManagedObjectContext
 
-    func delete(_ model: AccountModel?) async -> ResponseModel {
-        guard let model = model else { return ResponseModel(.successful) }
+    init() {
+        self.viewContext = CoreDataUtilities.getViewContext
         
+        Task {
+            await fetchAccounts()
+        }
+        
+        startObserveViewContextChanges()
+    }
+    
+    private func startObserveViewContextChanges() {
+        guard viewContextObserver == nil else { return } // Evita suscribirse dos veces
+
+        viewContextObserver = NotificationCenter.default
+            .publisher(for: .NSManagedObjectContextObjectsDidChange, object: viewContext)
+            .debounce(for: .milliseconds(100), scheduler: RunLoop.main) // opcional, para evitar multiples llamados
+            .sink { [weak self] _ in
+                
+                Task { @MainActor in
+                    await self?.fetchAccounts()
+                }
+            }
+    }
+    
+    private func fetchAccounts() async {
         do {
-            try await AccountManager(viewContext).delete(model)
-            return ResponseModel(.successful)
+            allAccounts = try await AccountManager(viewContext)
+                .fetchAll()
+                .sortedAccounts(by: sortSelection)
+            
         } catch {
             Logger.exception(error, type: .CoreData)
-            return ResponseModel(.error, error.localizedDescription)
+            responseToast = ResponseToast(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)
         }
     }
     
-    func deleteMltipleItems() async -> ResponseModel {
+    public func deactivateObservers() {
+        viewContextObserver?.cancel()
+        viewContextObserver = nil
+    }
+    
+
+    func delete() async {
+        guard let accountToUpdate = accountToUpdate else { return }
+        
+        defer {
+            self.accountToUpdate = nil
+        }
+        
+        do {
+            try await AccountManager(viewContext).delete(accountToUpdate)
+            responseToast = ResponseToast(LocalizedStringResource(stringLiteral: "Cuenta eliminada"), .error)
+        } catch {
+            Logger.exception(error, type: .CoreData)
+            responseToast = ResponseToast(LocalizedStringResource(stringLiteral: error.localizedDescription), .error) //TODO: Migrar mesaje error para usar localizable
+        }
+    }
+    
+    func deleteMltipleItems() async {
         defer {
             isEditing = false
+            selectedAccounts.removeAll()
         }
         
         do {
-            for item in selectedModels {
+            for item in selectedAccounts {
                 try await AccountManager(viewContext).delete(item)
             }
             
-            selectedModels.removeAll()
-            return ResponseModel(.successful)
+            responseToast = ResponseToast(LocalizedStringResource(stringLiteral: "Cuentas eliminadas"), .error)
         } catch {
             Logger.exception(error)
-            return ResponseModel(.error, error.localizedDescription)
+            responseToast = ResponseToast(LocalizedStringResource(stringLiteral: error.localizedDescription), .error) //TODO: Migrar mesaje error para usar localizable
         }
-    }
-    
-    /**
-     Updates the sort selection to store in UserDefaults.
-     */
-    func updateSelectedSort() {
-        UserDefaultsManager.sortAccounts = sortModelsBy
     }
     
     /**
@@ -104,6 +127,6 @@ class AccountViewModel: BaseViewModel {
      */
     func resetSelectedSort() {
         UserDefaultsManager.removeValue(for: .sortAccounts)
-        sortModelsBy = UserDefaultsManager.sortAccounts
+        sortSelection = UserDefaultsManager.sortAccounts
     }
 }

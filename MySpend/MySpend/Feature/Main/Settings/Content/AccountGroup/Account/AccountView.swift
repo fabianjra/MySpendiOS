@@ -9,56 +9,53 @@ import SwiftUI
 
 struct AccountView: View {
     
-    @StateObject private var viewModel = AccountViewModel()
+    @State private var viewModel = AccountViewModel()
+    
+    
+    // MARK: USED ONLY IN VIEW
     
     @State private var showNewItemModal = false
-    
-    @State private var modelToModify: AccountModel?
-    @State private var modelToDelete: AccountModel?
+    @State private var showAlertDelete = false
+    @State private var showAlertDeleteMultiple = false
     
     var body: some View {
         VStack {
-
-            if !viewModel.models.isEmpty {
+            if !viewModel.allAccounts.isEmpty {
                 topMenu
                     .padding(.top)
             }
             
-            
-            ZStack(alignment: .bottomTrailing) {
-                itemList
-            }
-            
-            TextError(viewModel.errorMessage)
+            itemList
         }
+        .background(Color.backgroundContentGradient)
         .navigationTitle("Accounts")
         
-        .task {
-            await viewModel.activateObservers()
+        .toolbar {
+            toolbarContent
         }
+        
+        
+        // MARK: EVENTS
+        
         .onDisappear {
             viewModel.deactivateObservers()
         }
-        .toolbar {
-            ToolbarItemGroup(placement: .primaryAction) {
-                Button(.transactionAdd, systemImage: ConstantSystemImage.addNewItem) {
-                    showNewItemModal = true
-                }
-                .disabled(viewModel.isEditing)
-            }
-        }
         
-        // Siempre con bordes pero hace mas lento la activacion del sheet:
+        
+        // MARK: SHEETS
+        
         .sheet(isPresented: $showNewItemModal) {
             AddModifyAccountView()
         }
-        .sheet(item: $modelToModify) { model in
-            AddModifyAccountView(model)
+        .sheet(item: $viewModel.accountToUpdate) { account in
+            AddModifyAccountView(account)
                 .onDisappear {
-                    modelToModify = nil
+                    viewModel.accountToUpdate = nil
+                    //TODO: Agregar mensaje a Toast del update.
                 }
         }
-        .background(Color.backgroundContentGradient)
+        
+        .toast(viewModel.responseToast, isPresented: $viewModel.showToast)
     }
     
     // MARK: - VIEWS
@@ -66,19 +63,19 @@ struct AccountView: View {
     private var topMenu: some View {
         VStack {
             ListEditorView(isEditing: $viewModel.isEditing,
-                           counterSelected: viewModel.selectedModels.count) {
+                           counterSelected: viewModel.selectedAccounts.count) {
                 
-                viewModel.selectedModels.removeAll()
+                viewModel.selectedAccounts.removeAll()
                 
             } actionTrailingEdit: {
-                viewModel.showAlertDeleteMultiple = true
+                showAlertDeleteMultiple = true
             }
             
             
             VStack {
                 RowLCTCointainer(disabled: viewModel.isEditing, leadingContent:  {
                     MenuContainer(addHorizontalPadding: true, disabled: viewModel.isEditing) {
-                        Section("Sorted by: \(viewModel.sortModelsBy.rawValue)") {
+                        Section("Sorted by: \(viewModel.sortSelection.rawValue)") {
                             sortButton(for: .byNameAz)
                             sortButton(for: .byCreationNewest)
                         }
@@ -93,20 +90,18 @@ struct AccountView: View {
             .disabled(viewModel.isEditing)
         }
         .padding(.horizontal)
-        .disabled(viewModel.models.isEmpty)
     }
 
     private func sortButton(for sortingOption: SortAccounts) -> some View {
         Button {
-            if viewModel.sortModelsBy == sortingOption {
-                viewModel.sortModelsBy = sortingOption.toggle
+            if viewModel.sortSelection == sortingOption {
+                viewModel.sortSelection = sortingOption.toggle
             } else {
-                viewModel.sortModelsBy = sortingOption
+                viewModel.sortSelection = sortingOption
             }
-            
-            viewModel.updateSelectedSort()
+
         } label: {
-            viewModel.sortModelsBy == sortingOption ? sortingOption.label() : sortingOption.label(inverted: false)
+            viewModel.sortSelection == sortingOption ? sortingOption.label() : sortingOption.label(inverted: false)
         }
     }
     
@@ -121,18 +116,15 @@ struct AccountView: View {
     
     private var itemList: some View {
         VStack {
-            let modelsFiltered = UtilsAccounts.filteredAccounts(viewModel.models,
-                                                                sortType: viewModel.sortModelsBy)
-            
-            if modelsFiltered.isEmpty {
+            if viewModel.allAccounts.isEmpty {
                 TransactionsEmptyView()
             } else {
                 ListContainer {
                     SectionContainer("Available accounts", isInsideList: true) {
-                        ForEach(modelsFiltered) { item in
+                        ForEach(viewModel.allAccounts) { item in
                             HStack {
                                 if viewModel.isEditing {
-                                    Image(systemName: viewModel.selectedModels.contains(item) ? ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle)
+                                    Image(systemName: viewModel.selectedAccounts.contains(item) ? ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle)
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: FrameSize.width.iconRowList,
@@ -151,13 +143,13 @@ struct AccountView: View {
                                 
                                 Button(item.name) {
                                     if viewModel.isEditing {
-                                        if viewModel.selectedModels.contains(item) {
-                                            viewModel.selectedModels.remove(item)
+                                        if viewModel.selectedAccounts.contains(item) {
+                                            viewModel.selectedAccounts.remove(item)
                                         } else {
-                                            viewModel.selectedModels.insert(item)
+                                            viewModel.selectedAccounts.insert(item)
                                         }
                                     } else {
-                                        modelToModify = item
+                                        viewModel.accountToUpdate = item
                                     }
                                 }
                                 
@@ -175,15 +167,15 @@ struct AccountView: View {
                             .listRowBackground(Color.listRowBackground) //Background for each row.
                             .swipeActions(edge: .trailing) {
                                 Button {
-                                    modelToDelete = item
-                                    viewModel.showAlertDelete = true
+                                    viewModel.accountToUpdate = item
+                                    showAlertDelete = true
                                 } label: {
                                     Label.delete
                                 }
                                 .tint(Color.alert)
                                 
                                 Button {
-                                    modelToModify = item
+                                    viewModel.accountToUpdate = item
                                 } label: {
                                     Label.edit
                                 }
@@ -192,8 +184,12 @@ struct AccountView: View {
                             
                             // MARK: DELETE ITEMS SINGLE
                             
-                            .alert("Delete account", isPresented: $viewModel.showAlertDelete) {
-                                Button("Delete", role: .destructive) { delete() }
+                            .alert("Delete account", isPresented: $showAlertDelete) {
+                                Button("Delete", role: .destructive) {
+                                    Task {
+                                        await viewModel.delete()
+                                    }
+                                }
                                 Button("Cancel", role: .cancel) { }
                             } message: {
                                 Text("Want to delete this account? \n This action cannot be undone.")
@@ -201,8 +197,12 @@ struct AccountView: View {
                             
                             // MARK: DELETE ITEMS MULTIPLE
                             
-                            .alert("Delete accounts", isPresented: $viewModel.showAlertDeleteMultiple) {
-                                Button("Delete", role: .destructive) { deleteMltipleItems() }
+                            .alert("Delete accounts", isPresented: $showAlertDeleteMultiple) {
+                                Button("Delete", role: .destructive) {
+                                    Task {
+                                        await viewModel.deleteMltipleItems()
+                                    }
+                                }
                                 Button("Cancel", role: .cancel) { }
                             } message: {
                                 Text("Want to delete these accounts? \n This action cannot be undone.")
@@ -210,9 +210,9 @@ struct AccountView: View {
                         }
                     }
                 }
-                .animation(.default, value: modelsFiltered.count)
+                .animation(.default, value: viewModel.allAccounts.count)
                 .animation(.default, value: viewModel.isEditing)
-                .animation(.default, value: viewModel.sortModelsBy)
+                .animation(.default, value: viewModel.sortSelection)
             }
         }
     }
@@ -233,30 +233,32 @@ struct AccountView: View {
         }
     }
     
-    
-    // MARK: - FUNCTIONS
-    
-    private func delete() {
-        Task {
-            defer {
-                modelToDelete = nil
-            }
+    @ToolbarContentBuilder
+    private var toolbarContent: some ToolbarContent {
+        
+        // MARK: TOP
+        
+        ToolbarItem(placement: .navigation) {
             
-            let result = await viewModel.delete(modelToDelete)
-            
-            if result.status.isError {
-                viewModel.errorMessage = result.message
+            if viewModel.isEditing {
+                
+                if viewModel.selectedAccounts.count == viewModel.selectedAccounts.count {
+                    Button(.selectorDeselectAll) {
+                        viewModel.selectedAccounts = Set()
+                    }
+                } else {
+                    Button(.selectorSelectAll) {
+                        viewModel.selectedAccounts = Set(viewModel.allAccounts)
+                    }
+                }
             }
         }
-    }
-    
-    private func deleteMltipleItems() {
-        Task {
-            let result = await viewModel.deleteMltipleItems()
-            
-            if result.status.isError {
-                viewModel.errorMessage = result.message
+        
+        ToolbarItemGroup(placement: .bottomBar) {
+            Button(.transactionAdd, systemImage: ConstantSystemImage.addNewItem) {
+                showNewItemModal = true
             }
+            .disabled(viewModel.isEditing)
         }
     }
 }

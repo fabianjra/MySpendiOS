@@ -13,7 +13,7 @@ struct SelectAccountModalView: View {
     
     @Binding var selectedModel: AccountModel
     
-    @StateObject var viewModel = AccountViewModel()
+    @State var viewModel = AccountViewModel()
     
     var body: some View {
         VStack {
@@ -33,7 +33,7 @@ struct SelectAccountModalView: View {
             VStack {
                 RowLCTCointainer(leadingContent: {
                     MenuContainer {
-                        Section("Sorted by: \(viewModel.sortModelsBy.rawValue)") {
+                        Section("Sorted by: \(viewModel.sortSelection.rawValue)") {
                             sortButton(for: .byNameAz)
                             sortButton(for: .byCreationNewest)
                         }
@@ -48,14 +48,12 @@ struct SelectAccountModalView: View {
             
             
             ZStack(alignment: .bottomTrailing) {
-                let modelsFiltered = UtilsAccounts.filteredAccounts(viewModel.models,
-                                                                    sortType: viewModel.sortModelsBy)
                 
-                if modelsFiltered.isEmpty {
+                if viewModel.allAccounts.isEmpty {
                     NoContentView(title: "Empty", entity: "Account")
                 } else {
                     ListContainer {
-                        ForEach(modelsFiltered) { item in
+                        ForEach(viewModel.allAccounts) { item in
                             HStack {
                                 let icon = item.icon.getIconFromSFSymbol
                                 
@@ -77,13 +75,8 @@ struct SelectAccountModalView: View {
                         }
                         .listRowBackground(Color.listRowBackground) //Background for each row.
                     }
-                    .animation(.default, value: viewModel.sortModelsBy)
+                    .animation(.default, value: viewModel.sortSelection)
                 }
-            }
-        }
-        .onAppear {
-            Task {
-                await viewModel.activateObservers()
             }
         }
         .onDisappear {
@@ -95,15 +88,14 @@ struct SelectAccountModalView: View {
     
     private func sortButton(for sortingOption: SortAccounts) -> some View {
         Button {
-            if viewModel.sortModelsBy == sortingOption {
-                viewModel.sortModelsBy = sortingOption.toggle
+            if viewModel.sortSelection == sortingOption {
+                viewModel.sortSelection = sortingOption.toggle
             } else {
-                viewModel.sortModelsBy = sortingOption
+                viewModel.sortSelection = sortingOption
             }
             
-            viewModel.updateSelectedSort()
         } label: {
-            viewModel.sortModelsBy == sortingOption ? sortingOption.label() : sortingOption.label(inverted: false)
+            viewModel.sortSelection == sortingOption ? sortingOption.label() : sortingOption.label(inverted: false)
         }
     }
     

@@ -338,6 +338,7 @@ private struct ToastModifier: ViewModifier {
                 if isPresented {
                     Label {
                         Text(response.message)
+                            .textStyle
                     } icon: {
                         Text(response.type?.rawValue ?? "")
                     }
@@ -355,7 +356,7 @@ private struct ToastModifier: ViewModifier {
                     }
                     
                     .task {
-                        try? await Task.sleep(for: .seconds(2))
+                        try? await Task.sleep(for: .seconds(2)) // Tiempo en segundos que se mostrara el Popup
                         
                         withAnimation {
                             isPresented = false
