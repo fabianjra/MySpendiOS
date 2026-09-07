@@ -16,26 +16,21 @@ struct AccountView: View {
     
     @State private var showNewItemModal = false
     @State private var showAlertDelete = false
-    @State private var showAlertDeleteMultiple = false
     
     var body: some View {
         VStack {
-            if !viewModel.allAccounts.isEmpty {
-                topMenu
-                    .padding(.top)
-            }
+            topMenu
             
             itemList
         }
         .background(Color.backgroundContentGradient)
-        .navigationTitle("Accounts")
+        .navigationTitle(.accountsTitle)
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(viewModel.isEditing)
         
         .toolbar {
             toolbarContent
         }
-        
-        
-        // MARK: EVENTS
         
         .onDisappear {
             viewModel.deactivateObservers()
@@ -47,11 +42,12 @@ struct AccountView: View {
         .sheet(isPresented: $showNewItemModal) {
             AddModifyAccountView()
         }
+        
         .sheet(item: $viewModel.accountToUpdate) { account in
             AddModifyAccountView(account)
                 .onDisappear {
                     viewModel.accountToUpdate = nil
-                    //TODO: Agregar mensaje a Toast del update.
+                    //TODO: Agregar mensaje a Toast del update. Debe ir al finalizar el ModifyAccountView.
                 }
         }
         
@@ -61,17 +57,6 @@ struct AccountView: View {
     // MARK: - VIEWS
     
     private var topMenu: some View {
-        VStack {
-            ListEditorView(isEditing: $viewModel.isEditing,
-                           counterSelected: viewModel.selectedAccounts.count) {
-                
-                viewModel.selectedAccounts.removeAll()
-                
-            } actionTrailingEdit: {
-                showAlertDeleteMultiple = true
-            }
-            
-            
             VStack {
                 RowLCTCointainer(disabled: viewModel.isEditing, leadingContent:  {
                     MenuContainer(addHorizontalPadding: true, disabled: viewModel.isEditing) {
@@ -88,8 +73,6 @@ struct AccountView: View {
                 })
             }
             .disabled(viewModel.isEditing)
-        }
-        .padding(.horizontal)
     }
 
     private func sortButton(for sortingOption: SortAccounts) -> some View {
@@ -110,7 +93,7 @@ struct AccountView: View {
             viewModel.resetSelectedSort()
         } label: {
             Label.restoreSelection
-                .foregroundStyle(Color.alert, Color.alert)
+                .foregroundStyle(.alert, .alert)
         }
     }
     
@@ -120,7 +103,7 @@ struct AccountView: View {
                 TransactionsEmptyView()
             } else {
                 ListContainer {
-                    SectionContainer("Available accounts", isInsideList: true) {
+                    SectionContainer(isInsideList: true) {
                         ForEach(viewModel.allAccounts) { item in
                             HStack {
                                 if viewModel.isEditing {
@@ -129,7 +112,7 @@ struct AccountView: View {
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: FrameSize.width.iconRowList,
                                                height: FrameSize.height.iconRowList)
-                                        .foregroundStyle(Color.alert)
+                                        .foregroundStyle(.alert)
                                         .transition(.scale.combined(with: .move(edge: .leading)))
                                 }
                                 
@@ -156,56 +139,64 @@ struct AccountView: View {
                                 Spacer()
                                 
                                 if item.id == viewModel.defaultModelSelected?.id {
-                                    TextPlain("Default",
-                                              color: Color.textFieldForeground,
-                                              family: .light,
-                                              size: .medium)
+                                    
+                                    Text(.accountsDefault)
+                                        .textStyle(color: .textFieldForeground,
+                                                   family: .light,
+                                                   size: .medium)
                                 }
                                 
                                 Image.chevronRight
                             }
-                            .listRowBackground(Color.listRowBackground) //Background for each row.
+                            //.listRowBackground(Color.listRowBackground) //Background for each row.
+
                             .swipeActions(edge: .trailing) {
-                                Button {
-                                    viewModel.accountToUpdate = item
-                                    showAlertDelete = true
-                                } label: {
-                                    Label.delete
+                                if !viewModel.isEditing {
+                                    
+                                    Button("", systemImage: ConstantSystemImage.trash) {
+                                        viewModel.accountToDelete = item
+                                        showAlertDelete = true
+                                    }
+                                    .tint(.alert)
+                                    
+                                    
+                                    Button("", systemImage: ConstantSystemImage.squareAndPencil) {
+                                        viewModel.accountToUpdate = item
+                                    }
+                                    //.tint(.warning)
                                 }
-                                .tint(Color.alert)
+                            }
+                            
+                            .contextMenu {
+                                if !viewModel.isEditing {
+                                    
+                                    Button(.selectorEdit, systemImage: ConstantSystemImage.squareAndPencil) {
+                                        viewModel.accountToUpdate = item
+                                    }
+                                    
+                                    
+                                    Button(.selectorDelete, systemImage: ConstantSystemImage.trash, role: .destructive) {
+                                        viewModel.accountToDelete = item
+                                        showAlertDelete = true
+                                    }
+                                    .tint(.alert)
+                                }
+                            }
+                            
+                            .alert(.accountDelete(viewModel.selectedAccounts.count), isPresented: $showAlertDelete) {
+                                Button(.alertOptionDelete, role: .destructive) {
+                                    Task {
+                                        if viewModel.selectedAccounts.isEmpty {
+                                            await viewModel.delete()
+                                        } else {
+                                            await viewModel.deleteMltipleItems()
+                                        }
+                                    }
+                                }
                                 
-                                Button {
-                                    viewModel.accountToUpdate = item
-                                } label: {
-                                    Label.edit
-                                }
-                                .tint(Color.warning)
-                            }
-                            
-                            // MARK: DELETE ITEMS SINGLE
-                            
-                            .alert("Delete account", isPresented: $showAlertDelete) {
-                                Button("Delete", role: .destructive) {
-                                    Task {
-                                        await viewModel.delete()
-                                    }
-                                }
-                                Button("Cancel", role: .cancel) { }
+                                Button(.alertOptionCancel, role: .cancel) { }
                             } message: {
-                                Text("Want to delete this account? \n This action cannot be undone.")
-                            }
-                            
-                            // MARK: DELETE ITEMS MULTIPLE
-                            
-                            .alert("Delete accounts", isPresented: $showAlertDeleteMultiple) {
-                                Button("Delete", role: .destructive) {
-                                    Task {
-                                        await viewModel.deleteMltipleItems()
-                                    }
-                                }
-                                Button("Cancel", role: .cancel) { }
-                            } message: {
-                                Text("Want to delete these accounts? \n This action cannot be undone.")
+                                Text(.accountDeleteMessage(viewModel.selectedAccounts.count))
                             }
                         }
                     }
@@ -239,10 +230,8 @@ struct AccountView: View {
         // MARK: TOP
         
         ToolbarItem(placement: .navigation) {
-            
             if viewModel.isEditing {
-                
-                if viewModel.selectedAccounts.count == viewModel.selectedAccounts.count {
+                if viewModel.selectedAccounts.count == viewModel.allAccounts.count {
                     Button(.selectorDeselectAll) {
                         viewModel.selectedAccounts = Set()
                     }
@@ -254,11 +243,48 @@ struct AccountView: View {
             }
         }
         
-        ToolbarItemGroup(placement: .bottomBar) {
-            Button(.transactionAdd, systemImage: ConstantSystemImage.addNewItem) {
-                showNewItemModal = true
+        ToolbarItem(placement: .title) {
+            if viewModel.selectedAccounts.count == .zero {
+                Text(.accountsTitle)
+                    .textStyle(size: .big)
+            } else {
+                Text(.selectorSelectedCountFemale(viewModel.selectedAccounts.count))
+                    .textStyle(size: .medium)
             }
-            .disabled(viewModel.isEditing)
+        }
+        
+        ToolbarItem(placement: .primaryAction) {
+            if viewModel.isEditing {
+                Button(role: .cancel) {
+                    viewModel.selectedAccounts.removeAll()
+                    viewModel.isEditing = false
+                }
+                
+            } else {
+                Button(.selectorSelect) {
+                    viewModel.isEditing = true
+                }
+                .disabled(viewModel.allAccounts.isEmpty)
+            }
+        }
+        
+        
+        // MARK: BOTTOM
+        
+        ToolbarSpacer(.flexible, placement: .bottomBar)
+        
+        ToolbarItem(placement: .bottomBar) {
+            if viewModel.isEditing {
+                Button(.selectorDelete, systemImage: ConstantSystemImage.trash) {
+                    showAlertDelete = true
+                }
+                .disabled(viewModel.selectedAccounts.isEmpty)
+                
+            } else {
+                Button(.transactionAdd, systemImage: ConstantSystemImage.addNewItem) {
+                    showNewItemModal = true
+                }
+            }
         }
     }
 }
@@ -273,19 +299,24 @@ private struct previewWrapper: View {
     var body: some View { AccountView() }
 }
 
-#Preview("Normal es_CR") {
+#Preview("Normal \(Previews.localeES_CR)") {
     NavigationStack {
         previewWrapper()
-            .environment(\.locale, .init(identifier: "es_CR"))
+            .environment(\.locale, .init(identifier: Previews.localeES_CR))
     }
 }
 
-#Preview("Saturated es_ES") {
-    previewWrapper(.saturated)
-        .environment(\.locale, .init(identifier: "es_ES"))
+#Preview("Saturated \(Previews.localeEN)") {
+    NavigationStack {
+        previewWrapper(.saturated)
+    }
+    .environment(\.locale, .init(identifier: Previews.localeEN))
 }
 
-#Preview("Empty en_US") {
-    previewWrapper(.empty)
-        .environment(\.locale, .init(identifier: "en_US"))
+
+#Preview("Empty \(Previews.localeEN)") {
+    NavigationStack {
+        previewWrapper(.empty)
+    }
+    .environment(\.locale, .init(identifier: Previews.localeEN))
 }

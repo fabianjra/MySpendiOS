@@ -43,7 +43,7 @@ struct TransactionHistoryView: View {
         }
         .padding(.horizontal)
         .navigationTitle(.titleHistoryView)
-        .navigationBarTitleDisplayMode(.inline) //TODO: CAMBIAR: El navegador de fechas va a ir abajo, entonces va a ponerse el titulo en grande al bajar.
+        .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             toolbarContent
         }
@@ -97,10 +97,10 @@ struct TransactionHistoryView: View {
     @ToolbarContentBuilder
     private var toolbarContent: some ToolbarContent {
         
+        // MARK: TOP
+        
         ToolbarItem(placement: .navigation) {
-            
             if viewModel.isEditing {
-                
                 if viewModel.selectedTransactions.count == viewModel.transactionsFiltered.count {
                     Button(.selectorDeselectAll) {
                         viewModel.selectedTransactions = Set()
@@ -114,25 +114,21 @@ struct TransactionHistoryView: View {
         }
         
         ToolbarItem(placement: .title) {
-            
             if viewModel.selectedTransactions.count == .zero {
                 Text(.titleHistoryView)
                     .textStyle(size: .big)
             } else {
-                Text(.selectorTransactionsCount(viewModel.selectedTransactions.count))
+                Text(.selectorSelectedCountFemale(viewModel.selectedTransactions.count))
                     .textStyle(size: .medium)
             }
-            
         }
         
         ToolbarItem(placement: .primaryAction) {
-            
             if viewModel.isEditing {
                 Button(role: .cancel) {
                     viewModel.selectedTransactions.removeAll()
                     viewModel.isEditing = false
                 }
-                
             } else {
                 Button(.selectorSelect) {
                     viewModel.isEditing = true
@@ -142,7 +138,7 @@ struct TransactionHistoryView: View {
         }
         
         
-        //Toolbar Bottom:
+        // MARK: BOTTOM
         
         if viewModel.isEditing {
             
@@ -506,11 +502,4 @@ private struct PreviewWrapper: View {
         PreviewWrapper()
     }
         .environment(\.locale, .init(identifier: Previews.localeEN_US_POSIX))
-}
-
-#Preview("Navigation \(Previews.localeES_CR)") {
-    NavigationStack {
-        PreviewWrapper(.normal)
-            .environment(\.locale, .init(identifier: Previews.localeES_CR))
-    }
 }

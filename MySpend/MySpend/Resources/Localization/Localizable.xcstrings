@@ -7,8 +7,62 @@
     "%@:" : {
 
     },
-    "%lld Selector.Transactions.Count" : {
-      "comment" : "Muestra la cantidad de transacciones seleccionadas",
+    "%lld Response.Accounts.Deleted" : {
+      "comment" : "Muestra la cantidad de cuentas eliminadas como respuesta al proceso",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld account deleted"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld accounts deleted"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : " Account deleted"
+                }
+              }
+            }
+          }
+        },
+        "es" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld cuenta eliminada"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld cuentas eliminadas"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Cuenta eliminada"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld Selector.Selected.Count.Female" : {
+      "comment" : "Muestra la cantidad de items seleccionados en version Femeinimo",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -24,6 +78,12 @@
                 "stringUnit" : {
                   "state" : "translated",
                   "value" : "%lld selected"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "selected"
                 }
               }
             }
@@ -43,6 +103,174 @@
                   "state" : "needs_review",
                   "value" : "%lld seleccionadas"
                 }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "seleccionada"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld Selector.Selected.Count.Male" : {
+      "comment" : "Muestra la cantidad de items seleccionados en version Masculino",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "%lld selected"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld selected"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "%lld selected"
+                }
+              }
+            }
+          }
+        },
+        "es" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld seleccionado"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld seleccionados"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "seleccionado"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Account.Delete %lld" : {
+      "comment" : "Titulo para el mensaje emergente de eliminar n cantidad de cuentas",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Delete %lld account"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Delete %lld accounts"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Delete account"
+                }
+              }
+            }
+          }
+        },
+        "es" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "Eliminar %lld cuenta"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "Eliminar %lld cuentas"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "Eliminar cuenta"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Account.Delete.Message %lld" : {
+      "comment" : "Mensaje para confirmar la eliminacion de cuentas en una alerta",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "Want to delete %lld transaction? This action can’t be undone."
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Want to delete %lld transactions? This action can’t be undone."
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Want to delete this transaction? This action can’t be undone."
+                }
+              }
+            }
+          }
+        },
+        "es" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "¿Desea eliminar %lld cuenta? Esta acción no se puede deshacer."
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "¿Desea eliminar %lld cuentas? Esta acción no se puede deshacer."
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "¿Desea eliminar esta cuenta? Esta acción no se puede deshacer."
+                }
               }
             }
           }
@@ -58,6 +286,24 @@
     "Accounts selected:" : {
       "comment" : "A label displayed above the list of selected accounts.",
       "isCommentAutoGenerated" : true
+    },
+    "Accounts.Default" : {
+      "comment" : "Describe con exactitud técnica que es la cuenta seleccionada por defecto al crear transacciones",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Default"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Predeterminada"
+          }
+        }
+      }
     },
     "Accounts.Empty" : {
       "comment" : "Indica que no hay cuentas",
@@ -77,28 +323,27 @@
         }
       }
     },
-    "Add item" : {
-      "comment" : "The label of a button that adds a new category.",
-      "isCommentAutoGenerated" : true
-    },
-    "Add Item" : {
-      "comment" : "A button label that says \"Add Item\".",
-      "extractionState" : "stale",
-      "isCommentAutoGenerated" : true,
+    "Accounts.Title" : {
+      "comment" : "Titulo para la pantalla de cuentas",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Add item"
+            "value" : "Accounts"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Agregar item"
+            "value" : "Cuentas"
           }
         }
       }
+    },
+    "Add item" : {
+      "comment" : "The label of a button that adds a new category.",
+      "isCommentAutoGenerated" : true
     },
     "Alert.Option.Cancel" : {
       "comment" : "Descripcion de cancelar en una alerta",
@@ -262,14 +507,6 @@
     "Creation (Oldest first)" : {
 
     },
-    "Cuenta eliminada" : {
-      "comment" : "Text displayed in a toast when an account is deleted.",
-      "isCommentAutoGenerated" : true
-    },
-    "Cuentas eliminadas" : {
-      "comment" : "Text displayed in a toast when multiple accounts are deleted.",
-      "isCommentAutoGenerated" : true
-    },
     "Currency list" : {
 
     },
@@ -301,9 +538,6 @@
 
     },
     "Delete account" : {
-
-    },
-    "Delete accounts" : {
 
     },
     "Delete categoreis" : {
@@ -1491,20 +1725,20 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
-                  "value" : "Desea eliminar %lld transacción? Esta acción no se puede deshacer."
+                  "state" : "translated",
+                  "value" : "¿Desea eliminar %lld transacción? Esta acción no se puede deshacer."
                 }
               },
               "other" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
-                  "value" : "Desea eliminar %lld transacciones? Esta acción no se puede deshacer."
+                  "state" : "translated",
+                  "value" : "¿Desea eliminar %lld transacciones? Esta acción no se puede deshacer."
                 }
               },
               "zero" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
-                  "value" : "Desea eliminar esta transacción? Esta acción no se puede deshacer."
+                  "state" : "translated",
+                  "value" : "¿Desea eliminar esta transacción? Esta acción no se puede deshacer."
                 }
               }
             }
@@ -1648,9 +1882,6 @@
 
     },
     "User is not logged in." : {
-
-    },
-    "Want to delete these accounts? \n This action cannot be undone." : {
 
     },
     "Want to delete these categories? \n This action cannot be undone." : {

@@ -27,6 +27,7 @@ final class AccountViewModel {
     }
     
     var allAccounts: [AccountModel] = []
+    var accountToDelete: AccountModel?
     var accountToUpdate: AccountModel?
     
     // MARK: DATA ON SCREEN
@@ -89,18 +90,18 @@ final class AccountViewModel {
     
 
     func delete() async {
-        guard let accountToUpdate = accountToUpdate else { return }
+        guard let accountToUpdate = accountToDelete else { return }
         
         defer {
-            self.accountToUpdate = nil
+            self.accountToDelete = nil
         }
         
         do {
             try await AccountManager(viewContext).delete(accountToUpdate)
-            responseToast = ResponseToast(LocalizedStringResource(stringLiteral: "Cuenta eliminada"), .error)
+            responseToast = ResponseToast(.responseAccountsDeleted(.zero), .ok)
         } catch {
             Logger.exception(error, type: .CoreData)
-            responseToast = ResponseToast(LocalizedStringResource(stringLiteral: error.localizedDescription), .error) //TODO: Migrar mesaje error para usar localizable
+            responseToast = ResponseToast(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)
         }
     }
     
@@ -115,10 +116,10 @@ final class AccountViewModel {
                 try await AccountManager(viewContext).delete(item)
             }
             
-            responseToast = ResponseToast(LocalizedStringResource(stringLiteral: "Cuentas eliminadas"), .error)
+            responseToast = ResponseToast(.responseAccountsDeleted(selectedAccounts.count), .ok)
         } catch {
             Logger.exception(error)
-            responseToast = ResponseToast(LocalizedStringResource(stringLiteral: error.localizedDescription), .error) //TODO: Migrar mesaje error para usar localizable
+            responseToast = ResponseToast(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)
         }
     }
     
