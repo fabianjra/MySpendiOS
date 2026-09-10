@@ -19,13 +19,12 @@ struct AccountView: View {
     
     var body: some View {
         VStack {
-            topMenu
-            
             itemList
         }
         .background(Color.backgroundContentGradient)
         .navigationTitle(.accountsTitle)
         .navigationBarTitleDisplayMode(.inline)
+//        .toolbarTitleDisplayMode(.inlineLarge)
         .navigationBarBackButtonHidden(viewModel.isEditing)
         
         .toolbar {
@@ -55,47 +54,6 @@ struct AccountView: View {
     }
     
     // MARK: - VIEWS
-    
-    private var topMenu: some View {
-            VStack {
-                RowLCTCointainer(disabled: viewModel.isEditing, leadingContent:  {
-                    MenuContainer(addHorizontalPadding: true, disabled: viewModel.isEditing) {
-                        Section("Sorted by: \(viewModel.sortSelection.rawValue)") {
-                            sortButton(for: .byNameAz)
-                            sortButton(for: .byCreationNewest)
-                        }
-                        
-                        // Reset the sort selection to default
-                        Section {
-                            sortButtonResetToDefault
-                        }
-                    }
-                })
-            }
-            .disabled(viewModel.isEditing)
-    }
-
-    private func sortButton(for sortingOption: SortAccounts) -> some View {
-        Button {
-            if viewModel.sortSelection == sortingOption {
-                viewModel.sortSelection = sortingOption.toggle
-            } else {
-                viewModel.sortSelection = sortingOption
-            }
-
-        } label: {
-            viewModel.sortSelection == sortingOption ? sortingOption.label() : sortingOption.label(inverted: false)
-        }
-    }
-    
-    private var sortButtonResetToDefault: some View {
-        Button {
-            viewModel.resetSelectedSort()
-        } label: {
-            Label.restoreSelection
-                .foregroundStyle(.alert, .alert)
-        }
-    }
     
     private var itemList: some View {
         VStack {
@@ -148,7 +106,6 @@ struct AccountView: View {
                                 
                                 Image.chevronRight
                             }
-                            //.listRowBackground(Color.listRowBackground) //Background for each row.
 
                             .swipeActions(edge: .trailing) {
                                 if !viewModel.isEditing {
@@ -163,7 +120,6 @@ struct AccountView: View {
                                     Button("", systemImage: ConstantSystemImage.squareAndPencil) {
                                         viewModel.accountToUpdate = item
                                     }
-                                    //.tint(.warning)
                                 }
                             }
                             
@@ -201,9 +157,6 @@ struct AccountView: View {
                         }
                     }
                 }
-                .animation(.default, value: viewModel.allAccounts.count)
-                .animation(.default, value: viewModel.isEditing)
-                .animation(.default, value: viewModel.sortSelection)
             }
         }
     }
@@ -253,23 +206,63 @@ struct AccountView: View {
             }
         }
         
-        ToolbarItem(placement: .primaryAction) {
+        
+        // MARK: BOTTOM
+        
+        ToolbarItemGroup(placement: .primaryAction) {
+            
+            
+            
             if viewModel.isEditing {
                 Button(role: .cancel) {
                     viewModel.selectedAccounts.removeAll()
-                    viewModel.isEditing = false
+                    
+                    withAnimation {
+                        viewModel.isEditing = false
+                    }
                 }
-                
             } else {
-                Button(.selectorSelect) {
-                    viewModel.isEditing = true
+                
+                Menu("Options", systemImage: ConstantSystemImage.options) {
+                    
+                    Button {
+                        viewModel.isEditing = true
+                    } label: {
+                        Label(.selectorSelect, systemImage: ConstantSystemImage.checkmarkCircle)
+                    }
+            
+                    
+                    Menu {
+                        Section {
+                            sortButton(for: .byNameAz)
+                            sortButton(for: .byCreationNewest)
+                        }
+                        
+                        // Reset the sort selection to default
+                        Section {
+                            Button {
+                                withAnimation {
+                                    viewModel.resetSelectedSort()
+                                }
+                            } label: {
+                                Label.restoreSelection
+                                    .tint(.alert)
+                            }
+                        }
+                    } label: {
+                        Label("Sort by", systemImage: ConstantSystemImage.arrowUpDown) //TODO: Agregar estilo para label
+                            .font(.montserrat())
+                        
+                        Text(viewModel.sortSelection.rawValue)
+                            .textStyle
+                    }
+                    
                 }
+                .menuOrder(.fixed)
                 .disabled(viewModel.allAccounts.isEmpty)
             }
+            
         }
-        
-        
-        // MARK: BOTTOM
         
         ToolbarSpacer(.flexible, placement: .bottomBar)
         
@@ -285,6 +278,21 @@ struct AccountView: View {
                     showNewItemModal = true
                 }
             }
+        }
+    }
+    
+    
+    private func sortButton(for sortingOption: SortAccounts) -> some View {
+        Button {
+            withAnimation {
+                if viewModel.sortSelection == sortingOption {
+                    viewModel.sortSelection = sortingOption.toggle
+                } else {
+                    viewModel.sortSelection = sortingOption
+                }
+            }
+        } label: {
+            viewModel.sortSelection == sortingOption ? sortingOption.label() : sortingOption.label(inverted: false)
         }
     }
 }

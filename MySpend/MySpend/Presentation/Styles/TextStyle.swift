@@ -9,6 +9,8 @@ import SwiftUI
 
 private struct TextStyle: ViewModifier {
     
+    @Environment(\.isEnabled) private var isEnabled: Bool
+    
     let color: Color
     let family: Font.Family
     let size: Font.Sizes
@@ -18,7 +20,7 @@ private struct TextStyle: ViewModifier {
     
     func body(content: Content) -> some View {
         content
-            .foregroundColor(color)
+            .foregroundColor(isEnabled ? color : .secondary)
             .font(.montserrat(family, size: size))
             .multilineTextAlignment(aligment)
             .truncationMode(truncateMode)
@@ -76,6 +78,11 @@ extension Text {
         
         Text("This is an error message")
             .textErrorStyle
+            .padding()
+        
+        Text("This text is disabled")
+            .textStyle
+            .disabled(true)
             .padding()
         
         Spacer()
