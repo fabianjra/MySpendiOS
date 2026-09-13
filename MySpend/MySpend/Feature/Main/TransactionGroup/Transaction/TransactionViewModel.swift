@@ -47,6 +47,7 @@ class TransactionViewModel: BaseViewModel {
             let fetched = try await TransactionManager(viewContext).fetchAll()
             allTransactions = fetched
             transactionsFiltered = fetched
+            calculateTotalBalance()
             
         } catch {
             errorMessage = error.localizedDescription
@@ -75,5 +76,35 @@ class TransactionViewModel: BaseViewModel {
         
         groupedTransactionsIncomes = groupedTransactions.filter { $0.category.type == .income }.sorted { $0.totalAmount > $1.totalAmount }
         groupedTransactionsExpenses = groupedTransactions.filter { $0.category.type == .expense }.sorted { $0.totalAmount > $1.totalAmount }
+        
+        calculateTotalBalance()
+    }
+    
+    
+    // MARK: Total balance
+    
+    var totalIncomesFormatted =  Decimal.zero.convertAmountDecimalToString.addCurrencySymbol
+    var totalExpensesFormatted = Decimal.zero.convertAmountDecimalToString.addCurrencySymbol
+    var totalBalanceFormatted = Decimal.zero.convertAmountDecimalToString.addCurrencySymbol
+    
+    /**
+     Esta función filtra las transacciones por CategoryType, sumando los ingresos (income) y los gastos (expense).
+     Luego, calcula el balance final restando los gastos a los ingresos y formatea el balance.
+     */
+    func calculateTotalBalance() {
+        
+        let totalIncome = transactionsFiltered
+            .filter { $0.category.type == .income }
+            .reduce(Decimal.zero) { $0 + $1.amount }
+
+        let totalExpenses = transactionsFiltered
+            .filter { $0.category.type  == .expense }
+            .reduce(Decimal.zero) { $0 + $1.amount }
+
+        let totalBalance = totalIncome - totalExpenses
+
+        totalIncomesFormatted = totalIncome.convertAmountDecimalToString.addCurrencySymbol
+        totalExpensesFormatted = totalExpenses.convertAmountDecimalToString.addCurrencySymbol
+        totalBalanceFormatted = totalBalance.convertAmountDecimalToString.addCurrencySymbol
     }
 }

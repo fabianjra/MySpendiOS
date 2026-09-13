@@ -86,34 +86,48 @@ struct TransactionView: View {
     }
     
     var headerTitle: some View {
-        HStack {
-            VStack(alignment: .leading) {
-                Text(.mainHeaderGreet(viewModel.userName, Emojis.greeting.rawValue))
-                    .textStyle(family: .semibold,
-                               size: .big,
-                               lineLimit: ConstantViews.singleTextMaxLines,
-                               truncateMode: .tail)
+        VStack(alignment: .leading) {
+
+            HStack {
+                VStack(alignment: .leading) {
+                    Text(.mainHeaderGreet(viewModel.userName, Emojis.greeting.rawValue))
+                        .textStyle(family: .semibold,
+                                   size: .big,
+                                   lineLimit: ConstantViews.singleTextMaxLines,
+                                   truncateMode: .tail)
+                    
+                    Text(.mainHeaderSubtitle)
+                        .textStyle(family: .light,
+                                   size: .small,
+                                   lineLimit: ConstantViews.singleTextMaxLines)
+                }
                 
-                Text(.mainHeaderSubtitle)
-                    .textStyle(family: .light,
-                               size: .small,
-                               lineLimit: ConstantViews.singleTextMaxLines)
+                Spacer()
+                
+                Button {
+                    showSettings = true
+                } label: {
+                    Image.settingsFill
+                        .resizable()
+                        .frame(width: ConstantFrames.navigationBarIcon,
+                               height: ConstantFrames.navigationBarIcon)
+                        .padding(ConstantViews.paddingNavigationBarIcon)
+                        .foregroundStyle(Color.buttonForeground)
+                }
+                .buttonStyle(.glass)
+                .buttonBorderShape(.circle)
             }
+            .padding(.bottom)
             
-            Spacer()
-            
-            Button {
-                showSettings = true
-            } label: {
-                Image.settingsFill
-                    .resizable()
-                    .frame(width: ConstantFrames.navigationBarIcon,
-                           height: ConstantFrames.navigationBarIcon)
-                    .padding(ConstantViews.paddingNavigationBarIcon)
-                    .foregroundStyle(Color.buttonForeground)
+            VStack(alignment: .leading) {
+                
+                Text(.transactionsTotalBalance)
+                    .fontDesign(.rounded)
+                
+                Text(viewModel.totalBalanceFormatted)
+                    .font(.largeTitle)
+                    .fontDesign(.rounded)
             }
-            .buttonStyle(.glass)
-            .buttonBorderShape(.circle)
         }
     }
     
@@ -252,7 +266,8 @@ struct TransactionView: View {
             Text(viewModel.errorMessage)
                 .textErrorStyle
             
-            TotalBalanceView(transactions: viewModel.transactionsFiltered)
+            TotalBalanceView(transactions: viewModel.transactionsFiltered,
+                             showTotalBalance: false)
                 .padding(.bottom)
             
             //Tiene un efecto no deseado al transicionar entre tab y tab.
