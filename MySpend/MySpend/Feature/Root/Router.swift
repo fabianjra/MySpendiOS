@@ -7,8 +7,9 @@
 
 import SwiftUI
 
-class Router: ObservableObject {
-    @Published var path: NavigationPath = NavigationPath()
+@Observable
+class Router {
+    var path = NavigationPath()
 
     static let shared: Router = Router()
     

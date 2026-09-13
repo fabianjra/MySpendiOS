@@ -8,7 +8,7 @@ import SwiftUI
 
 struct RootView: View {
     
-    @StateObject var router = Router.shared
+    @State private var router = Router.shared
     
     @AppStorage(UserDefaultsKeys.isOnBoarding.rawValue,
                 store: UserDefaultsManager.userDefaults)

@@ -40,9 +40,7 @@ struct TransactionView: View {
         // MARK: SHEETS
         
         .sheet(isPresented: $showSettings) {
-            NavigationStack {
-                SettingsView()
-            }
+            SettingsView()
         }
         .sheet(isPresented: $showNewTransactionView) {
             NavigationStack {

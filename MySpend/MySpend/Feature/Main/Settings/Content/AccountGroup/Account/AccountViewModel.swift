@@ -89,6 +89,14 @@ final class AccountViewModel {
     }
     
 
+    func toggleAccountSelection(_ account: AccountModel) {
+        if selectedAccounts.contains(account) {
+            selectedAccounts.remove(account)
+        } else {
+            selectedAccounts.insert(account)
+        }
+    }
+    
     func delete() async {
         guard let accountToUpdate = accountToDelete else { return }
         

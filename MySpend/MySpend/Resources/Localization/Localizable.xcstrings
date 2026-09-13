@@ -942,6 +942,9 @@
         }
       }
     },
+    "Options" : {
+
+    },
     "PersonalInformation.Input.Email" : {
       "comment" : "Indica el email del profile",
       "extractionState" : "manual",
@@ -1543,6 +1546,9 @@
       }
     },
     "Something wrong happened, try again." : {
+
+    },
+    "Sort by" : {
 
     },
     "Sort.Title.Description %@" : {

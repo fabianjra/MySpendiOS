@@ -12,7 +12,7 @@ struct AccountView: View {
     @State private var viewModel = AccountViewModel()
     
     
-    // MARK: USED ONLY IN VIEW
+    // MARK: LOCAL VARS
     
     @State private var showNewItemModal = false
     @State private var showAlertDelete = false
@@ -21,7 +21,6 @@ struct AccountView: View {
         VStack {
             itemList
         }
-        .background(Color.backgroundContentGradient)
         .navigationTitle(.accountsTitle)
         .navigationBarTitleDisplayMode(.inline)
 //        .toolbarTitleDisplayMode(.inlineLarge)
@@ -58,11 +57,25 @@ struct AccountView: View {
     private var itemList: some View {
         VStack {
             if viewModel.allAccounts.isEmpty {
-                TransactionsEmptyView()
+                
+                HStack {
+                    Spacer()
+                    TransactionsEmptyView()
+                    Spacer()
+                }
+                .background(Color.backgroundContentGradient)
+                
             } else {
-                ListContainer {
-                    SectionContainer(isInsideList: true) {
-                        ForEach(viewModel.allAccounts) { item in
+                List {
+                    ForEach(viewModel.allAccounts) { item in
+                        Button {
+                            if viewModel.isEditing {
+                                viewModel.toggleAccountSelection(item)
+                            } else {
+                                viewModel.accountToUpdate = item
+                            }
+                            
+                        } label: {
                             HStack {
                                 if viewModel.isEditing {
                                     Image(systemName: viewModel.selectedAccounts.contains(item) ? ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle)
@@ -72,91 +85,86 @@ struct AccountView: View {
                                                height: FrameSize.height.iconRowList)
                                         .foregroundStyle(.alert)
                                         .transition(.scale.combined(with: .move(edge: .leading)))
+                                    
                                 }
                                 
-                                let icon = item.icon.getIconFromSFSymbol
+                                item.icon.getIconFromSFSymbol?
+                                    .foregroundStyle(.textPrimaryForeground)
                                 
-                                if let image = icon {
-                                    image
-                                        .frame(width: FrameSize.width.iconCategoryList,
-                                               height: FrameSize.height.iconCategoryList)
-                                }
-                                
-                                Button(item.name) {
-                                    if viewModel.isEditing {
-                                        if viewModel.selectedAccounts.contains(item) {
-                                            viewModel.selectedAccounts.remove(item)
-                                        } else {
-                                            viewModel.selectedAccounts.insert(item)
-                                        }
-                                    } else {
-                                        viewModel.accountToUpdate = item
-                                    }
-                                }
+                                Text(item.name)
+                                    .textStyle
                                 
                                 Spacer()
                                 
                                 if item.id == viewModel.defaultModelSelected?.id {
-                                    
                                     Text(.accountsDefault)
-                                        .textStyle(color: .textFieldForeground,
+                                        .textStyle(color: .textPrimaryForeground,
                                                    family: .light,
-                                                   size: .medium)
+                                                   size: .mediumSmall)
                                 }
                                 
-                                Image.chevronRight
-                            }
-
-                            .swipeActions(edge: .trailing) {
                                 if !viewModel.isEditing {
-                                    
-                                    Button("", systemImage: ConstantSystemImage.trash) {
-                                        viewModel.accountToDelete = item
-                                        showAlertDelete = true
-                                    }
-                                    .tint(.alert)
-                                    
-                                    
-                                    Button("", systemImage: ConstantSystemImage.squareAndPencil) {
-                                        viewModel.accountToUpdate = item
+                                    Image.chevronRight
+                                        .tint(.secondary)
+                                }
+                            }
+                        }
+                        
+                        .swipeActions(edge: .trailing) {
+                            if !viewModel.isEditing {
+                                
+                                Button("", systemImage: ConstantSystemImage.trash) {
+                                    viewModel.accountToDelete = item
+                                    showAlertDelete = true
+                                }
+                                .tint(.alert)
+                                
+                                
+                                Button("", systemImage: ConstantSystemImage.squareAndPencil) {
+                                    viewModel.accountToUpdate = item
+                                }
+                            }
+                        }
+                        
+                        .contextMenu {
+                            if !viewModel.isEditing {
+                                
+                                Button(.selectorEdit, systemImage: ConstantSystemImage.squareAndPencil) {
+                                    viewModel.accountToUpdate = item
+                                }
+                                
+                                
+                                Button(.selectorDelete, systemImage: ConstantSystemImage.trash, role: .destructive) {
+                                    viewModel.accountToDelete = item
+                                    showAlertDelete = true
+                                }
+                                .tint(.alert)
+                            }
+                        }
+                        
+                        .alert(.accountDelete(viewModel.selectedAccounts.count), isPresented: $showAlertDelete) {
+                            Button(.alertOptionDelete, role: .destructive) {
+                                Task {
+                                    if viewModel.selectedAccounts.isEmpty {
+                                        await viewModel.delete()
+                                    } else {
+                                        await viewModel.deleteMltipleItems()
                                     }
                                 }
                             }
                             
-                            .contextMenu {
-                                if !viewModel.isEditing {
-                                    
-                                    Button(.selectorEdit, systemImage: ConstantSystemImage.squareAndPencil) {
-                                        viewModel.accountToUpdate = item
-                                    }
-                                    
-                                    
-                                    Button(.selectorDelete, systemImage: ConstantSystemImage.trash, role: .destructive) {
-                                        viewModel.accountToDelete = item
-                                        showAlertDelete = true
-                                    }
-                                    .tint(.alert)
-                                }
-                            }
-                            
-                            .alert(.accountDelete(viewModel.selectedAccounts.count), isPresented: $showAlertDelete) {
-                                Button(.alertOptionDelete, role: .destructive) {
-                                    Task {
-                                        if viewModel.selectedAccounts.isEmpty {
-                                            await viewModel.delete()
-                                        } else {
-                                            await viewModel.deleteMltipleItems()
-                                        }
-                                    }
-                                }
-                                
-                                Button(.alertOptionCancel, role: .cancel) { }
-                            } message: {
-                                Text(.accountDeleteMessage(viewModel.selectedAccounts.count))
-                            }
+                            Button(.alertOptionCancel, role: .cancel) { }
+                        } message: {
+                            Text(.accountDeleteMessage(viewModel.selectedAccounts.count))
                         }
                     }
                 }
+                //.foregroundColor(Color.listRowForeground) //Para los botones. El texto queda originalmente en azul.
+                //.navigationLinkIndicatorVisibility(.visible)
+                .animation(.default, value: viewModel.allAccounts)
+                .scrollContentBackground(.hidden)
+                .background(Color.backgroundContentGradient)
+                
             }
         }
     }
@@ -211,8 +219,6 @@ struct AccountView: View {
         
         ToolbarItemGroup(placement: .primaryAction) {
             
-            
-            
             if viewModel.isEditing {
                 Button(role: .cancel) {
                     viewModel.selectedAccounts.removeAll()
@@ -226,7 +232,9 @@ struct AccountView: View {
                 Menu("Options", systemImage: ConstantSystemImage.options) {
                     
                     Button {
-                        viewModel.isEditing = true
+                        withAnimation {
+                            viewModel.isEditing = true
+                        }
                     } label: {
                         Label(.selectorSelect, systemImage: ConstantSystemImage.checkmarkCircle)
                     }
