@@ -408,42 +408,6 @@
         }
       }
     },
-    "Button.History" : {
-      "comment" : "Botón para ir a ver el historial",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Go to History"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ir al historial"
-          }
-        }
-      }
-    },
-    "Button.History.Subtitle" : {
-      "comment" : "Subtitulo para el botón de ir al historial",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Transactions details"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ver los detalles de las transacciones"
-          }
-        }
-      }
-    },
     "Button.Save" : {
       "comment" : "Indica que el boton es para guardar informacion",
       "extractionState" : "manual",
@@ -1640,6 +1604,42 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Agregar transacción"
+          }
+        }
+      }
+    },
+    "Transaction.Button.Details" : {
+      "comment" : "Botón para ir a ver los detalles de las transacciones",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Details"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detalles"
+          }
+        }
+      }
+    },
+    "Transaction.Button.Details.Subtitle" : {
+      "comment" : "Subtitulo para el botón de ir a los detalles de las transacciones",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Transactions details"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ver los detalles de las transacciones"
           }
         }
       }

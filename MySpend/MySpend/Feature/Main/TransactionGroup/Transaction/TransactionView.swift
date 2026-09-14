@@ -90,13 +90,13 @@ struct TransactionView: View {
 
             HStack {
                 VStack(alignment: .leading) {
+                    Text(.mainHeaderSubtitle)
+                        .font(.footnote.weight(.thin))
+                        .lineLimit(ConstantViews.singleTextMaxLines)
+                    
                     Text(.mainHeaderGreet(viewModel.userName, Emojis.greeting.rawValue))
                         .font(.title2.bold())
                         .fontDesign(.rounded)
-                        .lineLimit(ConstantViews.singleTextMaxLines)
-                    
-                    Text(.mainHeaderSubtitle)
-                        .font(.callout.weight(.thin))
                         .lineLimit(ConstantViews.singleTextMaxLines)
                 }
                 
@@ -106,61 +106,50 @@ struct TransactionView: View {
                     showSettings = true
                 } label: {
                     Image.settingsFill
-                        .resizable()
-                        .frame(width: ConstantFrames.navigationBarIcon,
-                               height: ConstantFrames.navigationBarIcon)
-                        .padding(ConstantViews.paddingNavigationBarIcon)
+                        .font(.title2)
                         .foregroundStyle(Color.buttonForeground)
                 }
                 .buttonStyle(.glass)
-                .buttonBorderShape(.circle)
             }
             .padding(.bottom)
             
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: .zero) {
                 
                 Text(.transactionsTotalBalance)
                     .fontWeight(.light)
                     .fontDesign(.rounded)
                 
-                Text(viewModel.totalBalanceFormatted)
-                    .font(.largeTitle)
-                    .fontDesign(.rounded)
+                HStack {
+                    Text(viewModel.totalBalanceFormatted)
+                        .font(.largeTitle)
+                        .fontDesign(.rounded)
+                    
+                    Spacer()
+                    
+                    NavigationLink {
+                        TransactionHistoryView(transactionsLoaded: $viewModel.transactionsFiltered,
+                                               dateTimeInterval: $viewModel.dateTimeInterval,
+                                               selectedDate: $viewModel.selectedDate)
+                    } label: {
+                        HStack {
+                            Text(.transactionButtonDetails)
+                                .fontDesign(.rounded)
+                            
+                            Image.chevronRight
+                        }
+                        .foregroundColor(Color.textPrimaryForeground)
+                        .padding(.horizontal)
+                        .padding(.vertical, ConstantViews.bigSpacing)
+                        //.glassEffect(.regular.tint(Color.secondaryTop).interactive())
+                        .glassEffect(.regular.interactive())
+                    }
+                }
             }
         }
     }
     
     var headerActions: some View {
         VStack {
-            NavigationLink {
-                TransactionHistoryView(transactionsLoaded: $viewModel.transactionsFiltered,
-                                       dateTimeInterval: $viewModel.dateTimeInterval,
-                                       selectedDate: $viewModel.selectedDate)
-            } label: {
-                HStack {
-                    Image.stackFill
-                        .foregroundColor(Color.textPrimaryForeground)
-                    
-                    VStack(alignment: .leading) {
-                        Text(.buttonHistory)
-                            .textStyle
-                        
-                        Text(.buttonHistorySubtitle)
-                            .textStyle(size: .small)
-                    }
-                    .padding(.leading)
-                    
-                    Spacer()
-                    
-                    Image.arrowRight
-                        .foregroundColor(Color.textPrimaryForeground)
-                }
-                .padding(.horizontal)
-                .padding(.vertical)
-                //.glassEffect(.regular.tint(Color.secondaryTop).interactive())
-                .glassEffect(.regular.interactive())
-            }
-            
             DateIntervalNavigatorView(dateTimeInterval: $viewModel.dateTimeInterval,
                                       selectedDate: $viewModel.selectedDate,
                                       isEditing: .constant(false)){}
