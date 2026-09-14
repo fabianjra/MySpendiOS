@@ -91,15 +91,13 @@ struct TransactionView: View {
             HStack {
                 VStack(alignment: .leading) {
                     Text(.mainHeaderGreet(viewModel.userName, Emojis.greeting.rawValue))
-                        .textStyle(family: .semibold,
-                                   size: .big,
-                                   lineLimit: ConstantViews.singleTextMaxLines,
-                                   truncateMode: .tail)
+                        .font(.title2.bold())
+                        .fontDesign(.rounded)
+                        .lineLimit(ConstantViews.singleTextMaxLines)
                     
                     Text(.mainHeaderSubtitle)
-                        .textStyle(family: .light,
-                                   size: .small,
-                                   lineLimit: ConstantViews.singleTextMaxLines)
+                        .font(.callout.weight(.thin))
+                        .lineLimit(ConstantViews.singleTextMaxLines)
                 }
                 
                 Spacer()
@@ -122,6 +120,7 @@ struct TransactionView: View {
             VStack(alignment: .leading) {
                 
                 Text(.transactionsTotalBalance)
+                    .fontWeight(.light)
                     .fontDesign(.rounded)
                 
                 Text(viewModel.totalBalanceFormatted)
