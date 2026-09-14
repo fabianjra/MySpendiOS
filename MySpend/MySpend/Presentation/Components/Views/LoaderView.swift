@@ -26,5 +26,5 @@ struct LoaderView: View {
     VStack {
         LoaderView()
     }
-    .background(Color.backgroundContentGradient)
+    .background(Color.backgroundGradient)
 }

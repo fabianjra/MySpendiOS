@@ -55,7 +55,7 @@ struct OnBoardingAccountView: View {
         .padding(.horizontal)
         .navigationTitle(.onBoardingAccountTitle)
         .navigationSubtitle(.onBoardingAccountEntertName)
-        .background(Color.backgroundContentGradient)
+        .background(Color.backgroundGradient)
         .onAppear { focusedField = .accountName }
     }
 }

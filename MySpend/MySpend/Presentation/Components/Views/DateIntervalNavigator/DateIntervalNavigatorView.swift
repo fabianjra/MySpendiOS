@@ -75,17 +75,11 @@ struct DateIntervalNavigatorView<Content: View>: View {
                     .padding(.leading, ConstantViews.bigSpacing)
             }
             
-            Button {
-                //Pressed many times by mistake. There is now a button to the right called "today".
-                //selectedDate = viewModel.navigateDateTime(selectedDate, to: .today, byAdding: dateTimeInterval)
-            } label: {
-                let header = viewModel.getHeader(selectedDate, by: dateTimeInterval)
-                
-                TextPlain(header, color: isEditing ? Color.disabledForeground : Color.buttonForeground, size: .medium)
-                    .frame(width: FrameSize.width.buttonSelectValueIntervalCenter,
-                           height: FrameSize.height.buttonSelectValueInterval)
-                    .contentShape(Rectangle())
-            }
+            Text(viewModel.getHeader(selectedDate, by: dateTimeInterval))
+                .font(.callout)
+            //.scaledToFit()
+                .frame(width: FrameSize.width.buttonSelectValueIntervalCenter)
+            //.contentShape(Rectangle()) // Para seleccionar todo el componente
             
             
             Button {

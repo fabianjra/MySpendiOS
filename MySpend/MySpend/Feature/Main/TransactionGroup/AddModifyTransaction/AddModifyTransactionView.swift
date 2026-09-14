@@ -113,7 +113,7 @@ struct AddModifyTransactionView: View {
             
             .padding(.horizontal)
             .scrollDisabled(true)
-            .background(Color.backgroundContentGradient)
+            .background(Color.backgroundGradient)
             .ignoresSafeArea(.all, edges: .bottom)
             
             

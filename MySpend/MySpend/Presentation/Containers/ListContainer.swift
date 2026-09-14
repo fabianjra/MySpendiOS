@@ -33,5 +33,5 @@ struct ListContainer<Content: View>: View {
                 .listRowBackground(Color.listRowBackground)
         }
     }
-    .background(Color.backgroundContentGradient)
+    .background(Color.backgroundGradient)
 }

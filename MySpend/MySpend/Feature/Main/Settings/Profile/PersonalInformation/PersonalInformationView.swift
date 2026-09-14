@@ -43,7 +43,7 @@ struct PersonalInformationView: View {
         .navigationBarTitleDisplayMode(.large)
         .navigationTitle(.personalInformationTitle)
         .navigationSubtitle(.personalInformationSubtitle)
-        .background(Color.backgroundContentGradient)
+        .background(Color.backgroundGradient)
         
         .onAppear {
             viewModel.loadData()

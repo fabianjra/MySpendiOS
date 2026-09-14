@@ -74,5 +74,5 @@ struct SectionContainer<Content: View>: View {
         .padding()
         .background(Color.backgroundBottom)
     }
-    .background(Color.backgroundContentGradient)
+    .background(Color.backgroundGradient)
 }

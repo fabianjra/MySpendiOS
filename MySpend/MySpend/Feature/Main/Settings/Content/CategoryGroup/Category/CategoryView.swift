@@ -63,7 +63,7 @@ struct CategoryView: View {
                     modelToModify = nil
                 }
         }
-        .background(Color.backgroundContentGradient)
+        .background(Color.backgroundGradient)
     }
     
     // MARK: - VIEWS

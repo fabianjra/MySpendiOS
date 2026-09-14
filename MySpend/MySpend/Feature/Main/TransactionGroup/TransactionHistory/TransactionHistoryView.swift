@@ -64,7 +64,7 @@ struct TransactionHistoryView: View {
                     }
             }
         }
-        .background(Color.backgroundContentGradient)
+        .background(Color.backgroundGradient)
         .ignoresSafeArea(.keyboard, edges: .bottom)
         
         .onAppear {

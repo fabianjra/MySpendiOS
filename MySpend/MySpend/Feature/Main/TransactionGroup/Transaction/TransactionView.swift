@@ -27,14 +27,12 @@ struct TransactionView: View {
                 
             } else {
                 headerTitle
-
-                headerActions
                 
                 bodyContent
             }
         }
         .padding(.horizontal)
-        .background(Color.backgroundContentGradient)
+        .background(Color.backgroundGradient)
         
         
         // MARK: SHEETS
@@ -107,7 +105,6 @@ struct TransactionView: View {
                 } label: {
                     Image.settingsFill
                         .font(.title2)
-                        .foregroundStyle(Color.buttonForeground)
                 }
                 .buttonStyle(.glass)
             }
@@ -148,16 +145,13 @@ struct TransactionView: View {
         }
     }
     
-    var headerActions: some View {
+    var bodyContent: some View {
         VStack {
+            
             DateIntervalNavigatorView(dateTimeInterval: $viewModel.dateTimeInterval,
                                       selectedDate: $viewModel.selectedDate,
                                       isEditing: .constant(false)){}
-        }
-    }
-    
-    var bodyContent: some View {
-        VStack {
+            
             if filters.allAccounts.count > 1 {
                 
                 /// ¿Filtro activo?

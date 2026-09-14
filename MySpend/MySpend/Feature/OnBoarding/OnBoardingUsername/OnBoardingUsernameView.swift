@@ -49,7 +49,7 @@ struct OnBoardingUsernameView: View {
         .padding(.horizontal)
         .navigationTitle(.onBoardingUsernameTitle)
         .navigationSubtitle(.onBoardingUsernameEnterName)
-        .background(Color.backgroundContentGradient)
+        .background(Color.backgroundGradient)
         .onAppear { isFocused = true }
     }
 }

@@ -63,7 +63,7 @@ struct AccountView: View {
                     TransactionsEmptyView()
                     Spacer()
                 }
-                .background(Color.backgroundContentGradient)
+                .background(Color.backgroundGradient)
                 
             } else {
                 List {
@@ -163,7 +163,7 @@ struct AccountView: View {
                 //.navigationLinkIndicatorVisibility(.visible)
                 .animation(.default, value: viewModel.allAccounts)
                 .scrollContentBackground(.hidden)
-                .background(Color.backgroundContentGradient)
+                .background(Color.backgroundGradient)
                 
             }
         }

@@ -45,7 +45,7 @@ struct DateTimeIntervalListView: View {
             }
         }
         .navigationTitle("Time interval list")
-        .background(Color.backgroundContentGradient)
+        .background(Color.backgroundGradient)
     }
 }
 

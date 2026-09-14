@@ -42,7 +42,7 @@ struct CurrencyListView: View {
         .onChange(of: viewModel.currencySymbolType) {
             viewModel.updateCurrencySymbolTypeSelected()
         }
-        .background(Color.backgroundContentGradient)
+        .background(Color.backgroundGradient)
     }
     
     func rowView(_ currency: CurrencyModel, action: @escaping () -> Void) -> some View {
