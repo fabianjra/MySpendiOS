@@ -47,11 +47,11 @@ struct TransactionView: View {
         }
         
         .navigationTitle(.titleHomeView)
+        .searchable(text: $viewModel.searchText, isPresented: $showSearchView)
+        .searchToolbarBehavior(.minimize)
         .toolbar {
             toolbarContent
         }
-        .searchable(text: $viewModel.searchText, isPresented: $showSearchView, placement: .toolbar)
-        .searchToolbarBehavior(.minimize)
         .toolbar(.hidden, for: .navigationBar)
         
         
@@ -118,8 +118,9 @@ struct TransactionView: View {
                 
                 HStack {
                     Text(viewModel.totalBalanceFormatted)
-                        .font(.largeTitle)
+                        .font(viewModel.totalBalanceFormatted.description.filter(\.isNumber).count > 7 ? .title : .largeTitle)
                         .fontDesign(.rounded)
+                        .lineLimit(ConstantViews.singleTextMaxLines)
                     
                     Spacer()
                     

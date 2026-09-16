@@ -16,28 +16,26 @@ struct RootView: View {
     
     var body: some View {
         NavigationStack(path: $router.path) {
-            VStack {
-                if isOnboarding {
-                    OnBoardingUsernameView()
-                } else {
-                    TransactionView()
-                }
+            if isOnboarding {
+                OnBoardingUsernameView()
+            } else {
+                TransactionView()
             }
-            .onAppear {
-                UIApplication.shared.addTapGestureRecognizer()
-            }
-            .navigationDestination(for: Router.Destination.self) { destination in
-                switch destination {
-                    
-                case .mainView:
-                    TransactionView()
-                    
-                case .onBoardingName:
-                    OnBoardingUsernameView()
-                    
-                case .onBoardinAccount:
-                    OnBoardingAccountView()
-                }
+        }
+        .onAppear {
+            //UIApplication.shared.addTapGestureRecognizer()
+        }
+        .navigationDestination(for: Router.Destination.self) { destination in
+            switch destination {
+                
+            case .mainView:
+                TransactionView()
+                
+            case .onBoardingName:
+                OnBoardingUsernameView()
+                
+            case .onBoardinAccount:
+                OnBoardingAccountView()
             }
         }
     }

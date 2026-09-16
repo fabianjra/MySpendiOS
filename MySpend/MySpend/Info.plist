@@ -9,5 +9,15 @@
 		<string>Montserrat-SemiBold.ttf</string>
 		<string>Montserrat-Thin.ttf</string>
 	</array>
+	<key>UILaunchScreen</key>
+	<dict>
+		<key>UIImageName</key>
+		<string>AppIcon</string>
+		<key>UILaunchScreen</key>
+		<dict>
+			<key>Launch Screen.storyboard</key>
+			<string>Screen.storyboard</string>
+		</dict>
+	</dict>
 </dict>
 </plist>
