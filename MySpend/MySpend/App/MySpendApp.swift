@@ -39,10 +39,14 @@ struct MySpendApp: App {
         //FirebaseApp.configure()
     //}
 
+    @State private var themeManager = ThemeManager.shared
+    
     var body: some Scene {
         WindowGroup {
             RootView()
-                //.environmentObject(dataManager) //Class for get, add and delete from Firestore.
+                .environment(themeManager)
+                .preferredColorScheme(themeManager.theme.colorScheme)
+            //.environmentObject(dataManager) //Class for get, add and delete from Firestore.
         }
     }
 }

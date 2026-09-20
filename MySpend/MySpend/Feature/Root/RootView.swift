@@ -40,7 +40,6 @@ struct RootView: View {
         .onAppear {
             //UIApplication.shared.addTapGestureRecognizer()
         }
-        .preferredColorScheme(UserDefaultsManager.appTheme.colorScheme)
     }
 }
 
