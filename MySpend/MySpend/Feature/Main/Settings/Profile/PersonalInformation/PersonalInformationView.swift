@@ -10,6 +10,7 @@ import SwiftUI
 struct PersonalInformationView: View {
 
     @State private var viewModel = PersonalInformationViewModel()
+    @State private var toast = ToastViewModel()
     
     var body: some View {
         Form {
@@ -51,7 +52,7 @@ struct PersonalInformationView: View {
         
         .safeAreaInset(edge: .bottom) {
             Button {
-                viewModel.changeUserName()
+                toast.response = viewModel.changeUserName()
             } label: {
                 Text(.buttonSave)
                     .padding(.vertical, ConstantViews.paddingButtonVertical)
@@ -60,7 +61,7 @@ struct PersonalInformationView: View {
             .padding(.horizontal)
             .buttonStyle(.glass)
             .padding(.bottom)
-            .disabled(viewModel.showToast)
+            .disabled(toast.show)
         }
         
         .toolbar {
@@ -85,7 +86,7 @@ struct PersonalInformationView: View {
 //            }
         }
         
-        .toast(viewModel.responseToast, isPresented: $viewModel.showToast)
+        .toast(toast.response, isPresented: $toast.show)
     }
 }
 

@@ -10,6 +10,7 @@ import SwiftUI
 struct AccountView: View {
     
     @State private var viewModel = AccountViewModel()
+    @State private var toast = ToastViewModel()
     
     
     // MARK: LOCAL VARS
@@ -30,6 +31,14 @@ struct AccountView: View {
             toolbarContent
         }
         
+        .task {
+            let response = await viewModel.fetchAccounts()
+            
+            guard let response = response else { return }
+            if response.type == .error {
+                toast.response = response
+            }
+        }
         .onDisappear {
             viewModel.deactivateObservers()
         }
@@ -49,7 +58,7 @@ struct AccountView: View {
                 }
         }
         
-        .toast(viewModel.responseToast, isPresented: $viewModel.showToast)
+        .toast(toast.response, isPresented: $toast.show)
     }
     
     // MARK: - VIEWS
@@ -146,9 +155,9 @@ struct AccountView: View {
                             Button(.alertOptionDelete, role: .destructive) {
                                 Task {
                                     if viewModel.selectedAccounts.isEmpty {
-                                        await viewModel.delete()
+                                        toast.response = await viewModel.delete()
                                     } else {
-                                        await viewModel.deleteMltipleItems()
+                                        toast.response = await viewModel.deleteMltipleItems()
                                     }
                                 }
                             }

@@ -475,16 +475,17 @@ private struct PreviewWrapper: View {
         CoreDataUtilities.shared.mockDataType = mockDataType
     }
     
-    @State private var transactionsLoaded: [TransactionModel] = []
+    @StateObject private var viewModel = TransactionViewModel()
+    
     @State private var dateTimeInterval: DateTimeInterval = .month
     @State private var selectedDate: Date = .now
     
     var body: some View {
-        TransactionHistoryView(transactionsLoaded: $transactionsLoaded,
+        TransactionHistoryView(transactionsLoaded: $viewModel.transactionsFiltered,
                                dateTimeInterval: $dateTimeInterval,
                                selectedDate: $selectedDate)
         .task {
-            transactionsLoaded = await MockTransactionModel.fetchAll()
+            await viewModel.activateObservers()
         }
     }
 }

@@ -12,8 +12,6 @@ import CoreData
 @Observable
 final class AccountViewModel {
     
-    //var models: [AccountModel] = []
-    
     // MARK: EDIT
     var isEditing: Bool = false
     var selectedAccounts = Set<AccountModel>()
@@ -37,23 +35,14 @@ final class AccountViewModel {
         return allAccounts.first { $0.id.uuidString == defaultID }
     }
     
-    var showToast: Bool = false
-    var responseToast = ResponseToast() {
-        didSet {
-            showToast = true
-        }
-    }
-    
-    private var viewContextObserver: AnyCancellable?
-    private let viewContext: NSManagedObjectContext
 
-    init() {
-        self.viewContext = CoreDataUtilities.getViewContext
-        
-        Task {
-            await fetchAccounts()
-        }
-        
+    // MARK: - CORE DATA
+    private let viewContext: NSManagedObjectContext
+    private var viewContextObserver: AnyCancellable?
+    
+    init(viewContext: NSManagedObjectContext? = nil) {
+        self.viewContext = viewContext ?? CoreDataUtilities.getViewContext
+
         startObserveViewContextChanges()
     }
     
@@ -71,15 +60,16 @@ final class AccountViewModel {
             }
     }
     
-    private func fetchAccounts() async {
+    func fetchAccounts() async -> ResponseToast? {
         do {
             allAccounts = try await AccountManager(viewContext)
                 .fetchAll()
                 .sortedAccounts(by: sortSelection)
             
+            return nil
         } catch {
             Logger.exception(error, type: .CoreData)
-            responseToast = ResponseToast(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)
+            return ResponseToast(.responseErrorFetchAccounts, .error)
         }
     }
     
@@ -97,8 +87,8 @@ final class AccountViewModel {
         }
     }
     
-    func delete() async {
-        guard let accountToUpdate = accountToDelete else { return }
+    func delete() async -> ResponseToast {
+        guard let accountToUpdate = accountToDelete else { return ResponseToast()}
         
         defer {
             self.accountToDelete = nil
@@ -106,14 +96,14 @@ final class AccountViewModel {
         
         do {
             try await AccountManager(viewContext).delete(accountToUpdate)
-            responseToast = ResponseToast(.responseAccountsDeleted(.zero), .ok)
+            return ResponseToast(.responseAccountsDeleted(.zero), .ok)
         } catch {
             Logger.exception(error, type: .CoreData)
-            responseToast = ResponseToast(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)
+            return ResponseToast(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)
         }
     }
     
-    func deleteMltipleItems() async {
+    func deleteMltipleItems() async -> ResponseToast {
         defer {
             isEditing = false
             selectedAccounts.removeAll()
@@ -124,10 +114,10 @@ final class AccountViewModel {
                 try await AccountManager(viewContext).delete(item)
             }
             
-            responseToast = ResponseToast(.responseAccountsDeleted(selectedAccounts.count), .ok)
+            return ResponseToast(.responseAccountsDeleted(selectedAccounts.count), .ok)
         } catch {
             Logger.exception(error)
-            responseToast = ResponseToast(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)
+            return ResponseToast(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)
         }
     }
     

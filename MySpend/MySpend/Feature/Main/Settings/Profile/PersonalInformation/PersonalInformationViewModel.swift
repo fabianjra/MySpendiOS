@@ -14,24 +14,16 @@ final class PersonalInformationViewModel {
     var email = ""
     var phoneNumber = ""
     
-    var showToast: Bool = false
-    var responseToast = ResponseToast() {
-        didSet {
-            showToast = true
-        }
-    }
-    
-    func changeUserName() {
+    func changeUserName() -> ResponseToast {
         if username.isEmptyOrWhitespace {
-            responseToast = ResponseToast(.responseErrorTextFieldEmptySpace, .error)
-            return
+            return ResponseToast(.responseErrorTextFieldEmptySpace, .error)
         }
         
         UserDefaultsManager.userName = username
         UserDefaultsManager.userEmail = email
         UserDefaultsManager.userPhone = phoneNumber
         
-        responseToast = ResponseToast(.personalInformationMessageUpdated, .ok)
+        return ResponseToast(.personalInformationMessageUpdated, .ok)
     }
     
     func loadData() {

@@ -1081,6 +1081,24 @@
     "Reset to default" : {
 
     },
+    "Response.Error.FetchAccounts" : {
+      "comment" : "Mensaje para indicar que hubo un error al cargar cuentas",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error loading accounts"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Error al cargar cuentas"
+          }
+        }
+      }
+    },
     "Response.Error.TextField.EmptySpace" : {
       "comment" : "Indica que deben llenarse los espacios en blanco",
       "extractionState" : "manual",
