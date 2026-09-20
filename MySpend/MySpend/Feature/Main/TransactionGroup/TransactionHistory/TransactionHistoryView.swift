@@ -422,20 +422,20 @@ struct TransactionHistoryView: View {
     
     private func favorite(_ model: TransactionModel) {
         Task {
-            let result = await viewModel.favorite(model)
+            let response = await viewModel.favorite(model)
             
-            if result.status.isError {
-                toast.setResponse(result.message, type: .error)
+            if response.type == .error {
+                toast.response = response
             }
         }
     }
     
     private func favoriteMultipleTransactions(newState: Bool) {
         Task {
-            let result = await viewModel.favoriteMltiple(newState)
+            let response = await viewModel.favoriteMltiple(newState)
             
-            if result.status.isError {
-                toast.setResponse(result.message, type: .error)
+            if response.type == .error {
+                toast.response = response
             }
         }
     }
@@ -446,26 +446,13 @@ struct TransactionHistoryView: View {
                 modelToDelete = nil
             }
             
-            let result = await viewModel.delete(modelToDelete)
-            
-            if result.status.isError {
-                toast.setResponse(result.message, type: .error)
-            } else {
-                toast.setResponse(.responseTransactionDeleted(.zero), type: .ok)
-            }
+            toast.response = await viewModel.delete(modelToDelete)
         }
     }
     
     private func deleteMltipleTransactions() {
         Task {
-            let count = viewModel.selectedTransactions.count
-            let result = await viewModel.deleteMltiple()
-            
-            if result.status.isError {
-                toast.setResponse(result.message, type: .error)
-            } else {
-                toast.setResponse(.responseTransactionDeleted(count), type: .ok)
-            }
+            toast.response = await viewModel.deleteMltiple()
         }
     }
 }

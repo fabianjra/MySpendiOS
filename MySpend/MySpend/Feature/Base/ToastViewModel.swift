@@ -17,11 +17,11 @@ final class ToastViewModel {
         }
     }
     
-    func setResponse(_ text: String, type: ResponseType? = nil) {
-        response = ResponseToast(LocalizedStringResource(stringLiteral: text), type)
-    }
-    
-    func setResponse(_ textLocalized: LocalizedStringResource, type: ResponseType? = nil) {
-        response = ResponseToast(textLocalized, type)
-    }
+//    func setResponse(_ text: String, type: ResponseType? = nil) {
+//        response = ResponseToast(LocalizedStringResource(stringLiteral: text), type)
+//    }
+//    
+//    func setResponse(_ textLocalized: LocalizedStringResource, type: ResponseType? = nil) {
+//        response = ResponseToast(textLocalized, type)
+//    }
 }

@@ -71,7 +71,7 @@ extension View {
         Spacer()
         
         Button("View Toast small") {
-            toast.setResponse(.responseSuccesful, type: .ok)
+            toast.response = ResponseToast(.responseSuccesful, .ok)
         }
         
         HStack {
@@ -81,12 +81,14 @@ extension View {
         Spacer()
         
         Button("View Toast Big") {
-            toast.setResponse(Errors.cannotUpdateAccountWithTransactions("TEST").localizedDescription, type: .ok)
+            toast.response = ResponseToast(LocalizedStringResource(stringLiteral:
+                                                                    Errors.cannotUpdateAccountWithTransactions("TEST").localizedDescription), .error)
         }
         
         Spacer()
+        
         Button("View Toast Error") {
-            toast.setResponse(.responseErrorTextFieldEmptySpace, type: .error)
+            toast.response = ResponseToast(.responseErrorTextFieldEmptySpace, .error)
         }
         
         Spacer()
