@@ -79,6 +79,14 @@ struct UserDefaultsManager {
         }
     }
     
+    static var appTheme: AppTheme {
+        get { return UserDefaultsDataStore<AppTheme>(for: .appTheme).value ?? .system }
+        set {
+            var manager = UserDefaultsDataStore<AppTheme>(for: .appTheme)
+            manager.value = newValue
+        }
+    }
+    
     
     // MARK: USER DATA
     

@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-enum AppTheme: Identifiable, CaseIterable {
+enum AppTheme: Identifiable, CaseIterable, Codable {
     public var id: Self { self }
     
     case system
@@ -17,14 +17,27 @@ enum AppTheme: Identifiable, CaseIterable {
     
     var colorScheme: ColorScheme? {
         switch self {
-        case .system:
-            return .none
             
-        case .light:
-            return .light
+        case .system: return .none
+        case .light: return .light
+        case .dark: return .dark
+        }
+    }
+    
+    var localizedName: LocalizedStringResource {
+        switch self {
             
-        case .dark:
-            return .dark
+        case .system: return .appThemeSystem
+        case .light: return .appThemeLight
+        case .dark: return .appThemeDark
+        }
+    }
+    
+    var icon: String {
+        switch self {
+        case .system: return "🌓"
+        case .light: return "🌝"
+        case .dark: return "🌚"
         }
     }
 }
