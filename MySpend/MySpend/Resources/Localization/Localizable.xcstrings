@@ -1455,6 +1455,24 @@
         }
       }
     },
+    "Settings.General.Option.AppTheme" : {
+      "comment" : "TItulo en ajustes para la opcion del terma de la app",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Appearance"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Apariencia"
+          }
+        }
+      }
+    },
     "Settings.General.Option.Categories" : {
       "comment" : "Titulo en ajustes para la opcion de categorias",
       "extractionState" : "manual",

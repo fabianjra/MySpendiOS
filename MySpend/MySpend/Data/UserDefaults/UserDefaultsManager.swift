@@ -150,6 +150,7 @@ enum UserDefaultsKeys: String, Codable, CaseIterable {
     case dateTimeInterval = "datetime_interval_key"
     case currency = "currency_key"
     case currencySymbolType = "currency_symbol_type_key"
+    case appTheme = "app_theme_key"
     
     // MARK: USER DATA
     case isOnBoarding = "is_on_boarding_key"

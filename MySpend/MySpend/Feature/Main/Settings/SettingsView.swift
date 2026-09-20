@@ -64,7 +64,6 @@ struct SettingsView: View {
                         }
                     } message: {
                         Text(.settingsDataDeleteDescription)
-                            .textStyle
                     }
                     
                     .alert(.settingsDataDeleteTitleConfirmation, isPresented: $showAlertConfirmation) {
@@ -76,28 +75,22 @@ struct SettingsView: View {
                         }
                     } message: {
                         Text(.settingsDataDeleteDescriptionConfirmation)
-                            .textStyle
                     }
                 }
             }
             
             // MARK: STYLES
-            .font(.montserrat())
+            //.font(.montserrat())
             //.foregroundColor(Color.listRowForeground)
             //.listStyle(.insetGrouped) //Coomentend for: iOS26
             .scrollContentBackground(.hidden)
-            //.background(Color.backgroundContentGradient)
+            .background(Color.backgroundGradient)
             
             // MARK: NAVIGATION
             .navigationTitle(.settingsTitle) // Necesario para ver la descripcion al presionar el boton atras al navegar.
-            .navigationBarTitleDisplayMode(.inline)
+            //.navigationBarTitleDisplayMode(.inline)
             
             .toolbar {
-                ToolbarItem(placement: .title) {
-                    Text(.settingsTitle)
-                        .textStyle
-                }
-                
                 ToolbarItem(placement: .destructiveAction) {
                     Button(role: .close) {
                         dismiss()
