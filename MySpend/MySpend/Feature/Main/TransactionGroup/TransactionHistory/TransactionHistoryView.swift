@@ -9,7 +9,8 @@ import SwiftUI
 
 struct TransactionHistoryView: View {
     
-    @StateObject private var viewModel = TransactionHistoryViewModel()
+    @State private var viewModel = TransactionHistoryViewModel()
+    @State private var toast = ToastViewModel()
     
     @Binding var transactionsLoaded: [TransactionModel]
     @Binding var dateTimeInterval: DateTimeInterval
@@ -37,9 +38,6 @@ struct TransactionHistoryView: View {
             } else {
                 transactionsList
             }
-            
-            Text(viewModel.errorMessage)
-                .textErrorStyle
         }
         .padding(.horizontal)
         .navigationTitle(.titleHistoryView)
@@ -47,7 +45,7 @@ struct TransactionHistoryView: View {
         .toolbar {
             toolbarContent
         }
-        .searchable(text: $viewModel.searchText, isPresented: $showSearchView, placement: .toolbar)
+        .searchable(text: $viewModel.searchText, isPresented: $showSearchView)
         .searchToolbarBehavior(.minimize)
         .navigationBarBackButtonHidden(viewModel.isEditing)
         
@@ -82,6 +80,8 @@ struct TransactionHistoryView: View {
         .onChange(of: viewModel.sortTransactionsBy) {
             filterTransactionsByDate()
         }
+        
+        .toast(toast.response, isPresented: $toast.show)
     }
     
     private func filterTransactionsByDate() {
@@ -161,7 +161,7 @@ struct TransactionHistoryView: View {
             FilterTransactionsToolbarBottom(placement: .bottomBar)
             
             ToolbarSpacer(.flexible, placement: .bottomBar)
-            DefaultToolbarItem(kind: .search, placement: .bottomBar)
+            DefaultToolbarItem(kind: .search, placement: .bottomBar) //TODO: Reparar: se pasa hacia arriba al editar.
         }
         
         ToolbarItem(placement: .bottomBar) {
@@ -425,7 +425,7 @@ struct TransactionHistoryView: View {
             let result = await viewModel.favorite(model)
             
             if result.status.isError {
-                viewModel.errorMessage = result.message
+                toast.setResponse(result.message, type: .error)
             }
         }
     }
@@ -435,7 +435,7 @@ struct TransactionHistoryView: View {
             let result = await viewModel.favoriteMltiple(newState)
             
             if result.status.isError {
-                viewModel.errorMessage = result.message
+                toast.setResponse(result.message, type: .error)
             }
         }
     }
@@ -449,17 +449,22 @@ struct TransactionHistoryView: View {
             let result = await viewModel.delete(modelToDelete)
             
             if result.status.isError {
-                viewModel.errorMessage = result.message
+                toast.setResponse(result.message, type: .error)
+            } else {
+                toast.setResponse(.responseTransactionDeleted(.zero), type: .ok)
             }
         }
     }
     
     private func deleteMltipleTransactions() {
         Task {
+            let count = viewModel.selectedTransactions.count
             let result = await viewModel.deleteMltiple()
             
             if result.status.isError {
-                viewModel.errorMessage = result.message
+                toast.setResponse(result.message, type: .error)
+            } else {
+                toast.setResponse(.responseTransactionDeleted(count), type: .ok)
             }
         }
     }
@@ -493,8 +498,10 @@ private struct PreviewWrapper: View {
 }
 
 #Preview("Random Saturated \(Previews.localeEN_US)") {
-    PreviewWrapper(.saturated)
-        .environment(\.locale, .init(identifier: Previews.localeEN_US))
+    NavigationStack {
+        PreviewWrapper(.saturated)
+    }
+    .environment(\.locale, .init(identifier: Previews.localeEN_US))
 }
 
 #Preview("Empty \(Previews.localeEN_US_POSIX)") {

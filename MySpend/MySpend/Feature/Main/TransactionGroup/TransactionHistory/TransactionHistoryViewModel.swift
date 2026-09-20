@@ -6,11 +6,14 @@
 //
 
 import Foundation
+import CoreData
 
-class TransactionHistoryViewModel: BaseViewModel {
+@Observable
+@MainActor
+final class TransactionHistoryViewModel {
     
-    @Published var isEditing = false
-    @Published var searchText = ""
+    var isEditing = false
+    var searchText = ""
     
     /*
      Caracteristicas de usar un set para la seleccion de items:
@@ -20,10 +23,17 @@ class TransactionHistoryViewModel: BaseViewModel {
      Duplicados:                Imposibles: cada elemento es único.
      Orden:                     No garantiza orden estable.
      */
-    @Published var selectedTransactions = Set<TransactionModel>()
-    @Published var transactionsFiltered: [TransactionModel] = []
+    var selectedTransactions = Set<TransactionModel>()
+    var transactionsFiltered: [TransactionModel] = []
     
-    @Published var sortTransactionsBy = UserDefaultsManager.sorTransactions
+    var sortTransactionsBy = UserDefaultsManager.sorTransactions
+    
+    // MARK: - CORE DATA
+    private let viewContext: NSManagedObjectContext
+    
+    init(viewContext: NSManagedObjectContext? = nil) {
+        self.viewContext = viewContext ?? CoreDataUtilities.getViewContext
+    }
     
     func favorite(_ model: TransactionModel) async -> ResponseModel {
         do {
