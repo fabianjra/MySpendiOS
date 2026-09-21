@@ -113,9 +113,7 @@ struct SettingsView: View {
         }
     }
     .sheet(isPresented: $showSettings) {
-        NavigationStack {
-            SettingsView()
-        }
+        SettingsView()
     }
     .environment(\.locale, .init(identifier: Previews.localeES_ES))
     .environment(themeManager)
@@ -132,9 +130,7 @@ struct SettingsView: View {
         }
     }
     .sheet(isPresented: $showSettings) {
-        NavigationStack {
-            SettingsView()
-        }
+        SettingsView()
     }
     .environment(\.locale, .init(identifier: Previews.localeEN))
     .environment(themeManager)
