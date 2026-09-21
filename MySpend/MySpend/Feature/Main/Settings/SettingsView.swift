@@ -8,131 +8,99 @@
 import SwiftUI
 
 struct SettingsView: View {
-    
-    @Environment(\.dismiss) private var dismiss
-    @Environment(ThemeManager.self) private var themeManager
-    
+        
     @State private var showAlert = false
     @State private var showAlertConfirmation = false
     
     var body: some View {
-        NavigationStack {
-            List {
-                // MARK: - PROFILE
-                
-                Section(.settingsProfileSectionTitle) {
-                    ForEach(ProfileOptions.allCases) { option in
-                        NavigationLink(destination: option.view) {
-                            Label {
-                                Text(option.title)
-                            } icon: {
-                                Text(option.icon)
-                            }
+        List {
+            // MARK: - PROFILE
+            
+            Section(.settingsProfileSectionTitle) {
+                ForEach(ProfileOptions.allCases) { option in
+                    NavigationLink(destination: option.view) {
+                        Label {
+                            Text(option.title)
+                        } icon: {
+                            Text(option.icon)
                         }
-                    }
-                }
-                
-                // MARK: - GENERAL
-                
-                Section(.settingsGeneralSectionTitle) {
-                    ForEach(ContentOptions.allCases) { option in
-                        NavigationLink(destination: option.view) {
-                            Label {
-                                Text(option.title)
-                            } icon: {
-                                Text(option.icon)
-                            }
-                        }
-                    }
-                }
-                
-                // MARK: - ERASE ALL DATA
-                
-                Section(.settingsDataSectionTitle) {
-                    
-                    Button(.settingsDataDeleteButtonTitle) {
-                        showAlert = true
-                    }
-                    .foregroundColor(Color.alert)
-                    .fontWeight(.semibold)
-                    
-                    .alert(.settingsDataDeleteTitle, isPresented: $showAlert) {
-                        
-                        Button(.alertOptionCancel, role: .cancel) { }
-                        
-                        Button(.alertOptionDelete, role: .destructive) {
-                            showAlertConfirmation = true
-                        }
-                    } message: {
-                        Text(.settingsDataDeleteDescription)
-                    }
-                    
-                    .alert(.settingsDataDeleteTitleConfirmation, isPresented: $showAlertConfirmation) {
-                        
-                        Button(.alertOptionCancel, role: .cancel) { }
-                        
-                        Button(.alertOptionDelete, role: .destructive) {
-                            //TODO: AGREGAR BORRADO DE DATOS
-                        }
-                    } message: {
-                        Text(.settingsDataDeleteDescriptionConfirmation)
                     }
                 }
             }
             
-            // MARK: STYLES
-            //.font(.montserrat())
-            //.foregroundColor(Color.listRowForeground)
-            //.listStyle(.insetGrouped) //Coomentend for: iOS26
-            .scrollContentBackground(.hidden)
-            .background(Color.backgroundGradient)
+            // MARK: - GENERAL
             
-            // MARK: NAVIGATION
-            .navigationTitle(.settingsTitle) // Necesario para ver la descripcion al presionar el boton atras al navegar.
-            //.navigationBarTitleDisplayMode(.inline)
-            
-            .toolbar {
-                ToolbarItem(placement: .destructiveAction) {
-                    Button(role: .close) {
-                        dismiss()
+            Section(.settingsGeneralSectionTitle) {
+                ForEach(ContentOptions.allCases) { option in
+                    NavigationLink(destination: option.view) {
+                        Label {
+                            Text(option.title)
+                        } icon: {
+                            Text(option.icon)
+                        }
                     }
+                }
+            }
+            
+            // MARK: - ERASE ALL DATA
+            
+            Section(.settingsDataSectionTitle) {
+                
+                Button(.settingsDataDeleteButtonTitle) {
+                    showAlert = true
+                }
+                .foregroundColor(Color.alert)
+                .fontWeight(.semibold)
+                
+                .alert(.settingsDataDeleteTitle, isPresented: $showAlert) {
+                    
+                    Button(.alertOptionCancel, role: .cancel) { }
+                    
+                    Button(.alertOptionDelete, role: .destructive) {
+                        showAlertConfirmation = true
+                    }
+                } message: {
+                    Text(.settingsDataDeleteDescription)
+                }
+                
+                .alert(.settingsDataDeleteTitleConfirmation, isPresented: $showAlertConfirmation) {
+                    
+                    Button(.alertOptionCancel, role: .cancel) { }
+                    
+                    Button(.alertOptionDelete, role: .destructive) {
+                        //TODO: AGREGAR BORRADO DE DATOS
+                    }
+                } message: {
+                    Text(.settingsDataDeleteDescriptionConfirmation)
                 }
             }
         }
-        .preferredColorScheme(themeManager.theme.colorScheme)
+        .navigationTitle(.settingsTitle)
+        
+        //.listStyle(.insetGrouped) //Coomentend for: iOS26
+        .scrollContentBackground(.hidden)
+        .background(Color.backgroundGradient)
     }
 }
 
 #Preview(Previews.localeES_ES) {
-    @Previewable @State var showSettings = true
     @Previewable @State var themeManager = ThemeManager.shared
     
-    VStack {
-        Button(.settingsTitle) {
-            showSettings.toggle()
-        }
-    }
-    .sheet(isPresented: $showSettings) {
+    NavigationStack {
         SettingsView()
     }
-    .environment(\.locale, .init(identifier: Previews.localeES_ES))
     .environment(themeManager)
     .preferredColorScheme(themeManager.theme.colorScheme)
+    .environment(\.locale, .init(identifier: Previews.localeES_ES))
 }
 
 #Preview(Previews.localeEN) {
-    @Previewable @State var showSettings = true
     @Previewable @State var themeManager = ThemeManager.shared
     
-    VStack {
-        Button(.settingsTitle) {
-            showSettings.toggle()
-        }
-    }
-    .sheet(isPresented: $showSettings) {
+    NavigationStack {
         SettingsView()
     }
-    .environment(\.locale, .init(identifier: Previews.localeEN))
     .environment(themeManager)
     .preferredColorScheme(themeManager.theme.colorScheme)
+    .environment(\.locale, .init(identifier: Previews.localeEN))
 }

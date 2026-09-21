@@ -19,9 +19,14 @@ class Router {
         path = NavigationPath()
     }
     
+    func navigate(to destination: Destination) {
+        path.append(destination)
+    }
+    
     enum Destination {
         case mainView
         case onBoardingName
         case onBoardinAccount
+        case settings
     }
 }

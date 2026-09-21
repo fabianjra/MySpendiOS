@@ -37,9 +37,6 @@ struct TransactionView: View {
         
         // MARK: SHEETS
         
-        .sheet(isPresented: $showSettings) {
-            SettingsView()
-        }
         .sheet(isPresented: $showNewTransactionView) {
             NavigationStack {
                 AddModifyTransactionView(selectedDate: viewModel.selectedDate)
@@ -101,7 +98,7 @@ struct TransactionView: View {
                 Spacer()
                 
                 Button {
-                    showSettings = true
+                    Router.shared.navigate(to: .settings)
                 } label: {
                     Image.settingsFill
                         .font(.title2)
@@ -287,14 +284,30 @@ private struct previewWrapper: View {
         FilterCenter.shared.isFilterActive = isFilterActive
     }
     
-    var body: some View { TransactionView() }
+    @State private var router = Router.shared
+    @State private var themeManager = ThemeManager.shared
+    
+    var body: some View {
+        NavigationStack(path: $router.path) {
+            TransactionView()
+                .navigationDestination(for: Router.Destination.self) { destination in
+                    switch destination {
+                    case .settings:
+                        SettingsView()
+                        
+                    default:
+                        EmptyView()
+                    }
+                }
+        }
+        .environment(themeManager)
+        .preferredColorScheme(themeManager.theme.colorScheme)
+    }
 }
 
 #Preview("Normal \(Previews.localeES_CR)") {
-    NavigationStack {
-        previewWrapper()
-            .environment(\.locale, .init(identifier: Previews.localeES_CR))
-    }
+    previewWrapper()
+        .environment(\.locale, .init(identifier: Previews.localeES_CR))
 }
 
 #Preview("Normal filtered \(Previews.localeEN)") {

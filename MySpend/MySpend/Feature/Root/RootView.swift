@@ -8,6 +8,7 @@ import SwiftUI
 
 struct RootView: View {
     
+    @State private var themeManager = ThemeManager.shared
     @State private var router = Router.shared
     
     @AppStorage(UserDefaultsKeys.isOnBoarding.rawValue,
@@ -34,12 +35,17 @@ struct RootView: View {
                     
                 case .onBoardinAccount:
                     OnBoardingAccountView()
+                    
+                case .settings:
+                    SettingsView()
                 }
             }
         }
         .onAppear {
             //UIApplication.shared.addTapGestureRecognizer()
         }
+        .environment(themeManager)
+        .preferredColorScheme(themeManager.theme.colorScheme)
     }
 }
 

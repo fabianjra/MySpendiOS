@@ -35,7 +35,7 @@ enum AppTheme: Identifiable, CaseIterable, Codable {
     
     var icon: String {
         switch self {
-        case .system: return "🌓"
+        case .system: return ""
         case .light: return "🌝"
         case .dark: return "🌚"
         }

@@ -20,6 +20,6 @@ class OnBoardingUsernameViewModel: BaseViewModel {
         }
         
         UserDefaultsManager.userName = userName
-        Router.shared.path.append(Router.Destination.onBoardinAccount)
+        Router.shared.navigate(to: .onBoardinAccount)
     }
 }

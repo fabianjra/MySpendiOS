@@ -41,7 +41,6 @@ struct PersonalInformationView: View {
             }
         }
         .scrollContentBackground(.hidden)
-        .navigationBarTitleDisplayMode(.large)
         .navigationTitle(.personalInformationTitle)
         .navigationSubtitle(.personalInformationSubtitle)
         .background(Color.backgroundGradient)
@@ -63,29 +62,6 @@ struct PersonalInformationView: View {
             .padding(.bottom)
             .disabled(toast.show)
         }
-        
-        .toolbar {
-//            ToolbarItem(placement: .title) {
-//                Text(.personalInformationTitle)
-//                    .textStyle(size: .big)
-//            }
-//            
-//            ToolbarItem(placement: .subtitle) {
-//                Text(.personalInformationSubtitle)
-//                    .textStyle(size: .mediumSmall)
-//            }
-            
-//            ToolbarItem(placement: .largeTitle) {
-//                Text(.personalInformationTitle)
-//                    .textStyle
-//            }
-//            
-//            ToolbarItem(placement: .largeSubtitle) {
-//                Text(.personalInformationSubtitle)
-//                    .textStyle
-//            }
-        }
-        
         .toast(toast.response, isPresented: $toast.show)
     }
 }
