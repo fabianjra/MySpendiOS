@@ -98,7 +98,6 @@ struct SettingsView: View {
                 }
             }
         }
-        .preferredColorScheme(ThemeManager.shared.theme.colorScheme)
     }
 }
 

@@ -8,12 +8,14 @@
 import SwiftUI
 
 struct AppThemeView: View {
+    @Environment(ThemeManager.self) private var themeManager
+    
     var body: some View {
         VStack {
             List {
                 ForEach(AppTheme.allCases) { item in
                     Button {
-                        ThemeManager.shared.theme = item
+                        themeManager.theme = item
                     } label: {
                         HStack {
                             Text(item.icon)
@@ -21,7 +23,7 @@ struct AppThemeView: View {
                             
                             Spacer()
                             
-                            if ThemeManager.shared.theme == item {
+                            if themeManager.theme == item {
                                 Image.checkmark
                             }
                         }
@@ -40,6 +42,7 @@ struct AppThemeView: View {
     
     NavigationStack {
         AppThemeView()
+            .environment(themeManager)
             .preferredColorScheme(themeManager.theme.colorScheme)
     }
 }
