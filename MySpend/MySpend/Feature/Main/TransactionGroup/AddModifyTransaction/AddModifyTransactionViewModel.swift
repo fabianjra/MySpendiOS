@@ -9,8 +9,6 @@ import Foundation
 
 class AddModifyTransactionViewModel: BaseViewModel {
     
-    @Published var accounts: [AccountModel] = []
-    
     @Published var amountString: String = ""
     @Published var favorite: Bool = false
 
@@ -36,37 +34,31 @@ class AddModifyTransactionViewModel: BaseViewModel {
         super.init()
     }
     
-    func fetchAccounts() async {
-        do {
-            accounts = try await AccountManager(viewContext).fetchAll()
-            
-            if accounts.isEmpty {
-                disabled = true
-                errorMessage = Errors.notFoundAccount.localizedDescription
-                return
-            }
-            
-            if accounts.count == 1 {
-                showAccountTextField = false
-            }
-            
-            if isNewModel {
-                let defaultID: String = UserDefaultsManager.defaultAccountID
-                if let defaultAccount = accounts.first(where: { $0.id.uuidString == defaultID }) {
-                    model.account = defaultAccount
-                } else {
-                    guard let firstAccount = accounts.first else {
-                        disabled = true
-                        errorMessage = Errors.notFoundAccount.localizedDescription
-                        return
-                    }
-                    
-                    model.account = firstAccount
+    func configureSelectedAccount(_ accounts: [AccountModel]) {
+        
+        if accounts.isEmpty {
+            disabled = true
+            errorMessage = Errors.notFoundAccount.localizedDescription
+            return
+        }
+        
+        if accounts.count == 1 {
+            showAccountTextField = false
+        }
+        
+        if isNewModel {
+            let defaultID: String = UserDefaultsManager.defaultAccountID
+            if let defaultAccount = accounts.first(where: { $0.id.uuidString == defaultID }) {
+                model.account = defaultAccount
+            } else {
+                guard let firstAccount = accounts.first else {
+                    disabled = true
+                    errorMessage = Errors.notFoundAccount.localizedDescription
+                    return
                 }
+                
+                model.account = firstAccount
             }
-        } catch {
-            Logger.exception(error, type: .CoreData)
-            errorMessage = error.localizedDescription
         }
     }
     

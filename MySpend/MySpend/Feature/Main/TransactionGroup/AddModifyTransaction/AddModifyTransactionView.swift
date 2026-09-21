@@ -25,6 +25,8 @@ struct AddModifyTransactionView: View {
     @StateObject private var viewModel: AddModifyTransactionViewModel
     @FocusState private var focusedField: TransactionModel.Field?
     
+    private let filters = FilterCenter.shared
+    
     @State private var showDatePicker = false
     @State private var showCategoryList = false
     @State private var showAccountList = false
@@ -120,10 +122,8 @@ struct AddModifyTransactionView: View {
             // MARK: EVENTS
             
             .onAppear {
-                Task {
-                    await viewModel.fetchAccounts()
-                }
-                
+                viewModel.configureSelectedAccount(FilterCenter.shared.allAccounts)
+
                 if viewModel.isNewModel {
                     focusedField = .amount
                 }
@@ -272,6 +272,9 @@ private struct PreviewWrapper: View {
         AddModifyTransactionView()
     }
     .environment(\.locale, .init(identifier: Previews.localeEN))
+    .onAppear {
+        CoreDataUtilities.shared.mockDataType = .normal
+    }
 }
 
 #Preview("Modify \(Previews.localeES_CR)") {
