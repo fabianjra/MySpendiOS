@@ -448,6 +448,24 @@
         }
       }
     },
+    "AppTheme.View.Title" : {
+      "comment" : "Titulo para la vista de apariencia",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Appearance"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Apariencia"
+          }
+        }
+      }
+    },
     "Button.Continue" : {
       "comment" : "Continue text for button",
       "extractionState" : "manual",

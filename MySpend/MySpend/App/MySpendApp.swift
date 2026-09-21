@@ -44,7 +44,6 @@ struct MySpendApp: App {
     var body: some Scene {
         WindowGroup {
             RootView()
-                .environment(themeManager)
                 .preferredColorScheme(themeManager.theme.colorScheme)
             //.environmentObject(dataManager) //Class for get, add and delete from Firestore.
         }
