@@ -37,7 +37,7 @@ struct Logger {
         //let crashlytics = Crashlytics.crashlytics()
 
         // Log a breadcrumb for quick filtering in the Crashlytics console
-        let fileName = file.components(separatedBy: "/").last ?? file
+        //let fileName = file.components(separatedBy: "/").last ?? file
         //crashlytics.log("CatchException – \(fileName):\(line) – \(function)")
 
         // Attach source context as custom keys (visible in the stack-trace panel)
