@@ -10,6 +10,7 @@ import SwiftUI
 struct SettingsView: View {
     
     @Environment(\.dismiss) private var dismiss
+    @Environment(ThemeManager.self) private var themeManager
     
     @State private var showAlert = false
     @State private var showAlertConfirmation = false
@@ -98,11 +99,13 @@ struct SettingsView: View {
                 }
             }
         }
+        .preferredColorScheme(themeManager.theme.colorScheme)
     }
 }
 
 #Preview(Previews.localeES_ES) {
     @Previewable @State var showSettings = true
+    @Previewable @State var themeManager = ThemeManager.shared
     
     VStack {
         Button(.settingsTitle) {
@@ -115,10 +118,13 @@ struct SettingsView: View {
         }
     }
     .environment(\.locale, .init(identifier: Previews.localeES_ES))
+    .environment(themeManager)
+    .preferredColorScheme(themeManager.theme.colorScheme)
 }
 
 #Preview(Previews.localeEN) {
     @Previewable @State var showSettings = true
+    @Previewable @State var themeManager = ThemeManager.shared
     
     VStack {
         Button(.settingsTitle) {
@@ -131,4 +137,6 @@ struct SettingsView: View {
         }
     }
     .environment(\.locale, .init(identifier: Previews.localeEN))
+    .environment(themeManager)
+    .preferredColorScheme(themeManager.theme.colorScheme)
 }
