@@ -272,10 +272,9 @@ struct TransactionView: View {
         //ToolbarSpacer(.fixed, placement: .bottomBar)
         
         ToolbarItem(placement: .bottomBar) {
-            Button(.transactionAdd, systemImage: ConstantSystemImage.addNewItem) {
+            Button(.transactionAdd, systemImage: ConstantSystemImage.addNewItem, role: .confirm) {
                 showNewTransactionView = true
             }
-            .tint(.accentColor)
         }
     }
 }
