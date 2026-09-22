@@ -215,10 +215,8 @@ struct AccountView: View {
         ToolbarItem(placement: .title) {
             if viewModel.selectedAccounts.count == .zero {
                 Text(.accountsTitle)
-                    .textStyle(size: .big)
             } else {
                 Text(.selectorSelectedCountFemale(viewModel.selectedAccounts.count))
-                    .textStyle(size: .medium)
             }
         }
         
@@ -284,13 +282,13 @@ struct AccountView: View {
         
         ToolbarItem(placement: .bottomBar) {
             if viewModel.isEditing {
-                Button(.selectorDelete, systemImage: ConstantSystemImage.trash) {
+                Button(.selectorDelete, systemImage: ConstantSystemImage.trash, role: .destructive) {
                     showAlertDelete = true
                 }
                 .disabled(viewModel.selectedAccounts.isEmpty)
                 
             } else {
-                Button(.transactionAdd, systemImage: ConstantSystemImage.addNewItem) {
+                Button(.transactionAdd, systemImage: ConstantSystemImage.addNewItem, role: .confirm) {
                     showNewItemModal = true
                 }
             }

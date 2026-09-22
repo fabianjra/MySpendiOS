@@ -23,7 +23,12 @@ struct TransactionView: View {
     var body: some View {
         VStack {
             if showSearchView {
-                Color.red //TODO: Agregar vista de busqueda
+                List {
+                    ForEach(0...10, id: \.self) { item in
+                        Text("\(item)")
+                    }
+                }
+                .scrollDismissesKeyboard(.immediately)
                 
             } else {
                 headerTitle
