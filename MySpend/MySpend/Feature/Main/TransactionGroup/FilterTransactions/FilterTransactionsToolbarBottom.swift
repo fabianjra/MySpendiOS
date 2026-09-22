@@ -15,7 +15,6 @@ struct FilterTransactionsToolbarBottom: ToolbarContent {
     
     private let filters = FilterCenter.shared
 
-    //@ToolbarContentBuilder
     var body: some ToolbarContent {
         
         ToolbarItem(placement: placement) {
@@ -60,10 +59,7 @@ struct FilterTransactionsToolbarBottom: ToolbarContent {
                 }
             }
             .popover(isPresented: $showFiltersView) {
-                NavigationStack {
-                    FilterTransactionsView()
-                        .presentationDetents([.medium, .large])
-                }
+                FilterTransactionsView()
             }
         }
         

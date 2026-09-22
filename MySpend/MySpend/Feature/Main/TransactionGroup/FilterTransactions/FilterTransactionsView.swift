@@ -12,42 +12,42 @@ struct FilterTransactionsView: View {
     @Environment(\.dismiss) private var dismiss
     
     private let filters = FilterCenter.shared
+    @State private var selectedDetent: PresentationDetent = .medium
     
     var body: some View {
-        VStack {
-            List {
-                if filters.allAccounts.isEmpty {
-                    Text(.accountsEmpty)
-                        .textStyle(color: .secondary)
-                    
-                } else {
-                    Section {
-                        ForEach(filters.allAccounts) { account in
-                            
-                            HStack {
-                                Label(account.name, systemImage: account.icon)
-                                    .foregroundStyle(.textPrimaryForeground)
-                                
-                                Spacer()
-                                
-                                Image(systemName: filters.selectedAccountsFilter.contains(account.id) ? ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle)
-                                    .resizable()
-                                    .frame(width: FrameSize.height.iconRowList,
-                                           height: FrameSize.width.iconRowList)
-                                    .foregroundStyle(.primaryTop)
+        NavigationStack {
+            VStack { //Necesario si el contenedor es un NavistaionStack
+                List {
+                    if filters.allAccounts.isEmpty {
+                        Text(.accountsEmpty)
+                            .foregroundStyle(.secondary)
+                        
+                    } else {
+                        Section {
+                            ForEach(filters.allAccounts) { account in
+                                HStack {
+                                    Label(account.name, systemImage: account.icon)
+                                        .foregroundStyle(.textPrimaryForeground)
+                                    
+                                    Spacer()
+                                    
+                                    Image(systemName: filters.selectedAccountsFilter.contains(account.id) ? ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle)
+                                        .resizable()
+                                        .frame(width: FrameSize.height.iconRowList,
+                                               height: FrameSize.width.iconRowList)
+                                        .foregroundStyle(.primaryBottom)
+                                }
+                                .contentShape(Rectangle())
+                                .onTapGesture {
+                                    filters.toggleAccount(account)
+                                }
                             }
-                            .contentShape(Rectangle())
-                            .onTapGesture {
-                                filters.toggleAccount(account)
-                            }
+                        } header: {
+                            Text(.filterByAccount)
+                                .fontWeight(.light)
                         }
-                    } header: {
-                        Text(.filterByAccount)
-                            .textStyle
-                    }
-                    //.listRowBackground(Color.listRowBackground)
-                    
-                    Section {
+                        
+                        Section {
                             HStack {
                                 Label(.filterByFavorite, systemImage: ConstantSystemImage.favoriteFill)
                                     .foregroundStyle(.textPrimaryForeground)
@@ -59,48 +59,45 @@ struct FilterTransactionsView: View {
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: FrameSize.height.iconRowList,
                                            height: FrameSize.width.iconRowList)
-                                    .foregroundStyle(.primaryTop)
+                                    .foregroundStyle(.primaryBottom)
                             }
                             .contentShape(Rectangle())
                             .onTapGesture {
                                 filters.showOnlyFavorites.toggle()
                             }
-                    } header: {
-                        Text(.filterInclude)
-                            .textStyle
+                        } header: {
+                            Text(.filterInclude)
+                                .fontWeight(.light)
+                        }
+                    }
+                }
+                .scrollContentBackground(.hidden)
+                
+                Button {
+                    filters.restoreFilter()
+                } label: {
+                    Label(.filterRestore, systemImage: ConstantSystemImage.arrowCounterClockwise)
+                        .foregroundStyle(.textPrimaryForeground)
+                }
+            }
+            // MARK: NAVIGATION
+            .navigationTitle(.filters)
+            .navigationBarTitleDisplayMode(.inline)
+            
+            .toolbar {
+                ToolbarItem(placement: .destructiveAction) {
+                    Button(role: .close) {
+                        dismiss()
                     }
                 }
             }
-            
-            Button {
-                filters.restoreFilter()
-            } label: {
-                Label(.filterRestore, systemImage: ConstantSystemImage.arrowCounterClockwise)
-                    .foregroundStyle(.textPrimaryForeground)
-            }
-        }
-        //.foregroundColor(Color.listRowForeground)
-        .scrollContentBackground(.hidden)
-//        .background(Color.backgroundContentGradient.opacity(0.2))
-        
-        // MARK: NAVIGATION
-        //.navigationTitle("Filters")
-        .navigationBarTitleDisplayMode(.inline)
-        
-        .toolbar {
-            ToolbarItem(placement: .title) {
-                Text(.filters)
-                    .textStyle
-            }
-            
-            ToolbarItem(placement: .destructiveAction) {
-                Button(role: .close) {
-                    dismiss()
+            .presentationDetents([.medium, .large], selection: $selectedDetent)
+            .presentationBackground {
+                if selectedDetent == .large {
+                    Color.backgroundGradient
                 }
             }
         }
-        
-        
     }
 }
 
@@ -110,28 +107,34 @@ private struct previewWrapper: View {
         CoreDataUtilities.shared.mockDataType = mockDataType
     }
     
+    @State var show: Bool = false
+    
     var body: some View {
-        FilterTransactionsView()
+        VStack {
+            Button("Show") {
+                show = true
+            }
+        }
+        .sheet(isPresented: $show) {
+            FilterTransactionsView()
+        }
+        .onAppear {
+            show = true
+        }
     }
 }
 
 #Preview(Previews.localeES_CR) {
-    NavigationStack {
-        previewWrapper(.normal)
-            .environment(\.locale, .init(identifier: Previews.localeES_CR))
-    }
+    previewWrapper(.normal)
+        .environment(\.locale, .init(identifier: Previews.localeES_CR))
 }
 
 #Preview(Previews.localeEN) {
-    NavigationStack {
-        previewWrapper(.normal)
-            .environment(\.locale, .init(identifier: Previews.localeEN))
-    }
+    previewWrapper(.normal)
+        .environment(\.locale, .init(identifier: Previews.localeEN))
 }
 
 #Preview("Empty \(Previews.localeES)") {
-    NavigationStack {
-        previewWrapper()
-            .environment(\.locale, .init(identifier: Previews.localeES))
-    }
+    previewWrapper()
+        .environment(\.locale, .init(identifier: Previews.localeES))
 }

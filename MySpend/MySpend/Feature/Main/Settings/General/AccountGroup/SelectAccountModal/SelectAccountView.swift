@@ -50,10 +50,11 @@ struct SelectAccountView: View {
                 })
                 .padding(.horizontal)
                 
-                if sortedAccounts.isEmpty {
-                    NoContentView(title: "Empty", entity: "Account")
-                } else {
-                    List {
+                List {
+                    if sortedAccounts.isEmpty {
+                        Text(.accountsEmpty)
+                            .foregroundStyle(.secondary)
+                    } else {
                         ForEach(sortedAccounts) { item in
                             HStack {
                                 let icon = item.icon.getIconFromSFSymbol
@@ -74,15 +75,16 @@ struct SelectAccountView: View {
                             }
                         }
                     }
-                    .scrollContentBackground(.hidden)
-                    .animation(.default, value: sortSelection)
                 }
+                .scrollContentBackground(.hidden)
+                .animation(.default, value: sortSelection)
             }
             .navigationTitle(.accountsTitle)
-            .navigationSubtitle(.accountsSelectSubtitle)
+            //.navigationSubtitle(.accountsSelectSubtitle)
+            .navigationBarTitleDisplayMode(.inline)
             
             .toolbar {
-                ToolbarItem(placement: .primaryAction) {
+                ToolbarItem(placement: .destructiveAction) {
                     Button(role: .close) {
                         dismiss()
                     }
@@ -111,33 +113,41 @@ struct SelectAccountView: View {
     }
 }
 
-#Preview("Normal \(Previews.localeES_CR)") {
-    @Previewable @State var showModal = true
-    @Previewable @State var model = AccountModel()
+private struct previewWrapper: View {
+    init(_ mockDataType: MockDataType = .empty, local: String = Previews.localeES_CR) {
+        CoreDataUtilities.shared.mockDataType = mockDataType
+        self.local = local
+    }
+    var local: String
     
-    VStack {
-        Spacer()
-        
-        HStack {
-            Spacer()
+    @State var show: Bool = false
+    @State var model = AccountModel()
+    
+    var body: some View {
+        VStack {
+            Button("Show") {
+                show = true
+            }
         }
-        
-        Text("Model selected: \(model.name)")
-        Button("Show modal") {
-            showModal = true
+        .sheet(isPresented: $show) {
+            SelectAccountView(selectedModel: $model,
+                              allAccounts: FilterCenter.shared.allAccounts)
         }
-        
-        Spacer()
+        .onAppear {
+            show = true
+        }
+        .environment(\.locale, .init(identifier: local))
     }
-    .background(Color.backgroundGradient)
-    .sheet(isPresented: $showModal) {
-        SelectAccountView(selectedModel: $model,
-                          allAccounts: FilterCenter.shared.allAccounts)
-        
-    }
-    .onAppear {
-        showModal = true
-        CoreDataUtilities.shared.mockDataType = .normal
-    }
-    .environment(\.locale, .init(identifier: Previews.localeES_CR))
+}
+
+#Preview(Previews.localeES_CR) {
+    previewWrapper(.normal, local: Previews.localeES_CR)
+}
+
+#Preview(Previews.localeEN) {
+    previewWrapper(.normal, local: Previews.localeEN)
+}
+
+#Preview("Empty \(Previews.localeES)") {
+    previewWrapper(local: Previews.localeES)
 }
