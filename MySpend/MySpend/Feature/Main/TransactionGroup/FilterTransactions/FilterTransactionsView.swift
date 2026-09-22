@@ -127,7 +127,7 @@ private struct previewWrapper: View {
                 show = true
             }
         }
-        .sheet(isPresented: $show) {
+        .popover(isPresented: $show) {
             NavigationStack {
                 FilterTransactionsView()
             }

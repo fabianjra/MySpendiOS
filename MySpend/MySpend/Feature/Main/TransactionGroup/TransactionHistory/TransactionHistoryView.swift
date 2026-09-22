@@ -26,6 +26,8 @@ struct TransactionHistoryView: View {
     // MARK: NAVIGATION
     @State private var showNewItemModal = false
     @State private var showSearchView = false
+    @State private var showFilters = false
+    
     @State private var modelToModify: TransactionModel?
     @State private var modelToDelete: TransactionModel?
     
@@ -62,6 +64,12 @@ struct TransactionHistoryView: View {
                     }
             }
         }
+        .sheet(isPresented: $showFilters) {
+            NavigationStack {
+                FilterTransactionsView()
+            }
+        }
+        
         .background(Color.backgroundGradient)
         .ignoresSafeArea(.keyboard, edges: .bottom)
         
@@ -158,7 +166,7 @@ struct TransactionHistoryView: View {
             ToolbarSpacer(.flexible, placement: .bottomBar)
             
         } else {
-            FilterTransactionsToolbarBottom()
+            FilterTransactionsToolbarBottom(showFilters: $showFilters)
             
             ToolbarSpacer(.flexible, placement: .bottomBar)
             DefaultToolbarItem(kind: .search, placement: .bottomBar) //TODO: Reparar: se pasa hacia arriba al editar.

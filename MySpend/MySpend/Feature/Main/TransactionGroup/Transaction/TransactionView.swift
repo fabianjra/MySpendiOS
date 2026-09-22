@@ -14,7 +14,7 @@ struct TransactionView: View {
     // MARK: NAVIGATION
     @State private var showNewTransactionView = false
     @State private var showSettings = false
-    @State private var showFiltersView = false
+    @State private var showFilters = false
     @State private var showSearchView = false
     @State private var navigateToHistory: Bool = false
     
@@ -40,6 +40,11 @@ struct TransactionView: View {
         .sheet(isPresented: $showNewTransactionView) {
             NavigationStack {
                 AddModifyTransactionView(selectedDate: viewModel.selectedDate)
+            }
+        }
+        .sheet(isPresented: $showFilters) {
+            NavigationStack {
+                FilterTransactionsView()
             }
         }
         
@@ -260,7 +265,7 @@ struct TransactionView: View {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
         
-        FilterTransactionsToolbarBottom()
+        FilterTransactionsToolbarBottom(showFilters: $showFilters)
         
         ToolbarSpacer(.flexible, placement: .bottomBar)
         DefaultToolbarItem(kind: .search, placement: .bottomBar)

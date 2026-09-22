@@ -9,7 +9,7 @@ import SwiftUI
 
 struct FilterTransactionsToolbarBottom: ToolbarContent {
     
-    @State private var showFiltersView: Bool = false
+    @Binding var showFilters: Bool
     
     private let filters = FilterCenter.shared
 
@@ -26,7 +26,6 @@ struct FilterTransactionsToolbarBottom: ToolbarContent {
                         .foregroundStyle(.textPrimaryForeground)
                         .padding(ConstantViews.paddingSmall)
                         .background(filters.isFilterActive ? Capsule().fill(.primaryTop) : nil)
-                    //.animation(nil, value: UUID()) //otra manera de desabilitar la animacion.
                         .transaction { transaction in
                             transaction.animation = nil
                         }
@@ -35,7 +34,7 @@ struct FilterTransactionsToolbarBottom: ToolbarContent {
                 
                 if filters.isFilterActive {
                     Button {
-                        showFiltersView = true
+                        showFilters = true
                     } label: {
                         HStack {
                             VStack(alignment: .leading) {
@@ -54,11 +53,6 @@ struct FilterTransactionsToolbarBottom: ToolbarContent {
                     }
                     .frame(maxWidth: ConstantFrames.filterMaxWidth)
                     .contentShape(Rectangle()) //Para detectar el touch en todo el espacio disponible.
-                }
-            }
-            .sheet(isPresented: $showFiltersView) {
-                NavigationStack {
-                    FilterTransactionsView()
                 }
             }
         }
@@ -104,6 +98,8 @@ private struct previewWrapper: View {
         FilterCenter.shared.isFilterActive = isFilterActive
     }
     
+    @State var showFilters = false
+    
     var body: some View {
         VStack(spacing: 20) {
             Text("Accounts selected:").bold()
@@ -113,7 +109,14 @@ private struct previewWrapper: View {
             }
         }
         .toolbar {
-            FilterTransactionsToolbarBottom()
+            FilterTransactionsToolbarBottom(showFilters: $showFilters)
+            
+            ToolbarSpacer(placement: .bottomBar)
+        }
+        .sheet(isPresented: $showFilters) {
+            NavigationStack {
+                FilterTransactionsView()
+            }
         }
     }
 }
