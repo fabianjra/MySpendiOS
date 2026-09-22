@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SelectAccountModalView: View {
+struct SelectAccountView: View {
     
     @Environment(\.dismiss) var dismiss
     
@@ -115,20 +115,25 @@ struct SelectAccountModalView: View {
     @Previewable @State var showModal = true
     @Previewable @State var model = AccountModel()
     
-    ZStack(alignment: .top) {
-        Color.backgroundGradient
-        VStack {
-            Spacer()
-            Text("Model selected: \(model.name)")
-            Button("Show modal") {
-                showModal = true
-            }
+    VStack {
+        Spacer()
+        
+        HStack {
             Spacer()
         }
-    }.sheet(isPresented: $showModal) {
-        SelectAccountModalView(selectedModel: $model,
-                               allAccounts: FilterCenter.shared.allAccounts)
-            
+        
+        Text("Model selected: \(model.name)")
+        Button("Show modal") {
+            showModal = true
+        }
+        
+        Spacer()
+    }
+    .background(Color.backgroundGradient)
+    .sheet(isPresented: $showModal) {
+        SelectAccountView(selectedModel: $model,
+                          allAccounts: FilterCenter.shared.allAccounts)
+        
     }
     .onAppear {
         showModal = true
