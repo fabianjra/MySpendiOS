@@ -26,6 +26,8 @@ extension Image {
     static let stack = Image(systemName: "mail.stack") // History
     static let stackFill = Image(systemName: "mail.stack.fill")
     static let filter = Image(systemName: "line.3.horizontal.decrease")
+    static let settings = Image(systemName: "gearshape") // Settings
+    static let settingsFill = Image(systemName: "gear")
     
     // MARK: TEXFIELD
     static let envelopeFill = Image(systemName: "envelope.fill") // Email
@@ -34,13 +36,6 @@ extension Image {
     static let calendar = Image(systemName: "calendar") // Date
     static let checkmark = Image(systemName: "checkmark") // Password confirmation
     static let walletFill = Image(systemName: "wallet.bifold.fill") 
-    
-    
-    // MARK: TABVIEW
-    static let tabResume = Image(systemName: "list.bullet.rectangle") // Resume
-    static let tabResumeFill = Image(systemName: "list.bullet.rectangle.fill")
-    static let settings = Image(systemName: "gearshape") // Settings
-    static let settingsFill = Image(systemName: "gear")
     
     // MARK: LIST
     static let listBulletClipboard = Image(systemName: "list.bullet.clipboard") // Categories

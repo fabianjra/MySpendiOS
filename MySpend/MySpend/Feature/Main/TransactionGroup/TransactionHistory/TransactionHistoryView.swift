@@ -183,7 +183,7 @@ struct TransactionHistoryView: View {
                 Button(.transactionAdd, systemImage: ConstantSystemImage.addNewItem) {
                     showNewItemModal = true
                 }
-                .tint(.primaryTop)
+                .tint(.accentColor)
             }
         }
     }
@@ -303,7 +303,7 @@ struct TransactionHistoryView: View {
                             Spacer()
                             
                             Text(item.amount.convertAmountDecimalToString.addCurrencySymbol)
-                                .textStyle(color: item.category.type == .income ? .primaryTop : .alert)
+                                .textStyle(color: item.category.type == .income ? .accentColor : .alert)
                             
                             if item.favorite {
                                 Image(systemName: ConstantSystemImage.favoriteFill)
@@ -311,7 +311,7 @@ struct TransactionHistoryView: View {
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: FrameSize.height.iconRowList,
                                            height: FrameSize.width.iconRowList)
-                                    .foregroundStyle(.primaryTop)
+                                    .foregroundStyle(Color.accentColor)
                                     .onTapGesture {
                                         favorite(item)
                                     }
@@ -348,13 +348,12 @@ struct TransactionHistoryView: View {
                             Button("", systemImage: ConstantSystemImage.squareAndPencil) {
                                 modelToModify = item
                             }
-                            //.tint(.warning)
                             
                             if item.favorite == false {
                                 Button("", systemImage: ConstantSystemImage.favoriteFill) {
                                     favorite(item)
                                 }
-                                .tint(.primaryTop)
+                                .tint(.accentColor)
                                 
                             }
                         }

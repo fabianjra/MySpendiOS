@@ -25,7 +25,10 @@ struct FilterTransactionsToolbarBottom: ToolbarContent {
                     Image.filter
                         .foregroundStyle(.textPrimaryForeground)
                         .padding(ConstantViews.paddingSmall)
-                        .background(filters.isFilterActive ? Capsule().fill(.primaryTop) : nil)
+                        .background(
+                            filters.isFilterActive ?
+                            Capsule().fill(Color.accentColor.opacity(ConstantColors.opacityHigh)) : nil
+                        )
                         .transaction { transaction in
                             transaction.animation = nil
                         }
@@ -42,7 +45,8 @@ struct FilterTransactionsToolbarBottom: ToolbarContent {
                                     .textStyle(size: .medium)
                                 
                                 Text(getTextDescription)
-                                    .textStyle(color: filters.selectedAccountsFilter.isEmpty ? .textPrimaryForeground : .primaryTop,
+                                    .textStyle(color: filters.selectedAccountsFilter.isEmpty ?
+                                        .textPrimaryForeground : .accentColor,
                                                size: .mediumSmall,truncateMode: .tail)
                                 
                             }

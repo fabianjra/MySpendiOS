@@ -46,8 +46,7 @@ struct PickerView<E>: UIViewRepresentable where E: CaseIterable & RawRepresentab
         control.setTitleTextAttributes(attributeNormal, for: .normal)
         control.setTitleTextAttributes(attributeSelected, for: .selected)
         
-        control.selectedSegmentTintColor = UIColor(Color.textSecondaryForeground.opacity(ConstantColors.opacityHalf))
-        //control.backgroundColor = UIColor(Color.secondaryTop.opacity(0.2))
+        control.selectedSegmentTintColor = UIColor(Color.secondary.opacity(0.3))
         
         return control
     }
@@ -59,7 +58,7 @@ struct PickerView<E>: UIViewRepresentable where E: CaseIterable & RawRepresentab
         if let categoryType = selection as? CategoryType {
             switch categoryType {
             case .expense: uiView.selectedSegmentTintColor = UIColor(Color.alert)
-            case .income:  uiView.selectedSegmentTintColor = UIColor(Color.primaryBottom)
+            case .income:  uiView.selectedSegmentTintColor = UIColor(Color.accentColor)
             }
             
         } else {

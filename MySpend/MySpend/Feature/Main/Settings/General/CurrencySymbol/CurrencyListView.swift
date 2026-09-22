@@ -52,7 +52,7 @@ struct CurrencyListView: View {
                 .aspectRatio(contentMode: .fit)
                 .frame(width: FrameSize.height.iconRowList,
                        height: FrameSize.width.iconRowList)
-                .foregroundStyle(currency.selected ? Color.primaryBottom : Color.textFieldPlaceholder)
+                .foregroundStyle(currency.selected ? .accentColor : Color.textFieldPlaceholder)
                 .transition(.scale.combined(with: .move(edge: .leading)))
             
             Button {

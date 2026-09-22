@@ -68,7 +68,7 @@ extension Text {
             .padding()
         
         Text("This is a plain message asdf asf asf asdf asdf asf  fasdf asdf asdf")
-            .textStyle(color: .primaryTop,
+            .textStyle(color: .accentColor,
                        family: .thin,
                        size: .bigXXL,
                        aligment: .trailing,

@@ -19,10 +19,6 @@ public enum FrameSize {
         return 20.0
     }
 
-    var tabViewIcon: CGFloat {
-        return 25.0
-    }
-
     var socialNetwork: CGFloat {
         return 50.0
     }

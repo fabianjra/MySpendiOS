@@ -18,7 +18,7 @@ struct SectionContainer<Content: View>: View {
     
     init(_ title: String? = nil,
          isInsideList: Bool? = true,
-         textColor: Color = Color.textSecondaryForeground,
+         textColor: Color = Color.secondary,
          textSize: Font.Sizes = .small,
          rowColor: Color = Color.listRowBackground,
          @ViewBuilder content: @escaping () -> Content) {

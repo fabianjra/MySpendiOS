@@ -10,10 +10,8 @@ import SwiftUI
 extension Color {
     
     // MARK: GENERAL GRADIENTS
-    static let primaryGradiant: Array = [Color.primaryTop,
-                                         Color.primaryBottom]
-    static let secondaryGradiant: Array = [Color.secondaryTop,
-                                           Color.secondaryBottom]
+    static let primaryGradiant: Array = [Color.accentColor,
+                                         Color.accentColor]
     static let backgroundGradient = RadialGradient(colors: [.backgroundTop, .backgroundBottom],
                                                           center: .top,
                                                           startRadius: .zero,

@@ -68,7 +68,7 @@ struct TextFieldIconStyle: TextFieldStyle {
                     iconLeading
                         .frame(width: ConstantFrames.textFieldHeight,
                                height: ConstantFrames.textFieldHeight)
-                        .background(Color.textFieldIconBackground)
+                        .background(Color.secondary.opacity(ConstantColors.opacityHalf))
                 }
                 
                 ZStack {

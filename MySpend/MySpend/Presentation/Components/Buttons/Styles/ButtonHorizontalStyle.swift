@@ -10,7 +10,7 @@ import SwiftUI
 struct ButtonHorizontalStyle: ButtonStyle {
     
     var subTitle: String = ""
-    var color: Array<Color> = Color.secondaryGradiant
+    var color: Array<Color> = [Color.secondary, Color.secondary]
     var iconLeading: Image? = nil
 
     func makeBody(configuration: Configuration) -> some View {

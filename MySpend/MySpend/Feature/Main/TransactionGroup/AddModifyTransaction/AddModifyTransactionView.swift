@@ -98,7 +98,7 @@ struct AddModifyTransactionView: View {
                             Text(.favoriteMarkFavorite)
                                 .textStyle
                         }
-                        .tint(Color.primaryBottom)
+                        .tint(.accentColor)
                         .padding(.horizontal)
                     }
                     

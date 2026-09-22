@@ -56,7 +56,7 @@ struct AddModifyAccountView: View {
                 Toggle(isOn: $viewModel.isDefaultSelected) {
                     TextPlain("Default account:")
                 }
-                .tint(Color.primaryBottom)
+                .tint(.accentColor)
                 .padding(.horizontal)
                 
                 TextError(viewModel.errorMessage)

@@ -23,7 +23,7 @@ struct DateTimeIntervalListView: View {
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: FrameSize.height.iconRowList,
                                            height: FrameSize.width.iconRowList)
-                                    .foregroundStyle(item == viewModel.DateTimeIntervalSelected ? Color.primaryBottom : Color.textFieldPlaceholder)
+                                    .foregroundStyle(item == viewModel.DateTimeIntervalSelected ? .accentColor : Color.textFieldPlaceholder)
                                 
                                 Button {
                                     viewModel.updateDateTimeInterval(item)

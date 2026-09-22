@@ -140,7 +140,6 @@ struct TransactionView: View {
                         .foregroundColor(Color.textPrimaryForeground)
                         .padding(.horizontal)
                         .padding(.vertical, ConstantViews.bigSpacing)
-                        //.glassEffect(.regular.tint(Color.secondaryTop).interactive())
                         .glassEffect(.regular.interactive())
                     }
                 }
@@ -201,7 +200,7 @@ struct TransactionView: View {
                         VStack(alignment: .leading) {
                             
                             Text(.transactionTypeIncomes)
-                                .textStyle(color: .primaryTop, family: .semibold, size: .big)
+                                .textStyle(color: .accentColor, family: .semibold, size: .big)
                                 .padding(.bottom, ConstantViews.minimumSpacing)
                             
                             ForEach(viewModel.groupedTransactionsIncomes, id:\.category.id) { item in
@@ -276,7 +275,7 @@ struct TransactionView: View {
             Button(.transactionAdd, systemImage: ConstantSystemImage.addNewItem) {
                 showNewTransactionView = true
             }
-            .tint(Color.primaryTop)
+            .tint(.accentColor)
         }
     }
 }

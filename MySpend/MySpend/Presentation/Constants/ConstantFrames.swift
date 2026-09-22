@@ -10,8 +10,6 @@ import UIKit
 public struct ConstantFrames {
     static let textFieldHeight: CGFloat = 50.0
     static let dividerHeight: CGFloat = 0.5
-    //static let screenSize = UIScreen.main.bounds.size //DEPRECATED
-    static let tabViewHeight: CGFloat = 75.0
     static let toolbarNavigationBarHeight: CGFloat = 55.0
     static let formLabelWidth: CGFloat = 80
     
@@ -19,7 +17,6 @@ public struct ConstantFrames {
     static let emojiSize: CGFloat = 50.0
     
     // MARK: BUTTONS
-    static let roundedButtonIcon: CGFloat = 35.0
     static let navigationBarIcon: CGFloat = 20.0
     static let filterMaxWidth: CGFloat = 130.0
     

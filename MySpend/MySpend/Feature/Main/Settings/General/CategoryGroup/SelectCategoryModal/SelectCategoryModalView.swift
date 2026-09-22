@@ -96,8 +96,10 @@ struct SelectCategoryModalView: View {
                     .animation(.default, value: viewModel.sortCategoriesBy)
                 }
                 
-                ButtonRounded {
+                Button {
                     showNewItemModal = true
+                } label: {
+                    Image.plus
                 }
                 .padding(.trailing, ConstantViews.paddingButtonAddCategory)
                 .padding(.bottom, ConstantViews.paddingButtonAddCategory)

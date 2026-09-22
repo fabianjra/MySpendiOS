@@ -39,7 +39,7 @@ struct FilterTransactionsView: View {
                                 .resizable()
                                 .frame(width: FrameSize.height.iconRowList,
                                        height: FrameSize.width.iconRowList)
-                                .foregroundStyle(.primaryBottom)
+                                .foregroundStyle(Color.accentColor)
                             }
                             .contentShape(Rectangle())
                             .onTapGesture {
@@ -48,7 +48,6 @@ struct FilterTransactionsView: View {
                         }
                     } header: {
                         Text(.filterByAccount)
-                            .fontWeight(.light)
                     }
                         
                     Section {
@@ -68,7 +67,7 @@ struct FilterTransactionsView: View {
                             .aspectRatio(contentMode: .fit)
                             .frame(width: FrameSize.height.iconRowList,
                                    height: FrameSize.width.iconRowList)
-                            .foregroundStyle(.primaryBottom)
+                            .foregroundStyle(Color.accentColor)
                         }
                         .contentShape(Rectangle())
                         .onTapGesture {
@@ -76,7 +75,6 @@ struct FilterTransactionsView: View {
                         }
                     } header: {
                         Text(.filterInclude)
-                            .fontWeight(.light)
                     }
                 }
             }

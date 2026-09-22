@@ -28,7 +28,7 @@ struct TotalBalanceView: View {
                 Spacer()
                 
                 Text(viewModel.totalIncomesFormatted)
-                    .textStyle(color: .primaryTop,
+                    .textStyle(color: .accentColor,
                                family: .semibold)
             }
             .padding(.bottom, ConstantViews.minimumSpacing)

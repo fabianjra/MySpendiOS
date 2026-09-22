@@ -188,7 +188,6 @@ struct CategoryView: View {
                             } label: {
                                 Label.edit
                             }
-                            .tint(Color.warning)
                         }
                         
                         // MARK: DELETE ITEMS SINGLE

@@ -9,6 +9,7 @@ import Foundation
 
 struct ConstantColors {
     static let opacityHalf: CGFloat = 0.5
+    static let opacityHigh: CGFloat = 0.7
     static let opacityToolbarNavigationBar: CGFloat = 0.9
     static let endRadiusBackground: CGFloat = 300.0
 }
