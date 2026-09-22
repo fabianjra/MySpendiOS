@@ -17,8 +17,11 @@ struct SelectAccountModalView: View {
     @State private var sortSelection = UserDefaultsManager.sortAccounts {
         didSet {
             UserDefaultsManager.sortAccounts = sortSelection
-            //allAccounts = allAccounts.sortedAccounts(by: sortSelection)
         }
+    }
+    
+    private var sortedAccounts: [AccountModel] {
+        allAccounts.sortedAccounts(by: sortSelection)
     }
     
     var body: some View {
@@ -61,11 +64,11 @@ struct SelectAccountModalView: View {
             
             ZStack(alignment: .bottomTrailing) {
                 
-                if allAccounts.isEmpty {
+                if sortedAccounts.isEmpty {
                     NoContentView(title: "Empty", entity: "Account")
                 } else {
-                    ListContainer {
-                        ForEach(allAccounts) { item in
+                    List {
+                        ForEach(sortedAccounts) { item in
                             HStack {
                                 let icon = item.icon.getIconFromSFSymbol
                                 
@@ -79,20 +82,16 @@ struct SelectAccountModalView: View {
                                     selectedModel = item
                                     dismiss()
                                 }
-                                
-                                Spacer()
-                                
-                                Image.chevronRight
+                                .foregroundStyle(.textPrimaryForeground)
                             }
                         }
-                        .listRowBackground(Color.listRowBackground) //Background for each row.
                     }
-                    //.animation(.default, value: viewModel.sortSelection)
+                    .animation(.default, value: sortSelection)
                 }
             }
         }
         .presentationDetents([.medium, .large])
-        //.background(Color.backgroundContentGradient)
+//        .background(Color.backgroundGradient)
     }
     
     private func sortButton(for sortingOption: SortAccounts) -> some View {
@@ -109,41 +108,12 @@ struct SelectAccountModalView: View {
     }
 }
 
-//TOD: REPARAR
-//#Preview("Expenses es_CR") {
-//    @Previewable @State var showModal = true
-//    @Previewable @State var selectedCategory = CategoryModel()
-//    //@Previewable @State var viewModelMock = CategoryManager(viewContext: MockTransaction.preview.container.viewContext)
-//    @Previewable @State var viewModelMock = CoreDataUtilities.
-//
-//    ZStack(alignment: .top) {
-//        Color.backgroundBottom
-//        VStack {
-//            Spacer()
-//            TextPlain("Selected category: \(selectedCategory.name)")
-//
-//            Button("Show modal") {
-//                showModal = true
-//            }
-//            Spacer()
-//        }
-//    }.sheet(isPresented: $showModal) {
-//        SelectCategoryModalView(selectedCategory: $selectedCategory,
-//                                categoryType: $selectedCategory.categoryType,
-//                                viewModel: viewModelMock)
-//            .environment(\.locale, .init(identifier: "es_CR"))
-//    }
-//    .onAppear {
-//        showModal = true
-//    }
-//}
-
-#Preview("No content en_US") {
+#Preview("Normal \(Previews.localeES_CR)") {
     @Previewable @State var showModal = true
     @Previewable @State var model = AccountModel()
     
     ZStack(alignment: .top) {
-        Color.backgroundBottom
+        Color.backgroundGradient
         VStack {
             Spacer()
             Text("Model selected: \(model.name)")
@@ -155,10 +125,11 @@ struct SelectAccountModalView: View {
     }.sheet(isPresented: $showModal) {
         SelectAccountModalView(selectedModel: $model,
                                allAccounts: FilterCenter.shared.allAccounts)
-            .environment(\.locale, .init(identifier: "en_US"))
+            
     }
     .onAppear {
         showModal = true
         CoreDataUtilities.shared.mockDataType = .normal
     }
+    .environment(\.locale, .init(identifier: Previews.localeES_CR))
 }
