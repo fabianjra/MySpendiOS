@@ -260,7 +260,7 @@ struct TransactionView: View {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
         
-        FilterTransactionsToolbarBottom(placement: .bottomBar)
+        FilterTransactionsToolbarBottom()
         
         ToolbarSpacer(.flexible, placement: .bottomBar)
         DefaultToolbarItem(kind: .search, placement: .bottomBar)

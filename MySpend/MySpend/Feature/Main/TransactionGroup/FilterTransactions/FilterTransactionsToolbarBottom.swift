@@ -9,15 +9,13 @@ import SwiftUI
 
 struct FilterTransactionsToolbarBottom: ToolbarContent {
     
-    let placement: ToolbarItemPlacement
-    
     @State private var showFiltersView: Bool = false
     
     private let filters = FilterCenter.shared
 
     var body: some ToolbarContent {
         
-        ToolbarItem(placement: placement) {
+        ToolbarItem(placement: .bottomBar) {
             HStack {
                 Button {
                     //withAnimation {
@@ -58,11 +56,12 @@ struct FilterTransactionsToolbarBottom: ToolbarContent {
                     .contentShape(Rectangle()) //Para detectar el touch en todo el espacio disponible.
                 }
             }
-            .popover(isPresented: $showFiltersView) {
-                FilterTransactionsView()
+            .sheet(isPresented: $showFiltersView) {
+                NavigationStack {
+                    FilterTransactionsView()
+                }
             }
         }
-        
     }
     
     /**
@@ -114,7 +113,7 @@ private struct previewWrapper: View {
             }
         }
         .toolbar {
-            FilterTransactionsToolbarBottom(placement: .bottomBar)
+            FilterTransactionsToolbarBottom()
         }
     }
 }

@@ -158,7 +158,7 @@ struct TransactionHistoryView: View {
             ToolbarSpacer(.flexible, placement: .bottomBar)
             
         } else {
-            FilterTransactionsToolbarBottom(placement: .bottomBar)
+            FilterTransactionsToolbarBottom()
             
             ToolbarSpacer(.flexible, placement: .bottomBar)
             DefaultToolbarItem(kind: .search, placement: .bottomBar) //TODO: Reparar: se pasa hacia arriba al editar.

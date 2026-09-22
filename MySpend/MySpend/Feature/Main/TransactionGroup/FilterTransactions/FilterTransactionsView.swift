@@ -15,86 +15,98 @@ struct FilterTransactionsView: View {
     @State private var selectedDetent: PresentationDetent = .medium
     
     var body: some View {
-        NavigationStack {
-            VStack { //Necesario si el contenedor es un NavistaionStack
-                List {
-                    if filters.allAccounts.isEmpty {
-                        Text(.accountsEmpty)
-                            .foregroundStyle(.secondary)
+        VStack {
+            List {
+                if filters.allAccounts.isEmpty {
+                    Text(.accountsEmpty)
+                        .foregroundStyle(.secondary)
                         
-                    } else {
-                        Section {
-                            ForEach(filters.allAccounts) { account in
-                                HStack {
-                                    Label(account.name, systemImage: account.icon)
-                                        .foregroundStyle(.textPrimaryForeground)
-                                    
-                                    Spacer()
-                                    
-                                    Image(systemName: filters.selectedAccountsFilter.contains(account.id) ? ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle)
-                                        .resizable()
-                                        .frame(width: FrameSize.height.iconRowList,
-                                               height: FrameSize.width.iconRowList)
-                                        .foregroundStyle(.primaryBottom)
-                                }
-                                .contentShape(Rectangle())
-                                .onTapGesture {
-                                    filters.toggleAccount(account)
-                                }
-                            }
-                        } header: {
-                            Text(.filterByAccount)
-                                .fontWeight(.light)
-                        }
-                        
-                        Section {
+                } else {
+                    Section {
+                        ForEach(filters.allAccounts) { account in
                             HStack {
-                                Label(.filterByFavorite, systemImage: ConstantSystemImage.favoriteFill)
+                                Label(account.name, systemImage: account.icon)
                                     .foregroundStyle(.textPrimaryForeground)
-                                
+                                    
                                 Spacer()
-                                
-                                Image(systemName: filters.showOnlyFavorites ? ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: FrameSize.height.iconRowList,
-                                           height: FrameSize.width.iconRowList)
-                                    .foregroundStyle(.primaryBottom)
+                                    
+                                Image(
+                                    systemName: filters.selectedAccountsFilter
+                                        .contains(
+                                            account.id
+                                        ) ? ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle
+                                )
+                                .resizable()
+                                .frame(width: FrameSize.height.iconRowList,
+                                       height: FrameSize.width.iconRowList)
+                                .foregroundStyle(.primaryBottom)
                             }
                             .contentShape(Rectangle())
                             .onTapGesture {
-                                filters.showOnlyFavorites.toggle()
+                                filters.toggleAccount(account)
                             }
-                        } header: {
-                            Text(.filterInclude)
-                                .fontWeight(.light)
                         }
+                    } header: {
+                        Text(.filterByAccount)
+                            .fontWeight(.light)
+                    }
+                        
+                    Section {
+                        HStack {
+                            Label(
+                                .filterByFavorite,
+                                systemImage: ConstantSystemImage.favoriteFill
+                            )
+                            .foregroundStyle(.textPrimaryForeground)
+                                
+                            Spacer()
+                                
+                            Image(
+                                systemName: filters.showOnlyFavorites ? ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle
+                            )
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: FrameSize.height.iconRowList,
+                                   height: FrameSize.width.iconRowList)
+                            .foregroundStyle(.primaryBottom)
+                        }
+                        .contentShape(Rectangle())
+                        .onTapGesture {
+                            filters.showOnlyFavorites.toggle()
+                        }
+                    } header: {
+                        Text(.filterInclude)
+                            .fontWeight(.light)
                     }
                 }
-                .scrollContentBackground(.hidden)
+            }
+            .scrollContentBackground(.hidden)
                 
-                Button {
-                    filters.restoreFilter()
-                } label: {
-                    Label(.filterRestore, systemImage: ConstantSystemImage.arrowCounterClockwise)
-                        .foregroundStyle(.textPrimaryForeground)
-                }
+            Button {
+                filters.restoreFilter()
+            } label: {
+                Label(
+                    .filterRestore,
+                    systemImage: ConstantSystemImage.arrowCounterClockwise
+                )
+                .foregroundStyle(.textPrimaryForeground)
             }
-            // MARK: NAVIGATION
-            .navigationTitle(.filters)
-            .navigationBarTitleDisplayMode(.inline)
+        }
+        // MARK: NAVIGATION
+        .navigationTitle(.filters)
+        .navigationBarTitleDisplayMode(.inline)
             
-            .toolbar {
-                ToolbarItem(placement: .destructiveAction) {
-                    Button(role: .close) {
-                        dismiss()
-                    }
-                }
+        .presentationDetents([.medium, .large], selection: $selectedDetent)
+        .presentationBackground {
+            if selectedDetent == .large {
+                Color.backgroundGradient
             }
-            .presentationDetents([.medium, .large], selection: $selectedDetent)
-            .presentationBackground {
-                if selectedDetent == .large {
-                    Color.backgroundGradient
+        }
+            
+        .toolbar {
+            ToolbarItem(placement: .destructiveAction) {
+                Button(role: .close) {
+                    dismiss()
                 }
             }
         }
@@ -116,7 +128,9 @@ private struct previewWrapper: View {
             }
         }
         .sheet(isPresented: $show) {
-            FilterTransactionsView()
+            NavigationStack {
+                FilterTransactionsView()
+            }
         }
         .onAppear {
             show = true

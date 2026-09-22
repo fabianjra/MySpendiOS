@@ -83,17 +83,18 @@ struct SelectAccountView: View {
             //.navigationSubtitle(.accountsSelectSubtitle)
             .navigationBarTitleDisplayMode(.inline)
             
+            .presentationDetents([.medium, .large], selection: $selectedDetent)
+            .presentationBackground {
+                if selectedDetent == .large {
+                    Color.backgroundGradient
+                }
+            }
+            
             .toolbar {
                 ToolbarItem(placement: .destructiveAction) {
                     Button(role: .close) {
                         dismiss()
                     }
-                }
-            }
-            .presentationDetents([.medium, .large], selection: $selectedDetent)
-            .presentationBackground {
-                if selectedDetent == .large {
-                    Color.backgroundGradient
                 }
             }
         }
