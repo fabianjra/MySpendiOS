@@ -86,7 +86,7 @@ struct AccountView: View {
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: FrameSize.width.iconRowList,
                                                height: FrameSize.height.iconRowList)
-                                        .foregroundStyle(.alert)
+                                        .foregroundStyle(Color.accentColor)
                                         .transition(.scale.combined(with: .move(edge: .leading)))
                                     
                                 }

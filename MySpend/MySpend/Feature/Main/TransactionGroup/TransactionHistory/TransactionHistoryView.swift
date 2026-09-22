@@ -174,16 +174,15 @@ struct TransactionHistoryView: View {
         
         ToolbarItem(placement: .bottomBar) {
             if viewModel.isEditing {
-                Button(.selectorDelete, systemImage: ConstantSystemImage.trash) {
+                Button(.selectorDelete, systemImage: ConstantSystemImage.trash, role: .destructive) {
                     showAlertDelete = true
                 }
                 .disabled(viewModel.selectedTransactions.isEmpty)
                 
             } else {
-                Button(.transactionAdd, systemImage: ConstantSystemImage.addNewItem) {
+                Button(.transactionAdd, systemImage: ConstantSystemImage.addNewItem, role: .confirm) {
                     showNewItemModal = true
                 }
-                .tint(.accentColor)
             }
         }
     }
@@ -255,7 +254,7 @@ struct TransactionHistoryView: View {
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: FrameSize.height.iconRowList,
                                            height: FrameSize.width.iconRowList)
-                                    .foregroundStyle(.alert)
+                                    .foregroundStyle(Color.accentColor)
                                     .transition(.scale.combined(with: .move(edge: .leading)))
                             }
                             
@@ -305,16 +304,18 @@ struct TransactionHistoryView: View {
                             Text(item.amount.convertAmountDecimalToString.addCurrencySymbol)
                                 .textStyle(color: item.category.type == .income ? .accentColor : .alert)
                             
-                            if item.favorite {
-                                Image(systemName: ConstantSystemImage.favoriteFill)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: FrameSize.height.iconRowList,
-                                           height: FrameSize.width.iconRowList)
-                                    .foregroundStyle(Color.accentColor)
-                                    .onTapGesture {
-                                        favorite(item)
-                                    }
+                            if !viewModel.isEditing {
+                                if item.favorite {
+                                    Image(systemName: ConstantSystemImage.favoriteFill)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: FrameSize.height.iconRowList,
+                                               height: FrameSize.width.iconRowList)
+                                        .foregroundStyle(Color.accentColor)
+                                        .onTapGesture {
+                                            favorite(item)
+                                        }
+                                }
                             }
                             
                             //Image.chevronRight
