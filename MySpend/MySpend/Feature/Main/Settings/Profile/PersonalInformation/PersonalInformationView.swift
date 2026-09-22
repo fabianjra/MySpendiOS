@@ -13,36 +13,39 @@ struct PersonalInformationView: View {
     @State private var toast = ToastViewModel()
     
     var body: some View {
-        Form {
-            Section {
-                LabeledContent(.personalInformationInputName) {
-                    TextField(.personalInformationInputNamePlaceholder, text: $viewModel.username)
-                        .formInputStyle($viewModel.username)
-                        .textContentType(.name)
-                        .keyboardType(.alphabet)
+        VStack {
+            Form {
+                Section {
+                    LabeledContent(.personalInformationInputName) {
+                        TextField(.personalInformationInputNamePlaceholder, text: $viewModel.username)
+                            .formInputStyle($viewModel.username)
+                            .textContentType(.name)
+                            .keyboardType(.alphabet)
+                    }
+                    .formLabeledInputStyle
+                    
+                    LabeledContent(.personalInformationInputEmail) {
+                        TextField(.personalInformationInputEmailPlaceholder, text: $viewModel.email)
+                            .formInputStyle($viewModel.email)
+                            .textContentType(.emailAddress)
+                            .keyboardType(.emailAddress)
+                    }
+                    .formLabeledInputStyle
+                    
+                    LabeledContent(.personalInformationInputPhone) {
+                        TextField(.personalInformationInputPhonePlaceholder, text: $viewModel.phoneNumber)
+                            .formInputStyle($viewModel.phoneNumber)
+                            .textContentType(.telephoneNumber)
+                            .keyboardType(.phonePad)
+                    }
+                    .formLabeledInputStyle
                 }
-                .formLabeledInputStyle
-                
-                LabeledContent(.personalInformationInputEmail) {
-                    TextField(.personalInformationInputEmailPlaceholder, text: $viewModel.email)
-                        .formInputStyle($viewModel.email)
-                        .textContentType(.emailAddress)
-                        .keyboardType(.emailAddress)
-                }
-                .formLabeledInputStyle
-                
-                LabeledContent(.personalInformationInputPhone) {
-                    TextField(.personalInformationInputPhonePlaceholder, text: $viewModel.phoneNumber)
-                        .formInputStyle($viewModel.phoneNumber)
-                        .textContentType(.telephoneNumber)
-                        .keyboardType(.phonePad)
-                }
-                .formLabeledInputStyle
             }
         }
-        .scrollContentBackground(.hidden)
         .navigationTitle(.personalInformationTitle)
         .navigationSubtitle(.personalInformationSubtitle)
+        
+        .scrollContentBackground(.hidden)
         .background(Color.backgroundGradient)
         
         .onAppear {

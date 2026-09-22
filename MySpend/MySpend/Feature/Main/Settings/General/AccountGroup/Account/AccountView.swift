@@ -65,17 +65,11 @@ struct AccountView: View {
     
     private var itemList: some View {
         VStack {
-            if viewModel.allAccounts.isEmpty {
-                
-                HStack {
-                    Spacer()
-                    TransactionsEmptyView()
-                    Spacer()
-                }
-                .background(Color.backgroundGradient)
-                
-            } else {
-                List {
+            List {
+                if viewModel.allAccounts.isEmpty {
+                    Text(.accountsEmpty)
+                        .foregroundStyle(.secondary)
+                } else {
                     ForEach(viewModel.allAccounts) { item in
                         Button {
                             if viewModel.isEditing {
@@ -168,12 +162,12 @@ struct AccountView: View {
                         }
                     }
                 }
-                //.foregroundColor(Color.listRowForeground) //Para los botones. El texto queda originalmente en azul.
-                //.navigationLinkIndicatorVisibility(.visible)
-                .animation(.default, value: viewModel.allAccounts)
-                .scrollContentBackground(.hidden)
-                .background(Color.backgroundGradient)
             }
+            //.foregroundColor(Color.listRowForeground) //Para los botones. El texto queda originalmente en azul.
+            //.navigationLinkIndicatorVisibility(.visible)
+            .animation(.default, value: viewModel.allAccounts)
+            .scrollContentBackground(.hidden)
+            .background(Color.backgroundGradient)
         }
     }
     
