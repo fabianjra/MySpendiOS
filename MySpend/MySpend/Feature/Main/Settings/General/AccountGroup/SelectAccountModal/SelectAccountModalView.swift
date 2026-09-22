@@ -14,32 +14,22 @@ struct SelectAccountModalView: View {
     @Binding var selectedModel: AccountModel
     var allAccounts: [AccountModel]
     
+    private var sortedAccounts: [AccountModel] {
+        allAccounts.sortedAccounts(by: sortSelection)
+    }
+    
     @State private var sortSelection = UserDefaultsManager.sortAccounts {
         didSet {
             UserDefaultsManager.sortAccounts = sortSelection
         }
     }
     
-    private var sortedAccounts: [AccountModel] {
-        allAccounts.sortedAccounts(by: sortSelection)
-    }
+    @State private var selectedDetent: PresentationDetent = .medium
     
     var body: some View {
-        VStack {
-            
-            HeaderNavigator(title: "Accounts",
-                            titleWeight: .regular,
-                            titleSize: .bigXL,
-                            subTitle: "Select the account",
-                            subTitleWeight: .regular,
-                            showLeadingAction: false,
-                            showTrailingAction: true)
-            .padding(.top)
-            .padding(.vertical)
-            .padding(.horizontal)
-            
-            
+        NavigationStack {
             VStack {
+                
                 RowLCTCointainer(leadingContent: {
                     MenuContainer {
                         Section("Sorted by: \(sortSelection.rawValue)") {
@@ -58,11 +48,7 @@ struct SelectAccountModalView: View {
                         }
                     }
                 })
-            }
-            .padding(.horizontal)
-            
-            
-            ZStack(alignment: .bottomTrailing) {
+                .padding(.horizontal)
                 
                 if sortedAccounts.isEmpty {
                     NoContentView(title: "Empty", entity: "Account")
@@ -83,15 +69,32 @@ struct SelectAccountModalView: View {
                                     dismiss()
                                 }
                                 .foregroundStyle(.textPrimaryForeground)
+                                
+                                Spacer()
                             }
                         }
                     }
+                    .scrollContentBackground(.hidden)
                     .animation(.default, value: sortSelection)
                 }
             }
+            .navigationTitle(.accountsTitle)
+            .navigationSubtitle(.accountsSelectSubtitle)
+            
+            .toolbar {
+                ToolbarItem(placement: .primaryAction) {
+                    Button(role: .close) {
+                        dismiss()
+                    }
+                }
+            }
+            .presentationDetents([.medium, .large], selection: $selectedDetent)
+            .presentationBackground {
+                if selectedDetent == .large {
+                    Color.backgroundGradient
+                }
+            }
         }
-        .presentationDetents([.medium, .large])
-//        .background(Color.backgroundGradient)
     }
     
     private func sortButton(for sortingOption: SortAccounts) -> some View {

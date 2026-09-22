@@ -45,7 +45,7 @@ struct UserDefaultsManager {
     }
     
     static var sortAccounts: SortAccounts {
-        get { return UserDefaultsDataStore<SortAccounts>(for: .sortAccounts).value ?? .byNameAz }
+        get { return UserDefaultsDataStore<SortAccounts>(for: .sortAccounts).value ?? .byCreationOldest }
         set {
             var manager = UserDefaultsDataStore<SortAccounts>(for: .sortAccounts)
             manager.value = newValue

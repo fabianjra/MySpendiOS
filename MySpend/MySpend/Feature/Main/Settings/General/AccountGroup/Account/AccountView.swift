@@ -173,7 +173,6 @@ struct AccountView: View {
                 .animation(.default, value: viewModel.allAccounts)
                 .scrollContentBackground(.hidden)
                 .background(Color.backgroundGradient)
-                
             }
         }
     }
