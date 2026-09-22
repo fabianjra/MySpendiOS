@@ -12,8 +12,14 @@ struct SelectAccountModalView: View {
     @Environment(\.dismiss) var dismiss
     
     @Binding var selectedModel: AccountModel
+    var allAccounts: [AccountModel]
     
-    @State var viewModel = AccountViewModel()
+    @State private var sortSelection = UserDefaultsManager.sortAccounts {
+        didSet {
+            UserDefaultsManager.sortAccounts = sortSelection
+            //allAccounts = allAccounts.sortedAccounts(by: sortSelection)
+        }
+    }
     
     var body: some View {
         VStack {
@@ -33,13 +39,19 @@ struct SelectAccountModalView: View {
             VStack {
                 RowLCTCointainer(leadingContent: {
                     MenuContainer {
-                        Section("Sorted by: \(viewModel.sortSelection.rawValue)") {
+                        Section("Sorted by: \(sortSelection.rawValue)") {
                             sortButton(for: .byNameAz)
                             sortButton(for: .byCreationNewest)
                         }
                         
                         Section {
-                            sortButtonResetToDefault
+                            Button {
+                                UserDefaultsManager.removeValue(for: .sortAccounts)
+                                sortSelection = UserDefaultsManager.sortAccounts
+                            } label: {
+                                Label.restoreSelection
+                                    .foregroundStyle(Color.alert, Color.alert)
+                            }
                         }
                     }
                 })
@@ -49,11 +61,11 @@ struct SelectAccountModalView: View {
             
             ZStack(alignment: .bottomTrailing) {
                 
-                if viewModel.allAccounts.isEmpty {
+                if allAccounts.isEmpty {
                     NoContentView(title: "Empty", entity: "Account")
                 } else {
                     ListContainer {
-                        ForEach(viewModel.allAccounts) { item in
+                        ForEach(allAccounts) { item in
                             HStack {
                                 let icon = item.icon.getIconFromSFSymbol
                                 
@@ -75,12 +87,9 @@ struct SelectAccountModalView: View {
                         }
                         .listRowBackground(Color.listRowBackground) //Background for each row.
                     }
-                    .animation(.default, value: viewModel.sortSelection)
+                    //.animation(.default, value: viewModel.sortSelection)
                 }
             }
-        }
-        .onDisappear {
-            viewModel.deactivateObservers()
         }
         .presentationDetents([.medium, .large])
         //.background(Color.backgroundContentGradient)
@@ -88,23 +97,14 @@ struct SelectAccountModalView: View {
     
     private func sortButton(for sortingOption: SortAccounts) -> some View {
         Button {
-            if viewModel.sortSelection == sortingOption {
-                viewModel.sortSelection = sortingOption.toggle
+            if sortSelection == sortingOption {
+                sortSelection = sortingOption.toggle
             } else {
-                viewModel.sortSelection = sortingOption
+                sortSelection = sortingOption
             }
             
         } label: {
-            viewModel.sortSelection == sortingOption ? sortingOption.label() : sortingOption.label(inverted: false)
-        }
-    }
-    
-    private var sortButtonResetToDefault: some View {
-        Button {
-            viewModel.resetSelectedSort()
-        } label: {
-            Label.restoreSelection
-                .foregroundStyle(Color.alert, Color.alert)
+            sortSelection == sortingOption ? sortingOption.label() : sortingOption.label(inverted: false)
         }
     }
 }
@@ -146,17 +146,19 @@ struct SelectAccountModalView: View {
         Color.backgroundBottom
         VStack {
             Spacer()
-            TextPlain("Model selected: \(model.name)")
+            Text("Model selected: \(model.name)")
             Button("Show modal") {
                 showModal = true
             }
             Spacer()
         }
     }.sheet(isPresented: $showModal) {
-        SelectAccountModalView(selectedModel: $model)
+        SelectAccountModalView(selectedModel: $model,
+                               allAccounts: FilterCenter.shared.allAccounts)
             .environment(\.locale, .init(identifier: "en_US"))
     }
     .onAppear {
         showModal = true
+        CoreDataUtilities.shared.mockDataType = .normal
     }
 }
