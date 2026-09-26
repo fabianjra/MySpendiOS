@@ -33,7 +33,7 @@ public struct UtilsCurrency {
         formatter.locale = Locale.current
         //formatter.maximumIntegerDigits = CurrencyManager.amoutMaxLength
         //formatter.minimumFractionDigits = CurrencyManager.fractionLength
-        formatter.minimumFractionDigits = .zero
+        formatter.minimumFractionDigits = UserDefaultsManager.showDecimals ? CurrencyManager.fractionLength : .zero
         formatter.maximumFractionDigits = CurrencyManager.fractionLength
         
         /*
