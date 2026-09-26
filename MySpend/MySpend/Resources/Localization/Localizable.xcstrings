@@ -860,7 +860,7 @@
         }
       }
     },
-    "Main.Header.Greet %@ %@" : {
+    "Greet %@ %@" : {
       "comment" : "Saludo inicial",
       "extractionState" : "manual",
       "localizations" : {
@@ -878,7 +878,61 @@
         }
       }
     },
-    "Main.Header.Subtitle" : {
+    "Greet.GoodAfternoon" : {
+      "comment" : "Saludo inicial de buenas tardes",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Good afternoon"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buenas tardes"
+          }
+        }
+      }
+    },
+    "Greet.GoodEvening" : {
+      "comment" : "Saludo inicial de buenas noches",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Good evening"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buenas noches"
+          }
+        }
+      }
+    },
+    "Greet.GoodMorning" : {
+      "comment" : "Saludo inicial de buenos dias",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Good morning"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buenos días"
+          }
+        }
+      }
+    },
+    "Greet.Subtitle" : {
       "comment" : "Subtitulo de saludo inicial",
       "extractionState" : "manual",
       "localizations" : {

@@ -20,6 +20,16 @@ struct TransactionView: View {
     
     private let filters = FilterCenter.shared
     
+    private var greeting: LocalizedStringResource {
+        let hour = Calendar.current.component(.hour, from: .now)
+        
+        switch hour {
+        case 5..<12: return .greetGoodMorning
+        case 12..<18: return .greetGoodAfternoon
+        default: return .greetGoodEvening
+        }
+    }
+    
     var body: some View {
         VStack {
             if showSearchView {
@@ -95,11 +105,11 @@ struct TransactionView: View {
 
             HStack {
                 VStack(alignment: .leading) {
-                    Text(.mainHeaderSubtitle)
-                        .font(.footnote.weight(.thin))
+                    Text(greeting)
+                        .font(.footnote.weight(.light))
                         .lineLimit(ConstantViews.singleTextMaxLines)
                     
-                    Text(.mainHeaderGreet(viewModel.userName, Emojis.greeting.rawValue))
+                    Text(.greet(viewModel.userName, Emojis.greeting.rawValue))
                         .font(.title2.bold())
                         .fontDesign(.rounded)
                         .lineLimit(ConstantViews.singleTextMaxLines)
