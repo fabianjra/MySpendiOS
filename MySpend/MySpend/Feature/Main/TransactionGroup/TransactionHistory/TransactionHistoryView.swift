@@ -124,7 +124,7 @@ struct TransactionHistoryView: View {
         ToolbarItem(placement: .title) {
             if viewModel.selectedTransactions.count == .zero {
                 Text(.titleHistoryView)
-                    .textStyle(size: .big)
+                    .textStyle(size: .title3)
             } else {
                 Text(.selectorSelectedCountFemale(viewModel.selectedTransactions.count))
                     .textStyle(size: .medium)

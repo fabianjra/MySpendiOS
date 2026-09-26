@@ -215,7 +215,7 @@ struct TransactionView: View {
                         VStack(alignment: .leading) {
                             
                             Text(.transactionTypeIncomes)
-                                .textStyle(color: .accentColor, family: .semibold, size: .big)
+                                .textStyle(color: .accentColor, family: .semibold, size: .title3)
                                 .padding(.bottom, ConstantViews.minimumSpacing)
                             
                             ForEach(viewModel.groupedTransactionsIncomes, id:\.category.id) { item in
@@ -239,7 +239,7 @@ struct TransactionView: View {
                         VStack(alignment: .leading) {
                             
                             Text(.transactionTypeExpenses)
-                                .textStyle(color: .alert, family: .semibold, size: .big)
+                                .textStyle(color: .alert, family: .semibold, size: .title3)
                                 .padding(.bottom, ConstantViews.minimumSpacing)
                             
                             ForEach(viewModel.groupedTransactionsExpenses, id:\.category.id) { item in

@@ -21,7 +21,7 @@ struct ButtonNavigation: View {
             //Necesario para centrar los textos del header.
                 .frame(width: FrameSize.width.headerButton,
                        height: FrameSize.height.headerButton)
-                .font(.montserrat(size: .bigXXL))
+                .font(.montserrat(size: .largeTitle))
                 .foregroundColor(tintColor)
                 .fontWeight(.ultraLight)
         }

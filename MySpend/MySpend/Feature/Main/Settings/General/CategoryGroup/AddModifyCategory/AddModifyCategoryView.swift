@@ -56,7 +56,7 @@ struct AddModifyCategoryView: View {
             
             HeaderNavigator(title: viewModel.isAddModel ? "New category" : "Modify category",
                             titleWeight: .regular,
-                            titleSize: .bigXL,
+                            titleSize: .title,
                             subTitle: viewModel.isAddModel ? "Enter the category details" : "Modify the category details",
                             showLeadingAction: false,
                             showTrailingAction: true)

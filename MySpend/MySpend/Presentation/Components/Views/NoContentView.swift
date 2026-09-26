@@ -19,14 +19,14 @@ struct NoContentView: View {
                 Spacer()
                 TextPlain(title,
                           family: .semibold,
-                          size: .bigXL,
+                          size: .title,
                           aligment: .center)
                 .padding(.vertical)
                 Spacer()
             }
             
             TextPlain("\(message) \(entity)",
-                      size: .big,
+                      size: .title3,
                       aligment: .center,
                       lineLimit: ConstantViews.messageMaxLines)
             .padding(.bottom)

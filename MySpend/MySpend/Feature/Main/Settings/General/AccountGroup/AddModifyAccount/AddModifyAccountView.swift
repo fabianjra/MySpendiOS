@@ -26,7 +26,7 @@ struct AddModifyAccountView: View {
             
             HeaderNavigator(title: viewModel.isAddModel ? "New account" : "Modify account",
                             titleWeight: .regular,
-                            titleSize: .bigXL,
+                            titleSize: .title,
                             subTitle: viewModel.isAddModel ? "Enter the account details" : "Modify the account details",
                             showLeadingAction: false,
                             showTrailingAction: true)

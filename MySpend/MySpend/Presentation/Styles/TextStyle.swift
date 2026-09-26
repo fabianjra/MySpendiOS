@@ -70,7 +70,7 @@ extension Text {
         Text("This is a plain message asdf asf asf asdf asdf asf  fasdf asdf asdf")
             .textStyle(color: .accentColor,
                        family: .thin,
-                       size: .bigXXL,
+                       size: .largeTitle,
                        aligment: .trailing,
                        lineLimit: 1,
                        truncateMode: .middle)

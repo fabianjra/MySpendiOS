@@ -28,7 +28,7 @@ struct SelectCategoryModalView: View {
             
             HeaderNavigator(title: "Categories",
                             titleWeight: .regular,
-                            titleSize: .bigXL,
+                            titleSize: .title,
                             subTitle: "Select the category",
                             subTitleWeight: .regular,
                             showLeadingAction: false,

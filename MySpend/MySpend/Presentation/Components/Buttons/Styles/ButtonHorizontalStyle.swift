@@ -31,7 +31,7 @@ struct ButtonHorizontalStyle: ButtonStyle {
             
             VStack(alignment: .leading) {
                 configuration.label
-                    .font(.montserrat(size: .big))
+                    .font(.montserrat(size: .title3))
                     .foregroundColor(Color.buttonForeground)
                     .lineLimit(ConstantViews.singleTextMaxLines)
                 

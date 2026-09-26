@@ -33,7 +33,7 @@ extension Font {
      iOS 17         28.0    SFUI-Bold
      
      .largeTitle    34.0    SFUI-Regular
-     .title1        28.0    SFUI-Regular
+     .title         28.0    SFUI-Regular
      .title2        22.0    SFUI-Regular
      .title3        20.0    SFUI-Regular
      .headline      17.0    SFUI-Semibold
@@ -49,11 +49,11 @@ extension Font {
         case mediumSmall
         case medium
         case body
-        case big
-        case bigL
-        case bigXL
-        case bigXXL
-        case bigXXXL
+        case title3
+        case title2
+        case title
+        case largeTitle
+        case largeTitlePlus
         
         var value: CGFloat {
             switch self {
@@ -61,11 +61,11 @@ extension Font {
             case .mediumSmall: return UIFont.preferredFont(forTextStyle: .footnote).pointSize //13
             case .medium: return (UIFont.preferredFont(forTextStyle: .callout).pointSize) //16
             case .body: return UIFont.preferredFont(forTextStyle: .body).pointSize //17
-            case .big: return UIFont.preferredFont(forTextStyle: .title3).pointSize //20
-            case .bigL: return UIFont.preferredFont(forTextStyle: .title2).pointSize //22
-            case .bigXL: return UIFont.preferredFont(forTextStyle: .title1).pointSize //28
-            case .bigXXL: return UIFont.preferredFont(forTextStyle: .largeTitle).pointSize //34
-            case .bigXXXL: return (UIFont.preferredFont(forTextStyle: .largeTitle).pointSize + 10.0) //44
+            case .title3: return UIFont.preferredFont(forTextStyle: .title3).pointSize //20
+            case .title2: return UIFont.preferredFont(forTextStyle: .title2).pointSize //22
+            case .title: return UIFont.preferredFont(forTextStyle: .title1).pointSize //28
+            case .largeTitle: return UIFont.preferredFont(forTextStyle: .largeTitle).pointSize //34
+            case .largeTitlePlus: return (UIFont.preferredFont(forTextStyle: .largeTitle).pointSize + 10.0) //44
             }
         }
     }

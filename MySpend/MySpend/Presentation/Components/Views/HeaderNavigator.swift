@@ -15,7 +15,7 @@ struct HeaderNavigator: View {
     var table: String = LocalizableTable.main
     var title: LocalizedStringKey? = nil
     var titleWeight: Font.Family = .thin
-    var titleSize: Font.Sizes = .bigXXL
+    var titleSize: Font.Sizes = .largeTitle
     
     // MARK: SUBTITLE
     var subTitle: LocalizedStringKey? = nil
@@ -106,7 +106,7 @@ struct HeaderNavigator: View {
     VStack {
         HeaderNavigator(title: "Title",
                         titleWeight: .thin,
-                        titleSize: .bigXXL,
+                        titleSize: .largeTitle,
                         subTitle: "Subtitle",
                         subTitleWeight: .light,
                         subTitleSize: .body)

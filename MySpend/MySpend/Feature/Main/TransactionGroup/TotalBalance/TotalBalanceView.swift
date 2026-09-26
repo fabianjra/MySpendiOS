@@ -50,12 +50,12 @@ struct TotalBalanceView: View {
                 HStack {
                     
                     Text(.transactionsTotalBalance)
-                        .textStyle(size: .big)
+                        .textStyle(size: .title3)
                     
                     Spacer()
                     
                     Text(viewModel.totalBalanceFormatted)
-                        .textStyle(size: .big)
+                        .textStyle(size: .title3)
                 }
             }
         }

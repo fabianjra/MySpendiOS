@@ -14,7 +14,7 @@ struct TransactionsEmptyView: View {
             
             HStack {
                 Text(.transactionsEmpty)
-                    .textStyle(size: .bigXL)
+                    .textStyle(size: .title)
                     .padding(.vertical)
             }
             
