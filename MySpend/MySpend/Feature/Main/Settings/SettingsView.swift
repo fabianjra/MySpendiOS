@@ -40,6 +40,14 @@ struct SettingsView: View {
                         }
                     }
                 }
+                
+                Toggle(.settingsGeneralOptionShowDecimals,
+                       isOn: Binding (
+                        get: { UserDefaultsManager.showDecimals },
+                        set: { UserDefaultsManager.showDecimals = $0}
+                       )
+                )
+                .tint(.accentColor)
             }
             
             // MARK: - ERASE ALL DATA

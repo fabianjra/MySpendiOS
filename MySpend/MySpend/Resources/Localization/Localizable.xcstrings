@@ -1669,6 +1669,24 @@
         }
       }
     },
+    "Settings.General.Option.ShowDecimals" : {
+      "comment" : "Titulo para la opcion de mostrar decimales",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show decimals"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mostrar decimales"
+          }
+        }
+      }
+    },
     "Settings.General.SectionTitle" : {
       "comment" : "Sección de ajustes para los ajustes generales",
       "extractionState" : "manual",
