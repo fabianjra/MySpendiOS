@@ -25,7 +25,7 @@ struct CurrencyListView: View {
             List {
                 
                 Section {
-                    Toggle(.settingsGeneralOptionShowDecimals,
+                    Toggle(.currencyShowCents,
                            isOn: Binding (
                             get: { UserDefaultsManager.showDecimals },
                             set: { UserDefaultsManager.showDecimals = $0}

@@ -634,6 +634,24 @@
         }
       }
     },
+    "Currency.ShowCents" : {
+      "comment" : "Titulo para la opcion de mostrar los centimos en los montos",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Display cents"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mostrar céntimos"
+          }
+        }
+      }
+    },
     "Currency.Symbol" : {
       "comment" : "Descripción para el simbolo de la moneda",
       "extractionState" : "manual",
@@ -1770,24 +1788,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Intervalo de tiempo"
-          }
-        }
-      }
-    },
-    "Settings.General.Option.ShowDecimals" : {
-      "comment" : "Titulo para la opcion de mostrar decimales",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Show decimals"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Mostrar decimales"
           }
         }
       }
