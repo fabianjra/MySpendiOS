@@ -21,6 +21,15 @@ struct CurrencyListView: View {
             ListContainer {
                 
                 SectionContainer("Preferred currencies", isInsideList: true) {
+                    
+                    Toggle(.settingsGeneralOptionShowDecimals,
+                           isOn: Binding (
+                            get: { UserDefaultsManager.showDecimals },
+                            set: { UserDefaultsManager.showDecimals = $0}
+                           )
+                    )
+                    .tint(.accentColor)
+                    
                     rowView(viewModel.localeCurrency) {
                         viewModel.updateCurrencySelected(viewModel.localeCurrency)
                     }

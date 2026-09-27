@@ -60,7 +60,7 @@ enum ContentOptions: String, CaseIterable, Identifiable {
     public var id: Self { self }
     case accounts
     case categories
-    case currencySymbol
+    case currency
     case dateTimeInterval
     case appTheme
     
@@ -68,7 +68,7 @@ enum ContentOptions: String, CaseIterable, Identifiable {
         switch self {
         case .accounts: return .settingsGeneralOptionAccounts
         case .categories: return .settingsGeneralOptionCategories
-        case .currencySymbol: return .settingsGeneralOptionCurrencySymbol
+        case .currency: return .settingsGeneralOptionCurrency
         case .dateTimeInterval: return .settingsGeneralOptionDateTimeInterval
         case .appTheme: return .settingsGeneralOptionAppTheme
         }
@@ -78,7 +78,7 @@ enum ContentOptions: String, CaseIterable, Identifiable {
         switch self {
         case .accounts: return "🏦"
         case .categories: return "📋"
-        case .currencySymbol: return "💰"
+        case .currency: return "💱"
         case .dateTimeInterval: return "📅"
         case .appTheme: return "🎨"
         }
@@ -89,7 +89,7 @@ enum ContentOptions: String, CaseIterable, Identifiable {
         switch self {
         case .accounts: AccountView()
         case .categories: CategoryView()
-        case .currencySymbol: CurrencyListView()
+        case .currency: CurrencyListView()
         case .dateTimeInterval: DateTimeIntervalListView()
         case .appTheme: AppThemeView()
         }

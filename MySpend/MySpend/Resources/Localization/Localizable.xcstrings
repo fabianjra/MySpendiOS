@@ -1604,13 +1604,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Appearance"
+            "value" : "App theme"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Apariencia"
+            "value" : "Tema de la aplicación"
           }
         }
       }
@@ -1633,20 +1633,20 @@
         }
       }
     },
-    "Settings.General.Option.CurrencySymbol" : {
+    "Settings.General.Option.Currency" : {
       "comment" : "Titulo en ajustes para la opcion de simbolo de moneda",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Currency symbol"
+            "value" : "Currency"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "SImbolo de moneda"
+            "value" : "Moneda"
           }
         }
       }
