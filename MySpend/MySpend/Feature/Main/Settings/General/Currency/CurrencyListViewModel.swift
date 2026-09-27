@@ -7,11 +7,17 @@
 
 import Foundation
 
-class CurrencyListViewModel: BaseViewModel {
+@Observable
+final class CurrencyListViewModel {
     
-    @Published var localeCurrency = CurrencyManager.localeCurrencyOrDefault.updateModelToUserDefaultsSelected //Get locale currency and set Selected or not, depending on UserDefaults.
-    @Published var currenciesAvailables: [CurrencyModel] = []
-    @Published var currencySymbolType: CurrencySymbolType = CurrencyManager.selectedCurrencySymbolType
+    var localeCurrency = CurrencyManager.localeCurrencyOrDefault.updateModelToUserDefaultsSelected //Get locale currency and set Selected or not, depending on UserDefaults.
+    var currenciesAvailables: [CurrencyModel] = []
+    
+    var currencySymbolType: CurrencySymbolType = CurrencyManager.selectedCurrencySymbolType {
+        didSet {
+            CurrencyManager.selectedCurrencySymbolType = self.currencySymbolType
+        }
+    }
     
 
     func fetchCurrencyList() {
@@ -30,9 +36,5 @@ class CurrencyListViewModel: BaseViewModel {
         self.currenciesAvailables = self.currenciesAvailables.map { currency in
             return currency.updateModelToUserDefaultsSelected
         }
-    }
-
-    func updateCurrencySymbolTypeSelected() {
-        CurrencyManager.selectedCurrencySymbolType = self.currencySymbolType // Update the UserDefaults
     }
 }

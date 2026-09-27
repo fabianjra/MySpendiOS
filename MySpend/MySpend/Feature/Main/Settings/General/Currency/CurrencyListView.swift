@@ -9,19 +9,21 @@ import SwiftUI
 
 struct CurrencyListView: View {
     
-    @StateObject var viewModel = CurrencyListViewModel()
+    @State var viewModel = CurrencyListViewModel()
     
     var body: some View {
         VStack {
+            
+            Picker(.currencySymbol, selection: $viewModel.currencySymbolType) {
+                ForEach(CurrencySymbolType.allCases) { symbolType in
+                    Text(symbolType.localized)
+                }
+            }
+            .pickerStyle(.segmented)
 
-            PickerView(selection: $viewModel.currencySymbolType)
-                .padding(.top)
-                .padding(.horizontal)
-
-            ListContainer {
+            List {
                 
-                SectionContainer("Preferred currencies", isInsideList: true) {
-                    
+                Section {
                     Toggle(.settingsGeneralOptionShowDecimals,
                            isOn: Binding (
                             get: { UserDefaultsManager.showDecimals },
@@ -29,27 +31,31 @@ struct CurrencyListView: View {
                            )
                     )
                     .tint(.accentColor)
-                    
+                }
+                
+                Section {
                     rowView(viewModel.localeCurrency) {
                         viewModel.updateCurrencySelected(viewModel.localeCurrency)
                     }
+                } header: {
+                    Text(.currencyMostUsed)
                 }
                 
-                SectionContainer("Available currencies", isInsideList: true) {
+                Section {
                     ForEach(viewModel.currenciesAvailables) { currency in
                         rowView(currency) {
                             viewModel.updateCurrencySelected(currency)
                         }
                     }
+                } header: {
+                    Text(.currencyAllCurrencies)
                 }
             }
+            .scrollContentBackground(.hidden)
         }
-        .navigationTitle("Currency list")
+        .navigationTitle(.currencyTitle)
         .onAppear {
             viewModel.fetchCurrencyList()
-        }
-        .onChange(of: viewModel.currencySymbolType) {
-            viewModel.updateCurrencySymbolTypeSelected()
         }
         .background(Color.backgroundGradient)
     }
@@ -67,12 +73,12 @@ struct CurrencyListView: View {
             Button {
                 action()
             } label: {
-                TextPlain(currency.countryName, color: Color.textFieldForeground)
+                Text(currency.countryName)
             }
             
             Spacer()
             
-            TextPlain(viewModel.currencySymbolType == .symbol ? currency.symbol : currency.currencyCode, color: Color.textFieldForeground)
+            Text(viewModel.currencySymbolType == .symbol ? currency.symbol : currency.currencyCode)
         }
     }
 }

@@ -92,7 +92,7 @@ struct PickerView<E>: UIViewRepresentable where E: CaseIterable & RawRepresentab
         
         PickerView(selection: $categoryType)
         
-        PickerView(selection: $currencyType)
+        //PickerView(selection: $currencyType)
         
         PickerView(selection: $dateTimeInterval)
         

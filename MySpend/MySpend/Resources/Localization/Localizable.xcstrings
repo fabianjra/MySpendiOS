@@ -562,8 +562,113 @@
     "Creation (Oldest first)" : {
 
     },
-    "Currency list" : {
-
+    "Currency.AllCurrencies" : {
+      "comment" : "Monedas disponibles",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All currencies"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Todas las monedas"
+          }
+        }
+      }
+    },
+    "Currency.MostUsed" : {
+      "comment" : "Monedas más usadas",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Most used"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Más usadas"
+          }
+        }
+      }
+    },
+    "Currency.Picker.Code" : {
+      "comment" : "Descripcion para la seleccion del picker de codigo de moneda",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Code"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Código"
+          }
+        }
+      }
+    },
+    "Currency.Picker.Symbol" : {
+      "comment" : "Descripcion para la seleccion del picker de simbolo de moneda",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Symbol"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Simbolo"
+          }
+        }
+      }
+    },
+    "Currency.Symbol" : {
+      "comment" : "Descripción para el simbolo de la moneda",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Currency symbol"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Simbolo de moneda"
+          }
+        }
+      }
+    },
+    "Currency.Title" : {
+      "comment" : "Titulo para la pantalla de ajustes de moneda",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Currency options"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Opciones de moneda"
+          }
+        }
+      }
     },
     "Date (Newest first)" : {
 
@@ -1645,7 +1750,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Moneda"
           }
         }
