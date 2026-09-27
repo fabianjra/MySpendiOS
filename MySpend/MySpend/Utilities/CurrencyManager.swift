@@ -16,6 +16,7 @@ public struct CurrencyManager {
     private static let defaultCurrencySymbol: String = "$"
     private static let defaultCurrencyCode: String = "USD"
     private static let defaultCountryName: String = "United States"
+    private static let defaultCountryFlag: String = "🇺🇸"
 
     private static let defaultDecimalSeparator: String = "."
     private static let defaultGroupingSeparator: String = ","
@@ -63,14 +64,16 @@ extension CurrencyManager {
                 return CurrencyModel(countryCode: region.identifier,
                                      symbol: currencySymbol,
                                      currencyCode: currencyCode,
-                                     countryName: countryName)
+                                     countryName: countryName,
+                                     countryFlag: region.identifier.flagEmoji ?? "🏳️")
             }
         }
         
         return CurrencyModel(countryCode: CurrencyManager.defaultCountryCode,
                              symbol: CurrencyManager.defaultCurrencySymbol,
                              currencyCode: CurrencyManager.defaultCurrencyCode,
-                             countryName: CurrencyManager.defaultCountryName)
+                             countryName: CurrencyManager.defaultCountryName,
+                             countryFlag: CurrencyManager.defaultCountryFlag)
     }
     
     static func currencyList() -> [CurrencyModel] {
@@ -105,7 +108,8 @@ extension CurrencyManager {
                 let model = CurrencyModel(countryCode: regionCode,
                                           symbol: symbol,
                                           currencyCode: currencyCode,
-                                          countryName: countryName)
+                                          countryName: countryName,
+                                          countryFlag: regionCode.flagEmoji ?? "🏳️")
                 currencyList.append(model)
             }
         }
@@ -159,6 +163,46 @@ extension CurrencyManager {
         return symbol
     }
 }
+
+private extension String {
+    
+    /**
+     Convierte un código de país ISO 3166-1 alpha-2 (por ejemplo "CL", "US", "JP")
+     en su emoji de bandera correspondiente.
+     
+     La conversión se realiza mapeando cada letra del código a su símbolo Unicode
+     "Regional Indicator Symbol" (🇦-🇿), los cuales al combinarse en pares
+     se renderizan automáticamente como la bandera del país.
+     
+     ```swift
+     "CL".flagEmoji // "🇨🇱"
+     "US".flagEmoji // "🇺🇸"
+     "xx".flagEmoji // nil (no es un código de país válido)
+     ```
+     
+     - Returns: Un `String` con el emoji de la bandera si `self` es un código
+     ISO alpha-2 válido (dos letras A-Z, sin distinguir mayúsculas/minúsculas).
+     Retorna `nil` si el string no tiene exactamente 2 caracteres o contiene
+     algún carácter fuera del rango A-Z.
+     */
+    var flagEmoji: String? {
+        guard self.count == 2 else { return nil }
+        
+        let base: UInt32 = 127397
+        var scalarView = String.UnicodeScalarView()
+        
+        for scalar in self.uppercased().unicodeScalars {
+            guard scalar.value >= 65 && scalar.value <= 90, // A-Z
+                  let flagScalar = Unicode.Scalar(base + scalar.value) else {
+                return nil
+            }
+            scalarView.append(flagScalar)
+        }
+        
+        return String(scalarView)
+    }
+}
+
 
 
 // MARK: - USER DEFAULTS MANAGER

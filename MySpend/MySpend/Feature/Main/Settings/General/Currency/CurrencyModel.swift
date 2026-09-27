@@ -14,6 +14,7 @@ struct CurrencyModel: Identifiable, Codable {
     let symbol: String
     let currencyCode: String
     let countryName: String
+    let countryFlag: String
     
     let selected: Bool
     
@@ -21,6 +22,7 @@ struct CurrencyModel: Identifiable, Codable {
          symbol: String,
          currencyCode: String,
          countryName: String,
+         countryFlag: String,
          selected: Bool = false) {
         
         self.id = UUID().uuidString
@@ -28,6 +30,7 @@ struct CurrencyModel: Identifiable, Codable {
         self.symbol = symbol
         self.currencyCode = currencyCode
         self.countryName = countryName
+        self.countryFlag = countryFlag
         self.selected = selected
     }
     
@@ -36,6 +39,7 @@ struct CurrencyModel: Identifiable, Codable {
                              symbol: self.symbol,
                              currencyCode: self.currencyCode,
                              countryName: self.countryName,
+                             countryFlag: self.countryFlag,
                              selected: UserDefaultsManager.currency.countryCode == self.countryCode
         )
     }

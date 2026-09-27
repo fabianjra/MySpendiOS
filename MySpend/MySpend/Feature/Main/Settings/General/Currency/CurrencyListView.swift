@@ -68,6 +68,9 @@ struct CurrencyListView: View {
             action()
         } label: {
             HStack {
+                
+                Text(currency.countryFlag)
+                
                 Text(viewModel.currencySymbolType == .symbol ? currency.symbol : currency.currencyCode)
                     .foregroundStyle(Color.secondary)
                 
