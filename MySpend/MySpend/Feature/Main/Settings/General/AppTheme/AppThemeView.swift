@@ -31,6 +31,7 @@ struct AppThemeView: View {
                     .foregroundStyle(.textPrimaryForeground)
                 }
             }
+            .scrollContentBackground(.hidden)
         }
         .navigationTitle(.appThemeViewTitle)
         .background(Color.backgroundGradient)
