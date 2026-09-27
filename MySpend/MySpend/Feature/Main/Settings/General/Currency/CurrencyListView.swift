@@ -20,6 +20,7 @@ struct CurrencyListView: View {
                 }
             }
             .pickerStyle(.segmented)
+            .padding(.horizontal)
 
             List {
                 
@@ -54,6 +55,7 @@ struct CurrencyListView: View {
             .scrollContentBackground(.hidden)
         }
         .navigationTitle(.currencyTitle)
+        .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             viewModel.fetchCurrencyList()
         }
@@ -66,16 +68,17 @@ struct CurrencyListView: View {
             action()
         } label: {
             HStack {
-                Text("\(currency.countryName):")
+                Text(viewModel.currencySymbolType == .symbol ? currency.symbol : currency.currencyCode)
+                    .foregroundStyle(Color.secondary)
+                
+                Text(currency.countryName)
                     .foregroundStyle(Color.primary)
                 
                 Spacer ()
                 
-                Text(viewModel.currencySymbolType == .symbol ? currency.symbol : currency.currencyCode)
-                    .foregroundStyle(Color.primary)
-                
                 Image.checkmark
                     .opacity(currency.selected ? 1 : .zero)
+                    .bold()
             }
         }
     }
