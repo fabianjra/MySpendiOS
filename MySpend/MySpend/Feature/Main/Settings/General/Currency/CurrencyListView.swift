@@ -61,24 +61,22 @@ struct CurrencyListView: View {
     }
     
     func rowView(_ currency: CurrencyModel, action: @escaping () -> Void) -> some View {
-        HStack {
-            Image(systemName: currency.selected ? ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: FrameSize.height.iconRowList,
-                       height: FrameSize.width.iconRowList)
-                .foregroundStyle(currency.selected ? .accentColor : Color.textFieldPlaceholder)
-                .transition(.scale.combined(with: .move(edge: .leading)))
-            
-            Button {
-                action()
-            } label: {
-                Text(currency.countryName)
+        
+        Button {
+            action()
+        } label: {
+            HStack {
+                Text("\(currency.countryName):")
+                    .foregroundStyle(Color.primary)
+                
+                Spacer ()
+                
+                Text(viewModel.currencySymbolType == .symbol ? currency.symbol : currency.currencyCode)
+                    .foregroundStyle(Color.primary)
+                
+                Image.checkmark
+                    .opacity(currency.selected ? 1 : .zero)
             }
-            
-            Spacer()
-            
-            Text(viewModel.currencySymbolType == .symbol ? currency.symbol : currency.currencyCode)
         }
     }
 }

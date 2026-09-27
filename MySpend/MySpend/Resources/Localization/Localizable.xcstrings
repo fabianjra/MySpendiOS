@@ -1714,8 +1714,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tema de la aplicación"
+            "state" : "translated",
+            "value" : "Tema"
           }
         }
       }
