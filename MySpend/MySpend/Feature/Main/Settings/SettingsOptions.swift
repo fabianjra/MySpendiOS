@@ -89,7 +89,7 @@ enum ContentOptions: String, CaseIterable, Identifiable {
         switch self {
         case .accounts: AccountView()
         case .categories: CategoryView()
-        case .currency: CurrencyListView()
+        case .currency: CurrencyView()
         case .dateTimeInterval: DateTimeIntervalListView()
         case .appTheme: AppThemeView()
         }

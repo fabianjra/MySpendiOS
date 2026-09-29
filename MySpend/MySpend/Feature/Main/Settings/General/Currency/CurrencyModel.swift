@@ -15,17 +15,4 @@ struct CurrencyModel: Identifiable, Codable, Equatable {
     let currencyCode: String
     let countryName: String
     let countryFlag: String
-    
-    init(countryCode: String,
-         symbol: String,
-         currencyCode: String,
-         countryName: String,
-         countryFlag: String) {
-        
-        self.countryCode = countryCode
-        self.symbol = symbol
-        self.currencyCode = currencyCode
-        self.countryName = countryName
-        self.countryFlag = countryFlag
-    }
 }

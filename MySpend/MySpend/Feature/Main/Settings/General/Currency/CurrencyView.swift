@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct CurrencyListView: View {
+struct CurrencyView: View {
     
-    @State var viewModel = CurrencyListViewModel()
+    @State var viewModel = CurrencyViewModel()
     
     var body: some View {
         VStack {
@@ -80,6 +80,6 @@ struct CurrencyListView: View {
 
 #Preview {
     NavigationStack {
-        CurrencyListView()
+        CurrencyView()
     }
 }

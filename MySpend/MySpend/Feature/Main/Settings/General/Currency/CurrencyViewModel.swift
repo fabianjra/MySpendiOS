@@ -5,10 +5,10 @@
 //  Created by Fabian Rodriguez on 5/1/25.
 //
 
-import Foundation
+import Observation
 
 @Observable
-final class CurrencyListViewModel {
+final class CurrencyViewModel {
     
     var localeCurrency = CurrencyManager.localeCurrencyOrDefault
     var currenciesAvailables = CurrencyManager.currencyList()
