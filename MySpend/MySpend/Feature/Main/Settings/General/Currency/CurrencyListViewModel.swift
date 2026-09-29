@@ -13,15 +13,15 @@ final class CurrencyListViewModel {
     var localeCurrency = CurrencyManager.localeCurrencyOrDefault
     var currenciesAvailables = CurrencyManager.currencyList()
     
-    var selectedCurrency = CurrencyManager.selectedCurrency {
+    var selectedCurrency = UserDefaultsManager.currency {
         didSet {
-            CurrencyManager.selectedCurrency = self.selectedCurrency
+            UserDefaultsManager.currency = self.selectedCurrency
         }
     }
     
-    var currencySymbolType: CurrencySymbolType = CurrencyManager.selectedCurrencySymbolType {
+    var selectedCurrencySymbolType: CurrencySymbolType = UserDefaultsManager.currencySymbolType {
         didSet {
-            CurrencyManager.selectedCurrencySymbolType = self.currencySymbolType
+            UserDefaultsManager.currencySymbolType = self.selectedCurrencySymbolType
         }
     }
 }

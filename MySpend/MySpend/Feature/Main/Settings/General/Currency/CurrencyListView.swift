@@ -14,7 +14,7 @@ struct CurrencyListView: View {
     var body: some View {
         VStack {
             
-            Picker(.currencySymbol, selection: $viewModel.currencySymbolType) {
+            Picker(.currencySymbol, selection: $viewModel.selectedCurrencySymbolType) {
                 ForEach(CurrencySymbolType.allCases) { symbolType in
                     Text(symbolType.localized)
                 }
@@ -61,7 +61,7 @@ struct CurrencyListView: View {
             HStack {
                 Text(currency.countryFlag)
                 
-                Text(viewModel.currencySymbolType == .symbol ? currency.symbol : currency.currencyCode)
+                Text(viewModel.selectedCurrencySymbolType == .symbol ? currency.symbol : currency.currencyCode)
                     .foregroundStyle(Color.secondary)
                 
                 Text(currency.countryName)
@@ -69,9 +69,10 @@ struct CurrencyListView: View {
                 
                 Spacer ()
                 
-                Image.checkmark
-                    .opacity(currency.currencyCode == viewModel.selectedCurrency.currencyCode ? 1 : .zero)
-                    .bold()
+                if currency.countryCode == viewModel.selectedCurrency.countryCode {
+                    Image.checkmark
+                        .bold()
+                }
             }
         }
     }

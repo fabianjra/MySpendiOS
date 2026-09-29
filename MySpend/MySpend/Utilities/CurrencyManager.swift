@@ -216,27 +216,9 @@ extension CurrencyManager {
      It is used to show the currency symbol selected for the currency selected in any view that shows amouts (Transactions View, History, View, etc.)
      */
     public static var getSelectedSymbolOrCode: String {
-        switch self.selectedCurrencySymbolType {
+        switch UserDefaultsManager.currencySymbolType {
         case .symbol: return UserDefaultsManager.currency.symbol
         case .code: return UserDefaultsManager.currency.currencyCode
         }
-    }
-    
-    /**
-     Gets or updates the selected Currency in settings.
-     Eg: USD, CRC, EUR, etc.
-     Based on the currency selected, it can know which country, code or symbol is selected.
-     */
-    static var selectedCurrency: CurrencyModel {
-        get { return UserDefaultsManager.currency }
-        set { UserDefaultsManager.currency = newValue }
-    }
-    
-    /**
-     Gets or updates the selected symbol type in settings (from UserDefaults)
-     */
-    static var selectedCurrencySymbolType: CurrencySymbolType {
-        get { return UserDefaultsManager.currencySymbolType }
-        set { UserDefaultsManager.currencySymbolType = newValue }
     }
 }
