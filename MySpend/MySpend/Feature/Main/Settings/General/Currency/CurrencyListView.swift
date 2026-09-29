@@ -21,9 +21,8 @@ struct CurrencyListView: View {
             }
             .pickerStyle(.segmented)
             .padding(.horizontal)
-
+            
             List {
-                
                 Section {
                     Toggle(.currencyShowCents,
                            isOn: Binding (
@@ -52,15 +51,12 @@ struct CurrencyListView: View {
         }
         .navigationTitle(.currencyTitle)
         .navigationBarTitleDisplayMode(.inline)
-        .onAppear {
-            viewModel.fetchCurrencyList()
-        }
         .background(Color.backgroundGradient)
     }
     
     private func rowView(_ currency: CurrencyModel) -> some View {
         Button {
-            viewModel.updateCurrencySelected(currency)
+            viewModel.selectedCurrency = currency
         } label: {
             HStack {
                 Text(currency.countryFlag)
@@ -74,7 +70,7 @@ struct CurrencyListView: View {
                 Spacer ()
                 
                 Image.checkmark
-                    .opacity(currency.selected ? 1 : .zero)
+                    .opacity(currency.currencyCode == viewModel.selectedCurrency.currencyCode ? 1 : .zero)
                     .bold()
             }
         }
