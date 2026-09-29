@@ -35,18 +35,14 @@ struct CurrencyListView: View {
                 }
                 
                 Section {
-                    rowView(viewModel.localeCurrency) {
-                        viewModel.updateCurrencySelected(viewModel.localeCurrency)
-                    }
+                    rowView(viewModel.localeCurrency)
                 } header: {
                     Text(.currencyMostUsed)
                 }
                 
                 Section {
                     ForEach(viewModel.currenciesAvailables) { currency in
-                        rowView(currency) {
-                            viewModel.updateCurrencySelected(currency)
-                        }
+                        rowView(currency)
                     }
                 } header: {
                     Text(.currencyAllCurrencies)
@@ -62,13 +58,11 @@ struct CurrencyListView: View {
         .background(Color.backgroundGradient)
     }
     
-    func rowView(_ currency: CurrencyModel, action: @escaping () -> Void) -> some View {
-        
+    private func rowView(_ currency: CurrencyModel) -> some View {
         Button {
-            action()
+            viewModel.updateCurrencySelected(currency)
         } label: {
             HStack {
-                
                 Text(currency.countryFlag)
                 
                 Text(viewModel.currencySymbolType == .symbol ? currency.symbol : currency.currencyCode)
