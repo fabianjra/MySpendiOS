@@ -244,6 +244,6 @@ extension String {
      ```
      */
     var toInt: Int {
-        Int(self.trimmingCharacters(in: .whitespacesAndNewlines)) ?? 0
+        Int(self.trimmingCharacters(in: .whitespacesAndNewlines)) ?? .zero
     }
 }

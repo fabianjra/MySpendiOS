@@ -12,21 +12,21 @@ import Foundation
 public struct CurrencyManager {
     
     // MARK: PRIVATE
-    private static let defaultCountryCode: String = "US"
-    private static let defaultCurrencySymbol: String = "$"
-    private static let defaultCurrencyCode: String = "USD"
-    private static let defaultCountryName: String = "United States"
-    private static let defaultCountryFlag: String = "🇺🇸"
+    private static let defaultCountryCode = "US"
+    private static let defaultCurrencySymbol = "$"
+    private static let defaultCurrencyCode = "USD"
+    private static let defaultCountryName = "United States"
+    private static let defaultCountryFlag = "🇺🇸"
 
-    private static let defaultDecimalSeparator: String = "."
-    private static let defaultGroupingSeparator: String = ","
+    private static let defaultDecimalSeparator = "."
+    private static let defaultGroupingSeparator = ","
     
     // MARK: PUBLIC
     
-    public static let amoutMaxLength: Int = 50
-    public static let amoutMaxLengthWithDecimal: Int = 53
-    public static let fractionLength: Int = 2
-    public static let zeroAmoutString: String = Int.zero.description
+    public static let amoutMaxLength = 50
+    public static let amoutMaxLengthWithDecimal = 53
+    public static let fractionLength = 2
+    public static let zeroAmoutString = Int.zero.description
 }
 
 
