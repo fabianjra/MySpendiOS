@@ -20,6 +20,7 @@ struct AppThemeView: View {
                         HStack {
                             Text(item.icon)
                             Text(item.localizedName)
+                                .foregroundStyle(.textPrimaryForeground)
                             
                             Spacer()
                             
@@ -29,7 +30,6 @@ struct AppThemeView: View {
                             }
                         }
                     }
-                    .foregroundStyle(.textPrimaryForeground)
                 }
             }
             .scrollContentBackground(.hidden)

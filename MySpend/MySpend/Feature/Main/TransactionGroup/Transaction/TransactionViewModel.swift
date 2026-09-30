@@ -9,6 +9,16 @@ import Foundation
 
 class TransactionViewModel: BaseViewModel {
     
+    var greeting: LocalizedStringResource {
+        let hour = Calendar.current.component(.hour, from: .now)
+        
+        switch hour {
+        case 5..<12: return .greetGoodMorning
+        case 12..<18: return .greetGoodAfternoon
+        default: return .greetGoodEvening
+        }
+    }
+    
     @Published var userName = UserDefaultsManager.userName
     
     private var allTransactions: [TransactionModel] = []

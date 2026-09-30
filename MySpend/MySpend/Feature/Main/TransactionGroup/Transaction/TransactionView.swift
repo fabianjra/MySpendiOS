@@ -20,16 +20,6 @@ struct TransactionView: View {
     
     private let filters = FilterCenter.shared
     
-    private var greeting: LocalizedStringResource {
-        let hour = Calendar.current.component(.hour, from: .now)
-        
-        switch hour {
-        case 5..<12: return .greetGoodMorning
-        case 12..<18: return .greetGoodAfternoon
-        default: return .greetGoodEvening
-        }
-    }
-    
     var body: some View {
         VStack {
             if showSearchView {
@@ -105,7 +95,7 @@ struct TransactionView: View {
 
             HStack {
                 VStack(alignment: .leading) {
-                    Text(greeting)
+                    Text(viewModel.greeting)
                         .font(.footnote.weight(.light))
                         .lineLimit(ConstantViews.singleTextMaxLines)
                     
@@ -136,7 +126,7 @@ struct TransactionView: View {
                 HStack {
                     Text(viewModel.totalBalanceFormatted)
                         .font(viewModel.totalBalanceFormatted.description.filter(\.isNumber).count > 7 ? .title : .largeTitle)
-                        .fontDesign(.rounded)
+                        //.monospacedDigit()
                         .lineLimit(ConstantViews.singleTextMaxLines)
                     
                     Spacer()
@@ -215,19 +205,22 @@ struct TransactionView: View {
                         VStack(alignment: .leading) {
                             
                             Text(.transactionTypeIncomes)
-                                .textStyle(color: .accentColor, family: .semibold, size: .title3)
+                                .foregroundStyle(Color.accentColor)
+                                .fontWeight(.semibold)
+                                .font(.title3)
+                                .fontDesign(.rounded)
                                 .padding(.bottom, ConstantViews.minimumSpacing)
                             
                             ForEach(viewModel.groupedTransactionsIncomes, id:\.category.id) { item in
                                 HStack {
                                     Text(item.category.name)
-                                        .textStyle
+                                        .fontDesign(.rounded)
                                         .padding(.leading)
                                     
                                     Spacer()
                                     
                                     Text(item.totalAmount.convertAmountDecimalToString.addCurrencySymbol)
-                                        .textStyle
+                                        .monospacedDigit()
                                 }
                                 .padding(.bottom, ConstantViews.minimumSpacing)
                             }
@@ -239,26 +232,29 @@ struct TransactionView: View {
                         VStack(alignment: .leading) {
                             
                             Text(.transactionTypeExpenses)
-                                .textStyle(color: .alert, family: .semibold, size: .title3)
+                                .foregroundStyle(.alert)
+                                .fontWeight(.semibold)
+                                .font(.title3)
+                                .fontDesign(.rounded)
                                 .padding(.bottom, ConstantViews.minimumSpacing)
                             
                             ForEach(viewModel.groupedTransactionsExpenses, id:\.category.id) { item in
                                 HStack {
                                     Text(item.category.name)
-                                        .textStyle
+                                        .fontDesign(.rounded)
                                         .padding(.leading)
                                     
                                     Spacer()
                                     
                                     Text(item.totalAmount.convertAmountDecimalToString.addCurrencySymbol)
-                                        .textStyle
+                                        .monospacedDigit()
                                 }
                                 .padding(.bottom, ConstantViews.minimumSpacing)
                             }
                         }
                     }
                 }
-                .animation(.default, value: filters.selectedAccountsFilter.count)
+                .animation(.default, value: viewModel.transactionsFiltered.count)
                 
             }
             
