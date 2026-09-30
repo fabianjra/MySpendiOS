@@ -21,6 +21,46 @@ public struct CurrencyManager {
     private static let defaultDecimalSeparator = "."
     private static let defaultGroupingSeparator = ","
     
+    private static let currencyRegionCodes: [String: String] = [
+        "USD": "US", // United States
+        "EUR": "DE", // Germany
+        "JPY": "JP", // Japan
+        "GBP": "GB", // United Kingdom
+        "CNY": "CN", // China
+        "CHF": "CH", // Switzerland
+        "AUD": "AU", // Australia
+        "CAD": "CA", // Canada
+        "HKD": "HK", // Hong Kong
+        "SGD": "SG", // Singapore
+        "INR": "IN", // India
+        "KRW": "KR", // South Korea
+        "MXN": "MX", // Mexico
+        "BRL": "BR", // Brazil
+        "NZD": "NZ", // New Zealand
+        "SEK": "SE", // Sweden
+        "NOK": "NO", // Norway
+        "TWD": "TW", // Taiwan
+        "ZAR": "ZA", // South Africa
+        "PLN": "PL", // Poland
+
+        // Latin America
+        "ARS": "AR", // Argentina
+        "BOB": "BO", // Bolivia
+        "CLP": "CL", // Chile
+        "COP": "CO", // Colombia
+        "CRC": "CR", // Costa Rica
+        "CUP": "CU", // Cuba
+        "DOP": "DO", // Dominican Republic
+        "GTQ": "GT", // Guatemala
+        "HNL": "HN", // Honduras
+        "NIO": "NI", // Nicaragua
+        "PAB": "PA", // Panama
+        "PYG": "PY", // Paraguay
+        "PEN": "PE", // Peru
+        "UYU": "UY", // Uruguay
+        "VES": "VE"  // Venezuela
+    ]
+    
     // MARK: PUBLIC
     
     public static let amoutMaxLength = 50
@@ -76,7 +116,13 @@ extension CurrencyManager {
                              countryFlag: CurrencyManager.defaultCountryFlag)
     }
     
-    static func currencyList() -> [CurrencyModel] {
+    /**
+     Este metodo consulta todas las monedas disponibles en iOS por cada pais.
+     El problema es que duplica las divisas, por ejemplo existe el EURO para España, Andorra, Francia, Alemania, etc.
+     No se quiere tener varios paises con la misma moneda, sino, una sola que se usa en muchos paises.
+     */
+    /*
+    private func currencyList() -> [CurrencyModel] {
         var currencyList: [CurrencyModel] = []
 
         let regionCodes = Locale.Region.isoRegions.filter { $0.subRegions.isEmpty }.map { $0.identifier }
@@ -116,6 +162,55 @@ extension CurrencyManager {
         
         currencyList.sort { $0.countryName < $1.countryName }
         
+        return currencyList
+    }
+     */
+    
+    /**
+     Returns the list of currencies supported by the application.
+     
+     Creates a `CurrencyModel` for each currency and region defined in `currencyRegionCodes`.
+     Currency information, such as the localized country name and currency symbol, is obtained from the region's `Locale`.
+     
+     If a custom symbol is available through `getSymbolForCurrencyCode(code:)`,
+     it is used instead of the symbol provided by the locale.
+     
+     The resulting list is sorted alphabetically by currency code.
+     
+     - Returns: An array of supported `CurrencyModel` values sorted by currency code.
+     */
+    static func currencyList() -> [CurrencyModel] {
+        
+        var currencyList: [CurrencyModel] = []
+        
+        for (currencyCode, regionCode) in currencyRegionCodes {
+            let localeIdentifier = Locale.identifier(fromComponents: [NSLocale.Key.countryCode.rawValue: regionCode])
+
+            let locale = Locale(identifier: localeIdentifier)
+
+            guard let currencySymbol = locale.currencySymbol else {
+                continue
+            }
+
+            var symbol = getSymbolForCurrencyCode(code: currencyCode)
+
+            if symbol.isEmptyOrWhitespace {
+                symbol = currencySymbol
+            }
+
+            let countryName = locale.localizedString(forRegionCode: regionCode) ?? regionCode
+
+            let model = CurrencyModel(countryCode: regionCode,
+                                      symbol: symbol,
+                                      currencyCode: currencyCode,
+                                      countryName: countryName,
+                                      countryFlag: regionCode.flagEmoji ?? "🏳️")
+
+            currencyList.append(model)
+        }
+
+        currencyList.sort { $0.currencyCode < $1.currencyCode }
+
         return currencyList
     }
     
