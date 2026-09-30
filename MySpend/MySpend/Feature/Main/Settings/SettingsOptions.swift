@@ -90,7 +90,7 @@ enum ContentOptions: String, CaseIterable, Identifiable {
         case .accounts: AccountView()
         case .categories: CategoryView()
         case .currency: CurrencyView()
-        case .dateTimeInterval: DateTimeIntervalListView()
+        case .dateTimeInterval: DateTimeIntervalView()
         case .appTheme: AppThemeView()
         }
     }

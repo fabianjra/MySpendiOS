@@ -20,6 +20,7 @@ struct CurrencyView: View {
                 }
             }
             .pickerStyle(.segmented)
+            .glassEffect(.regular)
             .padding(.horizontal)
             
             List {

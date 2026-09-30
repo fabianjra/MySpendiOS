@@ -35,10 +35,17 @@ struct DateIntervalNavigatorView<Content: View>: View {
                 })
             }
             
-            PickerView(selection: $dateTimeInterval)
-                .disabled(isEditing)
-                .animation(.default,value: isEditing)
-                .glassEffect(.regular)
+            //PickerView(selection: $dateTimeInterval)
+            
+            Picker("", selection: $dateTimeInterval) {
+                ForEach(DateTimeInterval.allCases) { item in
+                    Text(item.localized)
+                }
+            }
+            .pickerStyle(.segmented)
+            .disabled(isEditing)
+            .animation(.default,value: isEditing)
+            .glassEffect(.regular)
             
             
             RowLCTCointainer(disabled: isEditing) {
