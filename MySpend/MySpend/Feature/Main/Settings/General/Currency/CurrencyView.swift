@@ -34,13 +34,15 @@ struct CurrencyView: View {
                 }
                 
                 Section {
-                    rowView(viewModel.localeCurrency)
+                    ForEach(viewModel.commonCurrencies) { currency in
+                        rowView(currency)
+                    }
                 } header: {
                     Text(.currencyMostUsed)
                 }
                 
                 Section {
-                    ForEach(viewModel.currenciesAvailables) { currency in
+                    ForEach(viewModel.availabelsCurrencies) { currency in
                         rowView(currency)
                     }
                 } header: {
@@ -78,8 +80,16 @@ struct CurrencyView: View {
     }
 }
 
-#Preview {
+#Preview(Previews.localeES_CR) {
     NavigationStack {
         CurrencyView()
+    }
+    .environment(\.locale, .init(identifier: Previews.localeES_CR))
+}
+
+#Preview(Previews.localeEN) {
+    NavigationStack {
+        CurrencyView()
+            .environment(\.locale, .init(identifier: Previews.localeEN))
     }
 }

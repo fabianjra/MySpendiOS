@@ -10,9 +10,6 @@ import Observation
 @Observable
 final class CurrencyViewModel {
     
-    var localeCurrency = CurrencyManager.localeCurrencyOrDefault
-    var currenciesAvailables = CurrencyManager.currencyList()
-    
     var selectedCurrency = UserDefaultsManager.currency {
         didSet {
             UserDefaultsManager.currency = self.selectedCurrency
@@ -23,5 +20,19 @@ final class CurrencyViewModel {
         didSet {
             UserDefaultsManager.currencySymbolType = self.selectedCurrencySymbolType
         }
+    }
+    
+    var localeCurrency: CurrencyModel
+    var availabelsCurrencies: [CurrencyModel]
+    var commonCurrencies: [CurrencyModel]
+    
+    init() {
+        let localeCurrency = CurrencyManager.localeCurrencyOrDefault
+        let availableCurrencies = CurrencyManager.currencyList()
+        
+        self.localeCurrency = localeCurrency
+        self.availabelsCurrencies = availableCurrencies
+        self.commonCurrencies = CurrencyManager.commonCurrencies(from: availableCurrencies,
+                                                                 localCurrency: localeCurrency)
     }
 }

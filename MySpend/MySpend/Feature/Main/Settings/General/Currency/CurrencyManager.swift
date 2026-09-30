@@ -12,16 +12,22 @@ import Foundation
 public struct CurrencyManager {
     
     // MARK: PRIVATE
-    private static let defaultCountryCode = "US"
-    private static let defaultCurrencySymbol = "$"
-    private static let defaultCurrencyCode = "USD"
-    private static let defaultCountryName = "United States"
-    private static let defaultCountryFlag = "🇺🇸"
-
+    private static let defaultCurrency = CurrencyModel(countryCode: "US",
+                                                       symbol: "$",
+                                                       currencyCode: "USD",
+                                                       countryName: "United States",
+                                                       countryFlag: "🇺🇸")
     private static let defaultDecimalSeparator = "."
     private static let defaultGroupingSeparator = ","
     
-    private static let currencyRegionCodes: [String: String] = [
+    private static let commonCurrencies = [
+        "USD",
+        "EUR",
+        "JPY",
+        "GBP"
+    ]
+    
+    private static let availableCurrencies: [String: String] = [
         "USD": "US", // United States
         "EUR": "DE", // Germany
         "JPY": "JP", // Japan
@@ -59,7 +65,7 @@ public struct CurrencyManager {
         "PEN": "PE", // Peru
         "UYU": "UY", // Uruguay
         "VES": "VE"  // Venezuela
-    ]
+]
     
     // MARK: PUBLIC
     
@@ -87,33 +93,28 @@ extension CurrencyManager {
 // MARK: - FUNCTIONS
 
 extension CurrencyManager {
-
+    
     /**
-     Gets the Local Currency.
-     If can't get one of the country or currency settings from local, returns the default USA currency.
+     Returns the currency associated with the user's current locale.
+     If the region or currency information cannot be determined,
+     the default currency (USD) is returned.
      */
     static var localeCurrencyOrDefault: CurrencyModel {
-        let locale = Locale(identifier: Locale.current.identifier)
+        let locale = Locale.current
         
-        if let region = locale.region {
+        guard let region = locale.region,
+              let countryName = locale.localizedString(forRegionCode: region.identifier),
+              let currencySymbol = locale.currencySymbol,
+              let currencyCode = locale.currency?.identifier else {
             
-            if let countryName = locale.localizedString(forRegionCode: region.identifier),
-               let currencySymbol = locale.currencySymbol,
-               let currencyCode = locale.currency?.identifier {
-                
-                return CurrencyModel(countryCode: region.identifier,
-                                     symbol: currencySymbol,
-                                     currencyCode: currencyCode,
-                                     countryName: countryName,
-                                     countryFlag: region.identifier.flagEmoji ?? "🏳️")
-            }
+            return defaultCurrency
         }
-        
-        return CurrencyModel(countryCode: CurrencyManager.defaultCountryCode,
-                             symbol: CurrencyManager.defaultCurrencySymbol,
-                             currencyCode: CurrencyManager.defaultCurrencyCode,
-                             countryName: CurrencyManager.defaultCountryName,
-                             countryFlag: CurrencyManager.defaultCountryFlag)
+
+        return CurrencyModel(countryCode: region.identifier,
+                             symbol: currencySymbol,
+                             currencyCode: currencyCode,
+                             countryName: countryName,
+                             countryFlag: region.identifier.flagEmoji ?? "🏳️")
     }
     
     /**
@@ -165,6 +166,20 @@ extension CurrencyManager {
         return currencyList
     }
      */
+        
+    static func commonCurrencies(from currencies: [CurrencyModel], localCurrency: CurrencyModel) -> [CurrencyModel] {
+        var result = [localCurrency]
+
+        for currencyCode in commonCurrencies {
+            guard currencyCode != localCurrency.currencyCode, let currency = currencies.first(where: { $0.currencyCode == currencyCode }) else {
+                continue
+            }
+
+            result.append(currency)
+        }
+
+        return result
+    }
     
     /**
      Returns the list of currencies supported by the application.
@@ -183,7 +198,7 @@ extension CurrencyManager {
         
         var currencyList: [CurrencyModel] = []
         
-        for (currencyCode, regionCode) in currencyRegionCodes {
+        for (currencyCode, regionCode) in availableCurrencies {
             let localeIdentifier = Locale.identifier(fromComponents: [NSLocale.Key.countryCode.rawValue: regionCode])
 
             let locale = Locale(identifier: localeIdentifier)
@@ -209,7 +224,7 @@ extension CurrencyManager {
             currencyList.append(model)
         }
 
-        currencyList.sort { $0.currencyCode < $1.currencyCode }
+        currencyList.sort { $0.countryName < $1.countryName }
 
         return currencyList
     }
