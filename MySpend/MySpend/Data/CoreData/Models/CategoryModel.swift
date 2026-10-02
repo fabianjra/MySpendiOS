@@ -13,7 +13,6 @@ struct CategoryModel: Identifiable, Equatable, Hashable {
     let dateCreated: Date
     let dateModified: Date
     var id = UUID()
-    let isActive: Bool
     
     // Entity-specific Attributes
     let dateLastUsed: Date
@@ -25,7 +24,6 @@ struct CategoryModel: Identifiable, Equatable, Hashable {
     init(icon: String = "", name: String = "", type: CategoryType = .expense) {
         self.dateCreated = .init()
         self.dateModified = .init()
-        self.isActive = true
         
         self.dateLastUsed = .init()
         self.icon = icon
@@ -39,7 +37,6 @@ struct CategoryModel: Identifiable, Equatable, Hashable {
         dateCreated = entity.dateCreated ?? .init()
         dateModified = entity.dateModified ?? .init()
         id = entity.id ?? UUID()
-        isActive = entity.isActive
         
         dateLastUsed = entity.dateLastUsed ?? .init()
         icon = entity.icon ?? ""

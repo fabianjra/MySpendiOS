@@ -43,14 +43,14 @@ struct AccountManager {
     
     // MARK: READ
 
-    func fetchAll(predicateFormat: String = predicate.byIsActive,
-                  predicateArgs: [Any] = [true]) async throws -> [AccountModel] {
+    func fetchAll(predicateFormat: String = "",
+                  predicateArgs: [Any] = []) async throws -> [AccountModel] {
         
         try await viewContext.perform {
             let entities = try CoreDataUtilities.fetchAll(Account.self,
                                                           predicateFormat: predicateFormat,
                                                           predicateArgs: predicateArgs,
-                                                          sortedBy: [NSSortDescriptor(keyPath: \Account.dateCreated, ascending: true)],
+                                                          sortedBy: [NSSortDescriptor(keyPath: \Account.name, ascending: true)],
                                                           viewContext: viewContext)
             return entities.map { AccountModel($0) }
         }
@@ -67,7 +67,6 @@ struct AccountManager {
             entity.dateCreated = .now
             entity.dateModified = .now
             entity.id = model.id
-            entity.isActive = model.isActive
             
             // Entity-specific Attributes
             entity.currencyCode = model.currencyCode
@@ -88,7 +87,6 @@ struct AccountManager {
             
             // Shared attributes (Abstract class):
             entity.dateModified = .now
-            entity.isActive = model.isActive
             
             // Entity-specific Attributes
             entity.currencyCode = model.currencyCode
@@ -130,8 +128,8 @@ struct AccountManager {
      - Throws: Any error thrown by `CoreDataUtilities.fetchAllCount(_:)`.
      - Date: Jul 2025
      */
-    func fetchAllCount(predicateFormat: String = predicate.byIsActive,
-                       predicateArgs: [Any] = [true]) async throws -> Int {
+    func fetchAllCount(predicateFormat: String = "",
+                       predicateArgs: [Any] = []) async throws -> Int {
         try await viewContext.perform {
             let result = try CoreDataUtilities.fetchAllCount(Account.self,
                                                              predicateFormat: predicateFormat,
@@ -166,7 +164,20 @@ struct AccountManager {
             return entity
         }
         
-        let entity = CoreDataUtilities.createAccountEntity(from: model, viewContext: viewContextArg)
+        let entity = createAccountEntity(from: model, viewContext: viewContextArg)
+        return entity
+    }
+    
+    private static func createAccountEntity(from model: AccountModel, viewContext: NSManagedObjectContext) -> Account {
+        let entity = Account(context: viewContext)
+        entity.dateCreated   = model.dateCreated
+        entity.dateModified  = model.dateModified
+        entity.id            = model.id
+        
+        entity.icon          = model.icon
+        entity.name          = model.name
+        
+        //viewContext.processPendingChanges() // No se deben procesar porque se encuentra dentro de un llamado "perform"
         return entity
     }
 }

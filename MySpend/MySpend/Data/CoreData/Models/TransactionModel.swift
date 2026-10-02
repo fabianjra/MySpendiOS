@@ -16,7 +16,6 @@ struct TransactionModel: Identifiable, Equatable, Hashable {
     let dateCreated: Date
     let dateModified: Date
     var id = UUID()
-    let isActive: Bool
     
     // Entity-specific Attributes
     var amount: Decimal
@@ -37,7 +36,6 @@ struct TransactionModel: Identifiable, Equatable, Hashable {
         
         self.dateCreated = .init()
         self.dateModified = .init()
-        self.isActive = true
 
         self.amount = amount
         self.dateTransaction = dateTransaction
@@ -53,7 +51,6 @@ struct TransactionModel: Identifiable, Equatable, Hashable {
         self.dateCreated = entity.dateCreated ?? .init()
         self.dateModified = entity.dateModified ?? .init()
         self.id = entity.id ?? UUID()
-        self.isActive = entity.isActive
         
         self.amount = entity.amount?.decimalValue ?? .zero
         self.dateTransaction = entity.dateTransaction ?? .init()

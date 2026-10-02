@@ -52,7 +52,6 @@ struct MockCoreDataNormal {
         item.dateCreated = Calendar.current.date(byAdding: .day, value: 1, to: .now)!
         item.dateModified = .now
         item.id = UUID(uuidString: MockCDConstants.mainAccountID)
-        item.isActive = true
         
         item.icon = "person.fill"
         item.name = "Main account 1"
@@ -65,7 +64,6 @@ struct MockCoreDataNormal {
         item.dateCreated = Calendar.current.date(byAdding: .day, value: 1112, to: .now)!
         item.dateModified = .now
         item.id = UUID()
-        item.isActive = true
         
         item.icon = ""
         item.name = "Only expenses in green context"
@@ -78,7 +76,6 @@ struct MockCoreDataNormal {
         item.dateCreated = Calendar.current.date(byAdding: .day, value: 25, to: .now)!
         item.dateModified = .now
         item.id = UUID()
-        item.isActive = true
         
         item.icon = ""
         item.name = "Only incomes"
@@ -91,7 +88,6 @@ struct MockCoreDataNormal {
         item.dateCreated = .now
         item.dateModified = .now
         item.id = UUID()
-        item.isActive = true
         
         item.dateLastUsed = .now
         item.icon = "✅"
@@ -107,7 +103,6 @@ struct MockCoreDataNormal {
         item.dateCreated = .now
         item.dateModified = .now
         item.id = UUID()
-        item.isActive = true
         
         item.dateLastUsed = .now
         item.icon = "✅"
@@ -123,7 +118,6 @@ struct MockCoreDataNormal {
         item.dateCreated = .now
         item.dateModified = .now
         item.id = UUID()
-        item.isActive = true
         
         item.dateLastUsed = .now
         item.icon = "✅"
@@ -139,7 +133,6 @@ struct MockCoreDataNormal {
         item.dateCreated = Calendar.current.date(byAdding: .day, value: 22, to: .now)!
         item.dateModified = .now
         item.id = UUID()
-        item.isActive = true
         
         item.dateLastUsed = Calendar.current.date(byAdding: .day, value: 1, to: .now)!
         item.icon = "✅"
@@ -155,7 +148,6 @@ struct MockCoreDataNormal {
         item.dateCreated = Calendar.current.date(byAdding: .day, value: 22, to: .now)!
         item.dateModified = .now
         item.id = UUID()
-        item.isActive = true
         
         item.dateLastUsed = Calendar.current.date(byAdding: .day, value: 1, to: .now)!
         item.icon = "✅"
@@ -171,7 +163,6 @@ struct MockCoreDataNormal {
         item.dateCreated = Calendar.current.date(byAdding: .day, value: 33, to: .now)!
         item.dateModified = .now
         item.id = UUID()
-        item.isActive = true
         
         item.amount = 500
         item.dateTransaction = .now
@@ -186,7 +177,6 @@ struct MockCoreDataNormal {
         item.dateCreated = Calendar.current.date(byAdding: .day, value: 20, to: .now)!
         item.dateModified = .now
         item.id = UUID()
-        item.isActive = true
         
         item.amount = 343.15
         item.dateTransaction = .now
@@ -200,7 +190,6 @@ struct MockCoreDataNormal {
         item.dateCreated = Calendar.current.date(byAdding: .day, value: 21, to: .now)!
         item.dateModified = Calendar.current.date(byAdding: .day, value: 21, to: .now)!
         item.id = UUID()
-        item.isActive = true
         
         item.amount = 99.25
         item.dateTransaction = Calendar.current.date(byAdding: .day, value: 21, to: .now)!
@@ -215,7 +204,6 @@ struct MockCoreDataNormal {
         item.dateCreated = Calendar.current.date(byAdding: .day, value: 121, to: .now)!
         item.dateModified = Calendar.current.date(byAdding: .day, value: 121, to: .now)!
         item.id = UUID()
-        item.isActive = true
         
         item.amount = 143.15
         item.dateTransaction = Calendar.current.date(byAdding: .day, value: 121, to: .now)!
@@ -229,7 +217,6 @@ struct MockCoreDataNormal {
         item.dateCreated = Calendar.current.date(byAdding: .day, value: 50, to: .now)!
         item.dateModified = Calendar.current.date(byAdding: .day, value: 50, to: .now)!
         item.id = UUID()
-        item.isActive = true
         
         item.amount = 99
         item.dateTransaction = Calendar.current.date(byAdding: .day, value: 50, to: .now)!

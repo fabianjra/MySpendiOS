@@ -19,7 +19,6 @@ struct CDConstants {
         
         // General:
         static let byID: String = "id == %@"
-        static let byIsActive: String = "isActive == %@"
         static let byMultipleID: String = "id IN %@"
         
         // Account:

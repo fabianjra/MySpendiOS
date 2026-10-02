@@ -56,7 +56,6 @@ struct MockCoreDataSaturated {
         item.dateCreated = Calendar.current.date(byAdding: .day, value: 1, to: .now)!
         item.dateModified = .now
         item.id = UUID(uuidString: MockCDConstants.mainAccountID)
-        item.isActive = true
         
         item.icon = "person.fill"
         item.name = "Main account 1Main account 1Main account 1 Main account 1Main account 1 Main account 1 Main account 1Main account 1 Main account 1 Main account 1"
@@ -69,7 +68,6 @@ struct MockCoreDataSaturated {
         item.dateCreated = Calendar.current.date(byAdding: .day, value: 2, to: .now)!
         item.dateModified = .now
         item.id = UUID()
-        item.isActive = true
         
         item.icon = ""
         item.name = "Only expensesOnly expenses Only expenses Only expenses Only expenses Only expenses Only expenses Only expenses Only expenses Only expenses Only expenses Only expenses Only expenses Only expenses Only expenses"
@@ -82,7 +80,6 @@ struct MockCoreDataSaturated {
         item.dateCreated = Calendar.current.date(byAdding: .day, value: 2, to: .now)!
         item.dateModified = .now
         item.id = UUID()
-        item.isActive = true
         
         item.icon = ""
         item.name = "Only incomesincomesincomesincomesincomesincomesincomesincomesincomesincomesincomesincomesincomesincomesincomesincomesincomesincomesincomesincomesincomesincomesincomesincomesincomesincomesincomesincomesincomes"
@@ -95,7 +92,6 @@ struct MockCoreDataSaturated {
         item.dateCreated = .now
         item.dateModified = .now
         item.id = UUID()
-        item.isActive = true
         
         item.dateLastUsed = .now
         item.icon = "✅"
@@ -111,7 +107,6 @@ struct MockCoreDataSaturated {
         item.dateCreated = Calendar.current.date(byAdding: .day, value: Int.random(in: 0...2), to: .now)!
         item.dateModified = .now
         item.id = UUID()
-        item.isActive = true
         
         item.dateLastUsed = Calendar.current.date(byAdding: .day, value: Int.random(in: 0...1), to: .now)!
         item.icon = "✅"
@@ -127,7 +122,6 @@ struct MockCoreDataSaturated {
         item.dateCreated = Calendar.current.date(byAdding: .day, value: Int.random(in: 0...5), to: .now)!
         item.dateModified = .now
         item.id = UUID()
-        item.isActive = true
         
         item.amount = UtilsCurrency.makeNSDecimal(Decimal(Double.random(in: 10.99...7456825682.99)))
         item.dateTransaction = .now
@@ -141,7 +135,6 @@ struct MockCoreDataSaturated {
         item.dateCreated = Calendar.current.date(byAdding: .day, value: Int.random(in: 0...25), to: .now)!
         item.dateModified = .now
         item.id = UUID()
-        item.isActive = true
         
         item.amount = UtilsCurrency.makeNSDecimal(Decimal(Double.random(in: 7456825682.99...1222384567238482347582345343.15)))
         item.dateTransaction = .now

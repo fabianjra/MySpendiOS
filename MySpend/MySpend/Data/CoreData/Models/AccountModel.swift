@@ -14,7 +14,6 @@ struct AccountModel: Codable, Identifiable, Equatable, Hashable {
     let dateCreated: Date
     let dateModified: Date
     var id = UUID()
-    let isActive: Bool
     
     // Entity-specific Attributes
     let currencyCode: String
@@ -25,7 +24,6 @@ struct AccountModel: Codable, Identifiable, Equatable, Hashable {
     init(currencyCode: String = "", icon: String = "", name : String = "") {
         self.dateCreated = .init()
         self.dateModified = .init()
-        self.isActive = true
         
         self.currencyCode = currencyCode
         self.icon = currencyCode
@@ -37,7 +35,6 @@ struct AccountModel: Codable, Identifiable, Equatable, Hashable {
         self.dateCreated = entity.dateCreated ?? .init()
         self.dateModified = entity.dateModified ?? .init()
         self.id = entity.id ?? UUID()
-        self.isActive = entity.isActive
         
         self.currencyCode = entity.currencyCode ?? ""
         self.icon = entity.icon ?? ""

@@ -25,8 +25,8 @@ struct TransactionManager {
     
     // MARK: READ
     
-    func fetchAll(predicateFormat: String = predicate.byIsActive,
-                  predicateArgs: [Any] = [true]) async throws -> [TransactionModel] {
+    func fetchAll(predicateFormat: String = "",
+                  predicateArgs: [Any] = []) async throws -> [TransactionModel] {
         
         try await viewContext.perform {
             let entities = try CoreDataUtilities.fetchAll(Transaction.self,
@@ -53,7 +53,6 @@ struct TransactionManager {
             entity.dateCreated = .now
             entity.dateModified = .now
             entity.id = model.id
-            entity.isActive = model.isActive
             
             // Entity-specific Attributes
             entity.amount = UtilsCurrency.makeNSDecimal(model.amount)
@@ -90,7 +89,6 @@ struct TransactionManager {
             
             // Shared attributes (Abstract class):
             entity.dateModified = .now
-            entity.isActive = model.isActive
             
             // Entity-specific Attributes
             entity.amount = UtilsCurrency.makeNSDecimal(model.amount)

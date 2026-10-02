@@ -137,8 +137,10 @@ struct CoreDataUtilities {
                                       sortedBy sortDescriptors: [NSSortDescriptor],
                                       viewContext: NSManagedObjectContext) throws -> [T] {
         let request = NSFetchRequest<T>(entityName: entity.entityName)
-        request.sortDescriptors = sortDescriptors
-        request.predicate = NSPredicate(format: predicateFormat, argumentArray: predicateArgs)
+        
+        // El orden y el filtro de datos, ya se hace manualmente desde la vista y ViewModel.
+        //request.sortDescriptors = sortDescriptors
+        //request.predicate = NSPredicate(format: predicateFormat, argumentArray: predicateArgs)
         
         return try viewContext.fetch(request)
     }
@@ -155,42 +157,5 @@ struct CoreDataUtilities {
         
         viewContext.delete(entity)
         try viewContext.save()
-    }
-    
-    
-    // MARK: - CATEGORY
-    
-    static func createCategoryEntity(from model: CategoryModel, viewContext: NSManagedObjectContext) -> Category {
-        let entity = Category(context: viewContext)
-        entity.dateCreated   = model.dateCreated
-        entity.dateModified  = model.dateModified
-        entity.id            = model.id
-        entity.isActive      = model.isActive
-        
-        entity.dateLastUsed  = model.dateLastUsed
-        entity.icon          = model.icon
-        entity.name          = model.name
-        entity.type          = model.type.rawValue
-        entity.usageCount    = Int64(model.usageCount)
-        
-        //viewContext.processPendingChanges() // No se deben procesar porque se encuentra dentro de un llamado "perform"
-        return entity
-    }
-    
-    
-    // MARK: - ACCOUNT
-    
-    static func createAccountEntity(from model: AccountModel, viewContext: NSManagedObjectContext) -> Account {
-        let entity = Account(context: viewContext)
-        entity.dateCreated   = model.dateCreated
-        entity.dateModified  = model.dateModified
-        entity.id            = model.id
-        entity.isActive      = model.isActive
-        
-        entity.icon          = model.icon
-        entity.name          = model.name
-        
-        //viewContext.processPendingChanges() // No se deben procesar porque se encuentra dentro de un llamado "perform"
-        return entity
     }
 }

@@ -38,7 +38,6 @@ struct CategoryManager {
       let categories = try manager.fetchAll()
      
       // 2. Filtro combinado y orden personalizado
-      let predicate = "isActive == %@ AND type == %@"
       let args: [Any] = [true, CategoryType.expense.rawValue]
       let order = [
           NSSortDescriptor(keyPath: \Category.name, ascending: true),
@@ -63,14 +62,14 @@ struct CategoryManager {
      - Throws: Propagates any Core Data fetch errors.
      - Date: Jul 2025
      */
-    func fetchAll(predicateFormat: String = predicate.byIsActive,
-                  predicateArgs: [Any] = [true]) async throws -> [CategoryModel] {
+    func fetchAll(predicateFormat: String = "",
+                  predicateArgs: [Any] = []) async throws -> [CategoryModel] {
         
         try await viewContext.perform {
             let entities = try CoreDataUtilities.fetchAll(Category.self,
                                                           predicateFormat: predicateFormat,
                                                           predicateArgs: predicateArgs,
-                                                          sortedBy: [NSSortDescriptor(keyPath: \Category.name, ascending: true)],
+                                                          sortedBy: [NSSortDescriptor(keyPath: \Category.dateModified, ascending: true)],
                                                           viewContext: viewContext)
             return entities.map { CategoryModel($0) }
         }
@@ -100,7 +99,6 @@ struct CategoryManager {
             entity.dateCreated = .now
             entity.dateModified = .now
             entity.id = model.id
-            entity.isActive = model.isActive
             
             // Entity-specific Attributes
             entity.dateLastUsed = .now
@@ -131,7 +129,6 @@ struct CategoryManager {
             
             // Shared attributes (Abstract class):
             entity.dateModified = .now
-            entity.isActive = model.isActive
             
             // Entity-specific Attributes
             entity.icon = model.icon
@@ -186,7 +183,25 @@ struct CategoryManager {
             return entity
         }
         
-        let entity = CoreDataUtilities.createCategoryEntity(from: model, viewContext: viewContextArg)
+        let entity = createCategoryEntity(from: model, viewContext: viewContextArg)
+        return entity
+    }
+    
+    // MARK: - CATEGORY
+    
+    private static func createCategoryEntity(from model: CategoryModel, viewContext: NSManagedObjectContext) -> Category {
+        let entity = Category(context: viewContext)
+        entity.dateCreated   = model.dateCreated
+        entity.dateModified  = model.dateModified
+        entity.id            = model.id
+        
+        entity.dateLastUsed  = model.dateLastUsed
+        entity.icon          = model.icon
+        entity.name          = model.name
+        entity.type          = model.type.rawValue
+        entity.usageCount    = Int64(model.usageCount)
+        
+        //viewContext.processPendingChanges() // No se deben procesar porque se encuentra dentro de un llamado "perform"
         return entity
     }
 }
