@@ -22,24 +22,16 @@ struct CategoryModel: Identifiable, Equatable, Hashable {
     var type: CategoryType
     let usageCount: Int
     
-    init() {
-        dateCreated = .init()
-        dateModified = .init()
-        isActive = true
-        
-        dateLastUsed = .init()
-        icon = ""
-        name = ""
-        type = .expense
-        usageCount = .zero
-    }
-    
-    // When a new category is created
     init(icon: String = "", name: String = "", type: CategoryType = .expense) {
-        self.init()
+        self.dateCreated = .init()
+        self.dateModified = .init()
+        self.isActive = true
+        
+        self.dateLastUsed = .init()
         self.icon = icon
         self.name = name
         self.type = type
+        self.usageCount = .zero
     }
     
     // When a category is going to load from Core Data and need to map to Category Model

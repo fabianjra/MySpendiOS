@@ -28,21 +28,6 @@ struct TransactionModel: Identifiable, Equatable, Hashable {
     var category: CategoryModel
     var account: AccountModel
     
-    init() {
-        dateCreated = .init()
-        dateModified = .init()
-        isActive = true
-        
-        amount = .zero
-        dateTransaction = .init()
-        notes = ""
-        favorite = false
-        
-        category = CategoryModel()
-        account = AccountModel()
-    }
-    
-    // When a new Transaction is created
     init(amount: Decimal = .zero,
          dateTransaction: Date = .now,
          notes: String = "",
@@ -50,29 +35,33 @@ struct TransactionModel: Identifiable, Equatable, Hashable {
          category: CategoryModel = CategoryModel(),
          account: AccountModel = AccountModel()) {
         
-        self.init()
+        self.dateCreated = .init()
+        self.dateModified = .init()
+        self.isActive = true
+
         self.amount = amount
         self.dateTransaction = dateTransaction
         self.notes = notes
         self.favorite = favorite
+        
         self.category = category
         self.account = account
     }
     
     // Init the model from Entity
     init(_ entity: Transaction) {
-        dateCreated = entity.dateCreated ?? .init()
-        dateModified = entity.dateModified ?? .init()
-        id = entity.id ?? UUID()
-        isActive = entity.isActive
+        self.dateCreated = entity.dateCreated ?? .init()
+        self.dateModified = entity.dateModified ?? .init()
+        self.id = entity.id ?? UUID()
+        self.isActive = entity.isActive
         
-        amount = entity.amount?.decimalValue ?? .zero
-        dateTransaction = entity.dateTransaction ?? .init()
-        notes = entity.notes ?? ""
-        favorite = entity.favorite
+        self.amount = entity.amount?.decimalValue ?? .zero
+        self.dateTransaction = entity.dateTransaction ?? .init()
+        self.notes = entity.notes ?? ""
+        self.favorite = entity.favorite
         
-        category = TransactionModel.convertToCategoryModel(entity.category)
-        account = TransactionModel.convertToAccountModel(entity.account)
+        self.category = TransactionModel.convertToCategoryModel(entity.category)
+        self.account = TransactionModel.convertToAccountModel(entity.account)
     }
     
     private static func convertToCategoryModel(_ categoryCoreData: Category?) -> CategoryModel {
