@@ -258,7 +258,7 @@ private struct PreviewWrapper: View {
             }
         }
         .task {
-            models = await MockTransactionModel.fetchAll()
+            models = await MockTransactionUtils.fetchAll()
             
             if !models.isEmpty && models.first != nil {
                 selectedModel = models.first

@@ -6,7 +6,7 @@
 //
 
 @MainActor
-struct MockTransactionModel {
+struct MockTransactionUtils {
     
     static func fetchAll() async -> [TransactionModel] {
         do {

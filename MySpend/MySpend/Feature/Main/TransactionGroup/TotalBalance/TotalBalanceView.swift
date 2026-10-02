@@ -78,7 +78,7 @@ private struct PreviewWrapper: View {
     var body: some View {
         TotalBalanceView(transactions: transactionsLoaded)
         .task {
-            transactionsLoaded = await MockTransactionModel.fetchAll()
+            transactionsLoaded = await MockTransactionUtils.fetchAll()
         }
     }
 }

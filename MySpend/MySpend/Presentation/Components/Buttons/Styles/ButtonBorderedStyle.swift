@@ -54,7 +54,7 @@ struct ButtonBorderedStyle: ButtonStyle {
         // MARK: ANIMATIONS
             .overlay(content: {
                 if isLoading {
-                    Loader()
+                    ProgressView()
                         .foregroundColor(Color.textPrimaryForeground)
                         .padding(.vertical, ConstantViews.mediumSpacing)
                 }

@@ -46,36 +46,6 @@ extension View {
         }
     
     /**
-     Assign corners to a view, selecting especific corners.
-     
-     **Example:**
-     ```swift
-     @State private var text: String = ""
-     
-     TextField("", text: $text)
-         .placeholder(when: text.isEmpty) {
-             Text("Text for placeholder")
-                 .foregroundColor(Color.gray)
-         }
-     ```
-     
-     - Parameters:
-        - radius:How much de corner will be. | .inifinity value by default.
-        - corners:Which corners will curve. | .allCorners value by default.
-     
-     - Returns: View
-     
-     - Authors: Fabian Rodriguez
-     
-     - Version: 1.0
-     
-     - Date: June 2023
-     */
-    func cornerRadiusCustom(_ radius: CGFloat, corners: UIRectCorner) -> some View {
-        clipShape( RoundedCornerShape(radius: radius, corners: corners) )
-    }
-    
-    /**
      The job of the SizeCalculator is to add a GeometryReader as the background of our target view.
      On appear, so after SwiftUI has rendered the content, it will send the size back to the Binding
      

@@ -7,5 +7,4 @@
 
 public enum Emojis: String {
     case greeting = "👋"
-    case fest = "🥳"
 }
