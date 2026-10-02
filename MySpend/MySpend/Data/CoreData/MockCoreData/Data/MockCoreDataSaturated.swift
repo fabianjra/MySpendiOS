@@ -60,8 +60,6 @@ struct MockCoreDataSaturated {
         
         item.icon = "person.fill"
         item.name = "Main account 1Main account 1Main account 1 Main account 1Main account 1 Main account 1 Main account 1Main account 1 Main account 1 Main account 1"
-        item.notes = "No notes"
-        item.userId = "Firebase_User_UUID"
         
         return item
     }
@@ -75,8 +73,6 @@ struct MockCoreDataSaturated {
         
         item.icon = ""
         item.name = "Only expensesOnly expenses Only expenses Only expenses Only expenses Only expenses Only expenses Only expenses Only expenses Only expenses Only expenses Only expenses Only expenses Only expenses Only expenses"
-        item.notes = ""
-        item.userId = ""
         
         return item
     }
@@ -90,8 +86,6 @@ struct MockCoreDataSaturated {
         
         item.icon = ""
         item.name = "Only incomesincomesincomesincomesincomesincomesincomesincomesincomesincomesincomesincomesincomesincomesincomesincomesincomesincomesincomesincomesincomesincomesincomesincomesincomesincomesincomesincomesincomes"
-        item.notes = ""
-        item.userId = ""
         
         return item
     }

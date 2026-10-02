@@ -13,36 +13,30 @@ struct AccountModel: Codable, Identifiable, Equatable, Hashable {
     // Shared attributes (Abstract class):
     let dateCreated: Date
     let dateModified: Date
-    let id: UUID
+    var id = UUID()
     let isActive: Bool
     
     // Entity-specific Attributes
     var currencyCode: String
     var icon: String // Emoji
     var name: String
-    var notes: String
-    var userId: String // For Firebase
     
     init() {
         dateCreated = .init()
         dateModified = .init()
-        id = UUID()
         isActive = true
         
         currencyCode = ""
         icon = ""
         name = ""
-        notes = ""
-        userId = ""
     }
     
     // When a new Transaction is created
-    init(currencyCode: String = "", icon: String = "", name: String, notes: String = "") {
+    init(currencyCode: String = "", icon: String = "", name: String) {
         self.init()
         self.currencyCode = currencyCode
         self.icon = icon
         self.name = name
-        self.notes = notes
     }
     
     // Init the model from Entity
@@ -55,8 +49,6 @@ struct AccountModel: Codable, Identifiable, Equatable, Hashable {
         currencyCode = entity.currencyCode ?? ""
         icon = entity.icon ?? ""
         name = entity.name ?? ""
-        notes = entity.notes ?? ""
-        userId = entity.userId ?? ""
     }
     
     enum Field: Hashable, CaseIterable {

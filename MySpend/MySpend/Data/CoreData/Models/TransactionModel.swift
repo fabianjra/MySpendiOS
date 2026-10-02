@@ -14,8 +14,8 @@ struct TransactionModel: Identifiable, Equatable, Hashable {
     
     // Shared attributes (Abstract class):
     let dateCreated: Date
-    var dateModified: Date
-    let id: UUID
+    let dateModified: Date
+    var id = UUID()
     let isActive: Bool
     
     // Entity-specific Attributes
@@ -31,7 +31,6 @@ struct TransactionModel: Identifiable, Equatable, Hashable {
     init() {
         dateCreated = .init()
         dateModified = .init()
-        id = UUID()
         isActive = true
         
         amount = .zero

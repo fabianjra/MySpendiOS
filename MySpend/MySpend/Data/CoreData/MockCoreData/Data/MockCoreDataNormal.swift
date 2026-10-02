@@ -56,8 +56,6 @@ struct MockCoreDataNormal {
         
         item.icon = "person.fill"
         item.name = "Main account 1"
-        item.notes = "No notes"
-        item.userId = "Firebase_User_UUID"
         
         return item
     }
@@ -71,8 +69,6 @@ struct MockCoreDataNormal {
         
         item.icon = ""
         item.name = "Only expenses in green context"
-        item.notes = ""
-        item.userId = ""
         
         return item
     }
@@ -86,8 +82,6 @@ struct MockCoreDataNormal {
         
         item.icon = ""
         item.name = "Only incomes"
-        item.notes = ""
-        item.userId = ""
         
         return item
     }

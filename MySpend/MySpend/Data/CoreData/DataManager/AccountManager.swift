@@ -73,8 +73,6 @@ struct AccountManager {
             entity.currencyCode = model.currencyCode
             entity.icon = model.icon
             entity.name = model.name
-            entity.notes = model.notes
-            entity.userId = model.userId
             
             try viewContext.save()
         }
@@ -96,8 +94,6 @@ struct AccountManager {
             entity.currencyCode = model.currencyCode
             entity.icon = model.icon
             entity.name = model.name
-            entity.notes = model.notes
-            entity.userId = model.userId
             
             try viewContext.save()
         }

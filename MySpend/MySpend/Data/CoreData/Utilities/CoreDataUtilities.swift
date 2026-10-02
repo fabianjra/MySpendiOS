@@ -189,8 +189,6 @@ struct CoreDataUtilities {
         
         entity.icon          = model.icon
         entity.name          = model.name
-        entity.notes         = model.notes
-        entity.userId        = model.userId
         
         //viewContext.processPendingChanges() // No se deben procesar porque se encuentra dentro de un llamado "perform"
         return entity
