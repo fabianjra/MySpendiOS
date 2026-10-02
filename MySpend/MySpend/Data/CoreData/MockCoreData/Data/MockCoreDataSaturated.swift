@@ -97,7 +97,6 @@ struct MockCoreDataSaturated {
         item.icon = "✅"
         item.name = "#\(counter): Gasto1Gasto1 Gasto1 Gasto1Gasto1Gasto1 Gasto1 Gasto1 Gasto1 Gasto1Gasto1 Gasto1 Gasto1 Gasto1 Gasto1 Gasto1 Gasto1 Gasto1 Gasto1 Gasto1 Gasto1"
         item.type = CategoryType.expense.rawValue
-        item.usageCount = Int64.random(in: 0...9999999)
         
         return item
     }
@@ -112,7 +111,6 @@ struct MockCoreDataSaturated {
         item.icon = "✅"
         item.name = "#\(counter): Ingreso-IngresoIngresoIngresoIngresoIngresoIngresoIngresoIngresoIngresoIngresoIngresoIngresoIngreso IngresoIngresoIngresoIngresoIngresoIngresoIngresoIngreso"
         item.type = CategoryType.income.rawValue
-        item.usageCount = Int64.random(in: 0...99999)
         
         return item
     }

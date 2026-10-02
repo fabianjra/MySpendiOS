@@ -19,7 +19,6 @@ struct CategoryModel: Identifiable, Equatable, Hashable {
     var icon: String // Emoji
     var name: String
     var type: CategoryType
-    let usageCount: Int
     
     init(icon: String = "", name: String = "", type: CategoryType = .expense) {
         self.dateCreated = .init()
@@ -29,7 +28,6 @@ struct CategoryModel: Identifiable, Equatable, Hashable {
         self.icon = icon
         self.name = name
         self.type = type
-        self.usageCount = .zero
     }
     
     // When a category is going to load from Core Data and need to map to Category Model
@@ -42,7 +40,6 @@ struct CategoryModel: Identifiable, Equatable, Hashable {
         icon = entity.icon ?? ""
         name = entity.name ?? ""
         type = CategoryModel.getCategoryType(from: entity.type)
-        usageCount = entity.usageCount.toInt
     }
     
     static private func getCategoryType(from rawType: String?) -> CategoryType {

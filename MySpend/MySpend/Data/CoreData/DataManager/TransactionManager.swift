@@ -67,9 +67,8 @@ struct TransactionManager {
             entity.category = categoryResolved
             entity.account = accountResolved
             
-            // Aumenta el valor de la cantidad de usos para la categoria:
+            // Asigna su ultimo uso para poder ordenarlo por los mas usados
             entity.category?.dateLastUsed = .now
-            entity.category?.usageCount = (entity.category?.usageCount ?? .zero) + 1
             
             try viewContext.save()
         }
@@ -100,7 +99,6 @@ struct TransactionManager {
             entity.account = accountResolved
             
             entity.category?.dateLastUsed = .now
-            entity.category?.usageCount = (entity.category?.usageCount ?? .zero) + 1
             
             try viewContext.save()
         }

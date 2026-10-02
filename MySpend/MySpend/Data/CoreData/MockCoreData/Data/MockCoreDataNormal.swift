@@ -93,7 +93,6 @@ struct MockCoreDataNormal {
         item.icon = "✅"
         item.name = "Gasto"
         item.type = CategoryType.expense.rawValue
-        item.usageCount = 0
         
         return item
     }
@@ -108,7 +107,6 @@ struct MockCoreDataNormal {
         item.icon = "✅"
         item.name = "Comidas afuera"
         item.type = CategoryType.expense.rawValue
-        item.usageCount = 0
         
         return item
     }
@@ -123,7 +121,6 @@ struct MockCoreDataNormal {
         item.icon = "✅"
         item.name = "Diario mensual casa"
         item.type = CategoryType.expense.rawValue
-        item.usageCount = 0
         
         return item
     }
@@ -138,7 +135,6 @@ struct MockCoreDataNormal {
         item.icon = "✅"
         item.name = "Ingreso"
         item.type = CategoryType.income.rawValue
-        item.usageCount = 1
         
         return item
     }
@@ -153,7 +149,6 @@ struct MockCoreDataNormal {
         item.icon = "✅"
         item.name = "Ingresos para las recargas"
         item.type = CategoryType.income.rawValue
-        item.usageCount = 1
         
         return item
     }

@@ -105,7 +105,6 @@ struct CategoryManager {
             entity.icon = model.icon
             entity.name = model.name
             entity.type = model.type.rawValue
-            entity.usageCount = .zero
             
             try viewContext.save()
         }
@@ -199,7 +198,6 @@ struct CategoryManager {
         entity.icon          = model.icon
         entity.name          = model.name
         entity.type          = model.type.rawValue
-        entity.usageCount    = Int64(model.usageCount)
         
         //viewContext.processPendingChanges() // No se deben procesar porque se encuentra dentro de un llamado "perform"
         return entity
