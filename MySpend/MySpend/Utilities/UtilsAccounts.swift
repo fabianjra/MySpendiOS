@@ -9,25 +9,22 @@ import Foundation
 
 extension Array where Element == AccountModel {
     
-    func sortedAccounts(by sortType: SortAccounts?) -> [AccountModel] {
-        
-        guard let sortType else {
-            return self
-        }
-        
-        switch sortType {
+    func sortedAccounts(by sort: AccountSortConfiguration) -> [AccountModel] {
+        switch sort.sortBy {
             
-        case .byNameAz:
-            return sorted { $0.name < $1.name }
+        case .title:
+            return sorted {
+                sort.order == .ascending
+                ? $0.name.localizedStandardCompare($1.name) == .orderedAscending
+                : $0.name.localizedStandardCompare($1.name) == .orderedDescending
+            }
             
-        case .byNameZa:
-            return sorted { $0.name > $1.name }
-            
-        case .byCreationNewest:
-            return sorted { $0.dateCreated > $1.dateCreated }
-            
-        case .byCreationOldest:
-            return sorted { $0.dateCreated < $1.dateCreated }
+        case .dateCreated:
+            return sorted {
+                sort.order == .ascending
+                ? $0.dateCreated < $1.dateCreated
+                : $0.dateCreated > $1.dateCreated
+            }
         }
     }
 }

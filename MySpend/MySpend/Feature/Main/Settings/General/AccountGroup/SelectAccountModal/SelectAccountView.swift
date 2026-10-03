@@ -30,25 +30,25 @@ struct SelectAccountView: View {
         NavigationStack {
             VStack {
                 
-                RowLCTCointainer(leadingContent: {
-                    MenuContainer {
-                        Section("Sorted by: \(sortSelection.rawValue)") {
-                            sortButton(for: .byNameAz)
-                            sortButton(for: .byCreationNewest)
-                        }
-                        
-                        Section {
-                            Button {
-                                UserDefaultsManager.removeValue(for: .sortAccounts)
-                                sortSelection = UserDefaultsManager.sortAccounts
-                            } label: {
-                                Label.restoreSelection
-                                    .foregroundStyle(Color.alert, Color.alert)
-                            }
-                        }
-                    }
-                })
-                .padding(.horizontal)
+//                RowLCTCointainer(leadingContent: {
+//                    MenuContainer {
+//                        Section("Sorted by: \(sortSelection.rawValue)") {
+//                            sortButton(for: .byNameAz)
+//                            sortButton(for: .byCreationNewest)
+//                        }
+//                        
+//                        Section {
+//                            Button {
+//                                UserDefaultsManager.removeValue(for: .sortAccounts)
+//                                sortSelection = UserDefaultsManager.sortAccounts
+//                            } label: {
+//                                Label.restoreSelection
+//                                    .foregroundStyle(Color.alert, Color.alert)
+//                            }
+//                        }
+//                    }
+//                })
+//                .padding(.horizontal)
                 
                 List {
                     if sortedAccounts.isEmpty {
@@ -100,18 +100,18 @@ struct SelectAccountView: View {
         }
     }
     
-    private func sortButton(for sortingOption: SortAccounts) -> some View {
-        Button {
-            if sortSelection == sortingOption {
-                sortSelection = sortingOption.toggle
-            } else {
-                sortSelection = sortingOption
-            }
-            
-        } label: {
-            sortSelection == sortingOption ? sortingOption.label() : sortingOption.label(inverted: false)
-        }
-    }
+//    private func sortButton(for sortingOption: SortAccounts) -> some View {
+//        Button {
+//            if sortSelection == sortingOption {
+//                sortSelection = sortingOption.toggle
+//            } else {
+//                sortSelection = sortingOption
+//            }
+//            
+//        } label: {
+//            sortSelection == sortingOption ? sortingOption.label() : sortingOption.label(inverted: false)
+//        }
+//    }
 }
 
 private struct previewWrapper: View {

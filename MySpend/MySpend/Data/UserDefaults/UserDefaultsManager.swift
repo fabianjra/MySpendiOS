@@ -44,10 +44,10 @@ struct UserDefaultsManager {
         }
     }
     
-    static var sortAccounts: SortAccounts {
-        get { return UserDefaultsDataStore<SortAccounts>(for: .sortAccounts).value ?? .byCreationOldest }
+    static var sortAccounts: AccountSortConfiguration {
+        get { return UserDefaultsDataStore<AccountSortConfiguration>(for: .sortAccounts).value ?? AccountSortConfiguration() }
         set {
-            var manager = UserDefaultsDataStore<SortAccounts>(for: .sortAccounts)
+            var manager = UserDefaultsDataStore<AccountSortConfiguration>(for: .sortAccounts)
             manager.value = newValue
         }
     }

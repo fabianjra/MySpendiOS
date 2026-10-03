@@ -20,11 +20,14 @@ final class AccountViewModel {
     var sortSelection = UserDefaultsManager.sortAccounts {
         didSet {
             UserDefaultsManager.sortAccounts = sortSelection
-            allAccounts = allAccounts.sortedAccounts(by: sortSelection)
         }
     }
     
-    var allAccounts: [AccountModel] = []
+    var sortedAccounts: [AccountModel] {
+        allAccounts.sortedAccounts(by: sortSelection)
+    }
+    
+    private var allAccounts: [AccountModel] = []
     var accountToDelete: AccountModel?
     var accountToUpdate: AccountModel?
     
@@ -62,9 +65,7 @@ final class AccountViewModel {
     
     func fetchAccounts() async -> ResponseToast? {
         do {
-            allAccounts = try await AccountManager(viewContext)
-                .fetchAll()
-                .sortedAccounts(by: sortSelection)
+            allAccounts = try await AccountManager(viewContext).fetchAll()
             
             return nil
         } catch {
@@ -125,7 +126,6 @@ final class AccountViewModel {
      Deletes the sort selection object in UserDefaults.
      */
     func resetSelectedSort() {
-        UserDefaultsManager.removeValue(for: .sortAccounts)
-        sortSelection = UserDefaultsManager.sortAccounts
+        sortSelection = AccountSortConfiguration()
     }
 }

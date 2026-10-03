@@ -1163,6 +1163,24 @@
         }
       }
     },
+    "Menu.Options.Title" : {
+      "comment" : "Titulo para el botón de menu de opciones",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Options"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opciones"
+          }
+        }
+      }
+    },
     "Modify account" : {
 
     },
@@ -1263,9 +1281,6 @@
           }
         }
       }
-    },
-    "Options" : {
-
     },
     "PersonalInformation.Input.Email" : {
       "comment" : "Indica el email del profile",
@@ -1962,8 +1977,113 @@
     "Something wrong happened, try again." : {
 
     },
-    "Sort by" : {
-
+    "Sort.Ascending" : {
+      "comment" : "Descripcion para el ordenamiento ascendente",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ascending"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ascendente"
+          }
+        }
+      }
+    },
+    "Sort.By.DateCreated" : {
+      "comment" : "Descripcion para la opcion de ordenar por fecha de creación",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Date Created"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fecha Creación"
+          }
+        }
+      }
+    },
+    "Sort.By.Default" : {
+      "comment" : "Indica accion para restaurar el ordenamiento por defecto",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "By Default"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Por defecto"
+          }
+        }
+      }
+    },
+    "Sort.By.Title" : {
+      "comment" : "Descripcion para la opcion de ordenar por titulo",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Title"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Titulo"
+          }
+        }
+      }
+    },
+    "Sort.Descending" : {
+      "comment" : "Descripcion para el ordenamiento descendente",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Descending"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Descendente"
+          }
+        }
+      }
+    },
+    "Sort.Title" : {
+      "comment" : "Titulo para la opcion de ordenar por",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sort By"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ordenar por"
+          }
+        }
+      }
     },
     "Sort.Title.Description %@" : {
       "comment" : "Titulo para la description de la seleccion del orden",
@@ -1972,7 +2092,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sorted by: %@"
+            "value" : "Sorted By: %@"
           }
         },
         "es" : {

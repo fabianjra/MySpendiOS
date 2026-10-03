@@ -12,9 +12,6 @@ struct AccountView: View {
     @State private var viewModel = AccountViewModel()
     @State private var toast = ToastViewModel()
     
-    
-    // MARK: LOCAL VARS
-    
     @State private var showNewItemModal = false
     @State private var showAlertDelete = false
     
@@ -66,11 +63,11 @@ struct AccountView: View {
     private var itemList: some View {
         VStack {
             List {
-                if viewModel.allAccounts.isEmpty {
+                if viewModel.sortedAccounts.isEmpty {
                     Text(.accountsEmpty)
                         .foregroundStyle(.secondary)
                 } else {
-                    ForEach(viewModel.allAccounts) { item in
+                    ForEach(viewModel.sortedAccounts) { item in
                         Button {
                             if viewModel.isEditing {
                                 viewModel.toggleAccountSelection(item)
@@ -165,25 +162,9 @@ struct AccountView: View {
             }
             //.foregroundColor(Color.listRowForeground) //Para los botones. El texto queda originalmente en azul.
             //.navigationLinkIndicatorVisibility(.visible)
-            .animation(.default, value: viewModel.allAccounts)
+            .animation(.default, value: viewModel.sortedAccounts)
             .scrollContentBackground(.hidden)
             .background(Color.backgroundGradient)
-        }
-    }
-    
-    func rowView(_ model: AccountModel?) -> some View {
-        HStack {
-            if let image = model?.icon.getIconFromSFSymbol {
-                image
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: FrameSize.height.iconRowList,
-                           height: FrameSize.width.iconRowList)
-            }
-            
-            TextPlain(model?.name ?? "No default account selected", color: Color.disabledForeground)
-            
-            Spacer()
         }
     }
     
@@ -194,13 +175,13 @@ struct AccountView: View {
         
         ToolbarItem(placement: .navigation) {
             if viewModel.isEditing {
-                if viewModel.selectedAccounts.count == viewModel.allAccounts.count {
+                if viewModel.selectedAccounts.count == viewModel.sortedAccounts.count {
                     Button(.selectorDeselectAll) {
                         viewModel.selectedAccounts = Set()
                     }
                 } else {
                     Button(.selectorSelectAll) {
-                        viewModel.selectedAccounts = Set(viewModel.allAccounts)
+                        viewModel.selectedAccounts = Set(viewModel.sortedAccounts)
                     }
                 }
             }
@@ -229,7 +210,7 @@ struct AccountView: View {
                 }
             } else {
                 
-                Menu("Options", systemImage: ConstantSystemImage.options) {
+                Menu(.menuOptionsTitle, systemImage: ConstantSystemImage.options) {
                     
                     Button {
                         withAnimation {
@@ -238,38 +219,49 @@ struct AccountView: View {
                     } label: {
                         Label(.selectorSelect, systemImage: ConstantSystemImage.checkmarkCircle)
                     }
-            
+                    
                     
                     Menu {
                         Section {
-                            sortButton(for: .byNameAz)
-                            sortButton(for: .byCreationNewest)
+                            Picker(.sortTitle, selection: $viewModel.sortSelection.sortBy) {
+                                ForEach(AccountSortOption.allCases, id: \.self) { sortBy in
+                                    Text(sortBy.localized)
+                                        .tag(sortBy)
+                                }
+                            }
+                            
                         }
                         
-                        // Reset the sort selection to default
                         Section {
-                            Button {
-                                withAnimation {
-                                    viewModel.resetSelectedSort()
+                            Picker(.sortTitle, selection: $viewModel.sortSelection.order) {
+                                ForEach(SortOrder.allCases, id: \.self) { order in
+                                    Text(order.localized)
+                                        .tag(order)
                                 }
-                            } label: {
-                                Label.restoreSelection
-                                    .tint(.alert)
                             }
                         }
-                    } label: {
-                        Label("Sort by", systemImage: ConstantSystemImage.arrowUpDown) //TODO: Agregar estilo para label
-                            .font(.montserrat())
                         
-                        Text(viewModel.sortSelection.rawValue)
-                            .textStyle
+                        Section {
+                            VStack(alignment: .leading) {
+                                Button(role: .destructive) {
+                                    viewModel.resetSelectedSort()
+                                } label: {
+                                    Text(.sortByDefault)
+                                }
+                            }
+                            
+                        }
+                        
+                    } label: {
+                        Label(.sortTitle, systemImage: ConstantSystemImage.arrowUpDown)
+                        
+                        Text(viewModel.sortSelection.sortBy.localized)
                     }
                     
                 }
                 .menuOrder(.fixed)
-                .disabled(viewModel.allAccounts.isEmpty)
+                .disabled(viewModel.sortedAccounts.isEmpty)
             }
-            
         }
         
         ToolbarSpacer(.flexible, placement: .bottomBar)
@@ -286,21 +278,6 @@ struct AccountView: View {
                     showNewItemModal = true
                 }
             }
-        }
-    }
-    
-    
-    private func sortButton(for sortingOption: SortAccounts) -> some View {
-        Button {
-            withAnimation {
-                if viewModel.sortSelection == sortingOption {
-                    viewModel.sortSelection = sortingOption.toggle
-                } else {
-                    viewModel.sortSelection = sortingOption
-                }
-            }
-        } label: {
-            viewModel.sortSelection == sortingOption ? sortingOption.label() : sortingOption.label(inverted: false)
         }
     }
 }
