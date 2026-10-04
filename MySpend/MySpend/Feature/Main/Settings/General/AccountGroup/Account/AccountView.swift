@@ -19,9 +19,11 @@ struct AccountView: View {
         VStack {
             itemList
         }
-        .navigationTitle(.accountsTitle)
-        .navigationBarTitleDisplayMode(.inline)
-//        .toolbarTitleDisplayMode(.inlineLarge)
+        .navigationTitle(
+            viewModel.selectedAccounts.count == .zero ?
+                .accountsTitle : .selectorSelectedCountFemale(viewModel.selectedAccounts.count)
+        )
+        .navigationSubtitle(.accountsSubtitle(viewModel.sortedAccounts.count))
         .navigationBarBackButtonHidden(viewModel.isEditing)
         
         .toolbar {
@@ -187,17 +189,6 @@ struct AccountView: View {
             }
         }
         
-        ToolbarItem(placement: .title) {
-            if viewModel.selectedAccounts.count == .zero {
-                Text(.accountsTitle)
-            } else {
-                Text(.selectorSelectedCountFemale(viewModel.selectedAccounts.count))
-            }
-        }
-        
-        
-        // MARK: BOTTOM
-        
         ToolbarItemGroup(placement: .primaryAction) {
             
             if viewModel.isEditing {
@@ -264,6 +255,9 @@ struct AccountView: View {
             }
         }
         
+        
+        // MARK: BOTTOM
+        
         ToolbarSpacer(.flexible, placement: .bottomBar)
         
         ToolbarItem(placement: .bottomBar) {
@@ -295,8 +289,8 @@ private struct previewWrapper: View {
 #Preview("Normal \(Previews.localeES_CR)") {
     NavigationStack {
         previewWrapper()
-            .environment(\.locale, .init(identifier: Previews.localeES_CR))
     }
+    .environment(\.locale, .init(identifier: Previews.localeES_CR))
 }
 
 #Preview("Saturated \(Previews.localeEN)") {

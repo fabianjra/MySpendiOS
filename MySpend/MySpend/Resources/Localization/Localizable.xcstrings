@@ -342,6 +342,60 @@
         }
       }
     },
+    "Accounts.Subtitle %lld" : {
+      "comment" : "Indica la cantidad total de cuentas",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Account"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Accounts"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "%lld Accounts"
+                }
+              }
+            }
+          }
+        },
+        "es" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "%lld Cuenta"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Cuentas"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Cuentas"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "Accounts.Title" : {
       "comment" : "Titulo para la pantalla de cuentas",
       "extractionState" : "manual",
@@ -1605,7 +1659,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deseleccionar todo"
+            "value" : "Anular selección"
           }
         }
       }
