@@ -26,19 +26,14 @@ struct FilterTransactionsView: View {
                         ForEach(filters.allAccounts) { account in
                             HStack {
                                 Label(account.name, systemImage: account.icon)
-                                    .foregroundStyle(.textPrimaryForeground)
+                                    .foregroundStyle(.primary)
                                     
                                 Spacer()
                                     
-                                Image(
-                                    systemName: filters.selectedAccountsFilter
-                                        .contains(
-                                            account.id
-                                        ) ? ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle
+                                Image(systemName: filters.selectedAccountsFilter.contains(account.id) ?
+                                      ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle
                                 )
-                                .resizable()
-                                .frame(width: FrameSize.height.iconRowList,
-                                       height: FrameSize.width.iconRowList)
+                                .font(.title2)
                                 .foregroundStyle(Color.accentColor)
                             }
                             .contentShape(Rectangle())
@@ -60,13 +55,10 @@ struct FilterTransactionsView: View {
                                 
                             Spacer()
                                 
-                            Image(
-                                systemName: filters.showOnlyFavorites ? ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle
+                            Image(systemName: filters.showOnlyFavorites ?
+                                  ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle
                             )
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: FrameSize.height.iconRowList,
-                                   height: FrameSize.width.iconRowList)
+                            .font(.title2)
                             .foregroundStyle(Color.accentColor)
                         }
                         .contentShape(Rectangle())

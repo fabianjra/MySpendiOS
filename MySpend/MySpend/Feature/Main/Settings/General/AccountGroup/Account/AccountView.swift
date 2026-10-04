@@ -66,9 +66,12 @@ struct AccountView: View {
         VStack {
             List {
                 if viewModel.sortedAccounts.isEmpty {
+                    
                     Text(.accountsEmpty)
                         .foregroundStyle(.secondary)
+                    
                 } else {
+                    
                     ForEach(viewModel.sortedAccounts) { item in
                         Button {
                             if viewModel.isEditing {
@@ -80,29 +83,28 @@ struct AccountView: View {
                         } label: {
                             HStack {
                                 if viewModel.isEditing {
-                                    Image(systemName: viewModel.selectedAccounts.contains(item) ? ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle)
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: FrameSize.width.iconRowList,
-                                               height: FrameSize.height.iconRowList)
-                                        .foregroundStyle(Color.accentColor)
-                                        .transition(.scale.combined(with: .move(edge: .leading)))
+                                    Image(systemName: viewModel.selectedAccounts.contains(item) ?
+                                          ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle
+                                    )
+                                    .font(.title2)
+                                    .foregroundStyle(Color.accentColor)
+                                    .transition(.slide.combined(with: .move(edge: .leading)))
                                     
                                 }
                                 
                                 item.icon.getIconFromSFSymbol?
-                                    .foregroundStyle(.textPrimaryForeground)
+                                    .foregroundStyle(Color.primary)
                                 
                                 Text(item.name)
-                                    .textStyle
+                                    .foregroundStyle(Color.primary)
                                 
                                 Spacer()
                                 
                                 if item.id == viewModel.defaultModelSelected?.id {
                                     Text(.accountsDefault)
-                                        .textStyle(color: .textPrimaryForeground,
-                                                   family: .light,
-                                                   size: .mediumSmall)
+                                        .foregroundStyle(Color.secondary)
+                                        .fontWeight(.light)
+                                        .font(.footnote)
                                 }
                                 
                                 if !viewModel.isEditing {
@@ -162,7 +164,6 @@ struct AccountView: View {
                     }
                 }
             }
-            //.foregroundColor(Color.listRowForeground) //Para los botones. El texto queda originalmente en azul.
             //.navigationLinkIndicatorVisibility(.visible)
             .animation(.default, value: viewModel.sortedAccounts)
             .scrollContentBackground(.hidden)
