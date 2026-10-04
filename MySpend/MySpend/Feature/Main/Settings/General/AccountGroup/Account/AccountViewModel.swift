@@ -12,8 +12,6 @@ import CoreData
 @Observable
 final class AccountViewModel {
     
-    // MARK: EDIT
-    var isEditing: Bool = false
     var selectedAccounts = Set<AccountModel>()
     
     // MARK: SORT
@@ -106,7 +104,6 @@ final class AccountViewModel {
     
     func deleteMltipleItems() async -> ResponseToast {
         defer {
-            isEditing = false
             selectedAccounts.removeAll()
         }
         

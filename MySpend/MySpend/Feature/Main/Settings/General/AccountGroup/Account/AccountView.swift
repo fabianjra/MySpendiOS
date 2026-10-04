@@ -9,6 +9,12 @@ import SwiftUI
 
 struct AccountView: View {
     
+    @Environment(\.editMode) private var editMode
+    
+    private var isEditing: Bool {
+        editMode?.wrappedValue.isEditing == true
+    }
+    
     @State private var viewModel = AccountViewModel()
     @State private var toast = ToastViewModel()
     
@@ -24,7 +30,7 @@ struct AccountView: View {
                 .accountsTitle : .selectorSelectedCountFemale(viewModel.selectedAccounts.count)
         )
         .navigationSubtitle(.accountsSubtitle(viewModel.sortedAccounts.count))
-        .navigationBarBackButtonHidden(viewModel.isEditing)
+        .navigationBarBackButtonHidden(isEditing)
         
         .toolbar {
             toolbarContent
@@ -40,6 +46,12 @@ struct AccountView: View {
         }
         .onDisappear {
             viewModel.deactivateObservers()
+        }
+        
+        .onChange(of: editMode?.wrappedValue) { _, newValue in
+            if newValue?.isEditing != true {
+                viewModel.selectedAccounts.removeAll()
+            }
         }
         
         
@@ -74,7 +86,7 @@ struct AccountView: View {
                     
                     ForEach(viewModel.sortedAccounts) { item in
                         Button {
-                            if viewModel.isEditing {
+                            if isEditing {
                                 viewModel.toggleAccountSelection(item)
                             } else {
                                 viewModel.accountToUpdate = item
@@ -82,13 +94,13 @@ struct AccountView: View {
                             
                         } label: {
                             HStack {
-                                if viewModel.isEditing {
+                                if isEditing {
                                     Image(systemName: viewModel.selectedAccounts.contains(item) ?
                                           ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle
                                     )
                                     .font(.title2)
                                     .foregroundStyle(Color.accentColor)
-                                    .transition(.slide.combined(with: .move(edge: .leading)))
+                                    .transition(.move(edge: .leading))
                                     
                                 }
                                 
@@ -104,7 +116,7 @@ struct AccountView: View {
                                         .font(.footnote)
                                 }
                                 
-                                if !viewModel.isEditing {
+                                if !isEditing {
                                     Image.chevronRight
                                         .tint(.secondary)
                                 }
@@ -112,7 +124,7 @@ struct AccountView: View {
                         }
                         
                         .swipeActions(edge: .trailing) {
-                            if !viewModel.isEditing {
+                            if !isEditing {
                                 
                                 Button(.selectorDelete, systemImage: ConstantSystemImage.trash, role: .destructive) {
                                     viewModel.accountToDelete = item
@@ -129,7 +141,7 @@ struct AccountView: View {
                         }
                         
                         .contextMenu {
-                            if !viewModel.isEditing {
+                            if !isEditing {
                                 
                                 Button(.selectorEdit, systemImage: ConstantSystemImage.squareAndPencil) {
                                     viewModel.accountToUpdate = item
@@ -151,6 +163,8 @@ struct AccountView: View {
                                     } else {
                                         toast.response = await viewModel.deleteMltipleItems()
                                     }
+                                    
+                                    editMode?.wrappedValue = .inactive
                                 }
                             }
                             
@@ -174,7 +188,7 @@ struct AccountView: View {
         // MARK: TOP
         
         ToolbarItem(placement: .navigation) {
-            if viewModel.isEditing {
+            if isEditing {
                 if viewModel.selectedAccounts.count == viewModel.sortedAccounts.count {
                     Button(.selectorDeselectAll) {
                         viewModel.selectedAccounts = Set()
@@ -189,26 +203,18 @@ struct AccountView: View {
         
         ToolbarItemGroup(placement: .primaryAction) {
             
-            if viewModel.isEditing {
-                Button(role: .cancel) {
-                    viewModel.selectedAccounts.removeAll()
-                    
-                    withAnimation {
-                        viewModel.isEditing = false
-                    }
-                }
+            if isEditing {
+                EditButton()
             } else {
-                
                 Menu(.menuOptionsTitle, systemImage: ConstantSystemImage.options) {
                     
                     Button {
                         withAnimation {
-                            viewModel.isEditing = true
+                            editMode?.wrappedValue = .active
                         }
                     } label: {
                         Label(.selectorSelect, systemImage: ConstantSystemImage.checkmarkCircle)
                     }
-                    
                     
                     Menu {
                         Section {
@@ -259,7 +265,7 @@ struct AccountView: View {
         ToolbarSpacer(.flexible, placement: .bottomBar)
         
         ToolbarItem(placement: .bottomBar) {
-            if viewModel.isEditing {
+            if isEditing {
                 Button(.selectorDelete, systemImage: ConstantSystemImage.trash, role: .destructive) {
                     showAlertDelete = true
                 }
@@ -285,8 +291,12 @@ private struct previewWrapper: View {
 }
 
 #Preview("Normal \(Previews.localeES_CR)") {
+    
+    @Previewable @State var editMode: EditMode = .inactive
+
     NavigationStack {
         previewWrapper()
+            .environment(\.editMode, $editMode)
     }
     .environment(\.locale, .init(identifier: Previews.localeES_CR))
 }
