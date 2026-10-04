@@ -11,22 +11,20 @@ struct FilterTransactionsToolbarBottom: ToolbarContent {
     
     @Binding var showFilters: Bool
     
-    private let filters = FilterCenter.shared
+    @Environment(FilterCenter.self) private var filterCenter
 
     var body: some ToolbarContent {
         
         ToolbarItem(placement: .bottomBar) {
             HStack {
                 Button {
-                    //withAnimation {
-                    filters.isFilterActive.toggle()
-                    //}
+                    filterCenter.isFilterActive.toggle()
                 } label: {
                     Image.filter
                         .foregroundStyle(.textPrimaryForeground)
                         .padding(ConstantViews.paddingSmall)
                         .background(
-                            filters.isFilterActive ?
+                            filterCenter.isFilterActive ?
                             Capsule().fill(Color.accentColor.opacity(ConstantColors.opacityHigh)) : nil
                         )
                         .transaction { transaction in
@@ -35,20 +33,20 @@ struct FilterTransactionsToolbarBottom: ToolbarContent {
                 }
                 
                 
-                if filters.isFilterActive {
+                if filterCenter.isFilterActive {
                     Button {
                         showFilters = true
                     } label: {
                         HStack {
                             VStack(alignment: .leading) {
                                 Text(.filterTitleDescription)
-                                    .textStyle(size: .medium)
+                                    .font(.medium)
                                 
                                 Text(getTextDescription)
-                                    .textStyle(color: filters.selectedAccountsFilter.isEmpty ?
-                                        .textPrimaryForeground : .accentColor,
-                                               size: .mediumSmall,truncateMode: .tail)
-                                
+                                    .foregroundStyle(filterCenter.selectedAccountsFilter.isEmpty ?
+                                        .textPrimaryForeground : .accentColor)
+                                    .font(.small)
+                                    .truncationMode(.tail)
                             }
                             
                             Spacer()
@@ -71,23 +69,23 @@ struct FilterTransactionsToolbarBottom: ToolbarContent {
      - Date: August 2026
      */
     private var getTextDescription: LocalizedStringResource {
-        if filters.showOnlyFavorites {
+        if filterCenter.showOnlyFavorites {
             return .filterAccountFavorites
         }
         
-        let selectedAccounts = filters.selectedAccountsFilter
+        let selectedAccounts = filterCenter.selectedAccountsFilter
         
         if selectedAccounts.isEmpty {
             return .filterAccountNone
         }
         
-        if selectedAccounts.count == filters.allAccounts.count {
+        if selectedAccounts.count == filterCenter.allAccounts.count {
             return .filterAccountAll
         }
         
         if selectedAccounts.count == 1,
            let accountID = selectedAccounts.first,
-           let account = filters.allAccounts.first(where: { $0.id == accountID }) {
+           let account = filterCenter.allAccounts.first(where: { $0.id == accountID }) {
             return LocalizedStringResource(stringLiteral: account.name)
         }
         
@@ -102,10 +100,11 @@ private struct previewWrapper: View {
         FilterCenter.shared.isFilterActive = isFilterActive
     }
     
-    @State var showFilters = false
+    @State private var filterCenter = FilterCenter.shared
+    @State private var showFilters = false
     
     var body: some View {
-        VStack(spacing: 20) {
+        VStack {
             Text("Accounts selected:").bold()
             
             ForEach(FilterCenter.shared.allAccounts.filter { FilterCenter.shared.selectedAccountsFilter.contains($0.id)}) { item in
@@ -122,6 +121,7 @@ private struct previewWrapper: View {
                 FilterTransactionsView()
             }
         }
+        .environment(filterCenter)
     }
 }
 

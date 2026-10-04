@@ -10,23 +10,23 @@ import SwiftUI
 struct FilterTransactionsView: View {
     
     @Environment(\.dismiss) private var dismiss
+    @Environment(FilterCenter.self) private var filterCenter
     
-    private let filters = FilterCenter.shared
     @State private var selectedDetent: PresentationDetent = .medium
     
     var body: some View {
         VStack {
             List {
-                if filters.allAccounts.isEmpty {
+                if filterCenter.allAccounts.isEmpty {
                     Text(.accountsEmpty)
                         .foregroundStyle(.secondary)
                     
                 } else {
                     Section {
-                        ForEach(filters.allAccounts) { account in
+                        ForEach(filterCenter.allAccounts) { account in
                             
                             Button {
-                                filters.toggleAccount(account)
+                                filterCenter.toggleAccount(account)
                             } label: {
                                 HStack {
                                     Label(account.name, systemImage: account.icon)
@@ -34,7 +34,7 @@ struct FilterTransactionsView: View {
                                     
                                     Spacer()
                                     
-                                    Image(systemName: filters.selectedAccountsFilter.contains(account.id) ?
+                                    Image(systemName: filterCenter.selectedAccountsFilter.contains(account.id) ?
                                           ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle
                                     )
                                     .font(.title2)
@@ -49,7 +49,7 @@ struct FilterTransactionsView: View {
                     Section {
                         
                         Button {
-                            filters.showOnlyFavorites.toggle()
+                            filterCenter.showOnlyFavorites.toggle()
                         } label: {
                             HStack {
                                 Label(.filterByFavorite, systemImage: ConstantSystemImage.favoriteFill)
@@ -57,7 +57,7 @@ struct FilterTransactionsView: View {
                                 
                                 Spacer()
                                 
-                                Image(systemName: filters.showOnlyFavorites ?
+                                Image(systemName: filterCenter.showOnlyFavorites ?
                                       ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle
                                 )
                                 .font(.title2)
@@ -72,7 +72,7 @@ struct FilterTransactionsView: View {
             .scrollContentBackground(.hidden)
                 
             Button {
-                filters.restoreFilter()
+                filterCenter.restoreFilter()
             } label: {
                 Label(
                     .filterRestore,
@@ -108,6 +108,7 @@ private struct previewWrapper: View {
         CoreDataUtilities.shared.mockDataType = mockDataType
     }
     
+    @State var filterCenter = FilterCenter.shared
     @State var show: Bool = false
     
     var body: some View {
@@ -124,6 +125,7 @@ private struct previewWrapper: View {
         .onAppear {
             show = true
         }
+        .environment(filterCenter)
     }
 }
 
