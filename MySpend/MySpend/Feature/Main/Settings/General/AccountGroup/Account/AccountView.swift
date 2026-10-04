@@ -92,12 +92,9 @@ struct AccountView: View {
                                     
                                 }
                                 
-                                item.icon.getIconFromSFSymbol?
+                                Label(item.name, systemImage: item.icon)
                                     .foregroundStyle(Color.primary)
-                                
-                                Text(item.name)
-                                    .foregroundStyle(Color.primary)
-                                
+
                                 Spacer()
                                 
                                 if item.id == viewModel.defaultModelSelected?.id {
@@ -117,16 +114,17 @@ struct AccountView: View {
                         .swipeActions(edge: .trailing) {
                             if !viewModel.isEditing {
                                 
-                                Button("", systemImage: ConstantSystemImage.trash) {
+                                Button(.selectorDelete, systemImage: ConstantSystemImage.trash, role: .destructive) {
                                     viewModel.accountToDelete = item
                                     showAlertDelete = true
                                 }
-                                .tint(.alert)
+                                .labelStyle(.iconOnly)
                                 
                                 
-                                Button("", systemImage: ConstantSystemImage.squareAndPencil) {
+                                Button(.selectorEdit, systemImage: ConstantSystemImage.squareAndPencil) {
                                     viewModel.accountToUpdate = item
                                 }
+                                .labelStyle(.iconOnly)
                             }
                         }
                         
@@ -142,7 +140,6 @@ struct AccountView: View {
                                     viewModel.accountToDelete = item
                                     showAlertDelete = true
                                 }
-                                .tint(.alert)
                             }
                         }
                         

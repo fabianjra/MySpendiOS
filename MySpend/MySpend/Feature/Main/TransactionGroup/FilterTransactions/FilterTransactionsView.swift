@@ -47,12 +47,13 @@ struct FilterTransactionsView: View {
                     }
                     
                     Section {
+                        
                         Button {
                             filters.showOnlyFavorites.toggle()
                         } label: {
                             HStack {
                                 Label(.filterByFavorite, systemImage: ConstantSystemImage.favoriteFill)
-                                .foregroundStyle(.textPrimaryForeground)
+                                    .foregroundStyle(.textPrimaryForeground)
                                 
                                 Spacer()
                                 
