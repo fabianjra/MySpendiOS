@@ -76,7 +76,7 @@ struct AccountView: View {
     
     private var itemList: some View {
         VStack {
-            List {
+            List(selection: $viewModel.selectedAccounts) {
                 if viewModel.sortedAccounts.isEmpty {
                     Section {
                         Text(.accountsEmpty)
@@ -94,16 +94,6 @@ struct AccountView: View {
                                 
                             } label: {
                                 HStack {
-                                    if isEditing {
-                                        Image(systemName: viewModel.selectedAccounts.contains(item) ?
-                                              ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle
-                                        )
-                                        .font(.title3)
-                                        .foregroundStyle(Color.accentColor)
-                                        .transition(.move(edge: .leading))
-                                        
-                                    }
-                                    
                                     Label(item.name, systemImage: item.icon)
                                         .foregroundStyle(Color.primary)
                                     
@@ -122,6 +112,7 @@ struct AccountView: View {
                                     }
                                 }
                             }
+                            .tag(item)
                             
                             .swipeActions(edge: .trailing) {
                                 if !isEditing {
