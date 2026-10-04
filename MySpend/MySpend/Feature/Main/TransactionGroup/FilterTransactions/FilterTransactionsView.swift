@@ -20,50 +20,48 @@ struct FilterTransactionsView: View {
                 if filters.allAccounts.isEmpty {
                     Text(.accountsEmpty)
                         .foregroundStyle(.secondary)
-                        
+                    
                 } else {
                     Section {
                         ForEach(filters.allAccounts) { account in
-                            HStack {
-                                Label(account.name, systemImage: account.icon)
-                                    .foregroundStyle(.primary)
-                                    
-                                Spacer()
-                                    
-                                Image(systemName: filters.selectedAccountsFilter.contains(account.id) ?
-                                      ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle
-                                )
-                                .font(.title2)
-                                .foregroundStyle(Color.accentColor)
-                            }
-                            .contentShape(Rectangle())
-                            .onTapGesture {
+                            
+                            Button {
                                 filters.toggleAccount(account)
+                            } label: {
+                                HStack {
+                                    Label(account.name, systemImage: account.icon)
+                                        .foregroundStyle(Color.primary)
+                                    
+                                    Spacer()
+                                    
+                                    Image(systemName: filters.selectedAccountsFilter.contains(account.id) ?
+                                          ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle
+                                    )
+                                    .font(.title2)
+                                    .foregroundStyle(Color.accentColor)
+                                }
                             }
                         }
                     } header: {
                         Text(.filterByAccount)
                     }
-                        
+                    
                     Section {
-                        HStack {
-                            Label(
-                                .filterByFavorite,
-                                systemImage: ConstantSystemImage.favoriteFill
-                            )
-                            .foregroundStyle(.textPrimaryForeground)
-                                
-                            Spacer()
-                                
-                            Image(systemName: filters.showOnlyFavorites ?
-                                  ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle
-                            )
-                            .font(.title2)
-                            .foregroundStyle(Color.accentColor)
-                        }
-                        .contentShape(Rectangle())
-                        .onTapGesture {
+                        Button {
                             filters.showOnlyFavorites.toggle()
+                        } label: {
+                            HStack {
+                                Label(.filterByFavorite, systemImage: ConstantSystemImage.favoriteFill)
+                                .foregroundStyle(.textPrimaryForeground)
+                                
+                                Spacer()
+                                
+                                Image(systemName: filters.showOnlyFavorites ?
+                                      ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle
+                                )
+                                .font(.title2)
+                                .foregroundStyle(Color.accentColor)
+                            }
                         }
                     } header: {
                         Text(.filterInclude)
