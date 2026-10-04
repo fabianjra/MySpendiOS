@@ -205,8 +205,14 @@ struct AccountView: View {
         ToolbarItemGroup(placement: .primaryAction) {
             
             if isEditing {
-                EditButton()
+                //EditButton()
+                Button(role: .cancel) {
+                    withAnimation {
+                        editMode?.wrappedValue = .inactive
+                    }
+                }
             } else {
+                
                 Menu(.menuOptionsTitle, systemImage: ConstantSystemImage.options) {
                     
                     Button {
