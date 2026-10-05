@@ -8,14 +8,14 @@
 import CoreData
 
 /**
- `CategoryManager` is responsible for managing Core Data storage and handling all data-related operations throughout the app.
+ `CategoryCoreDataManager` is responsible for managing Core Data storage and handling all data-related operations throughout the app.
  It serves as a bridge between Core Data and the user interface.
 
  - Authors: Fabian Rodriguez
  - Version: 1.0
  */
 
-struct CategoryManager {
+struct CategoryCoreDataManager {
     
     // El ViewContext es lo que se va a modificar.
     // Cuando se agreguen nuevos datos a Core Data, se debe obtener el ViewContext para hacerlo.

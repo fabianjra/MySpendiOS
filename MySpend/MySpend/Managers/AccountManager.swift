@@ -1,5 +1,5 @@
 //
-//  FilterTransactionsViewModel.swift
+//  AccountManager.swift
 //  MySpend
 //
 //  Created by Fabian Rodriguez on 7/8/26.
@@ -10,8 +10,8 @@ import Combine
 
 @MainActor
 @Observable
-final class FilterCenter {
-    static let shared = FilterCenter()
+final class AccountManager {
+    static let shared = AccountManager()
 
     var showOnlyFavorites: Bool = false
 
@@ -34,7 +34,7 @@ final class FilterCenter {
         // Cargar inicialmente las cuentas
         Task {
             do {
-                allAccounts = try await AccountManager(viewContext).fetchAll()
+                allAccounts = try await AccountCoreDataManager(viewContext).fetchAll()
             } catch {
                 Logger.exception(error, type: .CoreData)
             }
@@ -60,7 +60,7 @@ final class FilterCenter {
     
     private func onChangeAccounts() async {
         do {
-            allAccounts = try await AccountManager(viewContext).fetchAll()
+            allAccounts = try await AccountCoreDataManager(viewContext).fetchAll()
             
             // Limpia las cuentas que podrian haber sido eliminadas del UserDefaults.
             let availableIDs = Set(allAccounts.map(\.id))

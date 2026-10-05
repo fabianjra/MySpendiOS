@@ -18,7 +18,7 @@ struct TransactionView: View {
     @State private var showSearchView = false
     @State private var navigateToHistory: Bool = false
     
-    @Environment(FilterCenter.self) private var filterCenter
+    @Environment(AccountManager.self) private var filterCenter
     
     var body: some View {
         VStack {
@@ -299,12 +299,12 @@ private struct previewWrapper: View {
         CoreDataUtilities.shared.mockDataType = mockDataType
         
         UserDefaultsManager.userName = "Previews"
-        FilterCenter.shared.isFilterActive = isFilterActive
+        AccountManager.shared.isFilterActive = isFilterActive
     }
     
     @State var router = Router.shared
     @State var themeManager = ThemeManager.shared
-    @State var previewFilter = FilterCenter.shared
+    @State var previewFilter = AccountManager.shared
     
     var body: some View {
         NavigationStack(path: $router.path) {

@@ -10,7 +10,7 @@ import SwiftUI
 struct SelectAccountView: View {
     
     @Environment(\.dismiss) var dismiss
-    @Environment(FilterCenter.self) private var filterCenter
+    @Environment(AccountManager.self) private var filterCenter
     
     @Binding var selectedModel: AccountModel
     
@@ -108,7 +108,7 @@ private struct previewWrapper: View {
     }
     var local: String
     
-    @State var previewFilter = FilterCenter.shared
+    @State var previewFilter = AccountManager.shared
     @State var show: Bool = false
     @State var model = AccountModel()
     

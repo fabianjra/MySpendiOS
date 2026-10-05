@@ -8,7 +8,7 @@ import SwiftUI
 
 struct RootView: View {
     
-    @State private var filterCenter = FilterCenter.shared
+    @State private var filterCenter = AccountManager.shared
     @State private var themeManager = ThemeManager.shared
     @State private var router = Router.shared
     

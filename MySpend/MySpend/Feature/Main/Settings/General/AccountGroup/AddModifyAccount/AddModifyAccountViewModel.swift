@@ -38,8 +38,8 @@ final class AddModifyAccountViewModel: BaseViewModel {
         }
         
         do {
-            try await AccountManager(viewContext).create(model)
-            FilterCenter.shared.selectedAccountsFilter.insert(model.id)
+            try await AccountCoreDataManager(viewContext).create(model)
+            AccountManager.shared.selectedAccountsFilter.insert(model.id)
             
             if isDefaultSelected {
                 UserDefaultsManager.defaultAccountID = model.id.uuidString
@@ -58,7 +58,7 @@ final class AddModifyAccountViewModel: BaseViewModel {
         }
         
         do {
-            try await AccountManager(viewContext).update(model)
+            try await AccountCoreDataManager(viewContext).update(model)
             
             if isDefaultSelected {
                 UserDefaultsManager.defaultAccountID = model.id.uuidString
@@ -77,7 +77,7 @@ final class AddModifyAccountViewModel: BaseViewModel {
     
     func delete() async -> ResponseModel {
         do {
-            try await AccountManager(viewContext).delete(model)
+            try await AccountCoreDataManager(viewContext).delete(model)
             return ResponseModel(.successful)
         } catch {
             Logger.exception(error, type: .CoreData)

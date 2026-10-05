@@ -8,13 +8,13 @@
 import CoreData
 
 /**
- `AccountManager` is responsible for managing Core Data storage and handling all data-related operations throughout the app.
+ `AccountCoreDataManager` is responsible for managing Core Data storage and handling all data-related operations throughout the app.
  It serves as a bridge between Core Data and the user interface.
 
  - Authors: Fabian Rodriguez
  - Version: 1.0
  */
-struct AccountManager {
+struct AccountCoreDataManager {
     private let viewContext: NSManagedObjectContext // Main queue, UI.
     private let bgContext: NSManagedObjectContext // Private queue, background thread.
     

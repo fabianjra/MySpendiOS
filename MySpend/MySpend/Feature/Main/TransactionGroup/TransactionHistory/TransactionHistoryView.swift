@@ -16,7 +16,7 @@ struct TransactionHistoryView: View {
     @Binding var dateTimeInterval: DateTimeInterval
     @Binding var selectedDate: Date
     
-    @Environment(FilterCenter.self) private var filterCenter
+    @Environment(AccountManager.self) private var filterCenter
 
     
     // MARK: ALERTS (Solo manejadas dentro de la vista, no hacen nada en ViewModel)
@@ -470,7 +470,7 @@ private struct PreviewWrapper: View {
         CoreDataUtilities.shared.mockDataType = mockDataType
     }
     
-    @State var previewFilter = FilterCenter.shared
+    @State var previewFilter = AccountManager.shared
     
     @StateObject var viewModel = TransactionViewModel()
     

@@ -27,9 +27,9 @@ class OnBoardingAccountViewModel: BaseViewModel {
         let account = AccountModel(icon: ConstantSystemImage.bankDollarFill, name: mutatedName)
         
         do {
-            try await AccountManager(viewContext).create(account)
+            try await AccountCoreDataManager(viewContext).create(account)
             
-            FilterCenter.shared.selectedAccountsFilter.insert(account.id)
+            AccountManager.shared.selectedAccountsFilter.insert(account.id)
             
             UserDefaultsManager.defaultAccountID = account.id.uuidString
             UserDefaultsManager.isOnBoarding = false

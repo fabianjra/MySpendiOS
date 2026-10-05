@@ -10,7 +10,7 @@ import SwiftUI
 struct FilterTransactionsView: View {
     
     @Environment(\.dismiss) private var dismiss
-    @Environment(FilterCenter.self) private var filterCenter
+    @Environment(AccountManager.self) private var filterCenter
     
     @State private var selectedDetent: PresentationDetent = .medium
     
@@ -108,7 +108,7 @@ private struct previewWrapper: View {
         CoreDataUtilities.shared.mockDataType = mockDataType
     }
     
-    @State var previewFilter = FilterCenter.shared
+    @State var previewFilter = AccountManager.shared
     @State var show: Bool = false
     
     var body: some View {

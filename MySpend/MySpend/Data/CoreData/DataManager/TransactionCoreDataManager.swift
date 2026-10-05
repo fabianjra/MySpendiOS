@@ -14,7 +14,7 @@ import CoreData
  - Authors: Fabian Rodriguez
  - Version: 1.0
  */
-struct TransactionManager {
+struct TransactionCoreDataManager {
     private let viewContext: NSManagedObjectContext
     
     init(_ viewContext: NSManagedObjectContext) {
@@ -44,8 +44,8 @@ struct TransactionManager {
     func create(_ model: TransactionModel) async throws {
         try await viewContext.perform {
             
-            let categoryResolved = try CategoryManager.resolve(from: model.category, viewContextArg: viewContext)
-            let accountResolved = try AccountManager.resolve(from: model.account, viewContextArg: viewContext)
+            let categoryResolved = try CategoryCoreDataManager.resolve(from: model.category, viewContextArg: viewContext)
+            let accountResolved = try AccountCoreDataManager.resolve(from: model.account, viewContextArg: viewContext)
             
             let entity = Transaction(context: viewContext)
             
@@ -77,8 +77,8 @@ struct TransactionManager {
     func update(_ model: TransactionModel) async throws {
         try await viewContext.perform {
             
-            let categoryResolved = try CategoryManager.resolve(from: model.category, viewContextArg: viewContext)
-            let accountResolved = try AccountManager.resolve(from: model.account, viewContextArg: viewContext)
+            let categoryResolved = try CategoryCoreDataManager.resolve(from: model.category, viewContextArg: viewContext)
+            let accountResolved = try AccountCoreDataManager.resolve(from: model.account, viewContextArg: viewContext)
             
             guard let entity = try CoreDataUtilities.fetch(byID: model.id.uuidString,
                                                            entity: Transaction.self,

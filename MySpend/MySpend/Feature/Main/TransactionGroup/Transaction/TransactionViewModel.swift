@@ -44,7 +44,7 @@ class TransactionViewModel: BaseViewModel {
     
     private func fetchAll() async {
         do {
-            let fetched = try await TransactionManager(viewContext).fetchAll()
+            let fetched = try await TransactionCoreDataManager(viewContext).fetchAll()
             allTransactions = fetched
             transactionsFiltered = fetched
             calculateTotalBalance()
@@ -58,10 +58,10 @@ class TransactionViewModel: BaseViewModel {
     func filterTransactions() {
         let filteredByOptions: [TransactionModel]
         
-        if FilterCenter.shared.isFilterActive {
+        if AccountManager.shared.isFilterActive {
             
             filteredByOptions = allTransactions.filter {
-                FilterCenter.shared.selectedAccountsFilter.contains($0.account.id) && (FilterCenter.shared.showOnlyFavorites ? $0.favorite : true)
+                AccountManager.shared.selectedAccountsFilter.contains($0.account.id) && (AccountManager.shared.showOnlyFavorites ? $0.favorite : true)
             }
             
         } else {

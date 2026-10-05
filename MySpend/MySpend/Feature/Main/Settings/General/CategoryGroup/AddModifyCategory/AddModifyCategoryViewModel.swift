@@ -36,7 +36,7 @@ final class AddModifyCategoryViewModel: BaseViewModel {
         modelMutated.type = type
         
         do {
-            try await CategoryManager(viewContext).create(modelMutated)
+            try await CategoryCoreDataManager(viewContext).create(modelMutated)
             return ResponseModel(.successful)
         } catch {
             Logger.exception(error, type: .CoreData)
@@ -53,7 +53,7 @@ final class AddModifyCategoryViewModel: BaseViewModel {
         modelMutated.type = type
        
         do {
-            try await CategoryManager(viewContext).update(modelMutated)
+            try await CategoryCoreDataManager(viewContext).update(modelMutated)
             return ResponseModel(.successful)
         } catch {
             Logger.exception(error, type: .CoreData)
@@ -63,7 +63,7 @@ final class AddModifyCategoryViewModel: BaseViewModel {
     
     func delete() async -> ResponseModel {
         do {
-            try await CategoryManager(viewContext).delete(model)
+            try await CategoryCoreDataManager(viewContext).delete(model)
             return ResponseModel(.successful)
         } catch {
             Logger.exception(error, type: .CoreData)

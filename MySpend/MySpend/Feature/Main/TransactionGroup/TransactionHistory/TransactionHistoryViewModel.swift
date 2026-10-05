@@ -37,7 +37,7 @@ final class TransactionHistoryViewModel {
     
     func favorite(_ model: TransactionModel) async -> ResponseToast {
         do {
-            try await TransactionManager(viewContext).updateFavorite(model)
+            try await TransactionCoreDataManager(viewContext).updateFavorite(model)
             
             return ResponseToast()
         } catch {
@@ -60,11 +60,11 @@ final class TransactionHistoryViewModel {
             if selectedTransactions.count == 1 {
                 
                 if let selectedTransaction = selectedTransactions.first {
-                    try await TransactionManager(viewContext).updateFavorite(selectedTransaction, newState: newState)
+                    try await TransactionCoreDataManager(viewContext).updateFavorite(selectedTransaction, newState: newState)
                 }
                 
             } else {
-                try await TransactionManager(viewContext).favoriteMultiple(Array(selectedTransactions), newState: newState)
+                try await TransactionCoreDataManager(viewContext).favoriteMultiple(Array(selectedTransactions), newState: newState)
             }
             
             return ResponseToast(.responseSuccesful, .ok)
@@ -78,7 +78,7 @@ final class TransactionHistoryViewModel {
         guard let model = model else { return ResponseToast() }
         
         do {
-            try await TransactionManager(viewContext).delete(model)
+            try await TransactionCoreDataManager(viewContext).delete(model)
             return ResponseToast(.responseSuccesful, .ok)
         } catch {
             Logger.exception(error, type: .CoreData)
@@ -97,7 +97,7 @@ final class TransactionHistoryViewModel {
             //try await TransactionManager(viewContext: viewContext).deleteMultiple(entityName: Transaction.entityName, idsToDelete: idsToDelete)
 
             for item in selectedTransactions {
-                try await TransactionManager(viewContext).delete(item)
+                try await TransactionCoreDataManager(viewContext).delete(item)
             }
             
             return ResponseToast(.responseTransactionDeleted(selectedTransactions.count), .ok)

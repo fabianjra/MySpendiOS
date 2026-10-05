@@ -73,7 +73,7 @@ class AddModifyTransactionViewModel: BaseViewModel {
         modelMutated.favorite = favorite
         
         do {
-            try await TransactionManager(viewContext).create(modelMutated)
+            try await TransactionCoreDataManager(viewContext).create(modelMutated)
             return ResponseModel(.successful)
         } catch {
             Logger.exception(error, type: .CoreData)
@@ -91,7 +91,7 @@ class AddModifyTransactionViewModel: BaseViewModel {
         modelMutated.favorite = favorite
         
         do {
-            try await TransactionManager(viewContext).update(modelMutated)
+            try await TransactionCoreDataManager(viewContext).update(modelMutated)
             return ResponseModel(.successful)
         } catch {
             Logger.exception(error, type: .CoreData)
@@ -101,7 +101,7 @@ class AddModifyTransactionViewModel: BaseViewModel {
     
     func delete() async -> ResponseModel {
         do {
-            try await TransactionManager(viewContext).delete(model)
+            try await TransactionCoreDataManager(viewContext).delete(model)
             return ResponseModel(.successful)
         } catch {
             Logger.exception(error, type: .CoreData)

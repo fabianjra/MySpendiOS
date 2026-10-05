@@ -21,7 +21,7 @@ import SwiftUI
 struct AddModifyTransactionView: View {
     
     @Environment(\.dismiss) private var dismiss
-    @Environment(FilterCenter.self) private var filterCenter
+    @Environment(AccountManager.self) private var filterCenter
     
     @StateObject private var viewModel: AddModifyTransactionViewModel
     @FocusState private var focusedField: TransactionModel.Field?
@@ -237,7 +237,7 @@ private struct PreviewWrapper: View {
         CoreDataUtilities.shared.mockDataType = mockDataType
     }
     
-    @State var previewFilter = FilterCenter.shared
+    @State var previewFilter = AccountManager.shared
     @State var selectedModel: TransactionModel?
     @State var models: [TransactionModel] = []
     
@@ -268,7 +268,7 @@ private struct PreviewWrapper: View {
 
 #Preview("New \(Previews.localeEN)") {
     
-    @Previewable @State var previewFilter = FilterCenter.shared
+    @Previewable @State var previewFilter = AccountManager.shared
     
     NavigationStack {
         AddModifyTransactionView()

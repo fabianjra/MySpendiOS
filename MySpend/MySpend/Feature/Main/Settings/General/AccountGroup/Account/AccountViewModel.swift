@@ -63,7 +63,7 @@ final class AccountViewModel {
     
     func fetchAccounts() async -> ResponseToast? {
         do {
-            allAccounts = try await AccountManager(viewContext).fetchAll()
+            allAccounts = try await AccountCoreDataManager(viewContext).fetchAll()
             
             return nil
         } catch {
@@ -94,7 +94,7 @@ final class AccountViewModel {
         }
         
         do {
-            try await AccountManager(viewContext).delete(accountToUpdate)
+            try await AccountCoreDataManager(viewContext).delete(accountToUpdate)
             return ResponseToast(.responseAccountsDeleted(.zero), .ok)
         } catch {
             Logger.exception(error, type: .CoreData)
@@ -109,7 +109,7 @@ final class AccountViewModel {
         
         do {
             for item in selectedAccounts {
-                try await AccountManager(viewContext).delete(item)
+                try await AccountCoreDataManager(viewContext).delete(item)
             }
             
             return ResponseToast(.responseAccountsDeleted(selectedAccounts.count), .ok)

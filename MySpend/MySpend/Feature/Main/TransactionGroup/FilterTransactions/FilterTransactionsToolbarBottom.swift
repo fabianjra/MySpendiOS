@@ -11,7 +11,7 @@ struct FilterTransactionsToolbarBottom: ToolbarContent {
     
     @Binding var showFilters: Bool
     
-    @Environment(FilterCenter.self) private var filterCenter
+    @Environment(AccountManager.self) private var filterCenter
 
     var body: some ToolbarContent {
         
@@ -97,10 +97,10 @@ private struct previewWrapper: View {
     init(_ mockDataType: MockDataType = .empty, isFilterActive: Bool = false) {
         CoreDataUtilities.shared.mockDataType = mockDataType
         
-        FilterCenter.shared.isFilterActive = isFilterActive
+        AccountManager.shared.isFilterActive = isFilterActive
     }
     
-    @State private var previewFilter = FilterCenter.shared
+    @State private var previewFilter = AccountManager.shared
     @State private var showFilters = false
     
     var body: some View {
