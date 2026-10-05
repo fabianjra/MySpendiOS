@@ -21,7 +21,7 @@ import SwiftUI
 struct AddModifyTransactionView: View {
     
     @Environment(\.dismiss) private var dismiss
-    @Environment(AccountManager.self) private var filterCenter
+    @Environment(AccountManager.self) private var accountManager
     
     @StateObject private var viewModel: AddModifyTransactionViewModel
     @FocusState private var focusedField: TransactionModel.Field?
@@ -121,7 +121,7 @@ struct AddModifyTransactionView: View {
             // MARK: EVENTS
             
             .onAppear {
-                viewModel.configureSelectedAccount(filterCenter.allAccounts)
+                viewModel.configureSelectedAccount(accountManager.sortedAccounts)
 
                 if viewModel.isNewModel {
                     focusedField = .amount

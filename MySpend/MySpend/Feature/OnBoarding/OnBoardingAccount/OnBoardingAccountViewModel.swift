@@ -29,7 +29,7 @@ class OnBoardingAccountViewModel: BaseViewModel {
         do {
             try await AccountCoreDataManager(viewContext).create(account)
             
-            accountManager.selectedAccountsFilter.insert(account.id)
+            accountManager.filteredAccounts.insert(account.id)
             
             UserDefaultsManager.defaultAccountID = account.id.uuidString
             UserDefaultsManager.isOnBoarding = false

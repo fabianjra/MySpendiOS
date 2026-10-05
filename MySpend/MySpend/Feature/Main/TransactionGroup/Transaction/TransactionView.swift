@@ -75,7 +75,7 @@ struct TransactionView: View {
         .onChange(of: viewModel.transactionsFiltered) {
             viewModel.filterTransactions(accountManager: accountManager)
         }
-        .onChange(of: accountManager.selectedAccountsFilter) {
+        .onChange(of: accountManager.filteredAccounts) {
             viewModel.filterTransactions(accountManager: accountManager)
         }
         .onChange(of: [accountManager.isFilterActive, accountManager.showOnlyFavorites]) {
@@ -160,7 +160,7 @@ struct TransactionView: View {
                                       selectedDate: $viewModel.selectedDate,
                                       isEditing: .constant(false)){}
             
-            if accountManager.allAccounts.count > 1 {
+            if accountManager.sortedAccounts.count > 1 {
                 
                 /// ¿Filtro activo?
                 ///     ↓
@@ -174,17 +174,17 @@ struct TransactionView: View {
                         return ""
                     }
                     
-                    let selectedAccounts = accountManager.selectedAccountsFilter
+                    let selectedAccounts = accountManager.filteredAccounts
                     
                     if selectedAccounts.isEmpty {
                         return .filterAccountNoneTitle
                     }
                     
-                    if selectedAccounts.count == accountManager.allAccounts.count {
+                    if selectedAccounts.count == accountManager.sortedAccounts.count {
                         return .filterAccountAll
                     }
                     
-                    let accountNames = accountManager.allAccounts
+                    let accountNames = accountManager.sortedAccounts
                         .filter { selectedAccounts.contains($0.id) }
                         .map(\.name)
                         .joined(separator: ", ")

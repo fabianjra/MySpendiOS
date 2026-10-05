@@ -11,20 +11,20 @@ struct FilterTransactionsToolbarBottom: ToolbarContent {
     
     @Binding var showFilters: Bool
     
-    @Environment(AccountManager.self) private var filterCenter
+    @Environment(AccountManager.self) private var accountManager
 
     var body: some ToolbarContent {
         
         ToolbarItem(placement: .bottomBar) {
             HStack {
                 Button {
-                    filterCenter.isFilterActive.toggle()
+                    accountManager.isFilterActive.toggle()
                 } label: {
                     Image.filter
                         .foregroundStyle(.textPrimaryForeground)
                         .padding(ConstantViews.paddingSmall)
                         .background(
-                            filterCenter.isFilterActive ?
+                            accountManager.isFilterActive ?
                             Capsule().fill(Color.accentColor.opacity(ConstantColors.opacityHigh)) : nil
                         )
                         .transaction { transaction in
@@ -33,7 +33,7 @@ struct FilterTransactionsToolbarBottom: ToolbarContent {
                 }
                 
                 
-                if filterCenter.isFilterActive {
+                if accountManager.isFilterActive {
                     Button {
                         showFilters = true
                     } label: {
@@ -43,7 +43,7 @@ struct FilterTransactionsToolbarBottom: ToolbarContent {
                                     .font(.medium)
                                 
                                 Text(getTextDescription)
-                                    .foregroundStyle(filterCenter.selectedAccountsFilter.isEmpty ?
+                                    .foregroundStyle(accountManager.filteredAccounts.isEmpty ?
                                         .textPrimaryForeground : .accentColor)
                                     .font(.small)
                                     .truncationMode(.tail)
@@ -69,23 +69,23 @@ struct FilterTransactionsToolbarBottom: ToolbarContent {
      - Date: August 2026
      */
     private var getTextDescription: LocalizedStringResource {
-        if filterCenter.showOnlyFavorites {
+        if accountManager.showOnlyFavorites {
             return .filterAccountFavorites
         }
         
-        let selectedAccounts = filterCenter.selectedAccountsFilter
+        let selectedAccounts = accountManager.filteredAccounts
         
         if selectedAccounts.isEmpty {
             return .filterAccountNone
         }
         
-        if selectedAccounts.count == filterCenter.allAccounts.count {
+        if selectedAccounts.count == accountManager.sortedAccounts.count {
             return .filterAccountAll
         }
         
         if selectedAccounts.count == 1,
            let accountID = selectedAccounts.first,
-           let account = filterCenter.allAccounts.first(where: { $0.id == accountID }) {
+           let account = accountManager.sortedAccounts.first(where: { $0.id == accountID }) {
             return LocalizedStringResource(stringLiteral: account.name)
         }
         
@@ -107,7 +107,7 @@ private struct previewWrapper: View {
         VStack {
             Text("Accounts selected:").bold()
             
-            ForEach(previewFilter.allAccounts.filter { previewFilter.selectedAccountsFilter.contains($0.id)}) { item in
+            ForEach(previewFilter.sortedAccounts.filter { previewFilter.filteredAccounts.contains($0.id)}) { item in
                 Text(item.name)
             }
         }

@@ -10,13 +10,9 @@ import SwiftUI
 struct SelectAccountView: View {
     
     @Environment(\.dismiss) var dismiss
-    @Environment(AccountManager.self) private var filterCenter
+    @Environment(AccountManager.self) private var accountManager
     
     @Binding var selectedModel: AccountModel
-    
-    private var sortedAccounts: [AccountModel] {
-        filterCenter.allAccounts.sortedAccounts(by: sortSelection)
-    }
     
     @State private var sortSelection = UserDefaultsManager.sortAccounts {
         didSet {
@@ -51,11 +47,11 @@ struct SelectAccountView: View {
 //                .padding(.horizontal)
                 
                 List {
-                    if sortedAccounts.isEmpty {
+                    if accountManager.sortedAccounts.isEmpty {
                         Text(.accountsEmpty)
                             .foregroundStyle(.secondary)
                     } else {
-                        ForEach(sortedAccounts) { item in
+                        ForEach(accountManager.sortedAccounts) { item in
                             HStack {
                                 let icon = item.icon.getIconFromSFSymbol
                                 

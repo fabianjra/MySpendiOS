@@ -10,23 +10,23 @@ import SwiftUI
 struct FilterTransactionsView: View {
     
     @Environment(\.dismiss) private var dismiss
-    @Environment(AccountManager.self) private var filterCenter
+    @Environment(AccountManager.self) private var accountManager
     
     @State private var selectedDetent: PresentationDetent = .medium
     
     var body: some View {
         VStack {
             List {
-                if filterCenter.allAccounts.isEmpty {
+                if accountManager.sortedAccounts.isEmpty {
                     Text(.accountsEmpty)
                         .foregroundStyle(.secondary)
                     
                 } else {
                     Section {
-                        ForEach(filterCenter.allAccounts) { account in
+                        ForEach(accountManager.sortedAccounts) { account in
                             
                             Button {
-                                filterCenter.toggleAccount(account)
+                                accountManager.toggleFilter(account)
                             } label: {
                                 HStack {
                                     Label(account.name, systemImage: account.icon)
@@ -34,7 +34,7 @@ struct FilterTransactionsView: View {
                                     
                                     Spacer()
                                     
-                                    Image(systemName: filterCenter.selectedAccountsFilter.contains(account.id) ?
+                                    Image(systemName: accountManager.filteredAccounts.contains(account.id) ?
                                           ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle
                                     )
                                     .font(.title2)
@@ -49,7 +49,7 @@ struct FilterTransactionsView: View {
                     Section {
                         
                         Button {
-                            filterCenter.showOnlyFavorites.toggle()
+                            accountManager.showOnlyFavorites.toggle()
                         } label: {
                             HStack {
                                 Label(.filterByFavorite, systemImage: ConstantSystemImage.favoriteFill)
@@ -57,7 +57,7 @@ struct FilterTransactionsView: View {
                                 
                                 Spacer()
                                 
-                                Image(systemName: filterCenter.showOnlyFavorites ?
+                                Image(systemName: accountManager.showOnlyFavorites ?
                                       ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle
                                 )
                                 .font(.title2)
@@ -72,7 +72,7 @@ struct FilterTransactionsView: View {
             .scrollContentBackground(.hidden)
                 
             Button {
-                filterCenter.restoreFilter()
+                accountManager.restoreFilter()
             } label: {
                 Label(
                     .filterRestore,

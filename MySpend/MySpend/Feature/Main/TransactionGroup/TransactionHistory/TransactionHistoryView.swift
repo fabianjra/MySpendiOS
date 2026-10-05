@@ -16,7 +16,7 @@ struct TransactionHistoryView: View {
     @Binding var dateTimeInterval: DateTimeInterval
     @Binding var selectedDate: Date
     
-    @Environment(AccountManager.self) private var filterCenter
+    @Environment(AccountManager.self) private var accountManager
 
     
     // MARK: ALERTS (Solo manejadas dentro de la vista, no hacen nada en ViewModel)
@@ -289,7 +289,7 @@ struct TransactionHistoryView: View {
                                 }
                                 
                                 HStack {
-                                    if filterCenter.allAccounts.count > 1 {
+                                    if accountManager.sortedAccounts.count > 1 {
                                         Text("\(item.account.name):")
                                             .textStyle(size: .small)
                                     }

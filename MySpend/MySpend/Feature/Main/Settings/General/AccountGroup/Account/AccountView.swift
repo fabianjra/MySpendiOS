@@ -10,6 +10,7 @@ import SwiftUI
 struct AccountView: View {
     
     @Environment(\.editMode) private var editMode
+    @Environment(AccountManager.self) private var accountManager
     
     private var isEditing: Bool {
         editMode?.wrappedValue.isEditing == true
@@ -29,23 +30,11 @@ struct AccountView: View {
             viewModel.selectedAccounts.count == .zero ?
                 .accountsTitle : .selectorSelectedCountFemale(viewModel.selectedAccounts.count)
         )
-        .navigationSubtitle(.accountsSubtitle(viewModel.sortedAccounts.count))
+        .navigationSubtitle(.accountsSubtitle(accountManager.sortedAccounts.count))
         .navigationBarBackButtonHidden(isEditing)
         
         .toolbar {
             toolbarContent
-        }
-        
-        .task {
-            let response = await viewModel.fetchAccounts()
-            
-            guard let response = response else { return }
-            if response.type == .error {
-                toast.response = response
-            }
-        }
-        .onDisappear {
-            viewModel.deactivateObservers()
         }
         
         .onChange(of: editMode?.wrappedValue) { _, newValue in
@@ -77,14 +66,14 @@ struct AccountView: View {
     private var itemList: some View {
         VStack {
             List(selection: $viewModel.selectedAccounts) {
-                if viewModel.sortedAccounts.isEmpty {
+                if accountManager.sortedAccounts.isEmpty {
                     Section {
                         Text(.accountsEmpty)
                             .foregroundStyle(.secondary)
                     }
                 } else {
                     Section {
-                        ForEach(viewModel.sortedAccounts) { item in
+                        ForEach(accountManager.sortedAccounts) { item in
                             Button {
                                 if isEditing {
                                     viewModel.toggleAccountSelection(item)
@@ -99,7 +88,7 @@ struct AccountView: View {
                                     
                                     Spacer()
                                     
-                                    if item.id == viewModel.defaultModelSelected?.id {
+                                    if item.id == accountManager.defaultSelected?.id {
                                         Text(.accountsDefault)
                                             .foregroundStyle(Color.secondary)
                                             .fontWeight(.light)
@@ -150,9 +139,19 @@ struct AccountView: View {
                                 Button(.alertOptionDelete, role: .destructive) {
                                     Task {
                                         if viewModel.selectedAccounts.isEmpty {
-                                            toast.response = await viewModel.delete()
+                                            
+                                            defer {
+                                                viewModel.accountToDelete = nil
+                                            }
+                                            
+                                            toast.response = await accountManager.delete(viewModel.accountToDelete)
                                         } else {
-                                            toast.response = await viewModel.deleteMltipleItems()
+                                            
+                                            defer {
+                                                viewModel.selectedAccounts.removeAll()
+                                            }
+                                            
+                                            toast.response = await accountManager.deleteMltipleItems(viewModel.selectedAccounts)
                                         }
                                         
                                         editMode?.wrappedValue = .inactive
@@ -168,7 +167,7 @@ struct AccountView: View {
                 }
             }
             //.navigationLinkIndicatorVisibility(.visible)
-            .animation(.default, value: viewModel.sortedAccounts)
+            .animation(.default, value: accountManager.sortedAccounts)
             .scrollContentBackground(.hidden)
             .background(Color.backgroundGradient)
         }
@@ -177,17 +176,19 @@ struct AccountView: View {
     @ToolbarContentBuilder
     private var toolbarContent: some ToolbarContent {
         
+        @Bindable var accountManagerBind = accountManager
+        
         // MARK: TOP
         
         ToolbarItem(placement: .navigation) {
             if isEditing {
-                if viewModel.selectedAccounts.count == viewModel.sortedAccounts.count {
+                if viewModel.selectedAccounts.count == accountManager.sortedAccounts.count {
                     Button(.selectorDeselectAll) {
                         viewModel.selectedAccounts = Set()
                     }
                 } else {
                     Button(.selectorSelectAll) {
-                        viewModel.selectedAccounts = Set(viewModel.sortedAccounts)
+                        viewModel.selectedAccounts = Set(accountManager.sortedAccounts)
                     }
                 }
             }
@@ -216,7 +217,7 @@ struct AccountView: View {
                     
                     Menu {
                         Section {
-                            Picker(.sortTitle, selection: $viewModel.sortSelection.sortBy) {
+                            Picker(.sortTitle, selection: $accountManagerBind.sortingSelected.sortBy) {
                                 ForEach(AccountSortOption.allCases, id: \.self) { sortBy in
                                     Text(sortBy.localized)
                                         .tag(sortBy)
@@ -226,7 +227,7 @@ struct AccountView: View {
                         }
                         
                         Section {
-                            Picker(.sortTitle, selection: $viewModel.sortSelection.order) {
+                            Picker(.sortTitle, selection: $accountManagerBind.sortingSelected.order) {
                                 ForEach(SortOrder.allCases, id: \.self) { order in
                                     Text(order.localized)
                                         .tag(order)
@@ -237,7 +238,7 @@ struct AccountView: View {
                         Section {
                             VStack(alignment: .leading) {
                                 Button(role: .destructive) {
-                                    viewModel.resetSelectedSort()
+                                    accountManager.resetSort()
                                 } label: {
                                     Text(.sortByDefault)
                                 }
@@ -248,12 +249,12 @@ struct AccountView: View {
                     } label: {
                         Label(.sortTitle, systemImage: ConstantSystemImage.arrowUpDown)
                         
-                        Text(viewModel.sortSelection.sortBy.localized)
+                        Text(accountManager.sortingSelected.sortBy.localized)
                     }
                     
                 }
                 .menuOrder(.fixed)
-                .disabled(viewModel.sortedAccounts.isEmpty)
+                .disabled(accountManager.sortedAccounts.isEmpty)
             }
         }
         
@@ -285,16 +286,20 @@ private struct previewWrapper: View {
         
         UserDefaultsManager.defaultAccountID = MockCDConstants.mainAccountID
     }
-    var body: some View { AccountView() }
+    
+    @State var previewAccountManager = AccountManager.shared
+    @State var editMode: EditMode = .inactive
+    
+    var body: some View {
+        AccountView()
+            .environment(previewAccountManager)
+            .environment(\.editMode, $editMode)
+    }
 }
 
 #Preview("Normal \(Previews.localeES_CR)") {
-    
-    @Previewable @State var editMode: EditMode = .inactive
-
     NavigationStack {
         previewWrapper()
-            .environment(\.editMode, $editMode)
     }
     .environment(\.locale, .init(identifier: Previews.localeES_CR))
 }
