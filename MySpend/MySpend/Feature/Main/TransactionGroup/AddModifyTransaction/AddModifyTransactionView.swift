@@ -21,11 +21,10 @@ import SwiftUI
 struct AddModifyTransactionView: View {
     
     @Environment(\.dismiss) private var dismiss
+    @Environment(FilterCenter.self) private var filterCenter
     
     @StateObject private var viewModel: AddModifyTransactionViewModel
     @FocusState private var focusedField: TransactionModel.Field?
-    
-    private let filters = FilterCenter.shared
     
     @State private var showDatePicker = false
     @State private var showCategoryList = false
@@ -122,7 +121,7 @@ struct AddModifyTransactionView: View {
             // MARK: EVENTS
             
             .onAppear {
-                viewModel.configureSelectedAccount(FilterCenter.shared.allAccounts)
+                viewModel.configureSelectedAccount(filterCenter.allAccounts)
 
                 if viewModel.isNewModel {
                     focusedField = .amount
@@ -150,8 +149,7 @@ struct AddModifyTransactionView: View {
                                         categoryType: $viewModel.model.category.type) //TOD: Refatorizar porque se envia el mismo objeto
             }
             .sheet(isPresented: $showAccountList) {
-                SelectAccountView(selectedModel: $viewModel.model.account,
-                                       allAccounts: FilterCenter.shared.allAccounts)
+                SelectAccountView(selectedModel: $viewModel.model.account)
             }
         }
         
@@ -239,13 +237,12 @@ private struct PreviewWrapper: View {
         CoreDataUtilities.shared.mockDataType = mockDataType
     }
     
-    @State private var selectedModel: TransactionModel?
-    @State private var models: [TransactionModel] = []
+    @State var previewFilter = FilterCenter.shared
+    @State var selectedModel: TransactionModel?
+    @State var models: [TransactionModel] = []
     
     var body: some View {
         VStack {
-            Text("Transacciones:")
-            
             List(models) { model in
                 Button(model.id.uuidString) {
                     selectedModel = model
@@ -264,14 +261,19 @@ private struct PreviewWrapper: View {
                 selectedModel = models.first
             }
         }
+        .environment(previewFilter)
     }
 }
 
 
 #Preview("New \(Previews.localeEN)") {
+    
+    @Previewable @State var previewFilter = FilterCenter.shared
+    
     NavigationStack {
         AddModifyTransactionView()
     }
+    .environment(previewFilter)
     .environment(\.locale, .init(identifier: Previews.localeEN))
     .onAppear {
         CoreDataUtilities.shared.mockDataType = .normal

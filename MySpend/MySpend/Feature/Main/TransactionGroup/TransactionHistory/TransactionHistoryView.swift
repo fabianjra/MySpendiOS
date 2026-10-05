@@ -16,7 +16,7 @@ struct TransactionHistoryView: View {
     @Binding var dateTimeInterval: DateTimeInterval
     @Binding var selectedDate: Date
     
-    private let filters = FilterCenter.shared
+    @Environment(FilterCenter.self) private var filterCenter
 
     
     // MARK: ALERTS (Solo manejadas dentro de la vista, no hacen nada en ViewModel)
@@ -289,7 +289,7 @@ struct TransactionHistoryView: View {
                                 }
                                 
                                 HStack {
-                                    if filters.allAccounts.count > 1 {
+                                    if filterCenter.allAccounts.count > 1 {
                                         Text("\(item.account.name):")
                                             .textStyle(size: .small)
                                     }
@@ -470,10 +470,12 @@ private struct PreviewWrapper: View {
         CoreDataUtilities.shared.mockDataType = mockDataType
     }
     
-    @StateObject private var viewModel = TransactionViewModel()
+    @State var previewFilter = FilterCenter.shared
     
-    @State private var dateTimeInterval: DateTimeInterval = .month
-    @State private var selectedDate: Date = .now
+    @StateObject var viewModel = TransactionViewModel()
+    
+    @State var dateTimeInterval: DateTimeInterval = .month
+    @State var selectedDate: Date = .now
     
     var body: some View {
         TransactionHistoryView(transactionsLoaded: $viewModel.transactionsFiltered,
@@ -482,6 +484,7 @@ private struct PreviewWrapper: View {
         .task {
             await viewModel.activateObservers()
         }
+        .environment(previewFilter)
     }
 }
 

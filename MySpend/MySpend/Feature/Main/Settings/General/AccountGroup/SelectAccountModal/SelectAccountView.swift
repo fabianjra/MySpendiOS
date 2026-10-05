@@ -10,12 +10,12 @@ import SwiftUI
 struct SelectAccountView: View {
     
     @Environment(\.dismiss) var dismiss
+    @Environment(FilterCenter.self) private var filterCenter
     
     @Binding var selectedModel: AccountModel
-    var allAccounts: [AccountModel]
     
     private var sortedAccounts: [AccountModel] {
-        allAccounts.sortedAccounts(by: sortSelection)
+        filterCenter.allAccounts.sortedAccounts(by: sortSelection)
     }
     
     @State private var sortSelection = UserDefaultsManager.sortAccounts {
@@ -99,19 +99,6 @@ struct SelectAccountView: View {
             }
         }
     }
-    
-//    private func sortButton(for sortingOption: SortAccounts) -> some View {
-//        Button {
-//            if sortSelection == sortingOption {
-//                sortSelection = sortingOption.toggle
-//            } else {
-//                sortSelection = sortingOption
-//            }
-//            
-//        } label: {
-//            sortSelection == sortingOption ? sortingOption.label() : sortingOption.label(inverted: false)
-//        }
-//    }
 }
 
 private struct previewWrapper: View {
@@ -121,6 +108,7 @@ private struct previewWrapper: View {
     }
     var local: String
     
+    @State var previewFilter = FilterCenter.shared
     @State var show: Bool = false
     @State var model = AccountModel()
     
@@ -131,12 +119,12 @@ private struct previewWrapper: View {
             }
         }
         .sheet(isPresented: $show) {
-            SelectAccountView(selectedModel: $model,
-                              allAccounts: FilterCenter.shared.allAccounts)
+            SelectAccountView(selectedModel: $model)
         }
         .onAppear {
             show = true
         }
+        .environment(previewFilter)
         .environment(\.locale, .init(identifier: local))
     }
 }
