@@ -11,7 +11,7 @@ class OnBoardingAccountViewModel: BaseViewModel {
     
     @Published var accountName = ""
     
-    func finishOnBoarding(withAccountName: Bool) async {
+    func finishOnBoarding(withAccountName: Bool, accountManager: AccountManager) async {
         
         var mutatedName = accountName
         
@@ -29,7 +29,7 @@ class OnBoardingAccountViewModel: BaseViewModel {
         do {
             try await AccountCoreDataManager(viewContext).create(account)
             
-            AccountManager.shared.selectedAccountsFilter.insert(account.id)
+            accountManager.selectedAccountsFilter.insert(account.id)
             
             UserDefaultsManager.defaultAccountID = account.id.uuidString
             UserDefaultsManager.isOnBoarding = false

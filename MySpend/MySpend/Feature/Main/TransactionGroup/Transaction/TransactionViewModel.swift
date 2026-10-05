@@ -55,13 +55,13 @@ class TransactionViewModel: BaseViewModel {
         }
     }
     
-    func filterTransactions() {
+    func filterTransactions(accountManager: AccountManager) {
         let filteredByOptions: [TransactionModel]
         
-        if AccountManager.shared.isFilterActive {
+        if accountManager.isFilterActive {
             
             filteredByOptions = allTransactions.filter {
-                AccountManager.shared.selectedAccountsFilter.contains($0.account.id) && (AccountManager.shared.showOnlyFavorites ? $0.favorite : true)
+                accountManager.selectedAccountsFilter.contains($0.account.id) && (accountManager.showOnlyFavorites ? $0.favorite : true)
             }
             
         } else {

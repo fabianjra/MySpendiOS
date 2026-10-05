@@ -9,6 +9,8 @@ import SwiftUI
 
 struct OnBoardingAccountView: View {
     
+    @Environment(AccountManager.self) private var accountManager
+    
     @StateObject private var viewModel = OnBoardingAccountViewModel()
     @FocusState private var focusedField: OnBoardingAccountViewModel.Field?
     
@@ -22,13 +24,13 @@ struct OnBoardingAccountView: View {
             .focused($focusedField, equals: .accountName)
             .onSubmit {
                 Task {
-                    await viewModel.finishOnBoarding(withAccountName: true)
+                    await viewModel.finishOnBoarding(withAccountName: true, accountManager: accountManager)
                 }
             }
             
             Button {
                 Task {
-                    await viewModel.finishOnBoarding(withAccountName: true)
+                    await viewModel.finishOnBoarding(withAccountName: true, accountManager: accountManager)
                 }
             } label: {
                 Text(.buttonContinue)
@@ -40,7 +42,7 @@ struct OnBoardingAccountView: View {
             
             Button {
                 Task {
-                    await viewModel.finishOnBoarding(withAccountName: false)
+                    await viewModel.finishOnBoarding(withAccountName: false, accountManager: accountManager)
                 }
             } label: {
                 Text(.buttonSkip)
@@ -61,15 +63,23 @@ struct OnBoardingAccountView: View {
 }
 
 #Preview(Previews.localeES) {
+    
+    @Previewable @State var previewAccountManager = AccountManager.shared
+    
     NavigationStack {
         OnBoardingAccountView()
     }
+    .environment(previewAccountManager)
     .environment(\.locale, .init(identifier: Previews.localeES))
 }
 
 #Preview(Previews.localeEN) {
+    
+    @Previewable @State var previewAccountManager = AccountManager.shared
+    
     NavigationStack {
         OnBoardingAccountView()
     }
+    .environment(previewAccountManager)
     .environment(\.locale, .init(identifier: Previews.localeEN))
 }

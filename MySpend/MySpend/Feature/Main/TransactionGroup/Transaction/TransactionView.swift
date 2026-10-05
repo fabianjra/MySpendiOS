@@ -73,21 +73,21 @@ struct TransactionView: View {
         
         // MARK: LOAD FILTER BY OPTIONS
         .onChange(of: viewModel.transactionsFiltered) {
-            viewModel.filterTransactions()
+            viewModel.filterTransactions(accountManager: accountManager)
         }
         .onChange(of: accountManager.selectedAccountsFilter) {
-            viewModel.filterTransactions()
+            viewModel.filterTransactions(accountManager: accountManager)
         }
         .onChange(of: [accountManager.isFilterActive, accountManager.showOnlyFavorites]) {
-            viewModel.filterTransactions()
+            viewModel.filterTransactions(accountManager: accountManager)
         }
         
         // MARK: FILTER TRANSACTIONS BY DATE
         .onChange(of: viewModel.selectedDate) {
-            viewModel.filterTransactions()
+            viewModel.filterTransactions(accountManager: accountManager)
         }
         .onChange(of: viewModel.dateTimeInterval) {
-            viewModel.filterTransactions()
+            viewModel.filterTransactions(accountManager: accountManager)
         }
     }
     
@@ -331,22 +331,16 @@ private struct previewWrapper: View {
 }
 
 #Preview("Normal filtered \(Previews.localeEN)") {
-    NavigationStack {
-        previewWrapper(isFilterActive: true)
-            .environment(\.locale, .init(identifier: Previews.localeEN))
-    }
+    previewWrapper(isFilterActive: true)
+        .environment(\.locale, .init(identifier: Previews.localeEN))
 }
 
 #Preview("Saturated \(Previews.localeEN_US)") {
-    NavigationStack {
-        previewWrapper(.saturated)
-            .environment(\.locale, .init(identifier: Previews.localeEN_US))
-    }
+    previewWrapper(.saturated)
+        .environment(\.locale, .init(identifier: Previews.localeEN_US))
 }
 
 #Preview("Empty \(Previews.localeES_ES)") {
-    NavigationStack {
-        previewWrapper(.empty)
-            .environment(\.locale, .init(identifier: Previews.localeES_ES))
-    }
+    previewWrapper(.empty)
+        .environment(\.locale, .init(identifier: Previews.localeES_ES))
 }
