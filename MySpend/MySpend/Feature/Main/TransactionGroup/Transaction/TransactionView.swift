@@ -18,12 +18,13 @@ struct TransactionView: View {
     @State private var showSearchView = false
     @State private var navigateToHistory: Bool = false
     
-    private let filters = FilterCenter.shared
+    @Environment(FilterCenter.self) private var filterCenter
     
     var body: some View {
         VStack {
             if showSearchView {
                 List {
+                    //TODO: MOCK
                     ForEach(0...10, id: \.self) { item in
                         Text("\(item)")
                     }
@@ -74,10 +75,10 @@ struct TransactionView: View {
         .onChange(of: viewModel.transactionsFiltered) {
             viewModel.filterTransactions()
         }
-        .onChange(of: filters.selectedAccountsFilter) {
+        .onChange(of: filterCenter.selectedAccountsFilter) {
             viewModel.filterTransactions()
         }
-        .onChange(of: [filters.isFilterActive, filters.showOnlyFavorites]) {
+        .onChange(of: [filterCenter.isFilterActive, filterCenter.showOnlyFavorites]) {
             viewModel.filterTransactions()
         }
         
@@ -95,7 +96,7 @@ struct TransactionView: View {
 
             HStack {
                 VStack(alignment: .leading) {
-                    Text(viewModel.greeting)
+                    Text(UtilsDate.greeting)
                         .font(.footnote.weight(.light))
                         .lineLimit(ConstantViews.singleTextMaxLines)
                     
@@ -159,7 +160,7 @@ struct TransactionView: View {
                                       selectedDate: $viewModel.selectedDate,
                                       isEditing: .constant(false)){}
             
-            if filters.allAccounts.count > 1 {
+            if filterCenter.allAccounts.count > 1 {
                 
                 /// ¿Filtro activo?
                 ///     ↓
@@ -169,21 +170,21 @@ struct TransactionView: View {
                 ///     ↓
                 /// Entonces → nombres de las seleccionadas
                 let text: LocalizedStringResource = {
-                    guard filters.isFilterActive else {
+                    guard filterCenter.isFilterActive else {
                         return ""
                     }
                     
-                    let selectedAccounts = filters.selectedAccountsFilter
+                    let selectedAccounts = filterCenter.selectedAccountsFilter
                     
                     if selectedAccounts.isEmpty {
                         return .filterAccountNoneTitle
                     }
                     
-                    if selectedAccounts.count == filters.allAccounts.count {
+                    if selectedAccounts.count == filterCenter.allAccounts.count {
                         return .filterAccountAll
                     }
                     
-                    let accountNames = filters.allAccounts
+                    let accountNames = filterCenter.allAccounts
                         .filter { selectedAccounts.contains($0.id) }
                         .map(\.name)
                         .joined(separator: ", ")
@@ -195,7 +196,7 @@ struct TransactionView: View {
                     .textStyle(size: .medium, truncateMode: .tail)
             }
             
-            if viewModel.transactionsFiltered.isEmpty && !filters.isFilterActive {
+            if viewModel.transactionsFiltered.isEmpty && !filterCenter.isFilterActive {
                 TransactionsEmptyView()
                 
             } else {
@@ -215,11 +216,13 @@ struct TransactionView: View {
                                 HStack {
                                     Text(item.category.name)
                                         .fontDesign(.rounded)
+                                        .lineLimit(ConstantViews.singleTextMaxLines)
                                         .padding(.leading)
                                     
                                     Spacer()
                                     
                                     Text(item.totalAmount.convertAmountDecimalToString.addCurrencySymbol)
+                                        .lineLimit(ConstantViews.singleTextMaxLines)
                                         .monospacedDigit()
                                 }
                                 .padding(.bottom, ConstantViews.minimumSpacing)
@@ -242,11 +245,13 @@ struct TransactionView: View {
                                 HStack {
                                     Text(item.category.name)
                                         .fontDesign(.rounded)
+                                        .lineLimit(ConstantViews.singleTextMaxLines)
                                         .padding(.leading)
                                     
                                     Spacer()
                                     
                                     Text(item.totalAmount.convertAmountDecimalToString.addCurrencySymbol)
+                                        .lineLimit(ConstantViews.singleTextMaxLines)
                                         .monospacedDigit()
                                 }
                                 .padding(.bottom, ConstantViews.minimumSpacing)
@@ -259,7 +264,6 @@ struct TransactionView: View {
             }
             
             Text(viewModel.errorMessage)
-                .textErrorStyle
             
             TotalBalanceView(transactions: viewModel.transactionsFiltered,
                              showTotalBalance: false)
@@ -298,8 +302,9 @@ private struct previewWrapper: View {
         FilterCenter.shared.isFilterActive = isFilterActive
     }
     
-    @State private var router = Router.shared
-    @State private var themeManager = ThemeManager.shared
+    @State var router = Router.shared
+    @State var themeManager = ThemeManager.shared
+    @State var previewFilter = FilterCenter.shared
     
     var body: some View {
         NavigationStack(path: $router.path) {
@@ -314,6 +319,7 @@ private struct previewWrapper: View {
                     }
                 }
         }
+        .environment(previewFilter)
         .environment(themeManager)
         .preferredColorScheme(themeManager.theme.colorScheme)
     }

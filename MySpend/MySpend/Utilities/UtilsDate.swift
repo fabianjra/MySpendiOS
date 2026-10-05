@@ -9,6 +9,16 @@ import Foundation
 
 struct UtilsDate {
     
+    static var greeting: LocalizedStringResource {
+        let hour = Calendar.current.component(.hour, from: .now)
+        
+        switch hour {
+        case 5..<12: return .greetGoodMorning
+        case 12..<18: return .greetGoodAfternoon
+        default: return .greetGoodEvening
+        }
+    }
+    
     /**
      Convert a given date to string in short format: dd/MM/yyy. Ejem: 29/05/1990
      

@@ -100,14 +100,14 @@ private struct previewWrapper: View {
         FilterCenter.shared.isFilterActive = isFilterActive
     }
     
-    @State private var filterCenter = FilterCenter.shared
+    @State private var previewFilter = FilterCenter.shared
     @State private var showFilters = false
     
     var body: some View {
         VStack {
             Text("Accounts selected:").bold()
             
-            ForEach(FilterCenter.shared.allAccounts.filter { FilterCenter.shared.selectedAccountsFilter.contains($0.id)}) { item in
+            ForEach(previewFilter.allAccounts.filter { previewFilter.selectedAccountsFilter.contains($0.id)}) { item in
                 Text(item.name)
             }
         }
@@ -121,7 +121,7 @@ private struct previewWrapper: View {
                 FilterTransactionsView()
             }
         }
-        .environment(filterCenter)
+        .environment(previewFilter)
     }
 }
 

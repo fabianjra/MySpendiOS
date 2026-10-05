@@ -108,7 +108,7 @@ private struct previewWrapper: View {
         CoreDataUtilities.shared.mockDataType = mockDataType
     }
     
-    @State var filterCenter = FilterCenter.shared
+    @State var previewFilter = FilterCenter.shared
     @State var show: Bool = false
     
     var body: some View {
@@ -125,7 +125,7 @@ private struct previewWrapper: View {
         .onAppear {
             show = true
         }
-        .environment(filterCenter)
+        .environment(previewFilter)
     }
 }
 
