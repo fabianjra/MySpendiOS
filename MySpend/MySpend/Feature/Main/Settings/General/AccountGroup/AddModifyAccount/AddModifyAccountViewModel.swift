@@ -39,7 +39,7 @@ final class AddModifyAccountViewModel: BaseViewModel {
         
         do {
             try await AccountCoreDataManager(viewContext).create(model)
-            accountManager.filteredAccounts.insert(model.id)
+            accountManager.filteredAccountIDs.insert(model.id)
             
             if isDefaultSelected {
                 UserDefaultsManager.defaultAccountID = model.id.uuidString

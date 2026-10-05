@@ -43,7 +43,7 @@ struct FilterTransactionsToolbarBottom: ToolbarContent {
                                     .font(.medium)
                                 
                                 Text(getTextDescription)
-                                    .foregroundStyle(accountManager.filteredAccounts.isEmpty ?
+                                    .foregroundStyle(accountManager.filteredAccountIDs.isEmpty ?
                                         .textPrimaryForeground : .accentColor)
                                     .font(.small)
                                     .truncationMode(.tail)
@@ -73,7 +73,7 @@ struct FilterTransactionsToolbarBottom: ToolbarContent {
             return .filterAccountFavorites
         }
         
-        let selectedAccounts = accountManager.filteredAccounts
+        let selectedAccounts = accountManager.filteredAccountIDs
         
         if selectedAccounts.isEmpty {
             return .filterAccountNone
@@ -107,7 +107,7 @@ private struct previewWrapper: View {
         VStack {
             Text("Accounts selected:").bold()
             
-            ForEach(previewFilter.sortedAccounts.filter { previewFilter.filteredAccounts.contains($0.id)}) { item in
+            ForEach(previewFilter.sortedAccounts.filter { previewFilter.filteredAccountIDs.contains($0.id)}) { item in
                 Text(item.name)
             }
         }

@@ -9,8 +9,8 @@ import SwiftUI
 
 struct AccountView: View {
     
-    @Environment(\.editMode) private var editMode
     @Environment(AccountManager.self) private var accountManager
+    @Environment(\.editMode) private var editMode
     
     private var isEditing: Bool {
         editMode?.wrappedValue.isEditing == true
@@ -18,10 +18,7 @@ struct AccountView: View {
     
     @State private var viewModel = AccountViewModel()
     @State private var toast = ToastViewModel()
-    
-    @State private var showNewItemModal = false
-    @State private var showAlertDelete = false
-    
+        
     var body: some View {
         VStack {
             itemList
@@ -46,7 +43,7 @@ struct AccountView: View {
         
         // MARK: SHEETS
         
-        .sheet(isPresented: $showNewItemModal) {
+        .sheet(isPresented: $viewModel.showNewItemModal) {
             AddModifyAccountView()
         }
         
@@ -108,7 +105,7 @@ struct AccountView: View {
                                     
                                     Button(.selectorDelete, systemImage: ConstantSystemImage.trash, role: .destructive) {
                                         viewModel.accountToDelete = item
-                                        showAlertDelete = true
+                                        viewModel.showAlertDelete = true
                                     }
                                     .labelStyle(.iconOnly)
                                     
@@ -130,12 +127,12 @@ struct AccountView: View {
                                     
                                     Button(.selectorDelete, systemImage: ConstantSystemImage.trash, role: .destructive) {
                                         viewModel.accountToDelete = item
-                                        showAlertDelete = true
+                                        viewModel.showAlertDelete = true
                                     }
                                 }
                             }
                             
-                            .alert(.accountDelete(viewModel.selectedAccounts.count), isPresented: $showAlertDelete) {
+                            .alert(.accountDelete(viewModel.selectedAccounts.count), isPresented: $viewModel.showAlertDelete) {
                                 Button(.alertOptionDelete, role: .destructive) {
                                     Task {
                                         if viewModel.selectedAccounts.isEmpty {
@@ -266,13 +263,13 @@ struct AccountView: View {
         ToolbarItem(placement: .bottomBar) {
             if isEditing {
                 Button(.selectorDelete, systemImage: ConstantSystemImage.trash, role: .destructive) {
-                    showAlertDelete = true
+                    viewModel.showAlertDelete = true
                 }
                 .disabled(viewModel.selectedAccounts.isEmpty)
                 
             } else {
                 Button(.transactionAdd, systemImage: ConstantSystemImage.addNewItem, role: .confirm) {
-                    showNewItemModal = true
+                    viewModel.showNewItemModal = true
                 }
             }
         }

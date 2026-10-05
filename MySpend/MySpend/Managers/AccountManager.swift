@@ -21,8 +21,8 @@ final class AccountManager {
         allAccounts.sortedAccounts(by: sortingSelected)
     }
     
-    var filteredAccounts = UserDefaultsManager.selectedAccountsFilter {
-        didSet { UserDefaultsManager.selectedAccountsFilter = selectedAccountsFilter }
+    var filteredAccountIDs = UserDefaultsManager.selectedAccountsFilter {
+        didSet { UserDefaultsManager.selectedAccountsFilter = filteredAccountIDs }
     }
     
     var defaultSelected: AccountModel? {
@@ -35,7 +35,7 @@ final class AccountManager {
     // MARK: ORDENAMIENTO
     
     var sortingSelected = UserDefaultsManager.sortAccounts {
-        didSet { UserDefaultsManager.sortAccounts = sortSelection }
+        didSet { UserDefaultsManager.sortAccounts = sortingSelected }
     }
     
     func resetSort() {
@@ -52,15 +52,15 @@ final class AccountManager {
     }
     
     func toggleFilter(_ account: AccountModel) {
-        if filteredAccounts.contains(account.id) {
-            filteredAccounts.remove(account.id)
+        if filteredAccountIDs.contains(account.id) {
+            filteredAccountIDs.remove(account.id)
         } else {
-            filteredAccounts.insert(account.id)
+            filteredAccountIDs.insert(account.id)
         }
     }
     
     func restoreFilter() {
-        filteredAccounts = Set(allAccounts.map(\.id))
+        filteredAccountIDs = Set(allAccounts.map(\.id))
         showOnlyFavorites = false
     }
     
@@ -106,7 +106,7 @@ final class AccountManager {
             
             // Limpia las cuentas que podrian haber sido eliminadas del UserDefaults.
             let availableIDs = Set(allAccounts.map(\.id))
-            filteredAccounts = filteredAccounts.intersection(availableIDs)
+            filteredAccountIDs = filteredAccountIDs.intersection(availableIDs)
         } catch {
             Logger.exception(error, type: .CoreData)
         }
