@@ -10,6 +10,7 @@ import SwiftUI
 struct AddModifyAccountView: View {
     
     @Environment(\.dismiss) private var dismiss
+    @Environment(AccountManager.self) private var accountManager
     
     @StateObject private var viewModel: AddModifyAccountViewModel
     @FocusState private var focusedField: AccountModel.Field?
@@ -110,7 +111,7 @@ struct AddModifyAccountView: View {
             
             switch processType {
             case .add:
-                result = await viewModel.addNew()
+                result = await viewModel.addNew(accountManager: accountManager)
             case .modify:
                 result = await viewModel.modify()
             case .delete:
@@ -127,9 +128,13 @@ struct AddModifyAccountView: View {
 }
 
 
-#Preview("New") {
+#Preview(Previews.localeES_CR) {
+    
+    @Previewable @State var previewAccountManager = AccountManager.shared
     
     VStack {
         AddModifyAccountView()
     }
+    .environment(previewAccountManager)
+    .environment(\.locale, .init(identifier: Previews.localeES_CR))
 }

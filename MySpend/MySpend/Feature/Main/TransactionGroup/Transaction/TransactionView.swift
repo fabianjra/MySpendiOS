@@ -18,7 +18,7 @@ struct TransactionView: View {
     @State private var showSearchView = false
     @State private var navigateToHistory: Bool = false
     
-    @Environment(AccountManager.self) private var filterCenter
+    @Environment(AccountManager.self) private var accountManager
     
     var body: some View {
         VStack {
@@ -75,10 +75,10 @@ struct TransactionView: View {
         .onChange(of: viewModel.transactionsFiltered) {
             viewModel.filterTransactions()
         }
-        .onChange(of: filterCenter.selectedAccountsFilter) {
+        .onChange(of: accountManager.selectedAccountsFilter) {
             viewModel.filterTransactions()
         }
-        .onChange(of: [filterCenter.isFilterActive, filterCenter.showOnlyFavorites]) {
+        .onChange(of: [accountManager.isFilterActive, accountManager.showOnlyFavorites]) {
             viewModel.filterTransactions()
         }
         
@@ -160,7 +160,7 @@ struct TransactionView: View {
                                       selectedDate: $viewModel.selectedDate,
                                       isEditing: .constant(false)){}
             
-            if filterCenter.allAccounts.count > 1 {
+            if accountManager.allAccounts.count > 1 {
                 
                 /// ¿Filtro activo?
                 ///     ↓
@@ -170,21 +170,21 @@ struct TransactionView: View {
                 ///     ↓
                 /// Entonces → nombres de las seleccionadas
                 let text: LocalizedStringResource = {
-                    guard filterCenter.isFilterActive else {
+                    guard accountManager.isFilterActive else {
                         return ""
                     }
                     
-                    let selectedAccounts = filterCenter.selectedAccountsFilter
+                    let selectedAccounts = accountManager.selectedAccountsFilter
                     
                     if selectedAccounts.isEmpty {
                         return .filterAccountNoneTitle
                     }
                     
-                    if selectedAccounts.count == filterCenter.allAccounts.count {
+                    if selectedAccounts.count == accountManager.allAccounts.count {
                         return .filterAccountAll
                     }
                     
-                    let accountNames = filterCenter.allAccounts
+                    let accountNames = accountManager.allAccounts
                         .filter { selectedAccounts.contains($0.id) }
                         .map(\.name)
                         .joined(separator: ", ")
@@ -196,7 +196,7 @@ struct TransactionView: View {
                     .textStyle(size: .medium, truncateMode: .tail)
             }
             
-            if viewModel.transactionsFiltered.isEmpty && !filterCenter.isFilterActive {
+            if viewModel.transactionsFiltered.isEmpty && !accountManager.isFilterActive {
                 TransactionsEmptyView()
                 
             } else {
@@ -304,7 +304,7 @@ private struct previewWrapper: View {
     
     @State var router = Router.shared
     @State var themeManager = ThemeManager.shared
-    @State var previewFilter = AccountManager.shared
+    @State var previewAccountManager = AccountManager.shared
     
     var body: some View {
         NavigationStack(path: $router.path) {
@@ -319,7 +319,7 @@ private struct previewWrapper: View {
                     }
                 }
         }
-        .environment(previewFilter)
+        .environment(previewAccountManager)
         .environment(themeManager)
         .preferredColorScheme(themeManager.theme.colorScheme)
     }

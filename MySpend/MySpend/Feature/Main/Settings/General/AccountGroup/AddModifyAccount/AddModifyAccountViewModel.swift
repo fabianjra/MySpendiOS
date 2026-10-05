@@ -32,14 +32,14 @@ final class AddModifyAccountViewModel: BaseViewModel {
         super.init()
     }
     
-    func addNew() async -> ResponseModel {
+    func addNew(accountManager: AccountManager) async -> ResponseModel {
         if model.name.isEmptyOrWhitespace {
             return ResponseModel(.error, Errors.emptySpaces.localizedDescription)
         }
         
         do {
             try await AccountCoreDataManager(viewContext).create(model)
-            AccountManager.shared.selectedAccountsFilter.insert(model.id)
+            accountManager.selectedAccountsFilter.insert(model.id)
             
             if isDefaultSelected {
                 UserDefaultsManager.defaultAccountID = model.id.uuidString
