@@ -209,6 +209,7 @@ private struct UserDefaultsDataStore<T: Codable> {
                 return try JSONDecoder().decode(T.self, from: data)
             } catch {
                 Logger.exception(error)
+                Logger.custom("Key: \(key.rawValue)")
                 return nil
             }
         }
@@ -221,6 +222,7 @@ private struct UserDefaultsDataStore<T: Codable> {
                 UserDefaultsManager.userDefaults.set(data, forKey: key.rawValue)
             } catch {
                 Logger.exception(error)
+                Logger.custom("Key: \(key.rawValue)")
             }
         }
     }
