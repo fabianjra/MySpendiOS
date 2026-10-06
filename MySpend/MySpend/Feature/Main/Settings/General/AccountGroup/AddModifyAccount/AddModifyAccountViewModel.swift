@@ -9,40 +9,40 @@ import Foundation
 
 final class AddModifyAccountViewModel: BaseViewModel {
     
-    @Published var model: AccountModel
+    @Published var account: AccountModel
     @Published var isDefaultSelected = false
     
     @Published var showAlert = false
-    var isAddModel: Bool = true
+    var isNewAccount: Bool = true
     
-    init(_ model: AccountModel? = nil) {
+    init(_ account: AccountModel? = nil) {
         
         // If model exists, then it's a Modify action.
-        if let modelLoaded = model {
-            self.model = modelLoaded
-            self.isAddModel = false
+        if let accountLoaded = account {
+            self.account = accountLoaded
+            self.isNewAccount = false
             
-            if UserDefaultsManager.defaultAccountID == modelLoaded.id.uuidString {
+            if UserDefaultsManager.defaultAccountID == accountLoaded.id.uuidString {
                 self.isDefaultSelected = true
             }
         } else {
-            self.model = AccountModel()
+            self.account = AccountModel()
         }
         
         super.init()
     }
     
     func addNew(accountManager: AccountManager) async -> ResponseModel {
-        if model.name.isEmptyOrWhitespace {
+        if account.name.isEmptyOrWhitespace {
             return ResponseModel(.error, Errors.emptySpaces.localizedDescription)
         }
         
         do {
-            try await AccountCoreDataManager(viewContext).create(model)
-            accountManager.filteredAccountIDs.insert(model.id)
+            try await AccountCoreDataManager(viewContext).create(account)
+            accountManager.selectedAccountsToFilterByID.insert(account.id)
             
             if isDefaultSelected {
-                UserDefaultsManager.defaultAccountID = model.id.uuidString
+                accountManager.setDefaultAccount(by: account)
             }
             
             return ResponseModel(.successful)
@@ -53,17 +53,17 @@ final class AddModifyAccountViewModel: BaseViewModel {
     }
     
     func modify() async -> ResponseModel {
-        if model.name.isEmptyOrWhitespace {
+        if account.name.isEmptyOrWhitespace {
             return ResponseModel(.error, Errors.emptySpaces.localizedDescription)
         }
         
         do {
-            try await AccountCoreDataManager(viewContext).update(model)
+            try await AccountCoreDataManager(viewContext).update(account)
             
             if isDefaultSelected {
-                UserDefaultsManager.defaultAccountID = model.id.uuidString
+                UserDefaultsManager.defaultAccountID = account.id.uuidString
             } else {
-                if UserDefaultsManager.defaultAccountID == model.id.uuidString {
+                if UserDefaultsManager.defaultAccountID == account.id.uuidString {
                     UserDefaultsManager.defaultAccountID = ""
                 }
             }
@@ -77,7 +77,7 @@ final class AddModifyAccountViewModel: BaseViewModel {
     
     func delete() async -> ResponseModel {
         do {
-            try await AccountCoreDataManager(viewContext).delete(model)
+            try await AccountCoreDataManager(viewContext).delete(account)
             return ResponseModel(.successful)
         } catch {
             Logger.exception(error, type: .CoreData)

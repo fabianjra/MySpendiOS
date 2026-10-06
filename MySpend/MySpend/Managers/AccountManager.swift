@@ -12,34 +12,56 @@ import Combine
 @Observable
 final class AccountManager {
     static let shared = AccountManager()
-
-    // MARK: CUENTAS
     
+    private let coreDataManager: AccountCoreDataManager
     private var allAccounts: [AccountModel] = []
     
-    var sortedAccounts: [AccountModel] {
-        allAccounts.sortedAccounts(by: sortingSelected)
+
+    // MARK: DEFAULT ACCOUNT
+    
+    var selectedAccountsToFilterByID = UserDefaultsManager.selectedAccountsFilter {
+        didSet { UserDefaultsManager.selectedAccountsFilter = selectedAccountsToFilterByID }
     }
     
-    var filteredAccountIDs = UserDefaultsManager.selectedAccountsFilter {
-        didSet { UserDefaultsManager.selectedAccountsFilter = filteredAccountIDs }
+    /// Se encarga de setear la cuenta seleccionada por defecto
+    func setDefaultAccount(by account: AccountModel) {
+        defaultAccountID = account.id.uuidString
     }
     
-    var defaultSelected: AccountModel? {
-        let defaultID = UserDefaultsManager.defaultAccountID //TODO: Probar si se actualiza, porque no está siendo observada.
-        guard defaultID.isEmptyOrWhitespace == false else { return nil }
-        return allAccounts.first { $0.id.uuidString == defaultID }
+    /// Cualquiera puede leer su valor, pero solo el código dentro de la misma clase o archivo puede modificarlo.
+    private(set) var defaultAccount: AccountModel?
+    
+    private var defaultAccountID = UserDefaultsManager.defaultAccountID {
+        didSet {
+            UserDefaultsManager.defaultAccountID = defaultAccountID
+            updateDefaultAccount()
+        }
+    }
+    
+    private func updateDefaultAccount() {
+        guard !defaultAccountID.isEmptyOrWhitespace else {
+            defaultAccount = nil
+            return
+        }
+        
+        defaultAccount = allAccounts.first {
+            $0.id.uuidString == defaultAccountID
+        }
     }
     
     
     // MARK: ORDENAMIENTO
     
-    var sortingSelected = UserDefaultsManager.sortAccounts {
-        didSet { UserDefaultsManager.sortAccounts = sortingSelected }
+    var sortedAccounts: [AccountModel] {
+        allAccounts.sortedAccounts(by: sortSelection)
+    }
+    
+    var sortSelection = UserDefaultsManager.sortAccounts {
+        didSet { UserDefaultsManager.sortAccounts = sortSelection }
     }
     
     func resetSort() {
-        sortingSelected = AccountSortConfiguration()
+        sortSelection = AccountSortConfiguration()
     }
     
     
@@ -52,15 +74,21 @@ final class AccountManager {
     }
     
     func toggleFilter(_ account: AccountModel) {
-        if filteredAccountIDs.contains(account.id) {
-            filteredAccountIDs.remove(account.id)
+        if selectedAccountsToFilterByID.contains(account.id) {
+            selectedAccountsToFilterByID.remove(account.id)
         } else {
-            filteredAccountIDs.insert(account.id)
+            selectedAccountsToFilterByID.insert(account.id)
         }
     }
     
+    /// Limpia las cuentas que podrian haber sido eliminadas del UserDefaults.
+    private func cleanFilteredAccounts() {
+        let availableIDs = Set(allAccounts.map(\.id))
+        selectedAccountsToFilterByID.formIntersection(availableIDs)
+    }
+    
     func restoreFilter() {
-        filteredAccountIDs = Set(allAccounts.map(\.id))
+        selectedAccountsToFilterByID = Set(allAccounts.map(\.id))
         showOnlyFavorites = false
     }
     
@@ -71,18 +99,26 @@ final class AccountManager {
     private let viewContext: NSManagedObjectContext
 
     private init() {
-        self.viewContext = CoreDataUtilities.getViewContext
+        let viewContext = CoreDataUtilities.getViewContext
+        self.viewContext = viewContext
+        self.coreDataManager = AccountCoreDataManager(viewContext)
         
-        // Cargar inicialmente las cuentas
         Task {
-            do {
-                allAccounts = try await AccountCoreDataManager(viewContext).fetchAll()
-            } catch {
-                Logger.exception(error, type: .CoreData)
-            }
+            await refreshAccounts()
         }
         
         startObserveViewContextChanges()
+    }
+    
+    private func refreshAccounts() async {
+        do {
+            allAccounts = try await coreDataManager.fetchAll()
+            
+            updateDefaultAccount()
+            cleanFilteredAccounts()
+        } catch {
+            Logger.exception(error, type: .CoreData)
+        }
     }
 
     private func startObserveViewContextChanges() {
@@ -90,26 +126,14 @@ final class AccountManager {
 
         viewContextObserver = NotificationCenter.default
             .publisher(for: .NSManagedObjectContextObjectsDidChange, object: viewContext)
-            .debounce(for: .milliseconds(100), scheduler: RunLoop.main) // opcional, para evitar multiples llamados
-            //.receive(on: DispatchQueue.main) // Redundante: Puedes omitir .receive(on: DispatchQueue.main); con el debounce sobre RunLoop.main ya garantizas que el sink se ejecute en el hilo principal.
+            .debounce(for: .milliseconds(100), scheduler: RunLoop.main) // Evita multiples llamados
+            //.receive(on: DispatchQueue.main) // Redundante: Se puede omitir. Con el debounce sobre RunLoop.main ya garantizas que el sink se ejecute en el hilo principal.
             .sink { [weak self] _ in
                 
                 Task { @MainActor in
-                    await self?.onChangeAccounts()
+                    await self?.refreshAccounts()
                 }
             }
-    }
-    
-    private func onChangeAccounts() async {
-        do {
-            allAccounts = try await AccountCoreDataManager(viewContext).fetchAll()
-            
-            // Limpia las cuentas que podrian haber sido eliminadas del UserDefaults.
-            let availableIDs = Set(allAccounts.map(\.id))
-            filteredAccountIDs = filteredAccountIDs.intersection(availableIDs)
-        } catch {
-            Logger.exception(error, type: .CoreData)
-        }
     }
     
     
@@ -119,7 +143,7 @@ final class AccountManager {
         guard let account = account else { return ResponseToast()}
 
         do {
-            try await AccountCoreDataManager(viewContext).delete(account)
+            try await coreDataManager.delete(account)
             return ResponseToast(.responseAccountsDeleted(.zero), .ok)
         } catch {
             Logger.exception(error, type: .CoreData)
@@ -127,11 +151,10 @@ final class AccountManager {
         }
     }
     
-    func deleteMltipleItems(_ selectedAccounts: Set<AccountModel>) async -> ResponseToast {
-
+    func delete(_ selectedAccounts: Set<AccountModel>) async -> ResponseToast {
         do {
             for item in selectedAccounts {
-                try await AccountCoreDataManager(viewContext).delete(item)
+                try await coreDataManager.delete(item)
             }
             
             return ResponseToast(.responseAccountsDeleted(selectedAccounts.count), .ok)

@@ -61,7 +61,7 @@ class TransactionViewModel: BaseViewModel {
         if accountManager.isFilterActive {
             
             filteredByOptions = allTransactions.filter {
-                accountManager.filteredAccountIDs.contains($0.account.id) && (accountManager.showOnlyFavorites ? $0.favorite : true)
+                accountManager.selectedAccountsToFilterByID.contains($0.account.id) && (accountManager.showOnlyFavorites ? $0.favorite : true)
             }
             
         } else {

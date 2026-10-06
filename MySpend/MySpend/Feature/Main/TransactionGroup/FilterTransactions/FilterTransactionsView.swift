@@ -34,7 +34,7 @@ struct FilterTransactionsView: View {
                                     
                                     Spacer()
                                     
-                                    Image(systemName: accountManager.filteredAccountIDs.contains(account.id) ?
+                                    Image(systemName: accountManager.selectedAccountsToFilterByID.contains(account.id) ?
                                           ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle
                                     )
                                     .font(.title2)

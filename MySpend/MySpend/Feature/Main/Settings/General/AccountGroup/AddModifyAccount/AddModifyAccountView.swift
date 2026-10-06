@@ -25,10 +25,10 @@ struct AddModifyAccountView: View {
     var body: some View {
         FormContainer {
             
-            HeaderNavigator(title: viewModel.isAddModel ? "New account" : "Modify account",
+            HeaderNavigator(title: viewModel.isNewAccount ? "New account" : "Modify account",
                             titleWeight: .regular,
                             titleSize: .title,
-                            subTitle: viewModel.isAddModel ? "Enter the account details" : "Modify the account details",
+                            subTitle: viewModel.isNewAccount ? "Enter the account details" : "Modify the account details",
                             showLeadingAction: false,
                             showTrailingAction: true)
             .padding(.vertical)
@@ -37,16 +37,16 @@ struct AddModifyAccountView: View {
             // MARK: TEXTFIELDS
             
             VStack {
-                TextFieldModelName(text: $viewModel.model.name,
+                TextFieldModelName(text: $viewModel.account.name,
                                    errorMessage: $viewModel.errorMessage)
                 .focused($focusedField, equals: .name)
-                .onSubmit { process(viewModel.isAddModel ? .add : .modify) }
+                .onSubmit { process(viewModel.isNewAccount ? .add : .modify) }
                 
                 Button("") {
                     showIconsModal = true
                 }
-                .buttonStyle(ButtonTextFieldStyle(icon: viewModel.model.icon, actionClear: {
-                    viewModel.model.icon = ""
+                .buttonStyle(ButtonTextFieldStyle(icon: viewModel.account.icon, actionClear: {
+                    viewModel.account.icon = ""
                 }))
             }
             .padding(.bottom)
@@ -67,17 +67,17 @@ struct AddModifyAccountView: View {
         .safeAreaInset(edge: .bottom) {
             VStack {
                 Button(action: {
-                    process(viewModel.isAddModel ? .add : .modify)
+                    process(viewModel.isNewAccount ? .add : .modify)
                 }, label: {
-                    TextPlain(viewModel.isAddModel ? "Add" : "Modify")
+                    TextPlain(viewModel.isNewAccount ? "Add" : "Modify")
                         .padding(.vertical, ConstantViews.paddingButtonVertical)
                         .frame(maxWidth: ConstantFrames.iPadMaxWidth)
                 })
                 .buttonStyle(.glass)
-                .padding(.bottom, viewModel.isAddModel ? nil : .zero)
+                .padding(.bottom, viewModel.isNewAccount ? nil : .zero)
                 
                 
-                if viewModel.isAddModel == false {
+                if viewModel.isNewAccount == false {
                     Button("Delete") {
                         viewModel.showAlert = true
                     }
@@ -97,7 +97,7 @@ struct AddModifyAccountView: View {
             IconListModalView(selectedIcon: $selectedIcon, showModal: $showIconsModal)
         }
         .onChange(of: selectedIcon) { _, newValue in
-            viewModel.model.icon = newValue
+            viewModel.account.icon = newValue
         }
         .onAppear {
             focusedField = .name

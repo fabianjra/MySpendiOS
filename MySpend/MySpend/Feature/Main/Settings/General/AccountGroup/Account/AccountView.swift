@@ -85,7 +85,7 @@ struct AccountView: View {
                                     
                                     Spacer()
                                     
-                                    if item.id == accountManager.defaultSelected?.id {
+                                    if item.id == accountManager.defaultAccount?.id {
                                         Text(.accountsDefault)
                                             .foregroundStyle(Color.secondary)
                                             .fontWeight(.light)
@@ -148,7 +148,7 @@ struct AccountView: View {
                                                 viewModel.selectedAccounts.removeAll()
                                             }
                                             
-                                            toast.response = await accountManager.deleteMltipleItems(viewModel.selectedAccounts)
+                                            toast.response = await accountManager.delete(viewModel.selectedAccounts)
                                         }
                                         
                                         editMode?.wrappedValue = .inactive
@@ -214,7 +214,7 @@ struct AccountView: View {
                     
                     Menu {
                         Section {
-                            Picker(.sortTitle, selection: $accountManagerBind.sortingSelected.sortBy) {
+                            Picker(.sortTitle, selection: $accountManagerBind.sortSelection.sortBy) {
                                 ForEach(AccountSortOption.allCases, id: \.self) { sortBy in
                                     Text(sortBy.localized)
                                         .tag(sortBy)
@@ -224,7 +224,7 @@ struct AccountView: View {
                         }
                         
                         Section {
-                            Picker(.sortTitle, selection: $accountManagerBind.sortingSelected.order) {
+                            Picker(.sortTitle, selection: $accountManagerBind.sortSelection.order) {
                                 ForEach(SortOrder.allCases, id: \.self) { order in
                                     Text(order.localized)
                                         .tag(order)
@@ -246,7 +246,7 @@ struct AccountView: View {
                     } label: {
                         Label(.sortTitle, systemImage: ConstantSystemImage.arrowUpDown)
                         
-                        Text(accountManager.sortingSelected.sortBy.localized)
+                        Text(accountManager.sortSelection.sortBy.localized)
                     }
                     
                 }

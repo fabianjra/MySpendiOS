@@ -29,9 +29,9 @@ class OnBoardingAccountViewModel: BaseViewModel {
         do {
             try await AccountCoreDataManager(viewContext).create(account)
             
-            accountManager.filteredAccountIDs.insert(account.id)
+            accountManager.selectedAccountsToFilterByID.insert(account.id)
+            accountManager.setDefaultAccount(by: account)
             
-            UserDefaultsManager.defaultAccountID = account.id.uuidString
             UserDefaultsManager.isOnBoarding = false
 
             Router.shared.reset()

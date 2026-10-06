@@ -8,7 +8,7 @@ import SwiftUI
 
 struct RootView: View {
     
-    @State private var filterCenter = AccountManager.shared
+    @State private var accountManager = AccountManager.shared
     @State private var themeManager = ThemeManager.shared
     @State private var router = Router.shared
     
@@ -46,7 +46,7 @@ struct RootView: View {
         .onAppear {
             //UIApplication.shared.addTapGestureRecognizer()
         }
-        .environment(filterCenter)
+        .environment(accountManager)
         .environment(themeManager)
         .preferredColorScheme(themeManager.theme.colorScheme)
     }

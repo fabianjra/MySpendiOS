@@ -75,7 +75,7 @@ struct TransactionView: View {
         .onChange(of: viewModel.transactionsFiltered) {
             viewModel.filterTransactions(accountManager: accountManager)
         }
-        .onChange(of: accountManager.filteredAccountIDs) {
+        .onChange(of: accountManager.selectedAccountsToFilterByID) {
             viewModel.filterTransactions(accountManager: accountManager)
         }
         .onChange(of: [accountManager.isFilterActive, accountManager.showOnlyFavorites]) {
@@ -174,7 +174,7 @@ struct TransactionView: View {
                         return ""
                     }
                     
-                    let selectedAccounts = accountManager.filteredAccountIDs
+                    let selectedAccounts = accountManager.selectedAccountsToFilterByID
                     
                     if selectedAccounts.isEmpty {
                         return .filterAccountNoneTitle
