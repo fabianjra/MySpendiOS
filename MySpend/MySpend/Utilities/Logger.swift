@@ -164,9 +164,9 @@ struct Logger {
      - Date: February 2023
      */
     static func custom(_ obj: Any,
-                             file: String = #file,
-                             function: String = #function,
-                             line: Int = #line) {
+                       file: String = #file,
+                       function: String = #function,
+                       line: Int = #line) {
         
         let fileName = file.components(separatedBy: "/").last ?? file
         
