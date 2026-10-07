@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 110;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -68,24 +68,18 @@
 /* Begin PBXFrameworksBuildPhase section */
 		1F8581882DEFF40E00CDEE4B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		1F85819A2DEFF41000CDEE4B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		1F8581A42DEFF41000CDEE4B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
@@ -125,14 +119,10 @@
 			);
 			buildRules = (
 			);
-			dependencies = (
-			);
 			fileSystemSynchronizedGroups = (
 				1F85818D2DEFF40E00CDEE4B /* MySpend */,
 			);
 			name = MySpend;
-			packageProductDependencies = (
-			);
 			productName = MySpend;
 			productReference = 1F85818B2DEFF40E00CDEE4B /* MySpend.app */;
 			productType = "com.apple.product-type.application";
@@ -154,8 +144,6 @@
 				1F8581A02DEFF41000CDEE4B /* MySpendTests */,
 			);
 			name = MySpendTests;
-			packageProductDependencies = (
-			);
 			productName = MySpendTests;
 			productReference = 1F85819D2DEFF41000CDEE4B /* MySpendTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -177,8 +165,6 @@
 				1F8581AA2DEFF41000CDEE4B /* MySpendUITests */,
 			);
 			name = MySpendUITests;
-			packageProductDependencies = (
-			);
 			productName = MySpendUITests;
 			productReference = 1F8581A72DEFF41000CDEE4B /* MySpendUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
@@ -218,7 +204,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 			);
-			preferredProjectObjectVersion = 77;
+			preferredProjectObjectVersion = 110;
 			productRefGroup = 1F85818C2DEFF40E00CDEE4B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -233,72 +219,56 @@
 /* Begin PBXResourcesBuildPhase section */
 		1F8581892DEFF40E00CDEE4B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				1FB12A2F2E0507A400FF8AA0 /* README.md in Resources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		1F85819B2DEFF41000CDEE4B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		1F8581A52DEFF41000CDEE4B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		1FB12A302E05085E00FF8AA0 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
 				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
 			);
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"$(SRCROOT)/Outputs/CrashlyticsOutputFile.txt",
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n #\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
+			shellScript = (
+				"# Type a script or drag a script file from your workspace to insert its path.",
+				" #\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"",
+				"",
+			);
 		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1F8581872DEFF40E00CDEE4B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		1F8581992DEFF41000CDEE4B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		1F8581A32DEFF41000CDEE4B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
@@ -316,7 +286,7 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		1F8581AF2DEFF41000CDEE4B /* Debug */ = {
+		1F8581AF2DEFF41000CDEE4B /* Debug configuration for PBXProject "MySpend" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -383,7 +353,7 @@
 			};
 			name = Debug;
 		};
-		1F8581B02DEFF41000CDEE4B /* Release */ = {
+		1F8581B02DEFF41000CDEE4B /* Release configuration for PBXProject "MySpend" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -443,7 +413,7 @@
 			};
 			name = Release;
 		};
-		1F8581B22DEFF41000CDEE4B /* Debug */ = {
+		1F8581B22DEFF41000CDEE4B /* Debug configuration for PBXNativeTarget "MySpend" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -481,7 +451,7 @@
 			};
 			name = Debug;
 		};
-		1F8581B32DEFF41000CDEE4B /* Release */ = {
+		1F8581B32DEFF41000CDEE4B /* Release configuration for PBXNativeTarget "MySpend" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -518,7 +488,7 @@
 			};
 			name = Release;
 		};
-		1F8581B52DEFF41000CDEE4B /* Debug */ = {
+		1F8581B52DEFF41000CDEE4B /* Debug configuration for PBXNativeTarget "MySpendTests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -540,7 +510,7 @@
 			};
 			name = Debug;
 		};
-		1F8581B62DEFF41000CDEE4B /* Release */ = {
+		1F8581B62DEFF41000CDEE4B /* Release configuration for PBXNativeTarget "MySpendTests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -562,7 +532,7 @@
 			};
 			name = Release;
 		};
-		1F8581B82DEFF41000CDEE4B /* Debug */ = {
+		1F8581B82DEFF41000CDEE4B /* Debug configuration for PBXNativeTarget "MySpendUITests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -583,7 +553,7 @@
 			};
 			name = Debug;
 		};
-		1F8581B92DEFF41000CDEE4B /* Release */ = {
+		1F8581B92DEFF41000CDEE4B /* Release configuration for PBXNativeTarget "MySpendUITests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -610,37 +580,33 @@
 		1F8581862DEFF40E00CDEE4B /* Build configuration list for PBXProject "MySpend" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1F8581AF2DEFF41000CDEE4B /* Debug */,
-				1F8581B02DEFF41000CDEE4B /* Release */,
+				1F8581AF2DEFF41000CDEE4B /* Debug configuration for PBXProject "MySpend" */,
+				1F8581B02DEFF41000CDEE4B /* Release configuration for PBXProject "MySpend" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		1F8581B12DEFF41000CDEE4B /* Build configuration list for PBXNativeTarget "MySpend" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1F8581B22DEFF41000CDEE4B /* Debug */,
-				1F8581B32DEFF41000CDEE4B /* Release */,
+				1F8581B22DEFF41000CDEE4B /* Debug configuration for PBXNativeTarget "MySpend" */,
+				1F8581B32DEFF41000CDEE4B /* Release configuration for PBXNativeTarget "MySpend" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		1F8581B42DEFF41000CDEE4B /* Build configuration list for PBXNativeTarget "MySpendTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1F8581B52DEFF41000CDEE4B /* Debug */,
-				1F8581B62DEFF41000CDEE4B /* Release */,
+				1F8581B52DEFF41000CDEE4B /* Debug configuration for PBXNativeTarget "MySpendTests" */,
+				1F8581B62DEFF41000CDEE4B /* Release configuration for PBXNativeTarget "MySpendTests" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		1F8581B72DEFF41000CDEE4B /* Build configuration list for PBXNativeTarget "MySpendUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1F8581B82DEFF41000CDEE4B /* Debug */,
-				1F8581B92DEFF41000CDEE4B /* Release */,
+				1F8581B82DEFF41000CDEE4B /* Debug configuration for PBXNativeTarget "MySpendUITests" */,
+				1F8581B92DEFF41000CDEE4B /* Release configuration for PBXNativeTarget "MySpendUITests" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
