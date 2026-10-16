@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct FormInputStyle: TextFieldStyle {
+private struct FormInputStyle: TextFieldStyle {
     
     @Binding var text: String
     
@@ -40,6 +40,10 @@ struct FormInputStyle: TextFieldStyle {
 }
 
 extension View {
+    
+    /// Permite establecer el boton de borrado de texto con una equis.
+    /// Tambien establece el limite de caracteres maximos.
+    /// No establece ningun efecto ni estilo a la fuente.
     func formInputStyle(_ text: Binding<String>) -> some View {
         self.textFieldStyle(FormInputStyle(text: text))
     }
@@ -53,8 +57,5 @@ extension View {
             TextField(.personalInformationInputNamePlaceholder, text: $text)
                 .formInputStyle($text)
         }
-        
     }
-    .scrollContentBackground(.hidden)
-    .background(.backgroundBottom)
 }

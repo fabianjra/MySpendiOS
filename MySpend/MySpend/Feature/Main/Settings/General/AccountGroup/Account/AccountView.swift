@@ -44,15 +44,19 @@ struct AccountView: View {
         // MARK: SHEETS
         
         .sheet(isPresented: $viewModel.showNewItemModal) {
-            CreateAccountView()
+            NavigationStack {
+                CreateAccountView()
+            }
         }
         
         .sheet(item: $viewModel.accountToUpdate) { account in
-            CreateAccountView(account)
-                .onDisappear {
-                    viewModel.accountToUpdate = nil
-                    //TODO: Agregar mensaje a Toast del update. Debe ir al finalizar el ModifyAccountView.
-                }
+            NavigationStack {
+                CreateAccountView(account)
+                    .onDisappear {
+                        viewModel.accountToUpdate = nil
+                        //TODO: Agregar mensaje a Toast del update. Debe ir al finalizar el ModifyAccountView.
+                    }
+            }
         }
         
         .toast(toast.response, isPresented: $toast.show)

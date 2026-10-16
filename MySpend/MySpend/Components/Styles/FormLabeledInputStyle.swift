@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct FormLabeledInputStyle: LabeledContentStyle {
+private struct FormLabeledInputStyle: LabeledContentStyle {
     func makeBody(configuration: Configuration) -> some View {
         HStack(spacing: ConstantViews.formLabeledContentSpacing) {
             configuration.label
@@ -15,11 +15,13 @@ struct FormLabeledInputStyle: LabeledContentStyle {
             
             configuration.content
         }
-        .font(.montserrat())
     }
 }
 
 extension View {
+    
+    /// Establece el limite horizontal entre el label y el textField para introducir valores al texto.
+    /// No agrega estilos a la fuente.
     var formLabeledInputStyle: some View {
         self.labeledContentStyle(FormLabeledInputStyle())
     }
@@ -50,6 +52,6 @@ extension View {
         }
     }
     .scrollContentBackground(.hidden)
-    .background(.backgroundBottom)
+    .background(Color.backgroundGradient)
     .environment(\.locale, .init(identifier: Previews.localeES_ES))
 }

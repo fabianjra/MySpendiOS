@@ -10,6 +10,8 @@ struct ConstantSystemImage {
     // MARK: TRANSACTIONS
     
     static let addNewItem = "plus"
+    static let cancel = "xmark.circle"
+    static let cancelFill = "xmark.circle.fill"
     
     // Select:
     static let circle = "circle"
@@ -29,7 +31,6 @@ struct ConstantSystemImage {
     // MARK: SWIPE ACTIONS:
     static let trash = "trash"
     static let squareAndPencil = "square.and.pencil"
-    
     
     static let options = "ellipsis"
     

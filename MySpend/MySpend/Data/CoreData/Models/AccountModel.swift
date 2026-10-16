@@ -40,8 +40,4 @@ struct AccountModel: Codable, Identifiable, Equatable, Hashable {
         self.icon = entity.icon ?? ""
         self.name = entity.name ?? ""
     }
-    
-    enum Field: Hashable, CaseIterable {
-        case name
-    }
 }
