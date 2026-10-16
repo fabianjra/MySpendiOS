@@ -126,7 +126,7 @@ struct AddModifyCategoryView: View {
             }
         }
         .sheet(isPresented: $showIconsModal) {
-            IconListModalView(selectedIcon: $selectedIcon, showModal: $showIconsModal)
+            IconListModalView(selectedIcon: $selectedIcon)
         }
         .onChange(of: selectedIcon) { _, newValue in
             viewModel.model.icon = newValue

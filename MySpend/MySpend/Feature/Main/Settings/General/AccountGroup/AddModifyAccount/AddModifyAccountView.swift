@@ -12,14 +12,14 @@ struct AddModifyAccountView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(AccountManager.self) private var accountManager
     
-    @StateObject private var viewModel: AddModifyAccountViewModel
+    @State private var viewModel: AddModifyAccountViewModel
     @FocusState private var focusedField: AccountModel.Field?
     
     @State private var selectedIcon = ""
     @State private var showIconsModal = false
     
     init(_ model: AccountModel? = nil) {
-        _viewModel = StateObject(wrappedValue: AddModifyAccountViewModel(model))
+        _viewModel = State(wrappedValue: AddModifyAccountViewModel(model))
     }
     
     var body: some View {
@@ -38,9 +38,17 @@ struct AddModifyAccountView: View {
             
             VStack {
                 TextFieldModelName(text: $viewModel.account.name,
-                                   errorMessage: $viewModel.errorMessage)
+                                   errorMessage: .constant(""))
                 .focused($focusedField, equals: .name)
-                .onSubmit { process(viewModel.isNewAccount ? .add : .modify) }
+                .onSubmit {
+                    Task {
+                        if viewModel.isNewAccount {
+                            _ = await viewModel.create(with: accountManager)
+                        } else {
+                            _ = await viewModel.update(with: accountManager)
+                        }
+                    }
+                }
                 
                 Button("") {
                     showIconsModal = true
@@ -60,14 +68,21 @@ struct AddModifyAccountView: View {
                 .tint(.accentColor)
                 .padding(.horizontal)
                 
-                TextError(viewModel.errorMessage)
-                    .padding(.vertical)
+                //TextError(viewModel.errorMessage)
             }
         }
         .safeAreaInset(edge: .bottom) {
             VStack {
+                
                 Button(action: {
-                    process(viewModel.isNewAccount ? .add : .modify)
+                    Task {
+                        if viewModel.isNewAccount {
+                            _ = await viewModel.create(with: accountManager)
+                        } else {
+                            _ = await viewModel.update(with: accountManager)
+                        }
+                    }
+                    
                 }, label: {
                     TextPlain(viewModel.isNewAccount ? "Add" : "Modify")
                         .padding(.vertical, ConstantViews.paddingButtonVertical)
@@ -83,8 +98,15 @@ struct AddModifyAccountView: View {
                     }
                     .buttonStyle(ButtonLinkStyle(color: Color.alert, fontfamily: .semibold))
                     .alert("Delete account", isPresented: $viewModel.showAlert) {
-                        Button("Delete", role: .destructive) { process(.delete) }
+                        
+                        Button("Delete", role: .destructive) {
+                            Task {
+                                _ = await viewModel.delete(with: accountManager)
+                            }
+                        }
+                        
                         Button("Cancel", role: .cancel) { }
+                        
                     } message: {
                         Text("Want to delete this account? \n This action cannot be undone.")
                     }
@@ -94,7 +116,7 @@ struct AddModifyAccountView: View {
         }
         
         .sheet(isPresented: $showIconsModal) {
-            IconListModalView(selectedIcon: $selectedIcon, showModal: $showIconsModal)
+            IconListModalView(selectedIcon: $selectedIcon)
         }
         .onChange(of: selectedIcon) { _, newValue in
             viewModel.account.icon = newValue
@@ -103,27 +125,6 @@ struct AddModifyAccountView: View {
             focusedField = .name
         }
         .presentationDetents([.large])
-    }
-    
-    private func process(_ processType: ProcessType) {
-        Task {
-            let result: ResponseModel
-            
-            switch processType {
-            case .add:
-                result = await viewModel.addNew(accountManager: accountManager)
-            case .modify:
-                result = await viewModel.modify()
-            case .delete:
-                result = await viewModel.delete()
-            }
-            
-            if result.status.isSuccess {
-                dismiss()
-            } else {
-                viewModel.errorMessage = result.message
-            }
-        }
     }
 }
 

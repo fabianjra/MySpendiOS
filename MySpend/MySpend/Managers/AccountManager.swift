@@ -139,6 +139,37 @@ final class AccountManager {
     
     // MARK: CRUD
     
+    func create(_ account: AccountModel, isDefault: Bool) async -> ResponseToast {
+        do {
+            try await coreDataManager.create(account)
+            selectedAccountsToFilterByID.insert(account.id)
+            
+            if isDefault {
+                setDefaultAccount(by: account)
+            }
+            
+            return ResponseToast(.responseSuccesful, .ok)
+        } catch {
+            Logger.exception(error, type: .CoreData)
+            return ResponseToast(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)
+        }
+    }
+    
+    func update(_ account: AccountModel, isDefault: Bool) async -> ResponseToast {
+        do {
+            try await coreDataManager.update(account)
+            
+            if isDefault {
+                setDefaultAccount(by: account)
+            }
+            
+            return ResponseToast(.responseSuccesful, .ok)
+        } catch {
+            Logger.exception(error, type: .CoreData)
+            return ResponseToast(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)
+        }
+    }
+    
     func delete(_ account: AccountModel?) async -> ResponseToast {
         guard let account = account else { return ResponseToast()}
 

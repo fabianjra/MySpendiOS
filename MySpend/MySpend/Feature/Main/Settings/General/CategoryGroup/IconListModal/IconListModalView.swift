@@ -9,8 +9,9 @@ import SwiftUI
 
 struct IconListModalView: View {
     
+    @Environment(\.dismiss) private var dismiss
+    
     @Binding var selectedIcon: String
-    @Binding var showModal: Bool
     
     var body: some View {
         NavigationStack {
@@ -28,7 +29,7 @@ struct IconListModalView: View {
                                 ForEach(icon.list, id: \.self) { icon in
                                     Button {
                                         selectedIcon = icon
-                                        showModal = false
+                                        dismiss()
                                     } label: {
                                         Image(systemName: icon)
                                             .resizable()
@@ -49,8 +50,9 @@ struct IconListModalView: View {
             .toolbar {
                 ToolbarItem(placement: .destructiveAction) {
                     Button(role: .close) {
-                        showModal = false
-                    }                }
+                        dismiss()
+                    }
+                }
             }
             .navigationTitle("Select icon")
         }
@@ -75,7 +77,8 @@ struct IconListModalView: View {
             }
             Spacer()
         }
-    }.sheet(isPresented: $showModal) {
-        IconListModalView(selectedIcon: $selectedIcon, showModal: $showModal)
+    }
+    .sheet(isPresented: $showModal) {
+        IconListModalView(selectedIcon: $selectedIcon)
     }
 }
