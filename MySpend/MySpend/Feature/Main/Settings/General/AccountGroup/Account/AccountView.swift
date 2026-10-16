@@ -44,11 +44,11 @@ struct AccountView: View {
         // MARK: SHEETS
         
         .sheet(isPresented: $viewModel.showNewItemModal) {
-            AddModifyAccountView()
+            CreateAccountView()
         }
         
         .sheet(item: $viewModel.accountToUpdate) { account in
-            AddModifyAccountView(account)
+            CreateAccountView(account)
                 .onDisappear {
                     viewModel.accountToUpdate = nil
                     //TODO: Agregar mensaje a Toast del update. Debe ir al finalizar el ModifyAccountView.

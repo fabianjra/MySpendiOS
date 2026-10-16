@@ -7,7 +7,7 @@
 
 import SwiftUI
  
-struct AddModifyAccountView: View {
+struct CreateAccountView: View {
     
     @Environment(\.dismiss) private var dismiss
     @Environment(AccountManager.self) private var accountManager
@@ -134,7 +134,7 @@ struct AddModifyAccountView: View {
     @Previewable @State var previewAccountManager = AccountManager.shared
     
     VStack {
-        AddModifyAccountView()
+        CreateAccountView()
     }
     .environment(previewAccountManager)
     .environment(\.locale, .init(identifier: Previews.localeES_CR))
