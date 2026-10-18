@@ -65,10 +65,13 @@ struct CreateAccountView: View {
                     }
                     .tint(.accentColor)
 
+                } header: {
+                    //Text()
                 }
             }
-            
+            .padding(.top)
         }
+        
         .navigationTitle(.accountCreateTitle)
         .navigationSubtitle(.accountCreateSubtitle)
         
@@ -97,7 +100,6 @@ struct CreateAccountView: View {
                         toast.response = await viewModel.update(with: accountManager)
                     }
                 }
-                
             } label: {
                 Text(.buttonSave)
                     .padding(.vertical, ConstantViews.paddingButtonVertical)
