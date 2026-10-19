@@ -16,7 +16,7 @@ final class AccountManager {
     private let coreDataManager: AccountCoreDataManager
     private var allAccounts: [AccountModel] = []
     
-
+    
     // MARK: DEFAULT ACCOUNT
     
     var selectedAccountsToFilterByID = UserDefaultsManager.selectedAccountsFilter {
@@ -68,7 +68,7 @@ final class AccountManager {
     // MARK: FILTROS
     
     var showOnlyFavorites: Bool = false
-
+    
     var isFilterActive = UserDefaultsManager.isFilterActive {
         didSet { UserDefaultsManager.isFilterActive = isFilterActive }
     }
@@ -97,7 +97,7 @@ final class AccountManager {
     
     private var viewContextObserver: AnyCancellable?
     private let viewContext: NSManagedObjectContext
-
+    
     private init() {
         let viewContext = CoreDataUtilities.getViewContext
         self.viewContext = viewContext
@@ -120,14 +120,14 @@ final class AccountManager {
             Logger.exception(error, type: .CoreData)
         }
     }
-
+    
     private func startObserveViewContextChanges() {
         guard viewContextObserver == nil else { return } // Evita suscribirse dos veces
-
+        
         viewContextObserver = NotificationCenter.default
             .publisher(for: .NSManagedObjectContextObjectsDidChange, object: viewContext)
             .debounce(for: .milliseconds(100), scheduler: RunLoop.main) // Evita multiples llamados
-            //.receive(on: DispatchQueue.main) // Redundante: Se puede omitir. Con el debounce sobre RunLoop.main ya garantizas que el sink se ejecute en el hilo principal.
+        //.receive(on: DispatchQueue.main) // Redundante: Se puede omitir. Con el debounce sobre RunLoop.main ya garantizas que el sink se ejecute en el hilo principal.
             .sink { [weak self] _ in
                 
                 Task { @MainActor in
@@ -140,6 +140,10 @@ final class AccountManager {
     // MARK: CRUD
     
     func create(_ account: AccountModel, isDefault: Bool) async -> ResponseToast {
+        if account.name.isEmptyOrWhitespace {
+            return ResponseToast(.responseErrorTextFieldEmptySpace, .error)
+        }
+        
         do {
             try await coreDataManager.create(account)
             selectedAccountsToFilterByID.insert(account.id)
@@ -156,6 +160,10 @@ final class AccountManager {
     }
     
     func update(_ account: AccountModel, isDefault: Bool) async -> ResponseToast {
+        if account.name.isEmptyOrWhitespace {
+            return ResponseToast(.responseErrorTextFieldEmptySpace, .error)
+        }
+        
         do {
             try await coreDataManager.update(account)
             
@@ -172,7 +180,7 @@ final class AccountManager {
     
     func delete(_ account: AccountModel?) async -> ResponseToast {
         guard let account = account else { return ResponseToast()}
-
+        
         do {
             try await coreDataManager.delete(account)
             return ResponseToast(.responseAccountsDeleted(.zero), .ok)

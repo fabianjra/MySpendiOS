@@ -49,13 +49,9 @@ struct AccountView: View {
             }
         }
         
-        .sheet(item: $viewModel.accountToUpdate) { account in
+        .sheet(isPresented: $viewModel.showUpdateAccount) {
             NavigationStack {
-                CreateAccountView(account)
-                    .onDisappear {
-                        viewModel.accountToUpdate = nil
-                        //TODO: Agregar mensaje a Toast del update. Debe ir al finalizar el ModifyAccountView.
-                    }
+                UpdateAccountView(account: $viewModel.accountToUpdate)
             }
         }
         
@@ -80,6 +76,7 @@ struct AccountView: View {
                                     viewModel.toggleAccountSelection(item)
                                 } else {
                                     viewModel.accountToUpdate = item
+                                    viewModel.showUpdateAccount = true
                                 }
                                 
                             } label: {
@@ -116,6 +113,7 @@ struct AccountView: View {
                                     
                                     Button(.selectorEdit, systemImage: ConstantSystemImage.squareAndPencil) {
                                         viewModel.accountToUpdate = item
+                                        viewModel.showUpdateAccount = true
                                     }
                                     .labelStyle(.iconOnly)
                                 }
@@ -126,6 +124,7 @@ struct AccountView: View {
                                     
                                     Button(.selectorEdit, systemImage: ConstantSystemImage.squareAndPencil) {
                                         viewModel.accountToUpdate = item
+                                        viewModel.showUpdateAccount = true
                                     }
                                     
                                     
@@ -164,6 +163,8 @@ struct AccountView: View {
                                 Text(.accountDeleteMessage(viewModel.selectedAccounts.count))
                             }
                         }
+                    } header: {
+                        //Text(.accountListTitle)
                     }
                 }
             }

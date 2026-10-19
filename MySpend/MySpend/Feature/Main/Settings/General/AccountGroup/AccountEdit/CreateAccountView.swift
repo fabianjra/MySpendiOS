@@ -12,32 +12,26 @@ struct CreateAccountView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(AccountManager.self) private var accountManager
     
-    @State private var viewModel: AccountDetailEditViewModel
+    @State private var viewModel = AccountDetailEditViewModel()
+    @State private var account = AccountModel()
     
     @State private var toast = ToastViewModel()
     
-    init(_ model: AccountModel? = nil) {
-        _viewModel = State(wrappedValue: AccountDetailEditViewModel(model))
-    }
-    
     var body: some View {
         VStack {
-            AccountDetailEdit(viewModel: viewModel)
+            AccountDetailEdit(account: $account, isDefaultSelected: $viewModel.isDefaultSelected)
         }
         
         .navigationTitle(.accountCreateTitle)
         .navigationSubtitle(.accountCreateSubtitle)
         
-        .scrollContentBackground(.hidden)
-        .background(Color.backgroundGradient)
-        
         .safeAreaInset(edge: .bottom) {
             Button {
                 Task {
-                    if viewModel.isNewAccount {
-                        toast.response = await viewModel.create(with: accountManager)
-                    } else {
-                        toast.response = await viewModel.update(with: accountManager)
+                    toast.response = await accountManager.create(account,
+                                                                 isDefault: viewModel.isDefaultSelected)
+                    if toast.response.type == .ok {
+                        dismiss()
                     }
                 }
             } label: {
@@ -59,59 +53,6 @@ struct CreateAccountView: View {
                 }
             }
         }
-        
-//        FormContainer {
-//            HeaderNavigator(title: viewModel.isNewAccount ? "New account" : "Modify account",
-//                            titleWeight: .regular,
-//                            titleSize: .title,
-//                            subTitle: viewModel.isNewAccount ? "Enter the account details" : "Modify the account details",
-//                            showLeadingAction: false,
-//                            showTrailingAction: true)
-//            .padding(.vertical)
-//        }
-//        .safeAreaInset(edge: .bottom) {
-//            VStack {
-//                
-//                Button(action: {
-//                    Task {
-//                        if viewModel.isNewAccount {
-//                            _ = await viewModel.create(with: accountManager)
-//                        } else {
-//                            _ = await viewModel.update(with: accountManager)
-//                        }
-//                    }
-//                    
-//                }, label: {
-//                    TextPlain(viewModel.isNewAccount ? "Add" : "Modify")
-//                        .padding(.vertical, ConstantViews.paddingButtonVertical)
-//                        .frame(maxWidth: ConstantFrames.iPadMaxWidth)
-//                })
-//                .buttonStyle(.glass)
-//                .padding(.bottom, viewModel.isNewAccount ? nil : .zero)
-//                
-//                
-//                if viewModel.isNewAccount == false {
-//                    Button("Delete") {
-//                        viewModel.showAlert = true
-//                    }
-//                    .buttonStyle(ButtonLinkStyle(color: Color.alert, fontfamily: .semibold))
-//                    .alert("Delete account", isPresented: $viewModel.showAlert) {
-//                        
-//                        Button("Delete", role: .destructive) {
-//                            Task {
-//                                _ = await viewModel.delete(with: accountManager)
-//                            }
-//                        }
-//                        
-//                        Button("Cancel", role: .cancel) { }
-//                        
-//                    } message: {
-//                        Text("Want to delete this account? \n This action cannot be undone.")
-//                    }
-//                }
-//            }
-//            .padding(.horizontal)
-//        }
     }
 }
 

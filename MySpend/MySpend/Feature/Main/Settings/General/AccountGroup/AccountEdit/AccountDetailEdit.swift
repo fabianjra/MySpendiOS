@@ -9,7 +9,8 @@ import SwiftUI
 
 struct AccountDetailEdit: View {
     
-    @Bindable var viewModel: AccountDetailEditViewModel
+    @Binding var account: AccountModel
+    @Binding var isDefaultSelected: Bool
     
     @State private var showIconsModal = false
     @State private var selectedIcon = ""
@@ -20,8 +21,8 @@ struct AccountDetailEdit: View {
             Section {
                 
                 LabeledContent(.accountInputName) {
-                    TextField(.accountInputNamePlaceHolder, text: $viewModel.account.name)
-                        .formInputStyle($viewModel.account.name)
+                    TextField(.accountInputNamePlaceHolder, text: $account.name)
+                        .formInputStyle($account.name)
                         .textContentType(.creditCardName)
                         .keyboardType(.alphabet)
                         .focused($isFocused)
@@ -30,7 +31,7 @@ struct AccountDetailEdit: View {
                 
                 
                 LabeledContent(.accountInputIcon) {
-                    Button(viewModel.account.icon, systemImage: viewModel.account.icon) {
+                    Button(account.icon, systemImage: account.icon) {
                         showIconsModal = true
                     }
                     .labelStyle(.iconOnly)
@@ -38,9 +39,9 @@ struct AccountDetailEdit: View {
                     
                     Spacer()
                     
-                    if !viewModel.account.icon.isEmptyOrWhitespace {
+                    if !account.icon.isEmptyOrWhitespace {
                         Button {
-                            viewModel.account.icon = ""
+                            account.icon = ""
                         } label: {
                             Text(.selectorClear)
                         }
@@ -50,23 +51,26 @@ struct AccountDetailEdit: View {
                 .formLabeledInputStyle
                 
                 
-                Toggle(isOn: $viewModel.isDefaultSelected) {
+                Toggle(isOn: $isDefaultSelected) {
                     Text(.accountInputDefault)
                 }
                 .tint(.accentColor)
 
             } header: {
-                Text(.accountListTitle)
+                //Text(.accountListTitle)
             }
         }
         .scrollDisabled(true)
         .padding(.top)
         
+        .scrollContentBackground(.hidden)
+        .background(Color.backgroundGradient)
+        
         .onAppear {
             isFocused = true
         }
         .onChange(of: selectedIcon) { _, newValue in
-            viewModel.account.icon = newValue
+            account.icon = newValue
         }
         
         .sheet(isPresented: $showIconsModal) {
@@ -78,19 +82,19 @@ struct AccountDetailEdit: View {
 
 #Preview(Previews.localeES_CR) {
     
-    @Previewable @State var viewModel = AccountDetailEditViewModel()
-    @Previewable @State var isPresented: Bool = false
+    @Previewable @State var account = AccountModel()
+    @Previewable @State var isDefaultSelected = false
     
-    AccountDetailEdit(viewModel: viewModel)
+    AccountDetailEdit(account: $account, isDefaultSelected: $isDefaultSelected)
         .environment(\.locale, .init(identifier: Previews.localeES_CR))
 }
 
 
 #Preview(Previews.localeEN) {
     
-    @Previewable @State var viewModel = AccountDetailEditViewModel()
-    @Previewable @State var isPresented: Bool = false
+    @Previewable @State var account = AccountModel()
+    @Previewable @State var isDefaultSelected = false
     
-    AccountDetailEdit(viewModel: viewModel)
+    AccountDetailEdit(account: $account, isDefaultSelected: $isDefaultSelected)
         .environment(\.locale, .init(identifier: Previews.localeEN))
 }

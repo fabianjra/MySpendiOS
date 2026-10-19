@@ -245,6 +245,42 @@
         }
       }
     },
+    "Account.Update.Subtitle" : {
+      "comment" : "Subtitulo para la vista de actualizar cuenta",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modify account details"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modifica los detalles de la cuenta"
+          }
+        }
+      }
+    },
+    "Account.Update.Title" : {
+      "comment" : "Titulo para la vista de actualizar cuenta",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Update Account"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Actualizar Cuenta"
+          }
+        }
+      }
+    },
     "Accounts not found. Try adding a new one in settings." : {
 
     },
@@ -1647,7 +1683,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Borrar"
+            "value" : "Limpiar"
           }
         }
       }
