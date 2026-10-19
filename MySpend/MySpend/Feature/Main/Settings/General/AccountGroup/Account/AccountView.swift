@@ -18,7 +18,7 @@ struct AccountView: View {
     
     @State private var viewModel = AccountViewModel()
     @State private var toast = ToastViewModel()
-        
+    
     var body: some View {
         VStack {
             itemList
@@ -61,118 +61,116 @@ struct AccountView: View {
     // MARK: - VIEWS
     
     private var itemList: some View {
-        VStack {
-            List(selection: $viewModel.selectedAccounts) {
-                if accountManager.sortedAccounts.isEmpty {
-                    Section {
-                        Text(.accountsEmpty)
-                            .foregroundStyle(.secondary)
-                    }
-                } else {
-                    Section {
-                        ForEach(accountManager.sortedAccounts) { item in
-                            Button {
-                                if isEditing {
-                                    viewModel.toggleAccountSelection(item)
-                                } else {
+        List(selection: $viewModel.selectedAccounts) {
+            if accountManager.sortedAccounts.isEmpty {
+                Section {
+                    Text(.accountsEmpty)
+                        .foregroundStyle(.secondary)
+                }
+            } else {
+                Section {
+                    ForEach(accountManager.sortedAccounts) { item in
+                        Button {
+                            if isEditing {
+                                viewModel.toggleAccountSelection(item)
+                            } else {
+                                viewModel.accountToUpdate = item
+                                viewModel.showUpdateAccount = true
+                            }
+                            
+                        } label: {
+                            HStack {
+                                Label(item.name, systemImage: item.icon)
+                                    .foregroundStyle(Color.primary)
+                                
+                                Spacer()
+                                
+                                if item.id == accountManager.defaultAccount?.id {
+                                    Text(.accountsDefault)
+                                        .foregroundStyle(Color.secondary)
+                                        .fontWeight(.light)
+                                        .font(.footnote)
+                                }
+                                
+                                if !isEditing {
+                                    Image.chevronRight
+                                        .tint(.secondary)
+                                }
+                            }
+                        }
+                        .tag(item)
+                        
+                        .swipeActions(edge: .trailing) {
+                            if !isEditing {
+                                
+                                Button(.selectorDelete, systemImage: ConstantSystemImage.trash, role: .destructive) {
+                                    viewModel.accountToDelete = item
+                                    viewModel.showAlertDelete = true
+                                }
+                                .labelStyle(.iconOnly)
+                                
+                                
+                                Button(.selectorEdit, systemImage: ConstantSystemImage.squareAndPencil) {
+                                    viewModel.accountToUpdate = item
+                                    viewModel.showUpdateAccount = true
+                                }
+                                .labelStyle(.iconOnly)
+                            }
+                        }
+                        
+                        .contextMenu {
+                            if !isEditing {
+                                
+                                Button(.selectorEdit, systemImage: ConstantSystemImage.squareAndPencil) {
                                     viewModel.accountToUpdate = item
                                     viewModel.showUpdateAccount = true
                                 }
                                 
-                            } label: {
-                                HStack {
-                                    Label(item.name, systemImage: item.icon)
-                                        .foregroundStyle(Color.primary)
-                                    
-                                    Spacer()
-                                    
-                                    if item.id == accountManager.defaultAccount?.id {
-                                        Text(.accountsDefault)
-                                            .foregroundStyle(Color.secondary)
-                                            .fontWeight(.light)
-                                            .font(.footnote)
-                                    }
-                                    
-                                    if !isEditing {
-                                        Image.chevronRight
-                                            .tint(.secondary)
-                                    }
-                                }
-                            }
-                            .tag(item)
-                            
-                            .swipeActions(edge: .trailing) {
-                                if !isEditing {
-                                    
-                                    Button(.selectorDelete, systemImage: ConstantSystemImage.trash, role: .destructive) {
-                                        viewModel.accountToDelete = item
-                                        viewModel.showAlertDelete = true
-                                    }
-                                    .labelStyle(.iconOnly)
-                                    
-                                    
-                                    Button(.selectorEdit, systemImage: ConstantSystemImage.squareAndPencil) {
-                                        viewModel.accountToUpdate = item
-                                        viewModel.showUpdateAccount = true
-                                    }
-                                    .labelStyle(.iconOnly)
-                                }
-                            }
-                            
-                            .contextMenu {
-                                if !isEditing {
-                                    
-                                    Button(.selectorEdit, systemImage: ConstantSystemImage.squareAndPencil) {
-                                        viewModel.accountToUpdate = item
-                                        viewModel.showUpdateAccount = true
-                                    }
-                                    
-                                    
-                                    Button(.selectorDelete, systemImage: ConstantSystemImage.trash, role: .destructive) {
-                                        viewModel.accountToDelete = item
-                                        viewModel.showAlertDelete = true
-                                    }
-                                }
-                            }
-                            
-                            .alert(.accountDelete(viewModel.selectedAccounts.count), isPresented: $viewModel.showAlertDelete) {
-                                Button(.alertOptionDelete, role: .destructive) {
-                                    Task {
-                                        if viewModel.selectedAccounts.isEmpty {
-                                            
-                                            defer {
-                                                viewModel.accountToDelete = nil
-                                            }
-                                            
-                                            toast.response = await accountManager.delete(viewModel.accountToDelete)
-                                        } else {
-                                            
-                                            defer {
-                                                viewModel.selectedAccounts.removeAll()
-                                            }
-                                            
-                                            toast.response = await accountManager.delete(viewModel.selectedAccounts)
-                                        }
-                                        
-                                        editMode?.wrappedValue = .inactive
-                                    }
-                                }
                                 
-                                Button(.alertOptionCancel, role: .cancel) { }
-                            } message: {
-                                Text(.accountDeleteMessage(viewModel.selectedAccounts.count))
+                                Button(.selectorDelete, systemImage: ConstantSystemImage.trash, role: .destructive) {
+                                    viewModel.accountToDelete = item
+                                    viewModel.showAlertDelete = true
+                                }
                             }
                         }
-                    } header: {
-                        //Text(.accountListTitle)
+                        
+                        .alert(.accountDelete(viewModel.selectedAccounts.count), isPresented: $viewModel.showAlertDelete) {
+                            Button(.alertOptionDelete, role: .destructive) {
+                                Task {
+                                    if viewModel.selectedAccounts.isEmpty {
+                                        
+                                        defer {
+                                            viewModel.accountToDelete = nil
+                                        }
+                                        
+                                        toast.response = await accountManager.delete(viewModel.accountToDelete)
+                                    } else {
+                                        
+                                        defer {
+                                            viewModel.selectedAccounts.removeAll()
+                                        }
+                                        
+                                        toast.response = await accountManager.delete(viewModel.selectedAccounts)
+                                    }
+                                    
+                                    editMode?.wrappedValue = .inactive
+                                }
+                            }
+                            
+                            Button(.alertOptionCancel, role: .cancel) { }
+                        } message: {
+                            Text(.accountDeleteMessage(viewModel.selectedAccounts.count))
+                        }
                     }
+                } header: {
+                    //Text(.accountListTitle)
                 }
             }
-            //.navigationLinkIndicatorVisibility(.visible)
-            .animation(.default, value: accountManager.sortedAccounts)
-            .scrollContentBackground(.hidden)
-            .background(Color.backgroundGradient)
         }
+        //.navigationLinkIndicatorVisibility(.visible)
+        .animation(.default, value: accountManager.sortedAccounts)
+        .scrollContentBackground(.hidden)
+        .background(Color.backgroundGradient)
     }
     
     @ToolbarContentBuilder
