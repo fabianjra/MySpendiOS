@@ -62,9 +62,7 @@ struct AccountDetailEdit: View {
         }
         .scrollDisabled(true)
         .padding(.top)
-        
         .scrollContentBackground(.hidden)
-        .background(Color.backgroundGradient)
         
         .onAppear {
             isFocused = true

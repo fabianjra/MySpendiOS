@@ -53,6 +53,12 @@ struct CreateAccountView: View {
                 }
             }
         }
+        
+        .background {
+            Color.backgroundGradient
+                .ignoresSafeArea(.container, edges: .all)
+                .ignoresSafeArea(.keyboard, edges: .bottom)
+        }
     }
 }
 
