@@ -24,7 +24,7 @@ struct AccountView: View {
             itemList
         }
         .navigationTitle(
-            viewModel.selectedAccounts.count == .zero ?
+            viewModel.selectedAccounts.isEmpty ?
                 .accountsTitle : .selectorSelectedCountFemale(viewModel.selectedAccounts.count)
         )
         .navigationSubtitle(.accountsSubtitle(accountManager.sortedAccounts.count))
