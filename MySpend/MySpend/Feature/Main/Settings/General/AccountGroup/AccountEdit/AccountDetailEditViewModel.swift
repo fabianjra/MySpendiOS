@@ -1,5 +1,5 @@
 //
-//  AddModifyAccountViewModel.swift
+//  AccountEditDetailViewModel.swift
 //  MySpend
 //
 //  Created by Fabian Rodriguez on 9/7/25.
@@ -8,7 +8,7 @@
 import Observation
 
 @Observable
-final class AddModifyAccountViewModel {
+final class AccountDetailEditViewModel {
     
     var account: AccountModel
     var isDefaultSelected = false

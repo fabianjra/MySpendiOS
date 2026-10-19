@@ -41,8 +41,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nueva Cuenta"
+            "state" : "translated",
+            "value" : "Crear cuenta"
           }
         }
       }
@@ -223,6 +223,24 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ingresa el nombre de cuenta"
+          }
+        }
+      }
+    },
+    "Account.List.Title" : {
+      "comment" : "Titulo superior para la lista de cuentas mostradas",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "My Accounts"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mis Cuentas"
           }
         }
       }

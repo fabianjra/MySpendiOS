@@ -12,84 +12,24 @@ struct CreateAccountView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(AccountManager.self) private var accountManager
     
-    @State private var viewModel: AddModifyAccountViewModel
-    
-    @State private var selectedIcon = ""
-    @State private var showIconsModal = false
-    
-    @FocusState private var isFocused: Bool
+    @State private var viewModel: AccountDetailEditViewModel
     
     @State private var toast = ToastViewModel()
     
     init(_ model: AccountModel? = nil) {
-        _viewModel = State(wrappedValue: AddModifyAccountViewModel(model))
+        _viewModel = State(wrappedValue: AccountDetailEditViewModel(model))
     }
     
     var body: some View {
         VStack {
-            Form {
-                Section {
-                    
-                    LabeledContent(.accountInputName) {
-                        TextField(.accountInputNamePlaceHolder, text: $viewModel.account.name)
-                            .formInputStyle($viewModel.account.name)
-                            .textContentType(.creditCardName)
-                            .keyboardType(.alphabet)
-                            .focused($isFocused)
-                    }
-                    .formLabeledInputStyle
-                    
-                    
-                    LabeledContent(.accountInputIcon) {
-                        Button("", systemImage: viewModel.account.icon) {
-                            showIconsModal = true
-                        }
-                        .foregroundStyle(.primary)
-                        
-                        Spacer()
-                        
-                        if !viewModel.account.icon.isEmptyOrWhitespace {
-                            Button {
-                                viewModel.account.icon = ""
-                            } label: {
-                                Text(.selectorClear)
-                            }
-                            .buttonStyle(.borderless) // Permite la accion sin mostrar el modal.
-                        }
-                    }
-                    .formLabeledInputStyle
-                    
-                    
-                    Toggle(isOn: $viewModel.isDefaultSelected) {
-                        Text(.accountInputDefault)
-                    }
-                    .tint(.accentColor)
-
-                } header: {
-                    //Text()
-                }
-            }
-            .padding(.top)
+            AccountDetailEditView(viewModel: viewModel)
         }
         
         .navigationTitle(.accountCreateTitle)
         .navigationSubtitle(.accountCreateSubtitle)
         
-        .scrollDisabled(true)
         .scrollContentBackground(.hidden)
         .background(Color.backgroundGradient)
-        
-        .onAppear {
-            isFocused = true
-        }
-        .onChange(of: selectedIcon) { _, newValue in
-            viewModel.account.icon = newValue
-        }
-        
-        .sheet(isPresented: $showIconsModal) {
-            IconListModalView(selectedIcon: $selectedIcon)
-        }
-        //.presentationDetents([.large])
         
         .safeAreaInset(edge: .bottom) {
             Button {
@@ -112,7 +52,6 @@ struct CreateAccountView: View {
         }
         .toast(toast.response, isPresented: $toast.show)
         
-        //TODO: Falta el toolbar
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Button(role: .cancel) {
