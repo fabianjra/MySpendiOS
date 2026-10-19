@@ -21,6 +21,10 @@ struct UpdateAccountView: View {
         VStack {
             AccountDetailEdit(account: $account, isDefaultSelected: $viewModel.isDefaultSelected)
         }
+        .onAppear {
+            viewModel.isDefaultSelected = account.id == accountManager.defaultAccount?.id
+        }
+        
         .navigationTitle(.accountUpdateTitle)
         .navigationSubtitle(.accountUpdateSubtitle)
         
