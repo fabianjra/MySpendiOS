@@ -80,6 +80,7 @@ struct FilterTransactionsView: View {
                 )
                 .foregroundStyle(.textPrimaryForeground)
             }
+            .padding(.bottom, UtilsUI.isPad ? nil : .zero)
         }
         // MARK: NAVIGATION
         .navigationTitle(.filters)

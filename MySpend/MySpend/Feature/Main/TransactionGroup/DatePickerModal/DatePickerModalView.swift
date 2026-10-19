@@ -18,7 +18,7 @@ struct DatePickerModalView: View {
         NavigationStack {
             ScrollView {
                 DatePicker("", selection: $selectedDate, displayedComponents: .date)
-                    .id(datePickerID)
+                    //.id(datePickerID)
                     .datePickerStyle(.graphical)
                 //.frame(width: FrameSize.width.calendar, height: FrameSize.width.calendar)
             }
@@ -39,7 +39,7 @@ struct DatePickerModalView: View {
             }
         }
         .navigationBarTitleDisplayMode(.inline)
-        .presentationDetents([.medium])
+        .presentationDetents(UtilsUI.isPhone ? [.medium] : [])
     }
 }
 
