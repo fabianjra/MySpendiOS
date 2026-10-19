@@ -1,5 +1,5 @@
 //
-//  AccountDetailEditView.swift
+//  AccountDetailEdit.swift
 //  MySpend
 //
 //  Created by Fabian Rodriguez on 18/10/26.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AccountDetailEditView: View {
+struct AccountDetailEdit: View {
     
     @Bindable var viewModel: AccountDetailEditViewModel
     
@@ -81,7 +81,7 @@ struct AccountDetailEditView: View {
     @Previewable @State var viewModel = AccountDetailEditViewModel()
     @Previewable @State var isPresented: Bool = false
     
-    AccountDetailEditView(viewModel: viewModel)
+    AccountDetailEdit(viewModel: viewModel)
         .environment(\.locale, .init(identifier: Previews.localeES_CR))
 }
 
@@ -91,6 +91,6 @@ struct AccountDetailEditView: View {
     @Previewable @State var viewModel = AccountDetailEditViewModel()
     @Previewable @State var isPresented: Bool = false
     
-    AccountDetailEditView(viewModel: viewModel)
+    AccountDetailEdit(viewModel: viewModel)
         .environment(\.locale, .init(identifier: Previews.localeEN))
 }

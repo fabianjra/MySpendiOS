@@ -22,7 +22,7 @@ struct CreateAccountView: View {
     
     var body: some View {
         VStack {
-            AccountDetailEditView(viewModel: viewModel)
+            AccountDetailEdit(viewModel: viewModel)
         }
         
         .navigationTitle(.accountCreateTitle)

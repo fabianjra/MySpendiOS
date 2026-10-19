@@ -108,7 +108,7 @@ private struct previewWrapper: View {
         CoreDataUtilities.shared.mockDataType = mockDataType
     }
     
-    @State var previewFilter = AccountManager.shared
+    @State var accountManager = AccountManager.shared
     @State var show: Bool = false
     
     var body: some View {
@@ -125,7 +125,7 @@ private struct previewWrapper: View {
         .onAppear {
             show = true
         }
-        .environment(previewFilter)
+        .environment(accountManager)
     }
 }
 
