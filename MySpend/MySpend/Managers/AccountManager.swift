@@ -22,8 +22,7 @@ final class AccountManager {
     private var viewContextObserver: AnyCancellable?
     private let viewContext: NSManagedObjectContext
     
-    private init() {
-        let viewContext = CoreDataUtilities.getViewContext
+    init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
         self.coreDataManager = AccountCoreDataManager(viewContext)
         
@@ -32,6 +31,19 @@ final class AccountManager {
         }
         
         startObserveViewContextChanges()
+    }
+    
+    /**
+     Creates an AccountManager using the application's default Core Data context.
+     
+     This convenience initializer delegates to the designated initializer,
+     automatically providing the context returned by `CoreDataUtilities.getViewContext`.
+     
+     Used internally to initialize the shared instance without requiring
+     an explicit context.
+     */
+    private convenience init() {
+        self.init(viewContext: CoreDataUtilities.getViewContext)
     }
     
     private func refreshAccounts() async {

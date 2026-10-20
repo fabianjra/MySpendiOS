@@ -282,12 +282,12 @@ struct AccountView: View {
 
 private struct previewWrapper: View {
     init(_ mockDataType: MockDataType = .normal) {
-        CoreDataUtilities.shared.mockDataType = mockDataType
-        
         UserDefaultsManager.defaultAccountID = MockCDConstants.mainAccountID
+        
+        _previewAccountManager = State(initialValue: AccountManager(viewContext: mockDataType.viewContext))
     }
     
-    @State var previewAccountManager = AccountManager.shared
+    @State var previewAccountManager: AccountManager
     @State var editMode: EditMode = .inactive
     
     var body: some View {
