@@ -17,6 +17,50 @@ final class AccountManager {
     private var allAccounts: [AccountModel] = []
     
     
+    // MARK: OBSERVABLES
+    
+    private var viewContextObserver: AnyCancellable?
+    private let viewContext: NSManagedObjectContext
+    
+    private init() {
+        let viewContext = CoreDataUtilities.getViewContext
+        self.viewContext = viewContext
+        self.coreDataManager = AccountCoreDataManager(viewContext)
+        
+        Task {
+            await refreshAccounts()
+        }
+        
+        startObserveViewContextChanges()
+    }
+    
+    private func refreshAccounts() async {
+        do {
+            allAccounts = try await coreDataManager.fetchAll()
+            
+            updateDefaultAccount()
+            cleanFilteredAccounts()
+        } catch {
+            Logger.exception(error, type: .CoreData)
+        }
+    }
+    
+    private func startObserveViewContextChanges() {
+        guard viewContextObserver == nil else { return } // Evita suscribirse dos veces
+        
+        viewContextObserver = NotificationCenter.default
+            .publisher(for: .NSManagedObjectContextObjectsDidChange, object: viewContext)
+            .debounce(for: .milliseconds(100), scheduler: RunLoop.main) // Evita multiples llamados
+        //.receive(on: DispatchQueue.main) // Redundante: Se puede omitir. Con el debounce sobre RunLoop.main ya garantizas que el sink se ejecute en el hilo principal.
+            .sink { [weak self] _ in
+                
+                Task { @MainActor in
+                    await self?.refreshAccounts()
+                }
+            }
+    }
+    
+    
     // MARK: DEFAULT ACCOUNT
     
     var selectedAccountsToFilterByID = UserDefaultsManager.selectedAccountsFilter {
@@ -91,53 +135,12 @@ final class AccountManager {
         selectedAccountsToFilterByID = Set(allAccounts.map(\.id))
         showOnlyFavorites = false
     }
-    
-    
-    // MARK: OBSERVABLES
-    
-    private var viewContextObserver: AnyCancellable?
-    private let viewContext: NSManagedObjectContext
-    
-    private init() {
-        let viewContext = CoreDataUtilities.getViewContext
-        self.viewContext = viewContext
-        self.coreDataManager = AccountCoreDataManager(viewContext)
-        
-        Task {
-            await refreshAccounts()
-        }
-        
-        startObserveViewContextChanges()
-    }
-    
-    private func refreshAccounts() async {
-        do {
-            allAccounts = try await coreDataManager.fetchAll()
-            
-            updateDefaultAccount()
-            cleanFilteredAccounts()
-        } catch {
-            Logger.exception(error, type: .CoreData)
-        }
-    }
-    
-    private func startObserveViewContextChanges() {
-        guard viewContextObserver == nil else { return } // Evita suscribirse dos veces
-        
-        viewContextObserver = NotificationCenter.default
-            .publisher(for: .NSManagedObjectContextObjectsDidChange, object: viewContext)
-            .debounce(for: .milliseconds(100), scheduler: RunLoop.main) // Evita multiples llamados
-        //.receive(on: DispatchQueue.main) // Redundante: Se puede omitir. Con el debounce sobre RunLoop.main ya garantizas que el sink se ejecute en el hilo principal.
-            .sink { [weak self] _ in
-                
-                Task { @MainActor in
-                    await self?.refreshAccounts()
-                }
-            }
-    }
-    
-    
-    // MARK: CRUD
+}
+
+
+// MARK: CRUD
+
+extension AccountManager {
     
     func create(_ account: AccountModel, isDefault: Bool) async -> ResponseToast {
         if account.name.isEmptyOrWhitespace {
