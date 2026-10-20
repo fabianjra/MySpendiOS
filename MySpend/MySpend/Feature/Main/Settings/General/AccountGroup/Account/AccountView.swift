@@ -103,11 +103,12 @@ struct AccountView: View {
                         .swipeActions(edge: .trailing) {
                             if !isEditing {
                                 
-                                Button(.selectorDelete, systemImage: ConstantSystemImage.trash, role: .destructive) {
+                                Button(.selectorDelete, systemImage: ConstantSystemImage.trash) {
                                     viewModel.accountToDelete = item
                                     viewModel.showAlertDelete = true
                                 }
                                 .labelStyle(.iconOnly)
+                                .tint(.alert)
                                 
                                 
                                 Button(.selectorEdit, systemImage: ConstantSystemImage.squareAndPencil) {
