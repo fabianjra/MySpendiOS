@@ -177,7 +177,7 @@ struct AccountView: View {
     @ToolbarContentBuilder
     private var toolbarContent: some ToolbarContent {
         
-        @Bindable var accountManagerBind = accountManager
+        //@Bindable var accountManagerBind = accountManager
         
         // MARK: TOP
         
@@ -216,43 +216,7 @@ struct AccountView: View {
                         Label(.selectorSelect, systemImage: ConstantSystemImage.checkmarkCircle)
                     }
                     
-                    Menu {
-                        Section {
-                            Picker(.sortTitle, selection: $accountManagerBind.sortSelection.sortBy) {
-                                ForEach(AccountSortOption.allCases, id: \.self) { sortBy in
-                                    Text(sortBy.localized)
-                                        .tag(sortBy)
-                                }
-                            }
-                            
-                        }
-                        
-                        Section {
-                            Picker(.sortTitle, selection: $accountManagerBind.sortSelection.order) {
-                                ForEach(SortOrder.allCases, id: \.self) { order in
-                                    Text(order.localized)
-                                        .tag(order)
-                                }
-                            }
-                        }
-                        
-                        Section {
-                            VStack(alignment: .leading) {
-                                Button(role: .destructive) {
-                                    accountManager.resetSort()
-                                } label: {
-                                    Text(.sortByDefault)
-                                }
-                            }
-                            
-                        }
-                        
-                    } label: {
-                        Label(.sortTitle, systemImage: ConstantSystemImage.arrowUpDown)
-                        
-                        Text(accountManager.sortSelection.sortBy.localized)
-                    }
-                    
+                    MenuOrderAccount()
                 }
                 .menuOrder(.fixed)
                 .disabled(accountManager.sortedAccounts.isEmpty)

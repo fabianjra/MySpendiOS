@@ -38,6 +38,15 @@ struct SelectAccountView: View {
                                 dismiss()
                             }
                             .foregroundStyle(.primary)
+                            
+                            Spacer()
+                            
+                            if item.id == accountManager.defaultAccount?.id {
+                                Text(.accountsDefault)
+                                    .foregroundStyle(Color.secondary)
+                                    .fontWeight(.light)
+                                    .font(.footnote)
+                            }
                         }
                     }
                 }
@@ -56,6 +65,16 @@ struct SelectAccountView: View {
             }
             
             .toolbar {
+                
+                ToolbarItemGroup(placement: .primaryAction) {
+                    Menu(.menuOptionsTitle, systemImage: ConstantSystemImage.options) {
+                        MenuOrderAccount()
+                    }
+                    .menuOrder(.fixed)
+                    .disabled(accountManager.sortedAccounts.isEmpty)
+                }
+
+                
                 ToolbarItem(placement: .destructiveAction) {
                     Button(role: .close) {
                         dismiss()
