@@ -331,13 +331,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select the account"
+            "value" : "Select an Account"
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Selecciona la cuenta"
+            "state" : "translated",
+            "value" : "Selecciona una Cuenta"
           }
         }
       }

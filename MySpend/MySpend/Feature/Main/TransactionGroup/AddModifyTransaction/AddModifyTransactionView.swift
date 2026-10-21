@@ -149,7 +149,7 @@ struct AddModifyTransactionView: View {
                                         categoryType: $viewModel.model.category.type) //TOD: Refatorizar porque se envia el mismo objeto
             }
             .sheet(isPresented: $showAccountList) {
-                SelectAccountView(selectedModel: $viewModel.model.account)
+                SelectAccountView(selectedAccount: $viewModel.model.account)
             }
         }
         

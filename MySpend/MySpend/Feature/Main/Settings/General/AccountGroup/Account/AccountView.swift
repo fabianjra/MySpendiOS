@@ -285,20 +285,20 @@ private struct previewWrapper: View {
     init(_ mockDataType: MockDataType = .normal) {
         UserDefaultsManager.defaultAccountID = MockCDConstants.mainAccountID
         
-        _previewAccountManager = State(initialValue: AccountManager(viewContext: mockDataType.viewContext))
+        _accountManager = State(initialValue: AccountManager(viewContext: mockDataType.viewContext))
     }
     
-    @State var previewAccountManager: AccountManager
+    @State var accountManager: AccountManager
     @State var editMode: EditMode = .inactive
     
     var body: some View {
         AccountView()
-            .environment(previewAccountManager)
+            .environment(accountManager)
             .environment(\.editMode, $editMode)
     }
 }
 
-#Preview("Normal \(Previews.localeES_CR)") {
+#Preview(Previews.localeES_CR) {
     NavigationStack {
         previewWrapper()
     }

@@ -12,72 +12,41 @@ struct SelectAccountView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(AccountManager.self) private var accountManager
     
-    @Binding var selectedModel: AccountModel
-    
-    @State private var sortSelection = UserDefaultsManager.sortAccounts {
-        didSet {
-            UserDefaultsManager.sortAccounts = sortSelection
-        }
-    }
-    
+    @Binding var selectedAccount: AccountModel
     @State private var selectedDetent: PresentationDetent = .medium
     
     var body: some View {
         NavigationStack {
-            VStack {
-                
-//                RowLCTCointainer(leadingContent: {
-//                    MenuContainer {
-//                        Section("Sorted by: \(sortSelection.rawValue)") {
-//                            sortButton(for: .byNameAz)
-//                            sortButton(for: .byCreationNewest)
-//                        }
-//                        
-//                        Section {
-//                            Button {
-//                                UserDefaultsManager.removeValue(for: .sortAccounts)
-//                                sortSelection = UserDefaultsManager.sortAccounts
-//                            } label: {
-//                                Label.restoreSelection
-//                                    .foregroundStyle(Color.alert, Color.alert)
-//                            }
-//                        }
-//                    }
-//                })
-//                .padding(.horizontal)
-                
-                List {
-                    if accountManager.sortedAccounts.isEmpty {
-                        Text(.accountsEmpty)
-                            .foregroundStyle(.secondary)
-                    } else {
-                        ForEach(accountManager.sortedAccounts) { item in
-                            HStack {
-                                let icon = item.icon.getIconFromSFSymbol
-                                
-                                if let image = icon {
-                                    image
-                                        .frame(width: FrameSize.width.iconCategoryList,
-                                               height: FrameSize.height.iconCategoryList)
-                                }
-                                
-                                Button(item.name) {
-                                    selectedModel = item
-                                    dismiss()
-                                }
-                                .foregroundStyle(.textPrimaryForeground)
-                                
-                                Spacer()
+            List {
+                if accountManager.sortedAccounts.isEmpty {
+                    
+                    Text(.accountsEmpty)
+                        .foregroundStyle(.secondary)
+                    
+                } else {
+                    ForEach(accountManager.sortedAccounts) { item in
+                        HStack {
+                            let icon = item.icon.getIconFromSFSymbol
+                            
+                            if let image = icon {
+                                image
+                                    .font(.title3)
                             }
+                            
+                            Button(item.name) {
+                                selectedAccount = item
+                                dismiss()
+                            }
+                            .foregroundStyle(.primary)
                         }
                     }
                 }
-                .scrollContentBackground(.hidden)
-                .animation(.default, value: sortSelection)
             }
+            .scrollContentBackground(.hidden)
+            .animation(.default, value: accountManager.sortedAccounts)
+            
             .navigationTitle(.accountsTitle)
-            //.navigationSubtitle(.accountsSelectSubtitle)
-            .navigationBarTitleDisplayMode(.inline)
+            .navigationSubtitle(.accountsSelectSubtitle)
             
             .presentationDetents([.medium, .large], selection: $selectedDetent)
             .presentationBackground {
@@ -98,13 +67,16 @@ struct SelectAccountView: View {
 }
 
 private struct previewWrapper: View {
-    init(_ mockDataType: MockDataType = .empty, local: String = Previews.localeES_CR) {
-        CoreDataUtilities.shared.mockDataType = mockDataType
+    init(_ mockDataType: MockDataType = .normal, local: String = Previews.localeES_CR) {
+        UserDefaultsManager.defaultAccountID = MockCDConstants.mainAccountID
+        
+        _accountManager = State(initialValue: AccountManager(viewContext: mockDataType.viewContext))
         self.local = local
     }
+    
     var local: String
     
-    @State var previewFilter = AccountManager.shared
+    @State var accountManager = AccountManager.shared
     @State var show: Bool = false
     @State var model = AccountModel()
     
@@ -115,12 +87,12 @@ private struct previewWrapper: View {
             }
         }
         .sheet(isPresented: $show) {
-            SelectAccountView(selectedModel: $model)
+            SelectAccountView(selectedAccount: $model)
         }
         .onAppear {
             show = true
         }
-        .environment(previewFilter)
+        .environment(accountManager)
         .environment(\.locale, .init(identifier: local))
     }
 }
@@ -129,10 +101,10 @@ private struct previewWrapper: View {
     previewWrapper(.normal, local: Previews.localeES_CR)
 }
 
-#Preview(Previews.localeEN) {
-    previewWrapper(.normal, local: Previews.localeEN)
+#Preview("Saturated \(Previews.localeEN)") {
+    previewWrapper(.saturated, local: Previews.localeEN)
 }
 
 #Preview("Empty \(Previews.localeES)") {
-    previewWrapper(local: Previews.localeES)
+    previewWrapper(.empty, local: Previews.localeES)
 }
