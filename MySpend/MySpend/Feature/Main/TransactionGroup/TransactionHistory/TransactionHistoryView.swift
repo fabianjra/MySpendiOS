@@ -10,7 +10,7 @@ import SwiftUI
 struct TransactionHistoryView: View {
     
     @State private var viewModel = TransactionHistoryViewModel()
-    @State private var toast = ToastViewModel()
+    @State private var toastResponse: ToastResponse?
     
     @Binding var transactionsLoaded: [TransactionModel]
     @Binding var dateTimeInterval: DateTimeInterval
@@ -89,7 +89,7 @@ struct TransactionHistoryView: View {
             filterTransactionsByDate()
         }
         
-        .toast(toast.response, isPresented: $toast.show)
+        .toast($toastResponse)
     }
     
     private func filterTransactionsByDate() {
@@ -433,7 +433,7 @@ struct TransactionHistoryView: View {
             let response = await viewModel.favorite(model)
             
             if response.type == .error {
-                toast.response = response
+                toastResponse = response
             }
         }
     }
@@ -443,7 +443,7 @@ struct TransactionHistoryView: View {
             let response = await viewModel.favoriteMltiple(newState)
             
             if response.type == .error {
-                toast.response = response
+                toastResponse = response
             }
         }
     }
@@ -454,13 +454,13 @@ struct TransactionHistoryView: View {
                 modelToDelete = nil
             }
             
-            toast.response = await viewModel.delete(modelToDelete)
+            toastResponse = await viewModel.delete(modelToDelete)
         }
     }
     
     private func deleteMltipleTransactions() {
         Task {
-            toast.response = await viewModel.deleteMltiple()
+            toastResponse = await viewModel.deleteMltiple()
         }
     }
 }

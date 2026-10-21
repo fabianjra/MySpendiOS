@@ -15,7 +15,7 @@ struct UpdateAccountView: View {
     @Binding var account: AccountModel
     
     @State private var viewModel = AccountDetailEditViewModel()
-    @State private var toast = ToastViewModel()
+    @State private var toastResponse: ToastResponse?
     
     var body: some View {
         VStack {
@@ -32,9 +32,9 @@ struct UpdateAccountView: View {
             VStack {
                 Button {
                     Task {
-                        toast.response = await accountManager.update(account,
+                        toastResponse = await accountManager.update(account,
                                                                      isDefault: viewModel.isDefaultSelected)
-                        if toast.response.type == .ok {
+                        if toastResponse?.type == .ok {
                             dismiss()
                         }
                     }
@@ -46,7 +46,7 @@ struct UpdateAccountView: View {
                 .padding(.horizontal)
                 .buttonStyle(.glass)
                 .padding(.bottom)
-                .disabled(toast.show)
+                .disabled(toastResponse != nil)
                 
                 Button(.alertOptionDelete, role: .destructive) {
                     viewModel.showAlert = true
@@ -57,9 +57,9 @@ struct UpdateAccountView: View {
             .alert(.accountDelete(.zero), isPresented: $viewModel.showAlert) {
                 Button(.alertOptionDelete, role: .destructive) {
                     Task {
-                        toast.response = await accountManager.delete(account)
+                        toastResponse = await accountManager.delete(account)
                         
-                        if toast.response.type == .ok {
+                        if toastResponse?.type == .ok {
                             dismiss()
                         }
                     }
@@ -71,7 +71,7 @@ struct UpdateAccountView: View {
             }
             
         }
-        .toast(toast.response, isPresented: $toast.show)
+        .toast($toastResponse)
         
         .toolbar {
             ToolbarItem(placement: .primaryAction) {

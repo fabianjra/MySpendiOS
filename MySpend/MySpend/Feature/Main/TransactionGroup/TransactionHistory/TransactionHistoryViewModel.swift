@@ -35,14 +35,14 @@ final class TransactionHistoryViewModel {
         self.viewContext = viewContext ?? CoreDataUtilities.getViewContext
     }
     
-    func favorite(_ model: TransactionModel) async -> ResponseToast {
+    func favorite(_ model: TransactionModel) async -> ToastResponse {
         do {
             try await TransactionCoreDataManager(viewContext).updateFavorite(model)
             
-            return ResponseToast()
+            return ToastResponse()
         } catch {
             Logger.exception(error, type: .CoreData)
-            return ResponseToast(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)
+            return ToastResponse(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)
         }
     }
     
@@ -50,7 +50,7 @@ final class TransactionHistoryViewModel {
      Si solamente hay una transacción seleccionada, hace un Toggle para cambiar su estado de favorito.
      Si hay varias transacciones seleccionadas, entonces marca todas como favoritas.
      */
-    func favoriteMltiple(_ newState: Bool) async -> ResponseToast {
+    func favoriteMltiple(_ newState: Bool) async -> ToastResponse {
         defer {
             isEditing = false
             selectedTransactions.removeAll()
@@ -67,26 +67,26 @@ final class TransactionHistoryViewModel {
                 try await TransactionCoreDataManager(viewContext).favoriteMultiple(Array(selectedTransactions), newState: newState)
             }
             
-            return ResponseToast(.responseSuccesful, .ok)
+            return ToastResponse(.responseSuccesful, .ok)
         } catch {
             Logger.exception(error, type: .CoreData)
-            return ResponseToast(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)
+            return ToastResponse(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)
         }
     }
     
-    func delete(_ model: TransactionModel?) async -> ResponseToast {
-        guard let model = model else { return ResponseToast() }
+    func delete(_ model: TransactionModel?) async -> ToastResponse {
+        guard let model = model else { return ToastResponse() }
         
         do {
             try await TransactionCoreDataManager(viewContext).delete(model)
-            return ResponseToast(.responseSuccesful, .ok)
+            return ToastResponse(.responseSuccesful, .ok)
         } catch {
             Logger.exception(error, type: .CoreData)
-            return ResponseToast(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)
+            return ToastResponse(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)
         }
     }
     
-    func deleteMltiple() async -> ResponseToast {
+    func deleteMltiple() async -> ToastResponse {
         defer {
             isEditing = false
             selectedTransactions.removeAll()
@@ -100,10 +100,10 @@ final class TransactionHistoryViewModel {
                 try await TransactionCoreDataManager(viewContext).delete(item)
             }
             
-            return ResponseToast(.responseTransactionDeleted(selectedTransactions.count), .ok)
+            return ToastResponse(.responseTransactionDeleted(selectedTransactions.count), .ok)
         } catch {
             Logger.exception(error, type: .CoreData)
-            return ResponseToast(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)
+            return ToastResponse(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)
         }
     }
     

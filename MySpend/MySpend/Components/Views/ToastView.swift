@@ -8,12 +8,12 @@
 import SwiftUI
 
 private struct ToastView: ViewModifier {
-    let response: ResponseToast
-    @Binding var isPresented: Bool
+    @Binding var response: ToastResponse?
+    @State private var isPresented = false
     
     // Tiempo en segundos que se mostrara el Popup. Se calcula por palabra
     private var displayDuration: Double {
-        let message = String(localized: response.message)
+        let message = String(localized: response?.message ?? "")
         let wordCount = message.split(whereSeparator: \.isWhitespace).count
         let readingTime = Double(wordCount) / 225.0 * 60.0
 
@@ -26,9 +26,9 @@ private struct ToastView: ViewModifier {
                 if isPresented {
                     
                     HStack {
-                        Text(response.type?.rawValue ?? "")
+                        Text(response?.type?.rawValue ?? "")
                         
-                        Text(response.message)
+                        Text(response?.message ?? "")
                             .fontDesign(.rounded)
                             .lineLimit(ConstantViews.toastMessageMaxLines)
                     }
@@ -42,36 +42,52 @@ private struct ToastView: ViewModifier {
                     .onTapGesture {
                         withAnimation {
                             isPresented = false
+                            response = nil
                         }
                     }
                     
-                    .task {
+                    .task(id: response != nil && isPresented) {
+                        guard isPresented else { return }
+
                         try? await Task.sleep(for: .seconds(displayDuration))
-                        
+
+                        // Al ignorar el error de cancelación, una tarea cancelada puede continuar inmediatamente y ocultar un toast más reciente.
+                        // Por eso es importante esta linea de codigo.
+                        guard !Task.isCancelled else { return }
+
                         withAnimation {
                             isPresented = false
+                            response = nil
                         }
                     }
                 }
             }
             .animation(.easeInOut, value: isPresented)
+        
+            .onChange(of: response != nil, initial: true) { _, hasResponse in
+                if hasResponse {
+                    withAnimation {
+                        isPresented = true
+                    }
+                }
+            }
     }
 }
 
-extension View {
-    func toast(_ response: ResponseToast, isPresented: Binding<Bool>) -> some View {
-        modifier(ToastView(response: response, isPresented: isPresented))
+extension View {    
+    func toast(_ response: Binding<ToastResponse?>) -> some View {
+        modifier(ToastView(response: response))
     }
 }
 
 #Preview {
-    @Previewable @State var toast = ToastViewModel()
+    @Previewable @State var toastResponse: ToastResponse?
     
     VStack {
         Spacer()
         
         Button("View Toast small") {
-            toast.response = ResponseToast(.responseSuccesful, .ok)
+            toastResponse = ToastResponse(.responseSuccesful, .ok)
         }
         
         HStack {
@@ -81,18 +97,18 @@ extension View {
         Spacer()
         
         Button("View Toast Big") {
-            toast.response = ResponseToast(LocalizedStringResource(stringLiteral:
+            toastResponse = ToastResponse(LocalizedStringResource(stringLiteral:
                                                                     Errors.cannotUpdateAccountWithTransactions("TEST").localizedDescription), .error)
         }
         
         Spacer()
         
         Button("View Toast Error") {
-            toast.response = ResponseToast(.responseErrorTextFieldEmptySpace, .error)
+            toastResponse = ToastResponse(.responseErrorTextFieldEmptySpace, .error)
         }
         
         Spacer()
     }
     .background(Color.backgroundGradient)
-    .toast(toast.response, isPresented: $toast.show)
+    .toast($toastResponse)
 }

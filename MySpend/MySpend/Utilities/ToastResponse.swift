@@ -1,5 +1,5 @@
 //
-//  ResponseToast.swift
+//  ToastResponse.swift
 //  MySpend
 //
 //  Created by Fabian Rodriguez on 30/8/26.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ResponseToast {
+struct ToastResponse {
     let message: LocalizedStringResource
     let type: ResponseType?
     

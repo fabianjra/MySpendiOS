@@ -154,9 +154,9 @@ final class AccountManager {
 
 extension AccountManager {
     
-    func create(_ account: AccountModel, isDefault: Bool) async -> ResponseToast {
+    func create(_ account: AccountModel, isDefault: Bool) async -> ToastResponse {
         if account.name.isEmptyOrWhitespace {
-            return ResponseToast(.responseErrorTextFieldEmptySpace, .error)
+            return ToastResponse(.responseErrorTextFieldEmptySpace, .error)
         }
         
         do {
@@ -167,16 +167,16 @@ extension AccountManager {
                 setDefaultAccount(by: account)
             }
             
-            return ResponseToast(.responseSuccesful, .ok)
+            return ToastResponse(.responseSuccesful, .ok)
         } catch {
             Logger.exception(error, type: .CoreData)
-            return ResponseToast(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)
+            return ToastResponse(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)
         }
     }
     
-    func update(_ account: AccountModel, isDefault: Bool) async -> ResponseToast {
+    func update(_ account: AccountModel, isDefault: Bool) async -> ToastResponse {
         if account.name.isEmptyOrWhitespace {
-            return ResponseToast(.responseErrorTextFieldEmptySpace, .error)
+            return ToastResponse(.responseErrorTextFieldEmptySpace, .error)
         }
         
         do {
@@ -186,35 +186,35 @@ extension AccountManager {
                 setDefaultAccount(by: account)
             }
             
-            return ResponseToast(.responseSuccesful, .ok)
+            return ToastResponse(.responseSuccesful, .ok)
         } catch {
             Logger.exception(error, type: .CoreData)
-            return ResponseToast(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)
+            return ToastResponse(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)
         }
     }
     
-    func delete(_ account: AccountModel?) async -> ResponseToast {
-        guard let account = account else { return ResponseToast()}
+    func delete(_ account: AccountModel?) async -> ToastResponse {
+        guard let account = account else { return ToastResponse()}
         
         do {
             try await coreDataManager.delete(account)
-            return ResponseToast(.responseAccountsDeleted(.zero), .ok)
+            return ToastResponse(.responseAccountsDeleted(.zero), .ok)
         } catch {
             Logger.exception(error, type: .CoreData)
-            return ResponseToast(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)
+            return ToastResponse(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)
         }
     }
     
-    func delete(_ selectedAccounts: Set<AccountModel>) async -> ResponseToast {
+    func delete(_ selectedAccounts: Set<AccountModel>) async -> ToastResponse {
         do {
             for item in selectedAccounts {
                 try await coreDataManager.delete(item)
             }
             
-            return ResponseToast(.responseAccountsDeleted(selectedAccounts.count), .ok)
+            return ToastResponse(.responseAccountsDeleted(selectedAccounts.count), .ok)
         } catch {
             Logger.exception(error)
-            return ResponseToast(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)
+            return ToastResponse(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)
         }
     }
 }

@@ -17,7 +17,7 @@ struct AccountView: View {
     }
     
     @State private var viewModel = AccountViewModel()
-    @State private var toast = ToastViewModel()
+    @State private var toastResponse: ToastResponse?
     
     var body: some View {
         VStack {
@@ -55,7 +55,7 @@ struct AccountView: View {
             }
         }
         
-        .toast(toast.response, isPresented: $toast.show)
+        .toast($toastResponse)
     }
     
     // MARK: - VIEWS
@@ -144,14 +144,14 @@ struct AccountView: View {
                                             viewModel.accountToDelete = nil
                                         }
                                         
-                                        toast.response = await accountManager.delete(viewModel.accountToDelete)
+                                        toastResponse = await accountManager.delete(viewModel.accountToDelete)
                                     } else {
                                         
                                         defer {
                                             viewModel.selectedAccounts.removeAll()
                                         }
                                         
-                                        toast.response = await accountManager.delete(viewModel.selectedAccounts)
+                                        toastResponse = await accountManager.delete(viewModel.selectedAccounts)
                                     }
                                     
                                     editMode?.wrappedValue = .inactive

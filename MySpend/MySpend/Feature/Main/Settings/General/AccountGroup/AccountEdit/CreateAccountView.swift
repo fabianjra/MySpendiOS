@@ -15,7 +15,7 @@ struct CreateAccountView: View {
     @State private var viewModel = AccountDetailEditViewModel()
     @State private var account = AccountModel()
     
-    @State private var toast = ToastViewModel()
+    @State private var toastResponse: ToastResponse?
     
     var body: some View {
         VStack {
@@ -28,9 +28,9 @@ struct CreateAccountView: View {
         .safeAreaInset(edge: .bottom) {
             Button {
                 Task {
-                    toast.response = await accountManager.create(account,
+                    toastResponse = await accountManager.create(account,
                                                                  isDefault: viewModel.isDefaultSelected)
-                    if toast.response.type == .ok {
+                    if toastResponse?.type == .ok {
                         dismiss()
                     }
                 }
@@ -42,9 +42,9 @@ struct CreateAccountView: View {
             .padding(.horizontal)
             .buttonStyle(.glass)
             .padding(.bottom)
-            .disabled(toast.show)
+            .disabled(toastResponse != nil)
         }
-        .toast(toast.response, isPresented: $toast.show)
+        .toast($toastResponse)
         
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
