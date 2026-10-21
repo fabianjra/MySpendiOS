@@ -7,7 +7,9 @@
 
 import Foundation
 
-struct ToastResponse {
+struct ToastResponse: Identifiable {
+    let id = UUID()
+    
     let message: LocalizedStringResource
     let type: ResponseType?
     

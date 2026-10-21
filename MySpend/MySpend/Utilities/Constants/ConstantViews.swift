@@ -15,7 +15,6 @@ struct ConstantViews {
     // MARK: TEXT
     static let singleTextMaxLines: Int = 1
     static let messageMaxLines: Int = 3
-    static let toastMessageMaxLines: Int = 5
     static let passwordMinimumLength: Int = 6
     static let textMaxLength: Int = 120
     

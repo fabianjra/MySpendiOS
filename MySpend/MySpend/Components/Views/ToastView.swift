@@ -7,6 +7,20 @@
 
 import SwiftUI
 
+/**
+ A reusable SwiftUI view modifier that displays temporary toast notifications.
+ 
+ Presents a toast at the bottom of the view whenever a `ToastResponse` is provided.
+ The toast automatically disappears after a duration calculated from the message's
+ word count, with a minimum of 3 seconds and a maximum of 6 seconds.
+ 
+ Each new response restarts the display timer, ensuring that the latest message
+ remains visible for its full duration.
+ 
+ The toast can also be dismissed manually by tapping it.
+ 
+ - Note: Uses a binding to manage the response and automatically clears it when the toast is dismissed.
+ */
 private struct ToastView: ViewModifier {
     @Binding var response: ToastResponse?
     @State private var isPresented = false
@@ -16,7 +30,7 @@ private struct ToastView: ViewModifier {
         let message = String(localized: response?.message ?? "")
         let wordCount = message.split(whereSeparator: \.isWhitespace).count
         let readingTime = Double(wordCount) / 225.0 * 60.0
-
+        
         return min(max(readingTime, 3.0), 6.0)
     }
     
@@ -30,7 +44,7 @@ private struct ToastView: ViewModifier {
                         
                         Text(response?.message ?? "")
                             .fontDesign(.rounded)
-                            .lineLimit(ConstantViews.toastMessageMaxLines)
+                            .lineLimit(5)
                     }
                     .padding(.horizontal)
                     .padding(.vertical)
@@ -46,15 +60,17 @@ private struct ToastView: ViewModifier {
                         }
                     }
                     
-                    .task(id: response != nil && isPresented) {
-                        guard isPresented else { return }
-
-                        try? await Task.sleep(for: .seconds(displayDuration))
-
-                        // Al ignorar el error de cancelación, una tarea cancelada puede continuar inmediatamente y ocultar un toast más reciente.
-                        // Por eso es importante esta linea de codigo.
+                    .task(id: response?.id) {
+                        guard response != nil, isPresented else { return }
+                        
+                        do {
+                            try await Task.sleep(for: .seconds(displayDuration))
+                        } catch {
+                            return // La tarea fue cancelada porque llegó otro mensaje.
+                        }
+                        
                         guard !Task.isCancelled else { return }
-
+                        
                         withAnimation {
                             isPresented = false
                             response = nil
@@ -74,7 +90,7 @@ private struct ToastView: ViewModifier {
     }
 }
 
-extension View {    
+extension View {
     func toast(_ response: Binding<ToastResponse?>) -> some View {
         modifier(ToastView(response: response))
     }
@@ -99,6 +115,14 @@ extension View {
         Button("View Toast Big") {
             toastResponse = ToastResponse(LocalizedStringResource(stringLiteral:
                                                                     Errors.cannotUpdateAccountWithTransactions("TEST").localizedDescription), .error)
+        }
+        
+        Spacer()
+        
+        Button("EXTRA View Toast Big") {
+            toastResponse = ToastResponse(LocalizedStringResource(stringLiteral:
+                                                                    Errors.cannotUpdateAccountWithTransactions("TEST").localizedDescription +
+                                                                  Errors.cannotUpdateAccountWithTransactions("TEST").localizedDescription), .error)
         }
         
         Spacer()
