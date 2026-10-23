@@ -17,7 +17,7 @@ struct CategoryView: View {
     @State private var modelToModify: CategoryModel?
     @State private var modelToDelete: CategoryModel?
     
-    //TOD: MOVER A VISTAS POR SEPARADO PARA PODER AGREGAR EL LOADER
+
     var body: some View {
         VStack {
             
@@ -32,13 +32,12 @@ struct CategoryView: View {
             
             TextError(viewModel.errorMessage)
         }
-        .navigationTitle("Categories")
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle(
+            viewModel.selectedCategories.isEmpty ?
+                .categoriesTitle : .selectorSelectedCountFemale(viewModel.selectedCategories.count)
+        )
+        
         .toolbar {
-            ToolbarItem(placement: .title) {
-                TextPlain("Categories")
-            }
-            
             ToolbarItem(placement: .topBarTrailing) {
                 Button("Add item", systemImage: "plus") {
                     showNewItemModal = true
@@ -251,21 +250,18 @@ private struct previewWrapper: View {
     var body: some View { CategoryView() }
 }
 
-#Preview("Normal es_CR") {
+#Preview(Previews.localeES_CR) {
     NavigationStack {
         previewWrapper()
-            .environment(\.locale, .init(identifier: "es_CR"))
     }
+    .environment(\.locale, .init(identifier: Previews.localeES_CR))
 }
 
-#Preview("Saturated en_US") {
-    previewWrapper(.saturated)
-        .environment(\.locale, .init(identifier: "en_US"))
-}
-
-#Preview("Empty es_ES") {
-    previewWrapper(.empty)
-        .environment(\.locale, .init(identifier: "en_ES"))
+#Preview("Saturated \(Previews.localeEN)") {
+    NavigationStack {
+        previewWrapper(.saturated)
+    }
+    .environment(\.locale, .init(identifier: Previews.localeEN))
 }
 
 //#Preview("Only expenses es_CR") {
