@@ -21,7 +21,7 @@ struct AccountView: View {
     
     var body: some View {
         VStack {
-            itemList
+            accountList
         }
         .navigationTitle(
             viewModel.selectedAccounts.isEmpty ?
@@ -60,7 +60,7 @@ struct AccountView: View {
     
     // MARK: - VIEWS
     
-    private var itemList: some View {
+    private var accountList: some View {
         List(selection: $viewModel.selectedAccounts) {
             if accountManager.sortedAccounts.isEmpty {
                 Section {
@@ -164,7 +164,10 @@ struct AccountView: View {
                         }
                     }
                 } header: {
-                    //Text(.accountListTitle)
+                    Text(.accountListHeader)
+                    
+                } footer: {
+                    Text(.accountListFooter)
                 }
             }
         }
@@ -176,8 +179,6 @@ struct AccountView: View {
     
     @ToolbarContentBuilder
     private var toolbarContent: some ToolbarContent {
-        
-        //@Bindable var accountManagerBind = accountManager
         
         // MARK: TOP
         
