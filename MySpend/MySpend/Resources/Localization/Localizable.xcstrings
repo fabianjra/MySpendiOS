@@ -1580,6 +1580,36 @@
         }
       }
     },
+    "Response.Categories.Deleted %lld" : {
+      "comment" : "Muestra la cantidad de categorias eliminadas como respuesta al proceso",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Category deleted"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Categories deleted"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Category deleted"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "Response.Error.FetchAccounts" : {
       "comment" : "Mensaje para indicar que hubo un error al cargar cuentas",
       "extractionState" : "manual",

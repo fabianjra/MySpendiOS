@@ -8,7 +8,10 @@ import SwiftUI
 
 struct RootView: View {
     
+    // MARK: MANAGERS
     @State private var accountManager = AccountManager.shared
+    @State private var categoryManager = CategoryManager.shared
+    
     @State private var themeManager = ThemeManager.shared
     @State private var router = Router.shared
     
@@ -47,6 +50,8 @@ struct RootView: View {
             //UIApplication.shared.addTapGestureRecognizer()
         }
         .environment(accountManager)
+        .environment(categoryManager)
+        
         .environment(themeManager)
         .preferredColorScheme(themeManager.theme.colorScheme)
     }
@@ -63,7 +68,7 @@ private struct previewWrapper: View {
     var body: some View { RootView() }
 }
 
-#Preview("Normal \(Previews.localeES_CR)") {
+#Preview(Previews.localeES_CR) {
     previewWrapper()
         .environment(\.locale, .init(identifier: Previews.localeES_CR))
 }

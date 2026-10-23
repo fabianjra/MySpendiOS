@@ -7,6 +7,7 @@
 
 import Foundation
 
+//TODO: BORRAR
 struct UtilsCategories {
     
     static func filteredCategories(_ categories: [CategoryModel], by categoryType: CategoryType, sortType: SortCategories? = nil) -> [CategoryModel] {
@@ -36,6 +37,28 @@ struct UtilsCategories {
             
         } else {
             return filteredList
+        }
+    }
+}
+
+extension Array where Element == CategoryModel {
+    
+    func sortedCategories(by sort: CategorySortConfiguration) -> [CategoryModel] {
+        switch sort.sortBy {
+            
+        case .title:
+            return sorted {
+                sort.order == .ascending
+                ? $0.name.localizedStandardCompare($1.name) == .orderedAscending
+                : $0.name.localizedStandardCompare($1.name) == .orderedDescending
+            }
+            
+        case .dateCreated:
+            return sorted {
+                sort.order == .ascending
+                ? $0.dateCreated < $1.dateCreated
+                : $0.dateCreated > $1.dateCreated
+            }
         }
     }
 }

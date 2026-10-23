@@ -5,7 +5,7 @@
 //  Created by Fabian Rodriguez on 9/7/25.
 //
 
-import SwiftUI
+import Foundation
 
 struct AccountSortConfiguration: Codable, Equatable {
     var sortBy: AccountSortOption = .dateCreated

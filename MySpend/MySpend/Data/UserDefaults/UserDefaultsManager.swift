@@ -36,10 +36,19 @@ struct UserDefaultsManager {
         }
     }
     
+    //TODO: BORRAR.
     static var sorCategories: SortCategories {
         get { return UserDefaultsDataStore<SortCategories>(for: .sortCategories).value ?? .byNameAz }
         set {
             var manager = UserDefaultsDataStore<SortCategories>(for: .sortCategories)
+            manager.value = newValue
+        }
+    }
+    
+    static var sortCategories: CategorySortConfiguration {
+        get { return UserDefaultsDataStore<CategorySortConfiguration>(for: .sortCategories).value ?? CategorySortConfiguration() }
+        set {
+            var manager = UserDefaultsDataStore<CategorySortConfiguration>(for: .sortCategories)
             manager.value = newValue
         }
     }

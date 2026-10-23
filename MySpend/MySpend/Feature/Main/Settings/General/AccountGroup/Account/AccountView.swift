@@ -144,7 +144,10 @@ struct AccountView: View {
                                             viewModel.accountToDelete = nil
                                         }
                                         
-                                        toastResponse = await accountManager.delete(viewModel.accountToDelete)
+                                        if let account = viewModel.accountToDelete {
+                                            toastResponse = await accountManager.delete(account)
+                                        }
+                                        
                                     } else {
                                         
                                         defer {

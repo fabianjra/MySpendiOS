@@ -39,8 +39,7 @@ final class AccountManager {
      This convenience initializer delegates to the designated initializer,
      automatically providing the context returned by `CoreDataUtilities.getViewContext`.
      
-     Used internally to initialize the shared instance without requiring
-     an explicit context.
+     Used internally to initialize the shared instance without requiring an explicit context.
      */
     private convenience init() {
         self.init(viewContext: CoreDataUtilities.getViewContext)
@@ -193,11 +192,10 @@ extension AccountManager {
         }
     }
     
-    func delete(_ account: AccountModel?) async -> ToastResponse {
-        guard let account = account else { return ToastResponse()}
-        
+    func delete(_ account: AccountModel) async -> ToastResponse {
         do {
             try await coreDataManager.delete(account)
+            
             return ToastResponse(.responseAccountsDeleted(.zero), .ok)
         } catch {
             Logger.exception(error, type: .CoreData)
