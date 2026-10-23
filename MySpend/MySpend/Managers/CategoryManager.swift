@@ -14,7 +14,7 @@ final class CategoryManager {
     static let shared = CategoryManager()
     
     private let coreDataManager: CategoryCoreDataManager
-    private var allCategories: [CategoryModel] = []
+    private var categories: [CategoryModel] = []
     
     
     // MARK: OBSERVABLES
@@ -47,7 +47,7 @@ final class CategoryManager {
     
     private func refreshCategories() async {
         do {
-            allCategories = try await coreDataManager.fetchAll()
+            categories = try await coreDataManager.fetchAll()
         } catch {
             Logger.exception(error, type: .CoreData)
         }
@@ -70,8 +70,8 @@ final class CategoryManager {
     
     // MARK: ORDENAMIENTO
     
-    var sortedAccounts: [CategoryModel] {
-        allCategories.sortedCategories(by: sortSelection)
+    var sortedCategories: [CategoryModel] {
+        categories.sortedCategories(by: sortSelection)
     }
     
     var sortSelection = UserDefaultsManager.sortCategories {

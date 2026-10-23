@@ -9,11 +9,11 @@ import SwiftUI
 
 struct MenuOrderAccount: View {
     
-    @Environment(AccountManager.self) private var accountManager
+    @Environment(AccountManager.self) private var manager
     
     var body: some View {
         
-        @Bindable var accountManagerBind = accountManager
+        @Bindable var accountManagerBind = manager
         
         Menu {
             Section {
@@ -38,7 +38,7 @@ struct MenuOrderAccount: View {
             Section {
                 VStack(alignment: .leading) {
                     Button(role: .destructive) {
-                        accountManager.resetSort()
+                        manager.resetSort()
                     } label: {
                         Text(.sortByDefault)
                     }
@@ -49,14 +49,14 @@ struct MenuOrderAccount: View {
         } label: {
             Label(.sortTitle, systemImage: ConstantSystemImage.arrowUpDown)
             
-            Text(accountManager.sortSelection.sortBy.localized)
+            Text(manager.sortSelection.sortBy.localized)
         }
     }
 }
 
 #Preview {
-    @Previewable @State var accountManager = AccountManager.shared
+    @Previewable @State var manager = AccountManager.shared
     
     MenuOrderAccount()
-        .environment(accountManager)
+        .environment(manager)
 }

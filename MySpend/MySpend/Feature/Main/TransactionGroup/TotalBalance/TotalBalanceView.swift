@@ -22,7 +22,7 @@ struct TotalBalanceView: View {
                 .overlay(Color.divider)
             
             HStack {
-                Text(.transactionTypeIncomes)
+                Text(.categoryTypeIncomes)
                     .textStyle
                 
                 Spacer()
@@ -35,7 +35,7 @@ struct TotalBalanceView: View {
             
             HStack {
                 
-                Text(.transactionTypeExpenses)
+                Text(.categoryTypeExpenses)
                 
                 Spacer()
                 

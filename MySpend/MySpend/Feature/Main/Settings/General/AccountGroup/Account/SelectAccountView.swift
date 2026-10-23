@@ -10,7 +10,7 @@ import SwiftUI
 struct SelectAccountView: View {
     
     @Environment(\.dismiss) var dismiss
-    @Environment(AccountManager.self) private var accountManager
+    @Environment(AccountManager.self) private var manager
     
     @Binding var selectedAccount: AccountModel
     @State private var selectedDetent: PresentationDetent = .medium
@@ -18,13 +18,13 @@ struct SelectAccountView: View {
     var body: some View {
         NavigationStack {
             List {
-                if accountManager.sortedAccounts.isEmpty {
+                if manager.sortedAccounts.isEmpty {
                     
                     Text(.accountsEmpty)
                         .foregroundStyle(.secondary)
                     
                 } else {
-                    ForEach(accountManager.sortedAccounts) { item in
+                    ForEach(manager.sortedAccounts) { item in
                         HStack {
                             let icon = item.icon.getIconFromSFSymbol
                             
@@ -41,7 +41,7 @@ struct SelectAccountView: View {
                             
                             Spacer()
                             
-                            if item.id == accountManager.defaultAccount?.id {
+                            if item.id == manager.defaultAccount?.id {
                                 Text(.accountsDefault)
                                     .foregroundStyle(Color.secondary)
                                     .fontWeight(.light)
@@ -52,7 +52,7 @@ struct SelectAccountView: View {
                 }
             }
             .scrollContentBackground(.hidden)
-            .animation(.default, value: accountManager.sortedAccounts)
+            .animation(.default, value: manager.sortedAccounts)
             
             .navigationTitle(.accountsTitle)
             .navigationSubtitle(.accountsSelectSubtitle)
@@ -71,7 +71,7 @@ struct SelectAccountView: View {
                         MenuOrderAccount()
                     }
                     .menuOrder(.fixed)
-                    .disabled(accountManager.sortedAccounts.isEmpty)
+                    .disabled(manager.sortedAccounts.isEmpty)
                 }
 
                 
@@ -89,13 +89,13 @@ private struct previewWrapper: View {
     init(_ mockDataType: MockDataType = .normal, local: String = Previews.localeES_CR) {
         UserDefaultsManager.defaultAccountID = MockCDConstants.mainAccountID
         
-        _accountManager = State(initialValue: AccountManager(viewContext: mockDataType.viewContext))
+        _manager = State(initialValue: AccountManager(viewContext: mockDataType.viewContext))
         self.local = local
     }
     
     var local: String
     
-    @State var accountManager = AccountManager.shared
+    @State var manager = AccountManager.shared
     @State var show: Bool = false
     @State var model = AccountModel()
     
@@ -111,7 +111,7 @@ private struct previewWrapper: View {
         .onAppear {
             show = true
         }
-        .environment(accountManager)
+        .environment(manager)
         .environment(\.locale, .init(identifier: local))
     }
 }

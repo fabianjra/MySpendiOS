@@ -205,7 +205,7 @@ struct TransactionView: View {
                     if !viewModel.groupedTransactionsIncomes.isEmpty {
                         VStack(alignment: .leading) {
                             
-                            Text(.transactionTypeIncomes)
+                            Text(.categoryTypeIncomes)
                                 .foregroundStyle(Color.accentColor)
                                 .fontWeight(.semibold)
                                 .font(.title3)
@@ -234,7 +234,7 @@ struct TransactionView: View {
                     if !viewModel.groupedTransactionsExpenses.isEmpty {
                         VStack(alignment: .leading) {
                             
-                            Text(.transactionTypeExpenses)
+                            Text(.categoryTypeExpenses)
                                 .foregroundStyle(.alert)
                                 .fontWeight(.semibold)
                                 .font(.title3)

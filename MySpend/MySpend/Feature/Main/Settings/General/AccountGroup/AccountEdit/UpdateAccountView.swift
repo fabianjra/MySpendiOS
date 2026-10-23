@@ -10,7 +10,7 @@ import SwiftUI
 struct UpdateAccountView: View {
     
     @Environment(\.dismiss) private var dismiss
-    @Environment(AccountManager.self) private var accountManager
+    @Environment(AccountManager.self) private var manager
     
     @Binding var account: AccountModel
     
@@ -22,7 +22,7 @@ struct UpdateAccountView: View {
             AccountDetailEdit(account: $account, isDefaultSelected: $viewModel.isDefaultSelected)
         }
         .onAppear {
-            viewModel.isDefaultSelected = account.id == accountManager.defaultAccount?.id
+            viewModel.isDefaultSelected = account.id == manager.defaultAccount?.id
         }
         
         .navigationTitle(.accountUpdateTitle)
@@ -32,7 +32,7 @@ struct UpdateAccountView: View {
             VStack {
                 Button {
                     Task {
-                        toastResponse = await accountManager.update(account,
+                        toastResponse = await manager.update(account,
                                                                      isDefault: viewModel.isDefaultSelected)
                         if toastResponse?.type == .ok {
                             dismiss()
@@ -57,7 +57,7 @@ struct UpdateAccountView: View {
             .alert(.accountDelete(.zero), isPresented: $viewModel.showAlert) {
                 Button(.alertOptionDelete, role: .destructive) {
                     Task {
-                        toastResponse = await accountManager.delete(account)
+                        toastResponse = await manager.delete(account)
                         
                         if toastResponse?.type == .ok {
                             dismiss()
@@ -94,20 +94,20 @@ private struct PreviewWrapper: View {
         CoreDataUtilities.shared.mockDataType = mockDataType
     }
     
-    @State var accountManager = AccountManager.shared
+    @State var manager = AccountManager.shared
     @State var account = AccountModel()
     @State var isPresented: Bool = false
     
     var body: some View {
         VStack {
-            List(accountManager.sortedAccounts) { account in
+            List(manager.sortedAccounts) { account in
                 Button(account.name) {
                     self.account = account
                     isPresented = true
                 }
             }
         }
-        .onChange(of: accountManager.sortedAccounts, initial: true) { _, accounts in
+        .onChange(of: manager.sortedAccounts, initial: true) { _, accounts in
             guard let firstAccount = accounts.first else {
                 return
             }
@@ -120,11 +120,16 @@ private struct PreviewWrapper: View {
                 UpdateAccountView(account: $account)
             }
         }
-        .environment(accountManager)
+        .environment(manager)
     }
 }
 
 #Preview(Previews.localeES_CR) {
     PreviewWrapper()
         .environment(\.locale, .init(identifier: Previews.localeES_CR))
+}
+
+#Preview(Previews.localeEN) {
+    PreviewWrapper()
+        .environment(\.locale, .init(identifier: Previews.localeEN))
 }

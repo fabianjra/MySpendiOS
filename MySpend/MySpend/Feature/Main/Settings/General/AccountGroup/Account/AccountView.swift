@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AccountView: View {
     
-    @Environment(AccountManager.self) private var accountManager
+    @Environment(AccountManager.self) private var manager
     @Environment(\.editMode) private var editMode
     
     private var isEditing: Bool {
@@ -27,7 +27,7 @@ struct AccountView: View {
             viewModel.selectedAccounts.isEmpty ?
                 .accountsTitle : .selectorSelectedCountFemale(viewModel.selectedAccounts.count)
         )
-        .navigationSubtitle(.accountsSubtitle(accountManager.sortedAccounts.count))
+        .navigationSubtitle(.accountsSubtitle(manager.sortedAccounts.count))
         .navigationBarBackButtonHidden(isEditing)
         
         .toolbar {
@@ -62,14 +62,14 @@ struct AccountView: View {
     
     private var accountList: some View {
         List(selection: $viewModel.selectedAccounts) {
-            if accountManager.sortedAccounts.isEmpty {
+            if manager.sortedAccounts.isEmpty {
                 Section {
                     Text(.accountsEmpty)
                         .foregroundStyle(.secondary)
                 }
             } else {
                 Section {
-                    ForEach(accountManager.sortedAccounts) { item in
+                    ForEach(manager.sortedAccounts) { item in
                         Button {
                             if isEditing {
                                 viewModel.toggleAccountSelection(item)
@@ -85,7 +85,7 @@ struct AccountView: View {
                                 
                                 Spacer()
                                 
-                                if item.id == accountManager.defaultAccount?.id {
+                                if item.id == manager.defaultAccount?.id {
                                     Text(.accountsDefault)
                                         .foregroundStyle(Color.secondary)
                                         .fontWeight(.light)
@@ -145,7 +145,7 @@ struct AccountView: View {
                                         }
                                         
                                         if let account = viewModel.accountToDelete {
-                                            toastResponse = await accountManager.delete(account)
+                                            toastResponse = await manager.delete(account)
                                         }
                                         
                                     } else {
@@ -154,7 +154,7 @@ struct AccountView: View {
                                             viewModel.selectedAccounts.removeAll()
                                         }
                                         
-                                        toastResponse = await accountManager.delete(viewModel.selectedAccounts)
+                                        toastResponse = await manager.delete(viewModel.selectedAccounts)
                                     }
                                     
                                     editMode?.wrappedValue = .inactive
@@ -175,7 +175,7 @@ struct AccountView: View {
             }
         }
         //.navigationLinkIndicatorVisibility(.visible)
-        .animation(.default, value: accountManager.sortedAccounts)
+        .animation(.default, value: manager.sortedAccounts)
         .scrollContentBackground(.hidden)
         .background(Color.backgroundGradient)
     }
@@ -187,13 +187,13 @@ struct AccountView: View {
         
         ToolbarItem(placement: .navigation) {
             if isEditing {
-                if viewModel.selectedAccounts.count == accountManager.sortedAccounts.count {
+                if viewModel.selectedAccounts.count == manager.sortedAccounts.count {
                     Button(.selectorDeselectAll) {
                         viewModel.selectedAccounts = Set()
                     }
                 } else {
                     Button(.selectorSelectAll) {
-                        viewModel.selectedAccounts = Set(accountManager.sortedAccounts)
+                        viewModel.selectedAccounts = Set(manager.sortedAccounts)
                     }
                 }
             }
@@ -223,7 +223,7 @@ struct AccountView: View {
                     MenuOrderAccount()
                 }
                 .menuOrder(.fixed)
-                .disabled(accountManager.sortedAccounts.isEmpty)
+                .disabled(manager.sortedAccounts.isEmpty)
             }
         }
         
@@ -253,15 +253,15 @@ private struct previewWrapper: View {
     init(_ mockDataType: MockDataType = .normal) {
         UserDefaultsManager.defaultAccountID = MockCDConstants.mainAccountID
         
-        _accountManager = State(initialValue: AccountManager(viewContext: mockDataType.viewContext))
+        _manager = State(initialValue: AccountManager(viewContext: mockDataType.viewContext))
     }
     
-    @State var accountManager: AccountManager
+    @State var manager: AccountManager
     @State var editMode: EditMode = .inactive
     
     var body: some View {
         AccountView()
-            .environment(accountManager)
+            .environment(manager)
             .environment(\.editMode, $editMode)
     }
 }

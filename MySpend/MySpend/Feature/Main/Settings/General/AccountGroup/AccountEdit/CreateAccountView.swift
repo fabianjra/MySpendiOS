@@ -10,7 +10,7 @@ import SwiftUI
 struct CreateAccountView: View {
     
     @Environment(\.dismiss) private var dismiss
-    @Environment(AccountManager.self) private var accountManager
+    @Environment(AccountManager.self) private var manager
     
     @State private var viewModel = AccountDetailEditViewModel()
     @State private var account = AccountModel()
@@ -28,7 +28,7 @@ struct CreateAccountView: View {
         .safeAreaInset(edge: .bottom) {
             Button {
                 Task {
-                    toastResponse = await accountManager.create(account,
+                    toastResponse = await manager.create(account,
                                                                  isDefault: viewModel.isDefaultSelected)
                     if toastResponse?.type == .ok {
                         dismiss()
@@ -65,11 +65,11 @@ struct CreateAccountView: View {
 
 #Preview(Previews.localeES_CR) {
     
-    @Previewable @State var previewAccountManager = AccountManager.shared
+    @Previewable @State var manager = AccountManager.shared
     
     NavigationStack {
         CreateAccountView()
     }
-    .environment(previewAccountManager)
+    .environment(manager)
     .environment(\.locale, .init(identifier: Previews.localeES_CR))
 }

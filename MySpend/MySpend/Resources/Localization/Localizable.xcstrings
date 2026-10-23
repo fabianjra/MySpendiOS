@@ -631,6 +631,24 @@
     "Categories" : {
 
     },
+    "Categories.Empty" : {
+      "comment" : "Indica que no hay categorias",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No categories"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sin categorias"
+          }
+        }
+      }
+    },
     "Categories.Title" : {
       "comment" : "Titulo para la vista de categorias",
       "extractionState" : "manual",
@@ -654,6 +672,78 @@
     },
     "Category name (Z-A)" : {
 
+    },
+    "Category.Type.Expense" : {
+      "comment" : "Tipo de categoria gasto singular",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Expense"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gasto"
+          }
+        }
+      }
+    },
+    "Category.Type.Expenses" : {
+      "comment" : "Tipo de categoria gastos plural",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Expenses"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Gastos "
+          }
+        }
+      }
+    },
+    "Category.Type.Income" : {
+      "comment" : "Tipo de categoria ingreso singular",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Income"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ingreso"
+          }
+        }
+      }
+    },
+    "Category.Type.Incomes" : {
+      "comment" : "Tipo de categoria ingresos plural",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Incomes"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ingresos"
+          }
+        }
+      }
     },
     "Could not get data from collection snapshot" : {
 
@@ -2690,42 +2780,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Balance total"
-          }
-        }
-      }
-    },
-    "TransactionType.Expenses" : {
-      "comment" : "Tipo de transaccion para gasto",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Expenses"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Gastos "
-          }
-        }
-      }
-    },
-    "TransactionType.Incomes" : {
-      "comment" : "Tipo de transaccion para ingreso",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Incomes"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ingresos"
           }
         }
       }

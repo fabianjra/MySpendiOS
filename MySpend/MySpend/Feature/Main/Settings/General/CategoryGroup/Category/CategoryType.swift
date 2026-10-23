@@ -5,11 +5,19 @@
 //  Created by Fabian Rodriguez on 16/10/24.
 //
 
-enum CategoryType: String, CaseIterable, Identifiable, Codable, Hashable, LocalizableProtocol {
+import Foundation
+
+enum CategoryType: String, CaseIterable, Identifiable, Codable, Hashable {
     public var id: Self { self }
     
     case expense
     case income
     
-    var table: String { LocalizableTable.enums }
+    /// Permite obtener el texto localizable para el valor del enum ``CategoryType``
+    var localized: LocalizedStringResource {
+        switch self {
+        case .expense: return .categoryTypeExpense
+        case .income: return .categoryTypeIncome
+        }
+    }
 }

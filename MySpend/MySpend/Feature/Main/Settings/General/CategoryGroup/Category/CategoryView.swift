@@ -9,6 +9,17 @@ import SwiftUI
 
 struct CategoryView: View {
     
+    @Environment(CategoryManager.self) private var manager
+    @Environment(\.editMode) private var editMode
+    
+    private var isEditing: Bool {
+        editMode?.wrappedValue.isEditing == true
+    }
+    
+    @State private var toastResponse: ToastResponse?
+    
+    
+    
     @StateObject private var viewModel = CategoryViewModel()
     
     @State private var showNewItemModal = false
@@ -21,16 +32,11 @@ struct CategoryView: View {
     var body: some View {
         VStack {
             
-            if !viewModel.categories.isEmpty {
-                topMenu
-                    .padding(.top)
-            }
-            
-            ZStack(alignment: .bottomTrailing) {
-                categoryList
-            }
-            
-            TextError(viewModel.errorMessage)
+            //            if !viewModel.categories.isEmpty {
+            //                topMenu
+            //                    .padding(.top)
+            //            }
+            categoryList
         }
         .navigationTitle(
             viewModel.selectedCategories.isEmpty ?
@@ -62,6 +68,8 @@ struct CategoryView: View {
                     modelToModify = nil
                 }
         }
+        .toast($toastResponse)
+        
         .background(Color.backgroundGradient)
     }
     
@@ -130,6 +138,58 @@ struct CategoryView: View {
     
     private var categoryList: some View {
         VStack {
+            Picker("", selection: $modelType) {
+                ForEach(CategoryType.allCases) { type in
+                    Text(type.localized)
+                }
+            }
+            .pickerStyle(.segmented)
+            .glassEffect(.regular)
+            //.padding(.horizontal)
+            
+            
+            List(selection: $viewModel.selectedCategories) {
+                if manager.sortedCategories.isEmpty {
+                    Section {
+                        Text(.categoriesEmpty)
+                            .foregroundStyle(.secondary)
+                    }
+                } else {
+                    Section {
+                        ForEach(manager.sortedCategories) { item in
+                            Button {
+                                if isEditing {
+                                    //viewModel.toggleAccountSelection(item)
+                                } else {
+                                    //viewModel.accountToUpdate = item
+                                    //viewModel.showUpdateAccount = true
+                                }
+                                
+                            } label: {
+                                HStack {
+                                    Label(item.name, systemImage: item.icon)
+                                        .foregroundStyle(Color.primary)
+                                    
+                                    Spacer()
+                                    
+                                    if !isEditing {
+                                        Image.chevronRight
+                                            .tint(.secondary)
+                                    }
+                                }
+                            }
+                            .tag(item)
+                            
+                            //TODO: AQUI QUEDO ADELANTADO...
+                            .swipeActions(edge: .trailing) {
+                                
+                            }
+                        }
+                    }
+                }
+            }
+            
+            
             let categoriesFiltered = UtilsCategories.filteredCategories(viewModel.categories,
                                                                         by: modelType,
                                                                         sortType: viewModel.sortCategoriesBy)
@@ -245,9 +305,17 @@ struct CategoryView: View {
 
 private struct previewWrapper: View {
     init(_ mockDataType: MockDataType = .normal) {
-        CoreDataUtilities.shared.mockDataType = mockDataType
+        _manager = State(initialValue: CategoryManager(viewContext: mockDataType.viewContext))
     }
-    var body: some View { CategoryView() }
+    
+    @State var manager: CategoryManager
+    @State var editMode: EditMode = .inactive
+    
+    var body: some View {
+        CategoryView()
+            .environment(manager)
+            .environment(\.editMode, $editMode)
+    }
 }
 
 #Preview(Previews.localeES_CR) {
@@ -260,6 +328,13 @@ private struct previewWrapper: View {
 #Preview("Saturated \(Previews.localeEN)") {
     NavigationStack {
         previewWrapper(.saturated)
+    }
+    .environment(\.locale, .init(identifier: Previews.localeEN))
+}
+
+#Preview("Empty \(Previews.localeEN)") {
+    NavigationStack {
+        previewWrapper(.empty)
     }
     .environment(\.locale, .init(identifier: Previews.localeEN))
 }
