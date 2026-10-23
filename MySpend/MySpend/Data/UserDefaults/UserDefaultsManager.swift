@@ -217,8 +217,9 @@ private struct UserDefaultsDataStore<T: Codable> {
             do {
                 return try JSONDecoder().decode(T.self, from: data)
             } catch {
-                Logger.exception(error)
-                Logger.custom("Key: \(key.rawValue)")
+                let id = UUID().uuidString
+                Logger.exception(error, id: id)
+                Logger.custom("Key: \(key.rawValue)", id: id)
                 return nil
             }
         }
@@ -230,8 +231,9 @@ private struct UserDefaultsDataStore<T: Codable> {
                 let data = try JSONEncoder().encode(newValue)
                 UserDefaultsManager.userDefaults.set(data, forKey: key.rawValue)
             } catch {
-                Logger.exception(error)
-                Logger.custom("Key: \(key.rawValue)")
+                let id = UUID().uuidString
+                Logger.exception(error, id: id)
+                Logger.custom("Key: \(key.rawValue)", id: id)
             }
         }
     }

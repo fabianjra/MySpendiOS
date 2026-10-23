@@ -81,12 +81,13 @@ struct Logger {
      - Date: June 2025
      */
     static func exception(_ error: Error,
-                               type: ErrorType = .none,
-                               file: String = #file,
-                               function: String = #function,
-                               line: Int = #line) {
+                          type: ErrorType = .none,
+                          file: String = #file,
+                          function: String = #function,
+                          line: Int = #line,
+                          id: String = UUID().uuidString) {
         
-        let logId = UUID().uuidString
+        let logId = id
         print("********** START EXCEPTION LOG: \(logId)")
         print("Handled catch in: \(file.components(separatedBy: "/").last ?? file), function: \(function), line: \(line), description: \(error.localizedDescription)")
         
@@ -166,12 +167,13 @@ struct Logger {
     static func custom(_ obj: Any,
                        file: String = #file,
                        function: String = #function,
-                       line: Int = #line) {
+                       line: Int = #line,
+                       id: String = UUID().uuidString) {
         
         let fileName = file.components(separatedBy: "/").last ?? file
         
         //#if DEBUG
-        let logId = UUID().uuidString
+        let logId = id
         print("********** START CUSTOM MESSSAG LOG: \(logId)")
         let message = "-Print from: \(fileName), function: \(function), line: \(line) \n-Description: \(obj)"
         print(message)
