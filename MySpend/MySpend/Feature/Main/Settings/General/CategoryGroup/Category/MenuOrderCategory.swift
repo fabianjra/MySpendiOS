@@ -29,7 +29,7 @@ struct MenuOrderCategory: View {
             Section {
                 Picker(.sortTitle, selection: $managerBind.sortSelection.order) {
                     ForEach(SortOrder.allCases, id: \.self) { order in
-                        Text(order.localized)
+                        Text(manager.sortSelection.sortBy.orderLocalized(order))
                             .tag(order)
                     }
                 }

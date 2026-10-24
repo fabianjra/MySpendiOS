@@ -15,11 +15,22 @@ struct AccountSortConfiguration: Codable, Equatable {
 enum AccountSortOption: Codable, CaseIterable {
     case dateCreated
     case title
-
+    
     var localized: LocalizedStringResource {
         switch self {
         case .dateCreated: return .sortByDateCreated
         case .title: return .sortByTitle
+        }
+    }
+    
+    func orderLocalized(_ order: SortOrder) -> LocalizedStringResource {
+        switch self {
+        case .dateCreated:
+            return order == .ascending
+            ? .sortOrderMostRecent
+            : .sortOrderLeastUsed
+            
+        case .title: return order.localized
         }
     }
 }

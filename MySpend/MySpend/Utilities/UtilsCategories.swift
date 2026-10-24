@@ -60,7 +60,7 @@ extension Array where Element == CategoryModel {
                 : $0.dateCreated > $1.dateCreated
             }
             
-        case .mostOftenUsed:
+        case .usage:
             return sorted {
                 sort.order == .ascending
                 ? $0.dateLastUsed > $1.dateLastUsed

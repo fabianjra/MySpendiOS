@@ -2591,13 +2591,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Most Often Used"
+            "value" : "By Usage"
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Más Utilizadas"
+            "state" : "translated",
+            "value" : "Por Uso"
           }
         }
       }
@@ -2634,6 +2634,42 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Descendente"
+          }
+        }
+      }
+    },
+    "Sort.Order.LeastUsed" : {
+      "comment" : "Ordenamiento menos reciente",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Least Recently"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Menos reciente"
+          }
+        }
+      }
+    },
+    "Sort.Order.MostRecent" : {
+      "comment" : "Ordenamiento más reciente",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Most Recently"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Más reciente"
           }
         }
       }
