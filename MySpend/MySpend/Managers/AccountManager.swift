@@ -14,7 +14,8 @@ final class AccountManager {
     static let shared = AccountManager()
     
     private let coreDataManager: AccountCoreDataManager
-    private var allAccounts: [AccountModel] = []
+    private var accounts: [AccountModel] = []
+    var accountsCount: Int { accounts.count }
     
     
     // MARK: OBSERVABLES
@@ -47,7 +48,7 @@ final class AccountManager {
     
     private func refreshAccounts() async {
         do {
-            allAccounts = try await coreDataManager.fetchAll()
+            accounts = try await coreDataManager.fetchAll()
             
             updateDefaultAccount()
             cleanFilteredAccounts()
@@ -99,7 +100,7 @@ final class AccountManager {
             return
         }
         
-        defaultAccount = allAccounts.first {
+        defaultAccount = accounts.first {
             $0.id.uuidString == defaultAccountID
         }
     }
@@ -108,7 +109,7 @@ final class AccountManager {
     // MARK: ORDENAMIENTO
     
     var sortedAccounts: [AccountModel] {
-        allAccounts.sortedAccounts(by: sortSelection)
+        accounts.sortedAccounts(by: sortSelection)
     }
     
     var sortSelection = UserDefaultsManager.sortAccounts {
@@ -138,12 +139,12 @@ final class AccountManager {
     
     /// Limpia las cuentas que podrian haber sido eliminadas del UserDefaults.
     private func cleanFilteredAccounts() {
-        let availableIDs = Set(allAccounts.map(\.id))
+        let availableIDs = Set(accounts.map(\.id))
         selectedAccountsToFilterByID.formIntersection(availableIDs)
     }
     
     func restoreFilter() {
-        selectedAccountsToFilterByID = Set(allAccounts.map(\.id))
+        selectedAccountsToFilterByID = Set(accounts.map(\.id))
         showOnlyFavorites = false
     }
 }

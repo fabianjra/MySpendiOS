@@ -240,7 +240,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "La cuenta predeterminada será seleccionada automáticamente al crear una transacción."
+            "value" : "La cuenta predeterminada se seleccionará automáticamente al crear una transacción."
           }
         }
       }

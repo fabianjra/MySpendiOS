@@ -170,7 +170,9 @@ struct AccountView: View {
                     Text(.accountListHeader)
                     
                 } footer: {
-                    Text(.accountListFooter)
+                    if manager.accountsCount > 1 {
+                        Text(.accountListFooter)
+                    }
                 }
             }
         }
@@ -240,7 +242,7 @@ struct AccountView: View {
                 .disabled(viewModel.selectedAccounts.isEmpty)
                 
             } else {
-                Button(.transactionAdd, systemImage: ConstantSystemImage.addNewItem, role: .confirm) {
+                Button(.transactionAdd, systemImage: ConstantSystemImage.addNewItem) {
                     viewModel.showNewItemModal = true
                 }
             }
