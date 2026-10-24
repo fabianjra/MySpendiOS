@@ -11,21 +11,6 @@ class CategoryViewModel_original: BaseViewModel {
     
     @Published var selectedCategories = Set<CategoryModel>()
     
-    func toggleCategorySelection(_ category: CategoryModel) {
-        if selectedCategories.contains(category) {
-            selectedCategories.remove(category)
-        } else {
-            selectedCategories.insert(category)
-        }
-    }
-    
-    
-    
-  
-    
-    
-    
-    
     @Published var categories: [CategoryModel] = []
     
     // MARK: EDIT

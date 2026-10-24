@@ -792,22 +792,40 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Se elimnará esta categoría. Esta acción no se puede deshacer."
+                  "value" : "Se eliminará esta categoría. Esta acción no se puede deshacer."
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Se elimnarán %lld categorías. Esta acción no se puede deshacer."
+                  "value" : "Se eliminarán %lld categorías. Esta acción no se puede deshacer."
                 }
               },
               "zero" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Se elimnará esta categoría. Esta acción no se puede deshacer."
+                  "value" : "Se eliminará esta categoría. Esta acción no se puede deshacer."
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "Category.Type" : {
+      "comment" : "Tipos de categoria",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Category Type"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tipo de categoría"
           }
         }
       }

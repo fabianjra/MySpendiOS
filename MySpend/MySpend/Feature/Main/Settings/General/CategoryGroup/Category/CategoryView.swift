@@ -19,13 +19,19 @@ struct CategoryView: View {
     @State private var viewModel = CategoryViewModel()
     @State private var toastResponse: ToastResponse?
     
+    private var filteredCategories: [CategoryModel] {
+        manager.sortedCategories.filter {
+            $0.type == viewModel.selectedType
+        }
+    }
+    
     
     
     
     
     @State private var showNewItemModal = false
     
-    @State private var modelType: CategoryType = .expense
+    
     @State private var modelToModify: CategoryModel?
     @State private var modelToDelete: CategoryModel?
     
@@ -38,7 +44,7 @@ struct CategoryView: View {
             viewModel.selectedCategories.isEmpty ?
                 .categoriesTitle : .selectorSelectedCountFemale(viewModel.selectedCategories.count)
         )
-        .navigationSubtitle(.categoriesSubtitle(manager.sortedCategories.count))
+        .navigationSubtitle(.categoriesSubtitle(filteredCategories.count))
         .navigationBarBackButtonHidden(isEditing)
         
         .toolbar {
@@ -55,11 +61,11 @@ struct CategoryView: View {
         // MARK: SHEETS
         
         .sheet(isPresented: $showNewItemModal) {
-            AddModifyCategoryView(categoryType: $modelType)
+            AddModifyCategoryView(categoryType: $viewModel.selectedType)
                 .presentationDetents([.large])
         }
         .sheet(item: $modelToModify) { model in
-            AddModifyCategoryView(model, categoryType: $modelType)
+            AddModifyCategoryView(model, categoryType: $viewModel.selectedType)
                 .presentationDetents([.large])
                 .onDisappear {
                     modelToModify = nil
@@ -73,7 +79,7 @@ struct CategoryView: View {
     
     private var categoryList: some View {
         VStack {
-            Picker("", selection: $modelType) {
+            Picker(.categoryType, selection: $viewModel.selectedType) {
                 ForEach(CategoryType.allCases) { type in
                     Text(type.localized)
                 }
@@ -81,17 +87,18 @@ struct CategoryView: View {
             .pickerStyle(.segmented)
             .glassEffect(.regular)
             .padding(.horizontal)
+            .disabled(isEditing)
             
             
             List(selection: $viewModel.selectedCategories) {
-                if manager.sortedCategories.isEmpty {
+                if filteredCategories.isEmpty {
                     Section {
                         Text(.categoriesEmpty)
                             .foregroundStyle(.secondary)
                     }
                 } else {
                     Section {
-                        ForEach(manager.sortedCategories) { item in
+                        ForEach(filteredCategories) { item in
                             Button {
                                 if isEditing {
                                     viewModel.toggleCategorySelection(item)
@@ -188,7 +195,7 @@ struct CategoryView: View {
                     }
                 }
             }
-            .animation(.default, value: manager.sortedCategories)
+            .animation(.default, value: filteredCategories)
             .scrollContentBackground(.hidden)
         }
         .background(Color.backgroundGradient)
@@ -201,13 +208,13 @@ struct CategoryView: View {
         
         ToolbarItem(placement: .navigation) {
             if isEditing {
-                if viewModel.selectedCategories.count == manager.sortedCategories.count {
+                if viewModel.selectedCategories.count == filteredCategories.count {
                     Button(.selectorDeselectAll) {
                         viewModel.selectedCategories = Set()
                     }
                 } else {
                     Button(.selectorSelectAll) {
-                        viewModel.selectedCategories = Set(manager.sortedCategories)
+                        viewModel.selectedCategories = Set(filteredCategories)
                     }
                 }
             }
@@ -236,7 +243,7 @@ struct CategoryView: View {
                     MenuOrderCategory()
                 }
                 .menuOrder(.fixed)
-                .disabled(manager.sortedCategories.isEmpty)
+                .disabled(filteredCategories.isEmpty)
             }
         }
         

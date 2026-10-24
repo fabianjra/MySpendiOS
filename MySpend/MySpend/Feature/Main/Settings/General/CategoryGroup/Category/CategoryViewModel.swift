@@ -18,6 +18,8 @@ final class CategoryViewModel {
     //var categoryToDelete: CategoryModel?
     //var categoryToUpdate = CategoryModel()
     
+    var selectedType = CategoryType.expense
+    
     func toggleCategorySelection(_ category: CategoryModel) {
         if selectedCategories.contains(category) {
             selectedCategories.remove(category)
