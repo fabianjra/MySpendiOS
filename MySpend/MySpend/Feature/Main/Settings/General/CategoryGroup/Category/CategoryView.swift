@@ -42,21 +42,22 @@ struct CategoryView: View {
             viewModel.selectedCategories.isEmpty ?
                 .categoriesTitle : .selectorSelectedCountFemale(viewModel.selectedCategories.count)
         )
+        .navigationSubtitle(.categoriesSubtitle(manager.sortedCategories.count))
+        .navigationBarBackButtonHidden(isEditing)
         
         .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                Button("Add item", systemImage: "plus") {
-                    showNewItemModal = true
-                }
-                .disabled(viewModel.isEditing)
+            toolbarContent
+        }
+        
+        .onChange(of: editMode?.wrappedValue) { _, newValue in
+            if newValue?.isEditing != true {
+                viewModel.selectedCategories.removeAll()
             }
         }
-        .task {
-            await viewModel.activateObservers()
-        }
-        .onDisappear {
-            viewModel.deactivateObservers()
-        }
+        
+        
+        // MARK: SHEETS
+        
         .sheet(isPresented: $showNewItemModal) {
             AddModifyCategoryView(categoryType: $modelType)
                 .presentationDetents([.large])
@@ -69,72 +70,9 @@ struct CategoryView: View {
                 }
         }
         .toast($toastResponse)
-        
-        .background(Color.backgroundGradient)
     }
     
-    // MARK: - VIEWS
     
-    private var topMenu: some View {
-        VStack {
-            ListEditorView(isEditing: $viewModel.isEditing,
-                           counterSelected: viewModel.selectedCategories.count) {
-                
-                viewModel.selectedCategories.removeAll()
-                
-            } actionTrailingEdit: {
-                viewModel.showAlertDeleteMultiple = true
-            }
-            
-            
-            VStack {
-                PickerView(selection: $modelType)
-                    .frame(maxWidth: ConstantFrames.iPadMaxWidth)
-                    .padding(.bottom, ConstantViews.mediumSpacing)
-                
-                RowLCTCointainer(disabled: viewModel.isEditing, leadingContent:  {
-                    MenuContainer(addHorizontalPadding: true, disabled: viewModel.isEditing) {
-                        Section("Sorted by: \(viewModel.sortCategoriesBy.rawValue)") {
-                            sortButton(for: .byNameAz)
-                            sortButton(for: .byCreationNewest)
-                            sortButton(for: .byMostOftenUsed)
-                        }
-                        
-                        // Reset the sort selection to default
-                        Section {
-                            sortButtonResetToDefault
-                        }
-                    }
-                })
-            }
-            .disabled(viewModel.isEditing)
-        }
-        .padding(.horizontal)
-        .disabled(viewModel.categories.isEmpty)
-    }
-
-    private func sortButton(for sortingOption: SortCategories) -> some View {
-        Button {
-            if viewModel.sortCategoriesBy == sortingOption {
-                viewModel.sortCategoriesBy = sortingOption.toggle
-            } else {
-                viewModel.sortCategoriesBy = sortingOption
-            }
-            
-            viewModel.updateSelectedSort()
-        } label: {
-            viewModel.sortCategoriesBy == sortingOption ? sortingOption.label() : sortingOption.label(inverted: false)
-        }
-    }
-    
-    private var sortButtonResetToDefault: some View {
-        Button {
-            viewModel.resetSelectedSort()
-        } label: {
-            Label.restoreSelection
-                .foregroundStyle(Color.alert, Color.alert)
-        }
-    }
     
     private var categoryList: some View {
         VStack {
@@ -159,12 +97,11 @@ struct CategoryView: View {
                         ForEach(manager.sortedCategories) { item in
                             Button {
                                 if isEditing {
-                                    //viewModel.toggleAccountSelection(item)
+                                    viewModel.toggleCategorySelection(item)
                                 } else {
-                                    //viewModel.accountToUpdate = item
+                                    modelToModify = item
                                     //viewModel.showUpdateAccount = true
                                 }
-                                
                             } label: {
                                 HStack {
                                     Label(item.name, systemImage: item.icon)
@@ -180,127 +117,248 @@ struct CategoryView: View {
                             }
                             .tag(item)
                             
-                            //TODO: AQUI QUEDO ADELANTADO...
                             .swipeActions(edge: .trailing) {
-                                
-                            }
-                        }
-                    }
-                }
-            }
-            
-            
-            let categoriesFiltered = UtilsCategories.filteredCategories(viewModel.categories,
-                                                                        by: modelType,
-                                                                        sortType: viewModel.sortCategoriesBy)
-            
-            if categoriesFiltered.isEmpty {
-                TransactionsEmptyView()
-            } else {
-                ListContainer {
-                    ForEach(categoriesFiltered) { item in
-                        HStack {
-                            if viewModel.isEditing {
-                                Image(systemName: viewModel.selectedCategories.contains(item) ? ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: FrameSize.width.iconRowList,
-                                           height: FrameSize.height.iconRowList)
-                                    .foregroundStyle(Color.alert)
-                                    .transition(.scale.combined(with: .move(edge: .leading)))
-                            }
-                            
-                            if let image = item.icon.getIconFromSFSymbol {
-                                image
-                                    .frame(width: FrameSize.width.iconCategoryList,
-                                           height: FrameSize.height.iconCategoryList)
-                            }
-                            
-                            Button(item.name) {
-                                if viewModel.isEditing {
-                                    if viewModel.selectedCategories.contains(item) {
-                                        viewModel.selectedCategories.remove(item)
-                                    } else {
-                                        viewModel.selectedCategories.insert(item)
+                                if !isEditing {
+                                    
+                                    Button(.selectorDelete, systemImage: ConstantSystemImage.trash) {
+                                        modelToDelete = item
+                                        viewModel.showAlertDelete = true
                                     }
-                                } else {
-                                    modelToModify = item
+                                    .labelStyle(.iconOnly)
+                                    .tint(.alert)
+                                    
+                                    
+                                    Button(.selectorEdit, systemImage: ConstantSystemImage.squareAndPencil) {
+                                        modelToModify = item
+                                        //viewModel.showUpdateAccount = true
+                                    }
+                                    .labelStyle(.iconOnly)
                                 }
                             }
                             
-                            Spacer()
-                            
-                            Image.chevronRight
-                        }
-                        .listRowBackground(Color.listRowBackground) //Background for each row.
-                        .swipeActions(edge: .trailing) {
-                            Button {
-                                modelToDelete = item
-                                viewModel.showAlertDelete = true
-                            } label: {
-                                Label.delete
+                            .contextMenu {
+                                if !isEditing {
+                                    
+                                    Button(.selectorEdit, systemImage: ConstantSystemImage.squareAndPencil) {
+                                        modelToModify = item
+                                        //viewModel.showUpdateAccount = true
+                                    }
+                                    
+                                    
+                                    Button(.selectorDelete, systemImage: ConstantSystemImage.trash, role: .destructive) {
+                                        modelToDelete = item
+                                        viewModel.showAlertDelete = true
+                                    }
+                                }
                             }
-                            .tint(Color.alert)
                             
-                            Button {
-                                modelToModify = item
-                            } label: {
-                                Label.edit
+                            .alert(.categoryDelete(viewModel.selectedCategories.count), isPresented: $viewModel.showAlertDelete) {
+                                Button(.alertOptionDelete, role: .destructive) {
+                                    Task {
+                                        if viewModel.selectedCategories.isEmpty {
+                                            
+                                            defer {
+                                                modelToDelete = nil
+                                            }
+                                                                                        
+                                            if let category = modelToDelete {
+                                                toastResponse = await manager.delete(category)
+                                            }
+                                            
+                                        } else {
+                                            
+                                            defer {
+                                                viewModel.selectedCategories.removeAll()
+                                            }
+                                            
+                                            toastResponse = await manager.delete(viewModel.selectedCategories)
+                                        }
+                                        
+                                        editMode?.wrappedValue = .inactive
+                                    }
+                                }
+                                
+                                Button(.alertOptionCancel, role: .cancel) { }
+                            } message: {
+                                Text(.categoryDeleteMessage(viewModel.selectedCategories.count))
                             }
                         }
+                    } header: {
+//                        Text(.accountListHeader)
                         
-                        // MARK: DELETE ITEMS SINGLE
-                        
-                        .alert("Delete category", isPresented: $viewModel.showAlertDelete) {
-                            Button("Delete", role: .destructive) { delete() }
-                            Button("Cancel", role: .cancel) { }
-                        } message: {
-                            Text("Want to delete this category? \n This action cannot be undone.")
-                        }
-                        
-                        // MARK: DELETE ITEMS MULTIPLE
-                        
-                        .alert("Delete categoreis", isPresented: $viewModel.showAlertDeleteMultiple) {
-                            Button("Delete", role: .destructive) { deleteMltipleCategories() }
-                            Button("Cancel", role: .cancel) { }
-                        } message: {
-                            Text("Want to delete these categories? \n This action cannot be undone.")
-                        }
+                    } footer: {
+                        //Text(.accountListFooter)
                     }
                 }
-                .animation(.default, value: categoriesFiltered.count)
-                .animation(.default, value: viewModel.isEditing)
-                .animation(.default, value: viewModel.sortCategoriesBy)
+            }
+            .animation(.default, value: manager.sortedCategories)
+            .scrollContentBackground(.hidden)
+            .background(Color.backgroundGradient)
+        }
+    }
+    
+    @ToolbarContentBuilder
+    private var toolbarContent: some ToolbarContent {
+        
+        // MARK: TOP
+        
+        ToolbarItem(placement: .navigation) {
+            if isEditing {
+                if viewModel.selectedCategories.count == manager.sortedCategories.count {
+                    Button(.selectorDeselectAll) {
+                        viewModel.selectedCategories = Set()
+                    }
+                } else {
+                    Button(.selectorSelectAll) {
+                        viewModel.selectedCategories = Set(manager.sortedCategories)
+                    }
+                }
+            }
+        }
+        
+        ToolbarItemGroup(placement: .primaryAction) {
+            
+            if isEditing {
+                Button(role: .cancel) {
+                    withAnimation {
+                        editMode?.wrappedValue = .inactive
+                    }
+                }
+            } else {
+                
+                Menu(.menuOptionsTitle, systemImage: ConstantSystemImage.options) {
+                    
+                    Button {
+                        withAnimation {
+                            editMode?.wrappedValue = .active
+                        }
+                    } label: {
+                        Label(.selectorSelect, systemImage: ConstantSystemImage.checkmarkCircle)
+                    }
+                    
+                    //MenuOrderAccount()
+                }
+                .menuOrder(.fixed)
+                .disabled(manager.sortedCategories.isEmpty)
+            }
+        }
+        
+        
+        // MARK: BOTTOM
+        
+        ToolbarSpacer(.flexible, placement: .bottomBar)
+        
+        ToolbarItem(placement: .bottomBar) {
+            if isEditing {
+                Button(.selectorDelete, systemImage: ConstantSystemImage.trash, role: .destructive) {
+                    viewModel.showAlertDelete = true
+                }
+                .disabled(viewModel.selectedCategories.isEmpty)
+                
+            } else {
+                Button(.transactionAdd, systemImage: ConstantSystemImage.addNewItem) {
+                    showNewItemModal = true
+                }
             }
         }
     }
     
+    
+    
+    
+    
+    
+    
+    
+    
+    // MARK: - VIEWS
+    
+//    private var topMenu: some View {
+//        VStack {
+//            ListEditorView(isEditing: $viewModel.isEditing,
+//                           counterSelected: viewModel.selectedCategories.count) {
+//                
+//                viewModel.selectedCategories.removeAll()
+//                
+//            } actionTrailingEdit: {
+//                viewModel.showAlertDeleteMultiple = true
+//            }
+//            
+//            
+//            VStack {
+//                PickerView(selection: $modelType)
+//                    .frame(maxWidth: ConstantFrames.iPadMaxWidth)
+//                    .padding(.bottom, ConstantViews.mediumSpacing)
+//                
+//                RowLCTCointainer(disabled: viewModel.isEditing, leadingContent:  {
+//                    MenuContainer(addHorizontalPadding: true, disabled: viewModel.isEditing) {
+//                        Section("Sorted by: \(viewModel.sortCategoriesBy.rawValue)") {
+//                            sortButton(for: .byNameAz)
+//                            sortButton(for: .byCreationNewest)
+//                            sortButton(for: .byMostOftenUsed)
+//                        }
+//                        
+//                        // Reset the sort selection to default
+//                        Section {
+//                            sortButtonResetToDefault
+//                        }
+//                    }
+//                })
+//            }
+//            .disabled(viewModel.isEditing)
+//        }
+//        .padding(.horizontal)
+//        .disabled(viewModel.categories.isEmpty)
+//    }
+//    
+//    private func sortButton(for sortingOption: SortCategories) -> some View {
+//        Button {
+//            if viewModel.sortCategoriesBy == sortingOption {
+//                viewModel.sortCategoriesBy = sortingOption.toggle
+//            } else {
+//                viewModel.sortCategoriesBy = sortingOption
+//            }
+//            
+//            viewModel.updateSelectedSort()
+//        } label: {
+//            viewModel.sortCategoriesBy == sortingOption ? sortingOption.label() : sortingOption.label(inverted: false)
+//        }
+//    }
+//    
+//    private var sortButtonResetToDefault: some View {
+//        Button {
+//            viewModel.resetSelectedSort()
+//        } label: {
+//            Label.restoreSelection
+//                .foregroundStyle(Color.alert, Color.alert)
+//        }
+//    }
     
     // MARK: - FUNCTIONS
     
-    private func delete() {
-        Task {
-            defer {
-                modelToDelete = nil
-            }
-            
-            let result = await viewModel.delete(modelToDelete)
-            
-            if result.status.isError {
-                viewModel.errorMessage = result.message
-            }
-        }
-    }
-    
-    private func deleteMltipleCategories() {
-        Task {
-            let result = await viewModel.deleteMltiple()
-            
-            if result.status.isError {
-                viewModel.errorMessage = result.message
-            }
-        }
-    }
+//    private func delete() {
+//        Task {
+//            defer {
+//                modelToDelete = nil
+//            }
+//            
+//            let result = await viewModel.delete(modelToDelete)
+//            
+//            if result.status.isError {
+//                viewModel.errorMessage = result.message
+//            }
+//        }
+//    }
+//    
+//    private func deleteMltipleCategories() {
+//        Task {
+//            let result = await viewModel.deleteMltiple()
+//            
+//            if result.status.isError {
+//                viewModel.errorMessage = result.message
+//            }
+//        }
+//    }
 }
 
 private struct previewWrapper: View {

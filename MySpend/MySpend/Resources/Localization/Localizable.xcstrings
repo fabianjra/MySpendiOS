@@ -110,20 +110,20 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
-                  "value" : "Want to delete %lld transaction? This action can’t be undone."
+                  "state" : "translated",
+                  "value" : "This account will be deleted. This action can’t be undone."
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Want to delete %lld transactions? This action can’t be undone."
+                  "value" : "These %lld will be deleted. This action can’t be undone."
                 }
               },
               "zero" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Want to delete this transaction? This action can’t be undone."
+                  "value" : "This account will be deleted. This action can’t be undone."
                 }
               }
             }
@@ -134,19 +134,19 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "translated",
+                  "state" : "needs_review",
                   "value" : "¿Desea eliminar %lld cuenta? Esta acción no se puede deshacer."
                 }
               },
               "other" : {
                 "stringUnit" : {
-                  "state" : "translated",
+                  "state" : "needs_review",
                   "value" : "¿Desea eliminar %lld cuentas? Esta acción no se puede deshacer."
                 }
               },
               "zero" : {
                 "stringUnit" : {
-                  "state" : "translated",
+                  "state" : "needs_review",
                   "value" : "¿Desea eliminar esta cuenta? Esta acción no se puede deshacer."
                 }
               }
@@ -402,12 +402,6 @@
                   "state" : "translated",
                   "value" : "%lld Cuentas"
                 }
-              },
-              "zero" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "%lld Cuentas"
-                }
               }
             }
           }
@@ -649,6 +643,48 @@
         }
       }
     },
+    "Categories.Subtitle %lld" : {
+      "comment" : "Indica la cantidad total de categorias",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Category"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Categories"
+                }
+              }
+            }
+          }
+        },
+        "es" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "%lld Categoría"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "%lld Categorías"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "Categories.Title" : {
       "comment" : "Titulo para la vista de categorias",
       "extractionState" : "manual",
@@ -672,6 +708,113 @@
     },
     "Category name (Z-A)" : {
 
+    },
+    "Category.Delete %lld" : {
+      "comment" : "Titulo para el mensaje emergente de eliminar n cantidad de categorias",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Delete category"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Delete %lld categories"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Delete category"
+                }
+              }
+            }
+          }
+        },
+        "es" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Eliminar categoría"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "Eliminar %lld categorías"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Eliminar categoría"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Category.Delete.Message %lld" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "This category will be deleted. This action can’t be undone."
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "These %lld categories will be deleted. This action can’t be undone."
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "This category will be deleted. This action can’t be undone."
+                }
+              }
+            }
+          }
+        },
+        "es" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Se elimnará esta categoría. Esta acción no se puede deshacer."
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Se elimnarán %lld categorías. Esta acción no se puede deshacer."
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Se elimnará esta categoría. Esta acción no se puede deshacer."
+                }
+              }
+            }
+          }
+        }
+      }
     },
     "Category.Type.Expense" : {
       "comment" : "Tipo de categoria gasto singular",
@@ -983,9 +1126,6 @@
       }
     },
     "Delete" : {
-
-    },
-    "Delete categoreis" : {
 
     },
     "Delete category" : {
@@ -1693,6 +1833,30 @@
                 "stringUnit" : {
                   "state" : "translated",
                   "value" : "Category deleted"
+                }
+              }
+            }
+          }
+        },
+        "es" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Categoría eliminada"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Categorías eliminadas"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Categoría eliminada"
                 }
               }
             }
@@ -2794,9 +2958,6 @@
 
     },
     "User is not logged in." : {
-
-    },
-    "Want to delete these categories? \n This action cannot be undone." : {
 
     },
     "Want to delete this category? \n This action cannot be undone." : {

@@ -9,11 +9,28 @@ import Combine
 
 class CategoryViewModel: BaseViewModel {
     
+    @Published var selectedCategories = Set<CategoryModel>()
+    
+    func toggleCategorySelection(_ category: CategoryModel) {
+        if selectedCategories.contains(category) {
+            selectedCategories.remove(category)
+        } else {
+            selectedCategories.insert(category)
+        }
+    }
+    
+    
+    
+  
+    
+    
+    
+    
     @Published var categories: [CategoryModel] = []
     
     // MARK: EDIT
     @Published var isEditing: Bool = false
-    @Published var selectedCategories = Set<CategoryModel>()
+    
     
     // MARK: SORT
     @Published var sortCategoriesBy = UserDefaultsManager.sorCategories
