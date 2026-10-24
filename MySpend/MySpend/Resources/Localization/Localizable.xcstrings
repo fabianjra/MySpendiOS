@@ -2584,6 +2584,24 @@
         }
       }
     },
+    "Sort.By.MostOftenUsed" : {
+      "comment" : "Descripcion para la opcion de ordenar por más utilizadas",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Most Often Used"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Más Utilizadas"
+          }
+        }
+      }
+    },
     "Sort.By.Title" : {
       "comment" : "Descripcion para la opcion de ordenar por titulo",
       "extractionState" : "manual",

@@ -59,6 +59,13 @@ extension Array where Element == CategoryModel {
                 ? $0.dateCreated < $1.dateCreated
                 : $0.dateCreated > $1.dateCreated
             }
+            
+        case .mostOftenUsed:
+            return sorted {
+                sort.order == .ascending
+                ? $0.dateLastUsed > $1.dateLastUsed
+                : $0.dateLastUsed < $1.dateLastUsed
+            }
         }
     }
 }
