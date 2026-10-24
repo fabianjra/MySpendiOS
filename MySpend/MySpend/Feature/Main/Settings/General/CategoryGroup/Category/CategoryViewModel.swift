@@ -10,16 +10,17 @@ import Observation
 @Observable
 final class CategoryViewModel {
     
-    //var showNewItemModel = false
-    //var showUpdateCagatory = false
-    var showAlertDelete = false
-
     var selectedCategories = Set<CategoryModel>()
-    //var categoryToDelete: CategoryModel?
-    //var categoryToUpdate = CategoryModel()
-    
     var selectedType = CategoryType.expense
     
+    var showCreateCategory = false
+    
+    var showUpdateCagatory = false
+    var categoryToUpdate = CategoryModel()
+    
+    var showAlertDelete = false
+    var categoryToDelete: CategoryModel?
+
     func toggleCategorySelection(_ category: CategoryModel) {
         if selectedCategories.contains(category) {
             selectedCategories.remove(category)

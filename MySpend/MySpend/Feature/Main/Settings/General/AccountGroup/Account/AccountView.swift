@@ -43,7 +43,7 @@ struct AccountView: View {
         
         // MARK: SHEETS
         
-        .sheet(isPresented: $viewModel.showNewItemModal) {
+        .sheet(isPresented: $viewModel.showCreateAccount) {
             NavigationStack {
                 CreateAccountView()
             }
@@ -243,7 +243,7 @@ struct AccountView: View {
                 
             } else {
                 Button(.transactionAdd, systemImage: ConstantSystemImage.addNewItem) {
-                    viewModel.showNewItemModal = true
+                    viewModel.showCreateAccount = true
                 }
             }
         }

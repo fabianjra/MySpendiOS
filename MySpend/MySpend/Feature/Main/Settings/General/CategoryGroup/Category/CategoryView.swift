@@ -25,17 +25,6 @@ struct CategoryView: View {
         }
     }
     
-    
-    
-    
-    
-    @State private var showNewItemModal = false
-    
-    
-    @State private var modelToModify: CategoryModel?
-    @State private var modelToDelete: CategoryModel?
-    
-    
     var body: some View {
         VStack {
             categoryList
@@ -60,22 +49,16 @@ struct CategoryView: View {
         
         // MARK: SHEETS
         
-        .sheet(isPresented: $showNewItemModal) {
+        .sheet(isPresented: $viewModel.showCreateCategory) {
             AddModifyCategoryView(categoryType: $viewModel.selectedType)
-                .presentationDetents([.large])
         }
-        .sheet(item: $modelToModify) { model in
-            AddModifyCategoryView(model, categoryType: $viewModel.selectedType)
-                .presentationDetents([.large])
-                .onDisappear {
-                    modelToModify = nil
-                }
+        
+        .sheet(isPresented: $viewModel.showUpdateCagatory) {
+            AddModifyCategoryView(viewModel.categoryToUpdate, categoryType: $viewModel.selectedType)
         }
         
         .toast($toastResponse)
     }
-    
-    
     
     private var categoryList: some View {
         VStack {
@@ -103,8 +86,8 @@ struct CategoryView: View {
                                 if isEditing {
                                     viewModel.toggleCategorySelection(item)
                                 } else {
-                                    modelToModify = item
-                                    //viewModel.showUpdateAccount = true
+                                    viewModel.categoryToUpdate = item
+                                    viewModel.showUpdateCagatory = true
                                 }
                             } label: {
                                 HStack {
@@ -125,7 +108,7 @@ struct CategoryView: View {
                                 if !isEditing {
                                     
                                     Button(.selectorDelete, systemImage: ConstantSystemImage.trash) {
-                                        modelToDelete = item
+                                        viewModel.categoryToDelete = item
                                         viewModel.showAlertDelete = true
                                     }
                                     .labelStyle(.iconOnly)
@@ -133,8 +116,8 @@ struct CategoryView: View {
                                     
                                     
                                     Button(.selectorEdit, systemImage: ConstantSystemImage.squareAndPencil) {
-                                        modelToModify = item
-                                        //viewModel.showUpdateAccount = true
+                                        viewModel.categoryToUpdate = item
+                                        viewModel.showUpdateCagatory = true
                                     }
                                     .labelStyle(.iconOnly)
                                 }
@@ -144,13 +127,13 @@ struct CategoryView: View {
                                 if !isEditing {
                                     
                                     Button(.selectorEdit, systemImage: ConstantSystemImage.squareAndPencil) {
-                                        modelToModify = item
-                                        //viewModel.showUpdateAccount = true
+                                        viewModel.categoryToUpdate = item
+                                        viewModel.showUpdateCagatory = true
                                     }
                                     
                                     
                                     Button(.selectorDelete, systemImage: ConstantSystemImage.trash, role: .destructive) {
-                                        modelToDelete = item
+                                        viewModel.categoryToDelete = item
                                         viewModel.showAlertDelete = true
                                     }
                                 }
@@ -162,10 +145,10 @@ struct CategoryView: View {
                                         if viewModel.selectedCategories.isEmpty {
                                             
                                             defer {
-                                                modelToDelete = nil
+                                                viewModel.categoryToDelete = nil
                                             }
                                             
-                                            if let category = modelToDelete {
+                                            if let category = viewModel.categoryToDelete {
                                                 toastResponse = await manager.delete(category)
                                             }
                                             
@@ -261,7 +244,7 @@ struct CategoryView: View {
                 
             } else {
                 Button(.transactionAdd, systemImage: ConstantSystemImage.addNewItem) {
-                    showNewItemModal = true
+                    viewModel.showCreateCategory = true
                 }
             }
         }

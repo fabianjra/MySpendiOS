@@ -10,13 +10,15 @@ import Observation
 @Observable
 final class AccountViewModel {
     
-    var showNewItemModal = false
-    var showUpdateAccount = false
-    var showAlertDelete = false
-
     var selectedAccounts = Set<AccountModel>()
-    var accountToDelete: AccountModel?
+    
+    var showCreateAccount = false
+    
+    var showUpdateAccount = false
     var accountToUpdate = AccountModel()
+    
+    var showAlertDelete = false
+    var accountToDelete: AccountModel?
 
     func toggleAccountSelection(_ account: AccountModel) {
         if selectedAccounts.contains(account) {
