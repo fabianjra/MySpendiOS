@@ -13,11 +13,11 @@ struct MenuOrderAccount: View {
     
     var body: some View {
         
-        @Bindable var accountManagerBind = manager
+        @Bindable var managerBind = manager
         
         Menu {
             Section {
-                Picker(.sortTitle, selection: $accountManagerBind.sortSelection.sortBy) {
+                Picker(.sortTitle, selection: $managerBind.sortSelection.sortBy) {
                     ForEach(AccountSortOption.allCases, id: \.self) { sortBy in
                         Text(sortBy.localized)
                             .tag(sortBy)
@@ -27,7 +27,7 @@ struct MenuOrderAccount: View {
             }
             
             Section {
-                Picker(.sortTitle, selection: $accountManagerBind.sortSelection.order) {
+                Picker(.sortTitle, selection: $managerBind.sortSelection.order) {
                     ForEach(SortOrder.allCases, id: \.self) { order in
                         Text(order.localized)
                             .tag(order)

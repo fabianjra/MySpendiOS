@@ -2,14 +2,21 @@
 //  CategoryViewModel.swift
 //  MySpend
 //
-//  Created by Fabian Rodriguez on 11/8/24.
+//  Created by Fabian Rodriguez on 23/10/26.
 //
 
-import Combine
+import Observation
 
-class CategoryViewModel: BaseViewModel {
+@Observable
+final class CategoryViewModel {
     
-    @Published var selectedCategories = Set<CategoryModel>()
+    //var showNewItemModel = false
+    //var showUpdateCagatory = false
+    var showAlertDelete = false
+
+    var selectedCategories = Set<CategoryModel>()
+    //var categoryToDelete: CategoryModel?
+    //var categoryToUpdate = CategoryModel()
     
     func toggleCategorySelection(_ category: CategoryModel) {
         if selectedCategories.contains(category) {
@@ -17,93 +24,5 @@ class CategoryViewModel: BaseViewModel {
         } else {
             selectedCategories.insert(category)
         }
-    }
-    
-    
-    
-  
-    
-    
-    
-    
-    @Published var categories: [CategoryModel] = []
-    
-    // MARK: EDIT
-    @Published var isEditing: Bool = false
-    
-    
-    // MARK: SORT
-    @Published var sortCategoriesBy = UserDefaultsManager.sorCategories
-    
-    // MARK: POPUPS
-    @Published var showAlertDelete = false
-    @Published var showAlertDeleteMultiple = false
-    
-    /// Llamar en `onAppear`
-    func activateObservers() async {
-        startObserveViewContextChanges { [weak self] in
-            await self?.fetchAll()
-        }
-        
-        await fetchAll() // primera carga
-    }
-    
-    /// Llamar en `onDisappear`
-    func deactivateObservers() {
-        stopObservingContextChanges()
-    }
-    
-    private func fetchAll() async {
-        do {
-            categories = try await CategoryCoreDataManager(viewContext).fetchAll()
-        } catch {
-            errorMessage = error.localizedDescription
-            Logger.exception(error, type: .CoreData)
-        }
-    }
-    
-    func delete(_ model: CategoryModel?) async -> ResponseModel {
-        guard let model = model else { return ResponseModel(.successful) }
-        
-        do {
-            try await CategoryCoreDataManager(viewContext).delete(model)
-            return ResponseModel(.successful)
-        } catch {
-            Logger.exception(error, type: .CoreData)
-            return ResponseModel(.error, error.localizedDescription)
-        }
-    }
-    
-    func deleteMltiple() async -> ResponseModel {
-        defer {
-            isEditing = false
-        }
-        
-        do {
-            for item in selectedCategories {
-                try await CategoryCoreDataManager(viewContext).delete(item)
-            }
-            
-            selectedCategories.removeAll()
-            return ResponseModel(.successful)
-        } catch {
-            Logger.exception(error)
-            return ResponseModel(.error, error.localizedDescription)
-        }
-    }
-    
-    /**
-     Updates the sort selection to store in UserDefaults.
-     */
-    func updateSelectedSort() {
-        UserDefaultsManager.sorCategories = sortCategoriesBy
-    }
-    
-    /**
-     Deletes the sort selection object in UserDefaults.
-     */
-    func resetSelectedSort() {
-        UserDefaultsManager.removeValue(for: .sortCategories)
-        sortCategoriesBy = UserDefaultsManager.sorCategories
     }
 }

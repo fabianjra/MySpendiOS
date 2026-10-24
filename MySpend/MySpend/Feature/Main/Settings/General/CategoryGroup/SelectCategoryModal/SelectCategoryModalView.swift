@@ -15,7 +15,7 @@ struct SelectCategoryModalView: View {
     @Binding var selectedCategory: CategoryModel
     @Binding var categoryType: CategoryType
     
-    @StateObject private var viewModel = CategoryViewModel()
+    @State private var viewModel = CategoryViewModel_original()
     
     // Validate if should dismiss this modal because a new category was added.
     @State private var isNewModelAdded: Bool = false

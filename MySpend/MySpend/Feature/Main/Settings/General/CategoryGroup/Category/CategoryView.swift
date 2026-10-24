@@ -16,11 +16,12 @@ struct CategoryView: View {
         editMode?.wrappedValue.isEditing == true
     }
     
+    @State private var viewModel = CategoryViewModel()
     @State private var toastResponse: ToastResponse?
     
     
     
-    @StateObject private var viewModel = CategoryViewModel()
+    
     
     @State private var showNewItemModal = false
     
@@ -28,14 +29,9 @@ struct CategoryView: View {
     @State private var modelToModify: CategoryModel?
     @State private var modelToDelete: CategoryModel?
     
-
+    
     var body: some View {
         VStack {
-            
-            //            if !viewModel.categories.isEmpty {
-            //                topMenu
-            //                    .padding(.top)
-            //            }
             categoryList
         }
         .navigationTitle(
@@ -69,6 +65,7 @@ struct CategoryView: View {
                     modelToModify = nil
                 }
         }
+        
         .toast($toastResponse)
     }
     
@@ -83,7 +80,7 @@ struct CategoryView: View {
             }
             .pickerStyle(.segmented)
             .glassEffect(.regular)
-            //.padding(.horizontal)
+            .padding(.horizontal)
             
             
             List(selection: $viewModel.selectedCategories) {
@@ -160,7 +157,7 @@ struct CategoryView: View {
                                             defer {
                                                 modelToDelete = nil
                                             }
-                                                                                        
+                                            
                                             if let category = modelToDelete {
                                                 toastResponse = await manager.delete(category)
                                             }
@@ -184,7 +181,7 @@ struct CategoryView: View {
                             }
                         }
                     } header: {
-//                        Text(.accountListHeader)
+                        //Text(.accountListHeader)
                         
                     } footer: {
                         //Text(.accountListFooter)
@@ -193,8 +190,8 @@ struct CategoryView: View {
             }
             .animation(.default, value: manager.sortedCategories)
             .scrollContentBackground(.hidden)
-            .background(Color.backgroundGradient)
         }
+        .background(Color.backgroundGradient)
     }
     
     @ToolbarContentBuilder
@@ -236,7 +233,7 @@ struct CategoryView: View {
                         Label(.selectorSelect, systemImage: ConstantSystemImage.checkmarkCircle)
                     }
                     
-                    //MenuOrderAccount()
+                    MenuOrderCategory()
                 }
                 .menuOrder(.fixed)
                 .disabled(manager.sortedCategories.isEmpty)
@@ -262,103 +259,6 @@ struct CategoryView: View {
             }
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    // MARK: - VIEWS
-    
-//    private var topMenu: some View {
-//        VStack {
-//            ListEditorView(isEditing: $viewModel.isEditing,
-//                           counterSelected: viewModel.selectedCategories.count) {
-//                
-//                viewModel.selectedCategories.removeAll()
-//                
-//            } actionTrailingEdit: {
-//                viewModel.showAlertDeleteMultiple = true
-//            }
-//            
-//            
-//            VStack {
-//                PickerView(selection: $modelType)
-//                    .frame(maxWidth: ConstantFrames.iPadMaxWidth)
-//                    .padding(.bottom, ConstantViews.mediumSpacing)
-//                
-//                RowLCTCointainer(disabled: viewModel.isEditing, leadingContent:  {
-//                    MenuContainer(addHorizontalPadding: true, disabled: viewModel.isEditing) {
-//                        Section("Sorted by: \(viewModel.sortCategoriesBy.rawValue)") {
-//                            sortButton(for: .byNameAz)
-//                            sortButton(for: .byCreationNewest)
-//                            sortButton(for: .byMostOftenUsed)
-//                        }
-//                        
-//                        // Reset the sort selection to default
-//                        Section {
-//                            sortButtonResetToDefault
-//                        }
-//                    }
-//                })
-//            }
-//            .disabled(viewModel.isEditing)
-//        }
-//        .padding(.horizontal)
-//        .disabled(viewModel.categories.isEmpty)
-//    }
-//    
-//    private func sortButton(for sortingOption: SortCategories) -> some View {
-//        Button {
-//            if viewModel.sortCategoriesBy == sortingOption {
-//                viewModel.sortCategoriesBy = sortingOption.toggle
-//            } else {
-//                viewModel.sortCategoriesBy = sortingOption
-//            }
-//            
-//            viewModel.updateSelectedSort()
-//        } label: {
-//            viewModel.sortCategoriesBy == sortingOption ? sortingOption.label() : sortingOption.label(inverted: false)
-//        }
-//    }
-//    
-//    private var sortButtonResetToDefault: some View {
-//        Button {
-//            viewModel.resetSelectedSort()
-//        } label: {
-//            Label.restoreSelection
-//                .foregroundStyle(Color.alert, Color.alert)
-//        }
-//    }
-    
-    // MARK: - FUNCTIONS
-    
-//    private func delete() {
-//        Task {
-//            defer {
-//                modelToDelete = nil
-//            }
-//            
-//            let result = await viewModel.delete(modelToDelete)
-//            
-//            if result.status.isError {
-//                viewModel.errorMessage = result.message
-//            }
-//        }
-//    }
-//    
-//    private func deleteMltipleCategories() {
-//        Task {
-//            let result = await viewModel.deleteMltiple()
-//            
-//            if result.status.isError {
-//                viewModel.errorMessage = result.message
-//            }
-//        }
-//    }
 }
 
 private struct previewWrapper: View {
