@@ -9,11 +9,14 @@ import SwiftUI
 
 struct AccountDetailEdit: View {
     
+    // PARAMETRIZADOS
     @Binding var account: AccountModel
     @Binding var isDefaultSelected: Bool
-    
-    @State private var showIconsModal = false
+
+    // LOCALES
     @State private var selectedIcon = ""
+    @State private var showIconsModal = false
+    
     @FocusState private var isFocused: Bool
     
     var body: some View {

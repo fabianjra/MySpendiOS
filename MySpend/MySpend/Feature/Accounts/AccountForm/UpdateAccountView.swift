@@ -14,15 +14,16 @@ struct UpdateAccountView: View {
     
     @Binding var account: AccountModel
     
-    @State private var viewModel = AccountDetailEditViewModel()
+    @State private var isDefaultSelected = false
+    @State private var showAlert = false
     @State private var toastResponse: ToastResponse?
     
     var body: some View {
         VStack {
-            AccountDetailEdit(account: $account, isDefaultSelected: $viewModel.isDefaultSelected)
+            AccountDetailEdit(account: $account, isDefaultSelected: $isDefaultSelected)
         }
         .onAppear {
-            viewModel.isDefaultSelected = account.id == manager.defaultAccount?.id
+            isDefaultSelected = account.id == manager.defaultAccount?.id
         }
         
         .navigationTitle(.accountUpdateTitle)
@@ -32,8 +33,7 @@ struct UpdateAccountView: View {
             VStack {
                 Button {
                     Task {
-                        toastResponse = await manager.update(account,
-                                                                     isDefault: viewModel.isDefaultSelected)
+                        toastResponse = await manager.update(account, isDefault: isDefaultSelected)
                         if toastResponse?.type == .ok {
                             dismiss()
                         }
@@ -49,12 +49,12 @@ struct UpdateAccountView: View {
                 .disabled(toastResponse != nil)
                 
                 Button(.alertOptionDelete, role: .destructive) {
-                    viewModel.showAlert = true
+                    showAlert = true
                 }
                 .padding(.bottom)
             }
             
-            .alert(.accountDelete(.zero), isPresented: $viewModel.showAlert) {
+            .alert(.accountDelete(.zero), isPresented: $showAlert) {
                 Button(.alertOptionDelete, role: .destructive) {
                     Task {
                         toastResponse = await manager.delete(account)
@@ -71,7 +71,6 @@ struct UpdateAccountView: View {
             }
             
         }
-        .toast($toastResponse)
         
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
@@ -86,6 +85,8 @@ struct UpdateAccountView: View {
                 .ignoresSafeArea(.container, edges: .all)
                 .ignoresSafeArea(.keyboard, edges: .bottom)
         }
+        
+        .toast($toastResponse)
     }
 }
 

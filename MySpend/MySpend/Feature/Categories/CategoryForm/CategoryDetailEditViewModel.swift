@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class AddModifyCategoryViewModel: BaseViewModel {
+final class CategoryDetailEditViewModel: BaseViewModel {
     
     @Published var model: CategoryModel
     

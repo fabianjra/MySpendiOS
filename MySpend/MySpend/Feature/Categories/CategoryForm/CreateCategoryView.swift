@@ -20,7 +20,7 @@ struct CreateCategoryView: View {
     private let isSelectionMode: Bool
     @Binding var isNewModelAdded: Bool
     
-    @StateObject private var viewModel: AddModifyCategoryViewModel
+    @StateObject private var viewModel: CategoryDetailEditViewModel
     @FocusState private var focusedField: CategoryModel.Field?
     
     @State private var selectedIcon = ""
@@ -32,7 +32,7 @@ struct CreateCategoryView: View {
          isSelectionMode: Bool = false,
          isNewModelAdded: Binding<Bool> = .constant(false)) {
         
-        _viewModel = StateObject(wrappedValue: AddModifyCategoryViewModel(model))
+        _viewModel = StateObject(wrappedValue: CategoryDetailEditViewModel(model))
         
         self._categoryType = categoryType
         self._newCategoryID = newCategoryID

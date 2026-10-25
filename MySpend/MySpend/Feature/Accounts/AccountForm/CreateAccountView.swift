@@ -12,14 +12,13 @@ struct CreateAccountView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(AccountManager.self) private var manager
     
-    @State private var viewModel = AccountDetailEditViewModel()
     @State private var account = AccountModel()
-    
+    @State private var isDefaultSelected = false
     @State private var toastResponse: ToastResponse?
     
     var body: some View {
         VStack {
-            AccountDetailEdit(account: $account, isDefaultSelected: $viewModel.isDefaultSelected)
+            AccountDetailEdit(account: $account, isDefaultSelected: $isDefaultSelected)
         }
         
         .navigationTitle(.accountCreateTitle)
@@ -28,8 +27,7 @@ struct CreateAccountView: View {
         .safeAreaInset(edge: .bottom) {
             Button {
                 Task {
-                    toastResponse = await manager.create(account,
-                                                                 isDefault: viewModel.isDefaultSelected)
+                    toastResponse = await manager.create(account, isDefault: isDefaultSelected)
                     if toastResponse?.type == .ok {
                         dismiss()
                     }
@@ -44,7 +42,6 @@ struct CreateAccountView: View {
             .padding(.bottom)
             .disabled(toastResponse != nil)
         }
-        .toast($toastResponse)
         
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
@@ -59,6 +56,8 @@ struct CreateAccountView: View {
                 .ignoresSafeArea(.container, edges: .all)
                 .ignoresSafeArea(.keyboard, edges: .bottom)
         }
+        
+        .toast($toastResponse)
     }
 }
 
