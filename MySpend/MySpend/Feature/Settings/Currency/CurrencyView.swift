@@ -74,7 +74,6 @@ struct CurrencyView: View {
                 
                 if currency.countryCode == viewModel.selectedCurrency.countryCode {
                     Image.checkmark
-                        .bold()
                 }
             }
         }

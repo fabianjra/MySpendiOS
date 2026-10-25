@@ -29,7 +29,6 @@ struct DateTimeIntervalView: View {
                                 
                                 if item == viewModel.DateTimeIntervalSelected {
                                     Image.checkmark
-                                        .bold()
                                 }
                             }
                         }

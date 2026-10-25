@@ -105,7 +105,7 @@ private struct previewWrapper: View {
     
     var body: some View {
         VStack {
-            Text("Accounts selected:").bold()
+            Text("Accounts selected:")
             
             ForEach(previewFilter.sortedAccounts.filter { previewFilter.selectedAccountsToFilterByID.contains($0.id)}) { item in
                 Text(item.name)
@@ -125,7 +125,7 @@ private struct previewWrapper: View {
     }
 }
 
-#Preview("Normal filtrado \(Previews.localeES_CR)") {
+#Preview(Previews.localeES_CR) {
     NavigationStack {
         previewWrapper(.normal, isFilterActive: true)
             .environment(\.locale, .init(identifier: Previews.localeES_CR))

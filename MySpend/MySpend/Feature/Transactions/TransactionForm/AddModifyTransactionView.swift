@@ -266,7 +266,7 @@ private struct PreviewWrapper: View {
 }
 
 
-#Preview("New \(Previews.localeEN)") {
+#Preview(Previews.localeEN) {
     
     @Previewable @State var previewFilter = AccountManager.shared
     

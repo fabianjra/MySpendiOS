@@ -325,7 +325,7 @@ private struct previewWrapper: View {
     }
 }
 
-#Preview("Normal \(Previews.localeES_CR)") {
+#Preview(Previews.localeES_CR) {
     previewWrapper()
         .environment(\.locale, .init(identifier: Previews.localeES_CR))
 }

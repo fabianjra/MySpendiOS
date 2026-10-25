@@ -26,7 +26,6 @@ struct AppThemeView: View {
                             
                             if themeManager.theme == item {
                                 Image.checkmark
-                                    .bold()
                             }
                         }
                     }

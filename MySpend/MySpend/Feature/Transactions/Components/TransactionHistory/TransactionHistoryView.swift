@@ -488,7 +488,7 @@ private struct PreviewWrapper: View {
     }
 }
 
-#Preview("Normal \(Previews.localeES_CR)") {
+#Preview(Previews.localeES_CR) {
     NavigationStack {
         PreviewWrapper(.normal)
             
