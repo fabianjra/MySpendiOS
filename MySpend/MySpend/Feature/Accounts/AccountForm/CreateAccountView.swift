@@ -73,3 +73,14 @@ struct CreateAccountView: View {
     .environment(manager)
     .environment(\.locale, .init(identifier: Previews.localeES_CR))
 }
+
+#Preview(Previews.localeEN) {
+    
+    @Previewable @State var manager = AccountManager.shared
+    
+    NavigationStack {
+        CreateAccountView()
+    }
+    .environment(manager)
+    .environment(\.locale, .init(identifier: Previews.localeEN))
+}
