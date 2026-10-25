@@ -122,11 +122,12 @@ struct SelectCategoryModalView: View {
             }
         }
         .sheet(isPresented: $showNewItemModal) {
-            CreateCategoryView(categoryType: $categoryType,
-                                  newCategoryID: $newCategoryID,
-                                  isSelectionMode: true,
-                                  isNewModelAdded: $isNewModelAdded)
-            .presentationDetents([.large])
+            //TODO: REPARAR
+//            CreateCategoryView(categoryType: $categoryType,
+//                                  newCategoryID: $newCategoryID,
+//                                  isSelectionMode: true,
+//                                  isNewModelAdded: $isNewModelAdded)
+//            .presentationDetents([.large])
         }
         .presentationDetents([.medium, .large])
         //.background(Color.backgroundContentGradient.opacity(0.5))

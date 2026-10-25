@@ -50,11 +50,14 @@ struct CategoryView: View {
         // MARK: SHEETS
         
         .sheet(isPresented: $viewModel.showCreateCategory) {
-            CreateCategoryView(categoryType: $viewModel.selectedType)
+            NavigationStack {
+                CreateCategoryView(categoryType: $viewModel.selectedType)
+            }
         }
         
         .sheet(isPresented: $viewModel.showUpdateCagatory) {
-            CreateCategoryView(viewModel.categoryToUpdate, categoryType: $viewModel.selectedType)
+            //TODO: REPARAR
+            //CreateCategoryView(viewModel.categoryToUpdate, categoryType: $viewModel.selectedType)
         }
         
         .toast($toastResponse)
@@ -167,7 +170,7 @@ struct CategoryView: View {
                             }
                         }
                     } header: {
-                        //Text(.accountListHeader)
+                        Text(.categoryListHeader)
                         
                     } footer: {
                         //Text(.accountListFooter)

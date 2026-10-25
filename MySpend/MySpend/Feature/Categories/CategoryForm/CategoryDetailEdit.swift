@@ -11,6 +11,7 @@ struct CategoryDetailEdit: View {
     
     // PARAMETRIZADOS
     @Binding var category: CategoryModel
+    @Binding var categoryType: CategoryType
     
     // LOCALES
     @State private var selectedIcon = ""
@@ -19,52 +20,56 @@ struct CategoryDetailEdit: View {
     @FocusState private var isFocused: Bool
     
     var body: some View {
-        Form {
-            Section {
-                
-                LabeledContent(.inputName) {
-                    TextField(.categoryInputNamePlaceHolder, text: $category.name)
-                        .formInputStyle($category.name)
-                        .keyboardType(.alphabet)
-                        .focused($isFocused)
-                }
-                .formLabeledInputStyle
-                
-                
-                LabeledContent(.inputIcon) {
-                    Button {
-                        showIconsModal = true
-                    } label: {
-                        if category.icon.isEmptyOrWhitespace {
-                            Text(.inputIconPlaceHolder)
-                                .foregroundStyle(Color(uiColor: .placeholderText))
-                            
-                        } else {
-                            Image(systemName: category.icon)
-                                .foregroundStyle(Color.primary)
-                        }
+        VStack {
+            CategoryPickerView(selection: $categoryType)
+                .glassEffect(.regular)
+                .padding(.horizontal)
+            
+            Form {
+                Section {
+                    LabeledContent(.inputName) {
+                        TextField(.categoryInputNamePlaceHolder, text: $category.name)
+                            .formInputStyle($category.name)
+                            .keyboardType(.alphabet)
+                            .focused($isFocused)
                     }
+                    .formLabeledInputStyle
                     
-                    Spacer()
                     
-                    if !category.icon.isEmptyOrWhitespace {
+                    LabeledContent(.inputIcon) {
                         Button {
-                            category.icon = ""
+                            showIconsModal = true
                         } label: {
-                            Text(.selectorClear)
+                            if category.icon.isEmptyOrWhitespace {
+                                Text(.inputIconPlaceHolder)
+                                    .foregroundStyle(Color(uiColor: .placeholderText))
+                                
+                            } else {
+                                Image(systemName: category.icon)
+                                    .foregroundStyle(Color.primary)
+                            }
                         }
-                        .buttonStyle(.borderless) // Permite la accion de borrar el icono sin irse a la accion de mostrar modal.
+                        
+                        Spacer()
+                        
+                        if !category.icon.isEmptyOrWhitespace {
+                            Button {
+                                category.icon = ""
+                            } label: {
+                                Text(.selectorClear)
+                            }
+                            .buttonStyle(.borderless) // Permite la accion de borrar el icono sin irse a la accion de mostrar modal.
+                        }
                     }
+                    .formLabeledInputStyle
+                    
+                } footer: {
+                    Text(.inputNameRequired)
                 }
-                .formLabeledInputStyle
-                
-            } header: {
-                //Text(.accountListTitle)
             }
+            .scrollDisabled(true)
+            .scrollContentBackground(.hidden)
         }
-        .scrollDisabled(true)
-        .padding(.top)
-        .scrollContentBackground(.hidden)
         
         .onAppear {
             isFocused = true
@@ -84,7 +89,7 @@ struct CategoryDetailEdit: View {
     @Previewable @State var category = CategoryModel()
     @Previewable @State var isDefaultSelected = false
     
-    CategoryDetailEdit(category: $category)
+    CategoryDetailEdit(category: $category, categoryType: $category.type)
         .environment(\.locale, .init(identifier: Previews.localeES_CR))
 }
 
@@ -94,6 +99,6 @@ struct CategoryDetailEdit: View {
     @Previewable @State var category = CategoryModel()
     @Previewable @State var isDefaultSelected = false
     
-    CategoryDetailEdit(category: $category)
+    CategoryDetailEdit(category: $category, categoryType: $category.type)
         .environment(\.locale, .init(identifier: Previews.localeEN))
 }

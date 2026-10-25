@@ -66,8 +66,8 @@ struct AccountDetailEdit: View {
                 }
                 .tint(.accentColor)
 
-            } header: {
-                //Text(.accountListTitle)
+            } footer: {
+                Text(.inputNameRequired)
             }
         }
         .scrollDisabled(true)
