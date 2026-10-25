@@ -67,7 +67,10 @@ struct AccountDetailEdit: View {
                 .tint(.accentColor)
 
             } footer: {
-                Text(.inputNameRequired)
+                if account.name.isEmptyOrWhitespace {
+                    Text(.inputNameRequired)
+                        .foregroundStyle(.alert)
+                }
             }
         }
         .scrollDisabled(true)

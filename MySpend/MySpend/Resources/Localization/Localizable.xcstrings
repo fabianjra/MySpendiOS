@@ -81,7 +81,7 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Eliminar %lld cuenta"
+                  "value" : "Eliminar cuenta"
                 }
               },
               "other" : {
@@ -134,20 +134,20 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
-                  "value" : "¿Desea eliminar %lld cuenta? Esta acción no se puede deshacer."
+                  "state" : "translated",
+                  "value" : "Se eliminará esta cuenta. Esta acción no se puede deshacer."
                 }
               },
               "other" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
-                  "value" : "¿Desea eliminar %lld cuentas? Esta acción no se puede deshacer."
+                  "state" : "translated",
+                  "value" : "Se eliminarán %lld cuentas. Esta acción no se puede deshacer."
                 }
               },
               "zero" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
-                  "value" : "¿Desea eliminar esta cuenta? Esta acción no se puede deshacer."
+                  "state" : "translated",
+                  "value" : "Se eliminará esta cuenta. Esta acción no se puede deshacer."
                 }
               }
             }
@@ -757,6 +757,7 @@
       }
     },
     "Category.Delete.Message %lld" : {
+      "comment" : "Mensaje para confirmar la eliminacion de categorías en una alerta",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -931,6 +932,42 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Ingresos"
+          }
+        }
+      }
+    },
+    "Category.Update.Subtitle" : {
+      "comment" : "Subtitulo para la vista de actualizar categoría",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modify category details"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modifica los detalles de la categoría"
+          }
+        }
+      }
+    },
+    "Category.Update.Title" : {
+      "comment" : "Titulo para la vista de actualizar categoría",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Update Category"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Actualizar Categoría"
           }
         }
       }
@@ -1626,6 +1663,9 @@
         }
       }
     },
+    "Key" : {
+      "extractionState" : "manual"
+    },
     "Menu.Options.Title" : {
       "comment" : "Titulo para el botón de menu de opciones",
       "extractionState" : "manual",
@@ -1852,7 +1892,7 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld account deleted"
+                  "value" : " Account deleted"
                 }
               },
               "other" : {
@@ -1875,7 +1915,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "translated",
+                  "state" : "needs_review",
                   "value" : "%lld cuenta eliminada"
                 }
               },
@@ -1906,7 +1946,7 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld Category deleted"
+                  "value" : "Category deleted"
                 }
               },
               "other" : {
@@ -1929,7 +1969,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "translated",
+                  "state" : "needs_review",
                   "value" : "%lld Categoría eliminada"
                 }
               },

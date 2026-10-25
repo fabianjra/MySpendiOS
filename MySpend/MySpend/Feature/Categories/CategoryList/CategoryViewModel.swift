@@ -11,7 +11,7 @@ import Observation
 final class CategoryViewModel {
     
     var selectedCategories = Set<CategoryModel>()
-    var selectedType = CategoryType.expense
+    var categoryType = CategoryType.expense
     
     var showCreateCategory = false
     

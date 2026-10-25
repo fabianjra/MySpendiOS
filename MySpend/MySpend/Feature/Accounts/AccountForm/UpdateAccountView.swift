@@ -69,11 +69,10 @@ struct UpdateAccountView: View {
             } message: {
                 Text(.accountDeleteMessage(.zero))
             }
-            
         }
         
         .toolbar {
-            ToolbarItem(placement: .primaryAction) {
+            ToolbarItem(placement: .destructiveAction) {
                 Button(role: .cancel) {
                     dismiss()
                 }

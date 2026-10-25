@@ -64,7 +64,10 @@ struct CategoryDetailEdit: View {
                     .formLabeledInputStyle
                     
                 } footer: {
-                    Text(.inputNameRequired)
+                    if category.name.isEmptyOrWhitespace {
+                        Text(.inputNameRequired)
+                            .foregroundStyle(.alert)
+                    }
                 }
             }
             .scrollDisabled(true)

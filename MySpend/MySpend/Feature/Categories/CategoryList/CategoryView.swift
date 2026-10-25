@@ -21,7 +21,7 @@ struct CategoryView: View {
     
     private var filteredCategories: [CategoryModel] {
         manager.sortedCategories.filter {
-            $0.type == viewModel.selectedType
+            $0.type == viewModel.categoryType
         }
     }
     
@@ -51,13 +51,14 @@ struct CategoryView: View {
         
         .sheet(isPresented: $viewModel.showCreateCategory) {
             NavigationStack {
-                CreateCategoryView(categoryType: $viewModel.selectedType)
+                CreateCategoryView(categoryType: $viewModel.categoryType)
             }
         }
         
         .sheet(isPresented: $viewModel.showUpdateCagatory) {
-            //TODO: REPARAR
-            //CreateCategoryView(viewModel.categoryToUpdate, categoryType: $viewModel.selectedType)
+            NavigationStack {
+                UpdateCategoryView(category: $viewModel.categoryToUpdate)
+            }
         }
         
         .toast($toastResponse)
@@ -66,7 +67,7 @@ struct CategoryView: View {
     private var categoryList: some View {
         VStack {
             
-            CategoryPickerView(selection: $viewModel.selectedType)
+            CategoryPickerView(selection: $viewModel.categoryType)
                 .glassEffect(.regular)
                 .padding(.horizontal)
                 .disabled(isEditing)

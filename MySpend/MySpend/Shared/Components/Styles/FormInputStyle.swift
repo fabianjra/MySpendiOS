@@ -31,7 +31,7 @@ private struct FormInputStyle: TextFieldStyle {
                     text = ""
                 } label: {
                     Image.xmarkCircleFIll
-                        .tint(Color.secondary)
+                        .foregroundStyle(Color.secondary)
                 }
                 .buttonStyle(.plain)
                 //.accessibilityLabel("Clear text")
