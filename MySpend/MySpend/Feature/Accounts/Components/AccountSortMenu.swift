@@ -1,15 +1,15 @@
 //
-//  MenuOrderCategory.swift
+//  AccountSortMenu.swift
 //  MySpend
 //
-//  Created by Fabian Rodriguez on 23/10/26.
+//  Created by Fabian Rodriguez on 20/10/26.
 //
 
 import SwiftUI
 
-struct MenuOrderCategory: View {
+struct AccountSortMenu: View {
     
-    @Environment(CategoryManager.self) private var manager
+    @Environment(AccountManager.self) private var manager
     
     var body: some View {
         
@@ -18,7 +18,7 @@ struct MenuOrderCategory: View {
         Menu {
             Section {
                 Picker(.sortTitle, selection: $managerBind.sortSelection.sortBy) {
-                    ForEach(CategorySortOption.allCases, id: \.self) { sortBy in
+                    ForEach(AccountSortOption.allCases, id: \.self) { sortBy in
                         Text(sortBy.localized)
                             .tag(sortBy)
                     }
@@ -55,8 +55,8 @@ struct MenuOrderCategory: View {
 }
 
 #Preview {
-    @Previewable @State var manager = CategoryManager.shared
+    @Previewable @State var manager = AccountManager.shared
     
-    MenuOrderCategory()
+    AccountSortMenu()
         .environment(manager)
 }

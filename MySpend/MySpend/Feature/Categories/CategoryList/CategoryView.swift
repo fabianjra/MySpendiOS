@@ -219,7 +219,7 @@ struct CategoryView: View {
                         Label(.selectorSelect, systemImage: ConstantSystemImage.checkmarkCircle)
                     }
                     
-                    MenuOrderCategory()
+                    CategorySortMenu()
                 }
                 .menuOrder(.fixed)
                 .disabled(filteredCategories.isEmpty)

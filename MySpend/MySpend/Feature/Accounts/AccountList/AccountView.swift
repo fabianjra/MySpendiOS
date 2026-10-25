@@ -222,7 +222,7 @@ struct AccountView: View {
                         Label(.selectorSelect, systemImage: ConstantSystemImage.checkmarkCircle)
                     }
                     
-                    MenuOrderAccount()
+                    AccountSortMenu()
                 }
                 .menuOrder(.fixed)
                 .disabled(manager.sortedAccounts.isEmpty)

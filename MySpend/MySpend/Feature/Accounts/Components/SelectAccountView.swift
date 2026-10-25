@@ -68,7 +68,7 @@ struct SelectAccountView: View {
                 
                 ToolbarItemGroup(placement: .primaryAction) {
                     Menu(.menuOptionsTitle, systemImage: ConstantSystemImage.options) {
-                        MenuOrderAccount()
+                        AccountSortMenu()
                     }
                     .menuOrder(.fixed)
                     .disabled(manager.sortedAccounts.isEmpty)
