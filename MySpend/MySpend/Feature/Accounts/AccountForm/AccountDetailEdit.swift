@@ -34,11 +34,18 @@ struct AccountDetailEdit: View {
                 
                 
                 LabeledContent(.inputIcon) {
-                    Button(account.icon, systemImage: account.icon) {
+                    Button {
                         showIconsModal = true
+                    } label: {
+                        if account.icon.isEmptyOrWhitespace {
+                            Text(.inputIconPlaceHolder)
+                                .foregroundStyle(Color(uiColor: .placeholderText))
+                            
+                        } else {
+                            Image(systemName: account.icon)
+                                .foregroundStyle(Color.primary)
+                        }
                     }
-                    .labelStyle(.iconOnly)
-                    .foregroundStyle(.primary)
                     
                     Spacer()
                     

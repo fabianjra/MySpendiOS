@@ -32,11 +32,18 @@ struct CategoryDetailEdit: View {
                 
                 
                 LabeledContent(.inputIcon) {
-                    Button(category.icon, systemImage: category.icon) {
+                    Button {
                         showIconsModal = true
+                    } label: {
+                        if category.icon.isEmptyOrWhitespace {
+                            Text(.inputIconPlaceHolder)
+                                .foregroundStyle(Color(uiColor: .placeholderText))
+                            
+                        } else {
+                            Image(systemName: category.icon)
+                                .foregroundStyle(Color.primary)
+                        }
                     }
-                    .labelStyle(.iconOnly)
-                    .foregroundStyle(.primary)
                     
                     Spacer()
                     
@@ -50,7 +57,7 @@ struct CategoryDetailEdit: View {
                     }
                 }
                 .formLabeledInputStyle
-
+                
             } header: {
                 //Text(.accountListTitle)
             }

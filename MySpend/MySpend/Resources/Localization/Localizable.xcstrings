@@ -1509,7 +1509,7 @@
         }
       }
     },
-    "Input.Icon.Placeholder" : {
+    "Input.Icon.PlaceHolder" : {
       "comment" : "Placeholder para seleccionar el icono",
       "extractionState" : "manual",
       "localizations" : {
