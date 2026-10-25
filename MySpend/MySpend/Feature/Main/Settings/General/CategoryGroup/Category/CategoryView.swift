@@ -62,15 +62,11 @@ struct CategoryView: View {
     
     private var categoryList: some View {
         VStack {
-            Picker(.categoryType, selection: $viewModel.selectedType) {
-                ForEach(CategoryType.allCases) { type in
-                    Text(type.localized)
-                }
-            }
-            .pickerStyle(.segmented)
-            .glassEffect(.regular)
-            .padding(.horizontal)
-            .disabled(isEditing)
+            
+            CategoryPickerView(selection: $viewModel.selectedType)
+                .glassEffect(.regular)
+                .padding(.horizontal)
+                .disabled(isEditing)
             
             
             List(selection: $viewModel.selectedCategories) {
