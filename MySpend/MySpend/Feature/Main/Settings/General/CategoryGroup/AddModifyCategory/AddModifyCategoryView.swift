@@ -65,8 +65,8 @@ struct AddModifyCategoryView: View {
             
             // MARK: SEGMENT
             VStack {
-                PickerView(selection: $categoryType)
-                    .frame(maxWidth: ConstantFrames.iPadMaxWidth)
+                CategoryPickerView(selection: $categoryType)
+                    .glassEffect(.regular)
                     .padding(.bottom)
             }
             

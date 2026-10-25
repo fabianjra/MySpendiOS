@@ -39,7 +39,7 @@ struct SelectCategoryModalView: View {
             
             
             VStack {
-                PickerView(selection: $categoryType)
+                CategoryPickerView(selection: $categoryType)
                     .frame(maxWidth: ConstantFrames.iPadMaxWidth)
                     .padding(.bottom, ConstantViews.mediumSpacing)
                 

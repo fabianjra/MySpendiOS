@@ -42,7 +42,7 @@ struct AddModifyTransactionView: View {
                     // MARK: SEGMENT
                     
                     VStack {
-                        PickerView(selection: $viewModel.model.category.type)
+                        CategoryPickerView(selection: $viewModel.model.category.type)
                             .padding(.bottom)
                     }
                     

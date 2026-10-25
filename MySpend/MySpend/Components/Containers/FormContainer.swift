@@ -39,10 +39,7 @@ struct FormContainer<Content: View>: View {
         }
         .scrollDisabled(!scrollable)
         
-        .background(RadialGradient(colors: backgroundColor,
-                                   center: backgroundCenter,
-                                   startRadius: .zero,
-                                   endRadius: ConstantColors.endRadiusBackground))
+        .background(Color.backgroundGradient)
         .ignoresSafeArea(.all, edges: .bottom)
     }
 }
