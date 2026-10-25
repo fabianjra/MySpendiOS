@@ -8,11 +8,85 @@
 import SwiftUI
 
 struct CategoryDetailEdit: View {
+    
+    // PARAMETRIZADOS
+    @Binding var category: CategoryModel
+    
+    // LOCALES
+    @State private var selectedIcon = ""
+    @State private var showIconsModal = false
+    
+    @FocusState private var isFocused: Bool
+    
     var body: some View {
-        Text("")
+        Form {
+            Section {
+                
+                LabeledContent(.inputName) {
+                    TextField(.categoryInputNamePlaceHolder, text: $category.name)
+                        .formInputStyle($category.name)
+                        .keyboardType(.alphabet)
+                        .focused($isFocused)
+                }
+                .formLabeledInputStyle
+                
+                
+                LabeledContent(.inputIcon) {
+                    Button(category.icon, systemImage: category.icon) {
+                        showIconsModal = true
+                    }
+                    .labelStyle(.iconOnly)
+                    .foregroundStyle(.primary)
+                    
+                    Spacer()
+                    
+                    if !category.icon.isEmptyOrWhitespace {
+                        Button {
+                            category.icon = ""
+                        } label: {
+                            Text(.selectorClear)
+                        }
+                        .buttonStyle(.borderless) // Permite la accion de borrar el icono sin irse a la accion de mostrar modal.
+                    }
+                }
+                .formLabeledInputStyle
+
+            } header: {
+                //Text(.accountListTitle)
+            }
+        }
+        .scrollDisabled(true)
+        .padding(.top)
+        .scrollContentBackground(.hidden)
+        
+        .onAppear {
+            isFocused = true
+        }
+        .onChange(of: selectedIcon) { _, newValue in
+            category.icon = newValue
+        }
+        
+        .sheet(isPresented: $showIconsModal) {
+            IconListModalView(selectedIcon: $selectedIcon)
+        }
     }
 }
 
-#Preview {
-    CategoryDetailEdit()
+#Preview(Previews.localeES_CR) {
+    
+    @Previewable @State var category = CategoryModel()
+    @Previewable @State var isDefaultSelected = false
+    
+    CategoryDetailEdit(category: $category)
+        .environment(\.locale, .init(identifier: Previews.localeES_CR))
+}
+
+
+#Preview(Previews.localeEN) {
+    
+    @Previewable @State var category = CategoryModel()
+    @Previewable @State var isDefaultSelected = false
+    
+    CategoryDetailEdit(category: $category)
+        .environment(\.locale, .init(identifier: Previews.localeEN))
 }

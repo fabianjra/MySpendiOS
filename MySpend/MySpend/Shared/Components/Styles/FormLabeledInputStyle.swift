@@ -32,19 +32,19 @@ extension View {
     
     Form {
         Section(.personalInformationTitle) {
-            LabeledContent(.personalInformationInputName) {
+            LabeledContent(.inputName) {
                 TextField(.personalInformationInputNamePlaceholder, text: $text)
                     .formInputStyle($text)
             }
             .formLabeledInputStyle
             
-            LabeledContent(.personalInformationInputEmail) {
+            LabeledContent(.inputEmail) {
                 TextField(.personalInformationInputEmailPlaceholder, text: $text)
                     .formInputStyle($text)
             }
             .formLabeledInputStyle
             
-            LabeledContent(.personalInformationInputPhone) {
+            LabeledContent(.inputPhone) {
                 TextField(.personalInformationInputPhonePlaceholder, text: $text)
                     .formInputStyle($text)
             }

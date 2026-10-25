@@ -167,50 +167,14 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Cuenta predeterminada"
           }
         }
       }
     },
-    "Account.Input.Icon" : {
-      "comment" : "Label para el campo de seleccionar icono",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Icon"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Icono"
-          }
-        }
-      }
-    },
-    "Account.Input.Name" : {
-      "comment" : "Label para el campo de texto de nombre de cuenta",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Name"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nombre"
-          }
-        }
-      }
-    },
     "Account.Input.Name.PlaceHolder" : {
-      "comment" : "Placeholder para el campo de texto de nombre de la cuenta",
+      "comment" : "Placeholder para el campo de texto de nombre de cuenta",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -808,6 +772,24 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "Category.Input.Name.PlaceHolder" : {
+      "comment" : "Placeholder para el campo de texto de nombre de categoría",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter category name"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nombre de la categoría"
           }
         }
       }
@@ -1491,6 +1473,96 @@
         }
       }
     },
+    "Input.Email" : {
+      "comment" : "Label para el campo de texto de correo electronico",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Email"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Email"
+          }
+        }
+      }
+    },
+    "Input.Icon" : {
+      "comment" : "Label para el campo de seleccionar icono",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Icon"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Icono"
+          }
+        }
+      }
+    },
+    "Input.Icon.Placeholder" : {
+      "comment" : "Placeholder para seleccionar el icono",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select the icon"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selecciona el icono"
+          }
+        }
+      }
+    },
+    "Input.Name" : {
+      "comment" : "Label para el campo de texto de nombre",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nombre"
+          }
+        }
+      }
+    },
+    "Input.Phone" : {
+      "comment" : "Label para el campo de texto del número de teléfono",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Phone"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teléfono"
+          }
+        }
+      }
+    },
     "Menu.Options.Title" : {
       "comment" : "Titulo para el botón de menu de opciones",
       "extractionState" : "manual",
@@ -1601,24 +1673,6 @@
         }
       }
     },
-    "PersonalInformation.Input.Email" : {
-      "comment" : "Indica el email del profile",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Email"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Email"
-          }
-        }
-      }
-    },
     "PersonalInformation.Input.Email.Placeholder" : {
       "comment" : "Placeholder para escribir el email",
       "extractionState" : "manual",
@@ -1637,24 +1691,6 @@
         }
       }
     },
-    "PersonalInformation.Input.Name" : {
-      "comment" : "Indica el nombre del profile",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Name"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nombre"
-          }
-        }
-      }
-    },
     "PersonalInformation.Input.Name.Placeholder" : {
       "comment" : "Placeholder para escribir el nombre",
       "extractionState" : "manual",
@@ -1667,26 +1703,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Ingresa tu nombre"
-          }
-        }
-      }
-    },
-    "PersonalInformation.Input.Phone" : {
-      "comment" : "Indica el número de teléfono del profile",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Phone"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Teléfono"
           }
         }
       }

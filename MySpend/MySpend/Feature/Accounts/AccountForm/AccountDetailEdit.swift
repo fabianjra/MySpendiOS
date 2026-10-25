@@ -23,7 +23,7 @@ struct AccountDetailEdit: View {
         Form {
             Section {
                 
-                LabeledContent(.accountInputName) {
+                LabeledContent(.inputName) {
                     TextField(.accountInputNamePlaceHolder, text: $account.name)
                         .formInputStyle($account.name)
                         .textContentType(.creditCardName)
@@ -33,7 +33,7 @@ struct AccountDetailEdit: View {
                 .formLabeledInputStyle
                 
                 
-                LabeledContent(.accountInputIcon) {
+                LabeledContent(.inputIcon) {
                     Button(account.icon, systemImage: account.icon) {
                         showIconsModal = true
                     }
@@ -77,7 +77,6 @@ struct AccountDetailEdit: View {
         .sheet(isPresented: $showIconsModal) {
             IconListModalView(selectedIcon: $selectedIcon)
         }
-        
     }
 }
 

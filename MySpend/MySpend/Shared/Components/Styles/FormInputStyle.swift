@@ -54,7 +54,7 @@ extension View {
     @Previewable @State var text = ""
     
     Form {
-        LabeledContent(.personalInformationInputName) {
+        LabeledContent(.inputName) {
             TextField(.personalInformationInputNamePlaceholder, text: $text)
                 .formInputStyle($text)
         }

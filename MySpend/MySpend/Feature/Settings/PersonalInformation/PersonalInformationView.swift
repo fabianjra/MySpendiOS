@@ -16,7 +16,7 @@ struct PersonalInformationView: View {
         VStack {
             Form {
                 Section {
-                    LabeledContent(.personalInformationInputName) {
+                    LabeledContent(.inputName) {
                         TextField(.personalInformationInputNamePlaceholder, text: $viewModel.username)
                             .formInputStyle($viewModel.username)
                             .textContentType(.name)
@@ -24,7 +24,7 @@ struct PersonalInformationView: View {
                     }
                     .formLabeledInputStyle
                     
-                    LabeledContent(.personalInformationInputEmail) {
+                    LabeledContent(.inputEmail) {
                         TextField(.personalInformationInputEmailPlaceholder, text: $viewModel.email)
                             .formInputStyle($viewModel.email)
                             .textContentType(.emailAddress)
@@ -32,7 +32,7 @@ struct PersonalInformationView: View {
                     }
                     .formLabeledInputStyle
                     
-                    LabeledContent(.personalInformationInputPhone) {
+                    LabeledContent(.inputPhone) {
                         TextField(.personalInformationInputPhonePlaceholder, text: $viewModel.phoneNumber)
                             .formInputStyle($viewModel.phoneNumber)
                             .textContentType(.telephoneNumber)
