@@ -149,7 +149,9 @@ struct AddModifyTransactionView: View {
                                         categoryType: $viewModel.model.category.type) //TOD: Refatorizar porque se envia el mismo objeto
             }
             .sheet(isPresented: $showAccountList) {
-                SelectAccountView(selectedAccount: $viewModel.model.account)
+                NavigationStack {
+                    SelectAccountView(selectedAccount: $viewModel.model.account)
+                }
             }
         }
         

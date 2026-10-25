@@ -16,7 +16,6 @@ struct SelectAccountView: View {
     @State private var selectedDetent: PresentationDetent = .medium
     
     var body: some View {
-        NavigationStack {
             List {
                 if manager.sortedAccounts.isEmpty {
                     
@@ -81,7 +80,6 @@ struct SelectAccountView: View {
                     }
                 }
             }
-        }
     }
 }
 
@@ -101,12 +99,14 @@ private struct previewWrapper: View {
     
     var body: some View {
         VStack {
-            Button("Show") {
+            Button(.accountsTitle) {
                 show = true
             }
         }
         .sheet(isPresented: $show) {
-            SelectAccountView(selectedAccount: $model)
+            NavigationStack {
+                SelectAccountView(selectedAccount: $model)
+            }
         }
         .onAppear {
             show = true
