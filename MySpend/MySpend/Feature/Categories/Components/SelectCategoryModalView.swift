@@ -122,7 +122,7 @@ struct SelectCategoryModalView: View {
             }
         }
         .sheet(isPresented: $showNewItemModal) {
-            AddModifyCategoryView(categoryType: $categoryType,
+            CreateCategoryView(categoryType: $categoryType,
                                   newCategoryID: $newCategoryID,
                                   isSelectionMode: true,
                                   isNewModelAdded: $isNewModelAdded)

@@ -50,11 +50,11 @@ struct CategoryView: View {
         // MARK: SHEETS
         
         .sheet(isPresented: $viewModel.showCreateCategory) {
-            AddModifyCategoryView(categoryType: $viewModel.selectedType)
+            CreateCategoryView(categoryType: $viewModel.selectedType)
         }
         
         .sheet(isPresented: $viewModel.showUpdateCagatory) {
-            AddModifyCategoryView(viewModel.categoryToUpdate, categoryType: $viewModel.selectedType)
+            CreateCategoryView(viewModel.categoryToUpdate, categoryType: $viewModel.selectedType)
         }
         
         .toast($toastResponse)

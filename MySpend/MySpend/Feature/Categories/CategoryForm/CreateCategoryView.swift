@@ -7,21 +7,10 @@
 
 import SwiftUI
 
-/**
- This view can be instantiated with a model or without a model.
- Pass a model of type `CategoryModel` if you want to modify something on it, eg: when you want to modify a category.
- If you don't pass a model by parameter, the `bool` let `isNewCategory` will be set to true, because will use an internal @State model inside to
- manage the model data in the view and no the Binding model used for paraemter.
- 
- - Parameters:
-    - model: This model should be passed only when you want to modify something in the model already loaded.
-    - categoryType: The type of category, is Expense or Income for the initial value.
-
- - Date: December 2024
- */
-struct AddModifyCategoryView: View {
+struct CreateCategoryView: View {
     
     @Environment(\.dismiss) private var dismiss
+    @Environment(CategoryManager.self) private var manager
     
     @Binding var categoryType: CategoryType
     
@@ -163,19 +152,14 @@ struct AddModifyCategoryView: View {
 }
 
 
-#Preview("New") {
-    @Previewable @State var categoryType: CategoryType = .expense
+#Preview(Previews.localeES_CR) {
     
-    VStack {
-        AddModifyCategoryView(categoryType: $categoryType)
+    @Previewable @State var manager = CategoryManager.shared
+    @Previewable @State var type = CategoryType.expense
+    
+    NavigationStack {
+        CreateCategoryView(categoryType: $type)
     }
+    .environment(manager)
+    .environment(\.locale, .init(identifier: Previews.localeES_CR))
 }
-
-// TOD: REPARAR
-//#Preview("Modify") {
-//    @Previewable @State var model = MocksCategoriesFB.expense1
-//    @Previewable @State var categoryType = MocksCategoriesFB.expense2.categoryType
-//    VStack {
-//        AddModifyCategoryView(model: $model, categoryType: $categoryType, isNewCategoryAdded: .constant(false))
-//    }
-//}

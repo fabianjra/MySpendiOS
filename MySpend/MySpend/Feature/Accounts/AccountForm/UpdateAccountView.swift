@@ -100,19 +100,19 @@ private struct PreviewWrapper: View {
     
     var body: some View {
         VStack {
-            List(manager.sortedAccounts) { account in
-                Button(account.name) {
-                    self.account = account
+            List(manager.sortedAccounts) { item in
+                Button(item.name) {
+                    self.account = item
                     isPresented = true
                 }
             }
         }
-        .onChange(of: manager.sortedAccounts, initial: true) { _, accounts in
-            guard let firstAccount = accounts.first else {
+        .onChange(of: manager.sortedAccounts, initial: true) { _, items in
+            guard let firstItem = items.first else {
                 return
             }
             
-            account = firstAccount
+            account = firstItem
             isPresented = true
         }
         .sheet(isPresented: $isPresented) {
