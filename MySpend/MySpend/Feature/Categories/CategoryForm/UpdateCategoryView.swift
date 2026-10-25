@@ -19,7 +19,7 @@ struct UpdateCategoryView: View {
     
     var body: some View {
         
-        CategoryDetailEdit(category: $category, type: $category.type)
+        CategoryForm(category: $category, type: $category.type)
         
             .navigationTitle(.categoryUpdateTitle)
         //.navigationSubtitle(.categoryUpdateSubtitle)

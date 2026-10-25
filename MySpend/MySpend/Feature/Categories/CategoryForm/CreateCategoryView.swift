@@ -19,7 +19,7 @@ struct CreateCategoryView: View {
     
     var body: some View {
         
-        CategoryDetailEdit(category: $category, type: $categoryType)
+        CategoryForm(category: $category, type: $categoryType)
         
             .navigationTitle(.categoryCreateTitle)
         //.navigationSubtitle(.categoryCreateSubtitle)

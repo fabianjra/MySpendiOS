@@ -1,5 +1,5 @@
 //
-//  AccountDetailEdit.swift
+//  AccountForm.swift
 //  MySpend
 //
 //  Created by Fabian Rodriguez on 18/10/26.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AccountDetailEdit: View {
+struct AccountForm: View {
     
     // PARAMETRIZADOS
     @Binding var account: AccountModel
@@ -95,7 +95,7 @@ struct AccountDetailEdit: View {
     @Previewable @State var account = AccountModel()
     @Previewable @State var isDefaultSelected = false
     
-    AccountDetailEdit(account: $account, isDefaultSelected: $isDefaultSelected)
+    AccountForm(account: $account, isDefaultSelected: $isDefaultSelected)
         .environment(\.locale, .init(identifier: Previews.localeES_CR))
 }
 
@@ -105,6 +105,6 @@ struct AccountDetailEdit: View {
     @Previewable @State var account = AccountModel()
     @Previewable @State var isDefaultSelected = false
     
-    AccountDetailEdit(account: $account, isDefaultSelected: $isDefaultSelected)
+    AccountForm(account: $account, isDefaultSelected: $isDefaultSelected)
         .environment(\.locale, .init(identifier: Previews.localeEN))
 }

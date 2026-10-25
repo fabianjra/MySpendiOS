@@ -18,7 +18,7 @@ struct CreateAccountView: View {
     
     var body: some View {
         VStack {
-            AccountDetailEdit(account: $account, isDefaultSelected: $isDefaultSelected)
+            AccountForm(account: $account, isDefaultSelected: $isDefaultSelected)
         }
         
         .navigationTitle(.accountCreateTitle)

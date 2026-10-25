@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CategoryDetailEdit: View {
+struct CategoryForm: View {
     
     // PARAMETRIZADOS
     @Binding var category: CategoryModel
@@ -92,7 +92,7 @@ struct CategoryDetailEdit: View {
     @Previewable @State var category = CategoryModel()
     @Previewable @State var isDefaultSelected = false
     
-    CategoryDetailEdit(category: $category, type: $category.type)
+    CategoryForm(category: $category, type: $category.type)
         .environment(\.locale, .init(identifier: Previews.localeES_CR))
 }
 
@@ -102,6 +102,6 @@ struct CategoryDetailEdit: View {
     @Previewable @State var category = CategoryModel()
     @Previewable @State var isDefaultSelected = false
     
-    CategoryDetailEdit(category: $category, type: $category.type)
+    CategoryForm(category: $category, type: $category.type)
         .environment(\.locale, .init(identifier: Previews.localeEN))
 }

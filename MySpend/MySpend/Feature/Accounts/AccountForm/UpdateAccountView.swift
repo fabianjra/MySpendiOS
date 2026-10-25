@@ -20,7 +20,7 @@ struct UpdateAccountView: View {
     
     var body: some View {
         VStack {
-            AccountDetailEdit(account: $account, isDefaultSelected: $isDefaultSelected)
+            AccountForm(account: $account, isDefaultSelected: $isDefaultSelected)
         }
         .onAppear {
             isDefaultSelected = account.id == manager.defaultAccount?.id
