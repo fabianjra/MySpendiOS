@@ -45,46 +45,45 @@ struct CreateCategoryView: View {
     
     var body: some View {
         
-        VStack {
-            CategoryDetailEdit(category: $category, categoryType: $categoryType)
-        }
-        .navigationTitle(.categoryCreateTitle)
-        .navigationSubtitle(.categoryCreateSubtitle)
+        CategoryDetailEdit(category: $category, categoryType: $categoryType)
         
-        .safeAreaInset(edge: .bottom) {
-            Button {
-                Task {
-                    toastResponse = await manager.create(category)
-                    if toastResponse?.type == .ok {
+            .navigationTitle(.categoryCreateTitle)
+        //.navigationSubtitle(.categoryCreateSubtitle)
+        
+            .safeAreaInset(edge: .bottom) {
+                Button {
+                    Task {
+                        toastResponse = await manager.create(category)
+                        if toastResponse?.type == .ok {
+                            dismiss()
+                        }
+                    }
+                } label: {
+                    Text(.buttonSave)
+                        .padding(.vertical, ConstantViews.paddingButtonVertical)
+                        .frame(maxWidth: ConstantFrames.iPadMaxWidth)
+                }
+                .padding(.horizontal)
+                .buttonStyle(.glass)
+                .padding(.bottom)
+                .disabled(toastResponse != nil)
+            }
+        
+            .toolbar {
+                ToolbarItem(placement: .destructiveAction) {
+                    Button(role: .cancel) {
                         dismiss()
                     }
                 }
-            } label: {
-                Text(.buttonSave)
-                    .padding(.vertical, ConstantViews.paddingButtonVertical)
-                    .frame(maxWidth: ConstantFrames.iPadMaxWidth)
             }
-            .padding(.horizontal)
-            .buttonStyle(.glass)
-            .padding(.bottom)
-            .disabled(toastResponse != nil)
-        }
         
-        .toolbar {
-            ToolbarItem(placement: .primaryAction) {
-                Button(role: .cancel) {
-                    dismiss()
-                }
+            .background {
+                Color.backgroundGradient
+                    .ignoresSafeArea(.container, edges: .all)
+                    .ignoresSafeArea(.keyboard, edges: .bottom)
             }
-        }
         
-        .background {
-            Color.backgroundGradient
-                .ignoresSafeArea(.container, edges: .all)
-                .ignoresSafeArea(.keyboard, edges: .bottom)
-        }
-        
-        .toast($toastResponse)
+            .toast($toastResponse)
         
         
 //        FormContainer {

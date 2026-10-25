@@ -44,7 +44,7 @@ struct CreateAccountView: View {
         }
         
         .toolbar {
-            ToolbarItem(placement: .primaryAction) {
+            ToolbarItem(placement: .destructiveAction) {
                 Button(role: .cancel) {
                     dismiss()
                 }
