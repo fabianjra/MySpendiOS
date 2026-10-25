@@ -24,47 +24,36 @@ struct SelectAccountView: View {
                     
                 } else {
                     ForEach(manager.sortedAccounts) { item in
-                        HStack {
-                            let icon = item.icon.getIconFromSFSymbol
+                        Button {
+                            selectedAccount = item
+                            dismiss()
                             
-                            if let image = icon {
-                                image
-                                    .font(.title3)
-                            }
-                            
-                            Button(item.name) {
-                                selectedAccount = item
-                                dismiss()
-                            }
-                            .foregroundStyle(.primary)
-                            
-                            Spacer()
-                            
-                            if item.id == manager.defaultAccount?.id {
-                                Text(.accountsDefault)
-                                    .foregroundStyle(Color.secondary)
-                                    .fontWeight(.light)
-                                    .font(.footnote)
+                        } label: {
+                            HStack {
+                                Label(item.name, systemImage: item.icon)
+                                    .foregroundStyle(Color.primary)
+                                
+                                Spacer()
+                                
+                                if item.id == manager.defaultAccount?.id {
+                                    Text(.accountsDefault)
+                                        .foregroundStyle(Color.secondary)
+                                        .fontWeight(.light)
+                                        .font(.footnote)
+                                }
                             }
                         }
+                        .tag(item)
                     }
                 }
             }
             .scrollContentBackground(.hidden)
             .animation(.default, value: manager.sortedAccounts)
-            
+        
             .navigationTitle(.accountsTitle)
             .navigationSubtitle(.accountsSelectSubtitle)
             
-            .presentationDetents([.medium, .large], selection: $selectedDetent)
-            .presentationBackground {
-                if selectedDetent == .large {
-                    Color.backgroundGradient
-                }
-            }
-            
             .toolbar {
-                
                 ToolbarItemGroup(placement: .primaryAction) {
                     Menu(.menuOptionsTitle, systemImage: ConstantSystemImage.options) {
                         AccountSortMenu()
@@ -80,6 +69,15 @@ struct SelectAccountView: View {
                     }
                 }
             }
+        
+            .presentationDetents([.medium, .large], selection: $selectedDetent)
+            .presentationBackground {
+                if selectedDetent == .large {
+                    Color.backgroundGradient
+                }
+            }
+            
+            
     }
 }
 

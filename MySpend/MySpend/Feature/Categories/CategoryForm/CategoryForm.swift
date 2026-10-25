@@ -31,6 +31,7 @@ struct CategoryForm: View {
                         TextField(.categoryInputNamePlaceHolder, text: $category.name)
                             .formInputStyle($category.name)
                             .keyboardType(.alphabet)
+                            .autocorrectionDisabled()
                             .focused($isFocused)
                     }
                     .formLabeledInputStyle

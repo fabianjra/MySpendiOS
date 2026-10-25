@@ -26,8 +26,8 @@ struct AccountForm: View {
                 LabeledContent(.inputName) {
                     TextField(.accountInputNamePlaceHolder, text: $account.name)
                         .formInputStyle($account.name)
-                        .textContentType(.creditCardName)
                         .keyboardType(.alphabet)
+                        .autocorrectionDisabled()
                         .focused($isFocused)
                 }
                 .formLabeledInputStyle

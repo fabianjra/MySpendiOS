@@ -145,8 +145,9 @@ struct AddModifyTransactionView: View {
                                     showModal: $showDatePicker)
             }
             .sheet(isPresented: $showCategoryList) {
-                SelectCategoryModalView(selectedCategory: $viewModel.model.category,
-                                        categoryType: $viewModel.model.category.type) //TOD: Refatorizar porque se envia el mismo objeto
+                NavigationStack {
+                    SelectCategoryView(selectedCategory: $viewModel.model.category)
+                }
             }
             .sheet(isPresented: $showAccountList) {
                 NavigationStack {
@@ -239,7 +240,9 @@ private struct PreviewWrapper: View {
         CoreDataUtilities.shared.mockDataType = mockDataType
     }
     
-    @State var previewFilter = AccountManager.shared
+    @State var accountManager = AccountManager.shared
+    @State var categoryManager = CategoryManager.shared
+    
     @State var selectedModel: TransactionModel?
     @State var models: [TransactionModel] = []
     
@@ -263,19 +266,22 @@ private struct PreviewWrapper: View {
                 selectedModel = models.first
             }
         }
-        .environment(previewFilter)
+        .environment(accountManager)
+        .environment(categoryManager)
     }
 }
 
 
 #Preview(Previews.localeEN) {
     
-    @Previewable @State var previewFilter = AccountManager.shared
+    @Previewable @State var accountManager = AccountManager.shared
+    @Previewable @State var categoryManager = CategoryManager.shared
     
     NavigationStack {
         AddModifyTransactionView()
     }
-    .environment(previewFilter)
+    .environment(accountManager)
+    .environment(categoryManager)
     .environment(\.locale, .init(identifier: Previews.localeEN))
     .onAppear {
         CoreDataUtilities.shared.mockDataType = .normal

@@ -286,13 +286,3 @@ private struct previewWrapper: View {
     }
     .environment(\.locale, .init(identifier: Previews.localeEN))
 }
-
-//#Preview("Only expenses es_CR") {
-//    CategoryView(viewModel: CategoryViewModel(categories: MocksCategoriesFB.onlyExpenses))
-//        .environment(\.locale, .init(identifier: "es_CR"))
-//}
-//
-//#Preview("Only incomes en_US") {
-//    CategoryView(viewModel: CategoryViewModel(categories: MocksCategoriesFB.onlyIncomes))
-//        .environment(\.locale, .init(identifier: "en_US"))
-//}
