@@ -11,7 +11,7 @@ struct CategoryDetailEdit: View {
     
     // PARAMETRIZADOS
     @Binding var category: CategoryModel
-    @Binding var categoryType: CategoryType
+    @Binding var type: CategoryType
     
     // LOCALES
     @State private var selectedIcon = ""
@@ -21,7 +21,7 @@ struct CategoryDetailEdit: View {
     
     var body: some View {
         VStack {
-            CategoryPickerView(selection: $categoryType)
+            CategoryPickerView(selection: $type)
                 .glassEffect(.regular)
                 .padding(.horizontal)
             
@@ -92,7 +92,7 @@ struct CategoryDetailEdit: View {
     @Previewable @State var category = CategoryModel()
     @Previewable @State var isDefaultSelected = false
     
-    CategoryDetailEdit(category: $category, categoryType: $category.type)
+    CategoryDetailEdit(category: $category, type: $category.type)
         .environment(\.locale, .init(identifier: Previews.localeES_CR))
 }
 
@@ -102,6 +102,6 @@ struct CategoryDetailEdit: View {
     @Previewable @State var category = CategoryModel()
     @Previewable @State var isDefaultSelected = false
     
-    CategoryDetailEdit(category: $category, categoryType: $category.type)
+    CategoryDetailEdit(category: $category, type: $category.type)
         .environment(\.locale, .init(identifier: Previews.localeEN))
 }

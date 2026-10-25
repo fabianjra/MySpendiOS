@@ -19,7 +19,7 @@ struct CreateCategoryView: View {
     
     var body: some View {
         
-        CategoryDetailEdit(category: $category, categoryType: $categoryType)
+        CategoryDetailEdit(category: $category, type: $categoryType)
         
             .navigationTitle(.categoryCreateTitle)
         //.navigationSubtitle(.categoryCreateSubtitle)
@@ -27,7 +27,7 @@ struct CreateCategoryView: View {
             .safeAreaInset(edge: .bottom) {
                 Button {
                     Task {
-                        toastResponse = await manager.create(category)
+                        toastResponse = await manager.create(category, type: categoryType)
                         if toastResponse?.type == .ok {
                             dismiss()
                         }
