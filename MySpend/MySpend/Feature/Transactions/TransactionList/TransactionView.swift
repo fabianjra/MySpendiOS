@@ -100,7 +100,7 @@ struct TransactionView: View {
                         .font(.footnote.weight(.light))
                         .lineLimit(ConstantViews.singleTextMaxLines)
                     
-                    Text(.greet(viewModel.userName, Emojis.greeting.rawValue))
+                    Text(.greet(viewModel.userName, "👋"))
                         .font(.title2.bold())
                         .fontDesign(.rounded)
                         .lineLimit(ConstantViews.singleTextMaxLines)

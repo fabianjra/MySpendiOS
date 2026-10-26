@@ -66,58 +66,6 @@ extension String {
         }
     }
     
-    /**
-     Rounds the input string to two decimal places if the input has more than two decimal digits. If the input has two or fewer decimal places, it returns the original input.
-
-     This method first identifies the decimal separator based on the user's locale. It then checks if the decimal part has more than two digits. If so, it rounds the number using the `.halfUp` rounding mode.
-
-     **Example:**
-     ```swift
-     let roundedValue = "1234.5678".roundIfMoreThanTwoDecimals
-     print(roundedValue) // Prints "1234.57"
-     
-     let originalValue = "1234.56".roundIfMoreThanTwoDecimals
-     print(originalValue) // Prints "1234.56"
-     ```
-     
-     - Parameters:
-        - input: A String representing the number to check and potentially round
-
-     - Returns: An optional String? which is the original input if it has two or fewer decimals, or the rounded number if it has more than two decimals
-
-     - Authors: Fabian Rodriguez
-     
-     - Date: September 2024
-     */
-    public var roundIfMoreThanTwoDecimals: String? {
-        // 1. Crear un NumberFormatter para identificar el separador decimal
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.locale = Locale.current
-        
-        // 2. Separar la parte entera de la parte decimal
-        let components = self.split(separator: formatter.decimalSeparator.first ?? ".")
-        
-        // 3. Si tiene una parte decimal, verificar cuántos dígitos tiene
-        if components.count == 2 {
-            let decimals = components[1]
-            if decimals.count > 2 {
-                // 4. Aplicar redondeo si tiene más de 2 dígitos decimales
-                formatter.maximumFractionDigits = 2
-                formatter.roundingMode = .halfUp
-                if let number = formatter.number(from: self) {
-                    return formatter.string(from: number)
-                }
-            } else {
-                // 5. Si tiene exactamente 2 o menos decimales, devolver el número original
-                return self
-            }
-        }
-        
-        // 6. Si no tiene decimales o ya está en el formato adecuado
-        return self
-    }
-    
     
     // MARK: - TEXT
     
@@ -147,66 +95,6 @@ extension String {
     }
     
     /**
-     It's used to escape the URL.
-     If you have a city like "New York", it's separeted by spaces (two words), the you can go and escape the String, so it can be passed concatened to the URL String.
-     
-     **Example:**
-     ```swift
-     cityName.escaped
-     ```
-     
-     - Authors: Fabian Rodriguez
-     
-     - Version: 1.0
-     
-     - Date: Feb 2023
-     */
-    public var escaped: String {
-        return self.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? self
-    }
-    
-    
-    // MARK: IMAGES
-    
-    /**
-     Convert a given text to UIImage (UIKit image).
-     It's necessary that the SwiftUI Image control, receive as parameter "uiImage".
-     
-     **Example:**
-     ```swift
-     public var body: some View {
-        let imageFromText = "👋".textToImage(size: 50)
-        Image(uiImage: imageFromText)
-     }
-     ```
-     
-     - Parameters:
-        - size:The size the image will have.
-     
-     - Authors: Fabian Rodriguez
-     
-     - Version: 1.0
-     
-     - Date: Aug 2023
-     */
-    public func textToImage(size: CGFloat) -> UIImage {
-        let nsString = (self as NSString)
-        let font = UIFont.systemFont(ofSize: size)
-        let stringAttributes = [NSAttributedString.Key.font: font]
-        let imageSize = nsString.size(withAttributes: stringAttributes)
-        
-        UIGraphicsBeginImageContextWithOptions(imageSize, false, CGFloat.zero)
-        UIColor.clear.set()
-        UIRectFill(CGRect(origin: CGPoint(), size: imageSize))
-        nsString.draw(at: CGPoint.zero, withAttributes: stringAttributes)
-        
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        return image ?? UIImage()
-    }
-    
-    /**
      Get an Icon based on the string text SF Symbol. Example: envelope.fill
 
      **Example:**
@@ -230,20 +118,5 @@ extension String {
         
         // 3. Sí es válido → se crea el `Image`
         return Image(systemName: self)
-    }
-    
-    /**
-     Converts the receiver to `Int`, returning **0** when the string is empty, contains whitespace only, or cannot be parsed.
-     
-     Example:
-     ```swift
-     "42".asInt        // → 42
-     "abc".asInt       // → 0
-     "".asInt          // → 0
-     "   7  ".asInt    // → 7
-     ```
-     */
-    var toInt: Int {
-        Int(self.trimmingCharacters(in: .whitespacesAndNewlines)) ?? .zero
     }
 }

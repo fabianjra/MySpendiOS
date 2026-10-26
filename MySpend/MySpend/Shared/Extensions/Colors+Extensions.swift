@@ -16,8 +16,4 @@ extension Color {
                                                           center: .top,
                                                           startRadius: .zero,
                                                           endRadius: ConstantColors.endRadiusBackground)
-    
-    // MARK: VIEWS
-    static let backgroundFormGradiant: Array = [Color.backgroundFormLight,
-                                                Color.backgroundFormDark]
 }
