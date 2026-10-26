@@ -8,11 +8,6 @@
 struct CDConstants {
     static let containerName: String = "MySpend" // Debe ser el mismo nombre del archivo del modelo.
     
-    // MARK: - ACCOUNT NAMES
-    
-    static let mainAccountName: String = "Main account"
-    
-    
     // MARK: - PREDICATES
     
     struct Predicate {

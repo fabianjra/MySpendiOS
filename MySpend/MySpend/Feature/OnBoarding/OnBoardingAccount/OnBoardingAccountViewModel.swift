@@ -20,7 +20,7 @@ final class OnBoardingAccountViewModel {
                 return
             }
         } else {
-            accountName = CDConstants.mainAccountName
+            accountName = String(localized: .accountCreateDefaultName)
         }
         
         let account = AccountModel(icon: ConstantSystemImage.bankDollarFill, name: accountName)
