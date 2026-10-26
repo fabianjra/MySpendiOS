@@ -13,6 +13,7 @@ struct SelectCategoryView: View {
     @Environment(CategoryManager.self) private var manager
     
     @Binding var selectedCategory: CategoryModel
+    @Binding var type: CategoryType
     
     private var filteredCategories: [CategoryModel] {
         manager.sortedCategories.filter {
@@ -24,7 +25,7 @@ struct SelectCategoryView: View {
     
     var body: some View {
         VStack {
-            CategoryPickerView(selection: $selectedCategory.type)
+            CategoryPickerView(selection: $type)
                 .glassEffect(.regular)
                 .padding(.horizontal)
             
@@ -93,8 +94,11 @@ private struct previewWrapper: View {
     var local: String
     
     @State var manager = CategoryManager.shared
-    @State var show: Bool = false
+    
     @State var model = CategoryModel()
+    @State var type = CategoryType.expense
+    
+    @State var show: Bool = false
     
     var body: some View {
         VStack {
@@ -104,7 +108,7 @@ private struct previewWrapper: View {
         }
         .sheet(isPresented: $show) {
             NavigationStack {
-                SelectCategoryView(selectedCategory: $model)
+                SelectCategoryView(selectedCategory: $model, type: $type)
             }
         }
         .onAppear {

@@ -19,6 +19,18 @@ struct CategoryView: View {
     @State private var viewModel = CategoryViewModel()
     @State private var toastResponse: ToastResponse?
     
+    /**
+     Returns the categories filtered by the selected category type.
+
+     Filtering is handled locally because the selected type belongs to this view's
+     state and should not affect other screens.
+
+     Moving the selected type to the shared CategoryManager would cause changes
+     in one view to affect other views using the same manager.
+
+     This approach keeps filtering independent while reusing the sorted categories
+     provided by CategoryManager.
+     */
     private var filteredCategories: [CategoryModel] {
         manager.sortedCategories.filter {
             $0.type == viewModel.categoryType

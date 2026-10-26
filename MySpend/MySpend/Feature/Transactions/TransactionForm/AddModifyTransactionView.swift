@@ -146,7 +146,8 @@ struct AddModifyTransactionView: View {
             }
             .sheet(isPresented: $showCategoryList) {
                 NavigationStack {
-                    SelectCategoryView(selectedCategory: $viewModel.model.category)
+                    //TODO: Refactorizar: No se debe manejar el type enlazado al modelo, porque la categoria ya pertenece a un tipo.
+                    SelectCategoryView(selectedCategory: $viewModel.model.category, type: $viewModel.model.category.type)
                 }
             }
             .sheet(isPresented: $showAccountList) {
