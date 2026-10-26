@@ -2171,7 +2171,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Anular selección"
+            "value" : "Ninguna"
           }
         }
       }
@@ -2243,7 +2243,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Seleccionar todo"
+            "value" : "Todas"
           }
         }
       }
