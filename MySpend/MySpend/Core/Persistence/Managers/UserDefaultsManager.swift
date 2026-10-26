@@ -36,15 +36,6 @@ struct UserDefaultsManager {
         }
     }
     
-    //TODO: BORRAR.
-    static var sorCategories: SortCategories {
-        get { return UserDefaultsDataStore<SortCategories>(for: .sortCategories).value ?? .byNameAz }
-        set {
-            var manager = UserDefaultsDataStore<SortCategories>(for: .sortCategories)
-            manager.value = newValue
-        }
-    }
-    
     static var sortCategories: CategorySortConfiguration {
         get { return UserDefaultsDataStore<CategorySortConfiguration>(for: .sortCategories).value ?? CategorySortConfiguration() }
         set {
@@ -188,16 +179,6 @@ enum UserDefaultsKeys: String, Codable, CaseIterable {
     // MARK: FILTER
     case selectedAccountsFilter = "selected_account_filter_key"
     case isFilterActive = "is_filter_active_key"
-    
-//    var valueType: Codable.Type {
-//        switch self {
-//        case .sortTransactions: return SortTransactions.self
-//        case .sortCategories: return SortCategories.self
-//        case .dateTimeInterval: return DateTimeInterval.self
-//        case .currency: return CurrencyModel.self
-//        case .currencySymbolType: return CurrencySymbolType.self
-//        }
-//    }
 }
 
 private struct UserDefaultsDataStore<T: Codable> {

@@ -20,12 +20,5 @@ struct CDConstants {
         // General:
         static let byID: String = "id == %@"
         static let byMultipleID: String = "id IN %@"
-        
-        // Account:
-        static let byAccountId: String = "account.id == %@"
-        
-        // Category:
-        static let byCategoryId: String = "category.id == %@"
-        static let byCategoryType: String = "category.type == %@"
     }
 }

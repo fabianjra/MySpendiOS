@@ -7,40 +7,6 @@
 
 import Foundation
 
-//TODO: BORRAR
-struct UtilsCategories {
-    
-    static func filteredCategories(_ categories: [CategoryModel], by categoryType: CategoryType, sortType: SortCategories? = nil) -> [CategoryModel] {
-        
-        let filteredList = categories.filter { $0.type == categoryType }
-        
-        if let sortType = sortType {
-            
-            switch sortType {
-            case .byNameAz:
-                return filteredList.sorted(by: { $0.name < $1.name })
-                
-            case .byNameZa:
-                return filteredList.sorted(by: { $0.name > $1.name })
-                
-            case .byCreationNewest:
-                return filteredList.sorted(by: { $0.dateCreated > $1.dateCreated })
-                
-            case .byCreationOldest:
-                return filteredList.sorted(by: { $0.dateCreated < $1.dateCreated })
-                
-            case .byMostOftenUsed:
-                return filteredList.sorted {
-                    return $0.dateCreated > $1.dateCreated
-                }
-            }
-            
-        } else {
-            return filteredList
-        }
-    }
-}
-
 extension Array where Element == CategoryModel {
     
     func sortedCategories(by sort: CategorySortConfiguration) -> [CategoryModel] {

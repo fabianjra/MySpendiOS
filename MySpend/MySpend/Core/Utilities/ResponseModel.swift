@@ -5,6 +5,7 @@
 //  Created by Fabian Rodriguez on 31/7/24.
 //
 
+//TODO: ELIMINAR cuando se migre AddModifyTransaction
 struct ResponseModel {
     let status: Status
     let message: String

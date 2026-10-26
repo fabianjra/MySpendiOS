@@ -228,42 +228,4 @@ struct TransactionCoreDataManager {
          se debe pasar ese contexto al perform {} y en el mergeChanges indica ambos contextos (bgContext y viewContext) para que la UI reciba la notificación.
          */
     }
-    
-    // MARK: SHARED
-    
-    /**
-     Returns the number of `Transaction` records that would become **incompatible** after changing a category’s type.
-    
-     “Incompatible” means:
-     * The transaction currently uses the category whose primary-key is `currentCategoryID`.
-    
-     Internally:
-     1. Builds an `NSPredicate` that matches `category.id == currentCategoryID`.
-     2. Adds a second predicate whose value depends on `newCategoryType` (`account.type == .incomes` when switching to `.expense`, and vice-versa).
-     3. Combines both predicates with **AND** (`NSCompoundPredicate`).
-     4. Executes a **count-only** fetch (`resultType = .countResultType`) for maximum performance.
-    
-     Use this method when the user attempts to change a category from *expense → income* (or the reverse) and you need to block the operation if any existing transactions would violate the account-type rules.
-     * Category type *expense* is only compatible with account type *expenses* or *general*.
-     * Category type *income* is only compatible with account type *incomes* or *general*.
-    
-     - Parameters:
-       - currentCategoryID: The UUID string of the category being modified.
-       - newCategoryType:   The target `CategoryType` selected by the user.
-    
-     - Returns: The number of incompatible transactions found.
-     - Throws: Any error thrown by `viewContext.count(for:)`.
-     
-     - NOTA: Se dejó de utilizar porque debe permitir el cambio de tipo de categoria, aunque ya existan transacciones. No deberia ser problema.
-     */
-//    func fetchIncompatibleTypeCount(currentCategoryID id: String, newCategoryType: CategoryType) async throws -> Int {
-//        try await viewContext.perform {
-//            
-//            let request: NSFetchRequest<Transaction> = Transaction.fetchRequest()
-//            request.predicate = NSPredicate(format: predicate.byCategoryId, id) //NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate])
-//            request.resultType = .countResultType // Faster call to CoreData
-//            
-//            return try viewContext.count(for: request)
-//        }
-//    }
 }

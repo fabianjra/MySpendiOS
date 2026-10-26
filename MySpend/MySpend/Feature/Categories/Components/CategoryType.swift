@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum CategoryType: String, CaseIterable, Identifiable, Codable, Hashable {
+enum CategoryType: String, CaseIterable, Identifiable, Codable {
     public var id: Self { self }
     
     case expense
