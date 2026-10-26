@@ -88,16 +88,13 @@ final class CategoryManager {
 
 extension CategoryManager {
     
-    func create(_ category: CategoryModel, type: CategoryType) async -> ToastResponse {
+    func create(_ category: CategoryModel) async -> ToastResponse {
         if category.name.isEmptyOrWhitespace {
             return ToastResponse(.responseErrorTextFieldEmptySpace, .error)
         }
         
-        var mutatedCategory = category
-        mutatedCategory.type = type
-        
         do {
-            try await coreDataManager.create(mutatedCategory)
+            try await coreDataManager.create(category)
             
             return ToastResponse(.responseSuccesful, .ok)
         } catch {

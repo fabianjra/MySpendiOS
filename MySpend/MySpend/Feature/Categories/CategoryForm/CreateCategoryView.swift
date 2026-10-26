@@ -13,6 +13,7 @@ struct CreateCategoryView: View {
     @Environment(CategoryManager.self) private var manager
     
     @Binding var categoryType: CategoryType
+    let onCreated: (CategoryModel) -> Void
     
     @State private var category = CategoryModel()
     @State private var toastResponse: ToastResponse?
@@ -27,8 +28,11 @@ struct CreateCategoryView: View {
             .safeAreaInset(edge: .bottom) {
                 Button {
                     Task {
-                        toastResponse = await manager.create(category, type: categoryType)
+                        category.type = categoryType
+                        toastResponse = await manager.create(category)
+                        
                         if toastResponse?.type == .ok {
+                            onCreated(category)
                             dismiss()
                         }
                     }
@@ -67,8 +71,12 @@ struct CreateCategoryView: View {
     @Previewable @State var manager = CategoryManager.shared
     @Previewable @State var type = CategoryType.expense
     
+    @Previewable @State var createdCategory: CategoryModel?
+    
     NavigationStack {
-        CreateCategoryView(categoryType: $type)
+        CreateCategoryView(categoryType: $type) { category in
+            createdCategory = category
+        }
     }
     .environment(manager)
     .environment(\.locale, .init(identifier: Previews.localeES_CR))

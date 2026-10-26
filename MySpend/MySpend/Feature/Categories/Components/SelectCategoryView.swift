@@ -16,6 +16,8 @@ struct SelectCategoryView: View {
     @Binding var type: CategoryType
     
     @State private var showCreateCategory = false
+    @State private var createdCategory: CategoryModel?
+
     private var filteredCategories: [CategoryModel] {
         manager.sortedCategories.filter {
             $0.type == type
@@ -98,11 +100,28 @@ struct SelectCategoryView: View {
             }
         }
         
-        .sheet(isPresented: $showCreateCategory) {
+        /**
+         Presents the category creation sheet and automatically selects the newly created category.
+         
+         The onCreated callback stores the new category temporarily in `createdCategory`.
+         Once the sheet closes, onDismiss retrieves it, updates `selectedCategory`,
+         and dismisses SelectCategoryView.
+         
+         If creation is canceled, `createdCategory` remains nil, so the selection view stays open.
+         */
+        .sheet(isPresented: $showCreateCategory, onDismiss: {
+            guard let createdCategory else { return }
+            
+            selectedCategory = createdCategory
+            dismiss()
+            
+        }, content: {
             NavigationStack {
-                CreateCategoryView(categoryType: $type)
+                CreateCategoryView(categoryType: $type) { category in
+                    createdCategory = category
+                }
             }
-        }
+        })
     }
 }
 

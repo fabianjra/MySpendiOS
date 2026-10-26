@@ -63,7 +63,7 @@ struct CategoryView: View {
         
         .sheet(isPresented: $viewModel.showCreateCategory) {
             NavigationStack {
-                CreateCategoryView(categoryType: $viewModel.categoryType)
+                CreateCategoryView(categoryType: $viewModel.categoryType) { _ in } // Callback not neccesary
             }
         }
         
