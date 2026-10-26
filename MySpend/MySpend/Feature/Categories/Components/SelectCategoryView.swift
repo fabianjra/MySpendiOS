@@ -15,6 +15,7 @@ struct SelectCategoryView: View {
     @Binding var selectedCategory: CategoryModel
     @Binding var type: CategoryType
     
+    @State private var showCreateCategory = false
     private var filteredCategories: [CategoryModel] {
         manager.sortedCategories.filter {
             $0.type == type
@@ -60,6 +61,9 @@ struct SelectCategoryView: View {
         .padding(.top)
         
         .toolbar {
+            
+            // MARK: TOP
+            
             ToolbarItemGroup(placement: .primaryAction) {
                 Menu(.menuOptionsTitle, systemImage: ConstantSystemImage.options) {
                     CategorySortMenu()
@@ -74,12 +78,29 @@ struct SelectCategoryView: View {
                     dismiss()
                 }
             }
+            
+            
+            // MARK: BOTTOM
+            
+            ToolbarSpacer(.flexible, placement: .bottomBar)
+            
+            ToolbarItem(placement: .bottomBar) {
+                Button(.transactionAdd, systemImage: ConstantSystemImage.addNewItem) {
+                    showCreateCategory = true
+                }
+            }
         }
         
         .presentationDetents([.medium, .large], selection: $selectedDetent)
         .presentationBackground {
             if selectedDetent == .large {
                 Color.backgroundGradient
+            }
+        }
+        
+        .sheet(isPresented: $showCreateCategory) {
+            NavigationStack {
+                CreateCategoryView(categoryType: $type)
             }
         }
     }
