@@ -9,48 +9,60 @@ import SwiftUI
 
 struct OnBoardingUsernameView: View {
     
-    @StateObject private var viewModel = OnBoardingUsernameViewModel()
+    @State private var viewModel = OnBoardingUsernameViewModel()
     @FocusState private var isFocused: Bool
     
     var body: some View {
-        VStack(spacing: ConstantViews.formSpacing) {
-            
-            TextFieldName(text: $viewModel.userName,
-                          iconLeading: nil,
-                          errorMessage: $viewModel.errorMessage)
-            .focused($isFocused)
-            .onSubmit { viewModel.continueToNextStep(withName: true)}
-            
-            
-            Button {
-                Task {
-                    viewModel.continueToNextStep(withName: true)
-                }
-            } label: {
-                Text(.buttonContinue)
-                    .padding(.vertical, ConstantViews.paddingButtonVertical)
-                    .frame(maxWidth: ConstantFrames.iPadMaxWidth)
+        Form {
+            Section {
+                TextField(.personalInformationInputNamePlaceholder, text: $viewModel.userName)
+                    .formInputStyle($viewModel.userName)
+                    .keyboardType(.alphabet)
+                    .autocorrectionDisabled()
+                    .focused($isFocused)
+                    .onSubmit {
+                        viewModel.continueToNextStep(withName: true)
+                    }
+            } header: {
+                //Text(.personalInformationInputNamePlaceholder)
+            } footer: {
+                Text(.onBoardingUsernameOptionalInputMessage)
             }
-            .buttonStyle(.glass)
-            
-            
-            Button {
-                viewModel.continueToNextStep(withName: false)
-            } label: {
-                Text(.buttonSkip)
-                    .textStyle
-            }
-            
-            Text(viewModel.errorMessage)
-                .textErrorStyle
-            
-            Spacer()
         }
-        .padding(.horizontal)
+        .onAppear { isFocused = true }
+        
         .navigationTitle(.onBoardingUsernameTitle)
         .navigationSubtitle(.onBoardingUsernameEnterName)
+        
+        .safeAreaInset(edge: .bottom) {
+            VStack {
+                Button {
+                    Task {
+                        viewModel.continueToNextStep(withName: true)
+                    }
+                } label: {
+                    Text(.buttonContinue)
+                        .padding(.vertical, ConstantViews.paddingButtonVertical)
+                        .frame(maxWidth: ConstantFrames.iPadMaxWidth)
+                }
+                .padding(.horizontal)
+                .buttonStyle(.glass)
+                .padding(.bottom)
+                
+                
+                Button(.buttonSkip) {
+                    viewModel.continueToNextStep(withName: false)
+                }
+                .foregroundStyle(.primary)
+                .padding(.bottom)
+            }
+        }
+        
+        .scrollDisabled(true)
+        .scrollContentBackground(.hidden)
         .background(Color.backgroundGradient)
-        .onAppear { isFocused = true }
+        
+        .toast($viewModel.toastResponse)
     }
 }
 

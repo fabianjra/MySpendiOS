@@ -1758,6 +1758,24 @@
         }
       }
     },
+    "OnBoarding.Username.OptionalInputMessage" : {
+      "comment" : "Footer para indicar que el campo es opcional",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select “Do it later” to skip this step and leave your name blank."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Selecciona «Lo haré luego» para omitir este paso y dejar el nombre en blanco."
+          }
+        }
+      }
+    },
     "OnBoarding.Username.Title" : {
       "comment" : "Titulo inicial de la pantalla para indicar que se debe comenzar",
       "extractionState" : "manual",
@@ -2018,19 +2036,37 @@
       }
     },
     "Response.Error.TextField.EmptySpace" : {
-      "comment" : "Indica que deben llenarse los espacios en blanco",
+      "comment" : "Indica que deben llenarse el campo obligatorio",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fill the empty spaces"
+            "value" : "Fill in the required field"
           }
         },
         "es" : {
           "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Completa el campo obligatorio"
+          }
+        }
+      }
+    },
+    "Response.Error.TextField.EmptySpaces" : {
+      "comment" : "Indica que deben llenarse los campos obligatorios",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
             "state" : "translated",
-            "value" : "Completa los espacios en blanco"
+            "value" : "Fill in the required fields"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Completa los campos obligatorios"
           }
         }
       }
