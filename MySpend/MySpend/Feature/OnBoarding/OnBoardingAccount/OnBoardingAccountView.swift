@@ -11,56 +11,66 @@ struct OnBoardingAccountView: View {
     
     @Environment(AccountManager.self) private var accountManager
     
-    @StateObject private var viewModel = OnBoardingAccountViewModel()
-    @FocusState private var focusedField: OnBoardingAccountViewModel.Field?
+    @State private var viewModel = OnBoardingAccountViewModel()
+    @FocusState private var isFocused: Bool
     
     var body: some View {
-        VStack(spacing: ConstantViews.formSpacing) {
-            
-            TextFieldName(placeHolder: "Account name",
-                          text: $viewModel.accountName,
-                          iconLeading: nil,
-                          errorMessage: $viewModel.errorMessage)
-            .focused($focusedField, equals: .accountName)
-            .onSubmit {
-                Task {
-                    await viewModel.finishOnBoarding(withAccountName: true, accountManager: accountManager)
-                }
+        Form {
+            Section {
+                TextField(.accountInputNamePlaceHolder, text: $viewModel.accountName)
+                    .formInputStyle($viewModel.accountName)
+                    .autocorrectionDisabled()
+                    .focused($isFocused)
+                    .onSubmit {
+                        Task {
+                            await viewModel.finishOnBoarding(withAccountName: true, accountManager: accountManager)
+                        }
+                    }
+            } header: {
+                //Text(.personalInformationInputNamePlaceholder)
+            } footer: {
+                Text(.onBoardingAccountNameOptionalInputMessage)
             }
-            
-            Button {
-                Task {
-                    await viewModel.finishOnBoarding(withAccountName: true, accountManager: accountManager)
-                }
-            } label: {
-                Text(.buttonContinue)
-                    .padding(.vertical, ConstantViews.paddingButtonVertical)
-                    .frame(maxWidth: ConstantFrames.iPadMaxWidth)
-            }
-            .buttonStyle(.glass)
-            
-            
-            Button {
-                Task {
-                    await viewModel.finishOnBoarding(withAccountName: false, accountManager: accountManager)
-                }
-            } label: {
-                Text(.buttonSkip)
-                    .textStyle
-            }
-            
-            Text(viewModel.errorMessage)
-                .textErrorStyle
-            
-            Spacer()
         }
-        .padding(.horizontal)
+        .onAppear { isFocused = true }
+        
         .navigationTitle(.onBoardingAccountTitle)
         .navigationSubtitle(.onBoardingAccountEntertName)
+        
+        .safeAreaInset(edge: .bottom) {
+            VStack {
+                Button {
+                    Task {
+                        await viewModel.finishOnBoarding(withAccountName: true, accountManager: accountManager)
+                    }
+                } label: {
+                    Text(.buttonContinue)
+                        .padding(.vertical, ConstantViews.paddingButtonVertical)
+                        .frame(maxWidth: ConstantFrames.iPadMaxWidth)
+                }
+                .padding(.horizontal)
+                .buttonStyle(.glass)
+                .padding(.bottom)
+                
+                
+                Button(.buttonSkip) {
+                    Task {
+                        await viewModel.finishOnBoarding(withAccountName: false, accountManager: accountManager)
+                    }
+                }
+                .foregroundStyle(.primary)
+                .padding(.bottom)
+            }
+        }
+        
+        .scrollDisabled(true)
+        .scrollContentBackground(.hidden)
         .background(Color.backgroundGradient)
-        .onAppear { focusedField = .accountName }
+        
+        .toast($viewModel.toastResponse)
     }
 }
+
 
 #Preview(Previews.localeES) {
     

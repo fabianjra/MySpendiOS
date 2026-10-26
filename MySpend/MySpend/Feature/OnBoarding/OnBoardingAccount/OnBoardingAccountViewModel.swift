@@ -5,43 +5,30 @@
 //  Created by Fabian Rodriguez on 7/7/25.
 //
 
-import Foundation
+import Observation
 
-class OnBoardingAccountViewModel: BaseViewModel {
+@Observable
+final class OnBoardingAccountViewModel {
     
-    @Published var accountName = ""
+    var accountName = ""
+    var toastResponse: ToastResponse?
     
     func finishOnBoarding(withAccountName: Bool, accountManager: AccountManager) async {
-        
-        var mutatedName = accountName
-        
         if withAccountName {
             if accountName.isEmptyOrWhitespace {
-                errorMessage = Errors.emptySpace.localizedDescription
+                toastResponse = ToastResponse(.responseErrorTextFieldEmptySpace, .error)
                 return
             }
         } else {
-            mutatedName = CDConstants.mainAccountName
+            accountName = CDConstants.mainAccountName
         }
         
-        let account = AccountModel(icon: ConstantSystemImage.bankDollarFill, name: mutatedName)
+        let account = AccountModel(icon: ConstantSystemImage.bankDollarFill, name: accountName)
+        toastResponse = await accountManager.create(account, isDefault: true)
         
-        do {
-            try await AccountCoreDataManager(viewContext).create(account)
-            
-            accountManager.selectedAccountsToFilterByID.insert(account.id)
-            accountManager.setDefaultAccount(by: account)
-            
+        if toastResponse?.type == .ok {
             UserDefaultsManager.isOnBoarding = false
-
             Router.shared.reset()
-        } catch {
-            Logger.exception(error, type: .CoreData)
-            errorMessage = error.localizedDescription
         }
-    }
-    
-    enum Field: Hashable, CaseIterable {
-        case accountName
     }
 }

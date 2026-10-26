@@ -1740,6 +1740,24 @@
         }
       }
     },
+    "OnBoarding.AccountName.OptionalInputMessage" : {
+      "comment" : "Footer para indicar que el campo es opcional",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select “Do it later” to skip this step and use the default account name."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selecciona «Lo haré luego» para omitir este paso y usar el nombre de cuenta predeterminado."
+          }
+        }
+      }
+    },
     "OnBoarding.Username.EnterName" : {
       "comment" : "Indica que se debe ingresar un nombre de usuario",
       "extractionState" : "manual",
