@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+//TODO: ELIMINAR cuando se migure AddModifyTransaction
 struct ButtonLinkStyle: ButtonStyle {
     
     @Environment(\.isEnabled) private var isEnabled: Bool

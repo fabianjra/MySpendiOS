@@ -53,7 +53,7 @@ struct SectionContainer<Content: View>: View {
 
 #Preview {
     VStack {
-        ListContainer {
+        List {
             SectionContainer("Header for section") {
                 Text("Content of section")
             }

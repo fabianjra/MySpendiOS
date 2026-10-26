@@ -46,17 +46,12 @@ struct FormContainer<Content: View>: View {
 
 #Preview("1 component") {
     FormContainer {
-        TextFieldEmail(text: .constant(""),
-                       errorMessage: .constant(""))
+        TextField("", text: .constant(""))
     }
 }
 
 #Preview("2 components") {
     FormContainer {
-        TextFieldEmail(text: .constant(""),
-                       errorMessage: .constant(""))
-        
-        TextFieldPassword(text: .constant(""),
-                          errorMessage: .constant(""))
+        TextField("", text: .constant(""))
     }
 }
