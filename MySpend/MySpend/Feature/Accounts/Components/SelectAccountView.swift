@@ -52,6 +52,7 @@ struct SelectAccountView: View {
         
             .navigationTitle(.accountsTitle)
             .navigationSubtitle(.accountsSelectSubtitle)
+            .navigationBarTitleDisplayMode(.inline)
             
             .toolbar {
                 ToolbarItemGroup(placement: .primaryAction) {

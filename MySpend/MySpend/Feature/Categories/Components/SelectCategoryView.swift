@@ -17,7 +17,7 @@ struct SelectCategoryView: View {
     
     private var filteredCategories: [CategoryModel] {
         manager.sortedCategories.filter {
-            $0.type == selectedCategory.type
+            $0.type == type
         }
     }
     
@@ -57,6 +57,7 @@ struct SelectCategoryView: View {
         .navigationTitle(.categoriesTitle)
         .navigationSubtitle(.categorySelectSubtitle)
         .navigationBarTitleDisplayMode(.inline)
+        .padding(.top)
         
         .toolbar {
             ToolbarItemGroup(placement: .primaryAction) {
