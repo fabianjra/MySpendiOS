@@ -20,9 +20,19 @@ struct RootView: View {
                 store: UserDefaultsManager.userDefaults)
     private var isOnboarding: Bool = true
     
+    /**
+     Determines whether the onboarding flow should be displayed.
+
+     The launch argument overrides the visual flow only in Debug,
+     without modifying the user's persisted onboarding state.
+     */
+    private var shouldShowOnboarding: Bool {
+        AppLaunchConfiguration.showOnboarding || isOnboarding
+    }
+    
     var body: some View {
         ZStack {
-            if isOnboarding {
+            if shouldShowOnboarding {
                 
                 NavigationStack(path: $router.onboardingPath) {
                     OnBoardingUsernameView()
@@ -52,7 +62,7 @@ struct RootView: View {
                 }
             }
         }
-        .animation(.default, value: isOnboarding)
+        .animation(.default, value: shouldShowOnboarding)
         
         .onAppear {
             //UIApplication.shared.addTapGestureRecognizer()
