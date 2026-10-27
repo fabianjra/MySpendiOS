@@ -12,8 +12,6 @@ struct TextFieldIconStyle: TextFieldStyle {
     @Environment(\.isEnabled) private var isEnabled: Bool
     
     @Binding private var text: String
-    private let family: Font.Family
-    private let size: Font.Sizes
     private let iconLeading: Image?
     private let textLimit: Int
     
@@ -35,8 +33,6 @@ struct TextFieldIconStyle: TextFieldStyle {
     
     public init(_ text: Binding<String>,
                 placeHolder: String = "",
-                family: Font.Family = .regular,
-                size: Font.Sizes = .body,
                 iconLeading: Image? = nil,
                 textLimit: Int = ConstantViews.textLimitGeneral,
                 foregroundColor: Color = Color.textFieldForeground,
@@ -49,8 +45,6 @@ struct TextFieldIconStyle: TextFieldStyle {
         
         self._text = text
         self.placeHolder = placeHolder
-        self.family = family
-        self.size = size
         self.iconLeading = iconLeading
         self.textLimit = textLimit
         self.foregroundColor = foregroundColor
@@ -93,7 +87,6 @@ struct TextFieldIconStyle: TextFieldStyle {
                     //.background(.green) //For testing
                         .padding(.horizontal, iconLeading == nil ? nil : .zero)
                         .padding(.trailing, iconLeading != nil ? nil : .zero)
-                        .font(.montserrat(family, size: size))
                         .submitLabel(submitLabel)
                         .focused($isFocused)
                         .onAppear { showLabel = !text.isEmpty }
