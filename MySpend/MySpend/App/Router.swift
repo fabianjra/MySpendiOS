@@ -31,10 +31,6 @@ final class Router {
         path = NavigationPath()
     }
     
-    func resetOnboarding() {
-        onboardingPath = NavigationPath()
-    }
-    
     enum Destination {
         case onBoardinAccount
         case settings
