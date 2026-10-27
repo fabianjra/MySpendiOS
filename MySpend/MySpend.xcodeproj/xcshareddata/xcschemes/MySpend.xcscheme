@@ -82,9 +82,9 @@
       </CommandLineArguments>
       <EnvironmentVariables>
          <EnvironmentVariable
-            key = "ignore_analytics"
-            value = "1"
-            isEnabled = "YES">
+            key = "OS_ACTIVITY_MODE"
+            value = "disable"
+            isEnabled = "NO">
          </EnvironmentVariable>
       </EnvironmentVariables>
    </LaunchAction>
