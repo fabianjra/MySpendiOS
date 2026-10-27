@@ -157,7 +157,7 @@ struct TransactionView: View {
         VStack {
             
             DateIntervalNavigatorView(dateTimeInterval: $viewModel.dateTimeInterval,
-                                      selectedDate: $viewModel.selectedDate){}
+                                      selectedDate: $viewModel.selectedDate)
             
             if accountManager.sortedAccounts.count > 1 {
                 

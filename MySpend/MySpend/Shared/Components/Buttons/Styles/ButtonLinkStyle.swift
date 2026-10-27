@@ -16,34 +16,19 @@ struct ButtonLinkStyle: ButtonStyle {
     private let fontFamily: Font.Family
     private let fontsize: Font.Sizes
     
-    @Binding private var isLoading: Bool
-    
     init(color: Color = Color.buttonForeground,
          fontfamily: Font.Family = .regular,
-         fontsize: Font.Sizes = .body,
-         isLoading: Binding<Bool> = .constant(false)) {
+         fontsize: Font.Sizes = .body) {
         self.color = color
         self.fontFamily = fontfamily
         self.fontsize = fontsize
-        self._isLoading = isLoading
     }
     
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .modifier(ShowReservesSpace(isLoading == false))
-            .font(.montserrat(fontFamily, size: fontsize))
             .foregroundColor(isEnabled ? color : Color.disabledForeground)
             .frame(maxWidth: ConstantFrames.iPadMaxWidth)
             .padding(.vertical)
-        
-        // MARK: ANIMATIONS
-            .overlay(content: {
-                if isLoading {
-                    ProgressView()
-                        .foregroundColor(Color.textPrimaryForeground)
-                        .padding(.vertical, ConstantViews.mediumSpacing)
-                }
-            })
     }
 }
 
@@ -55,14 +40,6 @@ struct ButtonLinkStyle: ButtonStyle {
             print("button pressed")
         }
         .buttonStyle(ButtonLinkStyle())
-        .environment(\.isEnabled, true)
-        
-        Spacer()
-        
-        Button("Button loading") {
-            print("button pressed")
-        }
-        .buttonStyle(ButtonLinkStyle(isLoading: .constant(true)))
         .environment(\.isEnabled, true)
         
         Spacer()

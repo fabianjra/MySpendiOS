@@ -82,7 +82,6 @@ struct TextFieldIconStyle: TextFieldStyle {
                             Spacer()
                         }
                         .padding(.leading, iconLeading == nil ? nil : .zero)
-                        .modifier(ShowReservesSpace(showLabel))
                         .animation(.default, value: showLabel)
                         
                         Spacer()

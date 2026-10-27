@@ -9,14 +9,14 @@ import SwiftUI
 
 struct TransactionHistoryView: View {
     
+    @Environment(AccountManager.self) private var accountManager
+    
     @State private var viewModel = TransactionHistoryViewModel()
     @State private var toastResponse: ToastResponse?
     
     @Binding var transactionsLoaded: [TransactionModel]
     @Binding var dateTimeInterval: DateTimeInterval
     @Binding var selectedDate: Date
-    
-    @Environment(AccountManager.self) private var accountManager
 
     
     // MARK: ALERTS (Solo manejadas dentro de la vista, no hacen nada en ViewModel)
@@ -33,7 +33,7 @@ struct TransactionHistoryView: View {
     
     var body: some View {
         VStack {
-            header
+            DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval, selectedDate: $selectedDate)
             
             if transactionsLoaded.isEmpty {
                 TransactionsEmptyView()
@@ -207,35 +207,6 @@ struct TransactionHistoryView: View {
         } label: {
             Label.restoreSelection
                 .foregroundStyle(.alert, .alert)
-        }
-    }
-    
-    private var header: some View {
-        //        DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval,
-        //                                  selectedDate: $selectedDate,
-        //                                  isEditing: $viewModel.isEditing,
-        //                                  showEditor: true,
-        //                                  counterSelected: viewModel.selectedTransactions.count) {
-        //
-        //            viewModel.selectedTransactions.removeAll()
-        
-        
-        DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval,
-                                  selectedDate: $selectedDate) {
-        } actionTrailingEdit: {
-            //showAlertDeleteMultiple = true
-            
-        } contentLeadingSort: {
-            Section(.sortTitleDescription(viewModel.sortTransactionsBy.rawValue)) {
-                sortButton(.byDateNewest)
-                sortButton(.byAmountHigher)
-                sortButton(.byCategoryNameAz)
-            }
-            
-            // Reset the sort selection to default
-            Section {
-                sortButtonResetToDefault
-            }
         }
     }
     
@@ -467,7 +438,7 @@ private struct PreviewWrapper: View {
         CoreDataUtilities.shared.mockDataType = mockDataType
     }
     
-    @State var previewFilter = AccountManager.shared
+    @State var accountManager = AccountManager.shared
     
     @StateObject var viewModel = TransactionViewModel()
     
@@ -481,7 +452,7 @@ private struct PreviewWrapper: View {
         .task {
             await viewModel.activateObservers()
         }
-        .environment(previewFilter)
+        .environment(accountManager)
     }
 }
 

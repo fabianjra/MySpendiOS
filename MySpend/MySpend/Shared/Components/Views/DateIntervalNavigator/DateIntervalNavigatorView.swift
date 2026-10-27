@@ -7,17 +7,12 @@
 
 import SwiftUI
 
-struct DateIntervalNavigatorView<Content: View>: View {
+struct DateIntervalNavigatorView: View {
     
     @Binding var dateTimeInterval: DateTimeInterval
     @Binding var selectedDate: Date
     
     private var viewModel = DateIntervalNavigatorViewModel()
-    
-    var actionLeadingEdit: (() -> Void)? = nil
-    var actionTrailingEdit: (() -> Void)? = nil
-    
-    @ViewBuilder var contentLeadingSort: () -> Content
     
     var body: some View {
         VStack {
@@ -31,18 +26,25 @@ struct DateIntervalNavigatorView<Content: View>: View {
             .glassEffect(.regular)
             
             
-            RowLCTCointainer {
+            ZStack {
+                HStack() {
+                    Spacer()
+                }
+                
                 navigator
                 
-            } trailingContent: {
-                Button {
-                    selectedDate = viewModel.navigateDateTime(selectedDate, to: .today, byAdding: dateTimeInterval)
-                } label: {
-                    Text(.datetimeToday)
-                        .font(.callout)
-                        .foregroundStyle(Color.primary)
+                HStack {
+                    Spacer()
+                    
+                    Button {
+                        selectedDate = viewModel.navigateDateTime(selectedDate, to: .today, byAdding: dateTimeInterval)
+                    } label: {
+                        Text(.datetimeToday)
+                            .font(.callout)
+                            .foregroundStyle(Color.primary)
+                    }
+                    .opacity(!selectedDate.isSameDate(.now) ? 1 : .zero)
                 }
-                .modifier(ShowReservesSpace(!selectedDate.isSameDate(.now))) //Uses modifier because need to keep space.
             }
         }
     }
@@ -87,11 +89,10 @@ struct DateIntervalNavigatorView<Content: View>: View {
 #Preview(Previews.localeES) {
     @Previewable @State var dateTimeInterval = DateTimeInterval.month
     @Previewable @State var selectedDate = Date()
-    @Previewable @State var trailingButtonDisabled = true
     
     VStack {
         DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval,
-                                  selectedDate: $selectedDate) {}
+                                  selectedDate: $selectedDate)
     }
     .background(Color.backgroundGradient)
     .environment(\.locale, .init(identifier: Previews.localeES))
