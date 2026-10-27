@@ -29,14 +29,9 @@ struct RootView: View {
                     TransactionView()
                 }
             }
+            
             .navigationDestination(for: Router.Destination.self) { destination in
                 switch destination {
-                    
-                case .mainView:
-                    TransactionView()
-                    
-                case .onBoardingName:
-                    OnBoardingUsernameView()
                     
                 case .onBoardinAccount:
                     OnBoardingAccountView()

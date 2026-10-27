@@ -24,8 +24,6 @@ class Router {
     }
     
     enum Destination {
-        case mainView
-        case onBoardingName
         case onBoardinAccount
         case settings
     }
