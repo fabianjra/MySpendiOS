@@ -9,10 +9,8 @@ import SwiftUI
 
 struct TotalBalanceView: View {
     
-    @State var viewModel = TotalBalanceViewModel()
+    @State private var viewModel = TotalBalanceViewModel()
     let transactions: [TransactionModel]
-    
-    var showTotalBalance: Bool = true // Doesn't show in History.
     
     var body: some View {
         VStack {
@@ -23,40 +21,30 @@ struct TotalBalanceView: View {
             
             HStack {
                 Text(.categoryTypeIncomes)
-                    .textStyle
+                    .fontDesign(.rounded)
                 
                 Spacer()
                 
                 Text(viewModel.totalIncomesFormatted)
-                    .textStyle(color: .accentColor,
-                               family: .semibold)
+                    .foregroundStyle(Color.accentColor)
+                    .fontWeight(.semibold)
+                    .monospacedDigit()
+                    .lineLimit(1)
             }
             .padding(.bottom, ConstantViews.minimumSpacing)
             
             HStack {
                 
                 Text(.categoryTypeExpenses)
+                    .fontDesign(.rounded)
                 
                 Spacer()
                 
                 Text(viewModel.totalExpensesFormatted)
-                    .textStyle(color: .alert,
-                               family: .semibold)
-            }
-            .padding(.bottom, ConstantViews.minimumSpacing)
-            
-            
-            if showTotalBalance {
-                HStack {
-                    
-                    Text(.transactionsTotalBalance)
-                        .textStyle(size: .title3)
-                    
-                    Spacer()
-                    
-                    Text(viewModel.totalBalanceFormatted)
-                        .textStyle(size: .title3)
-                }
+                    .foregroundStyle(.alert)
+                    .fontWeight(.semibold)
+                    .monospacedDigit()
+                    .lineLimit(1)
             }
         }
         .onAppear {
@@ -68,33 +56,40 @@ struct TotalBalanceView: View {
     }
 }
 
-private struct PreviewWrapper: View {
-    init(_ mockDataType: MockDataType = .empty) {
-        CoreDataUtilities.shared.mockDataType = mockDataType
-    }
-    
-    @State private var transactionsLoaded: [TransactionModel] = []
-    
-    var body: some View {
-        TotalBalanceView(transactions: transactionsLoaded)
-        .task {
-            transactionsLoaded = await MockTransactionUtils.fetchAll()
-        }
-    }
-}
 
 #Preview(Previews.localeES_CR) {
-    ZStack {
-        Color(.backgroundBottom)
-        PreviewWrapper(.normal)
-    }
-    .environment(\.locale, .init(identifier: Previews.localeES_CR))
+    
+    @Previewable var mock = MockDataType.normal
+    @Previewable @State var transactionsLoaded: [TransactionModel] = []
+    
+    TotalBalanceView(transactions: transactionsLoaded)
+        .task {
+            transactionsLoaded = await MockTransactionUtils.fetchAll(mock.viewContext)
+        }
+        .environment(\.locale, .init(identifier: Previews.localeES_CR))
+}
+
+
+#Preview(Previews.localeEN) {
+    
+    @Previewable var mock = MockDataType.saturated
+    @Previewable @State var transactionsLoaded: [TransactionModel] = []
+    
+    TotalBalanceView(transactions: transactionsLoaded)
+        .task {
+            transactionsLoaded = await MockTransactionUtils.fetchAll(mock.viewContext)
+        }
+        .environment(\.locale, .init(identifier: Previews.localeEN))
 }
 
 #Preview(Previews.localeEN) {
-    ZStack {
-        Color(.backgroundBottom)
-        PreviewWrapper(.normal)
-    }
-    .environment(\.locale, .init(identifier: Previews.localeEN))
+    
+    @Previewable var mock = MockDataType.empty
+    @Previewable @State var transactionsLoaded: [TransactionModel] = []
+    
+    TotalBalanceView(transactions: transactionsLoaded)
+        .task {
+            transactionsLoaded = await MockTransactionUtils.fetchAll(mock.viewContext)
+        }
+        .environment(\.locale, .init(identifier: Previews.localeEN))
 }

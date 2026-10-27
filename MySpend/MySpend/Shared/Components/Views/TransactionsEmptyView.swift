@@ -13,16 +13,21 @@ struct TransactionsEmptyView: View {
             Spacer()
             
             HStack {
+                Spacer()
+                
                 Text(.transactionsEmpty)
-                    .textStyle(size: .title)
+                    .font(.title)
+                    .fontDesign(.rounded)
                     .padding(.vertical)
+                
+                Spacer()
             }
             
             Text(.transactionEmptyAddNewItem)
-                .textStyle(family: .light,
-                           size: .medium,
-                           aligment: .center,
-                           lineLimit: ConstantViews.messageMaxLines)
+                .font(Font.callout.weight(.light))
+                .fontDesign(.rounded)
+                .multilineTextAlignment(.center)
+                .lineLimit(ConstantViews.messageMaxLines)
             
             Spacer()
         }

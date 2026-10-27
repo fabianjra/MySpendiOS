@@ -21,6 +21,7 @@ struct MockCoreDataNormal {
         let account1 = MockCoreDataNormal.accountMain(viewContext)
         let account2 = MockCoreDataNormal.accountExpenses(viewContext)
         let account3 = MockCoreDataNormal.accountIncomes(viewContext)
+        let account4 = MockCoreDataNormal.accountExpenses(viewContext)
         
         // Categories:
         let categoryExpense1 = MockCoreDataNormal.categoryExpense1(viewContext)
@@ -37,6 +38,7 @@ struct MockCoreDataNormal {
         MockCoreDataNormal.transaction3(viewContext, category: categoryIncome1, account: account3)
         MockCoreDataNormal.transaction4(viewContext, category: categoryIncome2, account: account3)
         MockCoreDataNormal.transaction5(viewContext, category: categoryIncome2, account: account3)
+        MockCoreDataNormal.transaction5(viewContext, category: categoryIncome1, account: account4)
         
         do {
             try viewContext.save()

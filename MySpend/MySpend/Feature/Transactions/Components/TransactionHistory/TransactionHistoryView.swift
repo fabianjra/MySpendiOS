@@ -377,7 +377,7 @@ struct TransactionHistoryView: View {
             .animation(.default, value: viewModel.isEditing)
             .animation(.default, value: viewModel.sortTransactionsBy)
             
-            TotalBalanceView(transactions: viewModel.transactionsFiltered, showTotalBalance: false)
+            TotalBalanceView(transactions: viewModel.transactionsFiltered)
         }
     }
     

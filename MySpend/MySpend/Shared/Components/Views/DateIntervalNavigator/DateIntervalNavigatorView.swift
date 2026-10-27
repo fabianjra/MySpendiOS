@@ -27,7 +27,7 @@ struct DateIntervalNavigatorView: View {
             
             
             ZStack {
-                HStack() {
+                HStack {
                     Spacer()
                 }
                 
@@ -55,17 +55,14 @@ struct DateIntervalNavigatorView: View {
                 selectedDate = viewModel.navigateDateTime(selectedDate, to: .previous, byAdding: dateTimeInterval)
             } label: {
                 Image.chevronLeft
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
+                    .font(.title2)
                     .fontWeight(.thin)
-                    .frame(width: FrameSize.width.buttonSelectValueInterval,
-                           height: FrameSize.height.buttonSelectValueInterval)
-                    .padding(.leading, ConstantViews.bigSpacing)
             }
             
             Text(viewModel.getHeader(selectedDate, by: dateTimeInterval))
                 .font(.callout)
                 .frame(width: FrameSize.width.buttonSelectValueIntervalCenter)
+                .lineLimit(ConstantViews.singleTextMaxLines)
             //.contentShape(Rectangle()) // Para seleccionar todo el componente
             
             
@@ -73,12 +70,8 @@ struct DateIntervalNavigatorView: View {
                 selectedDate = viewModel.navigateDateTime(selectedDate, to: .next, byAdding: dateTimeInterval)
             } label: {
                 Image.chevronRight
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
+                    .font(.title2)
                     .fontWeight(.thin)
-                    .frame(width: FrameSize.width.buttonSelectValueInterval,
-                           height: FrameSize.height.buttonSelectValueInterval)
-                    .padding(.trailing, ConstantViews.bigSpacing)
             }
         }
         .padding(.vertical, ConstantViews.mediumSpacing)
@@ -91,8 +84,10 @@ struct DateIntervalNavigatorView: View {
     @Previewable @State var selectedDate = Date()
     
     VStack {
+        Spacer()
         DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval,
                                   selectedDate: $selectedDate)
+        Spacer()
     }
     .background(Color.backgroundGradient)
     .environment(\.locale, .init(identifier: Previews.localeES))

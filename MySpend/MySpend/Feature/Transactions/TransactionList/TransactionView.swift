@@ -192,7 +192,8 @@ struct TransactionView: View {
                 }()
                 
                 Text(text)
-                    .textStyle(size: .medium, truncateMode: .tail)
+                    .font(.callout)
+                    .lineLimit(2)
             }
             
             if viewModel.transactionsFiltered.isEmpty && !accountManager.isFilterActive {
@@ -258,14 +259,13 @@ struct TransactionView: View {
                         }
                     }
                 }
-                .animation(.default, value: viewModel.transactionsFiltered.count)
+                .animation(.default, value: viewModel.transactionsFiltered)
                 
             }
             
             Text(viewModel.errorMessage)
             
-            TotalBalanceView(transactions: viewModel.transactionsFiltered,
-                             showTotalBalance: false)
+            TotalBalanceView(transactions: viewModel.transactionsFiltered)
                 .padding(.bottom)
             
             //Tiene un efecto no deseado al transicionar entre tab y tab.
