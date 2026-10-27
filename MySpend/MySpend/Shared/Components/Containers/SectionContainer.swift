@@ -67,8 +67,7 @@ struct SectionContainer<Content: View>: View {
         VStack {
             SectionContainer("HEADER WHEN IS NOT A LIST",
                              isInsideList: false) {
-                TextFieldName(text: .constant(""),
-                              errorMessage: .constant(""))
+                Text("Content without header")
             }
         }
         .padding()

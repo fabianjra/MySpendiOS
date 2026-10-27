@@ -290,8 +290,7 @@ struct TextFieldIconStyle: TextFieldStyle {
         VStack {
             SectionContainer("Header for a TextField",
                              isInsideList: false) {
-                TextFieldName(text: .constant(""),
-                              errorMessage: .constant(""))
+                Text("Content without header")
             }
         }
     }

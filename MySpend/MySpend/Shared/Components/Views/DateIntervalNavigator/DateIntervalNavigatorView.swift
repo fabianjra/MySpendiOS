@@ -107,7 +107,7 @@ struct DateIntervalNavigatorView<Content: View>: View {
     }
 }
 
-#Preview("With account filter \(Previews.localeES)") {
+#Preview(Previews.localeES) {
     @Previewable @State var dateTimeInterval = DateTimeInterval.month
     @Previewable @State var selectedDate = Date()
     @Previewable @State var isEditing = false
@@ -132,59 +132,4 @@ struct DateIntervalNavigatorView<Content: View>: View {
         Spacer()
     }
     .environment(\.locale, .init(identifier: Previews.localeES))
-}
-
-#Preview("Only account filter \(Previews.localeES)") {
-    @Previewable @State var dateTimeInterval = DateTimeInterval.month
-    @Previewable @State var selectedDate = Date()
-    @Previewable @State var isEditing = false
-    @Previewable @State var trailingButtonDisabled = true
-    
-    VStack {
-        Spacer()
-        
-        DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval,
-                                  selectedDate: $selectedDate,
-                                  isEditing: $isEditing,
-                                  showEditor: true) {}
-            .background(Color.backgroundBottom.opacity(0.8))
-        
-        Spacer()
-        
-        DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval,
-                                  selectedDate: $selectedDate,
-                                  isEditing: .constant(false)){}
-            .background(Color.backgroundBottom.opacity(0.8))
-        
-        Spacer()
-    }
-    .environment(\.locale, .init(identifier: Previews.localeES))
-}
-
-
-#Preview("No account filter \(Previews.localeEN)") {
-    @Previewable @State var dateTimeInterval = DateTimeInterval.month
-    @Previewable @State var selectedDate = Date()
-    @Previewable @State var isEditing = false
-    @Previewable @State var trailingButtonDisabled = true
-    
-    VStack {
-        Spacer()
-        
-        DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval,
-                                  selectedDate: $selectedDate,
-                                  isEditing: $isEditing,
-                                  showEditor: true) {}
-            .background(Color.backgroundBottom.opacity(0.8))
-        
-        Spacer()
-        
-        DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval,
-                                  selectedDate: $selectedDate,
-                                  isEditing: .constant(false)) {}
-            .background(Color.backgroundBottom.opacity(0.8))
-        
-        Spacer()
-    }
-    .environment(\.locale, .init(identifier: Previews.localeEN))
 }
