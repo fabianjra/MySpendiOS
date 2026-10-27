@@ -95,7 +95,6 @@ struct AddModifyTransactionView: View {
                         
                         Toggle(isOn: $viewModel.favorite) {
                             Text(.favoriteMarkFavorite)
-                                .textStyle
                         }
                         .tint(.accentColor)
                         .padding(.horizontal)
@@ -103,7 +102,6 @@ struct AddModifyTransactionView: View {
                     
                     
                     Text(viewModel.errorMessage)
-                        .textErrorStyle
                 }
                 .disabled(viewModel.disabled)
                 
@@ -163,16 +161,10 @@ struct AddModifyTransactionView: View {
         }
         
         // MARK: NAVIGATION
-        .navigationTitle(viewModel.isNewModel ? .transactionNew : .transactionModify) // Necesario para ver la descripcion al presionar el boton atras al navegar.
+        .navigationTitle(viewModel.isNewModel ? .transactionNew : .transactionModify)
         .navigationBarTitleDisplayMode(.inline)
         
         .toolbar {
-            
-            ToolbarItem(placement: .title) {
-                Text(viewModel.isNewModel ? .transactionNew : .transactionModify)
-                    .textStyle
-            }
-            
             ToolbarItem(placement: .destructiveAction) {
                 Button(role: .close) {
                     dismiss()
@@ -187,7 +179,6 @@ struct AddModifyTransactionView: View {
                 process(viewModel.isNewModel ? .add : .modify)
             } label: {
                 Text(viewModel.isNewModel ? .transactionAdd : .transactionModify)
-                    .textStyle
                     .padding(.vertical, ConstantViews.paddingButtonVertical)
                     .frame(maxWidth: ConstantFrames.iPadMaxWidth)
             }
@@ -199,7 +190,9 @@ struct AddModifyTransactionView: View {
                 Button(.transactionDelete(.zero)) {
                     viewModel.showAlert = true
                 }
-                .buttonStyle(ButtonLinkStyle(color: Color.alert, fontfamily: .semibold))
+                .padding(.vertical)
+                .foregroundStyle(.alert)
+                .fontWeight(.semibold)
                 
                 .alert(.transactionDelete(.zero), isPresented: $viewModel.showAlert) {
                     

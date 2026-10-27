@@ -15,38 +15,39 @@ struct IconListModalView: View {
     
     var body: some View {
         NavigationStack {
-            FormContainer(addPading: false, scrollable: true, showsIndicators: false, backgroundCenter: .center) {
-                
-                ForEach(CategoryIcons.allCases) { icon in
-                    VStack {
-                        SectionContainer(icon.rawValue, isInsideList: false, textSize: .body) {
-                            
-                            let columns = [
-                                GridItem(.adaptive(minimum: ConstantViews.gridSpacing))
-                            ]
-                            
-                            LazyVGrid(columns: columns, alignment: .center, spacing: ConstantViews.formSpacing) {
-                                ForEach(icon.list, id: \.self) { icon in
-                                    Button {
-                                        selectedIcon = icon
-                                        dismiss()
-                                    } label: {
-                                        Image(systemName: icon)
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(width: FrameSize.width.iconShowcase,
-                                                   height: FrameSize.height.iconShowcase)
-                                            .tint(Color.textPrimaryForeground)
+            ScrollView(showsIndicators: false) {
+                VStack {
+                    ForEach(CategoryIcons.allCases) { icon in
+                        VStack {
+                            Section {
+                                let columns = [
+                                    GridItem(.adaptive(minimum: ConstantViews.gridSpacing))
+                                ]
+                                
+                                LazyVGrid(columns: columns, alignment: .center, spacing: ConstantViews.formSpacing) {
+                                    ForEach(icon.list, id: \.self) { icon in
+                                        Button {
+                                            selectedIcon = icon
+                                            dismiss()
+                                        } label: {
+                                            Image(systemName: icon)
+                                                .font(.title)
+                                                .tint(.primary)
+                                        }
                                     }
                                 }
+                            } header: {
+                                Text(icon.rawValue)
                             }
+                            .padding(.horizontal)
                         }
-                        .padding(.horizontal)
+                        .padding(.vertical)
                     }
-                    .padding(.top)
-                    .padding(.bottom)
                 }
             }
+            .background(Color.backgroundGradient)
+            .ignoresSafeArea(.all, edges: .bottom)
+            
             .toolbar {
                 ToolbarItem(placement: .destructiveAction) {
                     Button(role: .close) {
@@ -56,7 +57,6 @@ struct IconListModalView: View {
             }
             .navigationTitle("Select icon")
         }
-        .presentationDetents([.large])
     }
 }
 
@@ -68,7 +68,7 @@ struct IconListModalView: View {
         Color.backgroundBottom
         VStack {
             Spacer()
-            TextPlain("Icono: \(selectedIcon)")
+            Text("Icono: \(selectedIcon)")
             
             Image(systemName: selectedIcon)
             

@@ -124,10 +124,10 @@ struct TransactionHistoryView: View {
         ToolbarItem(placement: .title) {
             if viewModel.selectedTransactions.count == .zero {
                 Text(.titleHistoryView)
-                    .textStyle(size: .title3)
+                    .font(.title3)
             } else {
                 Text(.selectorSelectedCountFemale(viewModel.selectedTransactions.count))
-                    .textStyle(size: .medium)
+                    .font(.callout)
             }
         }
         
@@ -250,27 +250,30 @@ struct TransactionHistoryView: View {
                             VStack(alignment: .leading) {
                                 if item.notes.isEmptyOrWhitespace {
                                     Text(item.category.name)
-                                        .textStyle
+                                        .fontDesign(.rounded)
                                 } else {
                                     Text(item.notes)
-                                        .textStyle
+                                        .fontDesign(.rounded)
                                 }
                                 
                                 HStack {
                                     if accountManager.sortedAccounts.count > 1 {
                                         Text("\(item.account.name):")
-                                            .textStyle(size: .small)
+                                            .font(.footnote)
+                                            .fontDesign(.rounded)
                                     }
                                     
                                     Text(item.dateTransaction.toStringShortLocale)
-                                        .textStyle(size: .small)
+                                        .font(.footnote)
+                                        .fontDesign(.rounded)
                                 }
                             }
                             
                             Spacer()
                             
                             Text(item.amount.convertAmountDecimalToString.addCurrencySymbol)
-                                .textStyle(color: item.category.type == .income ? .accentColor : .alert)
+                                .foregroundStyle(item.category.type == .income ? .accentColor : .alert)
+                                .monospacedDigit()
                             
                             if !viewModel.isEditing {
                                 if item.favorite {

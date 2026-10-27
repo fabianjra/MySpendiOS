@@ -75,10 +75,9 @@ struct TextFieldIconStyle: TextFieldStyle {
                     
                     VStack {
                         HStack {
-                            //TODO: Cambiar por localized.
-                            TextPlain(placeHolder,
-                                      color: .textFieldPlaceholder,
-                                      size: .mediumSmall)
+                            Text(placeHolder)
+                                .foregroundStyle(.textFieldPlaceholder)
+                                .font(.footnote)
                             Spacer()
                         }
                         .padding(.leading, iconLeading == nil ? nil : .zero)
@@ -287,8 +286,7 @@ struct TextFieldIconStyle: TextFieldStyle {
             .disabled(true)
         
         VStack {
-            SectionContainer("Header for a TextField",
-                             isInsideList: false) {
+            Section("Header for a TextField") {
                 Text("Content without header")
             }
         }
