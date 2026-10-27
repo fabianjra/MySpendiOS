@@ -18,7 +18,7 @@ struct OnBoardingUsernameView: View {
                 TextField(.personalInformationInputNamePlaceholder, text: $viewModel.userName)
                     .formInputStyle($viewModel.userName)
                     .keyboardType(.alphabet)
-                    .autocorrectionDisabled()
+                    .textContentType(.name)
                     .focused($isFocused)
                     .onSubmit {
                         viewModel.continueToNextStep(withName: true)
@@ -60,7 +60,11 @@ struct OnBoardingUsernameView: View {
         
         .scrollDisabled(true)
         .scrollContentBackground(.hidden)
-        .background(Color.backgroundGradient)
+        .background {
+            Color.backgroundGradient
+                .ignoresSafeArea(.container, edges: .all)
+                .ignoresSafeArea(.keyboard, edges: .bottom)
+        }
         
         .toast($viewModel.toastResponse)
     }

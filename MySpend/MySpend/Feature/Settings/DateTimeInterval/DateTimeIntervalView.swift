@@ -40,7 +40,6 @@ struct DateTimeIntervalView: View {
                         viewModel.resetDateTimeInterval()
                     }
                 }
-                //.listRowBackground(Color.clear)
                 
             }
             .scrollContentBackground(.hidden)
