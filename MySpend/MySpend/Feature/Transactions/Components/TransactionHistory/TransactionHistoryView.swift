@@ -232,7 +232,7 @@ struct TransactionHistoryView: View {
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: FrameSize.width.iconInsideTextField,
                                            height: FrameSize.height.iconInsideTextField)
-                                    .foregroundStyle(.textPrimaryForeground)
+                                    .foregroundStyle(Color.primary)
                             }
                             
                             Button("") {
@@ -288,9 +288,6 @@ struct TransactionHistoryView: View {
                                         }
                                 }
                             }
-                            
-                            //Image.chevronRight
-                            //.foregroundStyle(.textPrimaryForeground)
                         }
                         .alignmentGuide(.listRowSeparatorLeading) { _ in
                             //Removes the padding Leading in the RowSeparator.
@@ -303,7 +300,6 @@ struct TransactionHistoryView: View {
                     }
                     .frame(height: FrameSize.height.rowForListTransactionHistory)
                     .listRowInsets(EdgeInsets(top: .zero, leading: .zero, bottom: .zero, trailing: .zero))
-                    //.listRowSeparatorTint(.textPrimaryForeground.opacity(ConstantColors.opacityHalf)) //Linea separadora
                     
                     // MARK: SWIPE ACTIONS:
                     

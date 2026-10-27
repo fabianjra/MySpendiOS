@@ -53,7 +53,7 @@ struct FilterTransactionsView: View {
                         } label: {
                             HStack {
                                 Label(.filterByFavorite, systemImage: ConstantSystemImage.favoriteFill)
-                                    .foregroundStyle(.textPrimaryForeground)
+                                    .foregroundStyle(Color.primary)
                                 
                                 Spacer()
                                 
@@ -78,7 +78,7 @@ struct FilterTransactionsView: View {
                     .filterRestore,
                     systemImage: ConstantSystemImage.arrowCounterClockwise
                 )
-                .foregroundStyle(.textPrimaryForeground)
+                .foregroundStyle(Color.primary)
             }
             .padding(.bottom, UtilsUI.isPad ? nil : .zero)
         }

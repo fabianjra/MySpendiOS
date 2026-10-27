@@ -21,7 +21,7 @@ struct FilterTransactionsToolbarBottom: ToolbarContent {
                     accountManager.isFilterActive.toggle()
                 } label: {
                     Image.filter
-                        .foregroundStyle(.textPrimaryForeground)
+                        .foregroundStyle(Color.primary)
                         .padding(ConstantViews.paddingSmall)
                         .background(
                             accountManager.isFilterActive ?
@@ -43,10 +43,8 @@ struct FilterTransactionsToolbarBottom: ToolbarContent {
                                     .font(.medium)
                                 
                                 Text(getTextDescription)
-                                    .foregroundStyle(accountManager.selectedAccountsToFilterByID.isEmpty ?
-                                        .textPrimaryForeground : .accentColor)
+                                    .foregroundStyle(accountManager.selectedAccountsToFilterByID.isEmpty ? Color.primary : .accentColor)
                                     .font(.small)
-                                    .truncationMode(.tail)
                             }
                             
                             Spacer()

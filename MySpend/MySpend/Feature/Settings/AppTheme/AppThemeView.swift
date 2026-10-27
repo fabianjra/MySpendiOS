@@ -20,7 +20,7 @@ struct AppThemeView: View {
                         HStack {
                             Text(item.icon)
                             Text(item.localizedName)
-                                .foregroundStyle(.textPrimaryForeground)
+                                .foregroundStyle(Color.primary)
                             
                             Spacer()
                             

@@ -37,5 +37,4 @@ struct TextFieldReadOnly: View {
                           colorDisabled: false)
     }
     .padding()
-    .background(Color.backgroundBottom)
 }

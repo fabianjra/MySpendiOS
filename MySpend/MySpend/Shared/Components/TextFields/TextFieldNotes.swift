@@ -29,5 +29,4 @@ struct TextFieldNotes: View {
         TextFieldNotes(text: .constant(""))
     }
     .padding()
-    .background(Color.backgroundBottom)
 }

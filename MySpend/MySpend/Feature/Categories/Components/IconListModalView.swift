@@ -65,7 +65,6 @@ struct IconListModalView: View {
     @Previewable @State var selectedIcon = ""
     
     ZStack(alignment: .top) {
-        Color.backgroundBottom
         VStack {
             Spacer()
             Text("Icono: \(selectedIcon)")

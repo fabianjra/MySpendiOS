@@ -143,7 +143,7 @@ struct TransactionView: View {
                             
                             Image.chevronRight
                         }
-                        .foregroundColor(Color.textPrimaryForeground)
+                        .foregroundColor(Color.primary)
                         .padding(.horizontal)
                         .padding(.vertical, ConstantViews.bigSpacing)
                         .glassEffect(.regular.interactive())

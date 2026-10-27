@@ -17,7 +17,7 @@ struct TotalBalanceView: View {
             Divider()
                 .frame(height: ConstantFrames.dividerHeight)
                 .frame(maxWidth: ConstantFrames.iPadMaxWidth)
-                .overlay(Color.divider)
+                .overlay(Color.secondary)
             
             HStack {
                 Text(.categoryTypeIncomes)

@@ -285,7 +285,6 @@ struct TextFieldIconStyle: TextFieldStyle {
         }
     }
     .padding()
-    .background(Color.backgroundBottom)
     
     VStack {
         TextField("", text: $amount,
@@ -294,5 +293,4 @@ struct TextFieldIconStyle: TextFieldStyle {
         
     }
     .padding()
-    .background(Color.backgroundBottom)
 }

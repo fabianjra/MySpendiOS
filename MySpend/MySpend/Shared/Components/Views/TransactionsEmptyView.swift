@@ -36,12 +36,10 @@ struct TransactionsEmptyView: View {
 
 #Preview(Previews.localeES) {
     TransactionsEmptyView()
-        .background(Color.backgroundBottom)
         .environment(\.locale, .init(identifier: Previews.localeES))
 }
 
 #Preview(Previews.localeEN) {
     TransactionsEmptyView()
-        .background(Color.backgroundBottom)
         .environment(\.locale, .init(identifier: Previews.localeEN))
 }

@@ -43,5 +43,4 @@ struct TextFieldReadOnlySelectable: View {
                                     errorMessage: .constant(""))
     }
     .padding()
-    .background(Color.backgroundBottom)
 }

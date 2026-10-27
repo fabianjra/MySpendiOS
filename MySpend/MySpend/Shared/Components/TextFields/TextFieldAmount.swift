@@ -31,5 +31,4 @@ struct TextFieldAmount: View {
         TextFieldAmount(text: .constant(""))
     }
     .padding()
-    .background(Color.backgroundBottom)
 }
