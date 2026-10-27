@@ -54,6 +54,8 @@ struct OnBoardingAccountView: View {
                 
                 
                 Button(.buttonSkip) {
+                    isFocused = false
+                    
                     Task {
                         await viewModel.finishOnBoarding(withAccountName: false, accountManager: accountManager)
                     }

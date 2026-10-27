@@ -8,19 +8,31 @@
 import SwiftUI
 
 @Observable
-class Router {
-    var path = NavigationPath()
-
+final class Router {
     static let shared: Router = Router()
     
+    var path = NavigationPath()
+    var onboardingPath = NavigationPath()
+    
     private init() {}
+    
+    func navigate(to destination: Destination) {
+        switch destination {
+            
+        case .onBoardinAccount:
+            onboardingPath.append(destination)
+            
+        case .settings:
+            path.append(destination)
+        }
+    }
     
     func reset() {
         path = NavigationPath()
     }
     
-    func navigate(to destination: Destination) {
-        path.append(destination)
+    func resetOnboarding() {
+        onboardingPath = NavigationPath()
     }
     
     enum Destination {

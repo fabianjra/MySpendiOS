@@ -14,21 +14,19 @@ final class OnBoardingAccountViewModel {
     var toastResponse: ToastResponse?
     
     func finishOnBoarding(withAccountName: Bool, accountManager: AccountManager) async {
-        if withAccountName {
-            if accountName.isEmptyOrWhitespace {
-                toastResponse = ToastResponse(.responseErrorTextFieldEmptySpace, .error)
-                return
-            }
-        } else {
-            accountName = String(localized: .accountCreateDefaultName)
+        
+        if withAccountName && accountName.isEmptyOrWhitespace {
+            toastResponse = ToastResponse(.responseErrorTextFieldEmptySpace, .error)
+            return
         }
         
-        let account = AccountModel(icon: ConstantSystemImage.bankDollarFill, name: accountName)
+        let name = withAccountName ? accountName : String(localized: .accountCreateDefaultName)
+        let account = AccountModel(icon: ConstantSystemImage.bankDollarFill, name: name)
+        
         toastResponse = await accountManager.create(account, isDefault: true)
         
         if toastResponse?.type == .ok {
             UserDefaultsManager.isOnBoarding = false
-            Router.shared.reset()
         }
     }
 }

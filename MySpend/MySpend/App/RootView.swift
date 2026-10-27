@@ -21,26 +21,39 @@ struct RootView: View {
     private var isOnboarding: Bool = true
     
     var body: some View {
-        NavigationStack(path: $router.path) {
-            Group {
-                if isOnboarding {
+        ZStack {
+            if isOnboarding {
+                
+                NavigationStack(path: $router.onboardingPath) {
                     OnBoardingUsernameView()
-                } else {
-                    TransactionView()
+                        .navigationDestination(for: Router.Destination.self) { destination in
+                            switch destination {
+                            case .onBoardinAccount:
+                                OnBoardingAccountView()
+                                
+                            default:
+                                EmptyView()
+                            }
+                        }
                 }
-            }
-            
-            .navigationDestination(for: Router.Destination.self) { destination in
-                switch destination {
-                    
-                case .onBoardinAccount:
-                    OnBoardingAccountView()
-                    
-                case .settings:
-                    SettingsView()
+                
+            } else {
+                NavigationStack(path: $router.path) {
+                    TransactionView()
+                        .navigationDestination(for: Router.Destination.self) { destination in
+                            switch destination {
+                            case .settings:
+                                SettingsView()
+                                
+                            default:
+                                EmptyView()
+                            }
+                        }
                 }
             }
         }
+        .animation(.default, value: isOnboarding)
+        
         .onAppear {
             //UIApplication.shared.addTapGestureRecognizer()
         }
