@@ -11,12 +11,8 @@ struct DateIntervalNavigatorView<Content: View>: View {
     
     @Binding var dateTimeInterval: DateTimeInterval
     @Binding var selectedDate: Date
-    @Binding var isEditing: Bool
     
-    var viewModel = DateIntervalNavigatorViewModel()
-    
-    var showEditor: Bool = false
-    var counterSelected: Int = .zero
+    private var viewModel = DateIntervalNavigatorViewModel()
     
     var actionLeadingEdit: (() -> Void)? = nil
     var actionTrailingEdit: (() -> Void)? = nil
@@ -25,17 +21,6 @@ struct DateIntervalNavigatorView<Content: View>: View {
     
     var body: some View {
         VStack {
-            if showEditor {
-                ListEditorView(isEditing: $isEditing,
-                               counterSelected: counterSelected,
-                               actionLeadingEdit: {
-                    if let action = actionLeadingEdit { action() }
-                }, actionTrailingEdit: {
-                    if let action = actionTrailingEdit { action() }
-                })
-            }
-            
-            //PickerView(selection: $dateTimeInterval)
             
             Picker("", selection: $dateTimeInterval) {
                 ForEach(DateTimeInterval.allCases) { item in
@@ -43,25 +28,19 @@ struct DateIntervalNavigatorView<Content: View>: View {
                 }
             }
             .pickerStyle(.segmented)
-            .disabled(isEditing)
-            .animation(.default,value: isEditing)
             .glassEffect(.regular)
             
             
-            RowLCTCointainer(disabled: isEditing) {
-                if showEditor {
-                    MenuContainer(disabled: isEditing) {
-                        contentLeadingSort()
-                    }
-                }
-            } centerContent: {
+            RowLCTCointainer {
                 navigator
                 
             } trailingContent: {
                 Button {
                     selectedDate = viewModel.navigateDateTime(selectedDate, to: .today, byAdding: dateTimeInterval)
                 } label: {
-                    TextPlain("Today", color: isEditing ? Color.disabledForeground : Color.textPrimaryForeground, size: .medium)
+                    Text(.datetimeToday)
+                        .font(.callout)
+                        .foregroundStyle(Color.primary)
                 }
                 .modifier(ShowReservesSpace(!selectedDate.isSameDate(.now))) //Uses modifier because need to keep space.
             }
@@ -84,7 +63,6 @@ struct DateIntervalNavigatorView<Content: View>: View {
             
             Text(viewModel.getHeader(selectedDate, by: dateTimeInterval))
                 .font(.callout)
-            //.scaledToFit()
                 .frame(width: FrameSize.width.buttonSelectValueIntervalCenter)
             //.contentShape(Rectangle()) // Para seleccionar todo el componente
             
@@ -102,34 +80,19 @@ struct DateIntervalNavigatorView<Content: View>: View {
             }
         }
         .padding(.vertical, ConstantViews.mediumSpacing)
-        .buttonStyle(ButtonScaleStyle())
-        .foregroundColor(isEditing ? Color.disabledForeground : Color.textPrimaryForeground)
+        .foregroundColor(Color.primary)
     }
 }
 
 #Preview(Previews.localeES) {
     @Previewable @State var dateTimeInterval = DateTimeInterval.month
     @Previewable @State var selectedDate = Date()
-    @Previewable @State var isEditing = false
     @Previewable @State var trailingButtonDisabled = true
     
     VStack {
-        Spacer()
-        
         DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval,
-                                  selectedDate: $selectedDate,
-                                  isEditing: $isEditing,
-                                  showEditor: true) {}
-            .background(Color.backgroundBottom.opacity(0.8))
-        
-        Spacer()
-        
-        DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval,
-                                  selectedDate: $selectedDate,
-                                  isEditing: .constant(false)) {}
-            .background(Color.backgroundBottom.opacity(0.8))
-        
-        Spacer()
+                                  selectedDate: $selectedDate) {}
     }
+    .background(Color.backgroundGradient)
     .environment(\.locale, .init(identifier: Previews.localeES))
 }

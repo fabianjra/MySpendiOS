@@ -221,10 +221,7 @@ struct TransactionHistoryView: View {
         
         
         DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval,
-                                  selectedDate: $selectedDate,
-                                  isEditing: $viewModel.isEditing,
-                                  showEditor: false, //TODO: Convertir a True para mostrar el Sort by. Eliminar la linea de arriba de edit.
-                                  counterSelected: viewModel.selectedTransactions.count) {
+                                  selectedDate: $selectedDate) {
         } actionTrailingEdit: {
             //showAlertDeleteMultiple = true
             

@@ -18,14 +18,6 @@ struct ListEditorView: View {
     
     var body: some View {
         RowLCTCointainer {
-            Button {
-                isEditing.toggle()
-                if let action = actionLeadingEdit { action() }
-            } label: {
-                TextPlain(isEditing ? "Done" : "Edit")
-            }
-            
-        } centerContent: {
             if isEditing {
                 TextPlain("\(counterSelected) Selected")
             }
