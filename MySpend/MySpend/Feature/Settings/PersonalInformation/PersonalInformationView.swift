@@ -65,6 +65,12 @@ struct PersonalInformationView: View {
             .padding(.bottom)
             .disabled(toastResponse != nil)
         }
+        .background {
+            Color.backgroundGradient
+                .ignoresSafeArea(.container, edges: .all)
+                .ignoresSafeArea(.keyboard, edges: .bottom)
+        }
+        
         .toast($toastResponse)
     }
 }
