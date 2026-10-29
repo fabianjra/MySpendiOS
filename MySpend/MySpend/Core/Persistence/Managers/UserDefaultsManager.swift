@@ -28,10 +28,19 @@ struct UserDefaultsManager {
     
     // MARK: SORT
     
-    static var sorTransactions: SortTransactions {
+    //TODO: ELIMINAR
+    static var sorTransactions_ORIGINAL: SortTransactions {
         get { return UserDefaultsDataStore<SortTransactions>(for: .sortTransactions).value ?? .byDateNewest }
         set {
             var manager = UserDefaultsDataStore<SortTransactions>(for: .sortTransactions)
+            manager.value = newValue
+        }
+    }
+    
+    static var sorTransactions: TransactionSortConfiguration {
+        get { return UserDefaultsDataStore<TransactionSortConfiguration>(for: .sortTransactions).value ?? TransactionSortConfiguration() }
+        set {
+            var manager = UserDefaultsDataStore<TransactionSortConfiguration>(for: .sortTransactions)
             manager.value = newValue
         }
     }

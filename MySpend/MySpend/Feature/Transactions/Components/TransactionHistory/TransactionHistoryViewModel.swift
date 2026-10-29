@@ -26,7 +26,7 @@ final class TransactionHistoryViewModel {
     var selectedTransactions = Set<TransactionModel>()
     var transactionsFiltered: [TransactionModel] = []
     
-    var sortTransactionsBy = UserDefaultsManager.sorTransactions
+    var sortTransactionsBy = UserDefaultsManager.sorTransactions_ORIGINAL
     
     // MARK: - CORE DATA
     private let viewContext: NSManagedObjectContext
@@ -111,7 +111,7 @@ final class TransactionHistoryViewModel {
      Updates the sort selection to store in UserDefaults.
      */
     func updateSelectedSort() {
-        UserDefaultsManager.sorTransactions = sortTransactionsBy
+        UserDefaultsManager.sorTransactions_ORIGINAL = sortTransactionsBy
     }
     
     /**
@@ -119,7 +119,7 @@ final class TransactionHistoryViewModel {
      */
     func resetSelectedSort() {
         UserDefaultsManager.removeValue(for: .sortTransactions)
-        sortTransactionsBy = UserDefaultsManager.sorTransactions
+        sortTransactionsBy = UserDefaultsManager.sorTransactions_ORIGINAL
     }
 }
 

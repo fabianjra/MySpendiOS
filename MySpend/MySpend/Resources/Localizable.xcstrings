@@ -2738,6 +2738,24 @@
         }
       }
     },
+    "Sort.By.Amount" : {
+      "comment" : "Descripcion para la opcion de ordenar por monto",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Amount"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Monto"
+          }
+        }
+      }
+    },
     "Sort.By.DateCreated" : {
       "comment" : "Descripcion para la opcion de ordenar por fecha de creación",
       "extractionState" : "manual",
@@ -2828,6 +2846,18 @@
         }
       }
     },
+    "Sort.Order.Highest" : {
+      "comment" : "Ordenamiento más alto",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Highest"
+          }
+        }
+      }
+    },
     "Sort.Order.LeastUsed" : {
       "comment" : "Ordenamiento menos reciente",
       "extractionState" : "manual",
@@ -2842,6 +2872,18 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Menos reciente"
+          }
+        }
+      }
+    },
+    "Sort.Order.Lowest" : {
+      "comment" : "Ordenamiento más bajo",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lowest"
           }
         }
       }
