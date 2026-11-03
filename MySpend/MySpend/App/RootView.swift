@@ -9,6 +9,7 @@ import SwiftUI
 struct RootView: View {
     
     // MARK: MANAGERS
+    @State private var transactionManager = TransactionManager.shared
     @State private var accountManager = AccountManager.shared
     @State private var categoryManager = CategoryManager.shared
     
@@ -67,6 +68,7 @@ struct RootView: View {
         .onAppear {
             //UIApplication.shared.addTapGestureRecognizer()
         }
+        .environment(transactionManager)
         .environment(accountManager)
         .environment(categoryManager)
         

@@ -75,6 +75,14 @@ struct TransactionView: View {
         .toolbar(.hidden, for: .navigationBar)
         
         
+        // MARK: ON APPEAR / DISSAPEAR
+        
+        .onFirstAppear {
+            Task {
+                await viewModel.activateObservers()
+            }
+        }
+        
         // MARK: LOAD FILTER BY OPTIONS
         .onChange(of: viewModel.transactionsFiltered) {
             viewModel.filterTransactions(accountManager: accountManager)
