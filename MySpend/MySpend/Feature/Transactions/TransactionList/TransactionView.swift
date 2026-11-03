@@ -10,12 +10,9 @@ import SwiftUI
 struct TransactionView: View {
     
     @Environment(TransactionManager.self) private var manager
-    @Environment(\.editMode) private var editMode
+    @Environment(AccountManager.self) private var accountManager
     
-    private var isEditing: Bool {
-        editMode?.wrappedValue.isEditing == true
-    }
-    
+    @StateObject private var viewModel = TransactionViewModel()
     @State private var toastResponse: ToastResponse?
 
     
@@ -24,7 +21,7 @@ struct TransactionView: View {
     
     
     
-    @StateObject private var viewModel = TransactionViewModel()
+    
     
     // MARK: NAVIGATION
     @State private var showNewTransactionView = false
@@ -33,7 +30,7 @@ struct TransactionView: View {
     @State private var showSearchView = false
     @State private var navigateToHistory: Bool = false
     
-    @Environment(AccountManager.self) private var accountManager
+    
     
     var body: some View {
         VStack {
@@ -78,14 +75,6 @@ struct TransactionView: View {
         .toolbar(.hidden, for: .navigationBar)
         
         
-        // MARK: ON APPEAR / DISSAPEAR
-        
-        .onFirstAppear {
-            Task {
-                await viewModel.activateObservers()
-            }
-        }
-        
         // MARK: LOAD FILTER BY OPTIONS
         .onChange(of: viewModel.transactionsFiltered) {
             viewModel.filterTransactions(accountManager: accountManager)
@@ -104,6 +93,8 @@ struct TransactionView: View {
         .onChange(of: viewModel.dateTimeInterval) {
             viewModel.filterTransactions(accountManager: accountManager)
         }
+        
+        .toast($toastResponse)
     }
     
     var headerTitle: some View {
@@ -317,7 +308,6 @@ private struct previewWrapper: View {
         UserDefaultsManager.userName = "Previews"
     }
     
-    @State var editMode: EditMode = .inactive
     @State var themeManager = ThemeManager.shared
     @State var router = Router.shared
     
@@ -337,7 +327,6 @@ private struct previewWrapper: View {
                     }
                 }
         }
-        .environment(\.editMode, $editMode)
         .environment(themeManager)
         .preferredColorScheme(themeManager.theme.colorScheme)
         
