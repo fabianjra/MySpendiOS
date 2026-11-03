@@ -41,9 +41,6 @@ final class TransactionManager {
     private func refreshTransactions() async {
         do {
             transactions = try await coreDataManager.fetchAll()
-            
-            //updateDefaultAccount()
-            //cleanFilteredAccounts()
         } catch {
             Logger.exception(error, type: .CoreData)
         }
@@ -64,17 +61,16 @@ final class TransactionManager {
     }
     
     
-    // MARK: DEFAULT ACCOUNT
+    // MARK: FILTROS
     
-    //TODO: ...
-    
+    func filteredTransactions(by dateTimeInterval: DateTimeInterval, selectedDate: Date) -> [TransactionModel] {
+        return transactions
+            .filteredTransactions(by: dateTimeInterval, selectedDate: selectedDate)
+            .sortedTransactions(by: sortSelection)
+    }
+
     
     // MARK: ORDENAMIENTO
-    
-    var sortedTransactions: [TransactionModel] {
-        //accounts.sortedAccounts(by: sortSelection)
-        return [] //TODO: HACER METODO
-    }
     
     var sortSelection = UserDefaultsManager.sorTransactions {
         didSet { UserDefaultsManager.sorTransactions = sortSelection }
