@@ -108,4 +108,13 @@ class AddModifyTransactionViewModel: BaseViewModel {
             return ResponseModel(.error, error.localizedDescription)
         }
     }
+    
+    //TODO: ESTE ES EL FILTRO QUE DEBE USARSE
+//    private var filteredTransactions: [TransactionModel] {
+//        manager.sortedTransactions
+//            .filteredTransactions(
+//                by: viewModel.selectedInterval,
+//                selectedDate: viewModel.selectedDate
+//            )
+//    }
 }

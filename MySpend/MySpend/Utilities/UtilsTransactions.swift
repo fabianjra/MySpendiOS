@@ -9,14 +9,35 @@ import Foundation
 
 extension Array where Element == TransactionModel {
     
+    /**
+     Example:
+     
+     ```
+     let transactions = manager.transactions
+                        .filteredTransactions(by: selectedInterval, selectedDate: selectedDate)
+                        .sortedTransactions(by: sortSelection)
+     ```
+     */
+    func filteredTransactions(by interval: DateTimeInterval, selectedDate: Date, calendar: Calendar = .current) -> [TransactionModel] {
+        
+        guard let dateInterval = calendar.dateInterval(of: interval.componentType,
+                                                       for: selectedDate) else {
+            return []
+        }
+        
+        return filter {
+            dateInterval.contains($0.dateTransaction)
+        }
+    }
+    
     func sortedTransactions(by sort: TransactionSortConfiguration) -> [TransactionModel] {
         switch sort.sortBy {
             
         case .dateTransaction:
             return sorted {
                 sort.order == .ascending
-                ? $0.dateCreated < $1.dateCreated
-                : $0.dateCreated > $1.dateCreated
+                ? $0.dateTransaction < $1.dateTransaction
+                : $0.dateTransaction > $1.dateTransaction
             }
             
             
