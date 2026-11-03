@@ -98,8 +98,7 @@ struct TransactionView: View {
     }
     
     var headerTitle: some View {
-        VStack(alignment: .leading) {
-
+        VStack {
             HStack {
                 VStack(alignment: .leading) {
                     Text(UtilsDate.greeting)
@@ -124,38 +123,37 @@ struct TransactionView: View {
             }
             .padding(.bottom)
             
-            VStack(alignment: .leading, spacing: .zero) {
-                
-                Text(.transactionsTotalBalance)
-                    .fontWeight(.light)
-                    .fontDesign(.rounded)
-                
+            
+            
+            NavigationLink {
+                TransactionHistoryView(transactionsLoaded: $viewModel.transactionsFiltered,
+                                       dateTimeInterval: $viewModel.dateTimeInterval,
+                                       selectedDate: $viewModel.selectedDate)
+            } label: {
                 HStack {
-                    Text(viewModel.totalBalanceFormatted)
-                        .font(viewModel.totalBalanceFormatted.description.filter(\.isNumber).count > 7 ? .title : .largeTitle)
+                    VStack {
+                        
+                        Text(.transactionsTotalBalance)
+                            .fontWeight(.light)
+                            .fontDesign(.rounded)
+                        
+                        Text(viewModel.totalBalanceFormatted)
+                            .font(viewModel.totalBalanceFormatted.description.filter(\.isNumber).count > 7 ? .title : .largeTitle)
                         //.monospacedDigit()
-                        .lineLimit(ConstantViews.singleTextMaxLines)
+                            .lineLimit(ConstantViews.singleTextMaxLines)
+                    }
                     
                     Spacer()
                     
-                    NavigationLink {
-                        TransactionHistoryView(transactionsLoaded: $viewModel.transactionsFiltered,
-                                               dateTimeInterval: $viewModel.dateTimeInterval,
-                                               selectedDate: $viewModel.selectedDate)
-                    } label: {
-                        HStack {
-                            Text(.transactionButtonDetails)
-                                .fontDesign(.rounded)
-                            
-                            Image.chevronRight
-                        }
-                        .foregroundColor(Color.primary)
-                        .padding(.horizontal)
-                        .padding(.vertical, ConstantViews.bigSpacing)
-                        .glassEffect(.regular.interactive())
-                    }
+                    Text(.transactionButtonDetails)
+                        .fontDesign(.rounded)
+                    
                 }
+                .foregroundColor(Color.primary)
             }
+            .navigationLinkIndicatorVisibility(.visible)
+            .padding(.trailing)
+            //.glassEffect(.regular.interactive())
         }
     }
     
