@@ -63,12 +63,20 @@ final class TransactionManager {
     
     // MARK: FILTROS
     
-    func filteredTransactions(by dateTimeInterval: DateTimeInterval, selectedDate: Date) -> [TransactionModel] {
+    /**
+     Filters transactions by the selected date interval and sorts the results.
+
+     TODO: Optimize performance for large datasets by moving filtering and sorting
+     to Core Data using NSFetchRequest, NSPredicate, and NSSortDescriptor.
+     
+     This will avoid loading and processing all transactions in memory.
+     */
+    func filteredAndSortedTransactions(by dateTimeInterval: DateTimeInterval, selectedDate: Date) -> [TransactionModel] {
         return transactions
             .filteredTransactions(by: dateTimeInterval, selectedDate: selectedDate)
             .sortedTransactions(by: sortSelection)
     }
-
+    
     
     // MARK: ORDENAMIENTO
     
