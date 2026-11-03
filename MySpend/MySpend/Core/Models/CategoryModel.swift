@@ -18,6 +18,7 @@ struct CategoryModel: Identifiable, Equatable, Hashable {
     let dateLastUsed: Date
     var icon: String // Emoji
     var name: String
+    var usageCount: Int
     var type: CategoryType
     
     init(icon: String = "", name: String = "", type: CategoryType = .expense) {
@@ -27,6 +28,7 @@ struct CategoryModel: Identifiable, Equatable, Hashable {
         self.dateLastUsed = .init()
         self.icon = icon
         self.name = name
+        self.usageCount = .zero
         self.type = type
     }
     
@@ -39,6 +41,7 @@ struct CategoryModel: Identifiable, Equatable, Hashable {
         dateLastUsed = entity.dateLastUsed ?? .init()
         icon = entity.icon ?? ""
         name = entity.name ?? ""
+        usageCount = Int(entity.usageCount)
         type = CategoryModel.getCategoryType(from: entity.type)
     }
     

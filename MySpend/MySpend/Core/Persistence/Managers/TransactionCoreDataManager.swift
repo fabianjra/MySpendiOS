@@ -61,14 +61,15 @@ struct TransactionCoreDataManager {
             entity.favorite = model.favorite
             
             // NOTA:
+            // Asigna su ultimo uso para poder ordenarlo por los mas usados
+            categoryResolved.dateLastUsed = .now
+            categoryResolved.usageCount += 1
+            
             // Con asignar uno de los lados basta; el otro se actualiza al guardar el contexto.
             // Es decir, no hay que ir a buscar la entidad Category para hacer la funcion de categoryEntity.addToTransaccions(entity).
             // Eso seria redundante (hace la misma operación dos veces) y solo gasta CPU.
             entity.category = categoryResolved
             entity.account = accountResolved
-            
-            // Asigna su ultimo uso para poder ordenarlo por los mas usados
-            entity.category?.dateLastUsed = .now
             
             try viewContext.save()
         }

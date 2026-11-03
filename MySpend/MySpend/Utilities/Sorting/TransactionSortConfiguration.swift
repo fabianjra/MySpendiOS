@@ -8,18 +8,18 @@
 import Foundation
 
 struct TransactionSortConfiguration: Codable, Equatable {
-    var sortBy: TransactionSortOption = .dateCreated
+    var sortBy: TransactionSortOption = .dateTransaction
     var order: SortOrder = .ascending
 }
 
 enum TransactionSortOption: Codable, CaseIterable {
-    case dateCreated
+    case dateTransaction
     case amount
     case title
 
     var localized: LocalizedStringResource {
         switch self {
-        case .dateCreated: return .sortByDateCreated
+        case .dateTransaction: return .sortByDateTransaction
         case .amount: return .sortByAmount
         case .title: return .sortByTitle
         }
@@ -28,7 +28,7 @@ enum TransactionSortOption: Codable, CaseIterable {
     func orderLocalized(_ order: SortOrder) -> LocalizedStringResource {
         switch self {
             
-        case .dateCreated:
+        case .dateTransaction:
             return order == .ascending
             ? .sortOrderMostRecent
             : .sortOrderLeastUsed

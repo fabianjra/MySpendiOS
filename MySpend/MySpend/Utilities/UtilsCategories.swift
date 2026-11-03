@@ -26,11 +26,21 @@ extension Array where Element == CategoryModel {
                 : $0.dateCreated > $1.dateCreated
             }
             
+        /**
+         Sorts categories by usage count according to the selected order.
+             
+         When two categories have the same usage count, the most recently
+         used category is displayed first, regardless of the selected order.
+         */
         case .usage:
             return sorted {
-                sort.order == .ascending
-                ? $0.dateLastUsed > $1.dateLastUsed
-                : $0.dateLastUsed < $1.dateLastUsed
+                if $0.usageCount == $1.usageCount {
+                    return $0.dateLastUsed > $1.dateLastUsed
+                }
+                
+                return sort.order == .ascending
+                ? $0.usageCount > $1.usageCount
+                : $0.usageCount < $1.usageCount
             }
         }
     }

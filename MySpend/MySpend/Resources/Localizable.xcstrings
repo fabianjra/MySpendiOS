@@ -2774,6 +2774,24 @@
         }
       }
     },
+    "Sort.By.DateTransaction" : {
+      "comment" : "Descripcion para la opcion de ordenar por fecha de transacción",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Date"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fecha"
+          }
+        }
+      }
+    },
     "Sort.By.Default" : {
       "comment" : "Indica accion para restaurar el ordenamiento por defecto",
       "extractionState" : "manual",

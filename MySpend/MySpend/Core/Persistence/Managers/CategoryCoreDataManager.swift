@@ -104,6 +104,7 @@ struct CategoryCoreDataManager {
             entity.dateLastUsed = .now
             entity.icon = model.icon
             entity.name = model.name
+            entity.usageCount = .zero
             entity.type = model.type.rawValue
             
             try viewContext.save()
@@ -132,6 +133,7 @@ struct CategoryCoreDataManager {
             // Entity-specific Attributes
             entity.icon = model.icon
             entity.name = model.name
+            entity.usageCount = Int64(model.usageCount)
             entity.type = model.type.rawValue
             
             try viewContext.save()

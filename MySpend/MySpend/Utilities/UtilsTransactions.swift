@@ -7,6 +7,38 @@
 
 import Foundation
 
+extension Array where Element == TransactionModel {
+    
+    func sortedTransactions(by sort: TransactionSortConfiguration) -> [TransactionModel] {
+        switch sort.sortBy {
+            
+        case .dateTransaction:
+            return sorted {
+                sort.order == .ascending
+                ? $0.dateCreated < $1.dateCreated
+                : $0.dateCreated > $1.dateCreated
+            }
+            
+            
+        case .amount:
+            return sorted {
+                sort.order == .ascending
+                ? $0.amount < $1.amount
+                : $0.amount > $1.amount
+            }
+            
+        case .title:
+            return sorted {
+                sort.order == .ascending
+                ? $0.category.name.localizedStandardCompare($1.category.name) == .orderedAscending
+                : $0.category.name.localizedStandardCompare($1.category.name) == .orderedDescending
+            }
+            
+        }
+    }
+}
+
+
 struct UtilsTransactions {
     
     /**
