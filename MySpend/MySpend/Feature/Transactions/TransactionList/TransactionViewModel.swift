@@ -7,7 +7,46 @@
 
 import Foundation
 
-class TransactionViewModel: BaseViewModel {
+// ViewModel propuesto por GTP:
+
+//@Observable
+//@MainActor
+//final class TransactionViewModel {
+//
+//    private(set) var filteredTransactions: [TransactionModel] = []
+//
+//    var selectedDate: Date = .now
+//    var selectedInterval: DateTimeInterval = .month
+//
+//    func refreshTransactions(using manager: TransactionManager) {
+//        filteredTransactions = manager.filteredAndSortedTransactions(
+//            by: selectedInterval,
+//            selectedDate: selectedDate
+//        )
+//    }
+
+// //Ahora filteredTransactions conserva el resultado anterior hasta que solicites una actualización.
+//}
+
+
+//EN LA VISTA:
+
+/**
+ .task {
+     viewModel.refreshTransactions(using: transactionManager)
+ }
+ .onChange(of: viewModel.selectedDate) {
+     viewModel.refreshTransactions(using: transactionManager)
+ }
+ .onChange(of: viewModel.selectedInterval) {
+     viewModel.refreshTransactions(using: transactionManager)
+ }
+ 
+ // De esta manera, el filtrado se ejecuta inicialmente y cuando cambia la fecha o el intervalo seleccionado.
+ */
+
+
+final class TransactionViewModel: BaseViewModel {
     
     @Published var userName = UserDefaultsManager.userName
     
