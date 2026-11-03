@@ -9,6 +9,21 @@ import SwiftUI
 
 struct TransactionView: View {
     
+    @Environment(TransactionManager.self) private var manager
+    @Environment(\.editMode) private var editMode
+    
+    private var isEditing: Bool {
+        editMode?.wrappedValue.isEditing == true
+    }
+    
+    @State private var toastResponse: ToastResponse?
+
+    
+    
+    
+    
+    
+    
     @StateObject private var viewModel = TransactionViewModel()
     
     // MARK: NAVIGATION
@@ -295,15 +310,19 @@ struct TransactionView: View {
 
 private struct previewWrapper: View {
     init(_ mockDataType: MockDataType = .normal, isFilterActive: Bool = false) {
-        CoreDataUtilities.shared.mockDataType = mockDataType
+        _manager = State(initialValue: TransactionManager(viewContext: mockDataType.viewContext))
+        _accountManager = State(initialValue: AccountManager(viewContext: mockDataType.viewContext))
+        _accountManager.wrappedValue.isFilterActive = isFilterActive
         
         UserDefaultsManager.userName = "Previews"
-        AccountManager.shared.isFilterActive = isFilterActive
     }
     
-    @State var router = Router.shared
+    @State var editMode: EditMode = .inactive
     @State var themeManager = ThemeManager.shared
-    @State var previewAccountManager = AccountManager.shared
+    @State var router = Router.shared
+    
+    @State var manager: TransactionManager
+    @State var accountManager: AccountManager
     
     var body: some View {
         NavigationStack(path: $router.path) {
@@ -318,9 +337,12 @@ private struct previewWrapper: View {
                     }
                 }
         }
-        .environment(previewAccountManager)
+        .environment(\.editMode, $editMode)
         .environment(themeManager)
         .preferredColorScheme(themeManager.theme.colorScheme)
+        
+        .environment(manager)
+        .environment(accountManager)
     }
 }
 
