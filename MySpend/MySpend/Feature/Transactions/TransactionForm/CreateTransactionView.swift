@@ -21,6 +21,7 @@ import SwiftUI
 struct CreateTransactionView: View {
     
     @Environment(\.dismiss) private var dismiss
+    @Environment(TransactionManager.self) private var manager
     @Environment(AccountManager.self) private var accountManager
     
     @StateObject private var viewModel: AddModifyTransactionViewModel
@@ -99,9 +100,6 @@ struct CreateTransactionView: View {
                         .tint(.accentColor)
                         .padding(.horizontal)
                     }
-                    
-                    
-                    Text(viewModel.errorMessage)
                 }
                 .disabled(viewModel.disabled)
                 
@@ -139,8 +137,7 @@ struct CreateTransactionView: View {
                 viewModel.model.category = CategoryModel(type: newValue) // Clean category beacause won't be the same CategoryType (Exponse, income).
             }
             .sheet(isPresented: $showDatePicker) {
-                DatePickerModalView(selectedDate: $viewModel.model.dateTransaction,
-                                    showModal: $showDatePicker)
+                DatePickerModalView(selectedDate: $viewModel.model.dateTransaction)
             }
             .sheet(isPresented: $showCategoryList) {
                 NavigationStack {
@@ -229,63 +226,67 @@ struct CreateTransactionView: View {
     }
 }
 
-private struct PreviewWrapper: View {
-    init(_ mockDataType: MockDataType = .empty) {
-        CoreDataUtilities.shared.mockDataType = mockDataType
-    }
-    
-    @State var accountManager = AccountManager.shared
-    @State var categoryManager = CategoryManager.shared
-    
-    @State var selectedModel: TransactionModel?
-    @State var models: [TransactionModel] = []
-    
-    var body: some View {
-        VStack {
-            List(models) { model in
-                Button(model.id.uuidString) {
-                    selectedModel = model
-                }
-            }
-            .sheet(item: $selectedModel) { model in
-                NavigationStack {
-                    CreateTransactionView(model)
-                }
-            }
-        }
-        .task {
-            models = await MockTransactionUtils.fetchAll(CoreDataUtilities.getViewContext)
-            
-            if !models.isEmpty && models.first != nil {
-                selectedModel = models.first
-            }
-        }
-        .environment(accountManager)
-        .environment(categoryManager)
-    }
-}
+//private struct PreviewWrapper: View {
+//    init(_ mockDataType: MockDataType = .normal) {
+//        _manager = State(initialValue: TransactionManager(viewContext: mockDataType.viewContext))
+//        _accountManager = State(initialValue: AccountManager(viewContext: mockDataType.viewContext))
+//        _categoryManager = State(initialValue: CategoryManager(viewContext: mockDataType.viewContext))
+//    }
+//    
+//    @State var manager: TransactionManager
+//    @State var accountManager: AccountManager
+//    @State var categoryManager: CategoryManager
+//    
+//    @State var selectedModel: TransactionModel?
+//    @State var models: [TransactionModel] = []
+//    
+//    var body: some View {
+//        VStack {
+//            List(models) { model in
+//                Button(model.id.uuidString) {
+//                    selectedModel = model
+//                }
+//            }
+//            .sheet(item: $selectedModel) { model in
+//                NavigationStack {
+//                    CreateTransactionView(model)
+//                }
+//            }
+//        }
+//        .task {
+//            //models = await MockTransactionUtils.fetchAll(CoreDataUtilities.getViewContext)
+//            models = manager.filteredAndSortedTransactions(by: .month, selectedDate: .now)
+//            
+//            if !models.isEmpty && models.first != nil {
+//                selectedModel = models.first
+//            }
+//        }
+//        .environment(manager)
+//        .environment(accountManager)
+//        .environment(categoryManager)
+//    }
+//}
 
 
-#Preview(Previews.localeEN) {
+#Preview(Previews.localeES) {
     
+    @Previewable @State var manager = TransactionManager.shared
     @Previewable @State var accountManager = AccountManager.shared
     @Previewable @State var categoryManager = CategoryManager.shared
     
     NavigationStack {
         CreateTransactionView()
     }
+    .environment(manager)
     .environment(accountManager)
     .environment(categoryManager)
-    .environment(\.locale, .init(identifier: Previews.localeEN))
-    .onAppear {
-        CoreDataUtilities.shared.mockDataType = .normal
-    }
+    .environment(\.locale, .init(identifier: Previews.localeES))
 }
 
-#Preview("Modify \(Previews.localeES_CR)") {
-    NavigationStack {
-        PreviewWrapper(.normal)
-        
-    }
-    .environment(\.locale, .init(identifier: Previews.localeES_CR))
-}
+//#Preview("Modify \(Previews.localeES_CR)") {
+//    NavigationStack {
+//        PreviewWrapper(.normal)
+//        
+//    }
+//    .environment(\.locale, .init(identifier: Previews.localeES_CR))
+//}

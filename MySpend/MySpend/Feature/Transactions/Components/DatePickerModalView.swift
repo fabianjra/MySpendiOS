@@ -9,10 +9,10 @@ import SwiftUI
 
 struct DatePickerModalView: View {
     
+    @Environment(\.dismiss) private var dismiss
     @State private var datePickerID = UUID()
     
     @Binding var selectedDate: Date
-    @Binding var showModal: Bool
     
     var body: some View {
         NavigationStack {
@@ -33,7 +33,7 @@ struct DatePickerModalView: View {
                 
                 ToolbarItem(placement: .confirmationAction) {
                     Button(role: .confirm) {
-                        showModal = false
+                        dismiss()
                     }
                 }
             }
@@ -58,7 +58,7 @@ struct DatePickerModalView: View {
             Spacer()
         }
     }.sheet(isPresented: $showModal) {
-        DatePickerModalView(selectedDate: $selectedDate, showModal: $showModal)
+        DatePickerModalView(selectedDate: $selectedDate)
     }
     .onAppear {
         dateString = selectedDate.toStringShortLocale

@@ -3191,6 +3191,186 @@
         }
       }
     },
+    "Transaction.Input.Account" : {
+      "comment" : "Label para el campo de cuenta",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Account"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Cuenta"
+          }
+        }
+      }
+    },
+    "Transaction.Input.Account.Placeholder" : {
+      "comment" : "Placeholder para seleccionar la cuenta",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select the account"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Selecciona la cuenta"
+          }
+        }
+      }
+    },
+    "Transaction.Input.Amount" : {
+      "comment" : "Label para el campo de monto",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Amount"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monto"
+          }
+        }
+      }
+    },
+    "Transaction.Input.Amount.Placeholder" : {
+      "comment" : "Placeholder para ingresar el monto de la transaccion",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter the amount"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ingresa el monto"
+          }
+        }
+      }
+    },
+    "Transaction.Input.Category" : {
+      "comment" : "Label para el campo de categoria",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Category"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Categoría"
+          }
+        }
+      }
+    },
+    "Transaction.Input.Category.Placeholder" : {
+      "comment" : "Placeholder para seleccionar la categoria",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select the category"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selecciona la categoría"
+          }
+        }
+      }
+    },
+    "Transaction.Input.Date" : {
+      "comment" : "Label para el campo de fecha",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Date"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Fecha"
+          }
+        }
+      }
+    },
+    "Transaction.Input.Date.PlaceHolder" : {
+      "comment" : "Placeholder para indicar que se debe seleccionar la fecha",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Transaction date"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seleccionar fecha"
+          }
+        }
+      }
+    },
+    "Transaction.Input.Notes" : {
+      "comment" : "Label para el campo de notas",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Note"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notas"
+          }
+        }
+      }
+    },
+    "Transaction.Input.Notes.Placeholder" : {
+      "comment" : "Placeholder para escribir notas",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No note entered"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sin notas"
+          }
+        }
+      }
+    },
     "Transaction.Modify" : {
       "comment" : "Mensaje para indicar que el proceso es para modificar una transacción",
       "extractionState" : "manual",
