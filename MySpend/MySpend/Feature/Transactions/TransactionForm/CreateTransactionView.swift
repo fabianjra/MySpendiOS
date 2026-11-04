@@ -18,7 +18,7 @@ import SwiftUI
  
  - Date: December 2024
  */
-struct AddModifyTransactionView: View {
+struct CreateTransactionView: View {
     
     @Environment(\.dismiss) private var dismiss
     @Environment(AccountManager.self) private var accountManager
@@ -249,7 +249,7 @@ private struct PreviewWrapper: View {
             }
             .sheet(item: $selectedModel) { model in
                 NavigationStack {
-                    AddModifyTransactionView(model)
+                    CreateTransactionView(model)
                 }
             }
         }
@@ -272,7 +272,7 @@ private struct PreviewWrapper: View {
     @Previewable @State var categoryManager = CategoryManager.shared
     
     NavigationStack {
-        AddModifyTransactionView()
+        CreateTransactionView()
     }
     .environment(accountManager)
     .environment(categoryManager)

@@ -53,12 +53,12 @@ struct TransactionHistoryView: View {
         
         .sheet(isPresented: $showNewItemModal) {
             NavigationStack {
-                AddModifyTransactionView(selectedDate: selectedDate)
+                CreateTransactionView(selectedDate: selectedDate)
             }
         }
         .sheet(item: $modelToModify) { model in
             NavigationStack {
-                AddModifyTransactionView(model)
+                CreateTransactionView(model)
                     .onDisappear {
                         modelToModify = nil
                     }
