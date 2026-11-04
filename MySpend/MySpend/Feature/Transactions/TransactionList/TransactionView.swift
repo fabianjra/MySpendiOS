@@ -139,15 +139,13 @@ struct TransactionView: View {
                                        selectedDate: $viewModel.selectedDate)
             } label: {
                 HStack {
-                    VStack {
-                        
+                    VStack(alignment: .leading) {
                         Text(.transactionsTotalBalance)
                             .fontWeight(.light)
                             .fontDesign(.rounded)
                         
                         Text(viewModel.totalBalanceFormatted)
                             .font(viewModel.totalBalanceFormatted.description.filter(\.isNumber).count > 7 ? .title : .largeTitle)
-                        //.monospacedDigit()
                             .lineLimit(ConstantViews.singleTextMaxLines)
                     }
                     
