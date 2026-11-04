@@ -80,11 +80,11 @@ public struct CurrencyManager {
 
 extension CurrencyManager {
     
-    public static var getLocalDecimalSeparator: String {
+    public static var localDecimalSeparator: String {
         return Locale.current.decimalSeparator ?? defaultDecimalSeparator
     }
 
-    public static var getLocalGroupingSeparator: String {
+    public static var localGroupingSeparator: String {
         return Locale.current.groupingSeparator ?? defaultGroupingSeparator
     }
 }

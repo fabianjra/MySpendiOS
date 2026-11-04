@@ -167,8 +167,8 @@ struct TextFieldIconStyle: TextFieldStyle {
     }
     
     private func onChangeAmount() -> String {
-        let decimalSeparator = CurrencyManager.getLocalDecimalSeparator
-        let groupingSeparator = CurrencyManager.getLocalGroupingSeparator
+        let decimalSeparator = CurrencyManager.localDecimalSeparator
+        let groupingSeparator = CurrencyManager.localGroupingSeparator
         
         /// Filter to only numbers or decimal:
         var allowedCharacters = CharacterSet.decimalDigits
@@ -231,8 +231,8 @@ struct TextFieldIconStyle: TextFieldStyle {
                     // Si el valor es 0, limpiar
                     text = ""
                 } else {
-                    let decimalSeparator = CurrencyManager.getLocalDecimalSeparator
-                    let groupingSeparator = CurrencyManager.getLocalGroupingSeparator
+                    let decimalSeparator = CurrencyManager.localDecimalSeparator
+                    let groupingSeparator = CurrencyManager.localGroupingSeparator
                     
                     let decimalParts = formatter.string(from: number)!.split(separator: decimalSeparator)
                     

@@ -48,4 +48,8 @@ struct ConstantSystemImage {
     
     // MARK: CURRENCY
     static let bankDollarFill = "dollarsign.bank.building.fill"
+    
+    // MARK: NUMPAD
+    static let padDelete = "delete.left"
+    static let padClear = "clear"
 }
