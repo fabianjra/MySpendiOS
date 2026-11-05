@@ -1,23 +1,12 @@
 //
-//  AddModifyTransactionView.swift
+//  CreateTransactionView.swift
 //  MySpend
 //
-//  Created by Fabian Rodriguez on 15/8/23.
+//  Created by Fabian Rodriguez on 4/11/26.
 //
 
 import SwiftUI
 
-/**
- This view can be instantiated with a model or without a model.
- Pass a model of type `TransactionModel` if you want to modify something on it, eg: when you want to modify a transaction.
- If you don't pass a model by parameter, the `bool` let `isNewTransaction` will be set to true, because will use an internal @State model inside to
- manage the model data in the view and no the Binding model used for paraemter.
- 
- - Parameters:
- - model: This model should be passed only when you want to modify something in the model already loaded.
- 
- - Date: December 2024
- */
 struct CreateTransactionView: View {
     
     @Environment(\.dismiss) private var dismiss
@@ -226,48 +215,6 @@ struct CreateTransactionView: View {
     }
 }
 
-//private struct PreviewWrapper: View {
-//    init(_ mockDataType: MockDataType = .normal) {
-//        _manager = State(initialValue: TransactionManager(viewContext: mockDataType.viewContext))
-//        _accountManager = State(initialValue: AccountManager(viewContext: mockDataType.viewContext))
-//        _categoryManager = State(initialValue: CategoryManager(viewContext: mockDataType.viewContext))
-//    }
-//    
-//    @State var manager: TransactionManager
-//    @State var accountManager: AccountManager
-//    @State var categoryManager: CategoryManager
-//    
-//    @State var selectedModel: TransactionModel?
-//    @State var models: [TransactionModel] = []
-//    
-//    var body: some View {
-//        VStack {
-//            List(models) { model in
-//                Button(model.id.uuidString) {
-//                    selectedModel = model
-//                }
-//            }
-//            .sheet(item: $selectedModel) { model in
-//                NavigationStack {
-//                    CreateTransactionView(model)
-//                }
-//            }
-//        }
-//        .task {
-//            //models = await MockTransactionUtils.fetchAll(CoreDataUtilities.getViewContext)
-//            models = manager.filteredAndSortedTransactions(by: .month, selectedDate: .now)
-//            
-//            if !models.isEmpty && models.first != nil {
-//                selectedModel = models.first
-//            }
-//        }
-//        .environment(manager)
-//        .environment(accountManager)
-//        .environment(categoryManager)
-//    }
-//}
-
-
 #Preview(Previews.localeES) {
     
     @Previewable @State var manager = TransactionManager.shared
@@ -282,11 +229,3 @@ struct CreateTransactionView: View {
     .environment(categoryManager)
     .environment(\.locale, .init(identifier: Previews.localeES))
 }
-
-//#Preview("Modify \(Previews.localeES_CR)") {
-//    NavigationStack {
-//        PreviewWrapper(.normal)
-//        
-//    }
-//    .environment(\.locale, .init(identifier: Previews.localeES_CR))
-//}

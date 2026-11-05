@@ -57,7 +57,7 @@ struct TransactionView: View {
         
         .sheet(isPresented: $showNewTransactionView) {
             NavigationStack {
-                CreateTransactionView(selectedDate: viewModel.selectedDate)
+                UpdateTransactionView(selectedDate: viewModel.selectedDate)
             }
         }
         .sheet(isPresented: $showFilters) {
