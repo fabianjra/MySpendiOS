@@ -158,7 +158,7 @@ struct UpdateTransactionView: View {
         }
         
         // MARK: NAVIGATION
-        .navigationTitle(viewModel.isNewModel ? .transactionNew : .transactionModify)
+        .navigationTitle(viewModel.isNewModel ? .transactionCreateTitle : .transactionUpdateTitle)
         .navigationBarTitleDisplayMode(.inline)
         
         .toolbar {
@@ -175,7 +175,7 @@ struct UpdateTransactionView: View {
             Button {
                 process(viewModel.isNewModel ? .add : .modify)
             } label: {
-                Text(viewModel.isNewModel ? .transactionAdd : .transactionModify)
+                Text(viewModel.isNewModel ? .transactionCreateTitle : .transactionUpdateTitle)
                     .padding(.vertical, ConstantViews.paddingButtonVertical)
                     .frame(maxWidth: ConstantFrames.iPadMaxWidth)
             }

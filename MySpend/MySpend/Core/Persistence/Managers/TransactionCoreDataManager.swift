@@ -50,19 +50,21 @@ struct TransactionCoreDataManager {
             let entity = Transaction(context: viewContext)
             
             // Shared attributes (Abstract class):
-            entity.dateCreated = .now
-            entity.dateModified = .now
+            let now = Date.now
+            entity.dateCreated = now
+            entity.dateModified = now
             entity.id = model.id
             
             // Entity-specific Attributes
             entity.amount = UtilsCurrency.makeNSDecimal(model.amount)
-            entity.dateTransaction = model.dateTransaction.dateWithCurrentTime
+            //entity.dateTransaction = model.dateTransaction.dateWithCurrentTime // No normalizar la hora de la transaccion.
+            entity.dateTransaction = model.dateTransaction
             entity.notes = model.notes
             entity.favorite = model.favorite
             
             // NOTA:
             // Asigna su ultimo uso para poder ordenarlo por los mas usados
-            categoryResolved.dateLastUsed = .now
+            categoryResolved.dateLastUsed = now
             categoryResolved.usageCount += 1
             
             // Con asignar uno de los lados basta; el otro se actualiza al guardar el contexto.
@@ -88,18 +90,19 @@ struct TransactionCoreDataManager {
             }
             
             // Shared attributes (Abstract class):
-            entity.dateModified = .now
+            let now = Date.now
+            entity.dateModified = now
             
             // Entity-specific Attributes
             entity.amount = UtilsCurrency.makeNSDecimal(model.amount)
-            entity.dateTransaction = model.dateTransaction.dateWithCurrentTime
+            entity.dateTransaction = model.dateTransaction
             entity.notes = model.notes
             entity.favorite = model.favorite
             
             entity.category = categoryResolved
             entity.account = accountResolved
             
-            entity.category?.dateLastUsed = .now
+            entity.category?.dateLastUsed = now
             
             try viewContext.save()
         }

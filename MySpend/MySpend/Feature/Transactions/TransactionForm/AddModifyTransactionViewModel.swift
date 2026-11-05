@@ -68,7 +68,7 @@ class AddModifyTransactionViewModel: BaseViewModel {
         }
 
         var modelMutated = model
-        modelMutated.amount = amountString.convertAmountToDecimal
+        modelMutated.amount = amountString.convertAmountToDecimal ?? .zero
         modelMutated.dateTransaction = UtilsDate.normalizeTransactionDate(model.dateTransaction)
         modelMutated.favorite = favorite
         
@@ -87,7 +87,7 @@ class AddModifyTransactionViewModel: BaseViewModel {
         }
 
         var modelMutated = model
-        modelMutated.amount = amountString.convertAmountToDecimal
+        modelMutated.amount = amountString.convertAmountToDecimal ?? .zero
         modelMutated.favorite = favorite
         
         do {

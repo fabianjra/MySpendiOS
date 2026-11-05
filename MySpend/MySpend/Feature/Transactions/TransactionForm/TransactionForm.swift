@@ -12,8 +12,7 @@ struct TransactionForm: View {
     // PARAMETRIZADOS
     @Binding var transaction: TransactionModel
     @Binding var type: CategoryType
-    
-    @State private var amountString = ""
+    @Binding var amountString: String
     
     @FocusState private var isFocused: Bool
     
@@ -51,7 +50,7 @@ struct TransactionForm: View {
                     LabeledContent(.transactionInputAmount) {
                         TextField(.transactionInputAmountPlaceholder, text: $amountString)
                             .formInputStyle($amountString)
-                            .autocorrectionDisabled()
+                            .keyboardType(.decimalPad)
                             .focused($isFocused)
                     }
                     .formLabeledInputStyle
@@ -125,15 +124,24 @@ struct TransactionForm: View {
         }
         
         // MARK: EVENTS
-        
+
         .onAppear {
             isFocused = true
+            
+            //TODO: COMPLETAR
+//            viewModel.configureSelectedAccount(accountManager.sortedAccounts)
         }
-        .onAppear {
-            amountString = transaction.amount.convertAmountDecimalToString
+        .onChange(of: amountString) { _, newValue in
+            guard isFocused else { return }
+
+            let filteredValue = onChangeAmount(newValue)
+
+            if filteredValue != newValue {
+                amountString = filteredValue
+            }
         }
-        .onChange(of: transaction.amount) {
-            amountString = transaction.amount.convertAmountDecimalToString
+        .onChange(of: isFocused) { _, newValue in
+            amountString = onChangeFocusAmount(amountString, newValue)
         }
         .onChange(of: type) {
             transaction.category = CategoryModel()
@@ -157,6 +165,53 @@ struct TransactionForm: View {
         }
         
     }
+    
+    
+    private func onChangeAmount(_ text: String) -> String {
+        let decimalSeparator = CurrencyManager.localDecimalSeparator
+        let groupingSeparator = CurrencyManager.localGroupingSeparator
+
+        let cleanedText = text.replacingOccurrences(of: groupingSeparator, with: "")
+
+        let parts = cleanedText.components(separatedBy: decimalSeparator)
+
+        let integerPart = String(parts[0].filter(\.isASCII).filter(\.isNumber).prefix(CurrencyManager.amoutMaxLength))
+
+        guard parts.count > 1 else {
+            return integerPart
+        }
+
+        let decimalPart = String(parts.dropFirst().joined().filter(\.isASCII).filter(\.isNumber).prefix(2))
+
+        return integerPart + decimalSeparator + decimalPart
+    }
+        
+    private func onChangeFocusAmount(_ text: String, _ isFocused: Bool) -> String {
+        let decimalSeparator = CurrencyManager.localDecimalSeparator
+        let groupingSeparator = CurrencyManager.localGroupingSeparator
+
+        if isFocused {
+            let editableText = text.replacingOccurrences(of: groupingSeparator,with: "")
+
+            let parts = editableText.components(separatedBy: decimalSeparator)
+
+            if parts.count == 2 && parts[1].allSatisfy({ $0 == "0" }) {
+                return parts[0] == "0" ? "" : parts[0]
+            }
+
+            return editableText == "0" ? "" : editableText
+        }
+
+        let cleanedText = onChangeAmount(text)
+
+        guard let amount = Decimal(string: cleanedText, locale: .current), amount != .zero else {
+            return ""
+        }
+
+        let formatter = UtilsCurrency.getLocalFormatter
+
+        return formatter.string(from: NSDecimalNumber(decimal: amount)) ?? cleanedText
+    }
 }
 
 #Preview(Previews.localeES_CR) {
@@ -166,8 +221,9 @@ struct TransactionForm: View {
     
     @Previewable @State var transaction = TransactionModel()
     @Previewable @State var type = CategoryType.expense
+    @Previewable @State var amountString = ""
     
-    TransactionForm(transaction: $transaction, type: $type)
+    TransactionForm(transaction: $transaction, type: $type, amountString: $amountString)
         .environment(\.locale, .init(identifier: Previews.localeES_CR))
     
         .environment(accountManager)

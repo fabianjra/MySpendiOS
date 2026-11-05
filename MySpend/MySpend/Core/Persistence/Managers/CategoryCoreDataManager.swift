@@ -96,12 +96,13 @@ struct CategoryCoreDataManager {
             let entity = Category(context: viewContext)
             
             // Shared attributes (Abstract class):
-            entity.dateCreated = .now
-            entity.dateModified = .now
+            let now = Date.now
+            entity.dateCreated = now
+            entity.dateModified = now
             entity.id = model.id
             
             // Entity-specific Attributes
-            entity.dateLastUsed = .now
+            entity.dateLastUsed = now
             entity.icon = model.icon
             entity.name = model.name
             entity.usageCount = .zero

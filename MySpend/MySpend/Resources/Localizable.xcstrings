@@ -2071,6 +2071,24 @@
         }
       }
     },
+    "Response.Error.InvalidAmount" : {
+      "comment" : "Mensaje para indicar que se ingrese un monto valido",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter a valid amount"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ingresa un monto válido"
+          }
+        }
+      }
+    },
     "Response.Error.TextField.EmptySpace" : {
       "comment" : "Indica que deben llenarse el campo obligatorio",
       "extractionState" : "manual",
@@ -3065,6 +3083,24 @@
         }
       }
     },
+    "Transaction.Create.Title" : {
+      "comment" : "Mensaje para indicar que el proceso es para una nueva transacción",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New transaction"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crear Transacción"
+          }
+        }
+      }
+    },
     "Transaction.Delete %lld" : {
       "comment" : "Titulo para el mensaje emergente de eliminar n cantidad de transacciones",
       "extractionState" : "manual",
@@ -3407,38 +3443,20 @@
         }
       }
     },
-    "Transaction.Modify" : {
+    "Transaction.Update.Title" : {
       "comment" : "Mensaje para indicar que el proceso es para modificar una transacción",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Modify transaction"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Modificar transacción"
-          }
-        }
-      }
-    },
-    "Transaction.New" : {
-      "comment" : "Mensaje para indicar que el proceso es para una nueva transacción",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "New transaction"
+            "value" : "Update Transaction"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Nueva transacción"
+            "value" : "Actualizar Transacción"
           }
         }
       }

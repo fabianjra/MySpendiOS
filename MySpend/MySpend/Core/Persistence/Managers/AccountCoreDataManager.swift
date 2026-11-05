@@ -64,8 +64,9 @@ struct AccountCoreDataManager {
             let entity = Account(context: viewContext)
             
             // Shared attributes (Abstract class):
-            entity.dateCreated = .now
-            entity.dateModified = .now
+            let now = Date.now
+            entity.dateCreated = now
+            entity.dateModified = now
             entity.id = model.id
             
             // Entity-specific Attributes

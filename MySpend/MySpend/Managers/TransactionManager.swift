@@ -94,19 +94,19 @@ final class TransactionManager {
 
 extension TransactionManager {
     
-    func create(_ transaction: TransactionModel, isFavorite: Bool) async -> ToastResponse {
+    func create(_ transaction: TransactionModel) async -> ToastResponse {
         //Validar si se puede utilizar el category como opcional en el modelo de transactionModel.
         //Asi se setea luego a null, cuando cambie la seleccion y asi se valida directamente con category en nil.
         if transaction.category.name.isEmptyOrWhitespace {
             return ToastResponse(.responseErrorTextFieldEmptySpace, .error)
         }
 
-        let amountString = transaction.amount.convertAmountDecimalToString
+        //TODO: Revisar cuando hay decimales, porque se usa directamente el monto de Amout
+        //let amountString = transaction.amount.convertAmountDecimalToString
         
-        var itemMutated = transaction
-        itemMutated.amount = amountString.convertAmountToDecimal
-        itemMutated.dateTransaction = UtilsDate.normalizeTransactionDate(itemMutated.dateTransaction)
-        itemMutated.favorite = isFavorite
+        //var itemMutated = transaction
+        //itemMutated.amount = amountString.convertAmountToDecimal
+        //itemMutated.dateTransaction = UtilsDate.normalizeTransactionDate(itemMutated.dateTransaction) //No es necesario porque ya se ordena.
         
         do {
             try await coreDataManager.create(transaction)
@@ -126,7 +126,7 @@ extension TransactionManager {
         let amountString = transaction.amount.convertAmountDecimalToString
         
         var itemMutated = transaction
-        itemMutated.amount = amountString.convertAmountToDecimal
+        itemMutated.amount = amountString.convertAmountToDecimal ?? .zero
         itemMutated.favorite = isFavorite
         
         do {

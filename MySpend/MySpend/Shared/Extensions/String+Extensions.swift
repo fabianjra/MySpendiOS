@@ -46,24 +46,23 @@ extension String {
 
      - Date: September 2024
      */
-    public var convertAmountToDecimal: Decimal {
-        let formatter = UtilsCurrency.getLocalFormatter
-        
-        if let amountCasted = formatter.number(from: self) {
-            var amountDecimal = amountCasted.decimalValue
-            
-            // Redondear a 2 decimales
-            var roundedDecimal = Decimal()
-            
-            NSDecimalRound(&roundedDecimal,
-                           &amountDecimal,
-                           CurrencyManager.fractionLength,
-                           .bankers)
-            
-            return roundedDecimal
-        } else {
+    var convertAmountToDecimal: Decimal? {
+        guard !trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             return .zero
         }
+
+        let formatter = UtilsCurrency.getLocalFormatter
+
+        guard let number = formatter.number(from: self) else {
+            return nil
+        }
+
+        var amount = number.decimalValue
+        var roundedAmount = Decimal()
+
+        NSDecimalRound(&roundedAmount, &amount, CurrencyManager.fractionLength, .bankers)
+
+        return roundedAmount
     }
     
     
