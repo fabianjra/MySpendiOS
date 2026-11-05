@@ -3227,6 +3227,24 @@
         }
       }
     },
+    "Transaction.Input.Account.Required" : {
+      "comment" : "Mensaje para indicar que el campo de categoría es obligatorio",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The account is required."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "La cuenta es obligatoria"
+          }
+        }
+      }
+    },
     "Transaction.Input.Amount" : {
       "comment" : "Label para el campo de monto",
       "extractionState" : "manual",
@@ -3295,6 +3313,24 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Selecciona la categoría"
+          }
+        }
+      }
+    },
+    "Transaction.Input.Category.Required" : {
+      "comment" : "Mensaje para indicar que el campo de cuenta es obligatorio",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The category is required."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "La categoría es obligatoria"
           }
         }
       }

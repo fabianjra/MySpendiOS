@@ -39,6 +39,10 @@ struct TransactionForm: View {
                                 .frame(width: ConstantFrames.formLabelWidth, alignment: .leading)
                             
                             Text(transaction.dateTransaction.toStringShortLocale)
+                            
+                            Spacer()
+                            
+                            Image.calendar
                         }
                         .foregroundStyle(Color.primary)
                     }
@@ -102,10 +106,22 @@ struct TransactionForm: View {
                     }
                     .tint(.accentColor)
                     
-                } footer: {}
+                } footer: {
+                    VStack(alignment: .leading) {
+                        if transaction.category.name.isEmptyOrWhitespace {
+                            Text(.transactionInputCategoryRequired)
+                                .foregroundStyle(.alert)
+                        }
+                        
+                        if transaction.account.name.isEmptyOrWhitespace {
+                            Text(.transactionInputAccountRequired)
+                                .foregroundStyle(.alert)
+                        }
+                    }
+                }
             }
             .scrollDisabled(true)
-            //.scrollContentBackground(.hidden)
+            .scrollContentBackground(.hidden)
         }
         
         // MARK: EVENTS
