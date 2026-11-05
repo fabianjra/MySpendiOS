@@ -97,7 +97,7 @@ extension TransactionManager {
     func create(_ transaction: TransactionModel) async -> ToastResponse {
         //Validar si se puede utilizar el category como opcional en el modelo de transactionModel.
         //Asi se setea luego a null, cuando cambie la seleccion y asi se valida directamente con category en nil.
-        if transaction.category.name.isEmptyOrWhitespace {
+        if transaction.category.name.isEmptyOrWhitespace || transaction.account.name.isEmptyOrWhitespace {
             return ToastResponse(.responseErrorTextFieldEmptySpace, .error)
         }
 
@@ -119,7 +119,7 @@ extension TransactionManager {
     }
     
     func update(_ transaction: TransactionModel, isFavorite: Bool) async -> ToastResponse {
-        if transaction.category.name.isEmptyOrWhitespace {
+        if transaction.category.name.isEmptyOrWhitespace || transaction.account.name.isEmptyOrWhitespace {
             return ToastResponse(.responseErrorTextFieldEmptySpace, .error)
         }
         

@@ -9,12 +9,17 @@ import SwiftUI
 
 struct TransactionForm: View {
     
+    @Environment(AccountManager.self) private var accountManager
+    
     // PARAMETRIZADOS
     @Binding var transaction: TransactionModel
     @Binding var type: CategoryType
     @Binding var amountString: String
     
     @FocusState private var isFocused: Bool
+    private var showAccountTextField: Bool {
+        accountManager.sortedAccounts.count > 1
+    }
     
     //SHEETS
     @State private var showDatePicker = false
@@ -74,27 +79,29 @@ struct TransactionForm: View {
                     }
                     
                     
-                    Button {
-                        showAccountList = true
-                    } label: {
-                        HStack(spacing: ConstantViews.formLabeledContentSpacing) {
-                            Text(.transactionInputAccount)
-                                .frame(width: ConstantFrames.formLabelWidth, alignment: .leading)
-                            
-                            Text(transaction.account.name.isEmptyOrWhitespace
-                                 ? .transactionInputAccountPlaceholder
-                                 : LocalizedStringResource(stringLiteral: transaction.account.name))
-                            
-                            .foregroundStyle(transaction.account.name.isEmptyOrWhitespace
-                                             ? Color.secondary : Color.primary)
+                    if showAccountTextField {
+                        Button {
+                            showAccountList = true
+                        } label: {
+                            HStack(spacing: ConstantViews.formLabeledContentSpacing) {
+                                Text(.transactionInputAccount)
+                                    .frame(width: ConstantFrames.formLabelWidth, alignment: .leading)
+                                
+                                Text(transaction.account.name.isEmptyOrWhitespace
+                                     ? .transactionInputAccountPlaceholder
+                                     : LocalizedStringResource(stringLiteral: transaction.account.name))
+                                
+                                .foregroundStyle(transaction.account.name.isEmptyOrWhitespace
+                                                 ? Color.secondary : Color.primary)
+                            }
+                            .foregroundStyle(Color.primary)
                         }
-                        .foregroundStyle(Color.primary)
                     }
                     
                     
                     LabeledContent(.transactionInputNotes) {
                         TextField(.transactionInputNotesPlaceholder, text: $transaction.notes, axis: .vertical)
-                            .formInputStyle($transaction.notes)
+                            .formInputStyle($transaction.notes, textLimit: 160)
                             .keyboardType(.alphabet)
                     }
                     .formLabeledInputStyle
@@ -119,7 +126,7 @@ struct TransactionForm: View {
                     }
                 }
             }
-            .scrollDisabled(true)
+            .scrollDisabled(transaction.notes.isEmptyOrWhitespace)
             .scrollContentBackground(.hidden)
         }
         
@@ -127,9 +134,7 @@ struct TransactionForm: View {
 
         .onAppear {
             isFocused = true
-            
-            //TODO: COMPLETAR
-//            viewModel.configureSelectedAccount(accountManager.sortedAccounts)
+            configureSelectedAccount()
         }
         .onChange(of: amountString) { _, newValue in
             guard isFocused else { return }
@@ -166,6 +171,14 @@ struct TransactionForm: View {
         
     }
     
+    
+    private func configureSelectedAccount() {
+        let accounts = accountManager.sortedAccounts
+
+        guard !accounts.isEmpty else { return }
+
+        transaction.account = accounts.first { $0.id == accountManager.defaultAccount?.id } ?? accounts[0]
+    }
     
     private func onChangeAmount(_ text: String) -> String {
         let decimalSeparator = CurrencyManager.localDecimalSeparator

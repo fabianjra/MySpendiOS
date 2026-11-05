@@ -10,16 +10,13 @@ import SwiftUI
 struct CreateTransactionView: View {
     
     @Environment(\.dismiss) private var dismiss
-    
     @Environment(TransactionManager.self) private var manager
-    @Environment(CategoryManager.self) private var categoryManager
-    @Environment(AccountManager.self) private var accountManager
     
-    @Binding var type: CategoryType
     var selectedDate: Date
     
     @State private var transaction = TransactionModel()
     @State private var amountString = ""
+    @State private var type = CategoryType.expense
     
     @State private var toastResponse: ToastResponse?
     
@@ -77,16 +74,13 @@ struct CreateTransactionView: View {
     
     @Previewable @State var manager = TransactionManager.shared
     @Previewable @State var accountManager = AccountManager.shared
-    @Previewable @State var categoryManager = CategoryManager.shared
     
-    @Previewable @State var type = CategoryType.expense
     @Previewable @State var selectedDate = Date.now
     
     NavigationStack {
-        CreateTransactionView(type: $type, selectedDate: selectedDate)
+        CreateTransactionView(selectedDate: selectedDate)
     }
     .environment(manager)
     .environment(accountManager)
-    .environment(categoryManager)
     .environment(\.locale, .init(identifier: Previews.localeES))
 }

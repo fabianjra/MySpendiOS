@@ -53,7 +53,7 @@ struct TransactionHistoryView: View {
         
         .sheet(isPresented: $showNewItemModal) {
             NavigationStack {
-                UpdateTransactionView(selectedDate: selectedDate)
+                CreateTransactionView(selectedDate: selectedDate)
             }
         }
         .sheet(item: $modelToModify) { model in
@@ -437,6 +437,7 @@ private struct PreviewWrapper: View {
         CoreDataUtilities.shared.mockDataType = mockDataType
     }
     
+    @State var manager = TransactionManager.shared
     @State var accountManager = AccountManager.shared
     
     @StateObject var viewModel = TransactionViewModel()
@@ -451,6 +452,7 @@ private struct PreviewWrapper: View {
         .task {
             await viewModel.activateObservers()
         }
+        .environment(manager)
         .environment(accountManager)
     }
 }
