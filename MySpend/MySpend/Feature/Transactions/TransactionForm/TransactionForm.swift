@@ -73,7 +73,7 @@ struct TransactionForm: View {
                                  : LocalizedStringResource(stringLiteral: transaction.category.name))
                             
                             .foregroundStyle(transaction.category.name.isEmptyOrWhitespace
-                                             ? Color.secondary : Color.primary)
+                                             ? Color(uiColor: .placeholderText) : Color.primary)
                         }
                         .foregroundStyle(Color.primary)
                     }
@@ -92,7 +92,7 @@ struct TransactionForm: View {
                                      : LocalizedStringResource(stringLiteral: transaction.account.name))
                                 
                                 .foregroundStyle(transaction.account.name.isEmptyOrWhitespace
-                                                 ? Color.secondary : Color.primary)
+                                                 ? Color(uiColor: .placeholderText) : Color.primary)
                             }
                             .foregroundStyle(Color.primary)
                         }
@@ -126,7 +126,7 @@ struct TransactionForm: View {
                     }
                 }
             }
-            .scrollDisabled(transaction.notes.isEmptyOrWhitespace)
+            //.scrollDisabled(transaction.notes.isEmptyOrWhitespace)
             .scrollContentBackground(.hidden)
         }
         

@@ -25,6 +25,7 @@ struct CreateTransactionView: View {
         TransactionForm(transaction: $transaction, type: $type, amountString: $amountString)
         
             .navigationTitle(.transactionCreateTitle)
+            .navigationBarTitleDisplayMode(.inline)
         
             .safeAreaInset(edge: .bottom) {
                 Button {
