@@ -92,7 +92,7 @@ struct MockCoreDataNormal {
         item.id = UUID()
         
         item.dateLastUsed = .now
-        item.icon = "✅"
+        item.icon = "clock"
         item.name = "Gasto"
         item.type = CategoryType.expense.rawValue
         
@@ -106,7 +106,7 @@ struct MockCoreDataNormal {
         item.id = UUID()
         
         item.dateLastUsed = .now
-        item.icon = "✅"
+        item.icon = "person"
         item.name = "Comidas afuera"
         item.type = CategoryType.expense.rawValue
         
