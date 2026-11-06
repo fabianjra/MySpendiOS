@@ -148,8 +148,8 @@ struct TransactionForm: View {
         .onChange(of: isFocused) { _, newValue in
             amountString = onChangeFocusAmount(amountString, newValue)
         }
-        .onChange(of: type) {
-            transaction.category = CategoryModel()
+        .onChange(of: type) { _, newValue in
+            transaction.category = CategoryModel(type: newValue)
         }
         
         

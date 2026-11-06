@@ -14,11 +14,18 @@ struct UpdateTransactionView: View {
     
     @Binding var transaction: TransactionModel
     
-    @State private var amountString = ""
-    @State private var type = CategoryType.expense
+    @State private var type: CategoryType
+    @State private var amountString: String
     
     @State private var showAlert = false
     @State private var toastResponse: ToastResponse?
+    
+    
+    init(transaction: Binding<TransactionModel>) {
+        self._transaction = transaction
+        self._type = State(initialValue: transaction.wrappedValue.category.type)
+        self._amountString = State(initialValue: transaction.wrappedValue.amount.convertAmountDecimalToString)
+    }
     
     var body: some View {
         
@@ -92,11 +99,6 @@ struct UpdateTransactionView: View {
                     .ignoresSafeArea(.keyboard, edges: .bottom)
             }
         
-            .onAppear {
-                type = transaction.category.type
-                amountString = transaction.amount.convertAmountDecimalToString
-            }
-        
             .toast($toastResponse)
     }
 }
@@ -109,6 +111,7 @@ struct UpdateTransactionView: View {
     @Previewable @State var categoryManager = CategoryManager.shared
     
     @Previewable @State var transaction = TransactionModel()
+//    @Previewable @State var type: CategoryType
     
     NavigationStack {
         UpdateTransactionView(transaction: $transaction)
