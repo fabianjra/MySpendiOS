@@ -277,10 +277,6 @@ struct TransactionView: View {
             
             TotalBalanceView(transactions: viewModel.transactionsFiltered)
                 .padding(.bottom)
-            
-            //Tiene un efecto no deseado al transicionar entre tab y tab.
-            //TODO: Revisar si con listener se comporta diferente.
-            //.redacted(reason: viewModel.isLoading ? .placeholder : [])
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)
     }
