@@ -21,7 +21,6 @@ struct CreateTransactionView: View {
     @State private var toastResponse: ToastResponse?
     
     var body: some View {
-        
         TransactionForm(transaction: $transaction, type: $type, amountString: $amountString)
         
             .navigationTitle(.transactionCreateTitle)

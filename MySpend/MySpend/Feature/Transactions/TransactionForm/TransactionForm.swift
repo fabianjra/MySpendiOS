@@ -134,6 +134,10 @@ struct TransactionForm: View {
 
         .onAppear {
             isFocused = true
+        }
+        
+        // Permite configurar la cuenta cuando carguen en un inicio o cuando aun falta para que CoreData me devuelva las cuentas.
+        .onChange(of: accountManager.sortedAccounts, initial: true) {
             configureSelectedAccount()
         }
         .onChange(of: amountString) { _, newValue in
@@ -171,12 +175,18 @@ struct TransactionForm: View {
         
     }
     
-    //TODO: Agregar la validacion de cuando es UPDATE: Debe seleccionar la que tiene la transaccion
     private func configureSelectedAccount() {
         let accounts = accountManager.sortedAccounts
 
         guard !accounts.isEmpty else { return }
 
+        // Preserve the existing account if it is still available.
+        if let selectedAccount = accounts.first(where: { $0.id == transaction.account.id }) {
+            transaction.account = selectedAccount
+            return
+        }
+
+        // Otherwise, select the default account or the first available.
         transaction.account = accounts.first { $0.id == accountManager.defaultAccount?.id } ?? accounts[0]
     }
     

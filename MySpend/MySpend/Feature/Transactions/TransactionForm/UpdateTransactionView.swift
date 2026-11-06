@@ -12,8 +12,7 @@ struct UpdateTransactionView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(TransactionManager.self) private var manager
     
-    @Binding var transaction: TransactionModel
-    
+    @State private var transaction: TransactionModel
     @State private var type: CategoryType
     @State private var amountString: String
     
@@ -21,16 +20,26 @@ struct UpdateTransactionView: View {
     @State private var toastResponse: ToastResponse?
     
     
-    init(transaction: Binding<TransactionModel>) {
-        self._transaction = transaction
-        self._type = State(initialValue: transaction.wrappedValue.category.type)
-        self._amountString = State(initialValue: transaction.wrappedValue.amount.convertAmountDecimalToString)
+    /**
+     Inicializa la vista con una copia independiente de la transacción utilizando @State.
+     
+     Se evita utilizar @Binding porque los cambios realizados en el formulario
+     se propagarían inmediatamente a la vista padre, incluso si el usuario cancela
+     la edición sin guardar, conservando modificaciones no deseadas en memoria.
+     
+     Como TransactionModel es un struct, @State permite modificar una copia local
+     sin afectar el modelo original.
+     
+     Si el usuario cancela, los cambios se descartan. Si confirma, las modificaciones
+     se guardan en Core Data.
+     */
+    init(transaction: TransactionModel) {
+        _transaction = State(initialValue: transaction)
+        self._type = State(initialValue: transaction.category.type)
+        self._amountString = State(initialValue: transaction.amount.convertAmountDecimalToString)
     }
     
     var body: some View {
-        
-        //TODO: El type se esta seteando a Income cuando es una transaccion income, entonces el textField de categoria queda en blanco.
-        //TODO: La cuenta no esta siendo seleccionada correctamente.
         TransactionForm(transaction: $transaction, type: $type, amountString: $amountString)
         
             .navigationTitle(.transactionUpdateTitle)
@@ -104,20 +113,54 @@ struct UpdateTransactionView: View {
 }
 
 
-#Preview(Previews.localeES) {
-    
-    @Previewable @State var manager = TransactionManager.shared
-    @Previewable @State var accountManager = AccountManager.shared
-    @Previewable @State var categoryManager = CategoryManager.shared
-    
-    @Previewable @State var transaction = TransactionModel()
-//    @Previewable @State var type: CategoryType
-    
-    NavigationStack {
-        UpdateTransactionView(transaction: $transaction)
+private struct PreviewWrapper: View {
+    init(_ mockDataType: MockDataType = .normal, isFilterActive: Bool = false) {
+        _manager = State(initialValue: TransactionManager(viewContext: mockDataType.viewContext))
+        _accountManager = State(initialValue: AccountManager(viewContext: mockDataType.viewContext))
+        _categoryManager = State(initialValue: CategoryManager(viewContext: mockDataType.viewContext))
     }
-    .environment(manager)
-    .environment(accountManager)
-    .environment(categoryManager)
-    .environment(\.locale, .init(identifier: Previews.localeES))
+    
+    @State var manager: TransactionManager
+    @State var accountManager: AccountManager
+    @State var categoryManager: CategoryManager
+    
+    @State var transaction = TransactionModel()
+    @State var isPresented = false
+    
+    var body: some View {
+        VStack {
+            List(manager.filteredAndSortedTransactions(by: .month, selectedDate: .now)) { item in
+                Button(item.category.name) {
+                    self.transaction = item
+                    isPresented = true
+                }
+            }
+        }
+        .onChange(of: manager.filteredAndSortedTransactions(by: .month, selectedDate: .now), initial: true) { _, items in
+            guard let firstItem = items.first else {
+                return
+            }
+            
+            transaction = firstItem
+            isPresented = true
+        }
+        .sheet(isPresented: $isPresented) {
+            NavigationStack {
+                UpdateTransactionView(transaction: transaction)
+            }
+        }
+        .environment(manager)
+        .environment(accountManager)
+        .environment(categoryManager)
+    }
+}
+
+#Preview(Previews.localeES_CR) {
+    PreviewWrapper()
+        .environment(\.locale, .init(identifier: Previews.localeES_CR))
+}
+
+#Preview(Previews.localeEN) {
+    PreviewWrapper()
+        .environment(\.locale, .init(identifier: Previews.localeEN))
 }

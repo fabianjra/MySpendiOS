@@ -91,7 +91,7 @@ private struct PreviewWrapper: View {
     
     @State var manager = CategoryManager.shared
     @State var category = CategoryModel()
-    @State var isPresented: Bool = false
+    @State var isPresented = false
     
     var body: some View {
         VStack {

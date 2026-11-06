@@ -60,7 +60,7 @@ struct TransactionHistoryView: View {
         }
         .sheet(isPresented: $showUpdateTransaction) {
             NavigationStack {
-                UpdateTransactionView(transaction: $modelToModify)
+                UpdateTransactionView(transaction: modelToModify)
             }
         }
         .sheet(isPresented: $showFilters) {
