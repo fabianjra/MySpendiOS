@@ -171,7 +171,7 @@ struct TransactionForm: View {
         
     }
     
-    
+    //TODO: Agregar la validacion de cuando es UPDATE: Debe seleccionar la que tiene la transaccion
     private func configureSelectedAccount() {
         let accounts = accountManager.sortedAccounts
 

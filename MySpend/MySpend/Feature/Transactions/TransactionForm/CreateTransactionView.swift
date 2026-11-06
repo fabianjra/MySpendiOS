@@ -75,6 +75,7 @@ struct CreateTransactionView: View {
     
     @Previewable @State var manager = TransactionManager.shared
     @Previewable @State var accountManager = AccountManager.shared
+    @Previewable @State var categoryManager = CategoryManager.shared
     
     @Previewable @State var selectedDate = Date.now
     
@@ -83,5 +84,6 @@ struct CreateTransactionView: View {
     }
     .environment(manager)
     .environment(accountManager)
+    .environment(categoryManager)
     .environment(\.locale, .init(identifier: Previews.localeES))
 }

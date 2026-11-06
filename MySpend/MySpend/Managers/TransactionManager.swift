@@ -101,13 +101,6 @@ extension TransactionManager {
             return ToastResponse(.responseErrorTextFieldEmptySpace, .error)
         }
 
-        //TODO: Revisar cuando hay decimales, porque se usa directamente el monto de Amout
-        //let amountString = transaction.amount.convertAmountDecimalToString
-        
-        //var itemMutated = transaction
-        //itemMutated.amount = amountString.convertAmountToDecimal
-        //itemMutated.dateTransaction = UtilsDate.normalizeTransactionDate(itemMutated.dateTransaction) //No es necesario porque ya se ordena.
-        
         do {
             try await coreDataManager.create(transaction)
             
@@ -118,16 +111,10 @@ extension TransactionManager {
         }
     }
     
-    func update(_ transaction: TransactionModel, isFavorite: Bool) async -> ToastResponse {
+    func update(_ transaction: TransactionModel) async -> ToastResponse {
         if transaction.category.name.isEmptyOrWhitespace || transaction.account.name.isEmptyOrWhitespace {
             return ToastResponse(.responseErrorTextFieldEmptySpace, .error)
         }
-        
-        let amountString = transaction.amount.convertAmountDecimalToString
-        
-        var itemMutated = transaction
-        itemMutated.amount = amountString.convertAmountToDecimal ?? .zero
-        itemMutated.favorite = isFavorite
         
         do {
             try await coreDataManager.update(transaction)

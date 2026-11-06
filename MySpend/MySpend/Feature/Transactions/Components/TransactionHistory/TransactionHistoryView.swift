@@ -25,10 +25,12 @@ struct TransactionHistoryView: View {
     
     // MARK: NAVIGATION
     @State private var showNewItemModal = false
+    @State private var showUpdateTransaction = false
+    
     @State private var showSearchView = false
     @State private var showFilters = false
     
-    @State private var modelToModify: TransactionModel?
+    @State private var modelToModify = TransactionModel()
     @State private var modelToDelete: TransactionModel?
     
     var body: some View {
@@ -56,12 +58,9 @@ struct TransactionHistoryView: View {
                 CreateTransactionView(selectedDate: selectedDate)
             }
         }
-        .sheet(item: $modelToModify) { model in
+        .sheet(isPresented: $showUpdateTransaction) {
             NavigationStack {
-                UpdateTransactionView(model)
-                    .onDisappear {
-                        modelToModify = nil
-                    }
+                UpdateTransactionView(transaction: $modelToModify)
             }
         }
         .sheet(isPresented: $showFilters) {
@@ -244,6 +243,7 @@ struct TransactionHistoryView: View {
                                     }
                                 } else {
                                     modelToModify = item
+                                    showUpdateTransaction = true
                                 }
                             }
                             
@@ -315,6 +315,7 @@ struct TransactionHistoryView: View {
                             
                             Button("", systemImage: ConstantSystemImage.squareAndPencil) {
                                 modelToModify = item
+                                showUpdateTransaction = true
                             }
                             
                             if item.favorite == false {
@@ -343,6 +344,7 @@ struct TransactionHistoryView: View {
                             
                             Button(.selectorEdit, systemImage: ConstantSystemImage.squareAndPencil) {
                                 modelToModify = item
+                                showUpdateTransaction = true
                             }
                             
                             
