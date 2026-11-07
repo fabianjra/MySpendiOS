@@ -66,9 +66,15 @@ struct AccountView: View {
         List(selection: $viewModel.selectedAccounts) {
             if manager.sortedAccounts.isEmpty {
                 Section {
-                    Text(.accountsEmpty)
-                        .foregroundStyle(.secondary)
+                    HStack {
+                        Spacer()
+                        Text(.accountsEmpty)
+                            .foregroundStyle(.secondary)
+                        Spacer()
+                    }
                 }
+                .listRowBackground(Color.clear)
+
             } else {
                 Section {
                     ForEach(manager.sortedAccounts) { item in

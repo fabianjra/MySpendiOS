@@ -154,11 +154,6 @@ struct TransactionHistoryView: View {
                                         .labelStyle(.iconOnly)
                                     }
                                 }
-                                
-                                if !isEditing {
-                                    Image.chevronRight
-                                        .tint(.secondary)
-                                }
                             }
                         }
                         .padding(.horizontal)
@@ -255,9 +250,9 @@ struct TransactionHistoryView: View {
                 }
                 .listRowBackground(Color.clear)
                 .listRowInsets(EdgeInsets(top: .zero, leading: .zero, bottom: .zero, trailing: .zero))
-                .alignmentGuide(.listRowSeparatorLeading) { dimensions in
-                    dimensions[.leading]
-                }
+                //            .alignmentGuide(.listRowSeparatorLeading) { dimensions in
+                //                dimensions[.leading]
+                //            }
             }
         }
         .listStyle(.plain)

@@ -87,9 +87,15 @@ struct CategoryView: View {
         List(selection: $viewModel.selectedCategories) {
             if filteredCategories.isEmpty {
                 Section {
-                    Text(.categoriesEmpty)
-                        .foregroundStyle(.secondary)
+                    HStack {
+                        Spacer()
+                        Text(.categoriesEmpty)
+                            .foregroundStyle(.secondary)
+                        Spacer()
+                    }
                 }
+                .listRowBackground(Color.clear)
+                
             } else {
                 Section {
                     ForEach(filteredCategories) { item in
@@ -105,13 +111,6 @@ struct CategoryView: View {
                                 Label(item.name, systemImage: item.icon)
                                     .foregroundStyle(Color.primary)
                                     .lineLimit(1)
-                                
-                                Spacer()
-                                
-                                if !isEditing {
-                                    Image.chevronRight
-                                        .tint(.secondary)
-                                }
                             }
                         }
                         .tag(item)
@@ -190,8 +189,8 @@ struct CategoryView: View {
                 }
             }
         }
-        .animation(.default, value: filteredCategories)
         .scrollContentBackground(.hidden)
+        .animation(.default, value: filteredCategories)
     }
     
     @ToolbarContentBuilder
