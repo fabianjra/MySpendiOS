@@ -55,6 +55,8 @@ struct AccountView: View {
             }
         }
         
+        .background(Color.backgroundGradient)
+        
         .toast($toastResponse)
     }
     
@@ -82,6 +84,7 @@ struct AccountView: View {
                             HStack {
                                 Label(item.name, systemImage: item.icon)
                                     .foregroundStyle(Color.primary)
+                                    .lineLimit(1)
                                 
                                 Spacer()
                                 
@@ -179,7 +182,6 @@ struct AccountView: View {
         //.navigationLinkIndicatorVisibility(.visible)
         .animation(.default, value: manager.sortedAccounts)
         .scrollContentBackground(.hidden)
-        .background(Color.backgroundGradient)
     }
     
     @ToolbarContentBuilder
