@@ -159,7 +159,7 @@ struct TransactionHistoryView: View {
                                         viewModel.transactionToUpdate = item
                                         viewModel.showUpdateTransaction = true
                                     }
-                                    
+                                    .labelStyle(.iconOnly)
                                     
                                     
                                     if item.favorite == false {
@@ -168,8 +168,8 @@ struct TransactionHistoryView: View {
                                                 toastResponse = await manager.favorite(item)
                                             }
                                         }
-                                        .tint(.accentColor)
                                         .labelStyle(.iconOnly)
+                                        .tint(.accentColor)
                                     }
                                 }
                             }
@@ -180,11 +180,11 @@ struct TransactionHistoryView: View {
                                     
                                     Button(item.favorite ? .selectorUnfavorite : .selectorFavorite,
                                            systemImage: item.favorite ? ConstantSystemImage.unfavoriteFill : ConstantSystemImage.favoriteFill) {
-                                        
                                         Task {
                                             toastResponse = await manager.favorite(item)
                                         }
                                     }
+                                    .tint(.accentColor)
                                     
                                     Button(.selectorEdit, systemImage: ConstantSystemImage.squareAndPencil) {
                                         viewModel.transactionToUpdate = item
@@ -231,12 +231,10 @@ struct TransactionHistoryView: View {
                                 Text(.transactionDeleteMessage(viewModel.selectedTransactions.count))
                             }
                             
-                            //.frame(height: FrameSize.height.rowForListTransactionHistory)
                             .listRowInsets(EdgeInsets(top: .zero, leading: .zero, bottom: .zero, trailing: .zero))
                         }
                     }
                 }
-                
                 
             }
             .listStyle(.plain)
@@ -313,6 +311,8 @@ struct TransactionHistoryView: View {
                         }
                         
                         toastResponse = await manager.favorite(viewModel.selectedTransactions, newState: shouldMarkAsFavorite)
+                        
+                        editMode?.wrappedValue = .inactive
                     }
                     
                 }
@@ -383,6 +383,7 @@ private struct PreviewWrapper: View {
                                selectedDate: $selectedDate)
         .environment(manager)
         .environment(accountManager)
+        .environment(\.editMode, $editMode)
     }
 }
 
