@@ -161,6 +161,8 @@ struct TransactionHistoryView: View {
                             }
                         }
                         .padding(.horizontal)
+                        .padding(.top)
+                        .padding(.bottom, ConstantViews.minimumSpacing)
                         .tag(item)
                         
                         
