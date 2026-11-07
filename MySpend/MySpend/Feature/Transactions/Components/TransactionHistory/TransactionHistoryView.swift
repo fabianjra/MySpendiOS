@@ -89,9 +89,16 @@ struct TransactionHistoryView: View {
         List(selection: $viewModel.selectedTransactions) {
             if filteredTransactions.isEmpty {
                 Section {
-                    Text(.transactionsEmpty)
-                        .foregroundStyle(.secondary)
+                    HStack {
+                        Spacer()
+                        Text(.transactionsEmpty)
+                            .foregroundStyle(.secondary)
+                        Spacer()
+                    }
                 }
+                .listRowSeparator(.hidden)
+                .listRowBackground(Color.clear)
+                
             } else {
                 Section {
                     ForEach(filteredTransactions) { item in
@@ -153,6 +160,7 @@ struct TransactionHistoryView: View {
                                 }
                             }
                         }
+                        .padding(.horizontal)
                         .tag(item)
                         
                         
@@ -242,8 +250,8 @@ struct TransactionHistoryView: View {
                         }
                     }
                 }
-                //.listRowInsets(EdgeInsets(top: .zero, leading: .zero, bottom: .zero, trailing: .zero))
                 .listRowBackground(Color.clear)
+                .listRowInsets(EdgeInsets(top: .zero, leading: .zero, bottom: .zero, trailing: .zero))
                 .alignmentGuide(.listRowSeparatorLeading) { dimensions in
                     dimensions[.leading]
                 }
@@ -411,7 +419,7 @@ private struct PreviewWrapper: View {
 
 #Preview("Empty \(Previews.localeEN_US_POSIX)") {
     NavigationStack {
-        PreviewWrapper()
+        PreviewWrapper(.empty)
     }
     .environment(\.locale, .init(identifier: Previews.localeEN_US_POSIX))
 }
