@@ -11,6 +11,7 @@ struct FilterTransactionsToolbarBottom: ToolbarContent {
     
     @Binding var showFilters: Bool
     
+    @Environment(TransactionManager.self) private var transactionManager
     @Environment(AccountManager.self) private var accountManager
 
     var body: some ToolbarContent {
@@ -67,7 +68,7 @@ struct FilterTransactionsToolbarBottom: ToolbarContent {
      - Date: August 2026
      */
     private var getTextDescription: LocalizedStringResource {
-        if accountManager.showOnlyFavorites {
+        if transactionManager.showOnlyFavorites {
             return .filterAccountFavorites
         }
         
@@ -91,21 +92,24 @@ struct FilterTransactionsToolbarBottom: ToolbarContent {
     }
 }
 
-private struct previewWrapper: View {
-    init(_ mockDataType: MockDataType = .empty, isFilterActive: Bool = false) {
-        CoreDataUtilities.shared.mockDataType = mockDataType
+private struct PreviewWrapper: View {
+    init(_ mockDataType: MockDataType = .normal, isFilterActive: Bool = false) {
+        _transactionManager = State(initialValue: TransactionManager(viewContext: mockDataType.viewContext))
+        _accountManager = State(initialValue: AccountManager(viewContext: mockDataType.viewContext))
         
-        AccountManager.shared.isFilterActive = isFilterActive
+        accountManager.isFilterActive = isFilterActive
     }
     
-    @State private var previewFilter = AccountManager.shared
+    @State var transactionManager: TransactionManager
+    @State var accountManager: AccountManager
+    
     @State private var showFilters = false
     
     var body: some View {
         VStack {
             Text("Accounts selected:")
             
-            ForEach(previewFilter.sortedAccounts.filter { previewFilter.selectedAccountsToFilterByID.contains($0.id)}) { item in
+            ForEach(accountManager.sortedAccounts.filter { accountManager.selectedAccountsToFilterByID.contains($0.id)}) { item in
                 Text(item.name)
             }
         }
@@ -119,20 +123,21 @@ private struct previewWrapper: View {
                 FilterTransactionsView()
             }
         }
-        .environment(previewFilter)
+        .environment(transactionManager)
+        .environment(accountManager)
     }
 }
 
 #Preview(Previews.localeES_CR) {
     NavigationStack {
-        previewWrapper(.normal, isFilterActive: true)
+        PreviewWrapper(.normal, isFilterActive: true)
             .environment(\.locale, .init(identifier: Previews.localeES_CR))
     }
 }
 
 #Preview("Normal sin filtrado \(Previews.localeEN)") {
     NavigationStack {
-        previewWrapper(.normal)
+        PreviewWrapper(.normal)
             .environment(\.locale, .init(identifier: Previews.localeEN))
     }
 }

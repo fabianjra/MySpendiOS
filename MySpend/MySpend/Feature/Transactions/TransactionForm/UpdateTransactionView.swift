@@ -131,7 +131,7 @@ private struct PreviewWrapper: View {
         manager.filteredAndSortedTransactions(by: .month,
                                               selectedDate: .now,
                                               accountIDs: accountManager.selectedAccountsToFilterByID,
-                                              isAccountFilterActive: accountManager.isFilterActive)
+                                              isFilterActive: accountManager.isFilterActive)
     }
     
     var body: some View {

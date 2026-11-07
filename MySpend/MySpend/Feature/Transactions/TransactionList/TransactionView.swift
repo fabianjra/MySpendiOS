@@ -85,21 +85,21 @@ struct TransactionView: View {
         
         // MARK: LOAD FILTER BY OPTIONS
         .onChange(of: viewModel.transactionsFiltered) {
-            viewModel.filterTransactions(accountManager: accountManager)
+            viewModel.filterTransactions(accountManager: accountManager, transactionManager: manager)
         }
         .onChange(of: accountManager.selectedAccountsToFilterByID) {
-            viewModel.filterTransactions(accountManager: accountManager)
+            viewModel.filterTransactions(accountManager: accountManager, transactionManager: manager)
         }
-        .onChange(of: [accountManager.isFilterActive, accountManager.showOnlyFavorites]) {
-            viewModel.filterTransactions(accountManager: accountManager)
+        .onChange(of: [accountManager.isFilterActive, manager.showOnlyFavorites]) {
+            viewModel.filterTransactions(accountManager: accountManager, transactionManager: manager)
         }
         
         // MARK: FILTER TRANSACTIONS BY DATE
         .onChange(of: viewModel.selectedDate) {
-            viewModel.filterTransactions(accountManager: accountManager)
+            viewModel.filterTransactions(accountManager: accountManager, transactionManager: manager)
         }
         .onChange(of: viewModel.dateTimeInterval) {
-            viewModel.filterTransactions(accountManager: accountManager)
+            viewModel.filterTransactions(accountManager: accountManager, transactionManager: manager)
         }
         
         .toast($toastResponse)

@@ -63,6 +63,8 @@ final class TransactionManager {
     
     // MARK: FILTROS
 
+    var showOnlyFavorites: Bool = false
+    
     /**
      El orden de las operaciones es importante:
      1. Filtrar por fecha: obtiene únicamente las transacciones del período seleccionado.
@@ -74,14 +76,15 @@ final class TransactionManager {
      
      This will avoid loading and processing all transactions in memory.
      */
-    func filteredAndSortedTransactions(by dateTimeInterval: DateTimeInterval, selectedDate: Date, accountIDs: Set<UUID>, isAccountFilterActive: Bool) -> [TransactionModel] {
+    func filteredAndSortedTransactions(by dateTimeInterval: DateTimeInterval, selectedDate: Date, accountIDs: Set<UUID>, isFilterActive: Bool) -> [TransactionModel] {
 
         let filteredByDate = transactions.filteredTransactions(by: dateTimeInterval, selectedDate: selectedDate)
-        let filteredByAccount = isAccountFilterActive ? filteredByDate.filter { accountIDs.contains($0.account.id) } : filteredByDate
+        let filteredByAccount = isFilterActive ? filteredByDate.filter { accountIDs.contains($0.account.id) } : filteredByDate
+        let filteredByFavorites = isFilterActive && showOnlyFavorites ? filteredByAccount.filter(\.favorite) : filteredByAccount
 
-        return filteredByAccount.sortedTransactions(by: sortSelection)
+        return filteredByFavorites.sortedTransactions(by: sortSelection)
     }
-    
+
     
     // MARK: ORDENAMIENTO
     

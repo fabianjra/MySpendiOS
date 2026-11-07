@@ -27,7 +27,7 @@ struct TransactionHistoryView: View {
         manager.filteredAndSortedTransactions(by: dateTimeInterval,
                                               selectedDate: selectedDate,
                                               accountIDs: accountManager.selectedAccountsToFilterByID,
-                                              isAccountFilterActive: accountManager.isFilterActive)
+                                              isFilterActive: accountManager.isFilterActive)
     }
     
     var body: some View {

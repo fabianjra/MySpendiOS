@@ -11,6 +11,7 @@ struct FilterTransactionsView: View {
     
     @Environment(\.dismiss) private var dismiss
     @Environment(AccountManager.self) private var accountManager
+    @Environment(TransactionManager.self) private var transactionManager
     
     @State private var selectedDetent: PresentationDetent = .medium
     
@@ -24,7 +25,7 @@ struct FilterTransactionsView: View {
                 } else {
                     Section {
                         Button {
-                            accountManager.showOnlyFavorites.toggle()
+                            transactionManager.showOnlyFavorites.toggle()
                         } label: {
                             HStack {
                                 Label(.filterByFavorite, systemImage: ConstantSystemImage.favoriteFill)
@@ -32,7 +33,7 @@ struct FilterTransactionsView: View {
                                 
                                 Spacer()
                                 
-                                Image(systemName: accountManager.showOnlyFavorites ?
+                                Image(systemName: transactionManager.showOnlyFavorites ?
                                       ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle
                                 )
                                 .font(.title2)
@@ -53,6 +54,7 @@ struct FilterTransactionsView: View {
                                 HStack {
                                     Label(account.name, systemImage: account.icon)
                                         .foregroundStyle(Color.primary)
+                                        .lineLimit(1)
                                     
                                     Spacer()
                                     
@@ -73,6 +75,7 @@ struct FilterTransactionsView: View {
                 
             Button {
                 accountManager.restoreFilter()
+                transactionManager.showOnlyFavorites = false
             } label: {
                 Label(
                     .filterRestore,
@@ -104,12 +107,15 @@ struct FilterTransactionsView: View {
 }
 
 
-private struct previewWrapper: View {
-    init(_ mockDataType: MockDataType = .empty) {
-        CoreDataUtilities.shared.mockDataType = mockDataType
+private struct PreviewWrapper: View {
+    init(_ mockDataType: MockDataType = .normal) {
+        _transactionManager = State(initialValue: TransactionManager(viewContext: mockDataType.viewContext))
+        _accountManager = State(initialValue: AccountManager(viewContext: mockDataType.viewContext))
     }
     
-    @State var accountManager = AccountManager.shared
+    @State var transactionManager: TransactionManager
+    @State var accountManager: AccountManager
+    
     @State var show: Bool = false
     
     var body: some View {
@@ -126,21 +132,22 @@ private struct previewWrapper: View {
         .onAppear {
             show = true
         }
+        .environment(transactionManager)
         .environment(accountManager)
     }
 }
 
 #Preview(Previews.localeES_CR) {
-    previewWrapper(.normal)
+    PreviewWrapper(.normal)
         .environment(\.locale, .init(identifier: Previews.localeES_CR))
 }
 
 #Preview(Previews.localeEN) {
-    previewWrapper(.normal)
+    PreviewWrapper(.saturated)
         .environment(\.locale, .init(identifier: Previews.localeEN))
 }
 
 #Preview("Empty \(Previews.localeES)") {
-    previewWrapper()
+    PreviewWrapper()
         .environment(\.locale, .init(identifier: Previews.localeES))
 }

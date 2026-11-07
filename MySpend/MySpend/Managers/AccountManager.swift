@@ -123,8 +123,6 @@ final class AccountManager {
     
     // MARK: FILTROS
     
-    var showOnlyFavorites: Bool = false
-    
     var isFilterActive = UserDefaultsManager.isFilterActive {
         didSet { UserDefaultsManager.isFilterActive = isFilterActive }
     }
@@ -145,7 +143,6 @@ final class AccountManager {
     
     func restoreFilter() {
         selectedAccountsToFilterByID = Set(accounts.map(\.id))
-        showOnlyFavorites = false
     }
 }
 
