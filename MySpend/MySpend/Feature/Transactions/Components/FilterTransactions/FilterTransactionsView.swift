@@ -49,7 +49,7 @@ struct FilterTransactionsView: View {
                         ForEach(accountManager.sortedAccounts) { account in
                             
                             Button {
-                                accountManager.toggleFilter(account)
+                                accountManager.toggleAccountToFilter(account)
                             } label: {
                                 HStack {
                                     Label(account.name, systemImage: account.icon)
@@ -74,7 +74,7 @@ struct FilterTransactionsView: View {
             .scrollContentBackground(.hidden)
                 
             Button {
-                accountManager.restoreFilter()
+                accountManager.restoreSelectedAccountsToFilter()
                 transactionManager.showOnlyFavorites = false
             } label: {
                 Label(

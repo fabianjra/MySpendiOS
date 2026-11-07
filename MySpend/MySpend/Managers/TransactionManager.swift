@@ -15,7 +15,6 @@ final class TransactionManager {
 
     private let coreDataManager: TransactionCoreDataManager
     private var transactions: [TransactionModel] = []
-    var transactionsCount: Int { transactions.count }
     
     
     // MARK: OBSERVABLES
@@ -61,6 +60,17 @@ final class TransactionManager {
     }
     
     
+    // MARK: ORDENAMIENTO
+    
+    var sortSelection = UserDefaultsManager.sorTransactions {
+        didSet { UserDefaultsManager.sorTransactions = sortSelection }
+    }
+    
+    func resetSort() {
+        sortSelection = TransactionSortConfiguration()
+    }
+    
+    
     // MARK: FILTROS
     
     var isFilterActive = UserDefaultsManager.isFilterActive {
@@ -87,17 +97,6 @@ final class TransactionManager {
         let filteredByFavorites = isFilterActive && showOnlyFavorites ? filteredByAccount.filter(\.favorite) : filteredByAccount
 
         return filteredByFavorites.sortedTransactions(by: sortSelection)
-    }
-
-    
-    // MARK: ORDENAMIENTO
-    
-    var sortSelection = UserDefaultsManager.sorTransactions {
-        didSet { UserDefaultsManager.sorTransactions = sortSelection }
-    }
-    
-    func resetSort() {
-        sortSelection = TransactionSortConfiguration()
     }
 }
 

@@ -51,7 +51,7 @@ final class AccountManager {
             accounts = try await coreDataManager.fetchAll()
             
             updateDefaultAccount()
-            cleanFilteredAccounts()
+            cleanSelectedAccountsToFilter()
         } catch {
             Logger.exception(error, type: .CoreData)
         }
@@ -123,7 +123,7 @@ final class AccountManager {
     
     // MARK: FILTROS
     
-    func toggleFilter(_ account: AccountModel) {
+    func toggleAccountToFilter(_ account: AccountModel) {
         if selectedAccountsToFilterByID.contains(account.id) {
             selectedAccountsToFilterByID.remove(account.id)
         } else {
@@ -132,12 +132,12 @@ final class AccountManager {
     }
     
     /// Limpia las cuentas que podrian haber sido eliminadas del UserDefaults.
-    private func cleanFilteredAccounts() {
+    private func cleanSelectedAccountsToFilter() {
         let availableIDs = Set(accounts.map(\.id))
         selectedAccountsToFilterByID.formIntersection(availableIDs)
     }
     
-    func restoreFilter() {
+    func restoreSelectedAccountsToFilter() {
         selectedAccountsToFilterByID = Set(accounts.map(\.id))
     }
 }
