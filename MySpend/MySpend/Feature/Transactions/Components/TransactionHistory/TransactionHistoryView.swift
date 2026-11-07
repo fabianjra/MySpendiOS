@@ -44,6 +44,7 @@ struct TransactionHistoryView: View {
                 .titleHistoryView : .selectorSelectedCountFemale(viewModel.selectedTransactions.count)
         )
         .navigationSubtitle(.transactionsSubtitle(filteredTransactions.count))
+        .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(isEditing)
         
         .toolbar {
@@ -109,18 +110,21 @@ struct TransactionHistoryView: View {
                                     Label(item.notes.isEmptyOrWhitespace ? item.category.name : item.notes, systemImage: item.category.icon)
                                         .foregroundStyle(Color.primary)
                                         .lineLimit(1)
+                                        .padding(.bottom, ConstantViews.minimumSpacing)
                                     
                                     HStack {
                                         if accountManager.sortedAccounts.count > 1 {
                                             Text("\(item.account.name):")
                                                 .font(.footnote)
                                                 .fontDesign(.rounded)
+                                                .foregroundStyle(.secondary)
                                                 .lineLimit(1)
                                         }
                                         
                                         Text(item.dateTransaction.toStringShortLocale)
                                             .font(.footnote)
                                             .fontDesign(.rounded)
+                                            .foregroundStyle(.secondary)
                                             .lineLimit(1)
                                     }
                                 }

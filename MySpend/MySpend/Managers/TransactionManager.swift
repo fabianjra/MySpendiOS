@@ -130,7 +130,7 @@ extension TransactionManager {
         do {
             try await coreDataManager.delete(transaction)
             
-            return ToastResponse(.responseCategoriesDeleted(.zero), .ok)
+            return ToastResponse(.responseTransactionDeleted(.zero), .ok)
         } catch {
             Logger.exception(error, type: .CoreData)
             return ToastResponse(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)
@@ -143,7 +143,7 @@ extension TransactionManager {
                 try await coreDataManager.delete(item)
             }
             
-            return ToastResponse(.responseCategoriesDeleted(selectedTransactions.count), .ok)
+            return ToastResponse(.responseTransactionDeleted(selectedTransactions.count), .ok)
         } catch {
             Logger.exception(error, type: .CoreData)
             return ToastResponse(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)
