@@ -231,7 +231,7 @@ struct TransactionView: View {
                                     
                                     Spacer()
                                     
-                                    Text(item.totalAmount.convertAmountDecimalToString.addCurrencySymbol)
+                                    Text(item.totalAmount.amountToString.addCurrencySymbol)
                                         .lineLimit(ConstantViews.singleTextMaxLines)
                                         .monospacedDigit()
                                 }
@@ -260,7 +260,7 @@ struct TransactionView: View {
                                     
                                     Spacer()
                                     
-                                    Text(item.totalAmount.convertAmountDecimalToString.addCurrencySymbol)
+                                    Text(item.totalAmount.amountToString.addCurrencySymbol)
                                         .lineLimit(ConstantViews.singleTextMaxLines)
                                         .monospacedDigit()
                                 }

@@ -122,9 +122,9 @@ final class TransactionViewModel: BaseViewModel {
     
     // MARK: Total balance
     
-    var totalIncomesFormatted =  Decimal.zero.convertAmountDecimalToString.addCurrencySymbol
-    var totalExpensesFormatted = Decimal.zero.convertAmountDecimalToString.addCurrencySymbol
-    var totalBalanceFormatted = Decimal.zero.convertAmountDecimalToString.addCurrencySymbol
+    var totalIncomesFormatted =  Decimal.zero.amountToString.addCurrencySymbol
+    var totalExpensesFormatted = Decimal.zero.amountToString.addCurrencySymbol
+    var totalBalanceFormatted = Decimal.zero.amountToString.addCurrencySymbol
     
     /**
      Esta función filtra las transacciones por CategoryType, sumando los ingresos (income) y los gastos (expense).
@@ -142,8 +142,8 @@ final class TransactionViewModel: BaseViewModel {
 
         let totalBalance = totalIncome - totalExpenses
 
-        totalIncomesFormatted = totalIncome.convertAmountDecimalToString.addCurrencySymbol
-        totalExpensesFormatted = totalExpenses.convertAmountDecimalToString.addCurrencySymbol
-        totalBalanceFormatted = totalBalance.convertAmountDecimalToString.addCurrencySymbol
+        totalIncomesFormatted = totalIncome.amountToString.addCurrencySymbol
+        totalExpensesFormatted = totalExpenses.amountToString.addCurrencySymbol
+        totalBalanceFormatted = totalBalance.amountToString.addCurrencySymbol
     }
 }

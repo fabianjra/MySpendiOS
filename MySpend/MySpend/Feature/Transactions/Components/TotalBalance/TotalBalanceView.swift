@@ -9,15 +9,16 @@ import SwiftUI
 
 struct TotalBalanceView: View {
     
-    @State private var viewModel = TotalBalanceViewModel()
     let transactions: [TransactionModel]
     
     var body: some View {
         VStack {
-            Divider()
-                .frame(height: ConstantFrames.dividerHeight)
-                .frame(maxWidth: ConstantFrames.iPadMaxWidth)
-                .overlay(Color.secondary)
+//            Divider()
+//                .frame(height: ConstantFrames.dividerHeight)
+//                .frame(maxWidth: ConstantFrames.iPadMaxWidth)
+//                .overlay(Color.secondary)
+            
+            let totals = transactions.calculateTotals()
             
             HStack {
                 Text(.categoryTypeIncomes)
@@ -25,7 +26,7 @@ struct TotalBalanceView: View {
                 
                 Spacer()
                 
-                Text(viewModel.totalIncomesFormatted)
+                Text(totals.incomes.amountToString)
                     .foregroundStyle(Color.accentColor)
                     .fontWeight(.semibold)
                     .monospacedDigit()
@@ -40,18 +41,12 @@ struct TotalBalanceView: View {
                 
                 Spacer()
                 
-                Text(viewModel.totalExpensesFormatted)
+                Text(totals.expenses.amountToString)
                     .foregroundStyle(.alert)
                     .fontWeight(.semibold)
                     .monospacedDigit()
                     .lineLimit(1)
             }
-        }
-        .onAppear {
-            viewModel.calculateTotalBalance(transactions)
-        }
-        .onChange(of: transactions) {
-            viewModel.calculateTotalBalance(transactions)
         }
     }
 }

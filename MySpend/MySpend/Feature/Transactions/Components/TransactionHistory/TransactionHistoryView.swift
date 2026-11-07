@@ -271,7 +271,7 @@ struct TransactionHistoryView: View {
                             
                             Spacer()
                             
-                            Text(item.amount.convertAmountDecimalToString.addCurrencySymbol)
+                            Text(item.amount.amountToString.addCurrencySymbol)
                                 .foregroundStyle(item.category.type == .income ? .accentColor : .alert)
                                 .monospacedDigit()
                             

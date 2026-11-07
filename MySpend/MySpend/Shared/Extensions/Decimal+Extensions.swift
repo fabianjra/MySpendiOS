@@ -9,7 +9,7 @@ import Foundation
 
 extension Decimal {
     
-    public var convertAmountDecimalToString: String {
+    public var amountToString: String {
         let formatter = UtilsCurrency.getLocalFormatter
         let decimalNumber = NSDecimalNumber(decimal: self)
         let formattedString = formatter.string(from: decimalNumber) ?? CurrencyManager.zeroAmoutString

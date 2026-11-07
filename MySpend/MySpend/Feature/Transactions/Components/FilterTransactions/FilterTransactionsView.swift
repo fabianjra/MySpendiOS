@@ -23,6 +23,28 @@ struct FilterTransactionsView: View {
                     
                 } else {
                     Section {
+                        Button {
+                            accountManager.showOnlyFavorites.toggle()
+                        } label: {
+                            HStack {
+                                Label(.filterByFavorite, systemImage: ConstantSystemImage.favoriteFill)
+                                    .foregroundStyle(Color.primary)
+                                
+                                Spacer()
+                                
+                                Image(systemName: accountManager.showOnlyFavorites ?
+                                      ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle
+                                )
+                                .font(.title2)
+                                .foregroundStyle(Color.accentColor)
+                            }
+                        }
+                    } header: {
+                        Text(.filterInclude)
+                    }
+                    
+                    
+                    Section {
                         ForEach(accountManager.sortedAccounts) { account in
                             
                             Button {
@@ -44,28 +66,6 @@ struct FilterTransactionsView: View {
                         }
                     } header: {
                         Text(.filterByAccount)
-                    }
-                    
-                    Section {
-                        
-                        Button {
-                            accountManager.showOnlyFavorites.toggle()
-                        } label: {
-                            HStack {
-                                Label(.filterByFavorite, systemImage: ConstantSystemImage.favoriteFill)
-                                    .foregroundStyle(Color.primary)
-                                
-                                Spacer()
-                                
-                                Image(systemName: accountManager.showOnlyFavorites ?
-                                      ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle
-                                )
-                                .font(.title2)
-                                .foregroundStyle(Color.accentColor)
-                            }
-                        }
-                    } header: {
-                        Text(.filterInclude)
                     }
                 }
             }
