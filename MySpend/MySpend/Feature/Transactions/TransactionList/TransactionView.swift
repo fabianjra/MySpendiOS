@@ -151,13 +151,16 @@ struct TransactionView: View {
                     
                     Spacer()
                     
-                    Text(.transactionButtonDetails)
-                        .fontDesign(.rounded)
+//                    Text(.transactionButtonDetails)
+//                        .fontDesign(.rounded)
+                    
+                    Image.chevronRight
+                        .font(.title)
                     
                 }
                 .foregroundColor(Color.primary)
             }
-            .navigationLinkIndicatorVisibility(.visible)
+//            .navigationLinkIndicatorVisibility(.visible)
             .padding(.trailing)
             //.glassEffect(.regular.interactive())
         }
