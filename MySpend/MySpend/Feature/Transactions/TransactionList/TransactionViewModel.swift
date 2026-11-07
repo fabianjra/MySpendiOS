@@ -97,7 +97,7 @@ final class TransactionViewModel: BaseViewModel {
     func filterTransactions(accountManager: AccountManager, transactionManager: TransactionManager) {
         let filteredByOptions: [TransactionModel]
         
-        if accountManager.isFilterActive {
+        if transactionManager.isFilterActive {
             
             filteredByOptions = allTransactions.filter {
                 accountManager.selectedAccountsToFilterByID.contains($0.account.id) && (transactionManager.showOnlyFavorites ? $0.favorite : true)

@@ -123,10 +123,6 @@ final class AccountManager {
     
     // MARK: FILTROS
     
-    var isFilterActive = UserDefaultsManager.isFilterActive {
-        didSet { UserDefaultsManager.isFilterActive = isFilterActive }
-    }
-    
     func toggleFilter(_ account: AccountModel) {
         if selectedAccountsToFilterByID.contains(account.id) {
             selectedAccountsToFilterByID.remove(account.id)

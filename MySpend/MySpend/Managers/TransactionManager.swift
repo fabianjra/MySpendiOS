@@ -62,6 +62,10 @@ final class TransactionManager {
     
     
     // MARK: FILTROS
+    
+    var isFilterActive = UserDefaultsManager.isFilterActive {
+        didSet { UserDefaultsManager.isFilterActive = isFilterActive }
+    }
 
     var showOnlyFavorites: Bool = false
     
@@ -76,7 +80,7 @@ final class TransactionManager {
      
      This will avoid loading and processing all transactions in memory.
      */
-    func filteredAndSortedTransactions(by dateTimeInterval: DateTimeInterval, selectedDate: Date, accountIDs: Set<UUID>, isFilterActive: Bool) -> [TransactionModel] {
+    func filteredAndSortedTransactions(by dateTimeInterval: DateTimeInterval, selectedDate: Date, accountIDs: Set<UUID>) -> [TransactionModel] {
 
         let filteredByDate = transactions.filteredTransactions(by: dateTimeInterval, selectedDate: selectedDate)
         let filteredByAccount = isFilterActive ? filteredByDate.filter { accountIDs.contains($0.account.id) } : filteredByDate

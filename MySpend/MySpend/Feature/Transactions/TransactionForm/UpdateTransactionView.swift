@@ -130,8 +130,7 @@ private struct PreviewWrapper: View {
     var filteredTransactions: [TransactionModel] {
         manager.filteredAndSortedTransactions(by: .month,
                                               selectedDate: .now,
-                                              accountIDs: accountManager.selectedAccountsToFilterByID,
-                                              isFilterActive: accountManager.isFilterActive)
+                                              accountIDs: accountManager.selectedAccountsToFilterByID)
     }
     
     var body: some View {

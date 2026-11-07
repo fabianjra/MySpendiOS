@@ -26,12 +26,10 @@ struct TransactionHistoryView: View {
     private var filteredTransactions: [TransactionModel] {
         manager.filteredAndSortedTransactions(by: dateTimeInterval,
                                               selectedDate: selectedDate,
-                                              accountIDs: accountManager.selectedAccountsToFilterByID,
-                                              isFilterActive: accountManager.isFilterActive)
+                                              accountIDs: accountManager.selectedAccountsToFilterByID)
     }
     
     var body: some View {
-        
         VStack {
             DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval, selectedDate: $selectedDate)
                 .padding(.horizontal)

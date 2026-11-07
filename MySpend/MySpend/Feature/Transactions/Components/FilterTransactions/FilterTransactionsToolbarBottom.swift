@@ -19,14 +19,14 @@ struct FilterTransactionsToolbarBottom: ToolbarContent {
         ToolbarItem(placement: .bottomBar) {
             HStack {
                 Button {
-                    accountManager.isFilterActive.toggle()
+                    transactionManager.isFilterActive.toggle()
                 } label: {
                     Image.filter
                         .foregroundStyle(Color.primary)
                         .padding(ConstantViews.paddingSmall)
-                        .background(
-                            accountManager.isFilterActive ?
-                            Capsule().fill(Color.accentColor.opacity(ConstantColors.opacityHigh)) : nil
+                        .background(transactionManager.isFilterActive
+                                    ? Capsule().fill(Color.accentColor.opacity(ConstantColors.opacityHigh))
+                                    : nil
                         )
                         .transaction { transaction in
                             transaction.animation = nil
@@ -34,7 +34,7 @@ struct FilterTransactionsToolbarBottom: ToolbarContent {
                 }
                 
                 
-                if accountManager.isFilterActive {
+                if transactionManager.isFilterActive {
                     Button {
                         showFilters = true
                     } label: {
@@ -97,7 +97,7 @@ private struct PreviewWrapper: View {
         _transactionManager = State(initialValue: TransactionManager(viewContext: mockDataType.viewContext))
         _accountManager = State(initialValue: AccountManager(viewContext: mockDataType.viewContext))
         
-        accountManager.isFilterActive = isFilterActive
+        transactionManager.isFilterActive = isFilterActive
     }
     
     @State var transactionManager: TransactionManager

@@ -90,7 +90,7 @@ struct TransactionView: View {
         .onChange(of: accountManager.selectedAccountsToFilterByID) {
             viewModel.filterTransactions(accountManager: accountManager, transactionManager: manager)
         }
-        .onChange(of: [accountManager.isFilterActive, manager.showOnlyFavorites]) {
+        .onChange(of: [manager.isFilterActive, manager.showOnlyFavorites]) {
             viewModel.filterTransactions(accountManager: accountManager, transactionManager: manager)
         }
         
@@ -181,7 +181,7 @@ struct TransactionView: View {
                 ///     ↓
                 /// Entonces → nombres de las seleccionadas
                 let text: LocalizedStringResource = {
-                    guard accountManager.isFilterActive else {
+                    guard manager.isFilterActive else {
                         return ""
                     }
                     
@@ -208,7 +208,7 @@ struct TransactionView: View {
                     .lineLimit(2)
             }
             
-            if viewModel.transactionsFiltered.isEmpty && !accountManager.isFilterActive {
+            if viewModel.transactionsFiltered.isEmpty && !manager.isFilterActive {
                 TransactionsEmptyView()
                 
             } else {
@@ -305,7 +305,8 @@ private struct previewWrapper: View {
     init(_ mockDataType: MockDataType = .normal, isFilterActive: Bool = false) {
         _manager = State(initialValue: TransactionManager(viewContext: mockDataType.viewContext))
         _accountManager = State(initialValue: AccountManager(viewContext: mockDataType.viewContext))
-        _accountManager.wrappedValue.isFilterActive = isFilterActive
+        
+        manager.isFilterActive = isFilterActive
         
         UserDefaultsManager.userName = "Previews"
     }
