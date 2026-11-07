@@ -3477,7 +3477,7 @@
       }
     },
     "Transactions.Empty" : {
-      "comment" : "Mensaje para cuando no hay transacciones",
+      "comment" : "Indica que no hay transacciones",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {

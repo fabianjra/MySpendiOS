@@ -145,9 +145,52 @@ extension TransactionManager {
             
             return ToastResponse(.responseCategoriesDeleted(selectedTransactions.count), .ok)
         } catch {
-            Logger.exception(error)
+            Logger.exception(error, type: .CoreData)
             return ToastResponse(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)
         }
     }
 }
 
+
+// MARK: FAVORITE
+
+extension TransactionManager {
+    
+    func favorite(_ model: TransactionModel) async -> ToastResponse {
+        do {
+            try await coreDataManager.updateFavorite(model)
+            
+            return ToastResponse(.responseSuccesful, .ok)
+        } catch {
+            Logger.exception(error, type: .CoreData)
+            return ToastResponse(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)
+        }
+    }
+    
+    /*
+     Si solamente hay una transacción seleccionada, hace un Toggle para cambiar su estado de favorito.
+     Si hay varias transacciones seleccionadas, entonces marca todas como favoritas.
+     */
+    func favorite(_ selectedTransactions: Set<TransactionModel>, newState: Bool) async -> ToastResponse {
+//        defer {
+//            selectedTransactions.removeAll()
+//        }
+        
+        do {
+            if selectedTransactions.count == 1 {
+                
+                if let selectedTransaction = selectedTransactions.first {
+                    try await TransactionCoreDataManager(viewContext).updateFavorite(selectedTransaction, newState: newState)
+                }
+                
+            } else {
+                try await TransactionCoreDataManager(viewContext).favoriteMultiple(Array(selectedTransactions), newState: newState)
+            }
+            
+            return ToastResponse(.responseSuccesful, .ok)
+        } catch {
+            Logger.exception(error, type: .CoreData)
+            return ToastResponse(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)
+        }
+    }
+}
