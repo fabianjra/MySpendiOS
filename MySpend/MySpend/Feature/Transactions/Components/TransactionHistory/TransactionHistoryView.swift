@@ -104,17 +104,20 @@ struct TransactionHistoryView: View {
                                     VStack(alignment: .leading) {
                                         Label(item.notes.isEmptyOrWhitespace ? item.category.name : item.notes, systemImage: item.category.icon)
                                             .foregroundStyle(Color.primary)
+                                            .lineLimit(1)
                                         
                                         HStack {
                                             if accountManager.sortedAccounts.count > 1 {
                                                 Text("\(item.account.name):")
                                                     .font(.footnote)
                                                     .fontDesign(.rounded)
+                                                    .lineLimit(1)
                                             }
                                             
                                             Text(item.dateTransaction.toStringShortLocale)
                                                 .font(.footnote)
                                                 .fontDesign(.rounded)
+                                                .lineLimit(1)
                                         }
                                     }
                                     
@@ -123,6 +126,7 @@ struct TransactionHistoryView: View {
                                     Text(item.amount.amountToString.addCurrencySymbol)
                                         .foregroundStyle(item.category.type == .income ? Color.accentColor : .alert)
                                         .monospacedDigit()
+                                        .lineLimit(1)
                                     
                                     if !isEditing {
                                         if item.favorite {
@@ -204,7 +208,6 @@ struct TransactionHistoryView: View {
                                 Button(.alertOptionDelete, role: .destructive) {
                                     Task {
                                         if viewModel.selectedTransactions.isEmpty {
-                                            
                                             defer {
                                                 viewModel.transactionToDelete = nil
                                             }
@@ -214,7 +217,6 @@ struct TransactionHistoryView: View {
                                             }
                                             
                                         } else {
-                                            
                                             defer {
                                                 viewModel.selectedTransactions.removeAll()
                                             }
@@ -230,19 +232,23 @@ struct TransactionHistoryView: View {
                             } message: {
                                 Text(.transactionDeleteMessage(viewModel.selectedTransactions.count))
                             }
-                            
-                            .listRowInsets(EdgeInsets(top: .zero, leading: .zero, bottom: .zero, trailing: .zero))
                         }
                     }
+                    //.listRowInsets(EdgeInsets(top: .zero, leading: .zero, bottom: .zero, trailing: .zero))
+                    .listRowBackground(Color.clear)
+                    .alignmentGuide(.listRowSeparatorLeading) { dimensions in
+                        dimensions[.leading]
+                    }
                 }
-                
             }
             .listStyle(.plain)
             .scrollIndicators(.hidden)
+            .scrollContentBackground(.hidden)
             .animation(.default, value: filteredTransactions)
             
             TotalBalanceView(transactions: filteredTransactions)
         }
+        .background(Color.backgroundGradient)
     }
     
     // MARK: VIEWS
