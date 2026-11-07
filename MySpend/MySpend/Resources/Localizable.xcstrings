@@ -2894,6 +2894,12 @@
             "state" : "translated",
             "value" : "Highest"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mayor"
+          }
         }
       }
     },
@@ -2923,6 +2929,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lowest"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menor"
           }
         }
       }
@@ -3478,6 +3490,48 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sin transacciones"
+          }
+        }
+      }
+    },
+    "Transactions.Subtitle %lld" : {
+      "comment" : "Indica la cantidad total de transacciones",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Transaction"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Transactions"
+                }
+              }
+            }
+          }
+        },
+        "es" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Transaccion"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Transacciones"
+                }
+              }
+            }
           }
         }
       }

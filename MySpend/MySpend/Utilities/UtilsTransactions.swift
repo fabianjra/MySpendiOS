@@ -36,23 +36,28 @@ extension Array where Element == TransactionModel {
         case .dateTransaction:
             return sorted {
                 sort.order == .ascending
-                ? $0.dateTransaction < $1.dateTransaction
-                : $0.dateTransaction > $1.dateTransaction
+                ? $0.dateTransaction > $1.dateTransaction
+                : $0.dateTransaction < $1.dateTransaction
             }
             
             
         case .amount:
             return sorted {
                 sort.order == .ascending
-                ? $0.amount < $1.amount
-                : $0.amount > $1.amount
+                ? $0.amount > $1.amount
+                : $0.amount < $1.amount
             }
             
         case .title:
             return sorted {
-                sort.order == .ascending
-                ? $0.category.name.localizedStandardCompare($1.category.name) == .orderedAscending
-                : $0.category.name.localizedStandardCompare($1.category.name) == .orderedDescending
+                let firstTitle = $0.notes.isEmptyOrWhitespace ? $0.category.name : $0.notes
+                let secondTitle = $1.notes.isEmptyOrWhitespace ? $1.category.name : $1.notes
+                
+                let comparison = firstTitle.localizedStandardCompare(secondTitle)
+
+                return sort.order == .ascending
+                    ? comparison == .orderedAscending
+                    : comparison == .orderedDescending
             }
             
         }

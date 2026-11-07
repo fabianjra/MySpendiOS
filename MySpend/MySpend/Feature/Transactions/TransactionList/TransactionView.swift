@@ -134,8 +134,7 @@ struct TransactionView: View {
             
             
             NavigationLink {
-                TransactionHistoryView(transactionsLoaded: $viewModel.transactionsFiltered,
-                                       dateTimeInterval: $viewModel.dateTimeInterval,
+                TransactionHistoryView(dateTimeInterval: $viewModel.dateTimeInterval,
                                        selectedDate: $viewModel.selectedDate)
             } label: {
                 HStack {

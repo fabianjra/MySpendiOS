@@ -22,8 +22,8 @@ extension Array where Element == CategoryModel {
         case .dateCreated:
             return sorted {
                 sort.order == .ascending
-                ? $0.dateCreated < $1.dateCreated
-                : $0.dateCreated > $1.dateCreated
+                ? $0.dateCreated > $1.dateCreated
+                : $0.dateCreated < $1.dateCreated
             }
             
         /**

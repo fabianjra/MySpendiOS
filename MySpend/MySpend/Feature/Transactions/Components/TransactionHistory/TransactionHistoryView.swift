@@ -9,12 +9,22 @@ import SwiftUI
 
 struct TransactionHistoryView: View {
     
+    @Environment(TransactionManager.self) private var manager
     @Environment(AccountManager.self) private var accountManager
+    
+    @Environment(\.editMode) private var editMode
+    private var isEditing: Bool {
+        editMode?.wrappedValue.isEditing == true
+    }
     
     @State private var viewModel = TransactionHistoryViewModel()
     @State private var toastResponse: ToastResponse?
     
-    @Binding var transactionsLoaded: [TransactionModel]
+    private var filteredTransactions: [TransactionModel] {
+        manager.filteredAndSortedTransactions(by: dateTimeInterval, selectedDate: selectedDate)
+    }
+    
+    
     @Binding var dateTimeInterval: DateTimeInterval
     @Binding var selectedDate: Date
 
@@ -37,21 +47,23 @@ struct TransactionHistoryView: View {
         VStack {
             DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval, selectedDate: $selectedDate)
             
-            if transactionsLoaded.isEmpty {
-                TransactionsEmptyView()
-            } else {
-                transactionsList
-            }
+            transactionsList
         }
-        .padding(.horizontal)
-        .navigationTitle(.titleHistoryView)
-        .navigationBarTitleDisplayMode(.inline)
+//        .padding(.horizontal)        
+        .navigationTitle(
+            viewModel.selectedTransactions.isEmpty ?
+                .titleHistoryView : .selectorSelectedCountFemale(viewModel.selectedTransactions.count)
+        )
+        .navigationSubtitle(.transactionsSubtitle(filteredTransactions.count))
+        .navigationBarBackButtonHidden(isEditing)
+        
+        
         .toolbar {
             toolbarContent
         }
         .searchable(text: $viewModel.searchText, isPresented: $showSearchView)
         .searchToolbarBehavior(.minimize)
-        .navigationBarBackButtonHidden(viewModel.isEditing)
+        .navigationBarBackButtonHidden(isEditing)
         
         .sheet(isPresented: $showNewItemModal) {
             NavigationStack {
@@ -72,31 +84,35 @@ struct TransactionHistoryView: View {
         .background(Color.backgroundGradient)
         .ignoresSafeArea(.keyboard, edges: .bottom)
         
-        .onAppear {
-            filterTransactionsByDate()
+        .onChange(of: editMode?.wrappedValue) { _, newValue in
+            if newValue?.isEditing != true {
+                viewModel.selectedTransactions.removeAll()
+            }
         }
-        .onChange(of: selectedDate) {
-            filterTransactionsByDate()
-        }
-        .onChange(of: transactionsLoaded) {
-            filterTransactionsByDate()
-        }
-        .onChange(of: dateTimeInterval) {
-            filterTransactionsByDate()
-        }
-        .onChange(of: viewModel.sortTransactionsBy) {
-            filterTransactionsByDate()
-        }
+        
+        
+//        .onChange(of: selectedDate) {
+//            filterTransactionsByDate()
+//        }
+//        .onChange(of: filteredTransactions) {
+//            filterTransactionsByDate()
+//        }
+//        .onChange(of: dateTimeInterval) {
+//            filterTransactionsByDate()
+//        }
+//        .onChange(of: viewModel.sortTransactionsBy) {
+//            filterTransactionsByDate()
+//        }
         
         .toast($toastResponse)
     }
     
-    private func filterTransactionsByDate() {
-        viewModel.transactionsFiltered = UtilsTransactions.filteredTransactions(selectedDate,
-                                                                                transactions: transactionsLoaded,
-                                                                                for: dateTimeInterval,
-                                                                                sortTransactions: viewModel.sortTransactionsBy)
-    }
+//    private func filterTransactionsByDate() {
+//        viewModel.transactionsFiltered = UtilsTransactions.filteredTransactions(selectedDate,
+//                                                                                transactions: transactions,
+//                                                                                for: dateTimeInterval,
+//                                                                                sortTransactions: viewModel.sortTransactionsBy)
+//    }
     
     
     // MARK: VIEWS
@@ -107,47 +123,50 @@ struct TransactionHistoryView: View {
         // MARK: TOP
         
         ToolbarItem(placement: .navigation) {
-            if viewModel.isEditing {
-                if viewModel.selectedTransactions.count == viewModel.transactionsFiltered.count {
+            if isEditing {
+                if viewModel.selectedTransactions.count == filteredTransactions.count {
                     Button(.selectorDeselectAll) {
                         viewModel.selectedTransactions = Set()
                     }
                 } else {
                     Button(.selectorSelectAll) {
-                        viewModel.selectedTransactions = Set(viewModel.transactionsFiltered)
+                        viewModel.selectedTransactions = Set(filteredTransactions)
                     }
                 }
             }
         }
         
-        ToolbarItem(placement: .title) {
-            if viewModel.selectedTransactions.count == .zero {
-                Text(.titleHistoryView)
-                    .font(.title3)
-            } else {
-                Text(.selectorSelectedCountFemale(viewModel.selectedTransactions.count))
-                    .font(.callout)
-            }
-        }
-        
-        ToolbarItem(placement: .primaryAction) {
-            if viewModel.isEditing {
+        ToolbarItemGroup(placement: .primaryAction) {
+            
+            if isEditing {
                 Button(role: .cancel) {
-                    viewModel.selectedTransactions.removeAll()
-                    viewModel.isEditing = false
+                    withAnimation {
+                        editMode?.wrappedValue = .inactive
+                    }
                 }
             } else {
-                Button(.selectorSelect) {
-                    viewModel.isEditing = true
+                
+                Menu(.menuOptionsTitle, systemImage: ConstantSystemImage.options) {
+                    
+                    Button {
+                        withAnimation {
+                            editMode?.wrappedValue = .active
+                        }
+                    } label: {
+                        Label(.selectorSelect, systemImage: ConstantSystemImage.checkmarkCircle)
+                    }
+                    
+                    TransactionSortMenu()
                 }
-                .disabled(transactionsLoaded.isEmpty)
+                .menuOrder(.fixed)
+                .disabled(filteredTransactions.isEmpty)
             }
         }
         
         
         // MARK: BOTTOM
         
-        if viewModel.isEditing {
+        if isEditing {
             
             ToolbarItem(placement: .bottomBar) {
                 
@@ -172,7 +191,7 @@ struct TransactionHistoryView: View {
         }
         
         ToolbarItem(placement: .bottomBar) {
-            if viewModel.isEditing {
+            if isEditing {
                 Button(.selectorDelete, systemImage: ConstantSystemImage.trash, role: .destructive) {
                     showAlertDelete = true
                 }
@@ -186,36 +205,14 @@ struct TransactionHistoryView: View {
         }
     }
     
-    private func sortButton(_ sortingOption: SortTransactions) -> some View {
-        Button {
-            if viewModel.sortTransactionsBy == sortingOption {
-                viewModel.sortTransactionsBy = sortingOption.toggle
-            } else {
-                viewModel.sortTransactionsBy = sortingOption
-            }
-            
-            viewModel.updateSelectedSort() // Updates the sort selection to store in UserDefaults.
-        } label: {
-            viewModel.sortTransactionsBy == sortingOption ? sortingOption.label() : sortingOption.label(inverted: false)
-        }
-    }
-    
-    private var sortButtonResetToDefault: some View {
-        Button {
-            viewModel.resetSelectedSort()
-        } label: {
-            Label.restoreSelection
-                .foregroundStyle(.alert, .alert)
-        }
-    }
     
     private var transactionsList: some View {
         VStack {
             List {
-                ForEach(viewModel.transactionsFiltered, id: \.self) { item in
+                ForEach(filteredTransactions, id: \.self) { item in
                     VStack {
                         HStack {
-                            if viewModel.isEditing {
+                            if isEditing {
                                 Image(systemName: viewModel.selectedTransactions.contains(item) ? ConstantSystemImage.checkmarkCircleFill : ConstantSystemImage.circle)
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
@@ -235,7 +232,7 @@ struct TransactionHistoryView: View {
                             }
                             
                             Button("") {
-                                if viewModel.isEditing {
+                                if isEditing {
                                     if viewModel.selectedTransactions.contains(item) {
                                         viewModel.selectedTransactions.remove(item)
                                     } else {
@@ -275,7 +272,7 @@ struct TransactionHistoryView: View {
                                 .foregroundStyle(item.category.type == .income ? .accentColor : .alert)
                                 .monospacedDigit()
                             
-                            if !viewModel.isEditing {
+                            if !isEditing {
                                 if item.favorite {
                                     Image(systemName: ConstantSystemImage.favoriteFill)
                                         .resizable()
@@ -304,7 +301,7 @@ struct TransactionHistoryView: View {
                     // MARK: SWIPE ACTIONS:
                     
                     .swipeActions(edge: .trailing) {
-                        if !viewModel.isEditing {
+                        if !isEditing {
                             
                             Button("", systemImage: ConstantSystemImage.trash) {
                                 modelToDelete = item
@@ -328,7 +325,7 @@ struct TransactionHistoryView: View {
                         }
                     }
                     .contextMenu {
-                        if !viewModel.isEditing {
+                        if !isEditing {
                             
                             if item.favorite {
                                 Button(.selectorUnfavorite, systemImage: ConstantSystemImage.unfavoriteFill) {
@@ -374,11 +371,9 @@ struct TransactionHistoryView: View {
             }
             .listStyle(.plain)
             .scrollIndicators(.hidden)
-            .animation(.default, value: viewModel.transactionsFiltered.count)
-            .animation(.default, value: viewModel.isEditing)
-            .animation(.default, value: viewModel.sortTransactionsBy)
+            .animation(.default, value: filteredTransactions.count)
             
-            TotalBalanceView(transactions: viewModel.transactionsFiltered)
+            TotalBalanceView(transactions: filteredTransactions)
         }
     }
     
@@ -435,25 +430,25 @@ struct TransactionHistoryView: View {
 }
 
 private struct PreviewWrapper: View {
-    init(_ mockDataType: MockDataType = .empty) {
-        CoreDataUtilities.shared.mockDataType = mockDataType
+    init(_ mockDataType: MockDataType = .normal) {
+        _manager = State(initialValue: TransactionManager(viewContext: mockDataType.viewContext))
+        _accountManager = State(initialValue: AccountManager(viewContext: mockDataType.viewContext))
     }
     
-    @State var manager = TransactionManager.shared
-    @State var accountManager = AccountManager.shared
+    @State var manager: TransactionManager
+    @State var accountManager: AccountManager
     
-    @StateObject var viewModel = TransactionViewModel()
+    @State var editMode: EditMode = .inactive
+    
+    
+//    @StateObject var viewModel = TransactionViewModel()
     
     @State var dateTimeInterval: DateTimeInterval = .month
     @State var selectedDate: Date = .now
     
     var body: some View {
-        TransactionHistoryView(transactionsLoaded: $viewModel.transactionsFiltered,
-                               dateTimeInterval: $dateTimeInterval,
+        TransactionHistoryView(dateTimeInterval: $dateTimeInterval,
                                selectedDate: $selectedDate)
-        .task {
-            await viewModel.activateObservers()
-        }
         .environment(manager)
         .environment(accountManager)
     }

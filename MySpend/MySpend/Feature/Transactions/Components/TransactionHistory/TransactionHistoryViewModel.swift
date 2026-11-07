@@ -12,7 +12,6 @@ import CoreData
 @MainActor
 final class TransactionHistoryViewModel {
     
-    var isEditing = false
     var searchText = ""
     
     /*
@@ -52,7 +51,6 @@ final class TransactionHistoryViewModel {
      */
     func favoriteMltiple(_ newState: Bool) async -> ToastResponse {
         defer {
-            isEditing = false
             selectedTransactions.removeAll()
         }
         
@@ -88,7 +86,6 @@ final class TransactionHistoryViewModel {
     
     func deleteMltiple() async -> ToastResponse {
         defer {
-            isEditing = false
             selectedTransactions.removeAll()
         }
         

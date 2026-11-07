@@ -9,8 +9,8 @@ import SwiftUI
 
 struct CategoryView: View {
     
-    @Environment(CategoryManager.self) private var manager
     @Environment(\.editMode) private var editMode
+    @Environment(CategoryManager.self) private var manager
     
     private var isEditing: Bool {
         editMode?.wrappedValue.isEditing == true
