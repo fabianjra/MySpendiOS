@@ -78,6 +78,7 @@ struct TransactionHistoryView: View {
     private var transactionsList: some View {
         VStack {
             DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval, selectedDate: $selectedDate)
+                .disabled(isEditing)
             
             List(selection: $viewModel.selectedTransactions) {
                 
@@ -307,6 +308,10 @@ struct TransactionHistoryView: View {
                        systemImage: shouldMarkAsFavorite ? ConstantSystemImage.favoriteFill : ConstantSystemImage.unfavoriteFill) {
                     
                     Task {
+                        defer {
+                            viewModel.selectedTransactions.removeAll()
+                        }
+                        
                         toastResponse = await manager.favorite(viewModel.selectedTransactions, newState: shouldMarkAsFavorite)
                     }
                     

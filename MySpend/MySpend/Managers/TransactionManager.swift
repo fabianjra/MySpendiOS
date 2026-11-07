@@ -172,10 +172,6 @@ extension TransactionManager {
      Si hay varias transacciones seleccionadas, entonces marca todas como favoritas.
      */
     func favorite(_ selectedTransactions: Set<TransactionModel>, newState: Bool) async -> ToastResponse {
-//        defer {
-//            selectedTransactions.removeAll()
-//        }
-        
         do {
             if selectedTransactions.count == 1 {
                 
