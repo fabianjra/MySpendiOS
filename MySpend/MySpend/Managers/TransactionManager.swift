@@ -62,19 +62,24 @@ final class TransactionManager {
     
     
     // MARK: FILTROS
-    
-    /**
-     Filters transactions by the selected date interval and sorts the results.
 
+    /**
+     El orden de las operaciones es importante:
+     1. Filtrar por fecha: obtiene únicamente las transacciones del período seleccionado.
+     2. Filtrar por cuentas: cuando el filtro está activo, conserva las transacciones asociadas a los identificadores seleccionados.
+     3. Ordenar: ordena únicamente las transacciones que pasaron ambos filtros.
+     
      TODO: Optimize performance for large datasets by moving filtering and sorting
      to Core Data using NSFetchRequest, NSPredicate, and NSSortDescriptor.
      
      This will avoid loading and processing all transactions in memory.
      */
-    func filteredAndSortedTransactions(by dateTimeInterval: DateTimeInterval, selectedDate: Date) -> [TransactionModel] {
-        return transactions
-            .filteredTransactions(by: dateTimeInterval, selectedDate: selectedDate)
-            .sortedTransactions(by: sortSelection)
+    func filteredAndSortedTransactions(by dateTimeInterval: DateTimeInterval, selectedDate: Date, accountIDs: Set<UUID>, isAccountFilterActive: Bool) -> [TransactionModel] {
+
+        let filteredByDate = transactions.filteredTransactions(by: dateTimeInterval, selectedDate: selectedDate)
+        let filteredByAccount = isAccountFilterActive ? filteredByDate.filter { accountIDs.contains($0.account.id) } : filteredByDate
+
+        return filteredByAccount.sortedTransactions(by: sortSelection)
     }
     
     

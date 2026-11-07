@@ -127,16 +127,23 @@ private struct PreviewWrapper: View {
     @State var transaction = TransactionModel()
     @State var isPresented = false
     
+    var filteredTransactions: [TransactionModel] {
+        manager.filteredAndSortedTransactions(by: .month,
+                                              selectedDate: .now,
+                                              accountIDs: accountManager.selectedAccountsToFilterByID,
+                                              isAccountFilterActive: accountManager.isFilterActive)
+    }
+    
     var body: some View {
         VStack {
-            List(manager.filteredAndSortedTransactions(by: .month, selectedDate: .now)) { item in
+            List(filteredTransactions) { item in
                 Button(item.category.name) {
                     self.transaction = item
                     isPresented = true
                 }
             }
         }
-        .onChange(of: manager.filteredAndSortedTransactions(by: .month, selectedDate: .now), initial: true) { _, items in
+        .onChange(of: filteredTransactions, initial: true) { _, items in
             guard let firstItem = items.first else {
                 return
             }

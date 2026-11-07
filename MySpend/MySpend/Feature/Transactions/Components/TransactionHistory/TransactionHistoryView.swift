@@ -17,15 +17,18 @@ struct TransactionHistoryView: View {
         editMode?.wrappedValue.isEditing == true
     }
     
+    @Binding var dateTimeInterval: DateTimeInterval
+    @Binding var selectedDate: Date
+    
     @State private var viewModel = TransactionHistoryViewModel()
     @State private var toastResponse: ToastResponse?
     
     private var filteredTransactions: [TransactionModel] {
-        manager.filteredAndSortedTransactions(by: dateTimeInterval, selectedDate: selectedDate)
+        manager.filteredAndSortedTransactions(by: dateTimeInterval,
+                                              selectedDate: selectedDate,
+                                              accountIDs: accountManager.selectedAccountsToFilterByID,
+                                              isAccountFilterActive: accountManager.isFilterActive)
     }
-    
-    @Binding var dateTimeInterval: DateTimeInterval
-    @Binding var selectedDate: Date
     
     var body: some View {
         
