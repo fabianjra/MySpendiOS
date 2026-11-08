@@ -92,30 +92,4 @@ extension String {
         
         return self.trimmingCharacters(in: .whitespaces).isEmpty
     }
-    
-    /**
-     Get an Icon based on the string text SF Symbol. Example: envelope.fill
-
-     **Example:**
-     ```swift
-     let icon = category.icon.getIconFromSFSymbol
-     ```
-     
-     - Parameters:
-        - iconName: SB Symbol Image name
-
-     - Returns: SwiftUI Image
-
-     - Date: Jul 2025
-     */
-    public var getIconFromSFSymbol: Image? {
-        // 1. Vacía o solo espacios → nil
-        guard !self.isEmptyOrWhitespace else { return nil }
-        
-        // 2. Valida que exista en la librería SF Symbols
-        guard UIImage(systemName: self) != nil else { return nil }
-        
-        // 3. Sí es válido → se crea el `Image`
-        return Image(systemName: self)
-    }
 }

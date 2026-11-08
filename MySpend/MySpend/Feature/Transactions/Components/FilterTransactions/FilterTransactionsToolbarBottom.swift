@@ -41,11 +41,11 @@ struct FilterTransactionsToolbarBottom: ToolbarContent {
                         HStack {
                             VStack(alignment: .leading) {
                                 Text(.filterTitleDescription)
-                                    .font(.medium)
+                                    .font(.callout)
                                 
                                 Text(getTextDescription)
                                     .foregroundStyle(accountManager.selectedAccountsToFilterByID.isEmpty ? Color.primary : .accentColor)
-                                    .font(.small)
+                                    .font(.footnote)
                             }
                             
                             Spacer()
