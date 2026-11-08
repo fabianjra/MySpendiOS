@@ -121,7 +121,7 @@ struct TransactionHistoryView: View {
                                         .padding(.bottom, ConstantViews.minimumSpacing)
                                     
                                     HStack {
-                                        if accountManager.sortedAccounts.count > 1 {
+                                        if shouldShowAccountName {
                                             Text("\(item.account.name):")
                                                 .font(.footnote)
                                                 .fontDesign(.rounded)
@@ -374,6 +374,14 @@ struct TransactionHistoryView: View {
         }
         
         return !viewModel.selectedTransactions.allSatisfy(\.favorite)
+    }
+    
+    private var shouldShowAccountName: Bool {
+        guard accountManager.sortedAccounts.count > 1 else {
+            return false
+        }
+
+        return !manager.isFilterActive || accountManager.selectedAccountsToFilterByID.count > 1
     }
 }
 
