@@ -1653,9 +1653,6 @@
         }
       }
     },
-    "Key" : {
-      "extractionState" : "manual"
-    },
     "Menu.Options.Title" : {
       "comment" : "Titulo para el botón de menu de opciones",
       "extractionState" : "manual",
@@ -2284,20 +2281,20 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
-                  "value" : "%lld selected"
+                  "state" : "translated",
+                  "value" : "%lld Selected"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld Selected"
                 }
               },
               "zero" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "selected"
+                  "value" : "%lld Selected"
                 }
               }
             }
@@ -2308,20 +2305,20 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "%lld seleccionada"
+                  "state" : "needs_review",
+                  "value" : "%lld Seleccionada"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld seleccionadas"
+                  "value" : "%lld Seleccionadas"
                 }
               },
               "zero" : {
                 "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "seleccionada"
+                  "state" : "needs_review",
+                  "value" : "%lld Seleccionadas"
                 }
               }
             }
@@ -2338,20 +2335,20 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
-                  "value" : "%lld selected"
+                  "state" : "translated",
+                  "value" : "%lld Selected"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld selected"
+                  "value" : "%lld Selected"
                 }
               },
               "zero" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
-                  "value" : "%lld selected"
+                  "state" : "translated",
+                  "value" : "%lld Selected"
                 }
               }
             }
@@ -2362,20 +2359,20 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "%lld seleccionado"
+                  "state" : "needs_review",
+                  "value" : "%lld Seleccionado"
                 }
               },
               "other" : {
                 "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "%lld seleccionados"
+                  "state" : "needs_review",
+                  "value" : "%lld Seleccionados"
                 }
               },
               "zero" : {
                 "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "seleccionado"
+                  "state" : "needs_review",
+                  "value" : "%lld Seleccionados"
                 }
               }
             }
