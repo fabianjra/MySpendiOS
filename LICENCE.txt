@@ -1,6 +1,6 @@
 LICENCIA DE USO RESTRINGIDO DE SOFTWARE – MySpend
 
-Copyright © 2025 Fabián Josué Rodríguez Álvarez. Todos los derechos reservados.
+Copyright © 2027 Fabián Josué Rodríguez Álvarez. Todos los derechos reservados.
 
 Este software, incluyendo su código fuente, interfaz, diseño y estructura interna (denominado colectivamente como "MySpend"), es propiedad exclusiva de su autor y está protegido por las leyes de derechos de autor nacionales (Costa Rica) e internacionales (Convenio de Berna y otros tratados aplicables).
 

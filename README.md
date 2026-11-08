@@ -1,6 +1,6 @@
 # MySpendiOS
 My Spend version para iOS con Core Data
-Copyright © 2025 Fabián Josué Rodríguez Álvarez. Todos los derechos reservados.
+Copyright © 2027 Fabián Josué Rodríguez Álvarez. Todos los derechos reservados.
 
 Se creó una lista de tareas TODO, In progress y Done en Trello: https://trello.com/b/wJz1gcrI/myspend
 ## Main:
