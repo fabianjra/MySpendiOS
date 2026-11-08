@@ -68,6 +68,39 @@ extension Array where Element == TransactionModel {
 struct UtilsTransactions {
     
     /**
+     ¿Filtro activo?
+         ↓
+     ¿Ninguna cuenta? → "None"
+         ↓
+     ¿Todas? → "All"
+         ↓
+     Entonces → nombres de las seleccionadas
+     */
+    static func filteredAccountsDescription(accounts: [AccountModel], selectedAccountsToFilter: Set<UUID>, isFilterActive: Bool) -> LocalizedStringResource {
+
+        guard accounts.count > 1, isFilterActive else {
+            return ""
+        }
+
+        if selectedAccountsToFilter.isEmpty {
+            return .filterAccountNoneTitle
+        }
+
+        if selectedAccountsToFilter.count == accounts.count {
+            return .filterAccountAll
+        }
+
+        let accountNames = accounts
+            .filter { selectedAccountsToFilter.contains($0.id) }
+            .map(\.name)
+            .joined(separator: ", ")
+
+        return LocalizedStringResource(stringLiteral: accountNames)
+    }
+    
+   
+    
+    /**
      Filtra las transacciones por intervalos de tiempo seleccionados y las ordena en forma descendente en base a la fecha de la transaccion
      */
     static func filteredTransactions(_ selectedDate: Date,

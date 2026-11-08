@@ -21,10 +21,10 @@ struct IconListModalView: View {
                         VStack {
                             Section {
                                 let columns = [
-                                    GridItem(.adaptive(minimum: ConstantViews.gridSpacing))
+                                    GridItem(.adaptive(minimum: 50))
                                 ]
                                 
-                                LazyVGrid(columns: columns, alignment: .center, spacing: ConstantViews.formSpacing) {
+                                LazyVGrid(columns: columns, alignment: .center, spacing: 15) {
                                     ForEach(icon.list, id: \.self) { icon in
                                         Button {
                                             selectedIcon = icon

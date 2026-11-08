@@ -99,6 +99,8 @@ extension View {
 #Preview {
     @Previewable @State var toastResponse: ToastResponse?
     
+    @Previewable let text = "Cannot update this account, because it has 12345.23452345,25 transactions associated to an incompatible category type."
+    
     VStack {
         Spacer()
         
@@ -113,16 +115,13 @@ extension View {
         Spacer()
         
         Button("View Toast Big") {
-            toastResponse = ToastResponse(LocalizedStringResource(stringLiteral:
-                                                                    Errors.cannotUpdateAccountWithTransactions("TEST").localizedDescription), .error)
+            toastResponse = ToastResponse(LocalizedStringResource(stringLiteral:text), .error)
         }
         
         Spacer()
         
         Button("EXTRA View Toast Big") {
-            toastResponse = ToastResponse(LocalizedStringResource(stringLiteral:
-                                                                    Errors.cannotUpdateAccountWithTransactions("TEST").localizedDescription +
-                                                                  Errors.cannotUpdateAccountWithTransactions("TEST").localizedDescription), .error)
+            toastResponse = ToastResponse(LocalizedStringResource(stringLiteral: text + text), .error)
         }
         
         Spacer()

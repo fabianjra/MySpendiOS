@@ -8,26 +8,14 @@
 import Foundation
 
 enum CDError: Error {
-    case notFoundFetch(entity: String)
     case notFoundUpdate(entity: String)
-    case notFoundDelete(entity: String)
-    
-    case duplicateEntity(name: String, entity: String)
-    case invalidData(String)
-    
     case unexpectedResultType(expected: String, actual: String)
 }
 
 extension CDError: LocalizedError {
     var errorDescription: String? {
         switch self {
-        case .notFoundFetch(let entity): return NSLocalizedString("When Fetch: Not fount entity of type \"\(entity)\"", comment: "")
         case .notFoundUpdate(let entity): return NSLocalizedString("When Update: Not fount entity of type \"\(entity)\"", comment: "")
-        case .notFoundDelete(let entity): return NSLocalizedString("When Delete: Not fount entity of type \"\(entity)\"", comment: "")
-            
-        case .duplicateEntity(let name, let entity): return NSLocalizedString("An entity of type \"\(entity)\" with the name \"\(name)\" already exists.", comment: "")
-        case .invalidData(let reason): return NSLocalizedString("Invalid data: \(reason)", comment: "")
-            
         case .unexpectedResultType(let expected, let actual): return NSLocalizedString("Core data failed to convert value type while casting. Value expected: \(expected). Actual value received: \(actual).", comment: "")
         }
     }

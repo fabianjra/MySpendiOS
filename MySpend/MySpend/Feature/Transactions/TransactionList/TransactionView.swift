@@ -111,12 +111,12 @@ struct TransactionView: View {
                 VStack(alignment: .leading) {
                     Text(UtilsDate.greeting)
                         .font(.footnote.weight(.light))
-                        .lineLimit(ConstantViews.singleTextMaxLines)
+                        .lineLimit(1)
                     
                     Text(.greet(viewModel.userName, "👋"))
                         .font(.title2.bold())
                         .fontDesign(.rounded)
-                        .lineLimit(ConstantViews.singleTextMaxLines)
+                        .lineLimit(1)
                 }
                 
                 Spacer()
@@ -145,7 +145,7 @@ struct TransactionView: View {
                         
                         Text(viewModel.totalBalanceFormatted)
                             .font(viewModel.totalBalanceFormatted.description.filter(\.isNumber).count > 7 ? .title : .largeTitle)
-                            .lineLimit(ConstantViews.singleTextMaxLines)
+                            .lineLimit(1)
                     }
                     
                     Spacer()
@@ -171,42 +171,13 @@ struct TransactionView: View {
             DateIntervalNavigatorView(dateTimeInterval: $viewModel.dateTimeInterval,
                                       selectedDate: $viewModel.selectedDate)
             
-            if accountManager.sortedAccounts.count > 1 {
-                
-                /// ¿Filtro activo?
-                ///     ↓
-                /// ¿Ninguna cuenta? → "None"
-                ///     ↓
-                /// ¿Todas? → "All"
-                ///     ↓
-                /// Entonces → nombres de las seleccionadas
-                let text: LocalizedStringResource = {
-                    guard manager.isFilterActive else {
-                        return ""
-                    }
-                    
-                    let selectedAccounts = accountManager.selectedAccountsToFilterByID
-                    
-                    if selectedAccounts.isEmpty {
-                        return .filterAccountNoneTitle
-                    }
-                    
-                    if selectedAccounts.count == accountManager.sortedAccounts.count {
-                        return .filterAccountAll
-                    }
-                    
-                    let accountNames = accountManager.sortedAccounts
-                        .filter { selectedAccounts.contains($0.id) }
-                        .map(\.name)
-                        .joined(separator: ", ")
-                    
-                    return LocalizedStringResource(stringLiteral: accountNames)
-                }()
-                
-                Text(text)
-                    .font(.callout)
-                    .lineLimit(2)
-            }
+            let text = UtilsTransactions.filteredAccountsDescription(accounts: accountManager.sortedAccounts,
+                                                                     selectedAccountsToFilter: accountManager.selectedAccountsToFilterByID,
+                                                                     isFilterActive: manager.isFilterActive)
+            Text(text)
+                .font(.caption)
+                .lineLimit(2)
+            
             
             if viewModel.transactionsFiltered.isEmpty && !manager.isFilterActive {
                 TransactionsEmptyView()
@@ -228,13 +199,13 @@ struct TransactionView: View {
                                 HStack {
                                     Text(item.category.name)
                                         .fontDesign(.rounded)
-                                        .lineLimit(ConstantViews.singleTextMaxLines)
+                                        .lineLimit(1)
                                         .padding(.leading)
                                     
                                     Spacer()
                                     
                                     Text(item.totalAmount.amountToString.addCurrencySymbol)
-                                        .lineLimit(ConstantViews.singleTextMaxLines)
+                                        .lineLimit(1)
                                         .monospacedDigit()
                                 }
                                 .padding(.bottom, ConstantViews.minimumSpacing)
@@ -257,13 +228,13 @@ struct TransactionView: View {
                                 HStack {
                                     Text(item.category.name)
                                         .fontDesign(.rounded)
-                                        .lineLimit(ConstantViews.singleTextMaxLines)
+                                        .lineLimit(1)
                                         .padding(.leading)
                                     
                                     Spacer()
                                     
                                     Text(item.totalAmount.amountToString.addCurrencySymbol)
-                                        .lineLimit(ConstantViews.singleTextMaxLines)
+                                        .lineLimit(1)
                                         .monospacedDigit()
                                 }
                                 .padding(.bottom, ConstantViews.minimumSpacing)

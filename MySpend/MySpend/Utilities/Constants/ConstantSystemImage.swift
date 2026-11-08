@@ -8,10 +8,7 @@
 struct ConstantSystemImage {
     
     // MARK: TRANSACTIONS
-    
     static let addNewItem = "plus"
-    static let cancel = "xmark.circle"
-    static let cancelFill = "xmark.circle.fill"
     
     // Select:
     static let circle = "circle"
@@ -38,14 +35,8 @@ struct ConstantSystemImage {
     static let arrowUp = "arrow.up"
     static let arrowDown = "arrow.down"
     static let arrowCounterClockwise = "arrow.counterclockwise"
-    static let clockArrowCounterClockwise = "clock.arrow.trianglehead.counterclockwise.rotate.90"
-    static let walletPassFill = "wallet.pass.fill"
     static let arrowUpDown = "arrow.up.arrow.down"
-    
-    // MARK: FILTER
-    static let minusClockwise = "minus.arrow.trianglehead.clockwise"
-    static let plusClockwise = "plus.arrow.trianglehead.clockwise"
-    
+
     // MARK: CURRENCY
     static let bankDollarFill = "dollarsign.bank.building.fill"
     

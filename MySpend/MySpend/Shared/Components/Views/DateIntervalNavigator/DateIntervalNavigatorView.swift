@@ -62,7 +62,7 @@ struct DateIntervalNavigatorView: View {
             Text(viewModel.getHeader(selectedDate, by: dateTimeInterval))
                 .font(.callout)
                 .frame(width: FrameSize.width.buttonSelectValueIntervalCenter)
-                .lineLimit(ConstantViews.singleTextMaxLines)
+                .lineLimit(1)
             //.contentShape(Rectangle()) // Para seleccionar todo el componente
             
             

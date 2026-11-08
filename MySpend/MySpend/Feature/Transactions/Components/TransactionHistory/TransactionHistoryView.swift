@@ -35,6 +35,13 @@ struct TransactionHistoryView: View {
                 .padding(.horizontal)
                 .disabled(isEditing)
             
+            let text = UtilsTransactions.filteredAccountsDescription(accounts: accountManager.sortedAccounts,
+                                                                     selectedAccountsToFilter: accountManager.selectedAccountsToFilterByID,
+                                                                     isFilterActive: manager.isFilterActive)
+            Text(text)
+                .font(.caption)
+                .lineLimit(2)
+            
             transactionsList
             
             TotalBalanceView(transactions: filteredTransactions)
@@ -250,9 +257,6 @@ struct TransactionHistoryView: View {
                 }
                 .listRowBackground(Color.clear)
                 .listRowInsets(EdgeInsets(top: .zero, leading: .zero, bottom: .zero, trailing: .zero))
-                //            .alignmentGuide(.listRowSeparatorLeading) { dimensions in
-                //                dimensions[.leading]
-                //            }
             }
         }
         .listStyle(.plain)

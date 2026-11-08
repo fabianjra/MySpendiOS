@@ -27,7 +27,7 @@ struct TransactionsEmptyView: View {
                 .font(Font.callout.weight(.light))
                 .fontDesign(.rounded)
                 .multilineTextAlignment(.center)
-                .lineLimit(ConstantViews.messageMaxLines)
+                .lineLimit(3)
             
             Spacer()
         }

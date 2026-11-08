@@ -25,7 +25,7 @@ struct FilterTransactionsToolbarBottom: ToolbarContent {
                         .foregroundStyle(Color.primary)
                         .padding(ConstantViews.paddingSmall)
                         .background(transactionManager.isFilterActive
-                                    ? Capsule().fill(Color.accentColor.opacity(ConstantColors.opacityHigh))
+                                    ? Capsule().fill(Color.accentColor.opacity(0.7))
                                     : nil
                         )
                         .transaction { transaction in
