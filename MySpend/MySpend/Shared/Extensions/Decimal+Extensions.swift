@@ -9,11 +9,39 @@ import Foundation
 
 extension Decimal {
     
-    public var amountToString: String {
-        let formatter = UtilsCurrency.getLocalFormatter
+    var amountToString: String {
+        let formatter = UtilsTransactions.getLocalFormatter
         let decimalNumber = NSDecimalNumber(decimal: self)
         let formattedString = formatter.string(from: decimalNumber) ?? CurrencyManager.zeroAmoutString
         
         return formattedString
     }
+    
+    /**
+     Converts the Decimal value into an NSDecimalNumber for Core Data persistence.
+     
+     Rounds the value to two decimal places using banker's rounding
+     (round half to even) to ensure consistent monetary precision.
+     
+     - Returns: An NSDecimalNumber rounded to two decimal places.
+     - Throws: DecimalConversionError.invalidAmount if the value is NaN.
+     */
+    func toNSDecimalNumber() throws -> NSDecimalNumber {
+        var amount = self
+        var roundedAmount = Decimal.zero
+        
+        NSDecimalRound(&roundedAmount, &amount, 2, .bankers)
+        
+        let number = NSDecimalNumber(decimal: roundedAmount)
+        
+        guard number != .notANumber else {
+            throw DecimalConversionError.invalidAmount
+        }
+        
+        return number
+    }
+}
+
+enum DecimalConversionError: Error {
+    case invalidAmount
 }

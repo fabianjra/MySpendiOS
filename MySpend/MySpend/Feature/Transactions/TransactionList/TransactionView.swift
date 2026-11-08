@@ -12,29 +12,21 @@ struct TransactionView: View {
     @Environment(TransactionManager.self) private var manager
     @Environment(AccountManager.self) private var accountManager
     
-    @StateObject private var viewModel = TransactionViewModel()
-    @State private var toastResponse: ToastResponse?
-
+    @State private var viewModel = TransactionViewModel()
     
+    private var filteredTransactions: [TransactionModel] {
+        manager.filteredAndSortedTransactions(by: viewModel.dateTimeInterval,
+                                              selectedDate: viewModel.selectedDate,
+                                              accountIDs: accountManager.selectedAccountsToFilterByID)
+    }
     
-    
-    
-    
-    
-    
-    
-    // MARK: NAVIGATION
-    @State private var showNewTransactionView = false
-    @State private var showSettings = false
-    @State private var showFilters = false
-    @State private var showSearchView = false
-    @State private var navigateToHistory: Bool = false
-    
-    
+    private var totalBalance: Decimal {
+        filteredTransactions.calculateTotals().balance
+    }
     
     var body: some View {
         VStack {
-            if showSearchView {
+            if viewModel.showSearchView {
                 List {
                     //TODO: MOCK
                     ForEach(0...10, id: \.self) { item in
@@ -44,65 +36,40 @@ struct TransactionView: View {
                 .scrollDismissesKeyboard(.immediately)
                 
             } else {
-                headerTitle
-                
-                bodyContent
+                Group {
+                    headerTitle
+                    
+                    transactionsList
+                }
+                .padding(.horizontal)
             }
         }
-        .padding(.horizontal)
-        .background(Color.backgroundGradient)
+        .navigationTitle(.titleHomeView)
+        .toolbar(.hidden, for: .navigationBar)
+        
+        .toolbar {
+            toolbarContent
+        }
         
         
         // MARK: SHEETS
         
-        .sheet(isPresented: $showNewTransactionView) {
+        .sheet(isPresented: $viewModel.showCreateTransaction) {
             NavigationStack {
                 CreateTransactionView(selectedDate: viewModel.selectedDate)
             }
         }
-        .sheet(isPresented: $showFilters) {
+        .sheet(isPresented: $viewModel.showFilters) {
             NavigationStack {
                 FilterTransactionsView()
             }
         }
         
-        .navigationTitle(.titleHomeView)
-        .searchable(text: $viewModel.searchText, isPresented: $showSearchView)
+        .searchable(text: $viewModel.searchText, isPresented: $viewModel.showSearchView)
         .searchToolbarBehavior(.minimize)
-        .toolbar {
-            toolbarContent
-        }
-        .toolbar(.hidden, for: .navigationBar)
         
-        
-        // MARK: ON APPEAR / DISSAPEAR
-        
-        .onFirstAppear {
-            Task {
-                await viewModel.activateObservers()
-            }
-        }
-        
-        // MARK: LOAD FILTER BY OPTIONS
-        .onChange(of: viewModel.transactionsFiltered) {
-            viewModel.filterTransactions(accountManager: accountManager, transactionManager: manager)
-        }
-        .onChange(of: accountManager.selectedAccountsToFilterByID) {
-            viewModel.filterTransactions(accountManager: accountManager, transactionManager: manager)
-        }
-        .onChange(of: [manager.isFilterActive, manager.showOnlyFavorites]) {
-            viewModel.filterTransactions(accountManager: accountManager, transactionManager: manager)
-        }
-        
-        // MARK: FILTER TRANSACTIONS BY DATE
-        .onChange(of: viewModel.selectedDate) {
-            viewModel.filterTransactions(accountManager: accountManager, transactionManager: manager)
-        }
-        .onChange(of: viewModel.dateTimeInterval) {
-            viewModel.filterTransactions(accountManager: accountManager, transactionManager: manager)
-        }
-        
-        .toast($toastResponse)
+        .ignoresSafeArea(.keyboard, edges: .bottom)
+        .background(Color.backgroundGradient)
     }
     
     var headerTitle: some View {
@@ -143,15 +110,16 @@ struct TransactionView: View {
                             .fontWeight(.light)
                             .fontDesign(.rounded)
                         
-                        Text(viewModel.totalBalanceFormatted)
-                            .font(viewModel.totalBalanceFormatted.description.filter(\.isNumber).count > 7 ? .title : .largeTitle)
+                        let balanceFormatted = totalBalance.amountToString.addCurrencySymbol
+                        
+                        Text(balanceFormatted)
+                            .font(balanceFormatted.filter(\.isNumber).count > 7 ? .title : .largeTitle)
                             .lineLimit(1)
                     }
                     
                     Spacer()
                     
-//                    Text(.transactionButtonDetails)
-//                        .fontDesign(.rounded)
+                    //Text(.transactionButtonDetails)
                     
                     Image.chevronRight
                         .font(.title)
@@ -159,33 +127,39 @@ struct TransactionView: View {
                 }
                 .foregroundColor(Color.primary)
             }
-//            .navigationLinkIndicatorVisibility(.visible)
             .padding(.trailing)
             //.glassEffect(.regular.interactive())
         }
     }
     
-    var bodyContent: some View {
-        VStack {
-            
+    var transactionsList: some View {
+        
+        // Se utiliza una variable para guardar filteredTransactions porque cada llamado de filteredTransactions dentro del body, recorre nuevamente esa lista.
+        let transactions = filteredTransactions
+        let groupedTransactions = UtilsTransactions.groupTransactionsByType(transactions)
+        
+        let filteredAccountsDescription = UtilsTransactions.filteredAccountsDescription(accounts: accountManager.sortedAccounts,
+                                                                                        selectedAccountsToFilter: accountManager.selectedAccountsToFilterByID,
+                                                                                        isFilterActive: manager.isFilterActive)
+        return VStack {
             DateIntervalNavigatorView(dateTimeInterval: $viewModel.dateTimeInterval,
                                       selectedDate: $viewModel.selectedDate)
             
-            let text = UtilsTransactions.filteredAccountsDescription(accounts: accountManager.sortedAccounts,
-                                                                     selectedAccountsToFilter: accountManager.selectedAccountsToFilterByID,
-                                                                     isFilterActive: manager.isFilterActive)
-            Text(text)
+            Text(filteredAccountsDescription)
                 .font(.caption)
                 .lineLimit(2)
             
             
-            if viewModel.transactionsFiltered.isEmpty && !manager.isFilterActive {
-                TransactionsEmptyView()
+            ScrollView(showsIndicators: false) {
                 
-            } else {
-                ScrollView(showsIndicators: false) {
+                if transactions.isEmpty  {
+                    Text(.transactionsEmpty)
+                        .foregroundStyle(.secondary)
+                        .padding(.top)
                     
-                    if !viewModel.groupedTransactionsIncomes.isEmpty {
+                } else {
+                    
+                    if !groupedTransactions.incomes.isEmpty {
                         VStack(alignment: .leading) {
                             
                             Text(.categoryTypeIncomes)
@@ -195,7 +169,7 @@ struct TransactionView: View {
                                 .fontDesign(.rounded)
                                 .padding(.bottom, ConstantViews.minimumSpacing)
                             
-                            ForEach(viewModel.groupedTransactionsIncomes, id:\.category.id) { item in
+                            ForEach(groupedTransactions.incomes, id:\.category.id) { item in
                                 HStack {
                                     Text(item.category.name)
                                         .fontDesign(.rounded)
@@ -214,7 +188,7 @@ struct TransactionView: View {
                         .padding(.bottom)
                     }
                     
-                    if !viewModel.groupedTransactionsExpenses.isEmpty {
+                    if !groupedTransactions.expenses.isEmpty {
                         VStack(alignment: .leading) {
                             
                             Text(.categoryTypeExpenses)
@@ -224,7 +198,7 @@ struct TransactionView: View {
                                 .fontDesign(.rounded)
                                 .padding(.bottom, ConstantViews.minimumSpacing)
                             
-                            ForEach(viewModel.groupedTransactionsExpenses, id:\.category.id) { item in
+                            ForEach(groupedTransactions.expenses, id:\.category.id) { item in
                                 HStack {
                                     Text(item.category.name)
                                         .fontDesign(.rounded)
@@ -241,23 +215,20 @@ struct TransactionView: View {
                             }
                         }
                     }
+                    
                 }
-                .animation(.default, value: viewModel.transactionsFiltered)
-                
             }
+            .animation(.default, value: transactions)
             
-            Text(viewModel.errorMessage)
-            
-            TotalBalanceView(transactions: viewModel.transactionsFiltered)
+            TotalBalanceView(transactions: transactions)
                 .padding(.bottom)
         }
-        .ignoresSafeArea(.keyboard, edges: .bottom)
     }
     
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
         
-        FilterTransactionsToolbarBottom(showFilters: $showFilters)
+        FilterTransactionsToolbarBottom(showFilters: $viewModel.showFilters)
         
         ToolbarSpacer(.flexible, placement: .bottomBar)
         DefaultToolbarItem(kind: .search, placement: .bottomBar)
@@ -266,7 +237,7 @@ struct TransactionView: View {
         
         ToolbarItem(placement: .bottomBar) {
             Button(.transactionAdd, systemImage: ConstantSystemImage.addNewItem, role: .confirm) {
-                showNewTransactionView = true
+                viewModel.showCreateTransaction = true
             }
         }
     }

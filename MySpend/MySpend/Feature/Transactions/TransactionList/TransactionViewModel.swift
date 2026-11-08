@@ -7,143 +7,20 @@
 
 import Foundation
 
-// ViewModel propuesto por GTP:
-
-//@Observable
-//@MainActor
-//final class TransactionViewModel {
-//
-//    private(set) var filteredTransactions: [TransactionModel] = []
-//
-//    var selectedDate: Date = .now
-//    var selectedInterval: DateTimeInterval = .month
-//
-//    func refreshTransactions(using manager: TransactionManager) {
-//        filteredTransactions = manager.filteredAndSortedTransactions(
-//            by: selectedInterval,
-//            selectedDate: selectedDate
-//        )
-//    }
-
-// //Ahora filteredTransactions conserva el resultado anterior hasta que solicites una actualización.
-//}
-
-
-//EN LA VISTA:
-
-/**
- .task {
-     viewModel.refreshTransactions(using: transactionManager)
- }
- .onChange(of: viewModel.selectedDate) {
-     viewModel.refreshTransactions(using: transactionManager)
- }
- .onChange(of: viewModel.selectedInterval) {
-     viewModel.refreshTransactions(using: transactionManager)
- }
- 
- // De esta manera, el filtrado se ejecuta inicialmente y cuando cambia la fecha o el intervalo seleccionado.
- */
-
-
-final class TransactionViewModel: BaseViewModel {
+@Observable
+final class TransactionViewModel {
     
-    @Published var userName = UserDefaultsManager.userName
+    var userName = UserDefaultsManager.userName
     
-    private var allTransactions: [TransactionModel] = []
-    @Published var transactionsFiltered: [TransactionModel] = []
+    var searchText = ""
+    var showSearchView = false
     
-    @Published var groupedTransactionsIncomes: UtilsCurrency.groupedTransactions = []
-    @Published var groupedTransactionsExpenses: UtilsCurrency.groupedTransactions = []
+    var dateTimeInterval = UserDefaultsManager.dateTimeInterval
+    var selectedDate: Date = .now
     
+    var showCreateTransaction = false
+    var navigateToSettings = false
+    var navigateToHistory: Bool = false
     
-    //MARK: VIEW PROPERTIES
-    @Published var dateTimeInterval = UserDefaultsManager.dateTimeInterval
-    @Published var selectedDate: Date = .now
-    @Published var searchText = ""
-    
-    /**
-     Call this function in `onFirstAppear`.
-     Shoud be called once when open application because this view will be active all alonge the app life.
-     
-     Dont call stopObservingChanges becaise this viewModel will be alive all alonge the app, listening for changes and show them in this home view.
-     */
-    func activateObservers() async {
-        startObserveViewContextChanges { [weak self] in
-            await self?.fetchAll()
-        }
-        
-        startObserveUserDefaultsChanges { [weak self] in
-            //self?.dateTimeInterval = UserDefaultsManager.dateTimeInterval //TODO: Pasar al view para actualizar el segment en caso de que cambie desde el UserDefaults de settings. Ahorita solamente carga el segment al inicio.
-            self?.userName = UserDefaultsManager.userName
-        }
-        
-        await fetchAll()
-    }
-    
-    private func fetchAll() async {
-        do {
-            let fetched = try await TransactionCoreDataManager(viewContext).fetchAll()
-            allTransactions = fetched
-            transactionsFiltered = fetched
-            calculateTotalBalance()
-            
-        } catch {
-            errorMessage = error.localizedDescription
-            Logger.exception(error, type: .CoreData)
-        }
-    }
-    
-    func filterTransactions(accountManager: AccountManager, transactionManager: TransactionManager) {
-        let filteredByOptions: [TransactionModel]
-        
-        if transactionManager.isFilterActive {
-            
-            filteredByOptions = allTransactions.filter {
-                accountManager.selectedAccountsToFilterByID.contains($0.account.id) && (transactionManager.showOnlyFavorites ? $0.favorite : true)
-            }
-            
-        } else {
-            filteredByOptions = allTransactions
-        }
-        
-        transactionsFiltered = UtilsTransactions.filteredTransactions(selectedDate,
-                                                                      transactions: filteredByOptions,
-                                                                      for: dateTimeInterval)
-        
-        let groupedTransactions = UtilsCurrency.calculateGroupedTransactions(transactionsFiltered)
-        
-        groupedTransactionsIncomes = groupedTransactions.filter { $0.category.type == .income }.sorted { $0.totalAmount > $1.totalAmount }
-        groupedTransactionsExpenses = groupedTransactions.filter { $0.category.type == .expense }.sorted { $0.totalAmount > $1.totalAmount }
-        
-        calculateTotalBalance()
-    }
-    
-    
-    // MARK: Total balance
-    
-    var totalIncomesFormatted =  Decimal.zero.amountToString.addCurrencySymbol
-    var totalExpensesFormatted = Decimal.zero.amountToString.addCurrencySymbol
-    var totalBalanceFormatted = Decimal.zero.amountToString.addCurrencySymbol
-    
-    /**
-     Esta función filtra las transacciones por CategoryType, sumando los ingresos (income) y los gastos (expense).
-     Luego, calcula el balance final restando los gastos a los ingresos y formatea el balance.
-     */
-    func calculateTotalBalance() {
-        
-        let totalIncome = transactionsFiltered
-            .filter { $0.category.type == .income }
-            .reduce(Decimal.zero) { $0 + $1.amount }
-
-        let totalExpenses = transactionsFiltered
-            .filter { $0.category.type  == .expense }
-            .reduce(Decimal.zero) { $0 + $1.amount }
-
-        let totalBalance = totalIncome - totalExpenses
-
-        totalIncomesFormatted = totalIncome.amountToString.addCurrencySymbol
-        totalExpensesFormatted = totalExpenses.amountToString.addCurrencySymbol
-        totalBalanceFormatted = totalBalance.amountToString.addCurrencySymbol
-    }
+    var showFilters = false
 }

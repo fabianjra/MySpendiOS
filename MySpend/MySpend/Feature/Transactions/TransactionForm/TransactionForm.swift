@@ -239,7 +239,7 @@ struct TransactionForm: View {
             return ""
         }
 
-        let formatter = UtilsCurrency.getLocalFormatter
+        let formatter = UtilsTransactions.getLocalFormatter
 
         return formatter.string(from: NSDecimalNumber(decimal: amount)) ?? cleanedText
     }

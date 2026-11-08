@@ -56,7 +56,7 @@ struct TransactionCoreDataManager {
             entity.id = model.id
             
             // Entity-specific Attributes
-            entity.amount = UtilsCurrency.makeNSDecimal(model.amount)
+            entity.amount = try model.amount.toNSDecimalNumber()
             //entity.dateTransaction = model.dateTransaction.dateWithCurrentTime // No normalizar la hora de la transaccion.
             entity.dateTransaction = model.dateTransaction
             entity.notes = model.notes
@@ -94,7 +94,7 @@ struct TransactionCoreDataManager {
             entity.dateModified = now
             
             // Entity-specific Attributes
-            entity.amount = UtilsCurrency.makeNSDecimal(model.amount)
+            entity.amount = try model.amount.toNSDecimalNumber()
             entity.dateTransaction = model.dateTransaction
             entity.notes = model.notes
             entity.favorite = model.favorite

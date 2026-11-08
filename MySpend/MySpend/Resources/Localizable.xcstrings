@@ -441,12 +441,6 @@
         }
       }
     },
-    "Amount (Highest first)" : {
-
-    },
-    "Amount (Lowest first)" : {
-
-    },
     "AppTheme.Dark" : {
       "comment" : "Opcion del tema del sistema: Oscuro",
       "extractionState" : "manual",
@@ -668,12 +662,6 @@
           }
         }
       }
-    },
-    "Category name (A-Z)" : {
-
-    },
-    "Category name (Z-A)" : {
-
     },
     "Category.Create.Subtitle" : {
       "comment" : "Subtitulo para la vista de crear categoría nueva",
@@ -1124,12 +1112,6 @@
           }
         }
       }
-    },
-    "Date (Newest first)" : {
-
-    },
-    "Date (Oldest first)" : {
-
     },
     "Datetime.Today" : {
       "comment" : "Indicación para la fecha de hoy",

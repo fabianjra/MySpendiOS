@@ -51,7 +51,7 @@ extension String {
             return .zero
         }
 
-        let formatter = UtilsCurrency.getLocalFormatter
+        let formatter = UtilsTransactions.getLocalFormatter
 
         guard let number = formatter.number(from: self) else {
             return nil

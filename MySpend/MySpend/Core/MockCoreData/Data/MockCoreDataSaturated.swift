@@ -121,7 +121,7 @@ struct MockCoreDataSaturated {
         item.dateModified = .now
         item.id = UUID()
         
-        item.amount = UtilsCurrency.makeNSDecimal(Decimal(Double.random(in: 10.99...7456825682.99)))
+        item.amount = try? Decimal(Double.random(in: 10.99...7456825682.99)).toNSDecimalNumber()
         item.dateTransaction = .now
         item.notes = "#\(counter): No notesNo notesNo notesNo notesNo notesNo notesNo notesNo notesNo notesNo notesNo notesNo notesNo notesNo notesNo notes"
         item.category = category
@@ -134,7 +134,7 @@ struct MockCoreDataSaturated {
         item.dateModified = .now
         item.id = UUID()
         
-        item.amount = UtilsCurrency.makeNSDecimal(Decimal(Double.random(in: 7456825682.99...1222384567238482347582345343.15)))
+        item.amount = try? Decimal(Double.random(in: 7456825682.99...1222384567238482347582345343.15)).toNSDecimalNumber()
         item.dateTransaction = .now
         item.notes = ""
         item.category = category

@@ -88,6 +88,7 @@ struct TransactionHistoryView: View {
         .searchable(text: $viewModel.searchText, isPresented: $viewModel.showSearchView)
         .searchToolbarBehavior(.minimize)
         
+        .ignoresSafeArea(.keyboard, edges: .bottom)
         .background(Color.backgroundGradient)
         
         .toast($toastResponse)
