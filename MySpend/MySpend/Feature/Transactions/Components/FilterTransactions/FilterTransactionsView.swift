@@ -42,6 +42,8 @@ struct FilterTransactionsView: View {
                         }
                     } header: {
                         Text(.filterInclude)
+                    } footer: {
+                        Text(.filterFavoriteFooter)
                     }
                     
                     

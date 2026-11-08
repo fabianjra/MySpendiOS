@@ -1383,6 +1383,24 @@
         }
       }
     },
+    "Filter.Favorite.Footer" : {
+      "comment" : "Indicacion para el filtro de favoritos",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Only favorite transactions from the selected accounts will be shown."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se mostrarán solo las transacciones favoritas de las cuentas seleccionadas."
+          }
+        }
+      }
+    },
     "Filter.Include" : {
       "comment" : "Indica que incluye filtros extra",
       "extractionState" : "manual",

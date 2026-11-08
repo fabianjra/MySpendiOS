@@ -275,17 +275,19 @@ struct TransactionView: View {
 private struct previewWrapper: View {
     init(_ mockDataType: MockDataType = .normal, isFilterActive: Bool = false) {
         _manager = State(initialValue: TransactionManager(viewContext: mockDataType.viewContext))
+        _categoryManager = State(initialValue: CategoryManager(viewContext: mockDataType.viewContext))
         _accountManager = State(initialValue: AccountManager(viewContext: mockDataType.viewContext))
         
         manager.isFilterActive = isFilterActive
-        
         UserDefaultsManager.userName = "Previews"
     }
     
     @State var themeManager = ThemeManager.shared
     @State var router = Router.shared
     
+    
     @State var manager: TransactionManager
+    @State var categoryManager: CategoryManager
     @State var accountManager: AccountManager
     
     var body: some View {
@@ -305,6 +307,7 @@ private struct previewWrapper: View {
         .preferredColorScheme(themeManager.theme.colorScheme)
         
         .environment(manager)
+        .environment(categoryManager)
         .environment(accountManager)
     }
 }
