@@ -99,6 +99,7 @@ struct SettingsView: View {
             } footer: {
                 Text(.settingsOptionDateIntervalFooter)
             }
+            .padding(.bottom)
             
             // MARK: - DATA
             

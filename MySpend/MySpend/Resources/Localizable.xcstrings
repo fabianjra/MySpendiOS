@@ -2533,13 +2533,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Data"
+            "value" : "Data managment"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Datos"
+            "value" : "Manejo de datos"
           }
         }
       }
