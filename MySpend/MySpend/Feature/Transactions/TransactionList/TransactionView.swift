@@ -13,7 +13,7 @@ struct TransactionView: View {
     @Environment(AccountManager.self) private var accountManager
     
     @Environment(DateIntervalManager.self) private var dateIntervalManager
-    @State private var selectedDateInterval: DateInterval = .month
+    @State private var selectedDateInterval = DateIntervalManager.shared.defaultInterval
     
     @State private var viewModel = TransactionViewModel()
     
@@ -68,7 +68,7 @@ struct TransactionView: View {
             }
         }
         
-        .onChange(of: dateIntervalManager.defaultInterval, initial: true) { _, newValue in
+        .onChange(of: dateIntervalManager.defaultInterval) { _, newValue in
             selectedDateInterval = newValue
         }
         
