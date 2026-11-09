@@ -57,6 +57,9 @@ struct SettingsView: View {
                             Text(option.icon)
                         }
                     }
+                    .alignmentGuide(.listRowSeparatorLeading) { dimensions in
+                        dimensions[.leading]
+                    }
                 }
                 
                 @Bindable var themeManager = themeManager
