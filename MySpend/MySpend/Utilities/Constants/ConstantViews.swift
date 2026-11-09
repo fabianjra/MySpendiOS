@@ -20,4 +20,5 @@ struct ConstantViews {
     // MARK: PADDING
     static let paddingButtonVertical: CGFloat = 6.0
     static let paddingSmall: CGFloat = 10.0
+    static let paddingMedium: CGFloat = 20.0
 }

@@ -93,13 +93,13 @@ struct SettingsView: View {
                 .pickerStyle(.menu)
                 .tint(.secondary)
                 
-            } header: {
+            }
+            header: {
                 Text(.settingsUserInterfaceSectionTitle)
                 
             } footer: {
                 Text(.settingsOptionDateIntervalFooter)
             }
-            .padding(.bottom)
             
             // MARK: - DATA
             
@@ -110,28 +110,29 @@ struct SettingsView: View {
                 }
                 .foregroundColor(Color.alert)
                 .fontWeight(.semibold)
+            }
+            .listSectionSpacing(.custom(ConstantViews.paddingMedium))
+            
+            .alert(.settingsDataDeleteTitle, isPresented: $showAlert) {
                 
-                .alert(.settingsDataDeleteTitle, isPresented: $showAlert) {
-                    
-                    Button(.alertOptionCancel, role: .cancel) { }
-                    
-                    Button(.alertOptionDelete, role: .destructive) {
-                        showAlertConfirmation = true
-                    }
-                } message: {
-                    Text(.settingsDataDeleteDescription)
-                }
+                Button(.alertOptionCancel, role: .cancel) { }
                 
-                .alert(.settingsDataDeleteTitleConfirmation, isPresented: $showAlertConfirmation) {
-                    
-                    Button(.alertOptionCancel, role: .cancel) { }
-                    
-                    Button(.alertOptionDelete, role: .destructive) {
-                        //TODO: AGREGAR BORRADO DE DATOS
-                    }
-                } message: {
-                    Text(.settingsDataDeleteDescriptionConfirmation)
+                Button(.alertOptionDelete, role: .destructive) {
+                    showAlertConfirmation = true
                 }
+            } message: {
+                Text(.settingsDataDeleteDescription)
+            }
+            
+            .alert(.settingsDataDeleteTitleConfirmation, isPresented: $showAlertConfirmation) {
+                
+                Button(.alertOptionCancel, role: .cancel) { }
+                
+                Button(.alertOptionDelete, role: .destructive) {
+                    //TODO: AGREGAR BORRADO DE DATOS
+                }
+            } message: {
+                Text(.settingsDataDeleteDescriptionConfirmation)
             }
         }
         .navigationTitle(.settingsTitle)
