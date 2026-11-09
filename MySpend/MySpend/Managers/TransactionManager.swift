@@ -105,7 +105,7 @@ final class TransactionManager {
 
 extension TransactionManager {
     
-    func create(_ transaction: TransactionModel) async -> ToastResponse {
+    func create(_ transaction: TransactionModel) async -> ToastResponse? {
         //Validar si se puede utilizar el category como opcional en el modelo de transactionModel.
         //Asi se setea luego a null, cuando cambie la seleccion y asi se valida directamente con category en nil.
         if transaction.category.name.isEmptyOrWhitespace || transaction.account.name.isEmptyOrWhitespace {
@@ -115,14 +115,14 @@ extension TransactionManager {
         do {
             try await coreDataManager.create(transaction)
             
-            return ToastResponse(.responseSuccessful, .ok)
+            return nil
         } catch {
             Logger.exception(error, type: .CoreData)
             return ToastResponse(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)
         }
     }
     
-    func update(_ transaction: TransactionModel) async -> ToastResponse {
+    func update(_ transaction: TransactionModel) async -> ToastResponse? {
         if transaction.category.name.isEmptyOrWhitespace || transaction.account.name.isEmptyOrWhitespace {
             return ToastResponse(.responseErrorTextFieldEmptySpace, .error)
         }
@@ -130,31 +130,31 @@ extension TransactionManager {
         do {
             try await coreDataManager.update(transaction)
             
-            return ToastResponse(.responseSuccessful, .ok)
+            return nil
         } catch {
             Logger.exception(error, type: .CoreData)
             return ToastResponse(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)
         }
     }
     
-    func delete(_ transaction: TransactionModel) async -> ToastResponse {
+    func delete(_ transaction: TransactionModel) async -> ToastResponse? {
         do {
             try await coreDataManager.delete(transaction)
             
-            return ToastResponse(.responseTransactionDeleted(.zero), .ok)
+            return nil
         } catch {
             Logger.exception(error, type: .CoreData)
             return ToastResponse(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)
         }
     }
     
-    func delete(_ selectedTransactions: Set<TransactionModel>) async -> ToastResponse {
+    func delete(_ selectedTransactions: Set<TransactionModel>) async -> ToastResponse? {
         do {
             for item in selectedTransactions {
                 try await coreDataManager.delete(item)
             }
             
-            return ToastResponse(.responseTransactionDeleted(selectedTransactions.count), .ok)
+            return nil
         } catch {
             Logger.exception(error, type: .CoreData)
             return ToastResponse(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)
@@ -167,11 +167,11 @@ extension TransactionManager {
 
 extension TransactionManager {
     
-    func favorite(_ model: TransactionModel) async -> ToastResponse {
+    func favorite(_ model: TransactionModel) async -> ToastResponse? {
         do {
             try await coreDataManager.updateFavorite(model)
             
-            return ToastResponse(.responseSuccessful, .ok)
+            return nil
         } catch {
             Logger.exception(error, type: .CoreData)
             return ToastResponse(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)
@@ -182,7 +182,7 @@ extension TransactionManager {
      Si solamente hay una transacción seleccionada, hace un Toggle para cambiar su estado de favorito.
      Si hay varias transacciones seleccionadas, entonces marca todas como favoritas.
      */
-    func favorite(_ selectedTransactions: Set<TransactionModel>, newState: Bool) async -> ToastResponse {
+    func favorite(_ selectedTransactions: Set<TransactionModel>, newState: Bool) async -> ToastResponse? {
         do {
             if selectedTransactions.count == 1 {
                 
@@ -194,7 +194,7 @@ extension TransactionManager {
                 try await TransactionCoreDataManager(viewContext).favoriteMultiple(Array(selectedTransactions), newState: newState)
             }
             
-            return ToastResponse(.responseSuccessful, .ok)
+            return nil
         } catch {
             Logger.exception(error, type: .CoreData)
             return ToastResponse(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)

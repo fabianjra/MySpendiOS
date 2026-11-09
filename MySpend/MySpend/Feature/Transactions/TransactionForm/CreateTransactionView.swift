@@ -37,7 +37,7 @@ struct CreateTransactionView: View {
                         transaction.amount = amount
                         toastResponse = await manager.create(transaction)
                         
-                        if toastResponse?.type == .ok {
+                        if toastResponse?.type != .error {
                             dismiss()
                         }
                     }

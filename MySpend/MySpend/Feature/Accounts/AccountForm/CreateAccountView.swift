@@ -28,7 +28,7 @@ struct CreateAccountView: View {
             Button {
                 Task {
                     toastResponse = await manager.create(account, isDefault: isDefaultSelected)
-                    if toastResponse?.type == .ok {
+                    if toastResponse?.type != .error {
                         dismiss()
                     }
                 }

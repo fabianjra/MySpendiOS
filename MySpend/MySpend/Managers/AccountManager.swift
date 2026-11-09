@@ -147,7 +147,7 @@ final class AccountManager {
 
 extension AccountManager {
     
-    func create(_ account: AccountModel, isDefault: Bool) async -> ToastResponse {
+    func create(_ account: AccountModel, isDefault: Bool) async -> ToastResponse? {
         if account.name.isEmptyOrWhitespace {
             return ToastResponse(.responseErrorTextFieldEmptySpace, .error)
         }
@@ -160,14 +160,14 @@ extension AccountManager {
                 setDefaultAccount(by: account)
             }
             
-            return ToastResponse(.responseSuccessful, .ok)
+            return nil
         } catch {
             Logger.exception(error, type: .CoreData)
             return ToastResponse(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)
         }
     }
     
-    func update(_ account: AccountModel, isDefault: Bool) async -> ToastResponse {
+    func update(_ account: AccountModel, isDefault: Bool) async -> ToastResponse? {
         if account.name.isEmptyOrWhitespace {
             return ToastResponse(.responseErrorTextFieldEmptySpace, .error)
         }
@@ -179,31 +179,31 @@ extension AccountManager {
                 setDefaultAccount(by: account)
             }
             
-            return ToastResponse(.responseSuccessful, .ok)
+            return nil
         } catch {
             Logger.exception(error, type: .CoreData)
             return ToastResponse(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)
         }
     }
     
-    func delete(_ account: AccountModel) async -> ToastResponse {
+    func delete(_ account: AccountModel) async -> ToastResponse? {
         do {
             try await coreDataManager.delete(account)
             
-            return ToastResponse(.responseAccountsDeleted(.zero), .ok)
+            return nil
         } catch {
             Logger.exception(error, type: .CoreData)
             return ToastResponse(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)
         }
     }
     
-    func delete(_ selectedAccounts: Set<AccountModel>) async -> ToastResponse {
+    func delete(_ selectedAccounts: Set<AccountModel>) async -> ToastResponse? {
         do {
             for item in selectedAccounts {
                 try await coreDataManager.delete(item)
             }
             
-            return ToastResponse(.responseAccountsDeleted(selectedAccounts.count), .ok)
+            return nil
         } catch {
             Logger.exception(error)
             return ToastResponse(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)

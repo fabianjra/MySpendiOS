@@ -57,7 +57,7 @@ struct UpdateTransactionView: View {
                             transaction.amount = amount
                             toastResponse = await manager.update(transaction)
                             
-                            if toastResponse?.type == .ok {
+                            if toastResponse?.type != .error {
                                 dismiss()
                             }
                         }
@@ -82,7 +82,7 @@ struct UpdateTransactionView: View {
                         Task {
                             toastResponse = await manager.delete(transaction)
                             
-                            if toastResponse?.type == .ok {
+                            if toastResponse?.type != .error {
                                 dismiss()
                             }
                         }

@@ -34,7 +34,7 @@ struct UpdateAccountView: View {
                 Button {
                     Task {
                         toastResponse = await manager.update(account, isDefault: isDefaultSelected)
-                        if toastResponse?.type == .ok {
+                        if toastResponse?.type != .error {
                             dismiss()
                         }
                     }
@@ -59,7 +59,7 @@ struct UpdateAccountView: View {
                     Task {
                         toastResponse = await manager.delete(account)
                         
-                        if toastResponse?.type == .ok {
+                        if toastResponse?.type != .error {
                             dismiss()
                         }
                     }

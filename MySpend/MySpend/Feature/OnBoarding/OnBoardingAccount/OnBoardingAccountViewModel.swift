@@ -25,7 +25,7 @@ final class OnBoardingAccountViewModel {
         
         toastResponse = await accountManager.create(account, isDefault: true)
         
-        if toastResponse?.type == .ok {
+        if toastResponse?.type != .error {
             UserDefaultsManager.isOnBoarding = false
         }
     }

@@ -29,7 +29,7 @@ struct UpdateCategoryView: View {
                     Button {
                         Task {
                             toastResponse = await manager.update(category)
-                            if toastResponse?.type == .ok {
+                            if toastResponse?.type != .error {
                                 dismiss()
                             }
                         }
@@ -54,7 +54,7 @@ struct UpdateCategoryView: View {
                         Task {
                             toastResponse = await manager.delete(category)
                             
-                            if toastResponse?.type == .ok {
+                            if toastResponse?.type != .error {
                                 dismiss()
                             }
                         }

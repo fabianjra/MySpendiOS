@@ -31,7 +31,7 @@ struct CreateCategoryView: View {
                         category.type = categoryType
                         toastResponse = await manager.create(category)
                         
-                        if toastResponse?.type == .ok {
+                        if toastResponse?.type != .error {
                             onCreated(category)
                             dismiss()
                         }

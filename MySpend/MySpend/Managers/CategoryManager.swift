@@ -88,7 +88,7 @@ final class CategoryManager {
 
 extension CategoryManager {
     
-    func create(_ category: CategoryModel) async -> ToastResponse {
+    func create(_ category: CategoryModel) async -> ToastResponse? {
         if category.name.isEmptyOrWhitespace {
             return ToastResponse(.responseErrorTextFieldEmptySpace, .error)
         }
@@ -96,14 +96,14 @@ extension CategoryManager {
         do {
             try await coreDataManager.create(category)
             
-            return ToastResponse(.responseSuccessful, .ok)
+            return nil
         } catch {
             Logger.exception(error, type: .CoreData)
             return ToastResponse(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)
         }
     }
     
-    func update(_ category: CategoryModel) async -> ToastResponse {
+    func update(_ category: CategoryModel) async -> ToastResponse? {
         if category.name.isEmptyOrWhitespace {
             return ToastResponse(.responseErrorTextFieldEmptySpace, .error)
         }
@@ -111,31 +111,31 @@ extension CategoryManager {
         do {
             try await coreDataManager.update(category)
             
-            return ToastResponse(.responseSuccessful, .ok)
+            return nil
         } catch {
             Logger.exception(error, type: .CoreData)
             return ToastResponse(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)
         }
     }
     
-    func delete(_ category: CategoryModel) async -> ToastResponse {
+    func delete(_ category: CategoryModel) async -> ToastResponse? {
         do {
             try await coreDataManager.delete(category)
             
-            return ToastResponse(.responseCategoriesDeleted(.zero), .ok)
+            return nil
         } catch {
             Logger.exception(error, type: .CoreData)
             return ToastResponse(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)
         }
     }
     
-    func delete(_ selectedCategories: Set<CategoryModel>) async -> ToastResponse {
+    func delete(_ selectedCategories: Set<CategoryModel>) async -> ToastResponse? {
         do {
             for item in selectedCategories {
                 try await coreDataManager.delete(item)
             }
             
-            return ToastResponse(.responseCategoriesDeleted(selectedCategories.count), .ok)
+            return nil
         } catch {
             Logger.exception(error)
             return ToastResponse(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)
