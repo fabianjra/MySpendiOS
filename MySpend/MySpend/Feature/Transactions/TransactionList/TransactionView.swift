@@ -27,6 +27,10 @@ struct TransactionView: View {
         filteredTransactions.calculateTotals().balance
     }
     
+    @AppStorage(UserDefaultsKeys.showCents.rawValue,
+                store: UserDefaultsManager.userDefaults)
+    private var showCents = true
+    
     var body: some View {
         VStack {
             if viewModel.showSearchView {
@@ -117,7 +121,7 @@ struct TransactionView: View {
                             .fontWeight(.light)
                             .fontDesign(.rounded)
                         
-                        let balanceFormatted = totalBalance.amountToString.addCurrencySymbol
+                        let balanceFormatted = totalBalance.amountToString(showCents: showCents).addCurrencySymbol
                         
                         Text(balanceFormatted)
                             .font(balanceFormatted.filter(\.isNumber).count > 7 ? .title : .largeTitle)
@@ -186,7 +190,7 @@ struct TransactionView: View {
                                     
                                     Spacer()
                                     
-                                    Text(item.totalAmount.amountToString.addCurrencySymbol)
+                                    Text(item.totalAmount.amountToString(showCents: showCents).addCurrencySymbol)
                                         .lineLimit(1)
                                         .monospacedDigit()
                                 }
@@ -215,7 +219,7 @@ struct TransactionView: View {
                                     
                                     Spacer()
                                     
-                                    Text(item.totalAmount.amountToString.addCurrencySymbol)
+                                    Text(item.totalAmount.amountToString(showCents: showCents).addCurrencySymbol)
                                         .lineLimit(1)
                                         .monospacedDigit()
                                 }

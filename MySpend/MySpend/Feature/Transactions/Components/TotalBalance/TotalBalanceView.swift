@@ -11,6 +11,10 @@ struct TotalBalanceView: View {
     
     let transactions: [TransactionModel]
     
+    @AppStorage(UserDefaultsKeys.showCents.rawValue,
+                store: UserDefaultsManager.userDefaults)
+    private var showCents = true
+    
     var body: some View {
         VStack {
 //            Divider()
@@ -26,7 +30,7 @@ struct TotalBalanceView: View {
                 
                 Spacer()
                 
-                Text(totals.incomes.amountToString)
+                Text(totals.incomes.amountToString(showCents: showCents))
                     .foregroundStyle(Color.accentColor)
                     .fontWeight(.semibold)
                     .monospacedDigit()
@@ -41,7 +45,7 @@ struct TotalBalanceView: View {
                 
                 Spacer()
                 
-                Text(totals.expenses.amountToString)
+                Text(totals.expenses.amountToString(showCents: showCents))
                     .foregroundStyle(.alert)
                     .fontWeight(.semibold)
                     .monospacedDigit()

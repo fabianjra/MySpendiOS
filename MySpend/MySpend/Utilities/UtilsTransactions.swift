@@ -146,7 +146,7 @@ struct UtilsTransactions {
      
      **Example:**
      ```swift
-     let formatter = UtilCurrency.getLocalFormatter
+     let formatter = UtilCurrency.localFormatter
      let formattedNumber = formatter.number(from: "1234.567")
      print(formattedNumber) // Prints "1234.57" or "1234,57" depending on locale
      ```
@@ -157,13 +157,13 @@ struct UtilsTransactions {
      
      - Date: Sepember 2024
      */
-    public static var getLocalFormatter: NumberFormatter {
+    public static func localFormatter(showCents: Bool) -> NumberFormatter {
         let formatter = NumberFormatter()
         
         formatter.locale = Locale.current
         //formatter.maximumIntegerDigits = CurrencyManager.amoutMaxLength
         //formatter.minimumFractionDigits = CurrencyManager.fractionLength
-        formatter.minimumFractionDigits = UserDefaultsManager.showCents ? CurrencyManager.fractionLength : .zero
+        formatter.minimumFractionDigits = showCents ? CurrencyManager.fractionLength : .zero
         formatter.maximumFractionDigits = CurrencyManager.fractionLength
         
         /*

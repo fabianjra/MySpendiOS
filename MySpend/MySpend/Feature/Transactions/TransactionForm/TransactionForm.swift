@@ -25,7 +25,7 @@ struct TransactionForm: View {
     @State private var showDatePicker = false
     @State private var showCategoryList = false
     @State private var showAccountList = false
-    
+
     var body: some View {
         VStack {
             CategoryPickerView(selection: $type)
@@ -239,7 +239,7 @@ struct TransactionForm: View {
             return ""
         }
 
-        let formatter = UtilsTransactions.getLocalFormatter
+        let formatter = UtilsTransactions.localFormatter(showCents: UserDefaultsManager.showCents)
 
         return formatter.string(from: NSDecimalNumber(decimal: amount)) ?? cleanedText
     }

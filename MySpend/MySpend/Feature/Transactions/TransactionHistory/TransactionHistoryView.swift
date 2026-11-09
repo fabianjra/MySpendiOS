@@ -29,6 +29,10 @@ struct TransactionHistoryView: View {
                                               accountIDs: accountManager.selectedAccountsToFilterByID)
     }
     
+    @AppStorage(UserDefaultsKeys.showCents.rawValue,
+                store: UserDefaultsManager.userDefaults)
+    private var showCents = true
+    
     var body: some View {
         VStack {
             DateIntervalNavigatorView(dateInterval: $dateInterval, selectedDate: $selectedDate)
@@ -149,7 +153,7 @@ struct TransactionHistoryView: View {
                                 
                                 Spacer()
                                 
-                                Text(item.amount.amountToString.addCurrencySymbol)
+                                Text(item.amount.amountToString(showCents: showCents).addCurrencySymbol)
                                     .foregroundStyle(item.category.type == .income ? Color.accentColor : .alert)
                                     .monospacedDigit()
                                     .lineLimit(1)
