@@ -101,8 +101,13 @@ struct TransactionHistoryView: View {
     }
     
     private var transactionsList: some View {
-        List(selection: $viewModel.selectedTransactions) {
-            if filteredTransactions.isEmpty {
+        
+        let transactions = filteredTransactions
+        let groupedTransactions = UtilsTransactions.groupTransactionsByDate(transactions)
+        
+        return List(selection: $viewModel.selectedTransactions) {
+            
+            if transactions.isEmpty {
                 Section {
                     HStack {
                         Spacer()
@@ -115,161 +120,165 @@ struct TransactionHistoryView: View {
                 .listRowBackground(Color.clear)
                 
             } else {
-                Section {
-                    ForEach(filteredTransactions) { item in
-                        
-                        Button {
-                            if isEditing {
-                                viewModel.toggleTransactionSelection(item)
-                            } else {
-                                viewModel.transactionToUpdate = item
-                                viewModel.showUpdateTransaction = true
-                            }
+                ForEach(groupedTransactions, id: \.date) { group in
+                    Section {
+                        ForEach(group.transactions) { item in
                             
-                        } label: {
-                            HStack {
-                                VStack(alignment: .leading) {
-                                    Label(item.notes.isEmptyOrWhitespace ? item.category.name : item.notes, systemImage: item.category.icon)
-                                        .foregroundStyle(Color.primary)
-                                        .lineLimit(1)
-                                        .padding(.bottom, ConstantViews.minimumSpacing)
-                                    
-                                    HStack {
+                            Button {
+                                if isEditing {
+                                    viewModel.toggleTransactionSelection(item)
+                                } else {
+                                    viewModel.transactionToUpdate = item
+                                    viewModel.showUpdateTransaction = true
+                                }
+                                
+                            } label: {
+                                HStack {
+                                    VStack(alignment: .leading) {
+                                        Label(item.notes.isEmptyOrWhitespace ? item.category.name : item.notes, systemImage: item.category.icon)
+                                            .foregroundStyle(Color.primary)
+                                            .fontDesign(.rounded)
+                                            .lineLimit(1)
+                                            .padding(.bottom, ConstantViews.minimumSpacing)
+                                        
                                         if shouldShowAccountName {
-                                            Text(verbatim: "\(item.account.name):")
+                                            Text(verbatim: item.account.name)
                                                 .font(.footnote)
                                                 .fontDesign(.rounded)
                                                 .foregroundStyle(.secondary)
                                                 .lineLimit(1)
                                         }
-                                        
-                                        Text(item.dateTransaction.toStringShortLocale)
-                                            .font(.footnote)
-                                            .fontDesign(.rounded)
-                                            .foregroundStyle(.secondary)
-                                            .lineLimit(1)
+                                    }
+                                    
+                                    Spacer()
+                                    
+                                    Text(item.amount.amountToString(showCents: showCents).addCurrencySymbol)
+                                        .foregroundStyle(item.category.type == .income ? Color.accentColor : .alert)
+                                        .monospacedDigit()
+                                        .lineLimit(1)
+                                    
+                                    if !isEditing {
+                                        if item.favorite {
+                                            Button(.selectorFavorite, systemImage: ConstantSystemImage.favoriteFill) {
+                                                Task {
+                                                    toastResponse = await manager.favorite(item)
+                                                }
+                                            }
+                                            .labelStyle(.iconOnly)
+                                        }
                                     }
                                 }
-                                
-                                Spacer()
-                                
-                                Text(item.amount.amountToString(showCents: showCents).addCurrencySymbol)
-                                    .foregroundStyle(item.category.type == .income ? Color.accentColor : .alert)
-                                    .monospacedDigit()
-                                    .lineLimit(1)
-                                
+                            }
+                            .buttonStyle(.plain)
+                            .tag(item)
+                            
+                            
+                            .swipeActions(edge: .trailing) {
                                 if !isEditing {
-                                    if item.favorite {
+                                    
+                                    Button(.selectorDelete, systemImage: ConstantSystemImage.trash) {
+                                        viewModel.transactionToDelete = item
+                                        viewModel.showAlertDelete = true
+                                    }
+                                    .labelStyle(.iconOnly)
+                                    .tint(.alert)
+                                    
+                                    
+                                    Button(.selectorEdit, systemImage: ConstantSystemImage.squareAndPencil) {
+                                        viewModel.transactionToUpdate = item
+                                        viewModel.showUpdateTransaction = true
+                                    }
+                                    .labelStyle(.iconOnly)
+                                    
+                                    
+                                    if item.favorite == false {
                                         Button(.selectorFavorite, systemImage: ConstantSystemImage.favoriteFill) {
                                             Task {
                                                 toastResponse = await manager.favorite(item)
                                             }
                                         }
                                         .labelStyle(.iconOnly)
+                                        .tint(.accentColor)
                                     }
                                 }
                             }
-                        }
-                        .padding(.horizontal)
-                        .padding(.top)
-                        .padding(.bottom, ConstantViews.minimumSpacing)
-                        .tag(item)
-                        
-                        
-                        .swipeActions(edge: .trailing) {
-                            if !isEditing {
-                                
-                                Button(.selectorDelete, systemImage: ConstantSystemImage.trash) {
-                                    viewModel.transactionToDelete = item
-                                    viewModel.showAlertDelete = true
-                                }
-                                .labelStyle(.iconOnly)
-                                .tint(.alert)
-                                
-                                
-                                Button(.selectorEdit, systemImage: ConstantSystemImage.squareAndPencil) {
-                                    viewModel.transactionToUpdate = item
-                                    viewModel.showUpdateTransaction = true
-                                }
-                                .labelStyle(.iconOnly)
-                                
-                                
-                                if item.favorite == false {
-                                    Button(.selectorFavorite, systemImage: ConstantSystemImage.favoriteFill) {
+                            
+                            
+                            .contextMenu {
+                                if !isEditing {
+                                    
+                                    Button(item.favorite ? .selectorUnfavorite : .selectorFavorite,
+                                           systemImage: item.favorite ? ConstantSystemImage.unfavoriteFill : ConstantSystemImage.favoriteFill) {
                                         Task {
                                             toastResponse = await manager.favorite(item)
                                         }
                                     }
-                                    .labelStyle(.iconOnly)
-                                    .tint(.accentColor)
-                                }
-                            }
-                        }
-                        
-                        
-                        .contextMenu {
-                            if !isEditing {
-                                
-                                Button(item.favorite ? .selectorUnfavorite : .selectorFavorite,
-                                       systemImage: item.favorite ? ConstantSystemImage.unfavoriteFill : ConstantSystemImage.favoriteFill) {
-                                    Task {
-                                        toastResponse = await manager.favorite(item)
-                                    }
-                                }
-                                       .tint(.accentColor)
-                                
-                                Button(.selectorEdit, systemImage: ConstantSystemImage.squareAndPencil) {
-                                    viewModel.transactionToUpdate = item
-                                    viewModel.showUpdateTransaction = true
-                                }
-                                
-                                
-                                Button(.selectorDelete, systemImage: ConstantSystemImage.trash, role: .destructive) {
-                                    viewModel.transactionToDelete = item
-                                    viewModel.showAlertDelete = true
-                                }
-                            }
-                        }
-                        
-                        
-                        .alert(.transactionDelete(viewModel.selectedTransactions.count), isPresented: $viewModel.showAlertDelete) {
-                            Button(.alertOptionDelete, role: .destructive) {
-                                Task {
-                                    if viewModel.selectedTransactions.isEmpty {
-                                        defer {
-                                            viewModel.transactionToDelete = nil
-                                        }
-                                        
-                                        if let transaction = viewModel.transactionToDelete {
-                                            toastResponse = await manager.delete(transaction)
-                                        }
-                                        
-                                    } else {
-                                        defer {
-                                            viewModel.selectedTransactions.removeAll()
-                                        }
-                                        
-                                        toastResponse = await manager.delete(viewModel.selectedTransactions)
+                                           .tint(.accentColor)
+                                    
+                                    Button(.selectorEdit, systemImage: ConstantSystemImage.squareAndPencil) {
+                                        viewModel.transactionToUpdate = item
+                                        viewModel.showUpdateTransaction = true
                                     }
                                     
-                                    editMode?.wrappedValue = .inactive
+                                    
+                                    Button(.selectorDelete, systemImage: ConstantSystemImage.trash, role: .destructive) {
+                                        viewModel.transactionToDelete = item
+                                        viewModel.showAlertDelete = true
+                                    }
                                 }
                             }
                             
-                            Button(.alertOptionCancel, role: .cancel) { }
-                        } message: {
-                            Text(.transactionDeleteMessage(viewModel.selectedTransactions.count))
+                            
+                            .alert(.transactionDelete(viewModel.selectedTransactions.count), isPresented: $viewModel.showAlertDelete) {
+                                Button(.alertOptionDelete, role: .destructive) {
+                                    Task {
+                                        if viewModel.selectedTransactions.isEmpty {
+                                            defer {
+                                                viewModel.transactionToDelete = nil
+                                            }
+                                            
+                                            if let transaction = viewModel.transactionToDelete {
+                                                toastResponse = await manager.delete(transaction)
+                                            }
+                                            
+                                        } else {
+                                            defer {
+                                                viewModel.selectedTransactions.removeAll()
+                                            }
+                                            
+                                            toastResponse = await manager.delete(viewModel.selectedTransactions)
+                                        }
+                                        
+                                        editMode?.wrappedValue = .inactive
+                                    }
+                                }
+                                
+                                Button(.alertOptionCancel, role: .cancel) { }
+                            } message: {
+                                Text(.transactionDeleteMessage(viewModel.selectedTransactions.count))
+                            }
+                            
+                        }
+                    } header: {
+                        if dateInterval != .day {
+                            if Calendar.current.isDateInToday(group.date) {
+                                Text(.dateToday)
+                            } else {
+                                Text(group.date, format: .dateTime.day().month(.wide).year())
+                            }
                         }
                     }
+                    .alignmentGuide(.listRowSeparatorLeading) { dimensions in
+                        dimensions[.leading]
+                    }
+                    //.listRowBackground(Color.clear)
+                    //.listRowInsets(EdgeInsets(top: .zero, leading: .zero, bottom: .zero, trailing: .zero))
                 }
-                .listRowBackground(Color.clear)
-                .listRowInsets(EdgeInsets(top: .zero, leading: .zero, bottom: .zero, trailing: .zero))
             }
         }
-        .listStyle(.plain)
         .scrollIndicators(.hidden)
         .scrollContentBackground(.hidden)
-        .animation(.default, value: filteredTransactions)
+        .animation(.default, value: transactions)
     }
     
     // MARK: VIEWS
@@ -391,7 +400,7 @@ struct TransactionHistoryView: View {
         guard accountManager.sortedAccounts.count > 1 else {
             return false
         }
-
+        
         return !manager.isFilterActive || accountManager.selectedAccountsToFilterByID.count > 1
     }
 }

@@ -107,6 +107,29 @@ struct UtilsTransactions {
     }
     
     
+    typealias DailyGroupedTransactions = [(date: Date, transactions: [TransactionModel])]
+    
+    /**
+     Groups transactions by calendar day, ignoring the time component.
+     
+     Preserves the original order of transactions within each day
+     and sorts the date sections from newest to oldest.
+     
+     - Parameters:
+     - transactions: The transactions to group.
+     - calendar: The calendar used to determine each transaction's day.
+     - Returns: Daily transaction groups sorted by date descending.
+     */
+    static func groupTransactionsByDate(_ transactions: [TransactionModel], calendar: Calendar = .current) -> DailyGroupedTransactions {
+        
+        let grouped = Dictionary(grouping: transactions) {
+            calendar.startOfDay(for: $0.dateTransaction)
+        }
+        
+        return grouped.map { (date: $0.key, transactions: $0.value) }.sorted { $0.date > $1.date }
+    }
+    
+    
     /**
      ¿Filtro activo?
          ↓
