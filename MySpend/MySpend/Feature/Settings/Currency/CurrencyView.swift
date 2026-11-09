@@ -27,8 +27,8 @@ struct CurrencyView: View {
                 Section {
                     Toggle(.currencyShowCents,
                            isOn: Binding (
-                            get: { UserDefaultsManager.showDecimals },
-                            set: { UserDefaultsManager.showDecimals = $0}
+                            get: { UserDefaultsManager.showCents },
+                            set: { UserDefaultsManager.showCents = $0}
                            )
                     )
                     .tint(.accentColor)

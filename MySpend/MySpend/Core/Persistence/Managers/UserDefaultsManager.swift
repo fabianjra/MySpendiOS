@@ -87,10 +87,10 @@ struct UserDefaultsManager {
         }
     }
     
-    static var showDecimals: Bool {
-        get { return UserDefaultsDataStore<Bool>(for: .showDecimals).value ?? true }
+    static var showCents: Bool {
+        get { return UserDefaultsDataStore<Bool>(for: .showCents).value ?? true }
         set {
-            var manager = UserDefaultsDataStore<Bool>(for: .showDecimals)
+            var manager = UserDefaultsDataStore<Bool>(for: .showCents)
             manager.value = newValue
         }
     }
@@ -167,7 +167,7 @@ enum UserDefaultsKeys: String, Codable, CaseIterable {
     case currency = "currency_key"
     case currencySymbolType = "currency_symbol_type_key"
     case appTheme = "app_theme_key"
-    case showDecimals = "show_decimals_key"
+    case showCents = "show_cents_key"
     
     // MARK: USER DATA
     case isOnBoarding = "is_on_boarding_key"

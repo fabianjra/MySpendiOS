@@ -163,7 +163,7 @@ struct UtilsTransactions {
         formatter.locale = Locale.current
         //formatter.maximumIntegerDigits = CurrencyManager.amoutMaxLength
         //formatter.minimumFractionDigits = CurrencyManager.fractionLength
-        formatter.minimumFractionDigits = UserDefaultsManager.showDecimals ? CurrencyManager.fractionLength : .zero
+        formatter.minimumFractionDigits = UserDefaultsManager.showCents ? CurrencyManager.fractionLength : .zero
         formatter.maximumFractionDigits = CurrencyManager.fractionLength
         
         /*
