@@ -49,7 +49,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Nueva cuenta"
           }
         }
@@ -148,7 +148,7 @@
               },
               "other" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "Se eliminarán %lld cuentas. Esta acción no se puede deshacer."
                 }
               },
@@ -265,7 +265,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Editar cuenta"
           }
         }
@@ -481,7 +481,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Sistema"
           }
         }
@@ -685,7 +685,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Nueva categoría"
           }
         }
@@ -937,7 +937,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Ingresos"
           }
         }
@@ -973,7 +973,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Editar categoría"
           }
         }
@@ -1459,7 +1459,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Hola %@ %@ "
           }
         }
@@ -1728,7 +1728,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Ingresa tu nombre para comenzar"
           }
         }
@@ -1818,7 +1818,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Ingresa tu # de teléfono"
           }
         }
@@ -2412,7 +2412,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Esta acción no se puede deshacer."
           }
         }
@@ -2448,7 +2448,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "¿Eliminar todos los datos?"
           }
         }
@@ -2736,7 +2736,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Orden predeterminado"
           }
         }
@@ -2898,7 +2898,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Ordenar por %@"
           }
         }
@@ -3312,7 +3312,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Notas"
           }
         }
@@ -3330,7 +3330,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Sin notas"
           }
         }
@@ -3348,7 +3348,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Editar transacción"
           }
         }
