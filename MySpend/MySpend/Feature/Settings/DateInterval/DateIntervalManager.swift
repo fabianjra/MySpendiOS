@@ -11,9 +11,9 @@ import SwiftUI
 final class DateIntervalManager {
     static let shared = DateIntervalManager()
     
-    var interval: DateInterval = UserDefaultsManager.dateInterval {
+    var defaultInterval: DateInterval = UserDefaultsManager.dateInterval {
         didSet {
-            UserDefaultsManager.dateInterval = interval
+            UserDefaultsManager.dateInterval = self.defaultInterval
         }
     }
     
@@ -21,6 +21,6 @@ final class DateIntervalManager {
     
     func resetDateInterval() {
         UserDefaultsManager.removeValue(for: .dateInterval)
-        interval = UserDefaultsManager.dateInterval
+        defaultInterval = UserDefaultsManager.dateInterval
     }
 }

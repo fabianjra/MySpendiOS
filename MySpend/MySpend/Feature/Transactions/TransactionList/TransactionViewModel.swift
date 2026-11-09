@@ -15,7 +15,6 @@ final class TransactionViewModel {
     var searchText = ""
     var showSearchView = false
     
-    var dateInterval = UserDefaultsManager.dateInterval
     var selectedDate: Date = .now
     
     var showCreateTransaction = false

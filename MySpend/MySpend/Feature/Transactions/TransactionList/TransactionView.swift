@@ -12,10 +12,13 @@ struct TransactionView: View {
     @Environment(TransactionManager.self) private var manager
     @Environment(AccountManager.self) private var accountManager
     
+    @Environment(DateIntervalManager.self) private var dateIntervalManager
+    @State private var selectedDateInterval: DateInterval = .month
+    
     @State private var viewModel = TransactionViewModel()
     
     private var filteredTransactions: [TransactionModel] {
-        manager.filteredAndSortedTransactions(by: viewModel.dateInterval,
+        manager.filteredAndSortedTransactions(by: selectedDateInterval,
                                               selectedDate: viewModel.selectedDate,
                                               accountIDs: accountManager.selectedAccountsToFilterByID)
     }
@@ -65,6 +68,10 @@ struct TransactionView: View {
             }
         }
         
+        .onChange(of: dateIntervalManager.defaultInterval, initial: true) { _, newValue in
+            selectedDateInterval = newValue
+        }
+        
         .searchable(text: $viewModel.searchText, isPresented: $viewModel.showSearchView)
         .searchToolbarBehavior(.minimize)
         
@@ -101,7 +108,7 @@ struct TransactionView: View {
             
             
             NavigationLink {
-                TransactionHistoryView(dateInterval: $viewModel.dateInterval,
+                TransactionHistoryView(dateInterval: $selectedDateInterval,
                                        selectedDate: $viewModel.selectedDate)
             } label: {
                 HStack {
@@ -142,7 +149,7 @@ struct TransactionView: View {
                                                                                         selectedAccountsToFilter: accountManager.selectedAccountsToFilterByID,
                                                                                         isFilterActive: manager.isFilterActive)
         return VStack {
-            DateIntervalNavigatorView(dateInterval: $viewModel.dateInterval,
+            DateIntervalNavigatorView(dateInterval: $selectedDateInterval,
                                       selectedDate: $viewModel.selectedDate)
             
             if let text = filteredAccountsDescription {
@@ -254,6 +261,7 @@ private struct previewWrapper: View {
         UserDefaultsManager.userName = "Previews"
     }
     
+    @State var dateIntervalManager = DateIntervalManager.shared
     @State var themeManager = ThemeManager.shared
     @State var router = Router.shared
     
@@ -275,6 +283,7 @@ private struct previewWrapper: View {
                     }
                 }
         }
+        .environment(dateIntervalManager)
         .environment(themeManager)
         .preferredColorScheme(themeManager.theme.colorScheme)
         
