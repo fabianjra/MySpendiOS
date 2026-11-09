@@ -325,7 +325,7 @@ extension CurrencyManager {
      
      It is used to show the currency symbol selected for the currency selected in any view that shows amouts (Transactions View, History, View, etc.)
      */
-    public static var getSelectedSymbolOrCode: String {
+    public static var selectedSymbolOrCode: String {
         switch UserDefaultsManager.currencySymbolType {
         case .symbol: return UserDefaultsManager.currency.symbol
         case .code: return UserDefaultsManager.currency.currencyCode

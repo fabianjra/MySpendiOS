@@ -15,6 +15,9 @@ struct SettingsView: View {
     @Environment(DateIntervalManager.self) private var dateIntervalManager
     @Environment(ThemeManager.self) private var themeManager
     
+    //TODO: Cambiar por environment
+    @State private var selectedCurrencyDescription = CurrencyManager.selectedSymbolOrCode
+    
     var body: some View {
         List {
             // MARK: - PROFILE
@@ -51,10 +54,17 @@ struct SettingsView: View {
             Section {
                 ForEach(UserInterfaceOptions.allCases) { option in
                     NavigationLink(destination: option.view) {
-                        Label {
-                            Text(option.title)
-                        } icon: {
-                            Text(option.icon)
+                        HStack {
+                            Label {
+                                Text(option.title)
+                            } icon: {
+                                Text(option.icon)
+                            }
+                            
+                            Spacer()
+                            
+                            Text(verbatim: selectedCurrencyDescription)
+                                .foregroundStyle(.secondary)
                         }
                     }
                     .alignmentGuide(.listRowSeparatorLeading) { dimensions in
@@ -141,6 +151,11 @@ struct SettingsView: View {
         .navigationTitle(.settingsTitle)
         .scrollContentBackground(.hidden)
         .background(Color.backgroundGradient)
+        
+        //TODO: Cambiar por environment
+        .onAppear {
+            selectedCurrencyDescription = CurrencyManager.selectedSymbolOrCode
+        }
     }
 }
 
