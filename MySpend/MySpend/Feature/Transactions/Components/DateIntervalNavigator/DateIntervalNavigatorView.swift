@@ -17,7 +17,7 @@ struct DateIntervalNavigatorView: View {
     var body: some View {
         VStack {
             
-            Picker(.settingsGeneralOptionDateInterval, selection: $dateInterval) {
+            Picker(.settingsOptionDateInterval, selection: $dateInterval) {
                 ForEach(DateInterval.allCases) { item in
                     Text(item.localized)
                 }

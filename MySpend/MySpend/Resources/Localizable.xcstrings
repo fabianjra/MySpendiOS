@@ -2418,6 +2418,24 @@
         }
       }
     },
+    "Settings.Content.SectionTitle" : {
+      "comment" : "Sección de ajustes para los ajustes del contenido",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Content managment"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Manejo de contenido"
+          }
+        }
+      }
+    },
     "Settings.Data.DeleteButtonTitle" : {
       "comment" : "Titulo para indicar que la opcion borra todos los datos",
       "extractionState" : "manual",
@@ -2544,24 +2562,6 @@
         }
       }
     },
-    "Settings.General.Option.AppTheme" : {
-      "comment" : "TItulo en ajustes para la opcion del terma de la app",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "App theme"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tema"
-          }
-        }
-      }
-    },
     "Settings.General.Option.Categories" : {
       "comment" : "Titulo en ajustes para la opcion de categorias",
       "extractionState" : "manual",
@@ -2598,7 +2598,25 @@
         }
       }
     },
-    "Settings.General.Option.DateInterval" : {
+    "Settings.Option.AppTheme" : {
+      "comment" : "TItulo en ajustes para la opcion del terma de la app",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App theme"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tema"
+          }
+        }
+      }
+    },
+    "Settings.Option.DateInterval" : {
       "comment" : "Titulo en ajustes para la opcion de intervalo de tiempo",
       "extractionState" : "manual",
       "localizations" : {
@@ -2616,20 +2634,20 @@
         }
       }
     },
-    "Settings.General.SectionTitle" : {
-      "comment" : "Sección de ajustes para los ajustes generales",
+    "Settings.Option.DateInterval.Footer" : {
+      "comment" : "Indicacion de que el periodo de tiempo predeterminado es el mensual",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "General"
+            "value" : "The default interval is monthly."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "General"
+            "value" : "El intervalo predeterminado es mensual."
           }
         }
       }
@@ -2684,6 +2702,24 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ajustes"
+          }
+        }
+      }
+    },
+    "Settings.UserInterface.SectionTitle" : {
+      "comment" : "Titulo para la sección de opciones de interfaz de usuario",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "User interface"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interfaz"
           }
         }
       }

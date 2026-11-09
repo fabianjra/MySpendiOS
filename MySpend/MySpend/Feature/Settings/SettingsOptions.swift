@@ -60,13 +60,11 @@ enum ContentOptions: String, CaseIterable, Identifiable {
     public var id: Self { self }
     case accounts
     case categories
-    case currency
     
     var title: LocalizedStringResource {
         switch self {
         case .accounts: return .settingsGeneralOptionAccounts
         case .categories: return .settingsGeneralOptionCategories
-        case .currency: return .settingsGeneralOptionCurrency
         }
     }
     
@@ -74,7 +72,6 @@ enum ContentOptions: String, CaseIterable, Identifiable {
         switch self {
         case .accounts: return "🏦"
         case .categories: return "📋"
-        case .currency: return "💱"
         }
     }
     
@@ -83,8 +80,32 @@ enum ContentOptions: String, CaseIterable, Identifiable {
         switch self {
         case .accounts: AccountView()
         case .categories: CategoryView()
-        case .currency: CurrencyView()
         }
     }
 }
 
+// MARK: - USER INTERFACE
+
+enum UserInterfaceOptions: String, CaseIterable, Identifiable {
+    public var id: Self { self }
+    case currency
+    
+    var title: LocalizedStringResource {
+        switch self {
+        case .currency: return .settingsGeneralOptionCurrency
+        }
+    }
+    
+    var icon: String {
+        switch self {
+        case .currency: return "💱"
+        }
+    }
+    
+    @ViewBuilder
+    var view: some View {
+        switch self {
+        case .currency: CurrencyView()
+        }
+    }
+}

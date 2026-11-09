@@ -79,11 +79,8 @@ struct FilterTransactionsView: View {
                 accountManager.restoreSelectedAccountsToFilter()
                 transactionManager.showOnlyFavorites = false
             } label: {
-                Label(
-                    .filterRestore,
-                    systemImage: ConstantSystemImage.arrowCounterClockwise
-                )
-                .foregroundStyle(Color.primary)
+                Label(.filterRestore,systemImage: ConstantSystemImage.arrowCounterClockwise)
+                    .foregroundStyle(Color.primary)
             }
             .padding(.bottom, UtilsUI.isPad ? nil : .zero)
         }

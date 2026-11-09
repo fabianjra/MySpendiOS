@@ -33,7 +33,7 @@ struct SettingsView: View {
             
             // MARK: - GENERAL
             
-            Section(.settingsGeneralSectionTitle) {
+            Section(.settingsContentSectionTitle) {
                 
                 ForEach(ContentOptions.allCases) { option in
                     NavigationLink(destination: option.view) {
@@ -44,25 +44,20 @@ struct SettingsView: View {
                         }
                     }
                 }
-                
-                
-                @Bindable var dateIntervalManager = dateIntervalManager
-                
-                Picker(selection: $dateIntervalManager.defaultInterval) {
-                    ForEach(DateInterval.allCases) { item in
-                        Text(item.localized)
-                            .tag(item)
-                    }
-                } label: {
-                    Label {
-                        Text(.settingsGeneralOptionDateInterval)
-                    } icon: {
-                        Text(verbatim: "📅")
+            }
+            
+            // MARK: - USER INTERFACE
+            
+            Section {
+                ForEach(UserInterfaceOptions.allCases) { option in
+                    NavigationLink(destination: option.view) {
+                        Label {
+                            Text(option.title)
+                        } icon: {
+                            Text(option.icon)
+                        }
                     }
                 }
-                .pickerStyle(.menu)
-                .tint(.primary)
-                
                 
                 @Bindable var themeManager = themeManager
                 
@@ -73,13 +68,36 @@ struct SettingsView: View {
                     }
                 } label: {
                     Label {
-                        Text(.settingsGeneralOptionAppTheme)
+                        Text(.settingsOptionAppTheme)
                     } icon: {
                         Text(verbatim: "🎨")
                     }
                 }
                 .pickerStyle(.menu)
-                .tint(.primary)
+                .tint(.secondary)
+                
+                @Bindable var dateIntervalManager = dateIntervalManager
+                
+                Picker(selection: $dateIntervalManager.defaultInterval) {
+                    ForEach(DateInterval.allCases) { item in
+                        Text(item.localized)
+                            .tag(item)
+                    }
+                } label: {
+                    Label {
+                        Text(.settingsOptionDateInterval)
+                    } icon: {
+                        Text(verbatim: "📅")
+                    }
+                }
+                .pickerStyle(.menu)
+                .tint(.secondary)
+                
+            } header: {
+                Text(.settingsUserInterfaceSectionTitle)
+                
+            } footer: {
+                Text(.settingsOptionDateIntervalFooter)
             }
             
             // MARK: - DATA
