@@ -18,6 +18,10 @@ struct SettingsView: View {
     //TODO: Cambiar por environment
     @State private var selectedCurrencyDescription = CurrencyManager.selectedSymbolOrCode
     
+    @AppStorage(UserDefaultsKeys.showCents.rawValue,
+                store: UserDefaultsManager.userDefaults)
+    private var showCents = true
+    
     var body: some View {
         List {
             // MARK: - PROFILE
@@ -71,6 +75,17 @@ struct SettingsView: View {
                         dimensions[.leading]
                     }
                 }
+                
+                
+                Toggle(isOn: $showCents) {
+                    Label {
+                        Text(.currencyShowCents)
+                    } icon: {
+                        Text(verbatim: "🪙")
+                    }
+                }
+                .tint(.accentColor)
+                
                 
                 @Bindable var themeManager = themeManager
                 

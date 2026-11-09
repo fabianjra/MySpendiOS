@@ -25,16 +25,6 @@ struct CurrencyView: View {
             
             List {
                 Section {
-                    Toggle(.currencyShowCents,
-                           isOn: Binding (
-                            get: { UserDefaultsManager.showCents },
-                            set: { UserDefaultsManager.showCents = $0}
-                           )
-                    )
-                    .tint(.accentColor)
-                }
-                
-                Section {
                     ForEach(viewModel.commonCurrencies) { currency in
                         rowView(currency)
                     }
