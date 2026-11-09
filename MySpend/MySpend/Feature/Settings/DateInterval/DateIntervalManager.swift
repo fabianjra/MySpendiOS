@@ -18,9 +18,4 @@ final class DateIntervalManager {
     }
     
     private init() {}
-    
-    func resetDateInterval() {
-        UserDefaultsManager.removeValue(for: .dateInterval)
-        defaultInterval = UserDefaultsManager.dateInterval
-    }
 }
