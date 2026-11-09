@@ -1159,6 +1159,42 @@
         }
       }
     },
+    "DatetimeInterval.Subtitle" : {
+      "comment" : "Subtitulo para la pantalla de seleccion del intervalo de tiempo predeterminado",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose the default time interval"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selecciona el intervalo de tiempo predeterminado"
+          }
+        }
+      }
+    },
+    "DatetimeInterval.Title" : {
+      "comment" : "Titulo para la pantalla de seleccion del intervalo de tiempo predeterminado",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Default Time Interval"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Intervalo predeterminado"
+          }
+        }
+      }
+    },
     "DatetimeInterval.Weekly" : {
       "comment" : "Intervalo de tiempo para semanal",
       "extractionState" : "manual",

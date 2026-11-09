@@ -17,7 +17,7 @@ struct DateTimeIntervalView: View {
                 Section {
                     ForEach(DateTimeInterval.allCases) { item in
                         Button {
-                            viewModel.DateTimeIntervalSelected = item
+                            viewModel.selectedDateInterval = item
                         } label: {
                             HStack {
                                 Text(item.localized)
@@ -27,7 +27,7 @@ struct DateTimeIntervalView: View {
                                 
                                 Spacer()
                                 
-                                if item == viewModel.DateTimeIntervalSelected {
+                                if item == viewModel.selectedDateInterval {
                                     Image.checkmark
                                 }
                             }
@@ -44,8 +44,8 @@ struct DateTimeIntervalView: View {
             }
             .scrollContentBackground(.hidden)
         }
-        .navigationTitle(Text(verbatim: "Time interval list"))
-        .navigationSubtitle(Text(verbatim: "Select the new time interval"))
+        .navigationTitle(.datetimeIntervalTitle)
+        .navigationSubtitle(.datetimeIntervalSubtitle)
         .background(Color.backgroundGradient)
     }
 }

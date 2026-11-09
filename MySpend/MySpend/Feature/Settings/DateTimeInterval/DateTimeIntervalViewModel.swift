@@ -10,14 +10,14 @@ import Observation
 @Observable
 final class DateTimeIntervalViewModel {
     
-    var DateTimeIntervalSelected = UserDefaultsManager.dateTimeInterval {
+    var selectedDateInterval = UserDefaultsManager.dateTimeInterval {
         didSet {
-            UserDefaultsManager.dateTimeInterval = self.DateTimeIntervalSelected
+            UserDefaultsManager.dateTimeInterval = self.selectedDateInterval
         }
     }
     
     func resetDateTimeInterval() {
         UserDefaultsManager.removeValue(for: .dateTimeInterval)
-        DateTimeIntervalSelected = UserDefaultsManager.dateTimeInterval
+        selectedDateInterval = UserDefaultsManager.dateTimeInterval
     }
 }
