@@ -12,7 +12,7 @@ struct SettingsView: View {
     @State private var showAlert = false
     @State private var showAlertConfirmation = false
     
-    @State private var selectedDateInterval = UserDefaultsManager.dateTimeInterval
+    @State private var selectedDateInterval = UserDefaultsManager.dateInterval
     @Environment(ThemeManager.self) private var themeManager
     
     var body: some View {
@@ -47,13 +47,13 @@ struct SettingsView: View {
                 
                 
                 Picker(selection: $selectedDateInterval) {
-                    ForEach(DateTimeInterval.allCases) { item in
+                    ForEach(DateInterval.allCases) { item in
                         Text(item.localized)
                             .tag(item)
                     }
                 } label: {
                     Label {
-                        Text(.settingsGeneralOptionDateTimeInterval)
+                        Text(.settingsGeneralOptionDateInterval)
                     } icon: {
                         Text(verbatim: "📅")
                     }

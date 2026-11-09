@@ -25,7 +25,7 @@ struct DatePickerModalView: View {
             .scrollDisabled(true)
             .toolbar {
                 ToolbarItem(placement: .navigation) {
-                    Button(.datetimeToday) {
+                    Button(.dateToday) {
                         selectedDate = .now
                         datePickerID = UUID()
                     }

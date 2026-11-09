@@ -1105,7 +1105,7 @@
         }
       }
     },
-    "Datetime.Today" : {
+    "Date.Today" : {
       "comment" : "Indicación para la fecha de hoy",
       "extractionState" : "manual",
       "localizations" : {
@@ -1123,7 +1123,7 @@
         }
       }
     },
-    "DatetimeInterval.Daily" : {
+    "DateInterval.Daily" : {
       "comment" : "Intervalo de tiempo para diario",
       "extractionState" : "manual",
       "localizations" : {
@@ -1141,7 +1141,7 @@
         }
       }
     },
-    "DatetimeInterval.Monthly" : {
+    "DateInterval.Monthly" : {
       "comment" : "Intervalo de tiempo para mensual",
       "extractionState" : "manual",
       "localizations" : {
@@ -1159,7 +1159,7 @@
         }
       }
     },
-    "DatetimeInterval.Subtitle" : {
+    "DateInterval.Subtitle" : {
       "comment" : "Subtitulo para la pantalla de seleccion del intervalo de tiempo predeterminado",
       "extractionState" : "manual",
       "localizations" : {
@@ -1177,7 +1177,7 @@
         }
       }
     },
-    "DatetimeInterval.Title" : {
+    "DateInterval.Title" : {
       "comment" : "Titulo para la pantalla de seleccion del intervalo de tiempo predeterminado",
       "extractionState" : "manual",
       "localizations" : {
@@ -1195,7 +1195,7 @@
         }
       }
     },
-    "DatetimeInterval.Weekly" : {
+    "DateInterval.Weekly" : {
       "comment" : "Intervalo de tiempo para semanal",
       "extractionState" : "manual",
       "localizations" : {
@@ -1213,7 +1213,7 @@
         }
       }
     },
-    "DatetimeInterval.Yearly" : {
+    "DateInterval.Yearly" : {
       "comment" : "Intervalo de tiempo para Anual",
       "extractionState" : "manual",
       "localizations" : {
@@ -2598,7 +2598,7 @@
         }
       }
     },
-    "Settings.General.Option.DateTimeInterval" : {
+    "Settings.General.Option.DateInterval" : {
       "comment" : "Titulo en ajustes para la opcion de intervalo de tiempo",
       "extractionState" : "manual",
       "localizations" : {

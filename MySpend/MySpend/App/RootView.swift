@@ -8,13 +8,16 @@ import SwiftUI
 
 struct RootView: View {
     
-    // MARK: MANAGERS
+    @State private var router = Router.shared
+    
+    // MARK: - ENTITY MANAGERS
     @State private var transactionManager = TransactionManager.shared
     @State private var accountManager = AccountManager.shared
     @State private var categoryManager = CategoryManager.shared
     
+    // MARK: - SETTINGS MANAGERS
     @State private var themeManager = ThemeManager.shared
-    @State private var router = Router.shared
+    @State private var dateIntervalManager = DateIntervalManager.shared
     
     
     @AppStorage(UserDefaultsKeys.isOnBoarding.rawValue,
@@ -72,6 +75,7 @@ struct RootView: View {
         .environment(accountManager)
         .environment(categoryManager)
         
+        .environment(dateIntervalManager)
         .environment(themeManager)
         .preferredColorScheme(themeManager.theme.colorScheme)
     }

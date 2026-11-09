@@ -15,7 +15,7 @@ struct TransactionView: View {
     @State private var viewModel = TransactionViewModel()
     
     private var filteredTransactions: [TransactionModel] {
-        manager.filteredAndSortedTransactions(by: viewModel.dateTimeInterval,
+        manager.filteredAndSortedTransactions(by: viewModel.dateInterval,
                                               selectedDate: viewModel.selectedDate,
                                               accountIDs: accountManager.selectedAccountsToFilterByID)
     }
@@ -101,7 +101,7 @@ struct TransactionView: View {
             
             
             NavigationLink {
-                TransactionHistoryView(dateTimeInterval: $viewModel.dateTimeInterval,
+                TransactionHistoryView(dateInterval: $viewModel.dateInterval,
                                        selectedDate: $viewModel.selectedDate)
             } label: {
                 HStack {
@@ -142,7 +142,7 @@ struct TransactionView: View {
                                                                                         selectedAccountsToFilter: accountManager.selectedAccountsToFilterByID,
                                                                                         isFilterActive: manager.isFilterActive)
         return VStack {
-            DateIntervalNavigatorView(dateTimeInterval: $viewModel.dateTimeInterval,
+            DateIntervalNavigatorView(dateInterval: $viewModel.dateInterval,
                                       selectedDate: $viewModel.selectedDate)
             
             if let text = filteredAccountsDescription {

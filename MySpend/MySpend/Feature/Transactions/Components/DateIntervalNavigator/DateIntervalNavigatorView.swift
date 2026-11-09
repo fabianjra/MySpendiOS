@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DateIntervalNavigatorView: View {
     
-    @Binding var dateTimeInterval: DateTimeInterval
+    @Binding var dateInterval: DateInterval
     @Binding var selectedDate: Date
     
     private var viewModel = DateIntervalNavigatorViewModel()
@@ -17,8 +17,8 @@ struct DateIntervalNavigatorView: View {
     var body: some View {
         VStack {
             
-            Picker(.settingsGeneralOptionDateTimeInterval, selection: $dateTimeInterval) {
-                ForEach(DateTimeInterval.allCases) { item in
+            Picker(.settingsGeneralOptionDateInterval, selection: $dateInterval) {
+                ForEach(DateInterval.allCases) { item in
                     Text(item.localized)
                 }
             }
@@ -37,9 +37,9 @@ struct DateIntervalNavigatorView: View {
                     Spacer()
                     
                     Button {
-                        selectedDate = viewModel.navigateDateTime(selectedDate, to: .today, byAdding: dateTimeInterval)
+                        selectedDate = viewModel.navigateDateTime(selectedDate, to: .today, byAdding: dateInterval)
                     } label: {
-                        Text(.datetimeToday)
+                        Text(.dateToday)
                             .font(.callout)
                             .foregroundStyle(Color.primary)
                     }
@@ -52,14 +52,14 @@ struct DateIntervalNavigatorView: View {
     var navigator: some View {
         HStack {
             Button {
-                selectedDate = viewModel.navigateDateTime(selectedDate, to: .previous, byAdding: dateTimeInterval)
+                selectedDate = viewModel.navigateDateTime(selectedDate, to: .previous, byAdding: dateInterval)
             } label: {
                 Image.chevronLeft
                     .font(.title2)
                     .fontWeight(.thin)
             }
             
-            Text(viewModel.getHeader(selectedDate, by: dateTimeInterval))
+            Text(viewModel.getHeader(selectedDate, by: dateInterval))
                 .font(.callout)
                 .frame(width: FrameSize.width.buttonSelectValueIntervalCenter)
                 .lineLimit(1)
@@ -67,7 +67,7 @@ struct DateIntervalNavigatorView: View {
             
             
             Button {
-                selectedDate = viewModel.navigateDateTime(selectedDate, to: .next, byAdding: dateTimeInterval)
+                selectedDate = viewModel.navigateDateTime(selectedDate, to: .next, byAdding: dateInterval)
             } label: {
                 Image.chevronRight
                     .font(.title2)
@@ -80,12 +80,12 @@ struct DateIntervalNavigatorView: View {
 }
 
 #Preview(Previews.localeES) {
-    @Previewable @State var dateTimeInterval = DateTimeInterval.month
+    @Previewable @State var dateInterval = DateInterval.month
     @Previewable @State var selectedDate = Date()
     
     VStack {
         Spacer()
-        DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval,
+        DateIntervalNavigatorView(dateInterval: $dateInterval,
                                   selectedDate: $selectedDate)
         Spacer()
     }

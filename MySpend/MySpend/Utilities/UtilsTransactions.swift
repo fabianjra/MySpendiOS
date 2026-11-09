@@ -18,7 +18,7 @@ extension Array where Element == TransactionModel {
                         .sortedTransactions(by: sortSelection)
      ```
      */
-    func filteredTransactions(by interval: DateTimeInterval, selectedDate: Date, calendar: Calendar = .current) -> [TransactionModel] {
+    func filteredTransactions(by interval: DateInterval, selectedDate: Date, calendar: Calendar = .current) -> [TransactionModel] {
         
         guard let dateInterval = calendar.dateInterval(of: interval.componentType,
                                                        for: selectedDate) else {

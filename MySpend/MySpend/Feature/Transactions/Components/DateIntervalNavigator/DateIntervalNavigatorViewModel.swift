@@ -10,7 +10,7 @@ import Foundation
 struct DateIntervalNavigatorViewModel {
     
     /// Manipulate the Date value selected by navigation on an specific TeimInterval
-    func navigateDateTime(_ selectedDate: Date, to timeNavigate: TimeNavigate, byAdding dateTimeInterval: DateTimeInterval) -> Date {
+    func navigateDateTime(_ selectedDate: Date, to timeNavigate: TimeNavigate, byAdding dateInterval: DateInterval) -> Date {
         
         if timeNavigate == .today {
             return Date.now
@@ -18,7 +18,7 @@ struct DateIntervalNavigatorViewModel {
         
         let timeToMove = timeNavigate == .next ? 1 : timeNavigate == .previous ? -1 : .zero
         
-        guard let newDate = Calendar.current.date(byAdding: dateTimeInterval.componentType,
+        guard let newDate = Calendar.current.date(byAdding: dateInterval.componentType,
                                                   value: timeToMove,
                                                   to: selectedDate)
         else { return selectedDate }
@@ -27,7 +27,7 @@ struct DateIntervalNavigatorViewModel {
         let calendar = Calendar.current
         var components = calendar.dateComponents([.year, .month, .day], from: newDate)
         
-        switch dateTimeInterval {
+        switch dateInterval {
         case .day, .week:
             break // keep day/month, just zero the time
             
@@ -98,7 +98,7 @@ struct DateIntervalNavigatorViewModel {
         } ?? newDate
     }
     
-    func getHeader(_ selectedDate: Date, by timeInterval: DateTimeInterval) -> String {
+    func getHeader(_ selectedDate: Date, by timeInterval: DateInterval) -> String {
         var header = ""
         
         let formatStyle = UtilsDate.getDateFormatStyleLocale

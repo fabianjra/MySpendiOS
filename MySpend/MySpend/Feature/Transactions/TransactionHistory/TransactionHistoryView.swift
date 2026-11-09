@@ -17,21 +17,21 @@ struct TransactionHistoryView: View {
         editMode?.wrappedValue.isEditing == true
     }
     
-    @Binding var dateTimeInterval: DateTimeInterval
+    @Binding var dateInterval: DateInterval
     @Binding var selectedDate: Date
     
     @State private var viewModel = TransactionHistoryViewModel()
     @State private var toastResponse: ToastResponse?
     
     private var filteredTransactions: [TransactionModel] {
-        manager.filteredAndSortedTransactions(by: dateTimeInterval,
+        manager.filteredAndSortedTransactions(by: dateInterval,
                                               selectedDate: selectedDate,
                                               accountIDs: accountManager.selectedAccountsToFilterByID)
     }
     
     var body: some View {
         VStack {
-            DateIntervalNavigatorView(dateTimeInterval: $dateTimeInterval, selectedDate: $selectedDate)
+            DateIntervalNavigatorView(dateInterval: $dateInterval, selectedDate: $selectedDate)
                 .padding(.horizontal)
                 .disabled(isEditing)
             
@@ -403,11 +403,11 @@ private struct PreviewWrapper: View {
     
     @State var editMode: EditMode = .inactive
     
-    @State var dateTimeInterval: DateTimeInterval = .month
+    @State var dateInterval: DateInterval = .month
     @State var selectedDate: Date = .now
     
     var body: some View {
-        TransactionHistoryView(dateTimeInterval: $dateTimeInterval,
+        TransactionHistoryView(dateInterval: $dateInterval,
                                selectedDate: $selectedDate)
         .environment(manager)
         .environment(accountManager)
