@@ -30,7 +30,7 @@ struct TransactionView: View {
                 List {
                     //TODO: MOCK
                     ForEach(0...10, id: \.self) { item in
-                        Text("\(item)")
+                        Text(verbatim: "\(item)")
                     }
                 }
                 .scrollDismissesKeyboard(.immediately)

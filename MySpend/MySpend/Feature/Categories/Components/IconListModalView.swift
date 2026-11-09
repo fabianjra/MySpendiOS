@@ -55,7 +55,7 @@ struct IconListModalView: View {
                     }
                 }
             }
-            .navigationTitle("Select icon")
+            .navigationTitle(Text(verbatim: "Select icon"))
         }
     }
 }

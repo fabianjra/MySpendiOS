@@ -88,7 +88,7 @@ struct FilterTransactionsView: View {
             .padding(.bottom, UtilsUI.isPad ? nil : .zero)
         }
         // MARK: NAVIGATION
-        .navigationTitle(.filters)
+        .navigationTitle(.filtersTitle)
         .navigationBarTitleDisplayMode(.inline)
             
         .presentationDetents([.medium, .large], selection: $selectedDetent)
@@ -122,8 +122,10 @@ private struct PreviewWrapper: View {
     
     var body: some View {
         VStack {
-            Button("Show") {
+            Button {
                 show = true
+            } label: {
+                Text(verbatim: "Show")
             }
         }
         .sheet(isPresented: $show) {

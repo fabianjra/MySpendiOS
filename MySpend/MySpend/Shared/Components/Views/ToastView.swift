@@ -27,7 +27,7 @@ private struct ToastView: ViewModifier {
     
     // Tiempo en segundos que se mostrara el Popup. Se calcula por palabra
     private var displayDuration: Double {
-        let message = String(localized: response?.message ?? "")
+        let message = response.map { String(localized: $0.message) } ?? String()
         let wordCount = message.split(whereSeparator: \.isWhitespace).count
         let readingTime = Double(wordCount) / 225.0 * 60.0
         
@@ -38,13 +38,16 @@ private struct ToastView: ViewModifier {
         content
             .overlay(alignment: .bottom) {
                 if isPresented {
-                    
                     HStack {
-                        Text(response?.type?.rawValue ?? "")
+                        if let type = response?.type {
+                            Text(type.rawValue)
+                        }
                         
-                        Text(response?.message ?? "")
-                            .fontDesign(.rounded)
-                            .lineLimit(5)
+                        if let message = response?.message {
+                            Text(message)
+                                .fontDesign(.rounded)
+                                .lineLimit(5)
+                        }
                     }
                     .padding(.horizontal)
                     .padding(.vertical)

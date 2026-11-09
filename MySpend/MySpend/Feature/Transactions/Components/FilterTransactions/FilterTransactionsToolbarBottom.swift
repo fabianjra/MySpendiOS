@@ -107,7 +107,7 @@ private struct PreviewWrapper: View {
     
     var body: some View {
         VStack {
-            Text("Accounts selected:")
+            Text(verbatim: "Accounts selected:")
             
             ForEach(accountManager.sortedAccounts.filter { accountManager.selectedAccountsToFilterByID.contains($0.id)}) { item in
                 Text(item.name)

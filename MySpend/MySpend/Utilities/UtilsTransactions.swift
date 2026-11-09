@@ -119,7 +119,7 @@ struct UtilsTransactions {
     static func filteredAccountsDescription(accounts: [AccountModel], selectedAccountsToFilter: Set<UUID>, isFilterActive: Bool) -> LocalizedStringResource {
 
         guard accounts.count > 1, isFilterActive else {
-            return ""
+            return LocalizedStringResource(stringLiteral: String())
         }
 
         if selectedAccountsToFilter.isEmpty {

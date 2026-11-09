@@ -130,7 +130,7 @@ struct TransactionHistoryView: View {
                                     
                                     HStack {
                                         if shouldShowAccountName {
-                                            Text("\(item.account.name):")
+                                            Text(verbatim: "\(item.account.name):")
                                                 .font(.footnote)
                                                 .fontDesign(.rounded)
                                                 .foregroundStyle(.secondary)

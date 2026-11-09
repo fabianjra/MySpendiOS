@@ -17,7 +17,7 @@ struct DatePickerModalView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                DatePicker("", selection: $selectedDate, displayedComponents: .date)
+                DatePicker(.transactionInputDate, selection: $selectedDate, displayedComponents: .date)
                     .id(datePickerID)
                     .datePickerStyle(.graphical)
                 //.frame(width: FrameSize.width.calendar, height: FrameSize.width.calendar)

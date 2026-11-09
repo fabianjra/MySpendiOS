@@ -44,8 +44,8 @@ struct DateTimeIntervalView: View {
             }
             .scrollContentBackground(.hidden)
         }
-        .navigationTitle("Time interval list")
-        .navigationSubtitle("Select the new time interval")
+        .navigationTitle(Text(verbatim: "Time interval list"))
+        .navigationSubtitle(Text(verbatim: "Select the new time interval"))
         .background(Color.backgroundGradient)
     }
 }
