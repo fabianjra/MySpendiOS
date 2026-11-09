@@ -8,9 +8,12 @@
 import SwiftUI
 
 struct SettingsView: View {
-        
+    
     @State private var showAlert = false
     @State private var showAlertConfirmation = false
+    
+    @State private var selectedDateInterval = UserDefaultsManager.dateTimeInterval
+    @Environment(ThemeManager.self) private var themeManager
     
     var body: some View {
         List {
@@ -31,6 +34,7 @@ struct SettingsView: View {
             // MARK: - GENERAL
             
             Section(.settingsGeneralSectionTitle) {
+                
                 ForEach(ContentOptions.allCases) { option in
                     NavigationLink(destination: option.view) {
                         Label {
@@ -40,9 +44,43 @@ struct SettingsView: View {
                         }
                     }
                 }
+                
+                
+                Picker(selection: $selectedDateInterval) {
+                    ForEach(DateTimeInterval.allCases) { item in
+                        Text(item.localized)
+                            .tag(item)
+                    }
+                } label: {
+                    Label {
+                        Text(.settingsGeneralOptionDateTimeInterval)
+                    } icon: {
+                        Text(verbatim: "📅")
+                    }
+                }
+                .pickerStyle(.menu)
+                .tint(.primary)
+                
+                
+                @Bindable var themeManager = themeManager
+                
+                Picker(selection: $themeManager.theme) {
+                    ForEach(AppTheme.allCases, id: \.self) { item in
+                        Label(item.localized, systemImage: item.icon)
+                            .tag(item)
+                    }
+                } label: {
+                    Label {
+                        Text(.settingsGeneralOptionAppTheme)
+                    } icon: {
+                        Text(verbatim: "🎨")
+                    }
+                }
+                .pickerStyle(.menu)
+                .tint(.primary)
             }
             
-            // MARK: - ERASE ALL DATA
+            // MARK: - DATA
             
             Section(.settingsDataSectionTitle) {
                 
@@ -76,8 +114,6 @@ struct SettingsView: View {
             }
         }
         .navigationTitle(.settingsTitle)
-        
-        //.listStyle(.insetGrouped) //Coomentend for: iOS26
         .scrollContentBackground(.hidden)
         .background(Color.backgroundGradient)
     }

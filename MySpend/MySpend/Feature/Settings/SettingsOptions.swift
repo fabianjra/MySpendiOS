@@ -61,16 +61,12 @@ enum ContentOptions: String, CaseIterable, Identifiable {
     case accounts
     case categories
     case currency
-    case dateTimeInterval
-    case appTheme
     
     var title: LocalizedStringResource {
         switch self {
         case .accounts: return .settingsGeneralOptionAccounts
         case .categories: return .settingsGeneralOptionCategories
         case .currency: return .settingsGeneralOptionCurrency
-        case .dateTimeInterval: return .settingsGeneralOptionDateTimeInterval
-        case .appTheme: return .settingsGeneralOptionAppTheme
         }
     }
     
@@ -79,8 +75,6 @@ enum ContentOptions: String, CaseIterable, Identifiable {
         case .accounts: return "🏦"
         case .categories: return "📋"
         case .currency: return "💱"
-        case .dateTimeInterval: return "📅"
-        case .appTheme: return "🎨"
         }
     }
     
@@ -90,8 +84,6 @@ enum ContentOptions: String, CaseIterable, Identifiable {
         case .accounts: AccountView()
         case .categories: CategoryView()
         case .currency: CurrencyView()
-        case .dateTimeInterval: DateTimeIntervalView()
-        case .appTheme: AppThemeView()
         }
     }
 }

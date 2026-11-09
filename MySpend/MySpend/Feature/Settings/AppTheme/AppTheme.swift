@@ -24,7 +24,7 @@ enum AppTheme: Identifiable, CaseIterable, Codable {
         }
     }
     
-    var localizedName: LocalizedStringResource {
+    var localized: LocalizedStringResource {
         switch self {
             
         case .system: return .appThemeSystem
@@ -35,9 +35,9 @@ enum AppTheme: Identifiable, CaseIterable, Codable {
     
     var icon: String {
         switch self {
-        case .system: return ""
-        case .light: return "🌝"
-        case .dark: return "🌚"
+        case .system: return "iphone"
+        case .light: return "sun.max"
+        case .dark: return "moon"
         }
     }
 }
