@@ -116,16 +116,16 @@ struct UtilsTransactions {
          ↓
      Entonces → nombres de las seleccionadas
      */
-    static func filteredAccountsDescription(accounts: [AccountModel], selectedAccountsToFilter: Set<UUID>, isFilterActive: Bool) -> LocalizedStringResource {
-
+    static func filteredAccountsDescription(accounts: [AccountModel], selectedAccountsToFilter: Set<UUID>, isFilterActive: Bool) -> LocalizedStringResource? {
+        
         guard accounts.count > 1, isFilterActive else {
-            return LocalizedStringResource(stringLiteral: String())
+            return nil
         }
-
+        
         if selectedAccountsToFilter.isEmpty {
             return .filterAccountNoneTitle
         }
-
+        
         if selectedAccountsToFilter.count == accounts.count {
             return .filterAccountAll
         }

@@ -1,16 +1,6 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "" : {
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : ""
-          }
-        }
-      }
-    },
     "Account.Create.DefaultName" : {
       "comment" : "Nombre de la cuenta por defecto en caso de no escribirlo en el OnBoarding",
       "extractionState" : "manual",

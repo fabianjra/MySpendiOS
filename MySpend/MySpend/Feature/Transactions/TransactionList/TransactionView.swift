@@ -145,10 +145,11 @@ struct TransactionView: View {
             DateIntervalNavigatorView(dateTimeInterval: $viewModel.dateTimeInterval,
                                       selectedDate: $viewModel.selectedDate)
             
-            Text(filteredAccountsDescription)
-                .font(.caption)
-                .lineLimit(2)
-            
+            if let text = filteredAccountsDescription {
+                Text(text)
+                    .font(.caption)
+                    .lineLimit(2)
+            }
             
             ScrollView(showsIndicators: false) {
                 

@@ -35,12 +35,14 @@ struct TransactionHistoryView: View {
                 .padding(.horizontal)
                 .disabled(isEditing)
             
-            let text = UtilsTransactions.filteredAccountsDescription(accounts: accountManager.sortedAccounts,
-                                                                     selectedAccountsToFilter: accountManager.selectedAccountsToFilterByID,
-                                                                     isFilterActive: manager.isFilterActive)
-            Text(text)
-                .font(.caption)
-                .lineLimit(2)
+            let filteredAccountsDescription = UtilsTransactions.filteredAccountsDescription(accounts: accountManager.sortedAccounts,
+                                                                                            selectedAccountsToFilter: accountManager.selectedAccountsToFilterByID,
+                                                                                            isFilterActive: manager.isFilterActive)
+            if let text = filteredAccountsDescription {
+                Text(text)
+                    .font(.caption)
+                    .lineLimit(2)
+            }
             
             transactionsList
             
