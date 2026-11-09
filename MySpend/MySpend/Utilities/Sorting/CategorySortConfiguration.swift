@@ -30,15 +30,15 @@ enum CategorySortOption: Codable, CaseIterable {
             
         case .usage:
             return order == .ascending
-            ? .sortOrderMostRecent
-            : .sortOrderLeastUsed
+            ? .sortOrderNewest
+            : .sortOrderOldest
             
         case .title: return order.localized
             
         case .dateCreated:
             return order == .ascending
-            ? .sortOrderMostRecent
-            : .sortOrderLeastUsed
+            ? .sortOrderNewest
+            : .sortOrderOldest
         
         }
     }

@@ -13,7 +13,7 @@ struct ToastResponse: Identifiable {
     let message: LocalizedStringResource
     let type: ResponseType?
     
-    init(_ message: LocalizedStringResource = .responseSuccesful,
+    init(_ message: LocalizedStringResource = .responseSuccessful,
          _ type: ResponseType? = nil) {
         self.message = message
         self.type = type

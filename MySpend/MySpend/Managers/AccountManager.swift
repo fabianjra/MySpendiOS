@@ -160,7 +160,7 @@ extension AccountManager {
                 setDefaultAccount(by: account)
             }
             
-            return ToastResponse(.responseSuccesful, .ok)
+            return ToastResponse(.responseSuccessful, .ok)
         } catch {
             Logger.exception(error, type: .CoreData)
             return ToastResponse(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)
@@ -179,7 +179,7 @@ extension AccountManager {
                 setDefaultAccount(by: account)
             }
             
-            return ToastResponse(.responseSuccesful, .ok)
+            return ToastResponse(.responseSuccessful, .ok)
         } catch {
             Logger.exception(error, type: .CoreData)
             return ToastResponse(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)

@@ -27,8 +27,8 @@ enum AccountSortOption: Codable, CaseIterable {
         switch self {
         case .dateCreated:
             return order == .ascending
-            ? .sortOrderMostRecent
-            : .sortOrderLeastUsed
+            ? .sortOrderNewest
+            : .sortOrderOldest
             
         case .title: return order.localized
         }

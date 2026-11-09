@@ -115,7 +115,7 @@ extension TransactionManager {
         do {
             try await coreDataManager.create(transaction)
             
-            return ToastResponse(.responseSuccesful, .ok)
+            return ToastResponse(.responseSuccessful, .ok)
         } catch {
             Logger.exception(error, type: .CoreData)
             return ToastResponse(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)
@@ -130,7 +130,7 @@ extension TransactionManager {
         do {
             try await coreDataManager.update(transaction)
             
-            return ToastResponse(.responseSuccesful, .ok)
+            return ToastResponse(.responseSuccessful, .ok)
         } catch {
             Logger.exception(error, type: .CoreData)
             return ToastResponse(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)
@@ -171,7 +171,7 @@ extension TransactionManager {
         do {
             try await coreDataManager.updateFavorite(model)
             
-            return ToastResponse(.responseSuccesful, .ok)
+            return ToastResponse(.responseSuccessful, .ok)
         } catch {
             Logger.exception(error, type: .CoreData)
             return ToastResponse(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)
@@ -194,7 +194,7 @@ extension TransactionManager {
                 try await TransactionCoreDataManager(viewContext).favoriteMultiple(Array(selectedTransactions), newState: newState)
             }
             
-            return ToastResponse(.responseSuccesful, .ok)
+            return ToastResponse(.responseSuccessful, .ok)
         } catch {
             Logger.exception(error, type: .CoreData)
             return ToastResponse(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)

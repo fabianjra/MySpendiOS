@@ -35,7 +35,7 @@ struct OnBoardingAccountView: View {
         .onAppear { isFocused = true }
         
         .navigationTitle(.onBoardingAccountTitle)
-        .navigationSubtitle(.onBoardingAccountEntertName)
+        .navigationSubtitle(.onBoardingAccountEnterName)
         
         .safeAreaInset(edge: .bottom) {
             VStack {

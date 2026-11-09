@@ -44,13 +44,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "New Account"
+            "value" : "New account"
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Crear Cuenta"
+            "state" : "needs_review",
+            "value" : "Nueva cuenta"
           }
         }
       }
@@ -194,7 +194,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ingresa el nombre de cuenta"
+            "value" : "Ingresa el nombre de la cuenta"
           }
         }
       }
@@ -260,13 +260,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Update Account"
+            "value" : "Edit account"
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Actualizar Cuenta"
+            "state" : "needs_review",
+            "value" : "Editar cuenta"
           }
         }
       }
@@ -476,13 +476,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "System configuration"
+            "value" : "System"
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Configuración del sistema"
+            "state" : "needs_review",
+            "value" : "Sistema"
           }
         }
       }
@@ -680,13 +680,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "New Category"
+            "value" : "New category"
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Crear Categoría"
+            "state" : "needs_review",
+            "value" : "Nueva categoría"
           }
         }
       }
@@ -932,12 +932,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Incomes"
+            "value" : "Income"
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Ingresos"
           }
         }
@@ -968,13 +968,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Update Category"
+            "value" : "Edit category"
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Actualizar Categoría"
+            "state" : "needs_review",
+            "value" : "Editar categoría"
           }
         }
       }
@@ -1454,12 +1454,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hello %@ %@ "
+            "value" : "Hello %@ %@"
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Hola %@ %@ "
           }
         }
@@ -1663,7 +1663,7 @@
         }
       }
     },
-    "OnBoarding.Account.EntertName" : {
+    "OnBoarding.Account.EnterName" : {
       "comment" : "Indica que se debe ingresar un nombre para la cuenta principal",
       "extractionState" : "manual",
       "localizations" : {
@@ -1723,12 +1723,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Enter your username to start"
+            "value" : "Enter your name to get started"
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Ingresa tu nombre para comenzar"
           }
         }
@@ -1813,12 +1813,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Enter your phone"
+            "value" : "Enter your phone number"
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Ingresa tu # de teléfono"
           }
         }
@@ -2058,7 +2058,7 @@
         }
       }
     },
-    "Response.Succesful" : {
+    "Response.Successful" : {
       "comment" : "Respuesta exitosa",
       "extractionState" : "manual",
       "localizations" : {
@@ -2407,13 +2407,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This action cannot be undone"
+            "value" : "This action cannot be undone."
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Esta acción no se puede deshacer"
+            "state" : "needs_review",
+            "value" : "Esta acción no se puede deshacer."
           }
         }
       }
@@ -2443,13 +2443,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Want to delete all data?"
+            "value" : "Delete all data?"
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "¿Desea borrar todos los datos?"
+            "state" : "needs_review",
+            "value" : "¿Eliminar todos los datos?"
           }
         }
       }
@@ -2461,13 +2461,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Are you completely sure you want to delete all data?"
+            "value" : "Are you sure you want to delete all data?"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "¿Está completamente seguro de que desea eliminar todos los datos?"
+            "value" : "¿Seguro que quieres eliminar todos los datos?"
           }
         }
       }
@@ -2731,13 +2731,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "By Default"
+            "value" : "Default order"
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Por Defecto"
+            "state" : "needs_review",
+            "value" : "Orden predeterminado"
           }
         }
       }
@@ -2814,24 +2814,6 @@
         }
       }
     },
-    "Sort.Order.LeastUsed" : {
-      "comment" : "Ordenamiento menos reciente",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Oldest first"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Más viejas primero"
-          }
-        }
-      }
-    },
     "Sort.Order.Lowest" : {
       "comment" : "Ordenamiento más bajo",
       "extractionState" : "manual",
@@ -2850,7 +2832,7 @@
         }
       }
     },
-    "Sort.Order.MostRecent" : {
+    "Sort.Order.Newest" : {
       "comment" : "Ordenamiento más reciente",
       "extractionState" : "manual",
       "localizations" : {
@@ -2863,7 +2845,25 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Más nuevas primero"
+            "value" : "Más recientes primero"
+          }
+        }
+      }
+    },
+    "Sort.Order.Oldest" : {
+      "comment" : "Ordenamiento menos reciente",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oldest first"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Más antiguas primero"
           }
         }
       }
@@ -2893,13 +2893,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sorted By: %@"
+            "value" : "Sorted by: %@"
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ordenar Por %@"
+            "state" : "needs_review",
+            "value" : "Ordenar por %@"
           }
         }
       }
@@ -2989,7 +2989,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ver los detalles de las transacciones"
+            "value" : "Detalles de las transacciones"
           }
         }
       }
@@ -3007,7 +3007,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Crear Transacción"
+            "value" : "Nueva transacción"
           }
         }
       }
@@ -3307,12 +3307,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Note"
+            "value" : "Notes"
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Notas"
           }
         }
@@ -3325,12 +3325,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No note entered"
+            "value" : "No notes entered"
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Sin notas"
           }
         }
@@ -3343,13 +3343,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Update Transaction"
+            "value" : "Edit transaction"
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Actualizar Transacción"
+            "state" : "needs_review",
+            "value" : "Editar transacción"
           }
         }
       }

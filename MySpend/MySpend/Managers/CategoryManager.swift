@@ -96,7 +96,7 @@ extension CategoryManager {
         do {
             try await coreDataManager.create(category)
             
-            return ToastResponse(.responseSuccesful, .ok)
+            return ToastResponse(.responseSuccessful, .ok)
         } catch {
             Logger.exception(error, type: .CoreData)
             return ToastResponse(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)
@@ -111,7 +111,7 @@ extension CategoryManager {
         do {
             try await coreDataManager.update(category)
             
-            return ToastResponse(.responseSuccesful, .ok)
+            return ToastResponse(.responseSuccessful, .ok)
         } catch {
             Logger.exception(error, type: .CoreData)
             return ToastResponse(LocalizedStringResource(stringLiteral: error.localizedDescription), .error)

@@ -108,7 +108,7 @@ extension View {
         Spacer()
         
         Button("View Toast small") {
-            toastResponse = ToastResponse(.responseSuccesful, .ok)
+            toastResponse = ToastResponse(.responseSuccessful, .ok)
         }
         
         HStack {

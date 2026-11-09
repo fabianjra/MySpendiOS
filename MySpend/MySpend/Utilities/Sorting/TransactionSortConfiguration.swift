@@ -30,8 +30,8 @@ enum TransactionSortOption: Codable, CaseIterable {
             
         case .dateTransaction:
             return order == .ascending
-            ? .sortOrderMostRecent
-            : .sortOrderLeastUsed
+            ? .sortOrderNewest
+            : .sortOrderOldest
             
         case .amount:
             return order == .ascending
