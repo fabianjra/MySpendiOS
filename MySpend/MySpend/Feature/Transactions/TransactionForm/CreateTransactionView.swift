@@ -14,11 +14,16 @@ struct CreateTransactionView: View {
     
     var selectedDate: Date
     
-    @State private var transaction = TransactionModel()
+    @State private var transaction: TransactionModel
     @State private var amountString = ""
     @State private var type = CategoryType.expense
     
     @State private var toastResponse: ToastResponse?
+    
+    init(selectedDate: Date) {
+        self.selectedDate = selectedDate
+        _transaction = State(initialValue: TransactionModel(dateTransaction: selectedDate))
+    }
     
     var body: some View {
         TransactionForm(transaction: $transaction, type: $type, amountString: $amountString)
