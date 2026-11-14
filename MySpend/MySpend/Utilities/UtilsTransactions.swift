@@ -186,8 +186,8 @@ struct UtilsTransactions {
         formatter.locale = Locale.current
         //formatter.maximumIntegerDigits = CurrencyManager.amoutMaxLength
         //formatter.minimumFractionDigits = CurrencyManager.fractionLength
-        formatter.minimumFractionDigits = showCents ? CurrencyManager.fractionLength : .zero
-        formatter.maximumFractionDigits = CurrencyManager.fractionLength
+        formatter.minimumFractionDigits = .zero
+        formatter.maximumFractionDigits = showCents ? CurrencyManager.fractionLength : .zero
         
         /*
          numberStyle: Define el estilo general del formateo numérico.
