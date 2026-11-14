@@ -26,21 +26,38 @@ extension Array where Element == CategoryModel {
                 : $0.dateCreated < $1.dateCreated
             }
             
-        /**
-         Sorts categories by usage count according to the selected order.
+            /**
+             Sorts categories by usage count according to the selected order.
              
-         When two categories have the same usage count, the most recently
-         used category is displayed first, regardless of the selected order.
-         */
+             When usage counts are equal, the most recently used category comes first.
+             Categories that have never been used are placed after used categories.
+             When both categories have never been used, the oldest category comes first.
+             */
         case .usage:
             return sorted {
-                if $0.usageCount == $1.usageCount {
-                    return $0.dateLastUsed > $1.dateLastUsed
+                let isAscending = sort.order == .ascending
+                
+                if $0.usageCount != $1.usageCount {
+                    return isAscending
+                    ? $0.usageCount > $1.usageCount
+                    : $0.usageCount < $1.usageCount
                 }
                 
-                return sort.order == .ascending
-                ? $0.usageCount > $1.usageCount
-                : $0.usageCount < $1.usageCount
+                switch ($0.dateLastUsed, $1.dateLastUsed) {
+                case let (date1?, date2?):
+                    return isAscending ? date1 > date2 : date1 < date2
+                    
+                case (.some, .none):
+                    return isAscending
+                    
+                case (.none, .some):
+                    return !isAscending
+                    
+                case (.none, .none):
+                    return isAscending
+                    ? $0.dateCreated < $1.dateCreated
+                    : $0.dateCreated > $1.dateCreated
+                }
             }
         }
     }

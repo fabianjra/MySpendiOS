@@ -2886,6 +2886,24 @@
         }
       }
     },
+    "Sort.Order.LeastUsed" : {
+      "comment" : "Ordenamiento de menos usadas",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Least used first"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Menos usadas primero"
+          }
+        }
+      }
+    },
     "Sort.Order.Lowest" : {
       "comment" : "Ordenamiento más bajo",
       "extractionState" : "manual",
@@ -2900,6 +2918,24 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Menor"
+          }
+        }
+      }
+    },
+    "Sort.Order.MostUsed" : {
+      "comment" : "Ordenamiento de más usadas",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Most used first"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Más usadas primero"
           }
         }
       }

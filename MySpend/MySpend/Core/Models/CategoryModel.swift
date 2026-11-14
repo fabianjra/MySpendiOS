@@ -15,7 +15,7 @@ struct CategoryModel: Identifiable, Equatable, Hashable {
     var id = UUID()
     
     // Entity-specific Attributes
-    let dateLastUsed: Date
+    let dateLastUsed: Date?
     var icon: String // Emoji
     var name: String
     var usageCount: Int
@@ -25,7 +25,7 @@ struct CategoryModel: Identifiable, Equatable, Hashable {
         self.dateCreated = .init()
         self.dateModified = .init()
         
-        self.dateLastUsed = .init()
+        self.dateLastUsed = nil
         self.icon = icon
         self.name = name
         self.usageCount = .zero
@@ -38,7 +38,7 @@ struct CategoryModel: Identifiable, Equatable, Hashable {
         dateModified = entity.dateModified ?? .init()
         id = entity.id ?? UUID()
         
-        dateLastUsed = entity.dateLastUsed ?? .init()
+        dateLastUsed = entity.dateLastUsed
         icon = entity.icon ?? ""
         name = entity.name ?? ""
         usageCount = Int(entity.usageCount)

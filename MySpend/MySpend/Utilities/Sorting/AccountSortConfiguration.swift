@@ -9,7 +9,7 @@ import Foundation
 
 struct AccountSortConfiguration: Codable, Equatable {
     var sortBy: AccountSortOption = .dateCreated
-    var order: SortOrder = .ascending
+    var order: SortOrder = .descending
 }
 
 enum AccountSortOption: Codable, CaseIterable {

@@ -99,10 +99,13 @@ struct TransactionCoreDataManager {
             entity.notes = model.notes
             entity.favorite = model.favorite
             
+            // NOTA:
+            // Asigna su ultimo uso para poder ordenarlo por los mas usados
+            categoryResolved.dateLastUsed = now
+            categoryResolved.usageCount += 1
+            
             entity.category = categoryResolved
             entity.account = accountResolved
-            
-            entity.category?.dateLastUsed = now
             
             try viewContext.save()
         }
