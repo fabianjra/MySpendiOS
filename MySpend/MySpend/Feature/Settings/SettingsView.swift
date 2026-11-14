@@ -12,7 +12,7 @@ struct SettingsView: View {
     @State private var showAlert = false
     @State private var showAlertConfirmation = false
     
-    @Environment(DateIntervalManager.self) private var dateIntervalManager
+    @Environment(DateTimeIntervalManager.self) private var dateTimeIntervalManager
     @Environment(ThemeManager.self) private var themeManager
     
     //TODO: Cambiar por environment
@@ -104,10 +104,10 @@ struct SettingsView: View {
                 .pickerStyle(.menu)
                 .tint(.secondary)
                 
-                @Bindable var dateIntervalManager = dateIntervalManager
+                @Bindable var dateTimeIntervalManager = dateTimeIntervalManager
                 
-                Picker(selection: $dateIntervalManager.defaultInterval) {
-                    ForEach(DateInterval.allCases) { item in
+                Picker(selection: $dateTimeIntervalManager.defaultInterval) {
+                    ForEach(DateTimeInterval.allCases) { item in
                         Text(item.localized)
                             .tag(item)
                     }
@@ -175,7 +175,7 @@ struct SettingsView: View {
 }
 
 #Preview(Previews.localeES_ES) {
-    @Previewable @State var dateIntervalManager = DateIntervalManager.shared
+    @Previewable @State var dateIntervalManager = DateTimeIntervalManager.shared
     @Previewable @State var themeManager = ThemeManager.shared
     
     NavigationStack {
@@ -188,7 +188,7 @@ struct SettingsView: View {
 }
 
 #Preview(Previews.localeEN) {
-    @Previewable @State var dateIntervalManager = DateIntervalManager.shared
+    @Previewable @State var dateIntervalManager = DateTimeIntervalManager.shared
     @Previewable @State var themeManager = ThemeManager.shared
     
     NavigationStack {

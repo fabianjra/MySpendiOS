@@ -1,5 +1,5 @@
 //
-//  DateInterval.swift
+//  DateTimeInterval.swift
 //  MySpend
 //
 //  Created by Fabian Rodriguez on 18/8/24.
@@ -15,7 +15,7 @@ import Foundation
  - Identifiable: To asign and ID to every item when iterate.
  - Codable: To Set and Get valures in UserDefaults.
  */
-enum DateInterval: CaseIterable, Identifiable, Codable {
+enum DateTimeInterval: CaseIterable, Identifiable, Codable {
     public var id: Self { self }
     
     case day

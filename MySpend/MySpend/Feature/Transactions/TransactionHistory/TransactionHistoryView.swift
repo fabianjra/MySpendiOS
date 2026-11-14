@@ -17,14 +17,14 @@ struct TransactionHistoryView: View {
         editMode?.wrappedValue.isEditing == true
     }
     
-    @Binding var dateInterval: DateInterval
+    @Binding var dateTimeInterval: DateTimeInterval
     @Binding var selectedDate: Date
     
     @State private var viewModel = TransactionHistoryViewModel()
     @State private var toastResponse: ToastResponse?
     
     private var filteredTransactions: [TransactionModel] {
-        manager.filteredAndSortedTransactions(by: dateInterval,
+        manager.filteredAndSortedTransactions(by: dateTimeInterval,
                                               selectedDate: selectedDate,
                                               accountIDs: accountManager.selectedAccountsToFilterByID)
     }
@@ -35,7 +35,7 @@ struct TransactionHistoryView: View {
     
     var body: some View {
         VStack {
-            DateIntervalNavigatorView(dateInterval: $dateInterval, selectedDate: $selectedDate)
+            DateTimeNavigatorView(dateTimeInterval: $dateTimeInterval, selectedDate: $selectedDate)
                 .padding(.horizontal)
                 .disabled(isEditing)
             
@@ -260,7 +260,7 @@ struct TransactionHistoryView: View {
                             
                         }
                     } header: {
-                        if dateInterval != .day {
+                        if dateTimeInterval != .day {
                             if Calendar.current.isDateInToday(group.date) {
                                 Text(.dateToday)
                             } else {
@@ -416,11 +416,11 @@ private struct PreviewWrapper: View {
     
     @State var editMode: EditMode = .inactive
     
-    @State var dateInterval: DateInterval = .month
+    @State var dateTimeInterval: DateTimeInterval = .month
     @State var selectedDate: Date = .now
     
     var body: some View {
-        TransactionHistoryView(dateInterval: $dateInterval,
+        TransactionHistoryView(dateTimeInterval: $dateTimeInterval,
                                selectedDate: $selectedDate)
         .environment(manager)
         .environment(accountManager)

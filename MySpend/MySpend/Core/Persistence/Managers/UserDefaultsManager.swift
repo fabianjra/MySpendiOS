@@ -55,10 +55,10 @@ struct UserDefaultsManager {
     
     // MARK: PREFERENCE
     
-    static var dateInterval: DateInterval {
-        get { return UserDefaultsDataStore<DateInterval>(for: .dateInterval).value ?? .month }
+    static var dateTimeInterval: DateTimeInterval {
+        get { return UserDefaultsDataStore<DateTimeInterval>(for: .dateTimeInterval).value ?? .month }
         set {
-            var manager = UserDefaultsDataStore<DateInterval>(for: .dateInterval)
+            var manager = UserDefaultsDataStore<DateTimeInterval>(for: .dateTimeInterval)
             manager.value = newValue
         }
     }
@@ -163,7 +163,7 @@ enum UserDefaultsKeys: String, Codable, CaseIterable {
     case sortAccounts = "sort_accounts_key"
     
     // MARK: PREFERENCE
-    case dateInterval = "date_interval_key"
+    case dateTimeInterval = "date_interval_key"
     case currency = "currency_key"
     case currencySymbolType = "currency_symbol_type_key"
     case appTheme = "app_theme_key"

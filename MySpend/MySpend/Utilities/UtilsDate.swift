@@ -77,7 +77,7 @@ struct UtilsDate {
      - If the date is **today or in the future**, the original time will be preserved.
      
      Esto se hace asi, porque si se agrega una transaccion en un dia anterior a hoy, debe qudar totalmente arriba ya que la fecha ya pasó y seria la ultima(s).
-     Si la transacción se agrega a futuro, entonces debe ser al inicio del dia y en la vista de `DateIntervalNavigatorView` ya se maneja la logica de set a 00:00:00
+     Si la transacción se agrega a futuro, entonces debe ser al inicio del dia y en la vista de `DateTimeIntervalNavigatorView` ya se maneja la logica de set a 00:00:00
      
      - Parameters:
         - date: The `Date` to normalize.

@@ -12,13 +12,13 @@ struct TransactionView: View {
     @Environment(TransactionManager.self) private var manager
     @Environment(AccountManager.self) private var accountManager
     
-    @Environment(DateIntervalManager.self) private var dateIntervalManager
-    @State private var selectedDateInterval = DateIntervalManager.shared.defaultInterval
+    @Environment(DateTimeIntervalManager.self) private var dateTimeIntervalManager
+    @State private var selectedDateTimeInterval = DateTimeIntervalManager.shared.defaultInterval
     
     @State private var viewModel = TransactionViewModel()
     
     private var filteredTransactions: [TransactionModel] {
-        manager.filteredAndSortedTransactions(by: selectedDateInterval,
+        manager.filteredAndSortedTransactions(by: selectedDateTimeInterval,
                                               selectedDate: viewModel.selectedDate,
                                               accountIDs: accountManager.selectedAccountsToFilterByID)
     }
@@ -72,8 +72,8 @@ struct TransactionView: View {
             }
         }
         
-        .onChange(of: dateIntervalManager.defaultInterval) { _, newValue in
-            selectedDateInterval = newValue
+        .onChange(of: dateTimeIntervalManager.defaultInterval) { _, newValue in
+            selectedDateTimeInterval = newValue
         }
         
         .searchable(text: $viewModel.searchText, isPresented: $viewModel.showSearchView)
@@ -112,7 +112,7 @@ struct TransactionView: View {
             
             
             NavigationLink {
-                TransactionHistoryView(dateInterval: $selectedDateInterval,
+                TransactionHistoryView(dateTimeInterval: $selectedDateTimeInterval,
                                        selectedDate: $viewModel.selectedDate)
             } label: {
                 HStack {
@@ -153,7 +153,7 @@ struct TransactionView: View {
                                                                                         selectedAccountsToFilter: accountManager.selectedAccountsToFilterByID,
                                                                                         isFilterActive: manager.isFilterActive)
         return VStack {
-            DateIntervalNavigatorView(dateInterval: $selectedDateInterval,
+            DateTimeNavigatorView(dateTimeInterval: $selectedDateTimeInterval,
                                       selectedDate: $viewModel.selectedDate)
             
             if let text = filteredAccountsDescription {
@@ -265,7 +265,7 @@ private struct previewWrapper: View {
         UserDefaultsManager.userName = "Previews"
     }
     
-    @State var dateIntervalManager = DateIntervalManager.shared
+    @State var dateTimeIntervalManager = DateTimeIntervalManager.shared
     @State var themeManager = ThemeManager.shared
     @State var router = Router.shared
     
@@ -287,7 +287,7 @@ private struct previewWrapper: View {
                     }
                 }
         }
-        .environment(dateIntervalManager)
+        .environment(dateTimeIntervalManager)
         .environment(themeManager)
         .preferredColorScheme(themeManager.theme.colorScheme)
         
