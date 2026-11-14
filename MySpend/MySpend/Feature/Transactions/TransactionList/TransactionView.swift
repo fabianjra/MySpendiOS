@@ -87,7 +87,7 @@ struct TransactionView: View {
         VStack {
             HStack {
                 VStack(alignment: .leading) {
-                    Text(UtilsDate.greeting)
+                    Text(viewModel.greeting)
                         .font(.footnote.weight(.light))
                         .lineLimit(1)
                     

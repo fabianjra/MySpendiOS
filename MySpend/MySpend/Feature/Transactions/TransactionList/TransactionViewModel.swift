@@ -22,4 +22,14 @@ final class TransactionViewModel {
     var navigateToHistory: Bool = false
     
     var showFilters = false
+    
+    var greeting: LocalizedStringResource {
+        let hour = Calendar.current.component(.hour, from: .now)
+        
+        switch hour {
+        case 5..<12: return .greetGoodMorning
+        case 12..<18: return .greetGoodAfternoon
+        default: return .greetGoodEvening
+        }
+    }
 }

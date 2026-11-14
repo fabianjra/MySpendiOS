@@ -119,7 +119,9 @@ struct DateTimeNavigatorViewModel {
      */
     func getHeader(_ selectedDate: Date, by timeInterval: DateTimeInterval) -> String {
         
-        let formatStyle = UtilsDate.getDateFormatStyleLocale
+        let identifier = Locale.preferredLanguages.first ?? Locale.current.identifier
+        let formatStyle = Date.FormatStyle().locale(Locale(identifier: identifier))
+        
         let calendar = Calendar.current
         let now = Date.now
         
