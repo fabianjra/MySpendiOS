@@ -268,8 +268,8 @@ struct TransactionHistoryView: View {
                                 Text(.dateToday)
                             } else {
                                 Text(group.date, format: isCurrentYear
-                                     ? .dateTime.weekday(.wide).day().month(.wide)
-                                     : .dateTime.weekday(.wide).day().month(.wide).year())
+                                     ? .dateTime.weekday(.wide).day().month(.abbreviated)
+                                     : .dateTime.weekday(.wide).day().month(.abbreviated).year())
                             }
                         }
                     }
