@@ -261,10 +261,15 @@ struct TransactionHistoryView: View {
                         }
                     } header: {
                         if dateTimeInterval != .day {
-                            if Calendar.current.isDateInToday(group.date) {
+                            let calendar = Calendar.current
+                            let isCurrentYear = calendar.isDate(group.date, equalTo: .now, toGranularity: .year)
+
+                            if calendar.isDateInToday(group.date) {
                                 Text(.dateToday)
                             } else {
-                                Text(group.date, format: .dateTime.day().month(.wide).year())
+                                Text(group.date, format: isCurrentYear
+                                     ? .dateTime.weekday(.wide).day().month(.wide)
+                                     : .dateTime.weekday(.wide).day().month(.wide).year())
                             }
                         }
                     }
@@ -280,8 +285,6 @@ struct TransactionHistoryView: View {
         .scrollContentBackground(.hidden)
         .animation(.default, value: transactions)
     }
-    
-    // MARK: VIEWS
     
     @ToolbarContentBuilder
     private var toolbarContent: some ToolbarContent {
@@ -379,7 +382,6 @@ struct TransactionHistoryView: View {
             }
         }
     }
-    
     
     
     // MARK: FUNCTIONS

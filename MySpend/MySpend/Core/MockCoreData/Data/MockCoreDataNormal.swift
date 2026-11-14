@@ -32,13 +32,14 @@ struct MockCoreDataNormal {
         let categoryIncome2 = MockCoreDataNormal.categoryIncome2(viewContext)
         
         // Transactions:
-        MockCoreDataNormal.transaction1(viewContext, category: categoryExpense1, account: account1)
-        MockCoreDataNormal.transaction2(viewContext, category: categoryExpense2, account: account1)
-        MockCoreDataNormal.transaction2(viewContext, category: categoryExpense3, account: account2)
+        MockCoreDataNormal.transactionNow1(viewContext, category: categoryExpense1, account: account1)
+        MockCoreDataNormal.transactionNow2(viewContext, category: categoryExpense2, account: account1)
+        MockCoreDataNormal.transactionNow2(viewContext, category: categoryExpense3, account: account2)
         MockCoreDataNormal.transaction3(viewContext, category: categoryIncome1, account: account3)
         MockCoreDataNormal.transaction4(viewContext, category: categoryIncome2, account: account3)
         MockCoreDataNormal.transaction5(viewContext, category: categoryIncome2, account: account3)
         MockCoreDataNormal.transaction5(viewContext, category: categoryIncome1, account: account4)
+        MockCoreDataNormal.transaction6(viewContext, category: categoryIncome1, account: account4)
         
         do {
             try viewContext.save()
@@ -155,9 +156,9 @@ struct MockCoreDataNormal {
         return item
     }
     
-    private static func transaction1(_ context: NSManagedObjectContext, category: Category, account: Account) {
+    private static func transactionNow1(_ context: NSManagedObjectContext, category: Category, account: Account) {
         let item = Transaction(context: context)
-        item.dateCreated = Calendar.current.date(byAdding: .day, value: 33, to: .now)!
+        item.dateCreated = .now
         item.dateModified = .now
         item.id = UUID()
         
@@ -169,9 +170,9 @@ struct MockCoreDataNormal {
         item.favorite = true
     }
     
-    private static func transaction2(_ context: NSManagedObjectContext, category: Category, account: Account) {
+    private static func transactionNow2(_ context: NSManagedObjectContext, category: Category, account: Account) {
         let item = Transaction(context: context)
-        item.dateCreated = Calendar.current.date(byAdding: .day, value: 20, to: .now)!
+        item.dateCreated = .now
         item.dateModified = .now
         item.id = UUID()
         
@@ -184,12 +185,12 @@ struct MockCoreDataNormal {
     
     private static func transaction3(_ context: NSManagedObjectContext, category: Category, account: Account) {
         let item = Transaction(context: context)
-        item.dateCreated = Calendar.current.date(byAdding: .day, value: 21, to: .now)!
-        item.dateModified = Calendar.current.date(byAdding: .day, value: 21, to: .now)!
+        item.dateCreated = Calendar.current.date(byAdding: .day, value: -21, to: .now)!
+        item.dateModified = .now
         item.id = UUID()
         
         item.amount = 99.25
-        item.dateTransaction = Calendar.current.date(byAdding: .day, value: 21, to: .now)!
+        item.dateTransaction = Calendar.current.date(byAdding: .day, value: -21, to: .now)!
         item.notes = ""
         item.category = category
         item.account = account
@@ -198,12 +199,12 @@ struct MockCoreDataNormal {
     
     private static func transaction4(_ context: NSManagedObjectContext, category: Category, account: Account) {
         let item = Transaction(context: context)
-        item.dateCreated = Calendar.current.date(byAdding: .day, value: 121, to: .now)!
-        item.dateModified = Calendar.current.date(byAdding: .day, value: 121, to: .now)!
+        item.dateCreated = Calendar.current.date(byAdding: .day, value: -18, to: .now)!
+        item.dateModified = .now
         item.id = UUID()
         
         item.amount = 143.15
-        item.dateTransaction = Calendar.current.date(byAdding: .day, value: 121, to: .now)!
+        item.dateTransaction = Calendar.current.date(byAdding: .day, value: -18, to: .now)!
         item.notes = ""
         item.category = category
         item.account = account
@@ -211,12 +212,26 @@ struct MockCoreDataNormal {
     
     private static func transaction5(_ context: NSManagedObjectContext, category: Category, account: Account) {
         let item = Transaction(context: context)
-        item.dateCreated = Calendar.current.date(byAdding: .day, value: 50, to: .now)!
-        item.dateModified = Calendar.current.date(byAdding: .day, value: 50, to: .now)!
+        item.dateCreated = Calendar.current.date(byAdding: .day, value: -5, to: .now)!
+        item.dateModified = Calendar.current.date(byAdding: .day, value: -5, to: .now)!
         item.id = UUID()
         
         item.amount = 99
-        item.dateTransaction = Calendar.current.date(byAdding: .day, value: 50, to: .now)!
+        item.dateTransaction = Calendar.current.date(byAdding: .day, value: -5, to: .now)!
+        item.notes = ""
+        item.category = category
+        item.account = account
+        item.favorite = true
+    }
+    
+    private static func transaction6(_ context: NSManagedObjectContext, category: Category, account: Account) {
+        let item = Transaction(context: context)
+        item.dateCreated = Calendar.current.date(byAdding: .day, value: -19, to: .now)!
+        item.dateModified = .now
+        item.id = UUID()
+        
+        item.amount = 99
+        item.dateTransaction = Calendar.current.date(byAdding: .day, value: -19, to: .now)!
         item.notes = ""
         item.category = category
         item.account = account

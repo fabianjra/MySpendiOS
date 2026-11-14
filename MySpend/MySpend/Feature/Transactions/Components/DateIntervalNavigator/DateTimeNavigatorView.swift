@@ -44,6 +44,8 @@ struct DateTimeNavigatorView: View {
                             .foregroundStyle(Color.primary)
                     }
                     .opacity(!selectedDate.isSameDate(.now) ? 1 : .zero)
+                    .allowsHitTesting(!selectedDate.isSameDate(.now)) // Accesibility
+                    .accessibilityHidden(selectedDate.isSameDate(.now)) // Accesibility
                 }
             }
         }
