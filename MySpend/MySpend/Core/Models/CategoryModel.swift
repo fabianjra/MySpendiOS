@@ -42,14 +42,6 @@ struct CategoryModel: Identifiable, Equatable, Hashable {
         icon = entity.icon ?? ""
         name = entity.name ?? ""
         usageCount = Int(entity.usageCount)
-        type = CategoryModel.getCategoryType(from: entity.type)
-    }
-    
-    static private func getCategoryType(from rawType: String?) -> CategoryType {
-        return CategoryType(rawValue: rawType ?? CategoryType.expense.rawValue) ?? .expense
-    }
-    
-    enum Field: Hashable, CaseIterable {
-        case name
+        type = entity.type.flatMap(CategoryType.init(rawValue:)) ?? .expense
     }
 }

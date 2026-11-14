@@ -57,28 +57,7 @@ struct TransactionModel: Identifiable, Equatable, Hashable {
         self.notes = entity.notes ?? ""
         self.favorite = entity.favorite
         
-        self.category = TransactionModel.convertToCategoryModel(entity.category)
-        self.account = TransactionModel.convertToAccountModel(entity.account)
-    }
-    
-    private static func convertToCategoryModel(_ categoryCoreData: Category?) -> CategoryModel {
-        if let category = categoryCoreData {
-            return CategoryModel(category)
-        } else {
-            return CategoryModel()
-        }
-    }
-    
-    private static func convertToAccountModel(_ accountCoreData: Account?) -> AccountModel {
-        if let account = accountCoreData {
-            return AccountModel(account)
-        } else {
-            return AccountModel()
-        }
-    }
-    
-    enum Field: Hashable, CaseIterable {
-        case amount
-        case notes
+        self.category = entity.category.map { CategoryModel($0) } ?? CategoryModel()
+        self.account = entity.account.map { AccountModel($0) } ?? AccountModel()
     }
 }
