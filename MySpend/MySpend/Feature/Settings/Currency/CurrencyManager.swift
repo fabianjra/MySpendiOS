@@ -17,8 +17,6 @@ public struct CurrencyManager {
                                                        currencyCode: "USD",
                                                        countryName: "United States",
                                                        countryFlag: "🇺🇸")
-    private static let defaultDecimalSeparator = "."
-    private static let defaultGroupingSeparator = ","
     
     private static let commonCurrencies = [
         "USD",
@@ -29,7 +27,7 @@ public struct CurrencyManager {
     
     private static let availableCurrencies: [String: String] = [
         "USD": "US", // United States
-        "EUR": "DE", // Germany
+        "EUR": "ES", // Spain
         "JPY": "JP", // Japan
         "GBP": "GB", // United Kingdom
         "CNY": "CN", // China
@@ -70,25 +68,16 @@ public struct CurrencyManager {
     // MARK: PUBLIC
     
     public static let amoutMaxLength = 50
-    public static let amoutMaxLengthWithDecimal = 53
     public static let fractionLength = 2
-    public static let zeroAmoutString = Int.zero.description
-}
-
-
-// MARK: - UTILS
-
-extension CurrencyManager {
     
     public static var localDecimalSeparator: String {
-        return Locale.current.decimalSeparator ?? defaultDecimalSeparator
+        return Locale.current.decimalSeparator ?? "."
     }
 
     public static var localGroupingSeparator: String {
-        return Locale.current.groupingSeparator ?? defaultGroupingSeparator
+        return Locale.current.groupingSeparator ?? ","
     }
 }
-
 
 // MARK: - FUNCTIONS
 
@@ -102,83 +91,25 @@ extension CurrencyManager {
     static var localeCurrencyOrDefault: CurrencyModel {
         let locale = Locale.current
         
-        guard let region = locale.region,
-              let countryName = locale.localizedString(forRegionCode: region.identifier),
-              let currencySymbol = locale.currencySymbol,
-              let currencyCode = locale.currency?.identifier else {
-            
+        guard let region = locale.region?.identifier,
+              let currencyCode = locale.currency?.identifier,
+              let currencySymbol = locale.currencySymbol else {
             return defaultCurrency
         }
-
-        return CurrencyModel(countryCode: region.identifier,
+        
+        return CurrencyModel(countryCode: region,
                              symbol: currencySymbol,
                              currencyCode: currencyCode,
-                             countryName: countryName,
-                             countryFlag: region.identifier.flagEmoji ?? "🏳️")
+                             countryName: locale.localizedString(forRegionCode: region) ?? region,
+                             countryFlag: region.flagEmoji ?? "🏳️")
     }
     
-    /**
-     Este metodo consulta todas las monedas disponibles en iOS por cada pais.
-     El problema es que duplica las divisas, por ejemplo existe el EURO para España, Andorra, Francia, Alemania, etc.
-     No se quiere tener varios paises con la misma moneda, sino, una sola que se usa en muchos paises.
-     */
-    /*
-    private func currencyList() -> [CurrencyModel] {
-        var currencyList: [CurrencyModel] = []
-
-        let regionCodes = Locale.Region.isoRegions.filter { $0.subRegions.isEmpty }.map { $0.identifier }
-        
-        for regionCode in regionCodes {
-            
-            let localeIdentifier = Locale.identifier(fromComponents: [NSLocale.Key.countryCode.rawValue: regionCode])
-            let locale = Locale(identifier: localeIdentifier)
-            
-            // Get values for the locale
-            if let countryName = locale.localizedString(forRegionCode: regionCode),
-               let currencySymbol = locale.currencySymbol,
-               let currencyCode = locale.currency?.identifier {
-                
-                /*
-                 El código de moneda XXX representa una moneda no aplicable (Non-transactional currency), lo que significa que no hay una moneda oficial asociada con ese país o región.
-                 Por ejemplo: para la Antártida (código de país AQ), no existe una moneda específica, por lo que Locale utiliza el símbolo genérico (¤).
-                 */
-                if currencySymbol == "¤" || currencyCode == "XXX" {
-                    continue
-                }
-                
-                var symbol = getSymbolForCurrencyCode(code: currencyCode)
-                
-                if symbol.isEmptyOrWhitespace {
-                    symbol = currencySymbol
-                }
-                
-                let model = CurrencyModel(countryCode: regionCode,
-                                          symbol: symbol,
-                                          currencyCode: currencyCode,
-                                          countryName: countryName,
-                                          countryFlag: regionCode.flagEmoji ?? "🏳️")
-                currencyList.append(model)
-            }
-        }
-        
-        currencyList.sort { $0.countryName < $1.countryName }
-        
-        return currencyList
-    }
-     */
-        
+    
     static func commonCurrencies(from currencies: [CurrencyModel], localCurrency: CurrencyModel) -> [CurrencyModel] {
-        var result = [localCurrency]
-
-        for currencyCode in commonCurrencies {
-            guard currencyCode != localCurrency.currencyCode, let currency = currencies.first(where: { $0.currencyCode == currencyCode }) else {
-                continue
-            }
-
-            result.append(currency)
+        [localCurrency] + commonCurrencies.compactMap { code in
+            guard code != localCurrency.currencyCode else { return nil }
+            return currencies.first { $0.currencyCode == code }
         }
-
-        return result
     }
     
     /**
@@ -194,83 +125,37 @@ extension CurrencyManager {
      
      - Returns: An array of supported `CurrencyModel` values sorted by currency code.
      */
-    static func currencyList() -> [CurrencyModel] {
-        
-        var currencyList: [CurrencyModel] = []
-        
-        for (currencyCode, regionCode) in availableCurrencies {
+    static let currencyList: [CurrencyModel] = {
+        availableCurrencies.compactMap { currencyCode, regionCode -> CurrencyModel? in
+            
             let localeIdentifier = Locale.identifier(fromComponents: [NSLocale.Key.countryCode.rawValue: regionCode])
-
             let locale = Locale(identifier: localeIdentifier)
-
-            guard let currencySymbol = locale.currencySymbol else {
-                continue
-            }
-
-            var symbol = getSymbolForCurrencyCode(code: currencyCode)
-
-            if symbol.isEmptyOrWhitespace {
-                symbol = currencySymbol
-            }
-
-            let countryName = locale.localizedString(forRegionCode: regionCode) ?? regionCode
-
-            let model = CurrencyModel(countryCode: regionCode,
-                                      symbol: symbol,
-                                      currencyCode: currencyCode,
-                                      countryName: countryName,
-                                      countryFlag: regionCode.flagEmoji ?? "🏳️")
-
-            currencyList.append(model)
+            
+            guard let currencySymbol = locale.currencySymbol else { return nil }
+            
+            let customSymbol = symbolForCurrencyCode(code: currencyCode)
+            
+            return CurrencyModel(countryCode: regionCode,
+                                 symbol: customSymbol.isEmptyOrWhitespace ? currencySymbol : customSymbol,
+                                 currencyCode: currencyCode,
+                                 countryName: locale.localizedString(forRegionCode: regionCode) ?? regionCode,
+                                 countryFlag: regionCode.flagEmoji ?? "🏳️")
         }
-
-        currencyList.sort { $0.countryName < $1.countryName }
-
-        return currencyList
-    }
+        .sorted { $0.countryName.localizedStandardCompare($1.countryName) == .orderedAscending }
+    }()
     
     // MARK: ONLY FOR SYMBOL:
     
-    private static func getSymbolForCurrencyCode(code: String) -> String {
-        var candidates: [String] = []
-        let locales: [String] = NSLocale.availableLocaleIdentifiers
-        
-        for localeID in locales {
-            guard let symbol = findMatchingSymbol(localeID: localeID, currencyCode: code) else {
-                continue
-            }
-            
-            if symbol.count == 1 {
-                return symbol
-            }
-            candidates.append(symbol)
-        }
-        
-        let sorted = candidates.sorted(by: { $0.count < $1.count })
-        
-        if sorted.count < 1 {
-            return ""
-        }
-        
-        return sorted[.zero]
-    }
+    private static func symbolForCurrencyCode(code: String) -> String {
+        let symbols = NSLocale.availableLocaleIdentifiers.compactMap { localeID -> String? in
+            let locale = Locale(identifier: localeID)
 
-    private static func findMatchingSymbol(localeID: String, currencyCode: String) -> String? {
-        let locale = Locale(identifier: localeID)
-        
-        guard let code = locale.currency?.identifier else {
-            return nil
+            guard locale.currency?.identifier == code else { return nil }
+
+            return locale.currencySymbol
         }
-        
-        if code != currencyCode {
-            return nil
-        }
-        
-        guard let symbol = locale.currencySymbol else {
-            return nil
-        }
-        
-        return symbol
+
+        return symbols.first(where: { $0.count == 1 }) ?? symbols.min(by: { $0.count < $1.count }) ?? ""
     }
 }
 

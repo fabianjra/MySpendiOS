@@ -12,7 +12,7 @@ extension Decimal {
     func amountToString(showCents: Bool) -> String {
         let formatter = UtilsTransactions.localFormatter(showCents: showCents)
         let decimalNumber = NSDecimalNumber(decimal: self)
-        let formattedString = formatter.string(from: decimalNumber) ?? CurrencyManager.zeroAmoutString
+        let formattedString = formatter.string(from: decimalNumber) ?? Int.zero.description
         
         return formattedString
     }

@@ -28,7 +28,7 @@ final class CurrencyViewModel {
     
     init() {
         let localeCurrency = CurrencyManager.localeCurrencyOrDefault
-        let availableCurrencies = CurrencyManager.currencyList()
+        let availableCurrencies = CurrencyManager.currencyList
         
         self.localeCurrency = localeCurrency
         self.availabelsCurrencies = availableCurrencies

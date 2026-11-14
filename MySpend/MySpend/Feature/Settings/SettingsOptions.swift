@@ -102,12 +102,6 @@ enum UserInterfaceOptions: String, CaseIterable, Identifiable {
         }
     }
     
-    var value : String {
-        switch self {
-        case .currency: return CurrencyManager.selectedSymbolOrCode //TODO: Cambiar por environment
-        }
-    }
-    
     @ViewBuilder
     var view: some View {
         switch self {
