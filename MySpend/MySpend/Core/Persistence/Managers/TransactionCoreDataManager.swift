@@ -57,7 +57,6 @@ struct TransactionCoreDataManager {
             
             // Entity-specific Attributes
             entity.amount = try model.amount.toNSDecimalNumber()
-            //entity.dateTransaction = model.dateTransaction.dateWithCurrentTime // No normalizar la hora de la transaccion.
             entity.dateTransaction = model.dateTransaction
             entity.notes = model.notes
             entity.favorite = model.favorite
@@ -80,9 +79,6 @@ struct TransactionCoreDataManager {
     func update(_ model: TransactionModel) async throws {
         try await viewContext.perform {
             
-            let categoryResolved = try CategoryCoreDataManager.resolve(from: model.category, viewContextArg: viewContext)
-            let accountResolved = try AccountCoreDataManager.resolve(from: model.account, viewContextArg: viewContext)
-            
             guard let entity = try CoreDataUtilities.fetch(byID: model.id.uuidString,
                                                            entity: Transaction.self,
                                                            viewContextArg: viewContext) else {
@@ -98,14 +94,21 @@ struct TransactionCoreDataManager {
             entity.dateTransaction = model.dateTransaction
             entity.notes = model.notes
             entity.favorite = model.favorite
+
+            // Update category usage only when the transaction changes category.
+            if entity.category?.id != model.category.id {
+
+                let categoryResolved = try CategoryCoreDataManager.resolve(from: model.category, viewContextArg: viewContext)
+                
+                categoryResolved.usageCount += 1
+                categoryResolved.dateLastUsed = now
+                entity.category = categoryResolved
+            }
             
-            // NOTA:
-            // Asigna su ultimo uso para poder ordenarlo por los mas usados
-            categoryResolved.dateLastUsed = now
-            categoryResolved.usageCount += 1
-            
-            entity.category = categoryResolved
-            entity.account = accountResolved
+            if entity.account?.id != model.account.id {
+                let accountResolved = try AccountCoreDataManager.resolve(from: model.account, viewContextArg: viewContext)
+                entity.account = accountResolved
+            }
             
             try viewContext.save()
         }
