@@ -263,13 +263,33 @@ struct TransactionHistoryView: View {
                         if dateTimeInterval != .day {
                             let calendar = Calendar.current
                             let isCurrentYear = calendar.isDate(group.date, equalTo: .now, toGranularity: .year)
-
+                            
                             if calendar.isDateInToday(group.date) {
                                 Text(.dateToday)
+                                
+//                                HStack {
+//                                    Text(.dateToday)
+//                                    
+//                                    Spacer()
+//
+//                                    Text(group.balance.amountToString(showCents: showCents).addCurrencySymbol)
+//                                }
+//                                .font(.callout)
                             } else {
                                 Text(group.date, format: isCurrentYear
                                      ? .dateTime.weekday(.wide).day().month(.abbreviated)
                                      : .dateTime.weekday(.wide).day().month(.abbreviated).year())
+                                
+//                                HStack {
+//                                    Text(group.date, format: isCurrentYear
+//                                         ? .dateTime.weekday(.wide).day().month(.abbreviated)
+//                                         : .dateTime.weekday(.wide).day().month(.abbreviated).year())
+//                                    
+//                                    Spacer()
+//                                    
+//                                    Text(group.balance.amountToString(showCents: showCents).addCurrencySymbol)
+//                                }
+//                                .font(.callout)
                             }
                         }
                     }

@@ -107,7 +107,7 @@ struct UtilsTransactions {
     }
     
     
-    typealias DailyGroupedTransactions = [(date: Date, transactions: [TransactionModel])]
+    typealias DailyGroupedTransactions = [(date: Date, transactions: [TransactionModel], balance: Decimal)]
     
     /**
      Groups transactions by calendar day, ignoring the time component.
@@ -126,7 +126,10 @@ struct UtilsTransactions {
             calendar.startOfDay(for: $0.dateTransaction)
         }
         
-        return grouped.map { (date: $0.key, transactions: $0.value) }.sorted { $0.date > $1.date }
+        return grouped.map {
+            (date: $0.key, transactions: $0.value, balance: $0.value.calculateTotals().balance)
+        }
+        .sorted { $0.date > $1.date }
     }
     
     
