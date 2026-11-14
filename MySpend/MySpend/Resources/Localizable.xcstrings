@@ -2647,7 +2647,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "El intervalo predeterminado es mensual."
+            "value" : "El intervalo predeterminado es el mensual."
           }
         }
       }
