@@ -77,7 +77,8 @@ extension String {
             return .zero
         }
 
-        let formatter = UtilsTransactions.localFormatter(showCents: UserDefaultsManager.showCents) //TODO: Obtener el showCents por parametro, por medio del environment.
+        // Siempre se usan los decimales porque es el valor que se irá a guardar a Core Data
+        let formatter = UtilsTransactions.localFormatter(showCents: true)
 
         guard let number = formatter.number(from: self) else {
             return nil

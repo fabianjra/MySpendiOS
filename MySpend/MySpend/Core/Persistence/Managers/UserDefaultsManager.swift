@@ -7,8 +7,6 @@
 
 import Foundation
 
-// MARK: GENERAL
-
 struct UserDefaultsManager {
     
     static var userDefaults: UserDefaults {
@@ -22,7 +20,7 @@ struct UserDefaultsManager {
     }
     
     
-    // MARK: SORT
+    // MARK: - SORT
     
     static var sorTransactions: TransactionSortConfiguration {
         get { return UserDefaultsDataStore<TransactionSortConfiguration>(for: .sortTransactions).value ?? TransactionSortConfiguration() }
@@ -40,7 +38,7 @@ struct UserDefaultsManager {
     }
     
     
-    // MARK: PREFERENCE
+    // MARK: - PREFERENCE
     
     static var dateTimeInterval: DateTimeInterval {
         get { return UserDefaultsDataStore<DateTimeInterval>(for: .dateTimeInterval).value ?? .month }
@@ -62,14 +60,8 @@ struct UserDefaultsManager {
         set { UserDefaultsDataStore<AppTheme>(for: .appTheme).value = newValue }
     }
     
-    //TODO: Se debe elininar ya que el valor debe operarse por medio del Enviroment APpStorage
-    static var showCents: Bool {
-        get { return UserDefaultsDataStore<Bool>(for: .showCents).value ?? true }
-        set { UserDefaultsDataStore<Bool>(for: .showCents).value = newValue }
-    }
     
-    
-    // MARK: USER DATA
+    // MARK: - USER DATA
     
     static var userName: String {
         get { return UserDefaultsDataStore<String>(for: .username).value ?? "" }
@@ -91,12 +83,13 @@ struct UserDefaultsManager {
         set { UserDefaultsDataStore<String>(for: .defaultAccountID).value = newValue }
     }
     
+    /// Reactivity is handled by TransactionManager through SwiftUI's Environment, so @AppStorage is not required.
     static var selectedAccountsFilter: Set<UUID> {
         get { return UserDefaultsDataStore<Set<UUID>>(for: .selectedAccountsFilter).value ?? [] }
         set { UserDefaultsDataStore<Set<UUID>>(for: .selectedAccountsFilter).value = newValue }
     }
     
-    //TODO: Cambiar por AppStorage
+    /// Reactivity is handled by TransactionManager through SwiftUI's Environment, so @AppStorage is not required.
     static var isFilterActive: Bool {
         get { return UserDefaultsDataStore<Bool>(for: .isFilterActive).value ?? false }
         set { UserDefaultsDataStore<Bool>(for: .isFilterActive).value = newValue }
@@ -151,6 +144,13 @@ private struct UserDefaultsDataStore<T: Codable> {
             }
         }
         
+        /**
+         Allows updating UserDefaults without modifying the struct itself.
+
+         `nonmutating` enables setting the value even when the
+         UserDefaultsDataStore instance is declared with `let`,
+         since changes are applied to external storage.
+         */
         nonmutating set {
             guard let newValue else {
                 UserDefaultsManager.userDefaults.removeObject(forKey: key.rawValue)

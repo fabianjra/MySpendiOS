@@ -36,7 +36,7 @@ struct UpdateTransactionView: View {
     init(transaction: TransactionModel) {
         _transaction = State(initialValue: transaction)
         self._type = State(initialValue: transaction.category.type)
-        self._amountString = State(initialValue: transaction.amount.amountToString(showCents: UserDefaultsManager.showCents)) //TODO: Cambiar por Appstorage
+        self._amountString = State(initialValue: transaction.amount.amountToString(showCents: true))
     }
     
     var body: some View {

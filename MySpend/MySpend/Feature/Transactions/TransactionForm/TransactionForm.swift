@@ -239,7 +239,7 @@ struct TransactionForm: View {
             return ""
         }
 
-        let formatter = UtilsTransactions.localFormatter(showCents: UserDefaultsManager.showCents) //TODO: Cambiar por environment AppStorage
+        let formatter = UtilsTransactions.localFormatter(showCents: true)
 
         return formatter.string(from: NSDecimalNumber(decimal: amount)) ?? cleanedText
     }
