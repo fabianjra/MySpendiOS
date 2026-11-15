@@ -34,7 +34,7 @@ struct CreateTransactionView: View {
             .safeAreaInset(edge: .bottom) {
                 Button {
                     Task {
-                        guard let amount = amountString.convertAmountToDecimal, amount >= .zero else {
+                        guard let amount = amountString.amountToDecimal, amount >= .zero else {
                             toastResponse = ToastResponse(.responseErrorInvalidAmount, .error)
                             return
                         }

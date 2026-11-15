@@ -72,7 +72,7 @@ extension String {
 
      - Date: September 2024
      */
-    var convertAmountToDecimal: Decimal? {
+    var amountToDecimal: Decimal? {
         guard !trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             return .zero
         }

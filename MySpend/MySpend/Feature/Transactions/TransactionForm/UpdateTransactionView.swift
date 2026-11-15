@@ -34,7 +34,7 @@ struct UpdateTransactionView: View {
      se guardan en Core Data.
      */
     init(transaction: TransactionModel) {
-        _transaction = State(initialValue: transaction)
+        self._transaction = State(initialValue: transaction)
         self._type = State(initialValue: transaction.category.type)
         self._amountString = State(initialValue: transaction.amount.amountToString(showCents: true))
     }
@@ -49,7 +49,7 @@ struct UpdateTransactionView: View {
                 VStack {
                     Button {
                         Task {
-                            guard let amount = amountString.convertAmountToDecimal, amount >= .zero else {
+                            guard let amount = amountString.amountToDecimal, amount >= .zero else {
                                 toastResponse = ToastResponse(.responseErrorInvalidAmount, .error)
                                 return
                             }
