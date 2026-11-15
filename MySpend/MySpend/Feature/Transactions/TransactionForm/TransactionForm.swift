@@ -199,14 +199,14 @@ struct TransactionForm: View {
     }
     
     private func onChangeAmount(_ text: String) -> String {
-        let decimalSeparator = CurrencyManager.localDecimalSeparator
-        let groupingSeparator = CurrencyManager.localGroupingSeparator
+        let decimalSeparator = CurrencyConstant.localDecimalSeparator
+        let groupingSeparator = CurrencyConstant.localGroupingSeparator
 
         let cleanedText = text.replacingOccurrences(of: groupingSeparator, with: "")
 
         let parts = cleanedText.components(separatedBy: decimalSeparator)
 
-        let integerPart = String(parts[0].filter(\.isASCII).filter(\.isNumber).prefix(CurrencyManager.amoutMaxLength))
+        let integerPart = String(parts[0].filter(\.isASCII).filter(\.isNumber).prefix(CurrencyConstant.amoutMaxLength))
 
         guard parts.count > 1 else {
             return integerPart
@@ -218,8 +218,8 @@ struct TransactionForm: View {
     }
         
     private func onChangeFocusAmount(_ text: String, _ isFocused: Bool) -> String {
-        let decimalSeparator = CurrencyManager.localDecimalSeparator
-        let groupingSeparator = CurrencyManager.localGroupingSeparator
+        let decimalSeparator = CurrencyConstant.localDecimalSeparator
+        let groupingSeparator = CurrencyConstant.localGroupingSeparator
 
         if isFocused {
             let editableText = text.replacingOccurrences(of: groupingSeparator,with: "")

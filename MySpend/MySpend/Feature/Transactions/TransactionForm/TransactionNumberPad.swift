@@ -39,7 +39,7 @@ struct TransactionNumberPad: View {
                 actionButton {
                     onDecimal()
                 } label: {
-                    Text(CurrencyManager.localDecimalSeparator)
+                    Text(CurrencyConstant.localDecimalSeparator)
                 }
 
                 numberButton("0")

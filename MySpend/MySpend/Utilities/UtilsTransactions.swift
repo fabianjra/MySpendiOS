@@ -187,10 +187,10 @@ struct UtilsTransactions {
         let formatter = NumberFormatter()
         
         formatter.locale = Locale.current
-        //formatter.maximumIntegerDigits = CurrencyManager.amoutMaxLength
-        //formatter.minimumFractionDigits = CurrencyManager.fractionLength
+        //formatter.maximumIntegerDigits = CurrencyConstant.amoutMaxLength
+        //formatter.minimumFractionDigits = CurrencyConstant.fractionLength
         formatter.minimumFractionDigits = .zero
-        formatter.maximumFractionDigits = showCents ? CurrencyManager.fractionLength : .zero
+        formatter.maximumFractionDigits = showCents ? CurrencyConstant.fractionLength : .zero
         
         /*
          numberStyle: Define el estilo general del formateo numérico.

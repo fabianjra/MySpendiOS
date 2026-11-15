@@ -64,7 +64,7 @@ struct UserDefaultsManager {
     }
     
     static var currency: CurrencyModel {
-        get { return UserDefaultsDataStore<CurrencyModel>(for: .currency).value ?? CurrencyManager.localeCurrency }
+        get { return UserDefaultsDataStore<CurrencyModel>(for: .currency).value ?? CurrencyConstant.localeCurrency }
         set {
             var manager = UserDefaultsDataStore<CurrencyModel>(for: .currency)
             manager.value = newValue

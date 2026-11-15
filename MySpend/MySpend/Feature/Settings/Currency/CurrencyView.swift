@@ -27,7 +27,7 @@ struct CurrencyView: View {
             
             List {
                 Section {
-                    ForEach(CurrencyManager.commonCurrencyList) { currency in
+                    ForEach(CurrencyConstant.commonCurrencyList) { currency in
                         rowView(currency)
                     }
                 } header: {
@@ -35,7 +35,7 @@ struct CurrencyView: View {
                 }
                 
                 Section {
-                    ForEach(CurrencyManager.availableCurrencyList) { currency in
+                    ForEach(CurrencyConstant.availableCurrencyList) { currency in
                         rowView(currency)
                     }
                 } header: {
