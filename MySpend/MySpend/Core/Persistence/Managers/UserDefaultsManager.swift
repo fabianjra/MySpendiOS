@@ -71,12 +71,6 @@ struct UserDefaultsManager {
     
     // MARK: USER DATA
     
-    //TODO: Cambiar por AppStorage
-    static var isOnBoarding: Bool {
-        get { return UserDefaultsDataStore<Bool>(for: .isOnBoarding).value ?? true }
-        set { UserDefaultsDataStore<Bool>(for: .isOnBoarding).value = newValue }
-    }
-    
     static var userName: String {
         get { return UserDefaultsDataStore<String>(for: .username).value ?? "" }
         set { UserDefaultsDataStore<String>(for: .username).value = newValue }

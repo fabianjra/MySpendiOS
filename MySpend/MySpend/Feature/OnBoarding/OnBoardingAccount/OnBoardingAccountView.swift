@@ -14,6 +14,12 @@ struct OnBoardingAccountView: View {
     @State private var viewModel = OnBoardingAccountViewModel()
     @FocusState private var isFocused: Bool
     
+    @AppStorage(UserDefaultsKeys.isOnBoarding.rawValue,
+                store: UserDefaultsManager.userDefaults)
+    private var isOnboarding: Bool = true
+    
+    @State private var toastResponse: ToastResponse?
+    
     var body: some View {
         Form {
             Section {
@@ -22,9 +28,7 @@ struct OnBoardingAccountView: View {
                     .autocorrectionDisabled()
                     .focused($isFocused)
                     .onSubmit {
-                        Task {
-                            await viewModel.finishOnBoarding(withAccountName: true, accountManager: accountManager)
-                        }
+                        finishOnBoarding(withAccountName: true)
                     }
             } header: {
                 //Text(.personalInformationInputNamePlaceholder)
@@ -40,9 +44,7 @@ struct OnBoardingAccountView: View {
         .safeAreaInset(edge: .bottom) {
             VStack {
                 Button {
-                    Task {
-                        await viewModel.finishOnBoarding(withAccountName: true, accountManager: accountManager)
-                    }
+                    finishOnBoarding(withAccountName: true)
                 } label: {
                     Text(.buttonContinue)
                         .padding(.vertical, ConstantViews.paddingButtonVertical)
@@ -55,10 +57,7 @@ struct OnBoardingAccountView: View {
                 
                 Button(.buttonSkip) {
                     isFocused = false
-                    
-                    Task {
-                        await viewModel.finishOnBoarding(withAccountName: false, accountManager: accountManager)
-                    }
+                    finishOnBoarding(withAccountName: false)
                 }
                 .foregroundStyle(.primary)
                 .padding(.bottom)
@@ -73,7 +72,17 @@ struct OnBoardingAccountView: View {
                 .ignoresSafeArea(.keyboard, edges: .bottom)
         }
         
-        .toast($viewModel.toastResponse)
+        .toast($toastResponse)
+    }
+    
+    private func finishOnBoarding(withAccountName: Bool) {
+        Task {
+            toastResponse = await viewModel.finishOnBoarding(withAccountName: withAccountName, accountManager: accountManager)
+            
+            if toastResponse?.type != .error {
+                isOnboarding = false
+            }
+        }
     }
 }
 
