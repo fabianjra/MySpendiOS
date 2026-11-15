@@ -7,7 +7,13 @@
 
 import Foundation
 
-public struct CurrencyManager {
+@Observable
+final class CurrencyManager {
+    
+    static let shared = CurrencyManager()
+    
+    private init() {}
+    
     
     // MARK: - CONSTANTS
     
@@ -155,17 +161,22 @@ public struct CurrencyManager {
     
     // MARK: - USER DEFAULTS MANAGER
     
+    var selectedCurrency = UserDefaultsManager.currency {
+        didSet { UserDefaultsManager.currency = self.selectedCurrency }
+    }
+    
+    var selectedSymbolType = UserDefaultsManager.currencySymbolType {
+        didSet { UserDefaultsManager.currencySymbolType = self.selectedSymbolType }
+    }
+    
     /**
      Gets the symbol type selected in the settings (from UserDefaults).
      Depending on the symbol type, it will take the `symbol` or `code` from the currency saved in the UserDefaults.
      
      It is used to show the currency symbol selected for the currency selected in any view that shows amouts (Transactions View, History, View, etc.)
      */
-    public static var selectedSymbolOrCode: String {
-        switch UserDefaultsManager.currencySymbolType {
-        case .symbol: return UserDefaultsManager.currency.symbol
-        case .code: return UserDefaultsManager.currency.currencyCode
-        }
+    var selectedSymbolOrCode: String {
+        self.selectedSymbolType == .symbol ? selectedCurrency.symbol : selectedCurrency.currencyCode
     }
 }
 
@@ -215,9 +226,17 @@ extension String {
      if there is roughly < 30 substrings to attach together, then concatenation is faster
      if there is roughly > 30 substrings to attach together, then interpolation is faster
      */
-    public var addCurrencySymbol: String {
-        return "\(CurrencyManager.selectedSymbolOrCode) \(self)" //Interpolation.
-    }
+//    public var addCurrencySymbol: String {
+//        return "\(CurrencyManager.selectedSymbolOrCode) \(self)" //Interpolation.
+//    }
+    
+    /**
+     if there is roughly < 30 substrings to attach together, then concatenation is faster
+     if there is roughly > 30 substrings to attach together, then interpolation is faster
+     */
+    func addCurrencySymbol(_ symbol: String) -> String {
+            "\(symbol) \(self)"
+        }
     
     /**
      Converts a string representing a monetary value into a `Decimal` value based on the current locale's number format.

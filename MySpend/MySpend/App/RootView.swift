@@ -18,6 +18,7 @@ struct RootView: View {
     // MARK: - SETTINGS MANAGERS
     @State private var themeManager = ThemeManager.shared
     @State private var dateTimeIntervalManager = DateTimeIntervalManager.shared
+    @State private var currencyManager = CurrencyManager.shared
     
     
     @AppStorage(UserDefaultsKeys.isOnBoarding.rawValue,
@@ -76,6 +77,7 @@ struct RootView: View {
         .environment(categoryManager)
         
         .environment(dateTimeIntervalManager)
+        .environment(currencyManager)
         .environment(themeManager)
         .preferredColorScheme(themeManager.theme.colorScheme)
     }

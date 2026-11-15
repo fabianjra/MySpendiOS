@@ -12,11 +12,9 @@ struct SettingsView: View {
     @State private var showAlert = false
     @State private var showAlertConfirmation = false
     
+    @Environment(CurrencyManager.self) private var currencyManager
     @Environment(DateTimeIntervalManager.self) private var dateTimeIntervalManager
     @Environment(ThemeManager.self) private var themeManager
-    
-    //TODO: Cambiar por environment
-    @State private var selectedCurrencyDescription = CurrencyManager.selectedSymbolOrCode
     
     @AppStorage(UserDefaultsKeys.showCents.rawValue,
                 store: UserDefaultsManager.userDefaults)
@@ -55,6 +53,8 @@ struct SettingsView: View {
             
             // MARK: - USER INTERFACE
             
+            @Bindable var currencyManager = currencyManager
+            
             Section {
                 ForEach(UserInterfaceOptions.allCases) { option in
                     NavigationLink(destination: option.view) {
@@ -67,7 +67,7 @@ struct SettingsView: View {
                             
                             Spacer()
                             
-                            Text(verbatim: selectedCurrencyDescription)
+                            Text(verbatim: currencyManager.selectedSymbolOrCode)
                                 .foregroundStyle(.secondary)
                         }
                     }
@@ -166,21 +166,18 @@ struct SettingsView: View {
         .navigationTitle(.settingsTitle)
         .scrollContentBackground(.hidden)
         .background(Color.backgroundGradient)
-        
-        //TODO: Cambiar por environment
-        .onAppear {
-            selectedCurrencyDescription = CurrencyManager.selectedSymbolOrCode
-        }
     }
 }
 
 #Preview(Previews.localeES_ES) {
+    @Previewable @State var currencyManager = CurrencyManager.shared
     @Previewable @State var dateIntervalManager = DateTimeIntervalManager.shared
     @Previewable @State var themeManager = ThemeManager.shared
     
     NavigationStack {
         SettingsView()
     }
+    .environment(currencyManager)
     .environment(dateIntervalManager)
     .environment(themeManager)
     .preferredColorScheme(themeManager.theme.colorScheme)
@@ -188,12 +185,14 @@ struct SettingsView: View {
 }
 
 #Preview(Previews.localeEN) {
+    @Previewable @State var currencyManager = CurrencyManager.shared
     @Previewable @State var dateIntervalManager = DateTimeIntervalManager.shared
     @Previewable @State var themeManager = ThemeManager.shared
     
     NavigationStack {
         SettingsView()
     }
+    .environment(currencyManager)
     .environment(dateIntervalManager)
     .environment(themeManager)
     .preferredColorScheme(themeManager.theme.colorScheme)

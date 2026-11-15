@@ -11,6 +11,7 @@ struct TransactionView: View {
     
     @Environment(TransactionManager.self) private var manager
     @Environment(AccountManager.self) private var accountManager
+    @Environment(CurrencyManager.self) private var currencyManager
     
     @Environment(DateTimeIntervalManager.self) private var dateTimeIntervalManager
     @State private var selectedDateTimeInterval = DateTimeIntervalManager.shared.defaultInterval
@@ -121,7 +122,7 @@ struct TransactionView: View {
                             .fontWeight(.light)
                             .fontDesign(.rounded)
                         
-                        let balanceFormatted = totalBalance.amountToString(showCents: showCents).addCurrencySymbol
+                        let balanceFormatted = totalBalance.amountToString(showCents: showCents).addCurrencySymbol(currencyManager.selectedSymbolOrCode)
                         
                         Text(balanceFormatted)
                             .font(balanceFormatted.filter(\.isNumber).count > 7 ? .title : .largeTitle)
@@ -190,7 +191,7 @@ struct TransactionView: View {
                                     
                                     Spacer()
                                     
-                                    Text(item.totalAmount.amountToString(showCents: showCents).addCurrencySymbol)
+                                    Text(item.totalAmount.amountToString(showCents: showCents).addCurrencySymbol(currencyManager.selectedSymbolOrCode))
                                         .lineLimit(1)
                                         .monospacedDigit()
                                 }
@@ -219,7 +220,7 @@ struct TransactionView: View {
                                     
                                     Spacer()
                                     
-                                    Text(item.totalAmount.amountToString(showCents: showCents).addCurrencySymbol)
+                                    Text(item.totalAmount.amountToString(showCents: showCents).addCurrencySymbol(currencyManager.selectedSymbolOrCode))
                                         .lineLimit(1)
                                         .monospacedDigit()
                                 }
@@ -257,20 +258,20 @@ struct TransactionView: View {
 
 private struct previewWrapper: View {
     init(_ mockDataType: MockDataType = .normal, isFilterActive: Bool = false) {
-        _manager = State(initialValue: TransactionManager(viewContext: mockDataType.viewContext))
+        _transactionManager = State(initialValue: TransactionManager(viewContext: mockDataType.viewContext))
         _categoryManager = State(initialValue: CategoryManager(viewContext: mockDataType.viewContext))
         _accountManager = State(initialValue: AccountManager(viewContext: mockDataType.viewContext))
         
-        manager.isFilterActive = isFilterActive
+        transactionManager.isFilterActive = isFilterActive
         UserDefaultsManager.userName = "Previews"
     }
     
+    @State var currencyManager = CurrencyManager.shared
     @State var dateTimeIntervalManager = DateTimeIntervalManager.shared
     @State var themeManager = ThemeManager.shared
     @State var router = Router.shared
     
-    
-    @State var manager: TransactionManager
+    @State var transactionManager: TransactionManager
     @State var categoryManager: CategoryManager
     @State var accountManager: AccountManager
     
@@ -287,11 +288,12 @@ private struct previewWrapper: View {
                     }
                 }
         }
+        .environment(currencyManager)
         .environment(dateTimeIntervalManager)
         .environment(themeManager)
         .preferredColorScheme(themeManager.theme.colorScheme)
         
-        .environment(manager)
+        .environment(transactionManager)
         .environment(categoryManager)
         .environment(accountManager)
     }

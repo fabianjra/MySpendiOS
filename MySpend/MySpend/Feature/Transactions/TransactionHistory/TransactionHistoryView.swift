@@ -9,8 +9,9 @@ import SwiftUI
 
 struct TransactionHistoryView: View {
     
-    @Environment(TransactionManager.self) private var manager
+    @Environment(TransactionManager.self) private var transactionManager
     @Environment(AccountManager.self) private var accountManager
+    @Environment(CurrencyManager.self) private var currencyManager
     
     @Environment(\.editMode) private var editMode
     private var isEditing: Bool {
@@ -24,7 +25,7 @@ struct TransactionHistoryView: View {
     @State private var toastResponse: ToastResponse?
     
     private var filteredTransactions: [TransactionModel] {
-        manager.filteredAndSortedTransactions(by: dateTimeInterval,
+        transactionManager.filteredAndSortedTransactions(by: dateTimeInterval,
                                               selectedDate: selectedDate,
                                               accountIDs: accountManager.selectedAccountsToFilterByID)
     }
@@ -41,7 +42,7 @@ struct TransactionHistoryView: View {
             
             let filteredAccountsDescription = UtilsTransactions.filteredAccountsDescription(accounts: accountManager.sortedAccounts,
                                                                                             selectedAccountsToFilter: accountManager.selectedAccountsToFilterByID,
-                                                                                            isFilterActive: manager.isFilterActive)
+                                                                                            isFilterActive: transactionManager.isFilterActive)
             if let text = filteredAccountsDescription {
                 Text(text)
                     .font(.caption)
@@ -152,7 +153,7 @@ struct TransactionHistoryView: View {
                                     
                                     Spacer()
                                     
-                                    Text(item.amount.amountToString(showCents: showCents).addCurrencySymbol)
+                                    Text(item.amount.amountToString(showCents: showCents).addCurrencySymbol(currencyManager.selectedSymbolOrCode))
                                         .foregroundStyle(item.category.type == .income ? Color.accentColor : .alert)
                                         .monospacedDigit()
                                         .lineLimit(1)
@@ -161,7 +162,7 @@ struct TransactionHistoryView: View {
                                         if item.favorite {
                                             Button(.selectorFavorite, systemImage: ConstantSystemImage.favoriteFill) {
                                                 Task {
-                                                    toastResponse = await manager.favorite(item)
+                                                    toastResponse = await transactionManager.favorite(item)
                                                 }
                                             }
                                             .labelStyle(.iconOnly)
@@ -194,7 +195,7 @@ struct TransactionHistoryView: View {
                                     if item.favorite == false {
                                         Button(.selectorFavorite, systemImage: ConstantSystemImage.favoriteFill) {
                                             Task {
-                                                toastResponse = await manager.favorite(item)
+                                                toastResponse = await transactionManager.favorite(item)
                                             }
                                         }
                                         .labelStyle(.iconOnly)
@@ -210,7 +211,7 @@ struct TransactionHistoryView: View {
                                     Button(item.favorite ? .selectorUnfavorite : .selectorFavorite,
                                            systemImage: item.favorite ? ConstantSystemImage.unfavoriteFill : ConstantSystemImage.favoriteFill) {
                                         Task {
-                                            toastResponse = await manager.favorite(item)
+                                            toastResponse = await transactionManager.favorite(item)
                                         }
                                     }
                                            .tint(.accentColor)
@@ -238,7 +239,7 @@ struct TransactionHistoryView: View {
                                             }
                                             
                                             if let transaction = viewModel.transactionToDelete {
-                                                toastResponse = await manager.delete(transaction)
+                                                toastResponse = await transactionManager.delete(transaction)
                                             }
                                             
                                         } else {
@@ -246,7 +247,7 @@ struct TransactionHistoryView: View {
                                                 viewModel.selectedTransactions.removeAll()
                                             }
                                             
-                                            toastResponse = await manager.delete(viewModel.selectedTransactions)
+                                            toastResponse = await transactionManager.delete(viewModel.selectedTransactions)
                                         }
                                         
                                         editMode?.wrappedValue = .inactive
@@ -272,7 +273,7 @@ struct TransactionHistoryView: View {
 //                                    
 //                                    Spacer()
 //
-//                                    Text(group.balance.amountToString(showCents: showCents).addCurrencySymbol)
+//                                    Text(group.balance.amountToString(showCents: showCents).addCurrencySymbol(currencyManager.selectedSymbolOrCode))
 //                                }
 //                                .font(.callout)
                             } else {
@@ -287,7 +288,7 @@ struct TransactionHistoryView: View {
 //                                    
 //                                    Spacer()
 //                                    
-//                                    Text(group.balance.amountToString(showCents: showCents).addCurrencySymbol)
+//                                    Text(group.balance.amountToString(showCents: showCents).addCurrencySymbol(currencyManager.selectedSymbolOrCode))
 //                                }
 //                                .font(.callout)
                             }
@@ -369,7 +370,7 @@ struct TransactionHistoryView: View {
                             viewModel.selectedTransactions.removeAll()
                         }
                         
-                        toastResponse = await manager.favorite(viewModel.selectedTransactions, newState: shouldMarkAsFavorite)
+                        toastResponse = await transactionManager.favorite(viewModel.selectedTransactions, newState: shouldMarkAsFavorite)
                         
                         editMode?.wrappedValue = .inactive
                     }
@@ -423,29 +424,31 @@ struct TransactionHistoryView: View {
             return false
         }
         
-        return !manager.isFilterActive || accountManager.selectedAccountsToFilterByID.count > 1
+        return !transactionManager.isFilterActive || accountManager.selectedAccountsToFilterByID.count > 1
     }
 }
 
 private struct PreviewWrapper: View {
     init(_ mockDataType: MockDataType = .normal) {
-        _manager = State(initialValue: TransactionManager(viewContext: mockDataType.viewContext))
+        _transactionManager = State(initialValue: TransactionManager(viewContext: mockDataType.viewContext))
         _accountManager = State(initialValue: AccountManager(viewContext: mockDataType.viewContext))
     }
     
-    @State var manager: TransactionManager
+    @State var transactionManager: TransactionManager
     @State var accountManager: AccountManager
     
     @State var editMode: EditMode = .inactive
     
+    @State var currencyManager = CurrencyManager.shared
     @State var dateTimeInterval: DateTimeInterval = .month
     @State var selectedDate: Date = .now
     
     var body: some View {
         TransactionHistoryView(dateTimeInterval: $dateTimeInterval,
                                selectedDate: $selectedDate)
-        .environment(manager)
+        .environment(transactionManager)
         .environment(accountManager)
+        .environment(currencyManager)
         .environment(\.editMode, $editMode)
     }
 }

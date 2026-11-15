@@ -9,12 +9,16 @@ import SwiftUI
 
 struct CurrencyView: View {
     
+    @Environment(CurrencyManager.self) private var currencyManager
+    
     @State var viewModel = CurrencyViewModel()
     
     var body: some View {
         VStack {
             
-            Picker(.currencySymbol, selection: $viewModel.selectedCurrencySymbolType) {
+            @Bindable var currencyManager = currencyManager
+            
+            Picker(.currencySymbol, selection: $currencyManager.selectedSymbolType) {
                 ForEach(CurrencySymbolType.allCases) { symbolType in
                     Text(symbolType.localized)
                 }
@@ -49,12 +53,12 @@ struct CurrencyView: View {
     
     private func rowView(_ currency: CurrencyModel) -> some View {
         Button {
-            viewModel.selectedCurrency = currency
+            currencyManager.selectedCurrency = currency
         } label: {
             HStack {
                 Text(currency.countryFlag)
                 
-                Text(viewModel.selectedCurrencySymbolType == .symbol ? currency.symbol : currency.currencyCode)
+                Text(currencyManager.selectedSymbolType == .symbol ? currency.symbol : currency.currencyCode)
                     .foregroundStyle(Color.secondary)
                 
                 Text(currency.countryName)
@@ -62,7 +66,7 @@ struct CurrencyView: View {
                 
                 Spacer ()
                 
-                if currency.countryCode == viewModel.selectedCurrency.countryCode {
+                if currency.countryCode == currencyManager.selectedCurrency.countryCode {
                     Image.checkmark
                 }
             }
@@ -71,15 +75,23 @@ struct CurrencyView: View {
 }
 
 #Preview(Previews.localeES_CR) {
+    
+    @Previewable @State var currencyManager = CurrencyManager.shared
+    
     NavigationStack {
         CurrencyView()
     }
+    .environment(currencyManager)
     .environment(\.locale, .init(identifier: Previews.localeES_CR))
 }
 
 #Preview(Previews.localeEN) {
+    
+    @Previewable @State var currencyManager = CurrencyManager.shared
+    
     NavigationStack {
         CurrencyView()
-            .environment(\.locale, .init(identifier: Previews.localeEN))
     }
+    .environment(currencyManager)
+    .environment(\.locale, .init(identifier: Previews.localeEN))
 }
