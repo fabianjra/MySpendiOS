@@ -163,7 +163,7 @@ final class CurrencyManager {
     }
     
     
-    // MARK: - USER DEFAULTS MANAGER
+    // MARK: - USER DEFAULTS
     
     var selectedCurrency = UserDefaultsManager.currency {
         didSet { UserDefaultsManager.currency = self.selectedCurrency }
