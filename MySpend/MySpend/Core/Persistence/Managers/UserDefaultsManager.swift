@@ -14,14 +14,10 @@ struct UserDefaultsManager {
     static var userDefaults: UserDefaults {
         UtilsUI.isRunningOnCanvasPreview ? .preview : .standard
     }
-    
-    static func removeValue(for key: UserDefaultsKeys) {
-        userDefaults.removeObject(forKey: key.rawValue)
-    }
-    
+
     static func removeAll() {
         UserDefaultsKeys.allCases.forEach {
-            removeValue(for: $0)
+            userDefaults.removeObject(forKey: $0.rawValue)
         }
     }
     
@@ -30,26 +26,17 @@ struct UserDefaultsManager {
     
     static var sorTransactions: TransactionSortConfiguration {
         get { return UserDefaultsDataStore<TransactionSortConfiguration>(for: .sortTransactions).value ?? TransactionSortConfiguration() }
-        set {
-            var manager = UserDefaultsDataStore<TransactionSortConfiguration>(for: .sortTransactions)
-            manager.value = newValue
-        }
+        set { UserDefaultsDataStore<TransactionSortConfiguration>(for: .sortTransactions).value = newValue } // No necesitas var porque nonmutating set permite modificar value sin mutar el struct.
     }
     
     static var sortCategories: CategorySortConfiguration {
         get { return UserDefaultsDataStore<CategorySortConfiguration>(for: .sortCategories).value ?? CategorySortConfiguration() }
-        set {
-            var manager = UserDefaultsDataStore<CategorySortConfiguration>(for: .sortCategories)
-            manager.value = newValue
-        }
+        set { UserDefaultsDataStore<CategorySortConfiguration>(for: .sortCategories).value = newValue }
     }
     
     static var sortAccounts: AccountSortConfiguration {
         get { return UserDefaultsDataStore<AccountSortConfiguration>(for: .sortAccounts).value ?? AccountSortConfiguration() }
-        set {
-            var manager = UserDefaultsDataStore<AccountSortConfiguration>(for: .sortAccounts)
-            manager.value = newValue
-        }
+        set { UserDefaultsDataStore<AccountSortConfiguration>(for: .sortAccounts).value = newValue }
     }
     
     
@@ -57,101 +44,68 @@ struct UserDefaultsManager {
     
     static var dateTimeInterval: DateTimeInterval {
         get { return UserDefaultsDataStore<DateTimeInterval>(for: .dateTimeInterval).value ?? .month }
-        set {
-            var manager = UserDefaultsDataStore<DateTimeInterval>(for: .dateTimeInterval)
-            manager.value = newValue
-        }
+        set { UserDefaultsDataStore<DateTimeInterval>(for: .dateTimeInterval).value = newValue }
     }
     
     static var currency: CurrencyModel {
         get { return UserDefaultsDataStore<CurrencyModel>(for: .currency).value ?? CurrencyConstant.localeCurrency }
-        set {
-            var manager = UserDefaultsDataStore<CurrencyModel>(for: .currency)
-            manager.value = newValue
-        }
+        set { UserDefaultsDataStore<CurrencyModel>(for: .currency).value = newValue }
     }
     
     static var currencySymbolType: CurrencySymbolType {
         get { return UserDefaultsDataStore<CurrencySymbolType>(for: .currencySymbolType).value ?? .symbol }
-        set {
-            var manager = UserDefaultsDataStore<CurrencySymbolType>(for: .currencySymbolType)
-            manager.value = newValue
-        }
+        set { UserDefaultsDataStore<CurrencySymbolType>(for: .currencySymbolType).value = newValue }
     }
     
     static var appTheme: AppTheme {
         get { return UserDefaultsDataStore<AppTheme>(for: .appTheme).value ?? .system }
-        set {
-            var manager = UserDefaultsDataStore<AppTheme>(for: .appTheme)
-            manager.value = newValue
-        }
+        set { UserDefaultsDataStore<AppTheme>(for: .appTheme).value = newValue }
     }
     
+    //TODO: Se debe elininar ya que el valor debe operarse por medio del Enviroment APpStorage
     static var showCents: Bool {
         get { return UserDefaultsDataStore<Bool>(for: .showCents).value ?? true }
-        set {
-            var manager = UserDefaultsDataStore<Bool>(for: .showCents)
-            manager.value = newValue
-        }
+        set { UserDefaultsDataStore<Bool>(for: .showCents).value = newValue }
     }
     
     
     // MARK: USER DATA
     
+    //TODO: Cambiar por AppStorage
     static var isOnBoarding: Bool {
         get { return UserDefaultsDataStore<Bool>(for: .isOnBoarding).value ?? true }
-        set {
-            var manager = UserDefaultsDataStore<Bool>(for: .isOnBoarding)
-            manager.value = newValue
-        }
+        set { UserDefaultsDataStore<Bool>(for: .isOnBoarding).value = newValue }
     }
     
     static var userName: String {
         get { return UserDefaultsDataStore<String>(for: .username).value ?? "" }
-        set {
-            var manager = UserDefaultsDataStore<String>(for: .username)
-            manager.value = newValue
-        }
+        set { UserDefaultsDataStore<String>(for: .username).value = newValue }
     }
     
     static var userEmail: String {
         get { return UserDefaultsDataStore<String>(for: .userEmail).value ?? "" }
-        set {
-            var manager = UserDefaultsDataStore<String>(for: .userEmail)
-            manager.value = newValue
-        }
+        set { UserDefaultsDataStore<String>(for: .userEmail).value = newValue }
     }
     
     static var userPhone: String {
         get { return UserDefaultsDataStore<String>(for: .userPhone).value ?? "" }
-        set {
-            var manager = UserDefaultsDataStore<String>(for: .userPhone)
-            manager.value = newValue
-        }
+        set { UserDefaultsDataStore<String>(for: .userPhone).value = newValue }
     }
     
     static var defaultAccountID: String {
         get { return UserDefaultsDataStore<String>(for: .defaultAccountID).value ?? "" }
-        set {
-            var manager = UserDefaultsDataStore<String>(for: .defaultAccountID)
-            manager.value = newValue
-        }
+        set { UserDefaultsDataStore<String>(for: .defaultAccountID).value = newValue }
     }
     
     static var selectedAccountsFilter: Set<UUID> {
         get { return UserDefaultsDataStore<Set<UUID>>(for: .selectedAccountsFilter).value ?? [] }
-        set {
-            var manager = UserDefaultsDataStore<Set<UUID>>(for: .selectedAccountsFilter)
-            manager.value = newValue
-        }
+        set { UserDefaultsDataStore<Set<UUID>>(for: .selectedAccountsFilter).value = newValue }
     }
     
+    //TODO: Cambiar por AppStorage
     static var isFilterActive: Bool {
         get { return UserDefaultsDataStore<Bool>(for: .isFilterActive).value ?? false }
-        set {
-            var manager = UserDefaultsDataStore<Bool>(for: .isFilterActive)
-            manager.value = newValue
-        }
+        set { UserDefaultsDataStore<Bool>(for: .isFilterActive).value = newValue }
     }
 }
 
@@ -198,25 +152,30 @@ private struct UserDefaultsDataStore<T: Codable> {
             do {
                 return try JSONDecoder().decode(T.self, from: data)
             } catch {
-                let id = UUID().uuidString
-                Logger.exception(error, id: id)
-                Logger.custom("Key: \(key.rawValue)", id: id)
+                logError(error)
                 return nil
             }
         }
         
-        set {
-            guard let newValue = newValue else { return }
+        nonmutating set {
+            guard let newValue else {
+                UserDefaultsManager.userDefaults.removeObject(forKey: key.rawValue)
+                return
+            }
             
             do {
                 let data = try JSONEncoder().encode(newValue)
                 UserDefaultsManager.userDefaults.set(data, forKey: key.rawValue)
             } catch {
-                let id = UUID().uuidString
-                Logger.exception(error, id: id)
-                Logger.custom("Key: \(key.rawValue)", id: id)
+                logError(error)
             }
         }
+    }
+    
+    private func logError(_ error: Error) {
+        let id = UUID().uuidString
+        Logger.exception(error, id: id)
+        Logger.custom("Key: \(key.rawValue)", id: id)
     }
 }
 
