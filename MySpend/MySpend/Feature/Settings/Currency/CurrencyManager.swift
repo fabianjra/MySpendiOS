@@ -17,14 +17,14 @@ final class CurrencyManager {
     
     // MARK: - CONSTANTS
     
-    private static let commonCurrenciesList = [
+    private static let commonCurrencies = [
         "USD",
         "EUR",
         "JPY",
         "GBP"
     ]
     
-    private static let availableCurrenciesList: [String: String] = [
+    private static let availableCurrencies: [String: String] = [
         "USD": "US", // United States
         "EUR": "ES", // Spain
         "JPY": "JP", // Japan
@@ -75,6 +75,50 @@ final class CurrencyManager {
         return Locale.current.groupingSeparator ?? ","
     }
     
+    
+    // MARK: - PROPIEDAES PARA LA VISTA CURRENCYVIEW
+    
+    static let commonCurrencyList: [CurrencyModel] = {
+        let localCurrency = localeCurrency
+        
+        return [localCurrency] + commonCurrencies.compactMap { code in
+            guard code != localCurrency.currencyCode else { return nil }
+            return availableCurrencyList.first { $0.currencyCode == code }
+        }
+    }()
+    
+    /**
+     Returns the list of currencies supported by the application.
+     
+     Creates a `CurrencyModel` for each currency and region defined in `currencyRegionCodes`.
+     Currency information, such as the localized country name and currency symbol, is obtained from the region's `Locale`.
+     
+     If a custom symbol is available through `getSymbolForCurrencyCode(code:)`,
+     it is used instead of the symbol provided by the locale.
+     
+     The resulting list is sorted alphabetically by currency code.
+     
+     - Returns: An array of supported `CurrencyModel` values sorted by currency code.
+     */
+    static let availableCurrencyList: [CurrencyModel] = {
+        availableCurrencies.compactMap { currencyCode, regionCode -> CurrencyModel? in
+            
+            let localeIdentifier = Locale.identifier(fromComponents: [NSLocale.Key.countryCode.rawValue: regionCode])
+            let locale = Locale(identifier: localeIdentifier)
+            
+            guard let currencySymbol = locale.currencySymbol else { return nil }
+            
+            let customSymbol = symbolForCurrencyCode(code: currencyCode)
+            
+            return CurrencyModel(countryCode: regionCode,
+                                 symbol: customSymbol.isEmptyOrWhitespace ? currencySymbol : customSymbol,
+                                 currencyCode: currencyCode,
+                                 countryName: locale.localizedString(forRegionCode: regionCode) ?? regionCode,
+                                 countryFlag: regionCode.flagEmoji ?? "🏳️")
+        }
+        .sorted { $0.countryName.localizedStandardCompare($1.countryName) == .orderedAscending }
+    }()
+    
     /**
      Returns the currency associated with the user's current locale.
      If the region or currency information cannot be determined,
@@ -104,46 +148,6 @@ final class CurrencyManager {
     
     
     // MARK: - FUNCTIONS
-    
-    static func commonCurrencies(from currencies: [CurrencyModel], localCurrency: CurrencyModel) -> [CurrencyModel] {
-        [localCurrency] + commonCurrenciesList.compactMap { code in
-            guard code != localCurrency.currencyCode else { return nil }
-            return currencies.first { $0.currencyCode == code }
-        }
-    }
-    
-    /**
-     Returns the list of currencies supported by the application.
-     
-     Creates a `CurrencyModel` for each currency and region defined in `currencyRegionCodes`.
-     Currency information, such as the localized country name and currency symbol, is obtained from the region's `Locale`.
-     
-     If a custom symbol is available through `getSymbolForCurrencyCode(code:)`,
-     it is used instead of the symbol provided by the locale.
-     
-     The resulting list is sorted alphabetically by currency code.
-     
-     - Returns: An array of supported `CurrencyModel` values sorted by currency code.
-     */
-    static let currencyList: [CurrencyModel] = {
-        availableCurrenciesList.compactMap { currencyCode, regionCode -> CurrencyModel? in
-            
-            let localeIdentifier = Locale.identifier(fromComponents: [NSLocale.Key.countryCode.rawValue: regionCode])
-            let locale = Locale(identifier: localeIdentifier)
-            
-            guard let currencySymbol = locale.currencySymbol else { return nil }
-            
-            let customSymbol = symbolForCurrencyCode(code: currencyCode)
-            
-            return CurrencyModel(countryCode: regionCode,
-                                 symbol: customSymbol.isEmptyOrWhitespace ? currencySymbol : customSymbol,
-                                 currencyCode: currencyCode,
-                                 countryName: locale.localizedString(forRegionCode: regionCode) ?? regionCode,
-                                 countryFlag: regionCode.flagEmoji ?? "🏳️")
-        }
-        .sorted { $0.countryName.localizedStandardCompare($1.countryName) == .orderedAscending }
-    }()
-    
     
     /// Get the symbol for the currency Code.
     private static func symbolForCurrencyCode(code: String) -> String {
@@ -221,15 +225,7 @@ private extension String {
 }
 
 extension String {
-    
-    /**
-     if there is roughly < 30 substrings to attach together, then concatenation is faster
-     if there is roughly > 30 substrings to attach together, then interpolation is faster
-     */
-//    public var addCurrencySymbol: String {
-//        return "\(CurrencyManager.selectedSymbolOrCode) \(self)" //Interpolation.
-//    }
-    
+
     /**
      if there is roughly < 30 substrings to attach together, then concatenation is faster
      if there is roughly > 30 substrings to attach together, then interpolation is faster
@@ -269,7 +265,7 @@ extension String {
             return .zero
         }
 
-        let formatter = UtilsTransactions.localFormatter(showCents: UserDefaultsManager.showCents)
+        let formatter = UtilsTransactions.localFormatter(showCents: UserDefaultsManager.showCents) //TODO: Obtener el showCents por parametro, por medio del environment.
 
         guard let number = formatter.number(from: self) else {
             return nil

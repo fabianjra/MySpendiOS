@@ -11,8 +11,6 @@ struct CurrencyView: View {
     
     @Environment(CurrencyManager.self) private var currencyManager
     
-    @State var viewModel = CurrencyViewModel()
-    
     var body: some View {
         VStack {
             
@@ -29,7 +27,7 @@ struct CurrencyView: View {
             
             List {
                 Section {
-                    ForEach(viewModel.commonCurrencies) { currency in
+                    ForEach(CurrencyManager.commonCurrencyList) { currency in
                         rowView(currency)
                     }
                 } header: {
@@ -37,7 +35,7 @@ struct CurrencyView: View {
                 }
                 
                 Section {
-                    ForEach(viewModel.availabelsCurrencies) { currency in
+                    ForEach(CurrencyManager.availableCurrencyList) { currency in
                         rowView(currency)
                     }
                 } header: {
