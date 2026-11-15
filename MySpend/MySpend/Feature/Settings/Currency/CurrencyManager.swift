@@ -7,25 +7,18 @@
 
 import Foundation
 
-// MARK: - CONSTANTS
-
 public struct CurrencyManager {
     
-    // MARK: PRIVATE
-    private static let defaultCurrency = CurrencyModel(countryCode: "US",
-                                                       symbol: "$",
-                                                       currencyCode: "USD",
-                                                       countryName: "United States",
-                                                       countryFlag: "🇺🇸")
+    // MARK: - CONSTANTS
     
-    private static let commonCurrencies = [
+    private static let commonCurrenciesList = [
         "USD",
         "EUR",
         "JPY",
         "GBP"
     ]
     
-    private static let availableCurrencies: [String: String] = [
+    private static let availableCurrenciesList: [String: String] = [
         "USD": "US", // United States
         "EUR": "ES", // Spain
         "JPY": "JP", // Japan
@@ -65,8 +58,6 @@ public struct CurrencyManager {
         "VES": "VE"  // Venezuela
 ]
     
-    // MARK: PUBLIC
-    
     public static let amoutMaxLength = 50
     public static let fractionLength = 2
     
@@ -77,24 +68,25 @@ public struct CurrencyManager {
     public static var localGroupingSeparator: String {
         return Locale.current.groupingSeparator ?? ","
     }
-}
-
-// MARK: - FUNCTIONS
-
-extension CurrencyManager {
     
     /**
      Returns the currency associated with the user's current locale.
      If the region or currency information cannot be determined,
      the default currency (USD) is returned.
      */
-    static var localeCurrencyOrDefault: CurrencyModel {
+    static var localeCurrency: CurrencyModel {
         let locale = Locale.current
         
         guard let region = locale.region?.identifier,
               let currencyCode = locale.currency?.identifier,
               let currencySymbol = locale.currencySymbol else {
-            return defaultCurrency
+            
+            // Returns the default Currency in case don't found the locale.
+            return CurrencyModel(countryCode: "US",
+                                 symbol: "$",
+                                 currencyCode: "USD",
+                                 countryName: "United States",
+                                 countryFlag: "🇺🇸")
         }
         
         return CurrencyModel(countryCode: region,
@@ -105,8 +97,10 @@ extension CurrencyManager {
     }
     
     
+    // MARK: - FUNCTIONS
+    
     static func commonCurrencies(from currencies: [CurrencyModel], localCurrency: CurrencyModel) -> [CurrencyModel] {
-        [localCurrency] + commonCurrencies.compactMap { code in
+        [localCurrency] + commonCurrenciesList.compactMap { code in
             guard code != localCurrency.currencyCode else { return nil }
             return currencies.first { $0.currencyCode == code }
         }
@@ -126,7 +120,7 @@ extension CurrencyManager {
      - Returns: An array of supported `CurrencyModel` values sorted by currency code.
      */
     static let currencyList: [CurrencyModel] = {
-        availableCurrencies.compactMap { currencyCode, regionCode -> CurrencyModel? in
+        availableCurrenciesList.compactMap { currencyCode, regionCode -> CurrencyModel? in
             
             let localeIdentifier = Locale.identifier(fromComponents: [NSLocale.Key.countryCode.rawValue: regionCode])
             let locale = Locale(identifier: localeIdentifier)
@@ -144,8 +138,8 @@ extension CurrencyManager {
         .sorted { $0.countryName.localizedStandardCompare($1.countryName) == .orderedAscending }
     }()
     
-    // MARK: ONLY FOR SYMBOL:
     
+    /// Get the symbol for the currency Code.
     private static func symbolForCurrencyCode(code: String) -> String {
         let symbols = NSLocale.availableLocaleIdentifiers.compactMap { localeID -> String? in
             let locale = Locale(identifier: localeID)
@@ -157,7 +151,24 @@ extension CurrencyManager {
 
         return symbols.first(where: { $0.count == 1 }) ?? symbols.min(by: { $0.count < $1.count }) ?? ""
     }
+    
+    
+    // MARK: - USER DEFAULTS MANAGER
+    
+    /**
+     Gets the symbol type selected in the settings (from UserDefaults).
+     Depending on the symbol type, it will take the `symbol` or `code` from the currency saved in the UserDefaults.
+     
+     It is used to show the currency symbol selected for the currency selected in any view that shows amouts (Transactions View, History, View, etc.)
+     */
+    public static var selectedSymbolOrCode: String {
+        switch UserDefaultsManager.currencySymbolType {
+        case .symbol: return UserDefaultsManager.currency.symbol
+        case .code: return UserDefaultsManager.currency.currencyCode
+        }
+    }
 }
+
 
 private extension String {
     
@@ -198,22 +209,58 @@ private extension String {
     }
 }
 
-
-
-// MARK: - USER DEFAULTS MANAGER
-
-extension CurrencyManager {
+extension String {
     
     /**
-     Gets the symbol type selected in the settings (from UserDefaults).
-     Depending on the symbol type, it will take the `symbol` or `code` from the currency saved in the UserDefaults.
-     
-     It is used to show the currency symbol selected for the currency selected in any view that shows amouts (Transactions View, History, View, etc.)
+     if there is roughly < 30 substrings to attach together, then concatenation is faster
+     if there is roughly > 30 substrings to attach together, then interpolation is faster
      */
-    public static var selectedSymbolOrCode: String {
-        switch UserDefaultsManager.currencySymbolType {
-        case .symbol: return UserDefaultsManager.currency.symbol
-        case .code: return UserDefaultsManager.currency.currencyCode
+    public var addCurrencySymbol: String {
+        return "\(CurrencyManager.selectedSymbolOrCode) \(self)" //Interpolation.
+    }
+    
+    /**
+     Converts a string representing a monetary value into a `Decimal` value based on the current locale's number format.
+
+     This method uses a custom `NumberFormatter` to parse the input string. If the string is successfully converted into a `Decimal`, that value is returned. If the conversion fails, the method returns `0`.
+
+     **Example:**
+     ```swift
+     let decimalValue = Utils.amountStringToDecimal("1,234.56")
+     print(decimalValue) // Prints "1234.56"
+     
+     let withoutValue = Utils.amountStringToDecimal("1234")
+     print(withoutValue) // Prints "1234"
+     
+     let invalidValue = Utils.amountStringToDecimal("invalid")
+     print(invalidValue) // Prints "0"
+     ```
+     
+     - Parameters:
+        - amount: A String representing the monetary value to be converted to Decimal. The string should be formatted according to the locale's decimal separator and thousands separator
+     
+     - Returns: A Decimal representation of the given string, or 0 if the string cannot be converted
+
+     - Authors: Fabian Rodriguez
+
+     - Date: September 2024
+     */
+    var convertAmountToDecimal: Decimal? {
+        guard !trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            return .zero
         }
+
+        let formatter = UtilsTransactions.localFormatter(showCents: UserDefaultsManager.showCents)
+
+        guard let number = formatter.number(from: self) else {
+            return nil
+        }
+
+        var amount = number.decimalValue
+        var roundedAmount = Decimal()
+
+        NSDecimalRound(&roundedAmount, &amount, CurrencyManager.fractionLength, .bankers)
+
+        return roundedAmount
     }
 }

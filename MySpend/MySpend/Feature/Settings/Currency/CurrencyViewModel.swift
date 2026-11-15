@@ -27,7 +27,7 @@ final class CurrencyViewModel {
     var commonCurrencies: [CurrencyModel]
     
     init() {
-        let localeCurrency = CurrencyManager.localeCurrencyOrDefault
+        let localeCurrency = CurrencyManager.localeCurrency
         let availableCurrencies = CurrencyManager.currencyList
         
         self.localeCurrency = localeCurrency
