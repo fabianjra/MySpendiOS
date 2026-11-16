@@ -151,18 +151,18 @@ struct TransactionView: View {
         let groupedTransactions = UtilsTransactions.groupTransactionsByType(transactions)
         let totals = transactions.calculateTotals()
         
-        let filteredAccountsDescription = UtilsTransactions.filteredAccountsDescription(accounts: accountManager.sortedAccounts,
-                                                                                        selectedAccountsToFilter: accountManager.selectedAccountsToFilterByID,
-                                                                                        isFilterActive: manager.isFilterActive)
+//        let filteredAccountsDescription = UtilsTransactions.filteredAccountsDescription(accounts: accountManager.sortedAccounts,
+//                                                                                        selectedAccountsToFilter: accountManager.selectedAccountsToFilterByID,
+//                                                                                        isFilterActive: manager.isFilterActive)
         return VStack {
             DateTimeNavigatorView(dateTimeInterval: $selectedDateTimeInterval,
                                       selectedDate: $viewModel.selectedDate)
             
-            if let text = filteredAccountsDescription {
-                Text(text)
-                    .font(.caption)
-                    .lineLimit(2)
-            }
+//            if let text = filteredAccountsDescription {
+//                Text(text)
+//                    .font(.caption)
+//                    .lineLimit(2)
+//            }
             
             ScrollView(showsIndicators: false) {
                 

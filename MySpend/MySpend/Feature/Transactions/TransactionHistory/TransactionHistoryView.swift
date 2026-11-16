@@ -38,16 +38,8 @@ struct TransactionHistoryView: View {
         VStack {
             DateTimeNavigatorView(dateTimeInterval: $dateTimeInterval, selectedDate: $selectedDate)
                 .padding(.horizontal)
+                .padding(.bottom, ConstantViews.minimumSpacing)
                 .disabled(isEditing)
-            
-            let filteredAccountsDescription = UtilsTransactions.filteredAccountsDescription(accounts: accountManager.sortedAccounts,
-                                                                                            selectedAccountsToFilter: accountManager.selectedAccountsToFilterByID,
-                                                                                            isFilterActive: transactionManager.isFilterActive)
-            if let text = filteredAccountsDescription {
-                Text(text)
-                    .font(.caption)
-                    .lineLimit(2)
-            }
             
             totalBalance
                 .padding(.horizontal)
@@ -155,11 +147,9 @@ struct TransactionHistoryView: View {
                     
                 } label: {
                     HStack {
-                        VStack(alignment: .leading) {
-                            Label(item.notes.isEmptyOrWhitespace ? item.category.name : item.notes, systemImage: item.category.icon)
-                                .fontWeight(.light)
-                                .foregroundStyle(Color.primary)
-                                .padding(.bottom, ConstantViews.minimumSpacing)
+                        
+                        Label {
+                            Text(item.notes.isEmptyOrWhitespace ? item.category.name : item.notes)
                             
                             HStack {
                                 if shouldShowAccountName {
@@ -172,8 +162,14 @@ struct TransactionHistoryView: View {
                             }
                             .font(.footnote)
                             .foregroundStyle(Color.secondary)
+                            
+                        } icon: {
+                            Image(systemName: item.category.icon)
                         }
+                        .fontWeight(.light)
                         .fontDesign(.rounded)
+                        .foregroundStyle(Color.primary)
+                        
                         
                         Spacer()
                         
