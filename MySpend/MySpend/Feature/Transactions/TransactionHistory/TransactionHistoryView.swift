@@ -157,11 +157,17 @@ struct TransactionHistoryView: View {
                                 .foregroundStyle(Color.primary)
                                 .padding(.bottom, ConstantViews.minimumSpacing)
                             
-                            if shouldShowAccountName {
-                                Text(verbatim: item.account.name)
-                                    .font(.footnote)
-                                    .foregroundStyle(Color.secondary)
+                            HStack {
+                                if shouldShowAccountName {
+                                    Text(verbatim: item.account.name)
+                                }
+                                
+                                if groupDate == nil {
+                                    Text(item.dateTransaction.toStringShortLocale)
+                                }
                             }
+                            .foregroundStyle(Color.secondary)
+                            .font(.footnote)
                         }
                         .fontDesign(.rounded)
                         .lineLimit(1)
