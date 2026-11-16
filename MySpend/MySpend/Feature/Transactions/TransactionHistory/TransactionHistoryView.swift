@@ -133,6 +133,7 @@ struct TransactionHistoryView: View {
                 
             }
         }
+        .scrollEdgeEffectStyle(.soft, for: .bottom)
         .scrollIndicators(.hidden)
         .scrollContentBackground(.hidden)
         .animation(.default, value: transactions)
