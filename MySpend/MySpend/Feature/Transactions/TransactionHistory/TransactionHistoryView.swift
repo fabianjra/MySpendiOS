@@ -159,7 +159,7 @@ struct TransactionHistoryView: View {
                             
                             HStack {
                                 if shouldShowAccountName {
-                                    Text(verbatim: item.account.name)
+                                    Text(verbatim: item.account.name + (groupDate == nil ? ":" : ""))
                                 }
                                 
                                 if groupDate == nil {
@@ -169,8 +169,6 @@ struct TransactionHistoryView: View {
                             .foregroundStyle(Color.secondary)
                             .font(.footnote)
                         }
-                        .fontDesign(.rounded)
-                        .lineLimit(1)
                         
                         Spacer()
                         
@@ -189,8 +187,10 @@ struct TransactionHistoryView: View {
                         Text(item.amount.amountToString(showCents: showCents).addCurrencySymbol(currencyManager.selectedSymbolOrCode))
                             .foregroundStyle(item.category.type == .income ? Color.accentColor : .alert)
                             .monospacedDigit()
-                            .lineLimit(1)
                     }
+                    .lineLimit(1)
+                    .fontWeight(.light)
+                    .fontDesign(.rounded)
                 }
                 .tag(item)
                 
