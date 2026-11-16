@@ -49,10 +49,12 @@ struct TransactionHistoryView: View {
                     .lineLimit(2)
             }
             
+            totalBalance
+                .padding(.horizontal)
+            
             transactionsList
             
-            TotalBalanceView(transactions: filteredTransactions)
-                .padding(.horizontal)
+            
         }
         .navigationTitle(
             viewModel.selectedTransactions.isEmpty ?
@@ -321,6 +323,47 @@ struct TransactionHistoryView: View {
         .alignmentGuide(.listRowSeparatorLeading) { dimensions in
             dimensions[.leading]
         }
+    }
+    
+    private var totalBalance: some View {
+        VStack {
+//            Divider()
+//                .frame(height: ConstantFrames.dividerHeight)
+//                .frame(maxWidth: ConstantFrames.iPadMaxWidth)
+//                .overlay(Color.secondary)
+            
+            let totals = filteredTransactions.calculateTotals()
+            
+            HStack {
+                Text(.categoryTypeIncomes)
+                
+                Spacer()
+                
+                Text(totals.incomes.amountToString(showCents: showCents).addCurrencySymbol(currencyManager.selectedSymbolOrCode))
+                    .fontWeight(.semibold)
+                    .monospacedDigit()
+            }
+            .lineLimit(1)
+            .fontDesign(.rounded)
+            .foregroundStyle(Color.accentColor)
+            //.padding(.bottom, ConstantViews.minimumSpacing)
+            
+            HStack {
+                
+                Text(.categoryTypeExpenses)
+                    
+                Spacer()
+                
+                Text(totals.expenses.amountToString(showCents: showCents).addCurrencySymbol(currencyManager.selectedSymbolOrCode))
+                    .fontWeight(.semibold)
+                    .monospacedDigit()
+                    
+            }
+            .lineLimit(1)
+            .fontDesign(.rounded)
+            .foregroundStyle(.alert)
+        }
+
     }
     
     @ToolbarContentBuilder
