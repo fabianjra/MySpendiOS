@@ -35,17 +35,6 @@ struct DateTimeNavigatorView: View {
                 
                 HStack {
                     Spacer()
-                    
-                    Button {
-                        selectedDate = viewModel.navigateDateTime(selectedDate, to: .today, byAdding: dateTimeInterval)
-                    } label: {
-                        Text(.dateToday)
-                            .font(.callout)
-                            .foregroundStyle(Color.primary)
-                    }
-                    .opacity(!selectedDate.isSameDate(.now) ? 1 : .zero)
-                    .allowsHitTesting(!selectedDate.isSameDate(.now)) // Accesibility
-                    .accessibilityHidden(selectedDate.isSameDate(.now)) // Accesibility
                 }
             }
         }
@@ -63,12 +52,25 @@ struct DateTimeNavigatorView: View {
                     .font(.title2.weight(.thin))
             }
             
-            Text(viewModel.getHeader(selectedDate, by: dateTimeInterval))
-                .font(.callout)
-                .frame(width: FrameSize.width.buttonSelectValueIntervalCenter)
-                .lineLimit(1)
-            //.contentShape(Rectangle()) // Para seleccionar todo el componente
-            
+            Button {
+                selectedDate = viewModel.navigateDateTime(selectedDate, to: .today, byAdding: dateTimeInterval)
+            } label: {
+                VStack(spacing: .zero) {
+                    Text(viewModel.getHeader(selectedDate, by: dateTimeInterval))
+                        .lineLimit(1)
+                        //.font(.callout)
+                        .frame(width: 180)
+                        .overlay(alignment: .bottom) {
+                            if !selectedDate.isSameDate(.now) {
+                                Text(.dateIntervalGoToToday)
+                                    .font(.caption)
+                                    .foregroundStyle(Color.secondary)
+                                    .fixedSize()
+                                    .offset(y: 14)
+                            }
+                        }
+                }
+            }
             
             Button {
                 selectedDate = viewModel.navigateDateTime(selectedDate, to: .next, byAdding: dateTimeInterval)

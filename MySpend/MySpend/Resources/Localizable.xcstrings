@@ -1141,6 +1141,24 @@
         }
       }
     },
+    "DateInterval.GoToToday" : {
+      "comment" : "Descripcion para ir a la fecha actual",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go to today"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volver a hoy"
+          }
+        }
+      }
+    },
     "DateInterval.Monthly" : {
       "comment" : "Intervalo de tiempo para mensual",
       "extractionState" : "manual",
