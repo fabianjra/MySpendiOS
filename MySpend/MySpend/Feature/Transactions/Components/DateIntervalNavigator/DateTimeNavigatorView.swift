@@ -25,18 +25,9 @@ struct DateTimeNavigatorView: View {
             .glassEffect(.regular)
             
             
-            ZStack {
-                HStack {
-                    Spacer()
-                }
-                
-                navigator
-                    .padding(.top, ConstantViews.mediumSpacing)
-                
-                HStack {
-                    Spacer()
-                }
-            }
+            navigator
+                .padding(.top, ConstantViews.mediumSpacing)
+                //.frame(maxWidth: .infinity, alignment: .center)
         }
         .onChange(of: dateTimeInterval) { _, newInterval in
             selectedDate = viewModel.normalizeDateTime(selectedDate, for: newInterval)

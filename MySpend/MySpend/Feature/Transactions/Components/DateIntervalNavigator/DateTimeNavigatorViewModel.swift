@@ -207,9 +207,11 @@ struct DateTimeNavigatorViewModel {
      */
     private func getFormatMonth(_ selectedDate: Date, style formatStyle: Date.FormatStyle, isCurrentYear: Bool) -> String {
         
-        let format = isCurrentYear
-        ? formatStyle.month(.wide)
-        : formatStyle.month().year()
+        var format = formatStyle.month(.wide)
+        
+        if !isCurrentYear {
+            format = format.year()
+        }
         
         return selectedDate.formatted(format)
     }
