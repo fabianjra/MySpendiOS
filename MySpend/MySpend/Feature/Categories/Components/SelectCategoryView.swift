@@ -128,13 +128,13 @@ struct SelectCategoryView: View {
 
 private struct previewWrapper: View {
     init(_ mockDataType: MockDataType = .normal, local: String = Previews.localeES_CR) {
-        _manager = State(initialValue: CategoryManager(viewContext: mockDataType.viewContext))
+        _categoryManager = State(initialValue: CategoryManager(viewContext: mockDataType.viewContext))
         self.local = local
     }
     
     var local: String
     
-    @State var manager = CategoryManager.shared
+    @State var categoryManager = CategoryManager(viewContext: MockDataType.normal.viewContext)
     
     @State var model = CategoryModel()
     @State var type = CategoryType.expense
@@ -155,7 +155,7 @@ private struct previewWrapper: View {
         .onAppear {
             show = true
         }
-        .environment(manager)
+        .environment(categoryManager)
         .environment(\.locale, .init(identifier: local))
     }
 }

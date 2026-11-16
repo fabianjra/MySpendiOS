@@ -77,16 +77,16 @@ struct CreateTransactionView: View {
 
 #Preview(Previews.localeES) {
     
-    @Previewable @State var manager = TransactionManager.shared
-    @Previewable @State var accountManager = AccountManager.shared
-    @Previewable @State var categoryManager = CategoryManager.shared
+    @Previewable @State var transactionManager = TransactionManager(viewContext: MockDataType.normal.viewContext)
+    @Previewable @State var accountManager = AccountManager(viewContext: MockDataType.normal.viewContext)
+    @Previewable @State var categoryManager = CategoryManager(viewContext: MockDataType.normal.viewContext)
     
     @Previewable @State var selectedDate = Date.now
     
     NavigationStack {
         CreateTransactionView(selectedDate: selectedDate)
     }
-    .environment(manager)
+    .environment(transactionManager)
     .environment(accountManager)
     .environment(categoryManager)
     .environment(\.locale, .init(identifier: Previews.localeES))

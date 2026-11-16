@@ -1,5 +1,5 @@
 //
-//  AccountManager.swift
+//  AccountCoreDataManager.swift
 //  MySpend
 //
 //  Created by Fabian Rodriguez on 4/7/25.
@@ -15,6 +15,7 @@ import CoreData
  - Version: 1.0
  */
 struct AccountCoreDataManager {
+    
     private let viewContext: NSManagedObjectContext // Main queue, UI.
     private let bgContext: NSManagedObjectContext // Private queue, background thread.
     
@@ -50,7 +51,6 @@ struct AccountCoreDataManager {
             let entities = try CoreDataUtilities.fetchAll(Account.self,
                                                           predicateFormat: predicateFormat,
                                                           predicateArgs: predicateArgs,
-                                                          sortedBy: [NSSortDescriptor(keyPath: \Account.name, ascending: true)],
                                                           viewContext: viewContext)
             return entities.map { AccountModel($0) }
         }

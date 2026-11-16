@@ -89,7 +89,7 @@ struct OnBoardingAccountView: View {
 
 #Preview(Previews.localeES) {
     
-    @Previewable @State var previewAccountManager = AccountManager.shared
+    @Previewable @State var previewAccountManager = AccountManager(viewContext: MockDataType.normal.viewContext)
     
     NavigationStack {
         OnBoardingAccountView()
@@ -100,7 +100,7 @@ struct OnBoardingAccountView: View {
 
 #Preview(Previews.localeEN) {
     
-    @Previewable @State var previewAccountManager = AccountManager.shared
+    @Previewable @State var previewAccountManager = AccountManager(viewContext: MockDataType.normal.viewContext)
     
     NavigationStack {
         OnBoardingAccountView()

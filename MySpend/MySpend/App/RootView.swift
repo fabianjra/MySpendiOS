@@ -10,11 +10,6 @@ struct RootView: View {
     
     @State private var router = Router.shared
     
-    // MARK: - ENTITY MANAGERS
-    @State private var transactionManager = TransactionManager.shared
-    @State private var accountManager = AccountManager.shared
-    @State private var categoryManager = CategoryManager.shared
-    
     // MARK: - SETTINGS MANAGERS
     @State private var themeManager = ThemeManager.shared
     @State private var dateTimeIntervalManager = DateTimeIntervalManager.shared
@@ -72,10 +67,6 @@ struct RootView: View {
         .onAppear {
             //UIApplication.shared.addTapGestureRecognizer()
         }
-        .environment(transactionManager)
-        .environment(accountManager)
-        .environment(categoryManager)
-        
         .environment(dateTimeIntervalManager)
         .environment(currencyManager)
         .environment(themeManager)
@@ -86,12 +77,24 @@ struct RootView: View {
 
 private struct previewWrapper: View {
     init(_ mockDataType: MockDataType = .normal, showOnBoarding: Bool = false) {
-        CoreDataUtilities.shared.mockDataType = mockDataType
+        _transactionManager = State(initialValue: TransactionManager(viewContext: mockDataType.viewContext))
+        _categoryManager = State(initialValue: CategoryManager(viewContext: mockDataType.viewContext))
+        _accountManager = State(initialValue: AccountManager(viewContext: mockDataType.viewContext))
         
         // Configuracion correcta para usar @AppStorage con preview:
         UserDefaultsManager.userDefaults.set(showOnBoarding, forKey: UserDefaultsKeys.isOnBoarding.rawValue)
     }
-    var body: some View { RootView() }
+    
+    @State var transactionManager: TransactionManager
+    @State var categoryManager: CategoryManager
+    @State var accountManager: AccountManager
+    
+    var body: some View {
+        RootView()
+            .environment(transactionManager)
+            .environment(categoryManager)
+            .environment(accountManager)
+    }
 }
 
 #Preview(Previews.localeES_CR) {

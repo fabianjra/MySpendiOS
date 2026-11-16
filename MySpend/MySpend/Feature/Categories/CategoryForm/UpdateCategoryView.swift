@@ -85,24 +85,21 @@ struct UpdateCategoryView: View {
 }
 
 private struct PreviewWrapper: View {
-    init(_ mockDataType: MockDataType = .empty) {
-        CoreDataUtilities.shared.mockDataType = mockDataType
-    }
-    
-    @State var manager = CategoryManager.shared
+
+    @State var categoryManager = CategoryManager(viewContext: MockDataType.normal.viewContext)
     @State var category = CategoryModel()
     @State var isPresented = false
     
     var body: some View {
         VStack {
-            List(manager.sortedCategories) { item in
+            List(categoryManager.sortedCategories) { item in
                 Button(item.name) {
                     self.category = item
                     isPresented = true
                 }
             }
         }
-        .onChange(of: manager.sortedCategories, initial: true) { _, items in
+        .onChange(of: categoryManager.sortedCategories, initial: true) { _, items in
             guard let firstItem = items.first else {
                 return
             }
@@ -115,7 +112,7 @@ private struct PreviewWrapper: View {
                 UpdateCategoryView(category: $category)
             }
         }
-        .environment(manager)
+        .environment(categoryManager)
     }
 }
 

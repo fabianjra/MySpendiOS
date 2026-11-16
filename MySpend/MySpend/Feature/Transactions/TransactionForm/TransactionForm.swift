@@ -249,8 +249,8 @@ struct TransactionForm: View {
 
 #Preview(Previews.localeES_CR) {
     
-    @Previewable @State var accountManager = AccountManager.shared
-    @Previewable @State var categoryManager = CategoryManager.shared
+    @Previewable @State var accountManager = AccountManager(viewContext: MockDataType.normal.viewContext)
+    @Previewable @State var categoryManager = CategoryManager(viewContext: MockDataType.normal.viewContext)
     
     @Previewable @State var transaction = TransactionModel()
     @Previewable @State var type = CategoryType.expense

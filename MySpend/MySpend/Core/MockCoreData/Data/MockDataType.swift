@@ -5,7 +5,6 @@
 //  Created by Fabian Rodriguez on 18/7/25.
 //
 
-//import Foundation
 import CoreData
 
 enum MockDataType {

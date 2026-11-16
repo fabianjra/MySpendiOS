@@ -11,7 +11,6 @@ import Combine
 @MainActor
 @Observable
 final class AccountManager {
-    static let shared = AccountManager()
     
     private let coreDataManager: AccountCoreDataManager
     private var accounts: [AccountModel] = []
@@ -32,18 +31,6 @@ final class AccountManager {
         }
         
         startObserveViewContextChanges()
-    }
-    
-    /**
-     Creates an AccountManager using the application's default Core Data context.
-     
-     This convenience initializer delegates to the designated initializer,
-     automatically providing the context returned by `CoreDataUtilities.getViewContext`.
-     
-     Used internally to initialize the shared instance without requiring an explicit context.
-     */
-    private convenience init() {
-        self.init(viewContext: CoreDataUtilities.getViewContext)
     }
     
     private func refreshAccounts() async {

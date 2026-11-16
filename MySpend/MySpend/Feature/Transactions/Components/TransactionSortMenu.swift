@@ -55,7 +55,7 @@ struct TransactionSortMenu: View {
 }
 
 #Preview {
-    @Previewable @State var manager = TransactionManager.shared
+    @Previewable @State var manager = TransactionManager(viewContext: MockDataType.normal.viewContext)
     
     TransactionSortMenu()
         .environment(manager)

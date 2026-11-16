@@ -55,7 +55,7 @@ struct AccountSortMenu: View {
 }
 
 #Preview {
-    @Previewable @State var manager = AccountManager.shared
+    @Previewable @State var manager = AccountManager(viewContext: MockDataType.normal.viewContext)
     
     AccountSortMenu()
         .environment(manager)

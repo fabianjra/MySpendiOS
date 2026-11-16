@@ -23,7 +23,8 @@ struct TransactionCoreDataManager {
     
     private typealias predicate = CDConstants.Predicate
     
-    // MARK: READ
+    
+    // MARK: - READ
     
     func fetchAll(predicateFormat: String = "",
                   predicateArgs: [Any] = []) async throws -> [TransactionModel] {
@@ -32,14 +33,13 @@ struct TransactionCoreDataManager {
             let entities = try CoreDataUtilities.fetchAll(Transaction.self,
                                                           predicateFormat: predicateFormat,
                                                           predicateArgs: predicateArgs,
-                                                          sortedBy: [NSSortDescriptor(keyPath: \Transaction.dateTransaction, ascending: true)],
                                                           viewContext: viewContext)
             return entities.map { TransactionModel($0) }
         }
     }
     
     
-    // MARK: CREATE / UPDATE
+    // MARK: - CREATE / UPDATE
     
     func create(_ model: TransactionModel) async throws {
         try await viewContext.perform {
@@ -177,7 +177,7 @@ struct TransactionCoreDataManager {
     }
     
     
-    // MARK: DELETE
+    // MARK: - DELETE
     
     func delete(_ model: TransactionModel) async throws {
         try await viewContext.perform {

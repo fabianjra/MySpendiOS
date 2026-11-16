@@ -11,11 +11,9 @@ import Combine
 @MainActor
 @Observable
 final class TransactionManager {
-    static let shared = TransactionManager()
 
     private let coreDataManager: TransactionCoreDataManager
     private var transactions: [TransactionModel] = []
-    
     
     // MARK: OBSERVABLES
     
@@ -33,9 +31,17 @@ final class TransactionManager {
         startObserveViewContextChanges()
     }
     
-    private convenience init() {
-        self.init(viewContext: CoreDataUtilities.getViewContext)
-    }
+    /**
+     Creates an AccountManager using the application's default Core Data context.
+     
+     This convenience initializer delegates to the designated initializer,
+     automatically providing the context returned by `CoreDataUtilities.getViewContext`.
+     
+     Used internally to initialize the shared instance without requiring an explicit context.
+     */
+//    private convenience init() {
+//        self.init(viewContext: CoreDataUtilities.getViewContext)
+//    }
     
     private func refreshTransactions() async {
         do {

@@ -69,7 +69,6 @@ struct CategoryCoreDataManager {
             let entities = try CoreDataUtilities.fetchAll(Category.self,
                                                           predicateFormat: predicateFormat,
                                                           predicateArgs: predicateArgs,
-                                                          sortedBy: [NSSortDescriptor(keyPath: \Category.dateModified, ascending: true)],
                                                           viewContext: viewContext)
             return entities.map { CategoryModel($0) }
         }

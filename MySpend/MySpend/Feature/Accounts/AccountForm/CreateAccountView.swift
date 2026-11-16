@@ -64,7 +64,7 @@ struct CreateAccountView: View {
 
 #Preview(Previews.localeES_CR) {
     
-    @Previewable @State var manager = AccountManager.shared
+    @Previewable @State var manager = AccountManager(viewContext: MockDataType.normal.viewContext)
     
     NavigationStack {
         CreateAccountView()
@@ -75,7 +75,7 @@ struct CreateAccountView: View {
 
 #Preview(Previews.localeEN) {
     
-    @Previewable @State var manager = AccountManager.shared
+    @Previewable @State var manager = AccountManager(viewContext: MockDataType.normal.viewContext)
     
     NavigationStack {
         CreateAccountView()

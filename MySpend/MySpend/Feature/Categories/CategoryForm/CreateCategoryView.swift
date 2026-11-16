@@ -68,7 +68,7 @@ struct CreateCategoryView: View {
 
 #Preview(Previews.localeES_CR) {
     
-    @Previewable @State var manager = CategoryManager.shared
+    @Previewable @State var manager = CategoryManager(viewContext: MockDataType.normal.viewContext)
     @Previewable @State var type = CategoryType.expense
     
     @Previewable @State var createdCategory: CategoryModel?

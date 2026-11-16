@@ -90,24 +90,21 @@ struct UpdateAccountView: View {
 }
 
 private struct PreviewWrapper: View {
-    init(_ mockDataType: MockDataType = .empty) {
-        CoreDataUtilities.shared.mockDataType = mockDataType
-    }
     
-    @State var manager = AccountManager.shared
+    @State var accountManager = AccountManager(viewContext: MockDataType.normal.viewContext)
     @State var account = AccountModel()
     @State var isPresented: Bool = false
     
     var body: some View {
         VStack {
-            List(manager.sortedAccounts) { item in
+            List(accountManager.sortedAccounts) { item in
                 Button(item.name) {
                     self.account = item
                     isPresented = true
                 }
             }
         }
-        .onChange(of: manager.sortedAccounts, initial: true) { _, items in
+        .onChange(of: accountManager.sortedAccounts, initial: true) { _, items in
             guard let firstItem = items.first else {
                 return
             }
@@ -120,7 +117,7 @@ private struct PreviewWrapper: View {
                 UpdateAccountView(account: $account)
             }
         }
-        .environment(manager)
+        .environment(accountManager)
     }
 }
 

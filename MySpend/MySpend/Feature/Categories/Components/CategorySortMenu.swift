@@ -55,7 +55,7 @@ struct CategorySortMenu: View {
 }
 
 #Preview {
-    @Previewable @State var manager = CategoryManager.shared
+    @Previewable @State var manager = CategoryManager(viewContext: MockDataType.normal.viewContext)
     
     CategorySortMenu()
         .environment(manager)

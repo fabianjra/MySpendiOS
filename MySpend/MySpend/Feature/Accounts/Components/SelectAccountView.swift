@@ -86,13 +86,13 @@ private struct previewWrapper: View {
     init(_ mockDataType: MockDataType = .normal, local: String = Previews.localeES_CR) {
         UserDefaultsManager.defaultAccountID = MockCDConstants.mainAccountID
         
-        _manager = State(initialValue: AccountManager(viewContext: mockDataType.viewContext))
+        _accountManager = State(initialValue: AccountManager(viewContext: mockDataType.viewContext))
         self.local = local
     }
     
     var local: String
     
-    @State var manager = AccountManager.shared
+    @State var accountManager: AccountManager
     @State var show: Bool = false
     @State var model = AccountModel()
     
@@ -110,7 +110,7 @@ private struct previewWrapper: View {
         .onAppear {
             show = true
         }
-        .environment(manager)
+        .environment(accountManager)
         .environment(\.locale, .init(identifier: local))
     }
 }

@@ -9,19 +9,8 @@ import CoreData
 
 struct CoreDataUtilities {
     
-    static var shared = CoreDataUtilities()
-    var mockDataType = MockDataType.normal
     private typealias predicate = CDConstants.Predicate
     
-    @MainActor
-    static var getViewContext: NSManagedObjectContext {
-        if UtilsUI.isRunningOnCanvasPreview {
-            return CoreDataUtilities.shared.mockDataType.viewContext
-        }
-        
-        return PersistenceController.shared.container.viewContext
-    }
-
     
     // MARK: - Fetch
     
@@ -125,7 +114,7 @@ struct CoreDataUtilities {
     static func fetchAll<T: NSManagedObject>(_ entity: T.Type,
                                       predicateFormat: String,
                                       predicateArgs: [Any],
-                                      sortedBy sortDescriptors: [NSSortDescriptor],
+                                      //sortedBy sortDescriptors: [NSSortDescriptor],
                                       viewContext: NSManagedObjectContext) throws -> [T] {
         let request = NSFetchRequest<T>(entityName: entity.entityName)
         
