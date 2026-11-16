@@ -174,11 +174,6 @@ struct TransactionHistoryView: View {
                         
                         Spacer()
                         
-                        Text(item.amount.amountToString(showCents: showCents).addCurrencySymbol(currencyManager.selectedSymbolOrCode))
-                            .foregroundStyle(item.category.type == .income ? Color.accentColor : .alert)
-                            .monospacedDigit()
-                            .lineLimit(1)
-                        
                         if !isEditing {
                             if item.favorite {
                                 Button(.selectorFavorite, systemImage: ConstantSystemImage.favoriteFill) {
@@ -186,9 +181,15 @@ struct TransactionHistoryView: View {
                                         toastResponse = await transactionManager.favorite(item)
                                     }
                                 }
+                                .foregroundStyle(Color.accentColor)
                                 .labelStyle(.iconOnly)
                             }
                         }
+                        
+                        Text(item.amount.amountToString(showCents: showCents).addCurrencySymbol(currencyManager.selectedSymbolOrCode))
+                            .foregroundStyle(item.category.type == .income ? Color.accentColor : .alert)
+                            .monospacedDigit()
+                            .lineLimit(1)
                     }
                 }
                 .tag(item)
