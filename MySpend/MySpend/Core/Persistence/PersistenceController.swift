@@ -27,7 +27,8 @@ struct PersistenceController {
         container = NSPersistentContainer(name: CDConstants.containerName)
         
         if inMemory {
-            container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null") // solo guardar en RAM
+            //container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
+            container.persistentStoreDescriptions.first?.type = NSInMemoryStoreType // solo guardar en RAM
         }
         
         // Inicializa el contenedor y carga el contenido de Core Data
@@ -51,11 +52,14 @@ struct PersistenceController {
         // Cuando se crea un Core Data Model y se crea un Persistence Container enlazado al modelo,
         // Se va a crear una propiedad llamada viewContext.
         // Este viewContext es la propiedad con la que se va a interactuar en toda la aplicacion para usar para manejar datos.
-        container.viewContext.automaticallyMergesChangesFromParent = true
         
-        // NOTA:
-        // automaticallyMergesChangesFromParent:
-        // Cada vez que el viewContext cambia desde el "parent context", cada "Child Context" va a cambiar tambien.
-        // Esto indica que no importa sobre que "context" se realicen cambios, siempre se realizaran por el merge.
+        /*
+         Automatically merges changes saved by other contexts that share
+         the same persistent store coordinator into the viewContext.
+
+         This keeps the main context synchronized with changes persisted
+         from background contexts without requiring manual merges.
+         */
+        container.viewContext.automaticallyMergesChangesFromParent = true
     }
 }

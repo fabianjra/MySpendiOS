@@ -36,7 +36,7 @@ struct MySpendApp: App {
         //FirebaseApp.configure()
     //}
 
-    let persistenceController = PersistenceController.shared
+    private let persistenceController = PersistenceController.shared
     
     @State private var transactionManager = TransactionManager(viewContext: PersistenceController.shared.container.viewContext)
     @State private var accountManager = AccountManager(viewContext: PersistenceController.shared.container.viewContext)
@@ -49,7 +49,6 @@ struct MySpendApp: App {
                 .environment(transactionManager)
                 .environment(accountManager)
                 .environment(categoryManager)
-            
             
             //.environmentObject(dataManager) //Class for get, add and delete from Firestore.
         }

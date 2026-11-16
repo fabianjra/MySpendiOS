@@ -15,7 +15,8 @@ final class TransactionManager {
     private let coreDataManager: TransactionCoreDataManager
     private var transactions: [TransactionModel] = []
     
-    // MARK: OBSERVABLES
+    
+    // MARK: - OBSERVABLES
     
     private var viewContextObserver: AnyCancellable?
     private let viewContext: NSManagedObjectContext
@@ -51,11 +52,29 @@ final class TransactionManager {
         }
     }
     
+    /**
+     Cuando se lleguen a implementar guardados desde otros contextos (backgroundViewContext), se deben escchar los cambios
+     mediante un observador de merge hacia el padre:
+     
+     private var viewContextMergeObserver: AnyCancellable?
+     
+     viewContextMergeObserver = NotificationCenter.default
+         .publisher(for: .NSManagedObjectContextDidMergeChangesObjectIDs, object: viewContext)
+         .debounce(for: .milliseconds(100), scheduler: RunLoop.main)
+         .sink { [weak self] _ in
+             Task { @MainActor in
+                 await self?.refreshTransactions()
+             }
+         }
+     
+     Importante: el evento de merge no equivale necesariamente a un nuevo guardado del viewContext; indica que ese contexto incorporó cambios externos. No es necesario agregar este observador si tus operaciones actuales siempre se guardan directamente en viewContext.
+     */
     private func startObserveViewContextChanges() {
         guard viewContextObserver == nil else { return }
         
         viewContextObserver = NotificationCenter.default
-            .publisher(for: .NSManagedObjectContextObjectsDidChange, object: viewContext)
+            //.publisher(for: .NSManagedObjectContextObjectsDidChange, object: viewContext)
+            .publisher(for: .NSManagedObjectContextDidSave, object: viewContext) //Escucha solamente cambios que se guardan.
             .debounce(for: .milliseconds(100), scheduler: RunLoop.main)
             .sink { [weak self] _ in
                 
@@ -66,7 +85,7 @@ final class TransactionManager {
     }
     
     
-    // MARK: ORDENAMIENTO
+    // MARK: - ORDENAMIENTO
     
     var sortSelection = UserDefaultsManager.sorTransactions {
         didSet { UserDefaultsManager.sorTransactions = sortSelection }
@@ -77,7 +96,7 @@ final class TransactionManager {
     }
     
     
-    // MARK: FILTROS
+    // MARK: - FILTROS
     
     var isFilterActive = UserDefaultsManager.isFilterActive {
         didSet { UserDefaultsManager.isFilterActive = isFilterActive }
@@ -107,7 +126,7 @@ final class TransactionManager {
 }
 
 
-// MARK: CRUD
+// MARK: - CRUD
 
 extension TransactionManager {
     
@@ -169,7 +188,7 @@ extension TransactionManager {
 }
 
 
-// MARK: FAVORITE
+// MARK: - FAVORITE
 
 extension TransactionManager {
     
