@@ -135,7 +135,6 @@ struct TransactionView: View {
                     
                     Image.chevronRight
                         .font(.title)
-                    
                 }
                 .foregroundColor(Color.primary)
             }

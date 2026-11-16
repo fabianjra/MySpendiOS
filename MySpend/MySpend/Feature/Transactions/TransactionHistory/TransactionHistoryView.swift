@@ -38,7 +38,7 @@ struct TransactionHistoryView: View {
         VStack {
             DateTimeNavigatorView(dateTimeInterval: $dateTimeInterval, selectedDate: $selectedDate)
                 .padding(.horizontal)
-                .padding(.bottom, ConstantViews.minimumSpacing)
+                .padding(.bottom)
                 .disabled(isEditing)
             
             totalBalance
@@ -323,44 +323,52 @@ struct TransactionHistoryView: View {
     }
     
     private var totalBalance: some View {
-        VStack {
-//            Divider()
-//                .frame(height: ConstantFrames.dividerHeight)
-//                .frame(maxWidth: ConstantFrames.iPadMaxWidth)
-//                .overlay(Color.secondary)
-            
+        HStack(spacing: .zero) {
             let totals = filteredTransactions.calculateTotals()
             
-            HStack {
+            VStack(alignment: .leading) {
                 Text(.categoryTypeIncomes)
-                
-                Spacer()
+                    .fontWeight(.light)
+                    .foregroundStyle(Color.secondary)
                 
                 Text(totals.incomes.amountToString(showCents: showCents).addCurrencySymbol(currencyManager.selectedSymbolOrCode))
-                    .fontWeight(.semibold)
                     .monospacedDigit()
+                    .foregroundStyle(Color.accentColor)
             }
             .lineLimit(1)
+            .font(.callout)
             .fontDesign(.rounded)
-            .foregroundStyle(Color.accentColor)
-            //.padding(.bottom, ConstantViews.minimumSpacing)
             
-            HStack {
+            .frame(maxWidth: .infinity, alignment: .leading)
+            
+            Divider()
+                .overlay(Color.secondary)
+                .padding(.horizontal)
+            
+            VStack(alignment: .leading) {
                 
                 Text(.categoryTypeExpenses)
-                    
-                Spacer()
+                    .fontWeight(.light)
+                    .foregroundStyle(Color.secondary)
                 
                 Text(totals.expenses.amountToString(showCents: showCents).addCurrencySymbol(currencyManager.selectedSymbolOrCode))
-                    .fontWeight(.semibold)
                     .monospacedDigit()
-                    
+                    .foregroundStyle(.alert)
             }
             .lineLimit(1)
+            .font(.callout)
             .fontDesign(.rounded)
-            .foregroundStyle(.alert)
+            
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
-
+        .fixedSize(horizontal: false, vertical: true)
+        .padding()
+        .background(Color.backgroundBottom)
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+//        .overlay {
+//            RoundedRectangle(cornerRadius: 12)
+//                .strokeBorder(Color.primary.opacity(0.08), lineWidth: 1)
+//        }
     }
     
     @ToolbarContentBuilder
