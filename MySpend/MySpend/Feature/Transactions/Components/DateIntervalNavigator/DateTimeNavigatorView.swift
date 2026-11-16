@@ -42,6 +42,8 @@ struct DateTimeNavigatorView: View {
                 Image.chevronLeft
                     .font(.title2.weight(.thin))
             }
+            .padding(.horizontal, 12)
+//            .background(.red)
             
             Button {
                 selectedDate = viewModel.navigateDateTime(selectedDate, to: .today, byAdding: dateTimeInterval)
@@ -49,8 +51,7 @@ struct DateTimeNavigatorView: View {
                 VStack(spacing: .zero) {
                     Text(viewModel.getHeader(selectedDate, by: dateTimeInterval))
                         .lineLimit(1)
-                        //.font(.callout)
-                        .frame(width: 180)
+                        .frame(width: 170)
                         .overlay(alignment: .bottom) {
                             if !selectedDate.isSameDate(.now) {
                                 Text(.dateIntervalGoToToday)
@@ -62,6 +63,7 @@ struct DateTimeNavigatorView: View {
                         }
                 }
             }
+//            .background(.yellow)
             
             Button {
                 selectedDate = viewModel.navigateDateTime(selectedDate, to: .next, byAdding: dateTimeInterval)
@@ -69,6 +71,8 @@ struct DateTimeNavigatorView: View {
                 Image.chevronRight
                     .font(.title2.weight(.thin))
             }
+            .padding(.horizontal, 12)
+//            .background(.red)
         }
         .foregroundColor(Color.primary)
     }
