@@ -16,7 +16,6 @@ struct DateTimeNavigatorView: View {
     
     var body: some View {
         VStack {
-            
             Picker(.settingsOptionDateInterval, selection: $dateTimeInterval) {
                 ForEach(DateTimeInterval.allCases) { item in
                     Text(item.localized)
@@ -32,6 +31,7 @@ struct DateTimeNavigatorView: View {
                 }
                 
                 navigator
+                    .padding(.top, ConstantViews.mediumSpacing)
                 
                 HStack {
                     Spacer()
@@ -77,7 +77,6 @@ struct DateTimeNavigatorView: View {
                     .font(.title2.weight(.thin))
             }
         }
-        .padding(.vertical, ConstantViews.mediumSpacing)
         .foregroundColor(Color.primary)
     }
 }
@@ -92,6 +91,6 @@ struct DateTimeNavigatorView: View {
                                   selectedDate: $selectedDate)
         Spacer()
     }
-    .background(Color.backgroundGradient)
+    .background(.blue.opacity(0.3))
     .environment(\.locale, .init(identifier: Previews.localeES))
 }

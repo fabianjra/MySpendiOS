@@ -134,6 +134,8 @@ struct TransactionHistoryView: View {
         .scrollIndicators(.hidden)
         .scrollContentBackground(.hidden)
         .animation(.default, value: transactions)
+        //.listRowBackground(Color.clear)
+        //.listRowInsets(EdgeInsets(top: .zero, leading: .zero, bottom: .zero, trailing: .zero))
     }
     
     private func transactionRow(_ transactions: [TransactionModel], groupDate: Date? = nil) -> some View {
@@ -153,18 +155,16 @@ struct TransactionHistoryView: View {
                         VStack(alignment: .leading) {
                             Label(item.notes.isEmptyOrWhitespace ? item.category.name : item.notes, systemImage: item.category.icon)
                                 .foregroundStyle(Color.primary)
-                                .fontDesign(.rounded)
-                                .lineLimit(1)
                                 .padding(.bottom, ConstantViews.minimumSpacing)
                             
                             if shouldShowAccountName {
                                 Text(verbatim: item.account.name)
                                     .font(.footnote)
-                                    .fontDesign(.rounded)
-                                    .foregroundStyle(.secondary)
-                                    .lineLimit(1)
+                                    .foregroundStyle(Color.secondary)
                             }
                         }
+                        .fontDesign(.rounded)
+                        .lineLimit(1)
                         
                         Spacer()
                         
@@ -185,7 +185,6 @@ struct TransactionHistoryView: View {
                         }
                     }
                 }
-                .buttonStyle(.plain)
                 .tag(item)
                 
                 
@@ -314,8 +313,6 @@ struct TransactionHistoryView: View {
         .alignmentGuide(.listRowSeparatorLeading) { dimensions in
             dimensions[.leading]
         }
-        //.listRowBackground(Color.clear)
-        //.listRowInsets(EdgeInsets(top: .zero, leading: .zero, bottom: .zero, trailing: .zero))
     }
     
     @ToolbarContentBuilder

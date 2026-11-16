@@ -67,17 +67,17 @@ struct TransactionForm: View {
                         HStack(spacing: ConstantViews.formLabeledContentSpacing) {
                             Text(.transactionInputCategory)
                                 .frame(width: ConstantFrames.formLabelWidth, alignment: .leading)
+                                .foregroundStyle(Color.primary)
                             
                             if transaction.category.name.isEmptyOrWhitespace {
                                 Text(.transactionInputCategoryPlaceholder)
                                     .foregroundStyle(Color(uiColor: .placeholderText))
                             } else {
                                 Label(transaction.category.name, systemImage: transaction.category.icon)
-                                    .foregroundStyle(.primary)
+                                    .foregroundStyle(Color.primary)
                             }
                         }
                     }
-                    .buttonStyle(.plain)
                     .alignmentGuide(.listRowSeparatorLeading) { dimensions in
                         dimensions[.leading]
                     }
@@ -90,17 +90,17 @@ struct TransactionForm: View {
                             HStack(spacing: ConstantViews.formLabeledContentSpacing) {
                                 Text(.transactionInputAccount)
                                     .frame(width: ConstantFrames.formLabelWidth, alignment: .leading)
+                                    .foregroundStyle(Color.primary)
                                 
                                 if transaction.account.name.isEmptyOrWhitespace {
                                     Text(.transactionInputAccountPlaceholder)
                                         .foregroundStyle(Color(uiColor: .placeholderText))
                                 } else {
                                     Label(transaction.account.name, systemImage: transaction.account.icon)
-                                        .foregroundStyle(.primary)
+                                        .foregroundStyle(Color.primary)
                                 }
                             }
                         }
-                        .buttonStyle(.plain)
                         .alignmentGuide(.listRowSeparatorLeading) { dimensions in
                             dimensions[.leading]
                         }
