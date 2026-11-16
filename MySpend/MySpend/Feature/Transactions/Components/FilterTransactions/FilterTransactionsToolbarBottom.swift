@@ -13,6 +13,7 @@ struct FilterTransactionsToolbarBottom: ToolbarContent {
     
     @Environment(TransactionManager.self) private var transactionManager
     @Environment(AccountManager.self) private var accountManager
+    @Environment(\.colorScheme) private var colorScheme
 
     var body: some ToolbarContent {
         
@@ -22,7 +23,11 @@ struct FilterTransactionsToolbarBottom: ToolbarContent {
                     transactionManager.isFilterActive.toggle()
                 } label: {
                     Image.filter
-                        .foregroundStyle(Color.primary)
+                        .foregroundStyle(
+                            transactionManager.isFilterActive
+                            ? (colorScheme == .dark ? Color.black : Color.white)
+                            : Color.primary
+                        )
                         .padding(ConstantViews.paddingSmall)
                         .background(transactionManager.isFilterActive
                                     ? Capsule().fill(Color.accentColor.opacity(0.7))

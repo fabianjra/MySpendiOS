@@ -154,6 +154,7 @@ struct TransactionHistoryView: View {
                     HStack {
                         VStack(alignment: .leading) {
                             Label(item.notes.isEmptyOrWhitespace ? item.category.name : item.notes, systemImage: item.category.icon)
+                                .fontWeight(.light)
                                 .foregroundStyle(Color.primary)
                                 .padding(.bottom, ConstantViews.minimumSpacing)
                             
@@ -166,9 +167,10 @@ struct TransactionHistoryView: View {
                                     Text(item.dateTransaction.toStringShortLocale)
                                 }
                             }
-                            .foregroundStyle(Color.secondary)
                             .font(.footnote)
+                            .foregroundStyle(Color.secondary)
                         }
+                        .fontDesign(.rounded)
                         
                         Spacer()
                         
@@ -189,7 +191,6 @@ struct TransactionHistoryView: View {
                             .monospacedDigit()
                     }
                     .lineLimit(1)
-                    .fontWeight(.light)
                     .fontDesign(.rounded)
                 }
                 .tag(item)

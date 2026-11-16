@@ -246,6 +246,7 @@ struct TransactionView: View {
                     
                 }
             }
+            .scrollEdgeEffectStyle(.soft, for: .bottom)
             .animation(.default, value: transactions)
         }
     }
