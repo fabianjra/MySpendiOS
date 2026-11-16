@@ -332,13 +332,11 @@ struct TransactionHistoryView: View {
                     .foregroundStyle(Color.secondary)
                 
                 Text(totals.incomes.amountToString(showCents: showCents).addCurrencySymbol(currencyManager.selectedSymbolOrCode))
-                    .monospacedDigit()
                     .foregroundStyle(Color.accentColor)
             }
             .lineLimit(1)
             .font(.callout)
             .fontDesign(.rounded)
-            
             .frame(maxWidth: .infinity, alignment: .leading)
             
             Divider()
@@ -352,7 +350,6 @@ struct TransactionHistoryView: View {
                     .foregroundStyle(Color.secondary)
                 
                 Text(totals.expenses.amountToString(showCents: showCents).addCurrencySymbol(currencyManager.selectedSymbolOrCode))
-                    .monospacedDigit()
                     .foregroundStyle(.alert)
             }
             .lineLimit(1)
