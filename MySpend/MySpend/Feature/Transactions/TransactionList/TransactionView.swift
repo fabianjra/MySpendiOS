@@ -149,6 +149,7 @@ struct TransactionView: View {
         // Se utiliza una variable para guardar filteredTransactions porque cada llamado de filteredTransactions dentro del body, recorre nuevamente esa lista.
         let transactions = filteredTransactions
         let groupedTransactions = UtilsTransactions.groupTransactionsByType(transactions)
+        let totals = transactions.calculateTotals()
         
         let filteredAccountsDescription = UtilsTransactions.filteredAccountsDescription(accounts: accountManager.sortedAccounts,
                                                                                         selectedAccountsToFilter: accountManager.selectedAccountsToFilterByID,
@@ -175,26 +176,32 @@ struct TransactionView: View {
                     if !groupedTransactions.incomes.isEmpty {
                         VStack(alignment: .leading) {
                             
-                            Text(.categoryTypeIncomes)
-                                .foregroundStyle(Color.accentColor)
-                                .fontWeight(.semibold)
-                                .font(.title3)
-                                .fontDesign(.rounded)
-                                .padding(.bottom, ConstantViews.minimumSpacing)
+                            HStack {
+                                Text(.categoryTypeIncomes)
+                                    
+                                Spacer()
+                                
+                                Text(totals.incomes.amountToString(showCents: showCents).addCurrencySymbol(currencyManager.selectedSymbolOrCode))
+                            }
+                            .lineLimit(1)
+                            .foregroundStyle(Color.accentColor)
+                            .font(.title3.weight(.semibold))
+                            .fontDesign(.rounded)
+                            .padding(.bottom, ConstantViews.minimumSpacing)
                             
                             ForEach(groupedTransactions.incomes, id:\.category.id) { item in
                                 HStack {
                                     Text(item.category.name)
-                                        .fontDesign(.rounded)
-                                        .lineLimit(1)
                                         .padding(.leading)
                                     
                                     Spacer()
                                     
                                     Text(item.totalAmount.amountToString(showCents: showCents).addCurrencySymbol(currencyManager.selectedSymbolOrCode))
-                                        .lineLimit(1)
                                         .monospacedDigit()
                                 }
+                                .lineLimit(1)
+                                .fontWeight(.light)
+                                .fontDesign(.rounded)
                                 .padding(.bottom, ConstantViews.minimumSpacing)
                             }
                         }
@@ -204,26 +211,34 @@ struct TransactionView: View {
                     if !groupedTransactions.expenses.isEmpty {
                         VStack(alignment: .leading) {
                             
-                            Text(.categoryTypeExpenses)
-                                .foregroundStyle(.alert)
-                                .fontWeight(.semibold)
-                                .font(.title3)
-                                .fontDesign(.rounded)
-                                .padding(.bottom, ConstantViews.minimumSpacing)
+                            HStack {
+                                Text(.categoryTypeExpenses)
+                                
+                                Spacer()
+                                
+                                Text(totals.expenses.amountToString(showCents: showCents).addCurrencySymbol(currencyManager.selectedSymbolOrCode))
+                            }
+                            .lineLimit(1)
+                            .foregroundStyle(.alert)
+                            .font(.title3.weight(.semibold))
+                            .fontDesign(.rounded)
+                            .padding(.bottom, ConstantViews.minimumSpacing)
+                            
                             
                             ForEach(groupedTransactions.expenses, id:\.category.id) { item in
                                 HStack {
                                     Text(item.category.name)
                                         .fontDesign(.rounded)
-                                        .lineLimit(1)
                                         .padding(.leading)
                                     
                                     Spacer()
                                     
                                     Text(item.totalAmount.amountToString(showCents: showCents).addCurrencySymbol(currencyManager.selectedSymbolOrCode))
-                                        .lineLimit(1)
                                         .monospacedDigit()
                                 }
+                                .lineLimit(1)
+                                .fontWeight(.light)
+                                .fontDesign(.rounded)
                                 .padding(.bottom, ConstantViews.minimumSpacing)
                             }
                         }
@@ -232,9 +247,6 @@ struct TransactionView: View {
                 }
             }
             .animation(.default, value: transactions)
-            
-            TotalBalanceView(transactions: transactions)
-                .padding(.bottom)
         }
     }
     
