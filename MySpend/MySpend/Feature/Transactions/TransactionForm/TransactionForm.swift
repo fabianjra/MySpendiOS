@@ -16,7 +16,9 @@ struct TransactionForm: View {
     @Binding var type: CategoryType
     @Binding var amountString: String
     
+    var autoFocus: Bool = true
     @FocusState private var isFocused: Bool
+    
     private var showAccountTextField: Bool {
         accountManager.sortedAccounts.count > 1
     }
@@ -141,7 +143,7 @@ struct TransactionForm: View {
         // MARK: EVENTS
 
         .onAppear {
-            isFocused = true
+            isFocused = autoFocus
         }
         
         // Permite configurar la cuenta cuando carguen en un inicio o cuando aun falta para que CoreData me devuelva las cuentas.

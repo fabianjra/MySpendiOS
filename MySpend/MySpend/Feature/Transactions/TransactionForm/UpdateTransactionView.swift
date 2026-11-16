@@ -40,7 +40,7 @@ struct UpdateTransactionView: View {
     }
     
     var body: some View {
-        TransactionForm(transaction: $transaction, type: $type, amountString: $amountString)
+        TransactionForm(transaction: $transaction, type: $type, amountString: $amountString, autoFocus: false)
         
             .navigationTitle(.transactionUpdateTitle)
             .navigationBarTitleDisplayMode(.inline)
