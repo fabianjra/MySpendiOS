@@ -26,8 +26,8 @@ struct TransactionHistoryView: View {
     
     private var filteredTransactions: [TransactionModel] {
         transactionManager.filteredAndSortedTransactions(by: dateTimeInterval,
-                                              selectedDate: selectedDate,
-                                              accountIDs: accountManager.selectedAccountsToFilterByID)
+                                                         selectedDate: selectedDate,
+                                                         accountIDs: accountManager.selectedAccountsToFilterByID)
     }
     
     @AppStorage(UserDefaultsKeys.showCents.rawValue,
@@ -122,189 +122,195 @@ struct TransactionHistoryView: View {
                 
             } else {
                 ForEach(groupedTransactions, id: \.date) { group in
-                    Section {
-                        ForEach(group.transactions) { item in
-                            
-                            Button {
-                                if isEditing {
-                                    viewModel.toggleTransactionSelection(item)
-                                } else {
-                                    viewModel.transactionToUpdate = item
-                                    viewModel.showUpdateTransaction = true
-                                }
-                                
-                            } label: {
-                                HStack {
-                                    VStack(alignment: .leading) {
-                                        Label(item.notes.isEmptyOrWhitespace ? item.category.name : item.notes, systemImage: item.category.icon)
-                                            .foregroundStyle(Color.primary)
-                                            .fontDesign(.rounded)
-                                            .lineLimit(1)
-                                            .padding(.bottom, ConstantViews.minimumSpacing)
-                                        
-                                        if shouldShowAccountName {
-                                            Text(verbatim: item.account.name)
-                                                .font(.footnote)
-                                                .fontDesign(.rounded)
-                                                .foregroundStyle(.secondary)
-                                                .lineLimit(1)
-                                        }
-                                    }
-                                    
-                                    Spacer()
-                                    
-                                    Text(item.amount.amountToString(showCents: showCents).addCurrencySymbol(currencyManager.selectedSymbolOrCode))
-                                        .foregroundStyle(item.category.type == .income ? Color.accentColor : .alert)
-                                        .monospacedDigit()
-                                        .lineLimit(1)
-                                    
-                                    if !isEditing {
-                                        if item.favorite {
-                                            Button(.selectorFavorite, systemImage: ConstantSystemImage.favoriteFill) {
-                                                Task {
-                                                    toastResponse = await transactionManager.favorite(item)
-                                                }
-                                            }
-                                            .labelStyle(.iconOnly)
-                                        }
-                                    }
-                                }
-                            }
-                            .buttonStyle(.plain)
-                            .tag(item)
-                            
-                            
-                            .swipeActions(edge: .trailing) {
-                                if !isEditing {
-                                    
-                                    Button(.selectorDelete, systemImage: ConstantSystemImage.trash) {
-                                        viewModel.transactionToDelete = item
-                                        viewModel.showAlertDelete = true
-                                    }
-                                    .labelStyle(.iconOnly)
-                                    .tint(.alert)
-                                    
-                                    
-                                    Button(.selectorEdit, systemImage: ConstantSystemImage.squareAndPencil) {
-                                        viewModel.transactionToUpdate = item
-                                        viewModel.showUpdateTransaction = true
-                                    }
-                                    .labelStyle(.iconOnly)
-                                    
-                                    
-                                    if item.favorite == false {
-                                        Button(.selectorFavorite, systemImage: ConstantSystemImage.favoriteFill) {
-                                            Task {
-                                                toastResponse = await transactionManager.favorite(item)
-                                            }
-                                        }
-                                        .labelStyle(.iconOnly)
-                                        .tint(.accentColor)
-                                    }
-                                }
-                            }
-                            
-                            
-                            .contextMenu {
-                                if !isEditing {
-                                    
-                                    Button(item.favorite ? .selectorUnfavorite : .selectorFavorite,
-                                           systemImage: item.favorite ? ConstantSystemImage.unfavoriteFill : ConstantSystemImage.favoriteFill) {
-                                        Task {
-                                            toastResponse = await transactionManager.favorite(item)
-                                        }
-                                    }
-                                           .tint(.accentColor)
-                                    
-                                    Button(.selectorEdit, systemImage: ConstantSystemImage.squareAndPencil) {
-                                        viewModel.transactionToUpdate = item
-                                        viewModel.showUpdateTransaction = true
-                                    }
-                                    
-                                    
-                                    Button(.selectorDelete, systemImage: ConstantSystemImage.trash, role: .destructive) {
-                                        viewModel.transactionToDelete = item
-                                        viewModel.showAlertDelete = true
-                                    }
-                                }
-                            }
-                            
-                            
-                            .alert(.transactionDelete(viewModel.selectedTransactions.count), isPresented: $viewModel.showAlertDelete) {
-                                Button(.alertOptionDelete, role: .destructive) {
-                                    Task {
-                                        if viewModel.selectedTransactions.isEmpty {
-                                            defer {
-                                                viewModel.transactionToDelete = nil
-                                            }
-                                            
-                                            if let transaction = viewModel.transactionToDelete {
-                                                toastResponse = await transactionManager.delete(transaction)
-                                            }
-                                            
-                                        } else {
-                                            defer {
-                                                viewModel.selectedTransactions.removeAll()
-                                            }
-                                            
-                                            toastResponse = await transactionManager.delete(viewModel.selectedTransactions)
-                                        }
-                                        
-                                        editMode?.wrappedValue = .inactive
-                                    }
-                                }
-                                
-                                Button(.alertOptionCancel, role: .cancel) { }
-                            } message: {
-                                Text(.transactionDeleteMessage(viewModel.selectedTransactions.count))
-                            }
-                            
-                        }
-                    } header: {
-                        if dateTimeInterval != .day {
-                            let calendar = Calendar.current
-                            let isCurrentYear = calendar.isDate(group.date, equalTo: .now, toGranularity: .year)
-                            
-                            if calendar.isDateInToday(group.date) {
-                                Text(.dateToday)
-                                
-//                                HStack {
-//                                    Text(.dateToday)
-//                                    
-//                                    Spacer()
-//
-//                                    Text(group.balance.amountToString(showCents: showCents).addCurrencySymbol(currencyManager.selectedSymbolOrCode))
-//                                }
-//                                .font(.callout)
-                            } else {
-                                Text(group.date, format: isCurrentYear
-                                     ? .dateTime.weekday(.wide).day().month(.abbreviated)
-                                     : .dateTime.weekday(.wide).day().month(.abbreviated).year())
-                                
-//                                HStack {
-//                                    Text(group.date, format: isCurrentYear
-//                                         ? .dateTime.weekday(.wide).day().month(.abbreviated)
-//                                         : .dateTime.weekday(.wide).day().month(.abbreviated).year())
-//                                    
-//                                    Spacer()
-//                                    
-//                                    Text(group.balance.amountToString(showCents: showCents).addCurrencySymbol(currencyManager.selectedSymbolOrCode))
-//                                }
-//                                .font(.callout)
-                            }
-                        }
-                    }
-                    .alignmentGuide(.listRowSeparatorLeading) { dimensions in
-                        dimensions[.leading]
-                    }
-                    //.listRowBackground(Color.clear)
-                    //.listRowInsets(EdgeInsets(top: .zero, leading: .zero, bottom: .zero, trailing: .zero))
+                    transactionRow(group.transactions, groupDate: group.date)
                 }
             }
         }
         .scrollIndicators(.hidden)
         .scrollContentBackground(.hidden)
         .animation(.default, value: transactions)
+    }
+    
+    private func transactionRow(_ transactions: [TransactionModel], groupDate: Date?) -> some View {
+        Section {
+            ForEach(transactions) { item in
+                
+                Button {
+                    if isEditing {
+                        viewModel.toggleTransactionSelection(item)
+                    } else {
+                        viewModel.transactionToUpdate = item
+                        viewModel.showUpdateTransaction = true
+                    }
+                    
+                } label: {
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Label(item.notes.isEmptyOrWhitespace ? item.category.name : item.notes, systemImage: item.category.icon)
+                                .foregroundStyle(Color.primary)
+                                .fontDesign(.rounded)
+                                .lineLimit(1)
+                                .padding(.bottom, ConstantViews.minimumSpacing)
+                            
+                            if shouldShowAccountName {
+                                Text(verbatim: item.account.name)
+                                    .font(.footnote)
+                                    .fontDesign(.rounded)
+                                    .foregroundStyle(.secondary)
+                                    .lineLimit(1)
+                            }
+                        }
+                        
+                        Spacer()
+                        
+                        Text(item.amount.amountToString(showCents: showCents).addCurrencySymbol(currencyManager.selectedSymbolOrCode))
+                            .foregroundStyle(item.category.type == .income ? Color.accentColor : .alert)
+                            .monospacedDigit()
+                            .lineLimit(1)
+                        
+                        if !isEditing {
+                            if item.favorite {
+                                Button(.selectorFavorite, systemImage: ConstantSystemImage.favoriteFill) {
+                                    Task {
+                                        toastResponse = await transactionManager.favorite(item)
+                                    }
+                                }
+                                .labelStyle(.iconOnly)
+                            }
+                        }
+                    }
+                }
+                .buttonStyle(.plain)
+                .tag(item)
+                
+                
+                .swipeActions(edge: .trailing) {
+                    if !isEditing {
+                        
+                        Button(.selectorDelete, systemImage: ConstantSystemImage.trash) {
+                            viewModel.transactionToDelete = item
+                            viewModel.showAlertDelete = true
+                        }
+                        .labelStyle(.iconOnly)
+                        .tint(.alert)
+                        
+                        
+                        Button(.selectorEdit, systemImage: ConstantSystemImage.squareAndPencil) {
+                            viewModel.transactionToUpdate = item
+                            viewModel.showUpdateTransaction = true
+                        }
+                        .labelStyle(.iconOnly)
+                        
+                        
+                        if item.favorite == false {
+                            Button(.selectorFavorite, systemImage: ConstantSystemImage.favoriteFill) {
+                                Task {
+                                    toastResponse = await transactionManager.favorite(item)
+                                }
+                            }
+                            .labelStyle(.iconOnly)
+                            .tint(.accentColor)
+                        }
+                    }
+                }
+                
+                
+                .contextMenu {
+                    if !isEditing {
+                        
+                        Button(item.favorite ? .selectorUnfavorite : .selectorFavorite,
+                               systemImage: item.favorite ? ConstantSystemImage.unfavoriteFill : ConstantSystemImage.favoriteFill) {
+                            Task {
+                                toastResponse = await transactionManager.favorite(item)
+                            }
+                        }
+                               .tint(.accentColor)
+                        
+                        Button(.selectorEdit, systemImage: ConstantSystemImage.squareAndPencil) {
+                            viewModel.transactionToUpdate = item
+                            viewModel.showUpdateTransaction = true
+                        }
+                        
+                        
+                        Button(.selectorDelete, systemImage: ConstantSystemImage.trash, role: .destructive) {
+                            viewModel.transactionToDelete = item
+                            viewModel.showAlertDelete = true
+                        }
+                    }
+                }
+                
+                
+                .alert(.transactionDelete(viewModel.selectedTransactions.count), isPresented: $viewModel.showAlertDelete) {
+                    Button(.alertOptionDelete, role: .destructive) {
+                        Task {
+                            if viewModel.selectedTransactions.isEmpty {
+                                defer {
+                                    viewModel.transactionToDelete = nil
+                                }
+                                
+                                if let transaction = viewModel.transactionToDelete {
+                                    toastResponse = await transactionManager.delete(transaction)
+                                }
+                                
+                            } else {
+                                defer {
+                                    viewModel.selectedTransactions.removeAll()
+                                }
+                                
+                                toastResponse = await transactionManager.delete(viewModel.selectedTransactions)
+                            }
+                            
+                            editMode?.wrappedValue = .inactive
+                        }
+                    }
+                    
+                    Button(.alertOptionCancel, role: .cancel) { }
+                } message: {
+                    Text(.transactionDeleteMessage(viewModel.selectedTransactions.count))
+                }
+                
+            }
+        } header: {
+            if let groupDate = groupDate {
+                if dateTimeInterval != .day {
+                    let calendar = Calendar.current
+                    let isCurrentYear = calendar.isDate(groupDate, equalTo: .now, toGranularity: .year)
+                    
+                    if calendar.isDateInToday(groupDate) {
+                        Text(.dateToday)
+                        
+                        //HStack {
+                        //    Text(.dateToday)
+                        //
+                        //    Spacer()
+                        //
+                        //    Text(group.balance.amountToString(showCents: showCents).addCurrencySymbol(currencyManager.selectedSymbolOrCode))
+                        //}
+                        //.font(.callout)
+                    } else {
+                        Text(groupDate, format: isCurrentYear
+                             ? .dateTime.weekday(.wide).day().month(.abbreviated)
+                             : .dateTime.weekday(.wide).day().month(.abbreviated).year())
+                        
+                        //HStack {
+                        //    Text(group.date, format: isCurrentYear
+                        //         ? .dateTime.weekday(.wide).day().month(.abbreviated)
+                        //         : .dateTime.weekday(.wide).day().month(.abbreviated).year())
+                        //
+                        //    Spacer()
+                        //
+                        //    Text(group.balance.amountToString(showCents: showCents).addCurrencySymbol(currencyManager.selectedSymbolOrCode))
+                        //}
+                        //.font(.callout)
+                    }
+                }
+            }
+        }
+        .alignmentGuide(.listRowSeparatorLeading) { dimensions in
+            dimensions[.leading]
+        }
+        //.listRowBackground(Color.clear)
+        //.listRowInsets(EdgeInsets(top: .zero, leading: .zero, bottom: .zero, trailing: .zero))
     }
     
     @ToolbarContentBuilder
