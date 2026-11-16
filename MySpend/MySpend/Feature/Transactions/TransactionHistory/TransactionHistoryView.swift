@@ -358,17 +358,12 @@ struct TransactionHistoryView: View {
             .lineLimit(1)
             .font(.callout)
             .fontDesign(.rounded)
-            
             .frame(maxWidth: .infinity, alignment: .leading)
         }
         .fixedSize(horizontal: false, vertical: true)
         .padding()
         .background(Color.backgroundBottom)
-        .clipShape(RoundedRectangle(cornerRadius: 12))
-//        .overlay {
-//            RoundedRectangle(cornerRadius: 12)
-//                .strokeBorder(Color.primary.opacity(0.08), lineWidth: 1)
-//        }
+        .clipShape(RoundedRectangle(cornerRadius: 24))
     }
     
     @ToolbarContentBuilder
