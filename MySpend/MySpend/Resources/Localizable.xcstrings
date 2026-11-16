@@ -2875,13 +2875,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Highest"
+            "value" : "Highest firt"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mayor"
+            "value" : "Mayor a menor"
           }
         }
       }
@@ -2911,13 +2911,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lowest"
+            "value" : "Lowest first"
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Menor"
+            "state" : "needs_review",
+            "value" : "Menor a mayor"
           }
         }
       }

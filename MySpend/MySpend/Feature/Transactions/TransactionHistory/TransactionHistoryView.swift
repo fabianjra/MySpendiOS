@@ -121,9 +121,14 @@ struct TransactionHistoryView: View {
                 .listRowBackground(Color.clear)
                 
             } else {
-                ForEach(groupedTransactions, id: \.date) { group in
-                    transactionRow(group.transactions, groupDate: group.date)
+                if transactionManager.sortSelection.sortBy == .dateTransaction {
+                    ForEach(groupedTransactions, id: \.date) { group in
+                        transactionRow(group.transactions, groupDate: group.date)
+                    }
+                } else {
+                    transactionRow(transactions)
                 }
+                
             }
         }
         .scrollIndicators(.hidden)
@@ -131,7 +136,7 @@ struct TransactionHistoryView: View {
         .animation(.default, value: transactions)
     }
     
-    private func transactionRow(_ transactions: [TransactionModel], groupDate: Date?) -> some View {
+    private func transactionRow(_ transactions: [TransactionModel], groupDate: Date? = nil) -> some View {
         Section {
             ForEach(transactions) { item in
                 
