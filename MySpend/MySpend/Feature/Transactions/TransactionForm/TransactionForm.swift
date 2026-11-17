@@ -71,7 +71,7 @@ struct TransactionForm: View {
                                 .frame(width: ConstantFrames.formLabelWidth, alignment: .leading)
                                 .foregroundStyle(Color.primary)
                             
-                            if transaction.category.name.isEmptyOrWhitespace {
+                            if transaction.category.name.isEmptyOrWhiteSpace {
                                 Text(.transactionInputCategoryPlaceholder)
                                     .foregroundStyle(Color(uiColor: .placeholderText))
                             } else {
@@ -94,7 +94,7 @@ struct TransactionForm: View {
                                     .frame(width: ConstantFrames.formLabelWidth, alignment: .leading)
                                     .foregroundStyle(Color.primary)
                                 
-                                if transaction.account.name.isEmptyOrWhitespace {
+                                if transaction.account.name.isEmptyOrWhiteSpace {
                                     Text(.transactionInputAccountPlaceholder)
                                         .foregroundStyle(Color(uiColor: .placeholderText))
                                 } else {
@@ -124,12 +124,12 @@ struct TransactionForm: View {
                     
                 } footer: {
                     VStack(alignment: .leading) {
-                        if transaction.category.name.isEmptyOrWhitespace {
+                        if transaction.category.name.isEmptyOrWhiteSpace {
                             Text(.transactionInputCategoryRequired)
                                 .foregroundStyle(.alert)
                         }
                         
-                        if transaction.account.name.isEmptyOrWhitespace {
+                        if transaction.account.name.isEmptyOrWhiteSpace {
                             Text(.transactionInputAccountRequired)
                                 .foregroundStyle(.alert)
                         }
@@ -241,7 +241,7 @@ struct TransactionForm: View {
             return ""
         }
 
-        let formatter = UtilsTransactions.localFormatter(showCents: true)
+        let formatter = CurrencyConstant.localFormatter(showCents: true)
 
         return formatter.string(from: NSDecimalNumber(decimal: amount)) ?? cleanedText
     }

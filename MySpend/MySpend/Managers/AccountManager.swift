@@ -82,7 +82,7 @@ final class AccountManager {
     }
     
     private func updateDefaultAccount() {
-        guard !defaultAccountID.isEmptyOrWhitespace else {
+        guard !defaultAccountID.isEmptyOrWhiteSpace else {
             defaultAccount = nil
             return
         }
@@ -135,7 +135,7 @@ final class AccountManager {
 extension AccountManager {
     
     func create(_ account: AccountModel, isDefault: Bool) async -> ToastResponse? {
-        if account.name.isEmptyOrWhitespace {
+        if account.name.isEmptyOrWhiteSpace {
             return ToastResponse(.responseErrorTextFieldEmptySpace, .error)
         }
         
@@ -155,7 +155,7 @@ extension AccountManager {
     }
     
     func update(_ account: AccountModel, isDefault: Bool) async -> ToastResponse? {
-        if account.name.isEmptyOrWhitespace {
+        if account.name.isEmptyOrWhiteSpace {
             return ToastResponse(.responseErrorTextFieldEmptySpace, .error)
         }
         

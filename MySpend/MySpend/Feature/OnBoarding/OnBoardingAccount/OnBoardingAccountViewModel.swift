@@ -14,7 +14,7 @@ final class OnBoardingAccountViewModel {
     
     func finishOnBoarding(withAccountName: Bool, accountManager: AccountManager) async -> ToastResponse? {
         
-        if withAccountName && accountName.isEmptyOrWhitespace {
+        if withAccountName && accountName.isEmptyOrWhiteSpace {
             return ToastResponse(.responseErrorTextFieldEmptySpace, .error)
         }
         

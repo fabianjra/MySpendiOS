@@ -37,7 +37,7 @@ struct AccountForm: View {
                     Button {
                         showIconsModal = true
                     } label: {
-                        if account.icon.isEmptyOrWhitespace {
+                        if account.icon.isEmptyOrWhiteSpace {
                             Text(.inputIconPlaceHolder)
                                 .foregroundStyle(Color(uiColor: .placeholderText))
                             
@@ -49,7 +49,7 @@ struct AccountForm: View {
                     
                     Spacer()
                     
-                    if !account.icon.isEmptyOrWhitespace {
+                    if !account.icon.isEmptyOrWhiteSpace {
                         Button {
                             account.icon = ""
                         } label: {
@@ -67,7 +67,7 @@ struct AccountForm: View {
                 .tint(.accentColor)
 
             } footer: {
-                if account.name.isEmptyOrWhitespace {
+                if account.name.isEmptyOrWhiteSpace {
                     Text(.inputNameRequired)
                         .foregroundStyle(.alert)
                 }

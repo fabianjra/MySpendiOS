@@ -41,7 +41,7 @@ struct CategoryForm: View {
                         Button {
                             showIconsModal = true
                         } label: {
-                            if category.icon.isEmptyOrWhitespace {
+                            if category.icon.isEmptyOrWhiteSpace {
                                 Text(.inputIconPlaceHolder)
                                     .foregroundStyle(Color(uiColor: .placeholderText))
                                 
@@ -53,7 +53,7 @@ struct CategoryForm: View {
                         
                         Spacer()
                         
-                        if !category.icon.isEmptyOrWhitespace {
+                        if !category.icon.isEmptyOrWhiteSpace {
                             Button {
                                 category.icon = ""
                             } label: {
@@ -65,7 +65,7 @@ struct CategoryForm: View {
                     .formLabeledInputStyle
                     
                 } footer: {
-                    if category.name.isEmptyOrWhitespace {
+                    if category.name.isEmptyOrWhiteSpace {
                         Text(.inputNameRequired)
                             .foregroundStyle(.alert)
                     }

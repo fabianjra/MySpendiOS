@@ -24,11 +24,7 @@ extension String {
      
      - Date: Feb 2023
      */
-    public var isEmptyOrWhitespace: Bool {
-        if(self.isEmpty) {
-            return true
-        }
-        
-        return self.trimmingCharacters(in: .whitespaces).isEmpty
+    public var isEmptyOrWhiteSpace: Bool {
+        trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 }

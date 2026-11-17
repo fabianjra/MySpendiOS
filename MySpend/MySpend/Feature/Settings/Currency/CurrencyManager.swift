@@ -73,12 +73,12 @@ extension String {
      - Date: September 2024
      */
     var amountToDecimal: Decimal? {
-        guard !trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+        guard !isEmptyOrWhiteSpace else {
             return .zero
         }
 
         // Siempre se usan los decimales porque es el valor que se irá a guardar a Core Data
-        let formatter = UtilsTransactions.localFormatter(showCents: true)
+        let formatter = CurrencyConstant.localFormatter(showCents: true)
 
         guard let number = formatter.number(from: self) else {
             return nil
@@ -92,3 +92,44 @@ extension String {
         return roundedAmount
     }
 }
+
+
+extension Decimal {
+    
+    func amountToString(showCents: Bool) -> String {
+        let formatter = CurrencyConstant.localFormatter(showCents: showCents)
+        let decimalNumber = NSDecimalNumber(decimal: self)
+        let formattedString = formatter.string(from: decimalNumber) ?? Int.zero.description
+        
+        return formattedString
+    }
+    
+    /**
+     Converts the Decimal value into an NSDecimalNumber for Core Data persistence.
+     
+     Rounds the value to two decimal places using banker's rounding
+     (round half to even) to ensure consistent monetary precision.
+     
+     - Returns: An NSDecimalNumber rounded to two decimal places.
+     - Throws: DecimalConversionError.invalidAmount if the value is NaN.
+     */
+    func toNSDecimalNumber() throws -> NSDecimalNumber {
+        var amount = self
+        var roundedAmount = Decimal.zero
+        
+        NSDecimalRound(&roundedAmount, &amount, 2, .bankers)
+        
+        let number = NSDecimalNumber(decimal: roundedAmount)
+        
+        guard number != .notANumber else {
+            throw DecimalConversionError.invalidAmount
+        }
+        
+        return number
+    }
+}
+
+enum DecimalConversionError: Error {
+    case invalidAmount
+}
+

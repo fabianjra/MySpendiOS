@@ -149,7 +149,7 @@ struct TransactionHistoryView: View {
                     HStack {
                         
                         Label {
-                            Text(item.notes.isEmptyOrWhitespace ? item.category.name : item.notes)
+                            Text(item.notes.isEmptyOrWhiteSpace ? item.category.name : item.notes)
                             
                             HStack {
                                 if shouldShowAccountName {

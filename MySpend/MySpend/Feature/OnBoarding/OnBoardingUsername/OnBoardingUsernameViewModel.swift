@@ -15,7 +15,7 @@ final class OnBoardingUsernameViewModel {
     
     func continueToNextStep(withName: Bool) {
         if withName {
-            if userName.isEmptyOrWhitespace {
+            if userName.isEmptyOrWhiteSpace {
                 toastResponse = ToastResponse(.responseErrorTextFieldEmptySpace, .error)
                 return
             }

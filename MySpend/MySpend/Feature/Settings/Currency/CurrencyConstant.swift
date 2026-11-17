@@ -56,14 +56,14 @@ struct CurrencyConstant {
         "VES": "VE"  // Venezuela
 ]
     
-    public static let amoutMaxLength = 50
-    public static let fractionLength = 2
+    static let amoutMaxLength = 50
+    static let fractionLength = 2
     
-    public static var localDecimalSeparator: String {
+    static var localDecimalSeparator: String {
         return Locale.current.decimalSeparator ?? "."
     }
 
-    public static var localGroupingSeparator: String {
+    static var localGroupingSeparator: String {
         return Locale.current.groupingSeparator ?? ","
     }
     
@@ -131,7 +131,7 @@ struct CurrencyConstant {
             let customSymbol = symbolForCurrencyCode(code: currencyCode)
             
             return CurrencyModel(countryCode: regionCode,
-                                 symbol: customSymbol.isEmptyOrWhitespace ? currencySymbol : customSymbol,
+                                 symbol: customSymbol.isEmptyOrWhiteSpace ? currencySymbol : customSymbol,
                                  currencyCode: currencyCode,
                                  countryName: locale.localizedString(forRegionCode: regionCode) ?? regionCode,
                                  countryFlag: regionCode.flagEmoji ?? "🏳️")
@@ -150,6 +150,84 @@ struct CurrencyConstant {
         }
 
         return symbols.first(where: { $0.count == 1 }) ?? symbols.min(by: { $0.count < $1.count }) ?? ""
+    }
+    
+    /**
+     Returns a localized `NumberFormatter` configured for decimal numbers based on the current locale.
+     
+     This formatter can be used to format numbers that include a fixed number of fractional digits (like currency).
+     
+     **Example:**
+     ```swift
+     let formatter = UtilCurrency.localFormatter
+     let formattedNumber = formatter.number(from: "1234.567")
+     print(formattedNumber) // Prints "1234.57" or "1234,57" depending on locale
+     ```
+     
+     - Returns: A NumberFormatter configured with locale settings, decimal number style, and rounding mode
+     
+     - Authors: Fabian Rodriguez
+     
+     - Date: Sepember 2024
+     */
+    static func localFormatter(showCents: Bool) -> NumberFormatter {
+        let formatter = NumberFormatter()
+        
+        formatter.locale = Locale.current
+        //formatter.maximumIntegerDigits = CurrencyConstant.amoutMaxLength
+        //formatter.minimumFractionDigits = CurrencyConstant.fractionLength
+        formatter.minimumFractionDigits = .zero
+        formatter.maximumFractionDigits = showCents ? fractionLength : .zero
+        
+        /*
+         numberStyle: Define el estilo general del formateo numérico.
+         .decimal: Formato decimal estándar (ejemplo: 1234.56).
+         .currency: Formato monetario (ejemplo: $1,234.56).
+         .percent: Formato de porcentaje (ejemplo: 12.34%).
+         .scientific: Notación científica (ejemplo: 1.23E3).
+         .spellOut: Convierte el número en palabras (ejemplo: "mil doscientos treinta y cuatro").
+         */
+        //formatter.numberStyle = .decimal
+        
+        
+        // **********************
+        // Optionals parameters:
+        // **********************
+        
+        //formateará el número con separadores de miles (ejemplo: 1,234.56)
+        formatter.usesGroupingSeparator = true
+        
+        /*
+         roundingMode: Define cómo redondear los números.
+         .up: Siempre redondea hacia arriba.
+         .down: Siempre redondea hacia abajo.
+         .halfUp: Redondea al número más cercano, y si es exactamente a la mitad, redondea hacia arriba (esto es lo estándar en la mayoría de los casos).
+         .halfDown: Redondea hacia abajo si está en la mitad.
+         .ceiling: Siempre redondea hacia el infinito positivo.
+         .floor: Siempre redondea hacia el infinito negativo.
+         */
+        ///formatter.roundingMode = .halfUp
+        
+        /*
+         currencySymbol y currencyCode: Personaliza el símbolo y el código de la moneda.
+         Ejemplo: formatter.currencySymbol = "€" o formatter.currencyCode = "EUR".
+         */
+        ///formatter.currencySymbol = "$"
+        ///formatter.currencyCode = "USD"
+        
+        /*
+         notANumberSymbol: Define lo que se mostrará si el número es un valor no numérico (NaN).
+         Ejemplo: formatter.notANumberSymbol = "NaN"
+         */
+        ///formatter.notANumberSymbol = "NaN"
+        
+        /*
+         positivePrefix y negativePrefix: Establecen un prefijo para números positivos o negativos.
+         Ejemplo: formatter.positivePrefix = "+" para que los números positivos tengan un "+" al principio.
+         */
+        ///formatter.positivePrefix = "+"
+        
+        return formatter
     }
 }
 

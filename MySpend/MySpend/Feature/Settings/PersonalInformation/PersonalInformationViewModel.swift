@@ -15,7 +15,7 @@ final class PersonalInformationViewModel {
     var phoneNumber = ""
     
     func changeUserName() -> ToastResponse {
-        if username.isEmptyOrWhitespace {
+        if username.isEmptyOrWhiteSpace {
             return ToastResponse(.responseErrorTextFieldEmptySpace, .error)
         }
         
