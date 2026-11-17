@@ -78,7 +78,10 @@ struct TransactionNumberPad: View {
                 .frame(maxWidth: .infinity)
                 .frame(height: numberButtonHeight)
         }
-        .buttonStyle(.glass)
+        //.buttonStyle(.glass)
+        .contentShape(RoundedRectangle(cornerRadius: 20))
+        .buttonStyle(.plain)
+        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 20))
     }
 
     private func actionButton<Content: View>(action: @escaping () -> Void, @ViewBuilder label: () -> Content) -> some View {
@@ -88,7 +91,10 @@ struct TransactionNumberPad: View {
                 .frame(maxWidth: .infinity)
                 .frame(height: numberButtonHeight)
         }
-        .buttonStyle(.glass)
+//        .buttonStyle(.glass)
+        .contentShape(RoundedRectangle(cornerRadius: 20))
+        .buttonStyle(.plain)
+        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 20))
     }
 }
 
