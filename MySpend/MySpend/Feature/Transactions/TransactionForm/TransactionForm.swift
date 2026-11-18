@@ -35,236 +35,240 @@ struct TransactionForm: View {
     
     
     var body: some View {
-        VStack {
-            CategoryPickerView(selection: $type)
-                .glassEffect(.regular)
-                .padding(.horizontal)
-            
-            
-            HStack {
-                Button {
-                    feedbackTrigger += 1
-                    transaction.favorite.toggle()
-                } label: {
-                    Image(systemName: transaction.favorite ? ConstantSystemImage.favoriteFill : ConstantSystemImage.favorite)
-                        .foregroundStyle(transaction.favorite ? Color.accentColor : Color.secondary)
-                        .padding(ConstantViews.highSpacing)
-                        .contentShape(Circle())
-                        .contentTransition(.symbolEffect(.replace))
-                }
-                .buttonStyle(.plain)
-                .overlay {
-                    Circle()
-                        .strokeBorder(Color.primary.opacity(0.1), lineWidth: 1)
-                }
-                .accessibilityLabel(Text(.favoriteMarkFavorite))
-                .accessibilityAddTraits(transaction.favorite ? [.isSelected] : [])
+        GeometryReader { geometry in
+            VStack {
+                CategoryPickerView(selection: $type)
+                    .glassEffect(.regular)
+                    .padding(.horizontal)
                 
                 
-                if showAccountTextField {
+                HStack {
                     Button {
-                        showAccountList = true
+                        feedbackTrigger += 1
+                        transaction.favorite.toggle()
                     } label: {
-                        Label {
-                            if transaction.account.name.isEmptyOrWhiteSpace {
-                                Text(.transactionInputAccountPlaceholder)
-                                    .foregroundStyle(.secondary)
-                            } else {
-                                Text(transaction.account.name)
-                            }
-                        } icon: {
-                            if transaction.account.name.isEmptyOrWhiteSpace {
-                                Image(systemName: ConstantSystemImage.selectAccount)
-                            } else {
-                                Image(systemName: transaction.account.icon)
-                            }
-                        }
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.8)
-                        .padding(ConstantViews.highSpacing)
+                        Image(systemName: transaction.favorite ? ConstantSystemImage.favoriteFill : ConstantSystemImage.favorite)
+                            .foregroundStyle(transaction.favorite ? Color.accentColor : Color.secondary)
+                            .padding(ConstantViews.highSpacing)
+                            .contentShape(Circle())
+                            .contentTransition(.symbolEffect(.replace))
                     }
                     .buttonStyle(.plain)
                     .overlay {
-                        Capsule()
+                        Circle()
                             .strokeBorder(Color.primary.opacity(0.1), lineWidth: 1)
                     }
+                    .accessibilityLabel(Text(.favoriteMarkFavorite))
+                    .accessibilityAddTraits(transaction.favorite ? [.isSelected] : [])
+                    
+                    
+                    if showAccountTextField {
+                        Button {
+                            showAccountList = true
+                        } label: {
+                            Label {
+                                if transaction.account.name.isEmptyOrWhiteSpace {
+                                    Text(.transactionInputAccountPlaceholder)
+                                        .foregroundStyle(.secondary)
+                                } else {
+                                    Text(transaction.account.name)
+                                }
+                            } icon: {
+                                if transaction.account.name.isEmptyOrWhiteSpace {
+                                    Image(systemName: ConstantSystemImage.selectAccount)
+                                } else {
+                                    Image(systemName: transaction.account.icon)
+                                }
+                            }
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.8)
+                            .padding(ConstantViews.highSpacing)
+                        }
+                        .buttonStyle(.plain)
+                        .overlay {
+                            Capsule()
+                                .strokeBorder(Color.primary.opacity(0.1), lineWidth: 1)
+                        }
+                    }
+                    
+                    Spacer()
                 }
+                .padding()
                 
                 Spacer()
-            }
-            .padding()
-            
-            Spacer()
-            
-            HStack(alignment: .top, spacing: ConstantViews.minimumSpacing) {
-                Text(currencyManager.selectedSymbolOrCode)
-                    .font(.system(size: 23, weight: .medium, design: .rounded))
-                    .foregroundStyle(.secondary)
-                    .offset(y: 5)
                 
-                Text(amountString.isEmpty ? Int.zero.description : amountString)
-                    .contentTransition(.numericText())
-                    .animation(.default, value: amountString)
-                    .font(.system(size: 45, weight: .bold, design: .rounded))
-                    .textSelection(.enabled)
-            }
-            .lineLimit(1)
-            .minimumScaleFactor(0.5)
-            .padding(.horizontal)
-            
-            
-            Spacer()
-            
-            
-            VStack {
+                HStack(alignment: .top, spacing: ConstantViews.minimumSpacing) {
+                    Text(currencyManager.selectedSymbolOrCode)
+                        .font(.system(size: 23, weight: .medium, design: .rounded))
+                        .foregroundStyle(.secondary)
+                        .offset(y: 5)
+                    
+                    Text(amountString.isEmpty ? Int.zero.description : amountString)
+                        .contentTransition(.numericText())
+                        .animation(.default, value: amountString)
+                        .font(.system(size: 45, weight: .bold, design: .rounded))
+                        .textSelection(.enabled)
+                }
+                .lineLimit(1)
+                .minimumScaleFactor(0.5)
+                .padding(.horizontal)
                 
-                HStack {
-                    Button {
-                        showDatePicker = true
-                    } label: {
-                        Label {
-                            if Calendar.current.isDateInToday(transaction.dateTransaction) {
-                                HStack {
-                                    Text(.dateToday)
-                                    
-                                    Text(transaction.dateTransaction.toStringShortLocaleNoYear)
-                                }
-                            } else {
-                                if Calendar.current.isDate(transaction.dateTransaction, equalTo: .now, toGranularity: .year) {
-                                    Text(transaction.dateTransaction.toStringShortLocaleNoYear)
+                
+                Spacer()
+                
+                
+                VStack {
+                    
+                    HStack {
+                        Button {
+                            showDatePicker = true
+                        } label: {
+                            Label {
+                                if Calendar.current.isDateInToday(transaction.dateTransaction) {
+                                    HStack {
+                                        Text(.dateToday)
+                                        
+                                        Text(transaction.dateTransaction.toStringShortLocaleNoYear)
+                                    }
                                 } else {
-                                    Text(transaction.dateTransaction.toStringShortLocale)
+                                    if Calendar.current.isDate(transaction.dateTransaction, equalTo: .now, toGranularity: .year) {
+                                        Text(transaction.dateTransaction.toStringShortLocaleNoYear)
+                                    } else {
+                                        Text(transaction.dateTransaction.toStringShortLocale)
+                                    }
+                                }
+                            } icon: {
+                                Image.calendar
+                            }
+                            .padding(ConstantViews.highSpacing)
+                        }
+                        .buttonStyle(.plain)
+                        .background {
+                            Capsule()
+                                .strokeBorder(Color.primary.opacity(0.1), lineWidth: 1)
+                        }
+                        
+                        
+                        HStack(spacing: ConstantViews.mediumSpacing) {
+                            Image(systemName: ConstantSystemImage.notes)
+                                .foregroundStyle(transaction.notes.isEmptyOrWhiteSpace ? .secondary : .primary)
+                            
+                            TextField(.transactionInputNotesPlaceholder, text: $transaction.notes)
+                                .lineLimit(1)
+                                .focused($isNoteFocused)
+                                .submitLabel(.done)
+                                .formInputStyle($transaction.notes)
+                        }
+                        .padding(ConstantViews.highSpacing)
+                        .frame(maxWidth: .infinity)
+                        .background {
+                            Capsule()
+                                .strokeBorder(Color.primary.opacity(0.1), lineWidth: 1)
+                        }
+                        
+                        Spacer()
+                    }
+                    .padding(.leading)
+                    
+                    
+                    HStack {
+                        Button {
+                            showCategoryList = true
+                        } label: {
+                            Label {
+                                if transaction.category.name.isEmptyOrWhiteSpace {
+                                    Text(.transactionInputCategoryPlaceholder)
+                                        .foregroundStyle(.secondary)
+                                } else {
+                                    Text(transaction.category.name)
+                                }
+                            } icon: {
+                                if transaction.category.name.isEmptyOrWhiteSpace {
+                                    Image(systemName: ConstantSystemImage.selectCategory)
+                                } else {
+                                    Image(systemName: transaction.category.icon)
                                 }
                             }
-                        } icon: {
-                            Image.calendar
-                        }
-                        .padding(ConstantViews.highSpacing)
-                    }
-                    .buttonStyle(.plain)
-                    .background {
-                        Capsule()
-                            .strokeBorder(Color.primary.opacity(0.1), lineWidth: 1)
-                    }
-                    
-                    
-                    HStack(spacing: ConstantViews.mediumSpacing) {
-                        Image(systemName: ConstantSystemImage.notes)
-                            .foregroundStyle(transaction.notes.isEmptyOrWhiteSpace ? .secondary : .primary)
-                        
-                        TextField(.transactionInputNotesPlaceholder, text: $transaction.notes)
                             .lineLimit(1)
-                            .focused($isNoteFocused)
-                            .submitLabel(.done)
-                            .formInputStyle($transaction.notes)
-                    }
-                    .padding(ConstantViews.highSpacing)
-                    .frame(maxWidth: .infinity)
-                    .background {
-                        Capsule()
-                            .strokeBorder(Color.primary.opacity(0.1), lineWidth: 1)
-                    }
-                    
-                    Spacer()
-                }
-                .padding(.leading)
-                
-                
-                HStack {
-                    Button {
-                        showCategoryList = true
-                    } label: {
-                        Label {
-                            if transaction.category.name.isEmptyOrWhiteSpace {
-                                Text(.transactionInputCategoryPlaceholder)
-                                    .foregroundStyle(.secondary)
-                            } else {
-                                Text(transaction.category.name)
-                            }
-                        } icon: {
-                            if transaction.category.name.isEmptyOrWhiteSpace {
-                                Image(systemName: ConstantSystemImage.selectCategory)
-                            } else {
-                                Image(systemName: transaction.category.icon)
-                            }
+                            .minimumScaleFactor(0.8)
+                            .padding(ConstantViews.highSpacing)
                         }
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.8)
-                        .padding(ConstantViews.highSpacing)
+                        .buttonStyle(.plain)
+                        .overlay {
+                            Capsule()
+                                .strokeBorder(Color.primary.opacity(0.1), lineWidth: 1)
+                        }
+                        
+                        Spacer()
                     }
-                    .buttonStyle(.plain)
-                    .overlay {
-                        Capsule()
-                            .strokeBorder(Color.primary.opacity(0.1), lineWidth: 1)
-                    }
-                    
-                    Spacer()
+                    .padding(.leading)
                 }
-                .padding(.leading)
+                
+                
+                TransactionNumberPad(
+                    onDigit: { digit in
+                        feedbackTrigger += 1
+                        amountString = onChangeAmount(amountString + digit)
+                        
+                    }, onDecimal: {
+                        feedbackTrigger += 1
+                        
+                        let separator = CurrencyConstant.localDecimalSeparator
+                        guard !amountString.contains(separator) else { return }
+                        
+                        amountString = onChangeAmount(amountString + separator)
+                        
+                    }, onErase: {
+                        feedbackTrigger += 1
+                        
+                        guard !amountString.isEmpty else { return }
+                        
+                        amountString.removeLast()
+                        amountString = onChangeAmount(amountString)
+                        
+                    }, onClear: {
+                        feedbackTrigger += 1
+                        amountString = ""
+                    },
+                    onConfirm: onConfirm,
+                    onDelete: onDelete
+                )
+                .padding(.horizontal)
+            }
+            
+            // MARK: EVENTS
+            
+            .onAppear {
+                amountString = onChangeAmount(amountString, prepareForAppear: true)
+            }
+            .onChange(of: accountManager.sortedAccounts, initial: true) {
+                configureSelectedAccount()
+            }
+            .onChange(of: type) { _, newValue in
+                transaction.category = CategoryModel(type: newValue)
             }
             
             
-            TransactionNumberPad(
-                onDigit: { digit in
-                    feedbackTrigger += 1
-                    amountString = onChangeAmount(amountString + digit)
-                    
-                }, onDecimal: {
-                    feedbackTrigger += 1
-                    
-                    let separator = CurrencyConstant.localDecimalSeparator
-                    guard !amountString.contains(separator) else { return }
-                    
-                    amountString = onChangeAmount(amountString + separator)
-                    
-                }, onErase: {
-                    feedbackTrigger += 1
-                    
-                    guard !amountString.isEmpty else { return }
-                    
-                    amountString.removeLast()
-                    amountString = onChangeAmount(amountString)
-                    
-                }, onClear: {
-                    feedbackTrigger += 1
-                    amountString = ""
-                },
-                onConfirm: onConfirm,
-                onDelete: onDelete
-            )
-            .padding(.horizontal)
-        }
-        
-        // MARK: EVENTS
-        
-        .onAppear {
-            amountString = onChangeAmount(amountString, prepareForAppear: true)
-        }
-        .onChange(of: accountManager.sortedAccounts, initial: true) {
-            configureSelectedAccount()
-        }
-        .onChange(of: type) { _, newValue in
-            transaction.category = CategoryModel(type: newValue)
-        }
-        
-        
-        // MARK: SHEETS
-        
-        .sheet(isPresented: $showDatePicker) {
-            DatePickerModalView(selectedDate: $transaction.dateTransaction)
-        }
-        .sheet(isPresented: $showCategoryList) {
-            NavigationStack {
-                SelectCategoryView(selectedCategory: $transaction.category, type: $type)
+            // MARK: SHEETS
+            
+            .sheet(isPresented: $showDatePicker) {
+                DatePickerModalView(selectedDate: $transaction.dateTransaction)
             }
-        }
-        .sheet(isPresented: $showAccountList) {
-            NavigationStack {
-                SelectAccountView(selectedAccount: $transaction.account)
+            .sheet(isPresented: $showCategoryList) {
+                NavigationStack {
+                    SelectCategoryView(selectedCategory: $transaction.category, type: $type)
+                }
             }
+            .sheet(isPresented: $showAccountList) {
+                NavigationStack {
+                    SelectAccountView(selectedAccount: $transaction.account)
+                }
+            }
+            
+            .sensoryFeedback(.selection, trigger: feedbackTrigger)
+            
+            .frame(width: geometry.size.width, height: geometry.size.height)
         }
-        
-        .sensoryFeedback(.selection, trigger: feedbackTrigger)
         .ignoresSafeArea(.keyboard, edges: .bottom)
     }
     
