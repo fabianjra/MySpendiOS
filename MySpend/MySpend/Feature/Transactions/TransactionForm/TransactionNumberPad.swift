@@ -9,11 +9,14 @@ import SwiftUI
 
 struct TransactionNumberPad: View {
     
+    var showDelete = false
+    
     let onDigit: (String) -> Void
     let onDecimal: () -> Void
-    let onDelete: () -> Void
+    let onErase: () -> Void
     let onClear: () -> Void
     let onConfirm: () -> Void
+    var onDelete: (() -> Void)? = nil
 
     private let rows = [
         ["1", "2", "3"],
@@ -21,8 +24,8 @@ struct TransactionNumberPad: View {
         ["7", "8", "9"]
     ]
     
-    private let numberButtonHeight: CGFloat = 64
-    private let actionButtonHeight: CGFloat = 54
+    private let numberButtonHeight: CGFloat = 50
+    private let actionButtonHeight: CGFloat = 35
 
     var body: some View {
         VStack {
@@ -36,6 +39,7 @@ struct TransactionNumberPad: View {
             }
 
             HStack {
+                
                 actionButton {
                     onDecimal()
                 } label: {
@@ -45,13 +49,26 @@ struct TransactionNumberPad: View {
                 numberButton("0")
 
                 actionButton {
-                    onDelete()
+                    onErase()
                 } label: {
                     Image(systemName: ConstantSystemImage.padDelete)
                 }
             }
 
             HStack {
+                
+                if let onDelete {
+                    Button(action: onDelete) {
+                        //Label(.alertOptionDelete, systemImage: )
+                        Text(.alertOptionDelete)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: actionButtonHeight)
+                    }
+                    .buttonStyle(.glassProminent)
+                    .tint(.alert)
+                }
+                    
+                
                 Button(action: onClear) {
                     Label(.selectorClear, systemImage: ConstantSystemImage.padClear)
                         .frame(maxWidth: .infinity)
@@ -59,6 +76,7 @@ struct TransactionNumberPad: View {
                 }
                 .buttonStyle(.glass)
 
+                
                 Button(action: onConfirm) {
                     Label(.buttonSave, systemImage: ConstantSystemImage.checkmark)
                         .frame(maxWidth: .infinity)
@@ -77,9 +95,10 @@ struct TransactionNumberPad: View {
                 .font(.title.bold())
                 .frame(maxWidth: .infinity)
                 .frame(height: numberButtonHeight)
+                .contentShape(Rectangle())
         }
         //.buttonStyle(.glass)
-        .contentShape(RoundedRectangle(cornerRadius: 20))
+        //.contentShape(RoundedRectangle(cornerRadius: 20))
         .buttonStyle(.plain)
         .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 20))
     }
@@ -90,9 +109,8 @@ struct TransactionNumberPad: View {
                 .font(.title2)
                 .frame(maxWidth: .infinity)
                 .frame(height: numberButtonHeight)
+                .contentShape(Rectangle())
         }
-//        .buttonStyle(.glass)
-        .contentShape(RoundedRectangle(cornerRadius: 20))
         .buttonStyle(.plain)
         .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 20))
     }
@@ -108,7 +126,7 @@ struct TransactionNumberPad: View {
         
     } onDecimal: {
         
-    } onDelete: {
+    } onErase: {
         
     } onClear: {
         
@@ -123,11 +141,13 @@ struct TransactionNumberPad: View {
         
     } onDecimal: {
         
-    } onDelete: {
+    } onErase: {
         
     } onClear: {
         
     } onConfirm: {
+        
+    } onDelete: {
         
     }
     .environment(\.locale, .init(identifier: Previews.localeEN))

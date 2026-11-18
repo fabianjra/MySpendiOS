@@ -56,7 +56,7 @@ struct CurrencyConstant {
         "VES": "VE"  // Venezuela
 ]
     
-    static let amoutMaxLength = 50
+    static let amoutMaxLength = 12
     static let fractionLength = 2
     
     static var localDecimalSeparator: String {

@@ -40,42 +40,60 @@ struct UpdateTransactionView: View {
     }
     
     var body: some View {
-        TransactionForm(transaction: $transaction, type: $type, amountString: $amountString, autoFocus: false)
+        TransactionForm(transaction: $transaction, type: $type, amountString: $amountString) {
+            
+            Task {
+                guard let amount = amountString.amountToDecimal, amount >= .zero else {
+                    toastResponse = ToastResponse(.responseErrorInvalidAmount, .error)
+                    return
+                }
+                
+                transaction.amount = amount
+                toastResponse = await manager.update(transaction)
+                
+                if toastResponse?.type != .error {
+                    dismiss()
+                }
+            }
+        } onDelete: {
+            showAlert = true
+        }
+        .ignoresSafeArea(.keyboard, edges: .bottom)
         
             .navigationTitle(.transactionUpdateTitle)
             .navigationBarTitleDisplayMode(.inline)
         
-            .safeAreaInset(edge: .bottom) {
-                VStack {
-                    Button {
-                        Task {
-                            guard let amount = amountString.amountToDecimal, amount >= .zero else {
-                                toastResponse = ToastResponse(.responseErrorInvalidAmount, .error)
-                                return
-                            }
-                            
-                            transaction.amount = amount
-                            toastResponse = await manager.update(transaction)
-                            
-                            if toastResponse?.type != .error {
-                                dismiss()
-                            }
-                        }
-                    } label: {
-                        Text(.buttonSave)
-                            .padding(.vertical, ConstantViews.paddingButtonVertical)
-                            .frame(maxWidth: ConstantFrames.iPadMaxWidth)
-                    }
-                    .padding(.horizontal)
-                    .buttonStyle(.glass)
-                    .padding(.bottom)
-                    .disabled(toastResponse != nil)
+//            .safeAreaInset(edge: .bottom) {
+//                VStack {
+//                    Button {
+//                        Task {
+//                            guard let amount = amountString.amountToDecimal, amount >= .zero else {
+//                                toastResponse = ToastResponse(.responseErrorInvalidAmount, .error)
+//                                return
+//                            }
+//                            
+//                            transaction.amount = amount
+//                            toastResponse = await manager.update(transaction)
+//                            
+//                            if toastResponse?.type != .error {
+//                                dismiss()
+//                            }
+//                        }
+//                    } label: {
+//                        Text(.buttonSave)
+//                            .padding(.vertical, ConstantViews.paddingButtonVertical)
+//                            .frame(maxWidth: ConstantFrames.iPadMaxWidth)
+//                    }
+//                    .padding(.horizontal)
+//                    .buttonStyle(.glass)
+//                    .padding(.bottom)
+//                    .disabled(toastResponse != nil)
                     
-                    Button(.alertOptionDelete, role: .destructive) {
-                        showAlert = true
-                    }
-                    .padding(.bottom)
-                }
+//                    Button(.alertOptionDelete, role: .destructive) {
+//                        showAlert = true
+//                    }
+//                    .padding(.bottom)
+//                }
                 
                 .alert(.transactionDelete(.zero), isPresented: $showAlert) {
                     Button(.alertOptionDelete, role: .destructive) {
@@ -92,7 +110,7 @@ struct UpdateTransactionView: View {
                 } message: {
                     Text(.transactionDeleteMessage(.zero))
                 }
-            }
+//            }
         
             .toolbar {
                 ToolbarItem(placement: .destructiveAction) {
@@ -123,6 +141,8 @@ private struct PreviewWrapper: View {
     @State var manager: TransactionManager
     @State var accountManager: AccountManager
     @State var categoryManager: CategoryManager
+    
+    @State var currencyManager = CurrencyManager.shared
     
     @State var transaction = TransactionModel()
     @State var isPresented = false
@@ -158,6 +178,7 @@ private struct PreviewWrapper: View {
         .environment(manager)
         .environment(accountManager)
         .environment(categoryManager)
+        .environment(currencyManager)
     }
 }
 

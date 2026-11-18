@@ -17,6 +17,13 @@ extension Date {
         return formatter.string(from: self)
     }
     
+    public var toStringShortLocaleNoYear: String {
+        let formatter = DateFormatter()
+        formatter.locale = .current
+        formatter.setLocalizedDateFormatFromTemplate("dMMM")
+        return formatter.string(from: self)
+    }
+    
     /**
      This function checks if two dates fall on the same calendar day, disregarding the time.
      It compares the year, month, and day components of the current date (self) with another date passed as a parameter (toCompare).

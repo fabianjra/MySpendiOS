@@ -43,4 +43,7 @@ struct ConstantSystemImage {
     // MARK: NUMPAD
     static let padDelete = "delete.left"
     static let padClear = "clear"
+    static let selectCategory = "square.grid.2x2"
+    static let selectAccount = "creditcard"
+    static let notes = "note.text"
 }

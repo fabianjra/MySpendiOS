@@ -26,36 +26,52 @@ struct CreateTransactionView: View {
     }
     
     var body: some View {
-        TransactionForm(transaction: $transaction, type: $type, amountString: $amountString)
+        TransactionForm(transaction: $transaction, type: $type, amountString: $amountString) {
+            
+            Task {
+                guard let amount = amountString.amountToDecimal, amount >= .zero else {
+                    toastResponse = ToastResponse(.responseErrorInvalidAmount, .error)
+                    return
+                }
+                
+                transaction.amount = amount
+                toastResponse = await manager.create(transaction)
+                
+                if toastResponse?.type != .error {
+                    dismiss()
+                }
+            }
+        }
+        .ignoresSafeArea(.keyboard, edges: .bottom)
         
             .navigationTitle(.transactionCreateTitle)
             .navigationBarTitleDisplayMode(.inline)
         
-            .safeAreaInset(edge: .bottom) {
-                Button {
-                    Task {
-                        guard let amount = amountString.amountToDecimal, amount >= .zero else {
-                            toastResponse = ToastResponse(.responseErrorInvalidAmount, .error)
-                            return
-                        }
-                        
-                        transaction.amount = amount
-                        toastResponse = await manager.create(transaction)
-                        
-                        if toastResponse?.type != .error {
-                            dismiss()
-                        }
-                    }
-                } label: {
-                    Text(.buttonSave)
-                        .padding(.vertical, ConstantViews.paddingButtonVertical)
-                        .frame(maxWidth: ConstantFrames.iPadMaxWidth)
-                }
-                .padding(.horizontal)
-                .buttonStyle(.glass)
-                .padding(.bottom)
-                .disabled(toastResponse != nil)
-            }
+//            .safeAreaInset(edge: .bottom) {
+//                Button {
+//                    Task {
+//                        guard let amount = amountString.amountToDecimal, amount >= .zero else {
+//                            toastResponse = ToastResponse(.responseErrorInvalidAmount, .error)
+//                            return
+//                        }
+//                        
+//                        transaction.amount = amount
+//                        toastResponse = await manager.create(transaction)
+//                        
+//                        if toastResponse?.type != .error {
+//                            dismiss()
+//                        }
+//                    }
+//                } label: {
+//                    Text(.buttonSave)
+//                        .padding(.vertical, ConstantViews.paddingButtonVertical)
+//                        .frame(maxWidth: ConstantFrames.iPadMaxWidth)
+//                }
+//                .padding(.horizontal)
+//                .buttonStyle(.glass)
+//                .padding(.bottom)
+//                .disabled(toastResponse != nil)
+//            }
         
             .toolbar {
                 ToolbarItem(placement: .destructiveAction) {
@@ -81,6 +97,8 @@ struct CreateTransactionView: View {
     @Previewable @State var accountManager = AccountManager(viewContext: MockDataType.normal.viewContext)
     @Previewable @State var categoryManager = CategoryManager(viewContext: MockDataType.normal.viewContext)
     
+    @Previewable @State var currencyManager = CurrencyManager.shared
+    
     @Previewable @State var selectedDate = Date.now
     
     NavigationStack {
@@ -89,5 +107,6 @@ struct CreateTransactionView: View {
     .environment(transactionManager)
     .environment(accountManager)
     .environment(categoryManager)
+    .environment(currencyManager)
     .environment(\.locale, .init(identifier: Previews.localeES))
 }
