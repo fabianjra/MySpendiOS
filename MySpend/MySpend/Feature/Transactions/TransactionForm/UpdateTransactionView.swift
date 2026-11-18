@@ -58,75 +58,40 @@ struct UpdateTransactionView: View {
         } onDelete: {
             showAlert = true
         }
-        .ignoresSafeArea(.keyboard, edges: .bottom)
-        
-            .navigationTitle(.transactionUpdateTitle)
-            .navigationBarTitleDisplayMode(.inline)
-        
-//            .safeAreaInset(edge: .bottom) {
-//                VStack {
-//                    Button {
-//                        Task {
-//                            guard let amount = amountString.amountToDecimal, amount >= .zero else {
-//                                toastResponse = ToastResponse(.responseErrorInvalidAmount, .error)
-//                                return
-//                            }
-//                            
-//                            transaction.amount = amount
-//                            toastResponse = await manager.update(transaction)
-//                            
-//                            if toastResponse?.type != .error {
-//                                dismiss()
-//                            }
-//                        }
-//                    } label: {
-//                        Text(.buttonSave)
-//                            .padding(.vertical, ConstantViews.paddingButtonVertical)
-//                            .frame(maxWidth: ConstantFrames.iPadMaxWidth)
-//                    }
-//                    .padding(.horizontal)
-//                    .buttonStyle(.glass)
-//                    .padding(.bottom)
-//                    .disabled(toastResponse != nil)
-                    
-//                    Button(.alertOptionDelete, role: .destructive) {
-//                        showAlert = true
-//                    }
-//                    .padding(.bottom)
-//                }
-                
-                .alert(.transactionDelete(.zero), isPresented: $showAlert) {
-                    Button(.alertOptionDelete, role: .destructive) {
-                        Task {
-                            toastResponse = await manager.delete(transaction)
-                            
-                            if toastResponse?.type != .error {
-                                dismiss()
-                            }
-                        }
-                    }
-                    
-                    Button(.alertOptionCancel, role: .cancel) { }
-                } message: {
-                    Text(.transactionDeleteMessage(.zero))
+        .navigationTitle(.transactionUpdateTitle)
+        .navigationBarTitleDisplayMode(.inline)
+
+        .toolbar {
+            ToolbarItem(placement: .destructiveAction) {
+                Button(role: .cancel) {
+                    dismiss()
                 }
-//            }
+            }
+        }
         
-            .toolbar {
-                ToolbarItem(placement: .destructiveAction) {
-                    Button(role: .cancel) {
+        .background {
+            Color.backgroundGradient
+                .ignoresSafeArea(.container, edges: .all)
+                .ignoresSafeArea(.keyboard, edges: .bottom)
+        }
+        
+        .alert(.transactionDelete(.zero), isPresented: $showAlert) {
+            Button(.alertOptionDelete, role: .destructive) {
+                Task {
+                    toastResponse = await manager.delete(transaction)
+                    
+                    if toastResponse?.type != .error {
                         dismiss()
                     }
                 }
             }
+            
+            Button(.alertOptionCancel, role: .cancel) { }
+        } message: {
+            Text(.transactionDeleteMessage(.zero))
+        }
         
-            .background {
-                Color.backgroundGradient
-                    .ignoresSafeArea(.container, edges: .all)
-                    .ignoresSafeArea(.keyboard, edges: .bottom)
-            }
-        
-            .toast($toastResponse)
+        .toast($toastResponse)
     }
 }
 

@@ -77,7 +77,7 @@ extension CategoryManager {
     
     func create(_ category: CategoryModel) async -> ToastResponse? {
         if category.name.isEmptyOrWhiteSpace {
-            return ToastResponse(.responseErrorTextFieldEmptySpace, .error)
+            return ToastResponse(.inputNameRequired, .error)
         }
         
         do {
@@ -92,7 +92,7 @@ extension CategoryManager {
     
     func update(_ category: CategoryModel) async -> ToastResponse? {
         if category.name.isEmptyOrWhiteSpace {
-            return ToastResponse(.responseErrorTextFieldEmptySpace, .error)
+            return ToastResponse(.inputNameRequired, .error)
         }
         
         do {

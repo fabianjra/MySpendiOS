@@ -17,21 +17,23 @@ struct TransactionForm: View {
     @Binding var type: CategoryType
     @Binding var amountString: String
     
-//    var autoFocus: Bool = true
-//    @FocusState private var isFocused: Bool
+    let onConfirm: () -> Void
+    var onDelete: (() -> Void)? = nil
+    
+    @FocusState private var isNoteFocused: Bool
     
     private var showAccountTextField: Bool {
         accountManager.sortedAccounts.count > 1
     }
+    
+    @State private var feedbackTrigger = 0
     
     //SHEETS
     @State private var showDatePicker = false
     @State private var showCategoryList = false
     @State private var showAccountList = false
     
-    let onConfirm: () -> Void
-    var onDelete: (() -> Void)? = nil
-
+    
     var body: some View {
         VStack {
             CategoryPickerView(selection: $type)
@@ -41,10 +43,10 @@ struct TransactionForm: View {
             
             HStack {
                 Button {
+                    feedbackTrigger += 1
                     transaction.favorite.toggle()
                 } label: {
                     Image(systemName: transaction.favorite ? ConstantSystemImage.favoriteFill : ConstantSystemImage.favorite)
-                        .font(.callout)
                         .foregroundStyle(transaction.favorite ? Color.accentColor : Color.secondary)
                         .padding(ConstantViews.highSpacing)
                         .contentShape(Circle())
@@ -77,12 +79,9 @@ struct TransactionForm: View {
                                 Image(systemName: transaction.account.icon)
                             }
                         }
-                        .font(.callout)
-                        .foregroundStyle(Color.primary)
-                        .padding(.horizontal, ConstantViews.highSpacing)
-                        .padding(.vertical, ConstantViews.highSpacing)
                         .lineLimit(1)
                         .minimumScaleFactor(0.8)
+                        .padding(ConstantViews.highSpacing)
                     }
                     .buttonStyle(.plain)
                     .overlay {
@@ -102,16 +101,15 @@ struct TransactionForm: View {
                     .font(.system(size: 23, weight: .medium, design: .rounded))
                     .foregroundStyle(.secondary)
                     .offset(y: 5)
-
+                
                 Text(amountString.isEmpty ? Int.zero.description : amountString)
                     .contentTransition(.numericText())
-                    //.animation(.snappy, value: amountString)
+                    .animation(.default, value: amountString)
                     .font(.system(size: 45, weight: .bold, design: .rounded))
                     .textSelection(.enabled)
             }
             .lineLimit(1)
             .minimumScaleFactor(0.5)
-            .frame(maxWidth: .infinity)
             .padding(.horizontal)
             
             
@@ -119,7 +117,7 @@ struct TransactionForm: View {
             
             
             VStack {
-            
+                
                 HStack {
                     Button {
                         showDatePicker = true
@@ -141,17 +139,10 @@ struct TransactionForm: View {
                         } icon: {
                             Image.calendar
                         }
-                        .font(.callout)
-                        .foregroundStyle(Color.primary)
-                        .padding(.horizontal, ConstantViews.highSpacing)
-                        .padding(.vertical, ConstantViews.highSpacing)
+                        .padding(ConstantViews.highSpacing)
                     }
                     .buttonStyle(.plain)
-                    //.background {
-                    //    Capsule()
-                    //        .fill(Color(.secondarySystemGroupedBackground))
-                    //}
-                    .overlay {
+                    .background {
                         Capsule()
                             .strokeBorder(Color.primary.opacity(0.1), lineWidth: 1)
                     }
@@ -159,16 +150,15 @@ struct TransactionForm: View {
                     
                     HStack(spacing: ConstantViews.mediumSpacing) {
                         Image(systemName: ConstantSystemImage.notes)
-                            .foregroundStyle(.secondary)
-
+                            .foregroundStyle(transaction.notes.isEmptyOrWhiteSpace ? .secondary : .primary)
+                        
                         TextField(.transactionInputNotesPlaceholder, text: $transaction.notes)
-                            .font(.callout)
                             .lineLimit(1)
+                            .focused($isNoteFocused)
                             .submitLabel(.done)
-                            .formInputStyle($transaction.notes, textLimit: 160)
+                            .formInputStyle($transaction.notes)
                     }
-                    .padding(.horizontal, ConstantViews.highSpacing)
-                    .padding(.vertical, ConstantViews.highSpacing)
+                    .padding(ConstantViews.highSpacing)
                     .frame(maxWidth: .infinity)
                     .background {
                         Capsule()
@@ -198,13 +188,9 @@ struct TransactionForm: View {
                                 Image(systemName: transaction.category.icon)
                             }
                         }
-                        .font(.callout)
-                        .foregroundStyle(Color.primary)
-                        .padding(.horizontal, ConstantViews.highSpacing)
-                        .padding(.vertical, ConstantViews.highSpacing)
-                        
                         .lineLimit(1)
                         .minimumScaleFactor(0.8)
+                        .padding(ConstantViews.highSpacing)
                     }
                     .buttonStyle(.plain)
                     .overlay {
@@ -220,151 +206,40 @@ struct TransactionForm: View {
             
             TransactionNumberPad(
                 onDigit: { digit in
-                    withAnimation {
-                        amountString = onChangeAmount(amountString + digit)
-                    }
+                    feedbackTrigger += 1
+                    amountString = onChangeAmount(amountString + digit)
                     
                 }, onDecimal: {
-                    withAnimation {
-                        let separator = CurrencyConstant.localDecimalSeparator
-                        
-                        guard !amountString.contains(separator) else { return }
-                        
-                        amountString = onChangeAmount(amountString + separator)
-                    }
+                    feedbackTrigger += 1
+                    
+                    let separator = CurrencyConstant.localDecimalSeparator
+                    guard !amountString.contains(separator) else { return }
+                    
+                    amountString = onChangeAmount(amountString + separator)
                     
                 }, onErase: {
-                    withAnimation {
-                        guard !amountString.isEmpty else { return }
-                        
-                        amountString.removeLast()
-                        amountString = onChangeAmount(amountString)
-                    }
+                    feedbackTrigger += 1
+                    
+                    guard !amountString.isEmpty else { return }
+                    
+                    amountString.removeLast()
+                    amountString = onChangeAmount(amountString)
                     
                 }, onClear: {
-                    withAnimation {
-                        amountString = ""
-                    }
-                    
+                    feedbackTrigger += 1
+                    amountString = ""
                 },
                 onConfirm: onConfirm,
                 onDelete: onDelete
             )
             .padding(.horizontal)
-
-            
-//            Form {
-//                Section {
-//                    
-//                    Button {
-//                        showDatePicker = true
-//                    } label: {
-//                        HStack(spacing: ConstantViews.formLabeledContentSpacing) {
-//                            Text(.transactionInputDate)
-//                                .frame(width: ConstantFrames.formLabelWidth, alignment: .leading)
-//                            
-//                            Text(transaction.dateTransaction.toStringShortLocale)
-//                            
-//                            Spacer()
-//                            
-//                            Image.calendar
-//                        }
-//                        .foregroundStyle(Color.primary)
-//                    }
-//                    
-//                    
-//                    LabeledContent(.transactionInputAmount) {
-//                        TextField(.transactionInputAmountPlaceholder, text: $amountString)
-//                            .formInputStyle($amountString)
-//                            .keyboardType(.decimalPad)
-//                            .focused($isFocused)
-//                    }
-//                    .formLabeledInputStyle
-//                    
-//                    
-//                    Button {
-//                        showCategoryList = true
-//                    } label: {
-//                        HStack(spacing: ConstantViews.formLabeledContentSpacing) {
-//                            Text(.transactionInputCategory)
-//                                .frame(width: ConstantFrames.formLabelWidth, alignment: .leading)
-//                                .foregroundStyle(Color.primary)
-//                            
-//                            if transaction.category.name.isEmptyOrWhiteSpace {
-//                                Text(.transactionInputCategoryPlaceholder)
-//                                    .foregroundStyle(Color(uiColor: .placeholderText))
-//                            } else {
-//                                Label(transaction.category.name, systemImage: transaction.category.icon)
-//                                    .foregroundStyle(Color.primary)
-//                            }
-//                        }
-//                    }
-//                    .alignmentGuide(.listRowSeparatorLeading) { dimensions in
-//                        dimensions[.leading]
-//                    }
-//                    
-//                    
-//                    if showAccountTextField {
-//                        Button {
-//                            showAccountList = true
-//                        } label: {
-//                            HStack(spacing: ConstantViews.formLabeledContentSpacing) {
-//                                Text(.transactionInputAccount)
-//                                    .frame(width: ConstantFrames.formLabelWidth, alignment: .leading)
-//                                    .foregroundStyle(Color.primary)
-//                                
-//                                if transaction.account.name.isEmptyOrWhiteSpace {
-//                                    Text(.transactionInputAccountPlaceholder)
-//                                        .foregroundStyle(Color(uiColor: .placeholderText))
-//                                } else {
-//                                    Label(transaction.account.name, systemImage: transaction.account.icon)
-//                                        .foregroundStyle(Color.primary)
-//                                }
-//                            }
-//                        }
-//                        .alignmentGuide(.listRowSeparatorLeading) { dimensions in
-//                            dimensions[.leading]
-//                        }
-//                    }
-//                    
-//                    
-//                    LabeledContent(.transactionInputNotes) {
-//                        TextField(.transactionInputNotesPlaceholder, text: $transaction.notes, axis: .vertical)
-//                            .formInputStyle($transaction.notes, textLimit: 160)
-//                            .keyboardType(.alphabet)
-//                    }
-//                    .formLabeledInputStyle
-//                    
-//                    
-//                    Toggle(isOn: $transaction.favorite) {
-//                        Text(.favoriteMarkFavorite)
-//                    }
-//                    .tint(.accentColor)
-//                    
-//                } footer: {
-//                    VStack(alignment: .leading) {
-//                        if transaction.category.name.isEmptyOrWhiteSpace {
-//                            Text(.transactionInputCategoryRequired)
-//                                .foregroundStyle(.alert)
-//                        }
-//                        
-//                        if transaction.account.name.isEmptyOrWhiteSpace {
-//                            Text(.transactionInputAccountRequired)
-//                                .foregroundStyle(.alert)
-//                        }
-//                    }
-//                }
-//            }
-//            .scrollContentBackground(.hidden)
         }
-        .ignoresSafeArea(.keyboard, edges: .bottom)
         
         // MARK: EVENTS
         
         .onAppear {
             amountString = onChangeAmount(amountString, prepareForAppear: true)
         }
-        // Permite configurar la cuenta cuando carguen en un inicio o cuando aun falta para que CoreData me devuelva las cuentas.
         .onChange(of: accountManager.sortedAccounts, initial: true) {
             configureSelectedAccount()
         }
@@ -388,84 +263,60 @@ struct TransactionForm: View {
                 SelectAccountView(selectedAccount: $transaction.account)
             }
         }
+        
+        .sensoryFeedback(.selection, trigger: feedbackTrigger)
+        .ignoresSafeArea(.keyboard, edges: .bottom)
     }
     
     private func configureSelectedAccount() {
         let accounts = accountManager.sortedAccounts
-
+        
         guard !accounts.isEmpty else { return }
-
+        
         // Preserve the existing account if it is still available.
         if let selectedAccount = accounts.first(where: { $0.id == transaction.account.id }) {
             transaction.account = selectedAccount
             return
         }
-
+        
         // Otherwise, select the default account or the first available.
         transaction.account = accounts.first { $0.id == accountManager.defaultAccount?.id } ?? accounts[0]
     }
     
     /**
      Validates and formats the amount while typing.
-
+     
      When preparing the initial value, removes unnecessary decimal zeros
      while preserving significant fractional digits.
      */
     private func onChangeAmount(_ text: String, prepareForAppear: Bool = false) -> String {
         let decimalSeparator = CurrencyConstant.localDecimalSeparator
         let groupingSeparator = CurrencyConstant.localGroupingSeparator
-
+        
         let cleanedText = text.replacingOccurrences(of: groupingSeparator, with: "")
         let parts = cleanedText.components(separatedBy: decimalSeparator)
-
+        
         let integerPart = String(parts[0].filter(\.isASCII).filter(\.isNumber).prefix(CurrencyConstant.amoutMaxLength))
         let decimalPart = String(parts.dropFirst().joined().filter(\.isASCII).filter(\.isNumber).prefix(CurrencyConstant.fractionLength))
-
+        
         guard !integerPart.isEmpty || parts.count > 1 else {
             return ""
         }
-
+        
         if prepareForAppear && (decimalPart.isEmpty || decimalPart.allSatisfy({ $0 == "0" })) {
             return integerPart == "0" ? "" : onChangeAmount(integerPart)
         }
-
+        
         let integerValue = Decimal(string: integerPart) ?? .zero
         let formatter = CurrencyConstant.localFormatter(showCents: false)
         let formattedInteger = formatter.string(from: NSDecimalNumber(decimal: integerValue)) ?? integerPart
-
+        
         guard parts.count > 1 else {
             return formattedInteger
         }
-
+        
         return formattedInteger + decimalSeparator + decimalPart
     }
-        
-//    private func onChangeFocusAmount(_ text: String, _ isFocused: Bool) -> String {
-//        let decimalSeparator = CurrencyConstant.localDecimalSeparator
-//        let groupingSeparator = CurrencyConstant.localGroupingSeparator
-//
-//        if isFocused {
-//            let editableText = text.replacingOccurrences(of: groupingSeparator,with: "")
-//
-//            let parts = editableText.components(separatedBy: decimalSeparator)
-//
-//            if parts.count == 2 && parts[1].allSatisfy({ $0 == "0" }) {
-//                return parts[0] == "0" ? "" : parts[0]
-//            }
-//
-//            return editableText == "0" ? "" : editableText
-//        }
-//
-//        let cleanedText = onChangeAmount(text)
-//
-//        guard let amount = Decimal(string: cleanedText, locale: .current), amount != .zero else {
-//            return ""
-//        }
-//
-//        let formatter = CurrencyConstant.localFormatter(showCents: true)
-//
-//        return formatter.string(from: NSDecimalNumber(decimal: amount)) ?? cleanedText
-//    }
 }
 
 #Preview(Previews.localeES_CR) {
@@ -484,4 +335,22 @@ struct TransactionForm: View {
         .environment(categoryManager)
         .environment(currencyManager)
         .environment(\.locale, .init(identifier: Previews.localeES_CR))
+}
+
+#Preview(Previews.localeEN) {
+    
+    @Previewable @State var accountManager = AccountManager(viewContext: MockDataType.normal.viewContext)
+    @Previewable @State var categoryManager = CategoryManager(viewContext: MockDataType.normal.viewContext)
+    
+    @Previewable @State var currencyManager = CurrencyManager.shared
+    
+    @Previewable @State var transaction = TransactionModel()
+    @Previewable @State var type = CategoryType.expense
+    @Previewable @State var amountString = ""
+    
+    TransactionForm(transaction: $transaction, type: $type, amountString: $amountString) { }
+        .environment(accountManager)
+        .environment(categoryManager)
+        .environment(currencyManager)
+        .environment(\.locale, .init(identifier: Previews.localeEN))
 }

@@ -136,7 +136,7 @@ extension AccountManager {
     
     func create(_ account: AccountModel, isDefault: Bool) async -> ToastResponse? {
         if account.name.isEmptyOrWhiteSpace {
-            return ToastResponse(.responseErrorTextFieldEmptySpace, .error)
+            return ToastResponse(.inputNameRequired, .error)
         }
         
         do {
@@ -156,7 +156,7 @@ extension AccountManager {
     
     func update(_ account: AccountModel, isDefault: Bool) async -> ToastResponse? {
         if account.name.isEmptyOrWhiteSpace {
-            return ToastResponse(.responseErrorTextFieldEmptySpace, .error)
+            return ToastResponse(.inputNameRequired, .error)
         }
         
         do {
