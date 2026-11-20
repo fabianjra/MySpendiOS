@@ -26,7 +26,9 @@ extension Array where Element == TransactionModel {
         }
         
         return filter {
-            dateInterval.contains($0.dateTransaction)
+            //dateInterval.contains($0.dateTransaction) //Provoca que una transaccion apareza en 2 fechas diferentes.
+            $0.dateTransaction >= dateInterval.start &&
+            $0.dateTransaction < dateInterval.end
         }
     }
     
