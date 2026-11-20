@@ -328,14 +328,14 @@ struct TransactionHistoryView: View {
             
             VStack(alignment: .leading) {
                 Text(.categoryTypeIncomes)
-                    .fontWeight(.light)
+                    .font(.callout.weight(.light))
                     .foregroundStyle(Color.secondary)
                 
                 Text(totals.incomes.amountToString(showCents: showCents).addCurrencySymbol(currencyManager.selectedSymbolOrCode))
+                    .font(.title3.weight(.bold))
                     .foregroundStyle(Color.accentColor)
             }
             .lineLimit(1)
-            .font(.callout)
             .fontDesign(.rounded)
             .frame(maxWidth: .infinity, alignment: .leading)
             
@@ -346,14 +346,14 @@ struct TransactionHistoryView: View {
             VStack(alignment: .leading) {
                 
                 Text(.categoryTypeExpenses)
-                    .fontWeight(.light)
+                    .font(.callout.weight(.light))
                     .foregroundStyle(Color.secondary)
                 
                 Text(totals.expenses.amountToString(showCents: showCents).addCurrencySymbol(currencyManager.selectedSymbolOrCode))
+                    .font(.title3.weight(.bold))
                     .foregroundStyle(.alert)
             }
             .lineLimit(1)
-            .font(.callout)
             .fontDesign(.rounded)
             .frame(maxWidth: .infinity, alignment: .leading)
         }
